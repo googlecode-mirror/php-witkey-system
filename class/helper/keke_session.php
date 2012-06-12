@@ -8,6 +8,7 @@
  */
 class keke_session {
 	public static  $_session_obj ;
+	public static $_left_time = 1800;
 	public static function get_instance() {
 		static $obj = null;
 		if ($obj == null) {
@@ -34,8 +35,8 @@ class keke_session {
 
 }
 
-class session_mysql_class {
-	public $_left_time = 1800;
+class session_mysql_class extends keke_session {
+	
 	public $_db;
 	function __construct() {
 		ini_set ( "session.save_handler", "user" );
@@ -44,12 +45,12 @@ class session_mysql_class {
 		session_start ();
 	}
 	function open($save_path, $sess_name) {
-		$this->_left_time = get_cfg_var ( "session.gc_maxlifetime" );
+		self::$_left_time = get_cfg_var ( "session.gc_maxlifetime" );
 		$this->_db = database::instance();
 		return true;
 	}
 	function close() {
-		return $this->gc ( $this->_left_time );
+		return $this->gc ( self::$_left_time );
 	}
 	function read($session_id) {
 		$sql = "select session_data from " . TABLEPRE . "witkey_session where session_id = '$session_id' and session_expirse>" . time ();
@@ -73,12 +74,14 @@ class session_mysql_class {
 		return $this->_db->execute ( $sql );
 	}
 }
-class session_file_class {
+class session_file_class extends keke_session {
 	function __construct() {
-		$path = S_ROOT . 'data' . DIRECTORY_SEPARATOR . 'session';
-		ini_set ( 'session.save_handler', 'files' );
+		//$path = S_ROOT . 'data' . DIRECTORY_SEPARATOR . 'session';
+		//ini_set ( 'session.save_handler', 'files' );
+		//session_save_path ( $path );
+		session_set_cookie_params(self::$_left_time, cookie::$path, cookie::$domain, cookie::$secure, cookie::$httponly);
 		session_cache_limiter(false);
-		session_save_path ( $path );
+	 
 		session_start ();
 	}
 }

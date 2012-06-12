@@ -100,11 +100,7 @@ class keke_core_class extends keke_base_class {
 	
 	static function get_format_size($bytes) {
 		$units = array (
-				0 => 'B',
-				1 => 'kB',
-				2 => 'MB',
-				3 => 'GB' 
-		);
+				0 => 'B',1 => 'kB',	2 => 'MB',3 => 'GB'	);
 		$log = log ( $bytes, 1024 );
 		$power = ( int ) $log;
 		$size = pow ( 1024, $log - $power );
@@ -357,7 +353,7 @@ class kekezu extends keke_core_class {
 	}
 	function __construct() {
 		$this->init ();
-		keke_lang_class::loadlang ( 'public', 'public' );
+		//keke_lang_class::loadlang ( 'public', 'public' );
 	}
 	
 	function init() {
@@ -393,17 +389,17 @@ class kekezu extends keke_core_class {
 		$_COOKIE = kekezu::k_stripslashes($_COOKIE);
 			// self::$_db = database::instance ();
 		$this->init_config ();
-		$this->init_session ();
-		$this->init_user ();
+		//$this->init_session ();
+		//$this->init_user ();
 			// kekezu::$_cache_obj = cache::instance ();
 			// kekezu::$_tpl_obj = new keke_tpl_class ();
 			// kekezu::$_page_obj = new keke_page_class ();
 			// $this->_tag = kekezu::get_tag ();
 			// $close_allow_fxx == 1 or $this->init_out_put ();
-		$this->init_model ();
-		$this->init_industry ();
-		$this->init_oauth ();
-		$this->init_lang ();
+		//$this->init_model ();
+		//$this->init_industry ();
+		//$this->init_oauth ();
+		//$this->init_lang ();
 		$this->init_weibo_attent ();
 		self::$_log = log::instance()->attach(new keke_log_file());
 		if (!isset($_SESSION['auid']) and $this->_sys_config ['is_close'] == 1 && substr ( $_SERVER ['PHP_SELF'], - 24 ) != '/control/admin/index.php') {
@@ -418,10 +414,9 @@ class kekezu extends keke_core_class {
 	function init_config() {
 		global $i_model, $_lang, $_K;
 		$sql = sprintf("select config_id,k,v,type,listorder from %switkey_basic_config",TABLEPRE);
-		
 		if(($basic_arr = cache::instance('sqlite')->generate_id($sql)->get(null))==null){
 			$basic_arr = db::query($sql)->execute();
-			cache::instance()->generate_id($sql)->set(null,$basic_arr);
+			cache::instance('sqlite')->generate_id($sql)->set(null,$basic_arr);
 		}
 		$this->_basic_arr = $basic_arr ;
 		
@@ -429,19 +424,20 @@ class kekezu extends keke_core_class {
 		$size = sizeof ( $basic_arr );
 		for($i = 0; $i < $size; $i ++) {
 			$config_arr [$basic_arr [$i] ['k']] = $basic_arr [$i] ['v'];
-		}
+		} 
+		
 		$mtime = explode ( ' ', microtime () );
 
 		$sql = sprintf('select * from %switkey_nav where ishide!=1 order by listorder',TABLEPRE);
 		if(($nav_list=cache::instance('sqlite')->generate_id($sql)->get(null))==null){
 			$nav_list = db::query($sql)->execute();
-			cache::instance()->generate_id($sql)->set(null, $nav_list);
+			cache::instance('sqlite')->generate_id($sql)->set(null, $nav_list);
 		}
 		$nav_list = kekezu::get_arr_by_key($nav_list,'nav_id');
 		$this->_nav_list = $nav_list;
 		$template = kekezu::get_tpl ();
 		$this->_template = $template ['tpl_title'];
-		$map_config = unserialize ( $config_arr ['map_api_open'] );
+		$map_config = unserialize ( $config_arr ['map_api_open']);
 		// $map_config ['google_api'] == 1 and $map_api = 'google' or;
 		$map_api = "baidu";
 		$_K ['timestamp'] = $mtime [1];
@@ -461,7 +457,7 @@ class kekezu extends keke_core_class {
 		$_K ['refer'] = "index.php";
 		$_K ['block_search'] = $_K ['block_replace'] = array ();
 		$_lang = array ();
-		is_file ( S_ROOT . '/config/lic.php' ) and include (S_ROOT . '/config/lic.php');
+		@include (S_ROOT . '/config/lic.php');
 		$config_arr ['seo_title'] and $_K ['html_title'] = $config_arr ['seo_title'] or $_K ['html_title'] = $config_arr ['website_name'];
 		define ( 'SKIN_PATH', 'tpl/' . $_K ['template'] );
 		define ( 'UPLOAD_RULE', date ( 'Y/m/d' ) );
@@ -537,8 +533,8 @@ class kekezu extends keke_core_class {
 		 $this->_tag or $this->_tag = kekezu::get_tag ();
 	}
 	function init_session() {
-		//keke_session::get_instance ();
-		session_start();
+		keke_session::get_instance ();
+		//session_start();
 	}
 	function init_out_put() {
 		global  $_K;
@@ -632,7 +628,7 @@ file_exists ( $ipath ) == true or header ( "Location: install/index.php" );
 
 $kekezu = kekezu::get_instance ();
 
-keke_lang_class::load_lang_class ( 'keke_core_class' );
+//keke_lang_class::load_lang_class ( 'keke_core_class' );
 $_cache_obj = kekezu::$_cache_obj;
 $page_obj = kekezu::$_page_obj;
 $template_obj = kekezu::$_tpl_obj;

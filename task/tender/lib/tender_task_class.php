@@ -304,11 +304,11 @@ class tender_task_class extends keke_task_class {
 		$where .= " order by work_time desc ";
 		if (! empty ( $p )) {
 			$page_obj = kekezu::$_page_obj;
-			$count = intval ( db_factory::get_count ( $count_sql . $where ) );
+			$count = intval ( dbfactory::get_count ( $count_sql . $where ) );
 			$pages = $page_obj->getPages ( $count, $p ['page_size'], $p ['page'], $p ['url'], $p ['anchor'] );
 			$where .= $pages ['where'];
 		}
-		$work_info = db_factory::query ( $sql . $where );
+		$work_info = dbfactory::query ( $sql . $where );
 		$work_arr ['work_info'] = $work_info;
 		$work_arr ['pages'] = $pages;
 		return $work_arr;
@@ -565,7 +565,7 @@ class tender_task_class extends keke_task_class {
 		$task_info = $this->_task_info; // 任务信息
 		$url = $_K ['siteurl'] . '/index.php?do=task&task_id=' . $this->_task_id;
 		$task_status = $this->_task_status;
-		$order_info = db_factory::get_one ( sprintf ( "select order_amount,order_status from %switkey_order where order_id='%d'", TABLEPRE, intval ( $order_id ) ) );
+		$order_info = dbfactory::get_one ( sprintf ( "select order_amount,order_status from %switkey_order where order_id='%d'", TABLEPRE, intval ( $order_id ) ) );
 		$order_amount = $order_info ['order_amount'];
 		if ($order_info ['order_status'] == 'ok') {
 			$task_status == 1 && $notice = $_lang['task_pay_success_and_wait_admin_audit'];
@@ -583,7 +583,7 @@ class tender_task_class extends keke_task_class {
 						kekezu::$_prom_obj->create_prom_event ( "pub_task", $this->_guid, $task_info ['task_id'], $task_info ['task_cash'] );
 					}
 					// 更改订单状态到已付款状态
-					db_factory::updatetable ( TABLEPRE . "witkey_order", array ("order_status" => "ok" ), array ("order_id" => "$order_id" ) );
+					dbfactory::updatetable ( TABLEPRE . "witkey_order", array ("order_status" => "ok" ), array ("order_id" => "$order_id" ) );
 					if ($order_amount < $task_config ['audit_cash']) { // 如果订单的金额比发布任务时配置的审核金额要小
 						$this->set_task_status ( 1 ); // 状态更改为审核状态
 						return pay_return_fac_class::struct_response ( $_lang['operate_notice'], $_lang['task_pay_success_and_wait_admin_audit'], $url, 'success' );

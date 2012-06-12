@@ -25,6 +25,6 @@ if( $sbt_edit ) {
 		kekezu::admin_system_log($_lang['add_prom_material']);
 		$add && kekezu::admin_show_msg($_lang['prom_material_add_success'],'',3,'','success');
 } else {
-	$item_id and $item_info = db_factory::get_one(" select * from ".TABLEPRE."witkey_prom_item where item_id = '$item_id'");
+	$item_id and $item_info = dbfactory::get_one(" select * from ".TABLEPRE."witkey_prom_item where item_id = '$item_id'");
 }
 require $template_obj->template ( 'control/admin/tpl/admin_'.$do.'_' . $view );

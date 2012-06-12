@@ -20,10 +20,10 @@ switch ($op) {
 			foreach ( $conf as $k => $v ) {
 				if (check_bind ( $k )) {
 					
-					$res .= db_factory::execute ( " update " . TABLEPRE . "witkey_basic_config set v='$v' where k='$k'" );
+					$res .= dbfactory::execute ( " update " . TABLEPRE . "witkey_basic_config set v='$v' where k='$k'" );
 				} else {
 				//	kekezu::admin_system_log('创建了手机平台');
-					$res .= db_factory::execute ( " insert into " . TABLEPRE . "witkey_basic_config values('','$k','$v','mobile','','')" );
+					$res .= dbfactory::execute ( " insert into " . TABLEPRE . "witkey_basic_config values('','$k','$v','mobile','','')" );
 				}
 			}
 			kekezu::admin_system_log($_lang['edit_mobile_log']);
@@ -57,6 +57,6 @@ switch ($op) {
  *检测绑定账号是否存在 
  */
 function check_bind($k) {
-	return db_factory::get_count ( " select k from " . TABLEPRE . "witkey_basic_config where k='$k'" );
+	return dbfactory::get_count ( " select k from " . TABLEPRE . "witkey_basic_config where k='$k'" );
 }
 require $template_obj->template ( 'control/admin/tpl/admin_' . $do . '_' . $view );

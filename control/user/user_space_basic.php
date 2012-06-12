@@ -41,7 +41,7 @@ if ($sbt_edit) {
 	}
 	
  	$sql = sprintf("select shop_id from %switkey_shop where uid=%d ",TABLEPRE,$uid); 
-	$shop_info = db_factory::query($sql);
+	$shop_info = dbfactory::query($sql);
 	$pk['shop_id'] = $shop_info['0']['shop_id']; 
 	$res = $shop_obj->save ($conf, $pk );
 	$res and kekezu::show_msg ( $_lang['operate_notice'], "index.php?do=space&member_id=$uid", 3, $_lang['edit_space_success'], 'success') or kekezu::show_msg ( $_lang['operate_notice'], $ac_url, 3, $_lang['edit_space_fail'], 'warning' );
@@ -53,12 +53,12 @@ if ($ajax) {
 	if (!$fields || !in_array($fields, $fieldss)){
 		kekezu::echojson( $_lang['fail_set'], "0" );
 	}
-	$fields && isset ( $filePath ) and $res = db_factory::execute ( sprintf ( " update %switkey_shop set %s='%s' where shop_id='%d'", TABLEPRE, $fields, $filePath, $shop_info ['shop_id'] ) );
+	$fields && isset ( $filePath ) and $res = dbfactory::execute ( sprintf ( " update %switkey_shop set %s='%s' where shop_id='%d'", TABLEPRE, $fields, $filePath, $shop_info ['shop_id'] ) );
 	$res and kekezu::echojson ( $_lang['successfully_set'], "1" ) or kekezu::echojson( $_lang['fail_set'], "0" );
 }
 if ($rever && $rever=='change'){
 	$sql = sprintf("update %switkey_shop set shop_background=null where shop_id=%d", TABLEPRE, $shop_info ['shop_id']);
-	$result = db_factory::execute($sql);
+	$result = dbfactory::execute($sql);
 	$result && kekezu::echojson ( $_lang['successfully_set'], "1" ) or kekezu::echojson ( $_lang['fail_set'], "0" );
 }
 $shop_backstyle = unserialize($shop_info['shop_backstyle']);

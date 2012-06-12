@@ -21,7 +21,7 @@ switch ($op) {
 		break;
 	case "disable" : //冻结用户
 		$sql = sprintf ( "update  %switkey_space set status=2 where uid =%d", TABLEPRE, $edituid );
-		db_factory::execute ( $sql );
+		dbfactory::execute ( $sql );
 		$v_arr = array ($_lang['username'] => $memberinfo_arr['username'], $_lang['website_name'] => kekezu::$_sys_config['website_name'] );
 		keke_shop_class::notify_user ( $memberinfo_arr ['uid'], $memberinfo_arr ['username'], 'freeze', $_lang['user_freeze'], $v_arr );
 		kekezu::admin_system_log ( $_lang['unfreeze_member'] . $memberinfo_arr ['username'] );
@@ -31,7 +31,7 @@ switch ($op) {
 		kekezu::admin_check_role ( 24 );
 		
 		$sql = sprintf ( "update  %switkey_space set status=1 where uid =%d", TABLEPRE, $edituid );
-		db_factory::execute ( $sql );
+		dbfactory::execute ( $sql );
 		$v_arr = array ($_lang['username'] => $memberinfo_arr['username'], $_lang['website_name'] => kekezu::$_sys_config['website_name'] );
 		keke_shop_class::notify_user ( $memberinfo_arr ['uid'], $memberinfo_arr ['username'], 'unfreeze', $_lang['user_freeze'], $v_arr );
 		kekezu::admin_system_log ( $_lang['unfreeze_member'] . $memberinfo_arr ['username'] );
@@ -43,7 +43,7 @@ if ($sbt_action && is_array ( $ckb )) {
 	
 	$ids = implode ( ',', $ckb );
 	$sql = sprintf ( "select uid,username from %switkey_space where uid in (%s)", TABLEPRE, $ids );
-	$space_arr = db_factory::query ( $sql );
+	$space_arr = dbfactory::query ( $sql );
 	switch ($sbt_action) {
 		case $_lang['mulit_delete'] : //批量删除
 			$table_class->del ( 'uid', $ckb );
@@ -55,7 +55,7 @@ if ($sbt_action && is_array ( $ckb )) {
 			
 
 			$sql = sprintf ( "update  %switkey_space set status=2 where uid in (%s)", TABLEPRE, $ids );
-			db_factory::execute ( $sql ); //改变用户状态 
+			dbfactory::execute ( $sql ); //改变用户状态 
 			foreach ( $space_arr as $v ) { //邮件通知
 				$v_arr = array ($_lang['username'] => $v['username'], $_lang['website_name'] => kekezu::$_sys_config['website_name'] );
 				keke_shop_class::notify_user ( $v ['uid'], $v ['username'], 'freeze', $_lang['user_freeze'], $v_arr );
@@ -67,7 +67,7 @@ if ($sbt_action && is_array ( $ckb )) {
 			
 
 			$sql = sprintf ( "update  %switkey_space set status=1 where uid in (%s)", TABLEPRE, $ids );
-			db_factory::execute ( $sql ); //改变用户状态 
+			dbfactory::execute ( $sql ); //改变用户状态 
 			foreach ( $space_arr as $v ) { //邮件通知
 				$v_arr = array ($_lang['username'] => $v['username'], $_lang['website_name'] => kekezu::$_sys_config['website_name']);
 				keke_shop_class::notify_user ( $v ['uid'], $v ['username'], 'unfreeze', $_lang['user_open'], $v_arr );

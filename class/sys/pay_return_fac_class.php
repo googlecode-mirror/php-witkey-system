@@ -53,9 +53,9 @@ class pay_return_fac_class {
 		if ($this->_charge_type == 'order_charge') {
 			$order_id = keke_order_class::create_user_charge_order ( 'online_charge', $this->_pay_type, $this->_total_fee,$this->_obj_id,$_lang['user_recharge'], 'wait', $this->_uid, $this->_username );
 		}
-		$order_info = db_factory::get_one ( sprintf ( " select order_status,order_type from %switkey_order_charge where order_id='%d' and uid='%d'", TABLEPRE, $order_id, $uid ) );
+		$order_info = dbfactory::get_one ( sprintf ( " select order_status,order_type from %switkey_order_charge where order_id='%d' and uid='%d'", TABLEPRE, $order_id, $uid ) );
 		if ($order_info ['order_status'] == 'wait') { //未付款才更新记录并产生财务
-			db_factory::execute ( sprintf ( " update %switkey_order_charge set order_status='ok' where order_id='%d'", TABLEPRE, $order_id ) );
+			dbfactory::execute ( sprintf ( " update %switkey_order_charge set order_status='ok' where order_id='%d'", TABLEPRE, $order_id ) );
 			$res = keke_finance_class::cash_in ( $uid, $this->_total_fee, 0, $order_info ['order_type'], $this->_charge_type, 'user_charge', $order_id );
 			/** 通知用户*/
 			$v_arr = array ($_lang['recharge_account'] => $this->_total_fee );

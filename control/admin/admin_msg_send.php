@@ -15,7 +15,7 @@ $mobile_p=$account_info['mobile_password'];
 switch ($ac){
 	case "ser":
 		$type=='uid' and $where=" uid='$u' " or $where=" INSTR(username,'$u')>0 ";
-		$user_info=db_factory::get_one(" select uid,username,phone,mobile from ".TABLEPRE."witkey_space where $where ");
+		$user_info=dbfactory::get_one(" select uid,username,phone,mobile from ".TABLEPRE."witkey_space where $where ");
 		if(!$user_info){
 			kekezu::echojson($_lang['he_came_from_mars'],'3');die();
 		}else{
@@ -38,7 +38,7 @@ switch ($ac){
 				break;
 			case "0":
 				$slt_type=='vip' and $where="isvip='1'" or $where="isvip!='1'";
-				$tel_arr=db_factory::query(" select mobile from ".TABLEPRE."witkey_space where $where and mobile is not null ");
+				$tel_arr=dbfactory::query(" select mobile from ".TABLEPRE."witkey_space where $where and mobile is not null ");
 				$tel_group=array();
 				foreach ($tel_arr as $v){
 					$tel_group[]=$v['mobile'];

@@ -25,7 +25,7 @@ class keke_user_mark_class {
 		$type and $where .= " and type='$type' ";
 		$obj and $where .= " and obj='$obj'";
 		$sql = " select * from " . TABLEPRE . "witkey_mark_config  $where ";
-		$type && $obj and $mark_conf = db_factory::get_one ( $sql ) or $mark_conf = db_factory::query ( $sql );
+		$type && $obj and $mark_conf = dbfactory::get_one ( $sql ) or $mark_conf = dbfactory::query ( $sql );
 		;
 		return $mark_conf;
 	}
@@ -75,7 +75,7 @@ class keke_user_mark_class {
 	 * @param int $uid 被评人
 	 */
 	public static function mark_info_exists($model_code,$obj_id,$by_uid,$uid){
-		return db_factory::execute(sprintf(" select model_code from %switkey_mark where model_code='%s' and obj_id = '%d' and uid='%d' and by_uid ='%d'",TABLEPRE,$model_code,$obj_id,$uid,$by_uid));
+		return dbfactory::execute(sprintf(" select model_code from %switkey_mark where model_code='%s' and obj_id = '%d' and uid='%d' and by_uid ='%d'",TABLEPRE,$model_code,$obj_id,$uid,$by_uid));
 	}
 	/**
 	 * 用户互评完成
@@ -119,7 +119,7 @@ class keke_user_mark_class {
 	 * @param int $mark_id 互评编号
 	 */
 	public static function get_single_mark($mark_id){
-		return db_factory::get_one(sprintf(" select * from %switkey_mark where mark_id = '%d'",TABLEPRE,$mark_id));
+		return dbfactory::get_one(sprintf(" select * from %switkey_mark where mark_id = '%d'",TABLEPRE,$mark_id));
 	}
 	/**
 	 * 更新space表的好评信息
@@ -144,7 +144,7 @@ class keke_user_mark_class {
 		//好评则好评数为1,其它评评不加
 		$mark_status==1 and $seller_good_num = 1 or $seller_good_num = 0;
 		//获取当前角色的信誉值
-		$credit_value = db_factory::get_count(sprintf("select %s from %switkey_space where uid = '%d'",$edit_col,TABLEPRE,$uid));
+		$credit_value = dbfactory::get_count(sprintf("select %s from %switkey_space where uid = '%d'",$edit_col,TABLEPRE,$uid));
 		/*** 根据评价者身份来获取被评价者的等级信息**/
 		$mark_type =='2' and $level_role = '1' or $level_role ='2';
 		//用户等级信息by 当前信誉值+已有信誉值
@@ -272,7 +272,7 @@ class keke_user_mark_class {
 		$where = " select * from ".TABLEPRE."witkey_mark where 1 = 1";
 		$ext and $where.=" and $ext ";
 		$arr       = keke_table_class::format_condit_data($where,$order,$w,$p);
-		$mark_info = db_factory::query ($arr['where'] );
+		$mark_info = dbfactory::query ($arr['where'] );
 		$mark_arr ['mark_info'] = $mark_info;
 		$mark_arr ['pages'] = $arr['pages'];
 		return $mark_arr;
@@ -321,7 +321,7 @@ class keke_user_mark_class {
 	 * @param $uid
 	 */
 	public function get_user_name($uid) {
-		return db_factory::get_count ( " select username from " . TABLEPRE . "witkey_member where uid ='$uid' " );
+		return dbfactory::get_count ( " select username from " . TABLEPRE . "witkey_member where uid ='$uid' " );
 	}
 	/**
 	 * 计算可得信誉值
@@ -357,7 +357,7 @@ class keke_user_mark_class {
 		isset ( $mark_status )&&$mark_status!='n' and $where .= " and mark_status='$mark_status'";
 		$model_code and $where .= " and model_code='$model_code' ";
 		$obj_id and $where .= " and obj_id = '$obj_id' ";
-		$aid_arr = db_factory::query ( " select aid,aid_star from " . TABLEPRE . "witkey_mark where $where " );
+		$aid_arr = dbfactory::query ( " select aid,aid_star from " . TABLEPRE . "witkey_mark where $where " );
 		$aid_info = array ();
 		$si = sizeof ( $aid_arr );
 		foreach ( $aid_config as $k => $v ) {

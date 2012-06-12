@@ -53,7 +53,7 @@ class keke_register_class {
 				$notify = "UCenter";
 				require_once S_ROOT . './keke_client/ucenter/client.php';
 				$reg_uid = uc_user_register ( $this->_reg_username, $old_pwd, $this->_reg_email );
-				$exists = db_factory::get_count ( sprintf ( " select count(uid) from %switkey_member where uid='%d'", TABLEPRE, $reg_uid ) );
+				$exists = dbfactory::get_count ( sprintf ( " select count(uid) from %switkey_member where uid='%d'", TABLEPRE, $reg_uid ) );
 				if ($exists) { //与三方用户UID冲突
 					$this->show_msg($_lang ['warning_local_and'] . $notify . $_lang ['user_table_primary_violation_notice'],'',2);
 				}
@@ -62,7 +62,7 @@ class keke_register_class {
 				$notify = "PW";
 				require_once (S_ROOT . './keke_client/pw_client/uc_client.php');
 				$reg_uid = uc_user_register ( $this->_reg_username, $this->_reg_pwd, $this->_reg_email );
-				$exists = db_factory::get_count ( sprintf ( " select uid from %switkey_member where uid='%d'", TABLEPRE, $reg_uid ) );
+				$exists = dbfactory::get_count ( sprintf ( " select uid from %switkey_member where uid='%d'", TABLEPRE, $reg_uid ) );
 				if ($exists) { //与三方用户UID冲突
 					$this->show_msg($_lang ['warning_local_and'] . $notify . $_lang ['user_table_primary_violation_notice'],'',2);
 				}
@@ -273,7 +273,7 @@ class keke_register_class {
 	public static function register_binding($oauth_user_info, $user_info, $type) {
 		global $_lang;
 		$csql = "select count(*) as c from %switkey_member_oauth where source='%s' and oauth_id ='%s'";
-		$c = db_factory::get_one ( sprintf ( $csql, TABLEPRE, $type, $oauth_user_info ['account'] ) );
+		$c = dbfactory::get_one ( sprintf ( $csql, TABLEPRE, $type, $oauth_user_info ['account'] ) );
 		if (intval ( $c ['c'] ) == 0) {
 			$oauth_obj = new Keke_witkey_member_oauth_class ();
 			$oauth_obj->setAccount ( $oauth_user_info ['name'] );
@@ -291,7 +291,7 @@ class keke_register_class {
 	//绑定
 	public static function is_oauth_bind($type, $oauth_id) {
 		$sql = "select * from %switkey_member_oauth where source = '%s' and  oauth_id = '%s'";
-		return db_factory::get_one ( sprintf ( $sql, TABLEPRE, $type, $oauth_id ) );
+		return dbfactory::get_one ( sprintf ( $sql, TABLEPRE, $type, $oauth_id ) );
 	}
 	function show_msg($content,$url='',$status) {
 		global $_lang;

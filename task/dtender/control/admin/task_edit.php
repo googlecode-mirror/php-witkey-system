@@ -11,9 +11,9 @@ $model_list = kekezu::$_model_list;
 $task_status = dtender_task_class::get_task_status();
 $task_id = $task_id ? $task_id : kekezu::admin_show_msg ($_lang['param_error'], "index.php?do=model&model_id=$model_id&view=list",3,'','warning' );
 $task_obj=keke_table_class::get_instance("witkey_task");
-$task_info = db_factory::get_one ( " select * from " . TABLEPRE . "witkey_task where task_id = '$task_id'" );
+$task_info = dbfactory::get_one ( " select * from " . TABLEPRE . "witkey_task where task_id = '$task_id'" );
 //load  attachment
-$file_list = db_factory::get_one ( " select * from " . TABLEPRE . "witkey_file where task_id = '$task_id'" );
+$file_list = dbfactory::get_one ( " select * from " . TABLEPRE . "witkey_file where task_id = '$task_id'" );
 $cash_rule_arr = kekezu::get_table_data ( "*", "witkey_task_cash_cove", "", "", '', '', "cash_rule_id" );
 /**可执行动作**/
 $operate = keke_task_config::can_operate ( $task_info ['task_status'] );

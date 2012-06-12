@@ -8,7 +8,7 @@ class service_shop_class {
 	 */
 	function service_del($service_ids) {
 		is_array ( $service_ids ) and $ids = implode ( ",", $service_ids ) or $ids = $service_ids;
-		return db_factory::execute ( sprintf ( "delete from %switkey_service where service_id in(%s)", TABLEPRE, $ids ) );
+		return dbfactory::execute ( sprintf ( "delete from %switkey_service where service_id in(%s)", TABLEPRE, $ids ) );
 	}
 	
 	/**
@@ -18,7 +18,7 @@ class service_shop_class {
 	 */
 	function service_down($service_ids) {
 		is_array ( $service_ids ) and $ids = implode ( ",", $service_ids ) or $ids = $service_ids;
-		return db_factory::execute ( sprintf ( "update %switkey_service set service_status='%d'  where service_id in(%s)", TABLEPRE, 3, $ids ) );
+		return dbfactory::execute ( sprintf ( "update %switkey_service set service_status='%d'  where service_id in(%s)", TABLEPRE, 3, $ids ) );
 	}
 	/**
 	 * 
@@ -27,7 +27,7 @@ class service_shop_class {
 	 */
 	function service_disable($service_ids) {
 		is_array ( $service_ids ) and $ids = implode ( ",", $service_ids ) or $ids = $service_ids;
-		return db_factory::execute ( sprintf ( "update %switkey_service set service_status='%d'  where service_id in(%s)", TABLEPRE, 4, $ids ) );
+		return dbfactory::execute ( sprintf ( "update %switkey_service set service_status='%d'  where service_id in(%s)", TABLEPRE, 4, $ids ) );
 	}
 	/**
 	 * 
@@ -36,7 +36,7 @@ class service_shop_class {
 	 */
 	function service_pass($service_ids) {
 		is_array ( $service_ids ) and $ids = implode ( ",", $service_ids ) or $ids = $service_ids;
-		return db_factory::execute ( sprintf ( "update %switkey_service set service_status='%d'  where service_id in(%s)", TABLEPRE, 2, $ids ) );
+		return dbfactory::execute ( sprintf ( "update %switkey_service set service_status='%d'  where service_id in(%s)", TABLEPRE, 2, $ids ) );
 	}
 	
 	/**
@@ -46,7 +46,7 @@ class service_shop_class {
 	 */
 	function service_use($service_ids) {
 		is_array ( $service_ids ) and $ids = implode ( ",", $service_ids ) or $ids = $service_ids;
-		return db_factory::execute ( sprintf ( "update %switkey_service set service_status='%d'  where service_id in(%s)", TABLEPRE, 5, $ids ) );
+		return dbfactory::execute ( sprintf ( "update %switkey_service set service_status='%d'  where service_id in(%s)", TABLEPRE, 5, $ids ) );
 	}
 	
 	/**
@@ -56,7 +56,7 @@ class service_shop_class {
 	 */
 	function order_del($order_ids) {
 		is_array ( $order_ids ) and $ids = implode ( ",", $order_ids ) or $ids = $order_ids;
-		return db_factory::execute ( sprintf ( "delete from %switkey_order where order_id in(%s)", TABLEPRE, $ids ) );
+		return dbfactory::execute ( sprintf ( "delete from %switkey_order where order_id in(%s)", TABLEPRE, $ids ) );
 	}
 	
 	/**

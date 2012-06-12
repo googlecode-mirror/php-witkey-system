@@ -24,7 +24,7 @@ class sreward_alipay_trust_class {
 				 %switkey_order_detail c on a.task_id = c.obj_id left join %switkey_order b
 				on a.model_id=b.model_id and b.order_id=c.order_id left join %switkey_member_oauth d
 				on a.uid=d.uid where a.task_id='%d' and d.source='alipay_trust'";
-		$task_info = db_factory::get_one ( sprintf ( $sql, TABLEPRE, TABLEPRE, TABLEPRE, TABLEPRE, $this->_task_id ) );
+		$task_info = dbfactory::get_one ( sprintf ( $sql, TABLEPRE, TABLEPRE, TABLEPRE, TABLEPRE, $this->_task_id ) );
 		$task_info and $task_info ['model_code'] = kekezu::$_model_list [$task_info ['model_id']] ['model_dir'];
 		$this->_task_info = $task_info;
 		$this->_model_id = $task_info ['model_id'];
@@ -114,7 +114,7 @@ class sreward_alipay_trust_class {
 				/*获取当前中标威客的打款信息*/
 				$sql = " select a.uid,a.work_id,a.username,b.oauth_id,b.account from %switkey_task_work a left join
 								%switkey_member_oauth b on a.uid=b.uid where a.task_id='%d' and a.work_id='%d'";
-				$work_info = db_factory::get_one ( sprintf ( $sql, TABLEPRE, TABLEPRE, $this->_task_id, $data ['work_id'] ) );
+				$work_info = dbfactory::get_one ( sprintf ( $sql, TABLEPRE, TABLEPRE, $this->_task_id, $data ['work_id'] ) );
 				$cash = $task_info ['task_cash'] * (1 - $task_info ['profit_rate'] / 100);
 				$extra_info [] = array ($work_info ['work_id'], $cash, $work_info ['oauth_id'], $work_info ['username'] );
 				$data['is_auto_bid'] or $task_info ['sp_end_time'] = $this->_task_config ['notice_period'] * 24 * 3600 + time ();
@@ -124,7 +124,7 @@ class sreward_alipay_trust_class {
 				$bidder_info = $this->_data ['confirmed_bidders'] ['bidder'];
 				switch ($bidder_info ['transfer_status']) {
 					case "W"://系统选标，雇主确认。
-						$agree_id = db_factory::get_count(sprintf(" select agree_id from %switkey_agreement where task_id='%d' and work_id='%d'",TABLEPRE,$this->_task_id,$bidder_info ['outer_transfer_no']));
+						$agree_id = dbfactory::get_count(sprintf(" select agree_id from %switkey_agreement where task_id='%d' and work_id='%d'",TABLEPRE,$this->_task_id,$bidder_info ['outer_transfer_no']));
 						$jump_url = $_K['siteurl']."/index.php?do=agreement&agree_id=".$agree_id;
 						$agree_obj = sreward_task_agreement::get_instance($agree_id);
 						$agree_obj->accept_confirm($jump_url,'normal',true);
@@ -180,7 +180,7 @@ class sreward_alipay_trust_class {
 			case true : //回调、本地业务处理
 				switch ($this->_data ['is_success']) {
 					case "T" :
-						$agree_id = db_factory::get_count ( sprintf ( " select agree_id from %switkey_agreement where task_id='%d'", TABLEPRE, $this->_task_id ) );
+						$agree_id = dbfactory::get_count ( sprintf ( " select agree_id from %switkey_agreement where task_id='%d'", TABLEPRE, $this->_task_id ) );
 						$agree_obj = sreward_task_agreement::get_instance ( $agree_id );
 						$url = $_K ['siteurl'] . "/index.php?do=agreement&agree_id=" . $agree_id . "&step=step3";
 						$res = $agree_obj->accept_confirm ( $url, 'json', true );
@@ -215,7 +215,7 @@ class sreward_alipay_trust_class {
 						$work_id = $this->_data['cancel_transfer_detail'];
 						$sql     = " select a.report_id from %switkey_report a left join %switkey_task_work b 
 									 on a.obj_id=b.work_id and a.origin_id=b.task_id where work_status='4' and work_id='%d' and task_id='%d'";
-						$report_id = db_factory::get_count(sprintf($sql,TABLEPRE,TABLEPRE,$work_id,$this->_task_id));
+						$report_id = dbfactory::get_count(sprintf($sql,TABLEPRE,TABLEPRE,$work_id,$this->_task_id));
 						$report_obj = sreward_report_class::get_instance($report_id);
 						$op_result['action']='pass';
 						$op_result['cancel_bid']=1;

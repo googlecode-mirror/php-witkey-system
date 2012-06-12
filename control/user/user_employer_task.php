@@ -31,7 +31,7 @@ if (isset ( $ac )) {
 	if ($task_id) {
 		switch ($ac) {
 			case "del" :
-				$res = db_factory::execute ( sprintf ( " delete from %switkey_task where task_id='%d' and task_status=0 ", TABLEPRE, $task_id ) );
+				$res = dbfactory::execute ( sprintf ( " delete from %switkey_task where task_id='%d' and task_status=0 ", TABLEPRE, $task_id ) );
 				$res and kekezu::show_msg ( $_lang ['operate_notice'], $url, 3, $_lang ['t_delete_success'], 'success' ) or kekezu::show_msg ( $_lang ['operate_notice'], $url, 3, $_lang ['t_delete_fail'], 'warning' );
 				break;
 		}
@@ -46,7 +46,7 @@ if ($model_id) {
 	$cls = $model_list [$model_id] ['model_code'] . "_task_class";
 	$status_arr = call_user_func ( array ($cls, "get_task_status" ) );
 	//**周发布任务统计**//
-	$pub_count = intval ( db_factory::get_count ( sprintf ( "select count(task_id) pub_count from %switkey_task
+	$pub_count = intval ( dbfactory::get_count ( sprintf ( "select count(task_id) pub_count from %switkey_task
  		where YEARWEEK(FROM_UNIXTIME(start_time)) = YEARWEEK('%s') and model_id='%d' and uid='%d'", TABLEPRE, date ( 'Y-m-d H:i:s', time () ), $model_id, $uid ) ) );
 	$sql = sprintf ( "select *,substring(
 		payitem_time,
@@ -61,17 +61,17 @@ if ($model_id) {
 	$task_title && $task_title != $_lang ['input_task_name'] and $where .= " and INSTR(task_title,'$task_title')>0 ";
 	$ord and $where .= " order by $ord " or $where .= " order by task_id desc ";
 	/**搜索条件 end**/
-	$count = db_factory::get_count ( sprintf ( "select count(task_id) from %switkey_task where %s", TABLEPRE, $where ) );
+	$count = dbfactory::get_count ( sprintf ( "select count(task_id) from %switkey_task where %s", TABLEPRE, $where ) );
 	
 	$pages = $page_obj->getPages ( $count, $page_size, $page, $url, '#userCenter' );
-	$task_info = db_factory::query ( $sql . $where . $pages ['where'] );
+	$task_info = dbfactory::query ( $sql . $where . $pages ['where'] );
 }
 if ($ac == 'pay' && $task_id && $model_id) {
 	$model_info = kekezu::$_model_list [$model_id];
 	if ($model_info ['model_type'] == "task") {
 		$class_name = $model_info ['model_code'] . "_task_class";
-		$order_id = db_factory::get_count ( sprintf ( " select order_id from %switkey_order_detail where obj_id='%d'", TABLEPRE, $task_id ) );
-		$task_info = db_factory::get_one ( sprintf ( "select * from %switkey_task where task_id='%d'", TABLEPRE, $task_id ) );
+		$order_id = dbfactory::get_count ( sprintf ( " select order_id from %switkey_order_detail where obj_id='%d'", TABLEPRE, $task_id ) );
+		$task_info = dbfactory::get_one ( sprintf ( "select * from %switkey_task where task_id='%d'", TABLEPRE, $task_id ) );
 		$obj = new $class_name ( $task_info );
 		$res = $obj->dispose_order ( $order_id, $ac );
 		header ( "Location:" . $res ['url'] );

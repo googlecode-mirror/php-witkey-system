@@ -57,7 +57,7 @@ class keke_auth_realname_class extends keke_auth_base_class{
 		}
 		if ($success) {//财务记录
 			//更新实名
-			db_factory::execute(sprintf(" update %switkey_space set truename='%s',idcard='%s' where uid ='%d'",TABLEPRE,$data[realname],$data[id_card],$data[uid]));
+			dbfactory::execute(sprintf(" update %switkey_space set truename='%s',idcard='%s' where uid ='%d'",TABLEPRE,$data[realname],$data[id_card],$data[uid]));
 			//认证收费。产生财务记录
 			$data['cash'] > 0 and keke_finance_class::cash_out ($data['uid'],$data ['cash'],$this->_auth_name, $data ['cash'], $this->_auth_name, $success );
 			

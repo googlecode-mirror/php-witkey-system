@@ -23,7 +23,7 @@ if (kekezu::submitcheck($formhash)) {
 			case "email":
 					$sql = "select * from %switkey_auth_email where uid=%d and auth_status=1";
 					$sql = sprintf($sql,TABLEPRE,$user_info['uid']);
-					$auth_arr = db_factory::query($sql);
+					$auth_arr = dbfactory::query($sql);
 					
 					if($auth_arr){
 						$pass_info = reset_set_password($user_info);
@@ -66,11 +66,11 @@ function reset_set_password($user_info){
 	//更新密码信息
 	$sql = "update %switkey_member set password = '%s' , rand_code = '%s' where uid=%d";
 	$sql = sprintf($sql,TABLEPRE,$user_code,$slt,$user_info['uid']); 
-	$res = db_factory::execute($sql);
+	$res = dbfactory::execute($sql);
 
 	$sql = "update %switkey_space set  password = '%s' , sec_code = '%s' where uid=%d";
 	$sql = sprintf($sql,TABLEPRE,$user_code,$user_seccode,$user_info['uid']);
-	db_factory::execute($sql);
+	dbfactory::execute($sql);
 	$pass_info ['code'] = $code;
 	$pass_info ['sec_code''] = $slt;
 	return $pass_info; 

@@ -38,7 +38,7 @@ if ($ac) {
 			break;
 		case "del" :
 			if ($report_id) {
-				$res = db_factory::execute (sprintf(" delete from %switkey_report where report_id='%d'",TABLEPRE,$report_id));
+				$res = dbfactory::execute (sprintf(" delete from %switkey_report where report_id='%d'",TABLEPRE,$report_id));
 				$filepath and keke_file_class::del_file($filepath);//删除相应文件
 				$res and kekezu::show_msg ( $_lang['operate_notice'], $url."#userCenter", "3", $_lang['delete'] . $action_arr [$op] . $_lang['record_success'],'success' ) or kekezu::show_msg ( $_lang['operate_notice'], $url."#userCenter", "3", $_lang['delete'] . $action_arr [$op] . $_lang['record_fail'],"warning" );
 			} else

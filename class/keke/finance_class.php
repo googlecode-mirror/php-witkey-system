@@ -93,7 +93,7 @@ class keke_finance_class {
 			// 提现判断,代金券不能用提现
 			if ($action == 'withdraw') {
 				//扣除人个帐户
-				db_factory::execute ( "update " . TABLEPRE . "witkey_space set balance = balance-" . abs ( floatval ( $cash ) ) . " where uid ='{$user_info['uid']}'" );
+				dbfactory::execute ( "update " . TABLEPRE . "witkey_space set balance = balance-" . abs ( floatval ( $cash ) ) . " where uid ='{$user_info['uid']}'" );
 				$fo->setFina_cash ( $cash );
 				$fo->setFina_credit ( 0 );
 				$fo->setUser_balance ( $user_balance - abs ( $cash ) );
@@ -102,7 +102,7 @@ class keke_finance_class {
 				$sy_credit = $user_credit - $cash;
 				if ($sy_credit > 0) {
 					//更新用户积分
-					db_factory::execute ( "update " . TABLEPRE . "witkey_space set credit = credit-{$cash} where uid ='{$user_info['uid']}'" );
+					dbfactory::execute ( "update " . TABLEPRE . "witkey_space set credit = credit-{$cash} where uid ='{$user_info['uid']}'" );
 					$fo->setFina_credit ( $cash );
 					$fo->setFina_cash ( 0 );
 					$fo->setUser_balance ( $user_balance );
@@ -110,7 +110,7 @@ class keke_finance_class {
 				
 				} else {
 					//更新余额与积分
-					db_factory::execute ( "update " . TABLEPRE . "witkey_space set credit = credit-{$user_credit},balance = balance-" . abs ( $sy_credit ) . " where uid ='{$user_info['uid']}'" );
+					dbfactory::execute ( "update " . TABLEPRE . "witkey_space set credit = credit-{$user_credit},balance = balance-" . abs ( $sy_credit ) . " where uid ='{$user_info['uid']}'" );
 					$fo->setFina_credit ( $user_credit );
 					$fo->setFina_cash ( abs ( $sy_credit ) );
 					$fo->setUser_balance ( $user_balance - abs ( $sy_credit ) );
@@ -125,7 +125,7 @@ class keke_finance_class {
 			}
 			//unique_num 这个字段现在已经不用了
 			/* $sql = "update " . TABLEPRE . "witkey_finance set unique_num = CONCAT('88',LPAD(LAST_INSERT_ID(),8,'0')) where fina_id = last_insert_id() ";
-			db_factory::execute ( $sql ); */
+			dbfactory::execute ( $sql ); */
 		} 
 		return $res;
 	}
@@ -172,13 +172,13 @@ class keke_finance_class {
 		$fo->setSite_profit ( $profit );
 		$fo->setRecharge_cash ( $charge !== null ? floatval ( $charge ) : null );
 		$sql = "update " . TABLEPRE . "witkey_space set credit = credit+{$credit},balance = balance+" . $cash . " where uid ='{$user_info['uid']}'";
-		$res = db_factory::execute ( $sql );
+		$res = dbfactory::execute ( $sql );
 		if ($res) {
 			$fo->setFina_time ( time () );
 			$row = $fo->create_keke_witkey_finance ();
 			//unique_num 字段已经没有用了
 			/* $sql2 = "update " . TABLEPRE . "witkey_finance set  unique_num=CONCAT('88',LPAD(LAST_INSERT_ID(),8,'0')) where fina_id = last_insert_id()";
-			db_factory::execute ( $sql2 );
+			dbfactory::execute ( $sql2 );
 			 */
 			return $row;
 		} else {
@@ -200,7 +200,7 @@ class keke_finance_class {
 		$data ['fina_type']  =$fina_type;
 		$fina_id = $fina_obj->save ( $data );
 		$sql = "update " . TABLEPRE . "witkey_finance set unique_num = CONCAT('88',LPAD(LAST_INSERT_ID(),8,'0')) where fina_id = last_insert_id() ";
-		db_factory::execute ( $sql );
+		dbfactory::execute ( $sql );
 		return $fina_id;
 	}
 	

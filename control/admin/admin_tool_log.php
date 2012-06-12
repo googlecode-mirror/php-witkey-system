@@ -22,7 +22,7 @@ if ($ac == 'del') {
 	$res and kekezu::admin_show_msg ($_lang['delete_success'], $url,3,'','success' ) or kekezu::admin_show_msg ($_lang['delete_fail'], $url,3,'','warning' );
 } elseif ($ac == 'del_all') {
 	$sql = sprintf ( "TRUNCATE TABLE %switkey_system_log", TABLEPRE );
-	db_factory::execute ( $sql );
+	dbfactory::execute ( $sql );
 	kekezu::admin_system_log( $_lang['empty_system_log'] );
 	kekezu::admin_show_msg ( $_lang['empty_system_log_success'], $url,3,'','success' );
 } elseif ($sbt_action) {

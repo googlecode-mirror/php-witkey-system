@@ -25,7 +25,7 @@ final class tender_time_class extends time_base_class {
 		global $_lang;
 		//获取投标时间结束的任务
 		$sql = sprintf("select * from %switkey_task where model_id = 4 and task_status=2 and ".time().">sub_time",TABLEPRE);
-		$task_arr = db_factory::query($sql);
+		$task_arr = dbfactory::query($sql);
 		foreach ($task_arr as $k=>$v){//改变任务状态
 			$count = $this->get_task_work($v['task_id'], 0);
 			if($count){
@@ -50,7 +50,7 @@ final class tender_time_class extends time_base_class {
 		global $_lang;
 		$sql = sprintf("select * from %switkey_task where model_id = 4 and task_status=3 and ".time().">end_time",TABLEPRE);
 
-		$task_arr = db_factory::query($sql);
+		$task_arr = dbfactory::query($sql);
 				
 		foreach ($task_arr as  $k=>$v){
 			$count = $this->get_task_work($v['task_id'],4);

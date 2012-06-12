@@ -28,7 +28,7 @@ if ($ord ['0']) {
 $sql = "select a.*,b.task_status,b.task_title,b.model_id from %switkey_comment as a left join %switkey_task as b on a.obj_id = b.task_id " . $where;
 $url = "index.php?do=task&view=comment&wh['comment_id']={$wh['comment_id']}&wh['task_title']={$wh['task_title']}&slt_task_type=$slt_task_type&ord['0']=$ord[0]&ord['1']=$ord[1]";
 
-$count = db_factory::execute ( sprintf ( $sql, TABLEPRE, TABLEPRE ) );
+$count = dbfactory::execute ( sprintf ( $sql, TABLEPRE, TABLEPRE ) );
 $slt_page_size = intval ( $slt_page_size ) ? intval ( $slt_page_size ) : 10;
 intval ( $page ) or $page =1;
 kekezu::$_page_obj->setAjax(1);
@@ -36,7 +36,7 @@ kekezu::$_page_obj->setAjaxDom("ajax_dom");
 $pages = kekezu::$_page_obj->getPages ( $count, $slt_page_size, $page, $url );
 
 $sql .= $pages ['where'];
-$comment_arr = db_factory::query ( sprintf ( $sql, TABLEPRE, TABLEPRE ) );
+$comment_arr = dbfactory::query ( sprintf ( $sql, TABLEPRE, TABLEPRE ) );
 
 $table_class = keke_table_class::get_instance ( 'witkey_comment' );
 //É¾³ý
@@ -55,7 +55,7 @@ if ($ac == 'comment_info') {
 	if ($comment_id) {
 		$sql = "select a.*,b.task_status,b.task_title,b.model_id from %switkey_comment as a left join %switkey_task as b on a.obj_id = b.task_id where 
 			a.comment_id=" . $comment_id;
-		$comment_info = db_factory::query ( sprintf ( $sql, TABLEPRE, TABLEPRE ) );
+		$comment_info = dbfactory::query ( sprintf ( $sql, TABLEPRE, TABLEPRE ) );
 		$comment_info = $comment_info ['0'];
 	}
 }

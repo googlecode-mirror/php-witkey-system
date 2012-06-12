@@ -38,7 +38,7 @@ class sreward_report_class extends keke_report_class {
 					} else {
 							switch ($this->_obj_info ['is_trust']) {
 								case "1" ://担保模式，将交易协议更改为完成状态 
-									$res = db_factory::execute(sprintf("update %switkey_agreement set agree_status='3' where task_id='%d'",TABLEPRE,$this->_obj_info['origin_id']));
+									$res = dbfactory::execute(sprintf("update %switkey_agreement set agree_status='3' where task_id='%d'",TABLEPRE,$this->_obj_info['origin_id']));
 									break;
 								case "0" :
 									$res = keke_finance_class::cash_in ( $g_info ['uid'], $gz_get, '0', 'rights_return' ); //给雇主返钱
@@ -88,7 +88,7 @@ class sreward_report_class extends keke_report_class {
 					$res .= $this->to_black ( $op_result ['freeze_day'] );
 				}
 				if ($op_result ['deduct_credit'] && $op_result [$this->_credit_info ['name']] && $this->_process_can ['deduct']) { //扣信誉(能力)
-					$res .= db_factory::execute ( sprintf ( " update %switkey_space set %s=%s-%d where uid='%d'", TABLEPRE, $this->_credit_info ['name'], $this->_credit_info ['name'], intval ( $op_result [$this->_credit_info ['name']] ), $this->_to_user_info ['uid'] ) );
+					$res .= dbfactory::execute ( sprintf ( " update %switkey_space set %s=%s-%d where uid='%d'", TABLEPRE, $this->_credit_info ['name'], $this->_credit_info ['name'], intval ( $op_result [$this->_credit_info ['name']] ), $this->_to_user_info ['uid'] ) );
 				}
 				if($trust_response&&$trust_response){
 					$res = true;

@@ -13,7 +13,7 @@ $url = 'index.php?do=user&view=custom_list&uid=' . $w [uid] . '&username=' . $w 
 switch ($op) {
 	case "add" :
 		if ($is_submit) {
-			$m_info = db_factory::get_one ( " select uid,username,group_id from " . TABLEPRE . "witkey_space where uid = '$fds[uid]'" );
+			$m_info = dbfactory::get_one ( " select uid,username,group_id from " . TABLEPRE . "witkey_space where uid = '$fds[uid]'" );
 			!$m_info and kekezu::admin_show_msg ( $_lang['user_no_exit'], $url,3,'','warning' );
 			if ($m_info) {
 				if ($m_info [group_id] == 7) {
@@ -37,7 +37,7 @@ switch ($op) {
 	case "del" :
 		$del_info = kekezu::get_user_info($delid);
 		$delid or kekezu::admin_show_msg ( $_lang['param_error'], $url,3,'','warning' );
-		$res = db_factory::execute (sprintf( "update %switkey_space set group_id = 0 where uid = '%d' ",TABLEPRE,$delid ));
+		$res = dbfactory::execute (sprintf( "update %switkey_space set group_id = 0 where uid = '%d' ",TABLEPRE,$delid ));
 		kekezu::admin_system_log( $_lang['delete_kf']. $del_info[username] );//记录日志
 		$res and kekezu::admin_show_msg ( $_lang['operate_notice'], $url ,2,$_lang['delete_success'],'success') or kekezu::admin_show_msg ( $_lang['operate_notice'], $url ,2,$_lang['delete_fail'],'warning');
 		break;
@@ -47,7 +47,7 @@ switch ($op) {
 			$keyids = $ckb;
 			if(is_array($keyids)){
 				$ids = implode ( ',', $keyids );
-				$res = db_factory::execute ( sprintf("update %switkey_space set group_id = 0 where uid in (%s) ",TABLEPRE,$ids) );
+				$res = dbfactory::execute ( sprintf("update %switkey_space set group_id = 0 where uid in (%s) ",TABLEPRE,$ids) );
 				kekezu::admin_system_log( $_lang['more_delete_kfs'] . $ids);//记录日志
 				$res and kekezu::admin_show_msg($_lang['operate_notice'],$url,2,$_lang['mulit_operate_success']) or kekezu::admin_show_msg($_lang['operate_notice'],$url,2,$_lang['mulit_operate_fail'],"error");
 			}

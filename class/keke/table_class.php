@@ -200,7 +200,7 @@ class keke_table_class {
 			$where .= " and  `$keys[$i]` = '{$wherearr[$keys[$i]]}'";
 		}
 	 
-		return db_factory::execute ( " update ".TABLEPRE. $table_name . " set $set_value where $where" );
+		return dbfactory::execute ( " update ".TABLEPRE. $table_name . " set $set_value where $where" );
 	}
 	/**
 	 * 查询条件组合  
@@ -222,7 +222,7 @@ class keke_table_class {
 		$order and $where.=" order by $order ";
 		if (! empty ( $p )) {
 			$page_obj = kekezu::$_page_obj;
-			$count = intval ( db_factory::execute ($where ));
+			$count = intval ( dbfactory::execute ($where ));
 			$pages = $page_obj->getPages ( $count, $p ['page_size'], $p ['page'], $p ['url'], $p ['anchor'] );
 			$where .= $pages ['where'];
 		}
@@ -242,7 +242,7 @@ class keke_table_class {
 	public static function all_table_info($table_name,$arr){ 
 		 list($key,$val)= each($arr);
 		 $sql = sprintf("select * from %s where %s='%s'",TABLEPRE.$table_name,$key,$val);
-		 return db_factory::query($sql);
+		 return dbfactory::query($sql);
 	}
 	
 	

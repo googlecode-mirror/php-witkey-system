@@ -58,7 +58,7 @@ switch ($op) {
 			
 			case "del":
 				 
-				$res = db_factory::execute(sprintf(" delete from %switkey_task_cash_cove where cash_rule_id='%d'",TABLEPRE,$rule_id));
+				$res = dbfactory::execute(sprintf(" delete from %switkey_task_cash_cove where cash_rule_id='%d'",TABLEPRE,$rule_id));
 				$res and kekezu::admin_show_msg ($_lang['op_success'], "index.php?do=$do&model_id=$model_id&view=config&op=control", 3,'','success' ) or kekezu::admin_show_msg ($_lang['op_fail'], "index.php?do=$do&model_id=$model_id&view=config&op=control", 3, '', 'warning' );
 				break;
 			case "edit":

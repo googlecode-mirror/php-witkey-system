@@ -11,11 +11,11 @@ if ($sbt_edit) { //Ìí¼Ó¡¢±à¼­\
 	/**map_api**/
 	$api = array();
 	foreach ( $conf as $k => $v ) {
-		$res .= db_factory::execute ( " update " . TABLEPRE . "witkey_basic_config set v='$v' where k='$k'" );
+		$res .= dbfactory::execute ( " update " . TABLEPRE . "witkey_basic_config set v='$v' where k='$k'" );
 		$open==$k and $api[$k] = 1 or $api[$k] = 0;
 	}
 	$api = serialize($api);
-	db_factory::execute(sprintf("update %switkey_basic_config set v='%s' where k='map_api_open'",TABLEPRE,$api));
+	dbfactory::execute(sprintf("update %switkey_basic_config set v='%s' where k='map_api_open'",TABLEPRE,$api));
 	kekezu::admin_system_log ($_lang['edit_map_api']);
 	
 	if ($res){
@@ -25,7 +25,7 @@ if ($sbt_edit) { //Ìí¼Ó¡¢±à¼­\
 	}
 }else {
 	$map_apis = kekezu::get_table_data ( "k,v,type,desc", "witkey_basic_config", "type='map'", "", "", "", "k" );
- 	$api_open =  db_factory::get_one("select v from ".TABLEPRE."witkey_basic_config where k='map_api_open'"); 
+ 	$api_open =  dbfactory::get_one("select v from ".TABLEPRE."witkey_basic_config where k='map_api_open'"); 
  	$api_open =unserialize($api_open['v']);
 }
 require $template_obj->template ( 'control/admin/tpl/admin_' . $do . '_' . $view );

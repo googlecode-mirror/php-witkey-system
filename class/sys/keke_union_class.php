@@ -30,7 +30,7 @@ class keke_union_class {
 			$this->_task_id = $task_id;
 		}
 		$sql = "select `task_id`,`model_id`,`task_union`,`r_task_id` from `%switkey_task` where task_id=%d";
-		$result = db_factory::get_one ( sprintf ( $sql, TABLEPRE, $this->_task_id ) );
+		$result = dbfactory::get_one ( sprintf ( $sql, TABLEPRE, $this->_task_id ) );
 		if (! $result || ! $result ['task_union']) { //如果不是联盟任务,返回.
 			return false;
 		}
@@ -65,7 +65,7 @@ class keke_union_class {
 			case false :
 				global $config, $kekezu, $_K;
 				$sql = "select `task_id`,`model_id`,`task_cash_coverage`,`task_cash`,`task_title`,`task_status`,`username`,`start_time`,`end_time` from %switkey_task where task_id=%d and task_union=0";
-				$task_info = db_factory::get_one ( sprintf ( $sql, TABLEPRE, intval ( $task_id ) ) );
+				$task_info = dbfactory::get_one ( sprintf ( $sql, TABLEPRE, intval ( $task_id ) ) );
 				if (! $task_info) {
 					return false;
 				}
@@ -89,7 +89,7 @@ class keke_union_class {
 				switch ($data['is_success']) {
 					case "T" : //成功响应
 						$sql = sprintf ( " update %switkey_task set r_task_id ='%d',task_union='1' where task_id='%d'", TABLEPRE, $data['r_task_id'], $data['task_id']);
-						$res = db_factory::execute ( $sql );
+						$res = dbfactory::execute ( $sql );
 						$response ['type'] = "success";
 						$response ['notice'] = "联盟任务发布成功";
 						break;
@@ -116,7 +116,7 @@ class keke_union_class {
 				}
 				//查找对应的relation是否存在
 				$sql = "select * from %switkey_task_relation where task_id=%d and uid=%d";
-				$relation_arr = db_factory::get_one ( sprintf ( $sql, TABLEPRE, $this->_task_id, $uid ) );
+				$relation_arr = dbfactory::get_one ( sprintf ( $sql, TABLEPRE, $this->_task_id, $uid ) );
 				if (! $relation_arr) {
 					return false;
 				}
@@ -186,7 +186,7 @@ class keke_union_class {
 							$status_arr = call_user_func ( array ($data['model_code'] . '_task_class', 'get_task_union_status'));
 							$status_arr = array_flip ( $status_arr );
 							$task_status = $status_arr [$data['task_status']];
-							$res = db_factory::execute ( sprintf ( " update %switkey_task set task_status='%d' where r_task_id ='%d'", TABLEPRE, $task_status, $data['r_task_id']) );
+							$res = dbfactory::execute ( sprintf ( " update %switkey_task set task_status='%d' where r_task_id ='%d'", TABLEPRE, $task_status, $data['r_task_id']) );
 						}
 						$response ['type'] = "success";
 						$response ['notice'] = "状态修改成功";
@@ -219,7 +219,7 @@ class keke_union_class {
 	 * 获取金额区间
 	 */
 	static function get_cash_cove($rule_id) {
-		//$cove = db_factory::get_one ( sprintf ( " select start_cove,end_cove from %switkey_task_cash_cove where cash_rule_id='%d'", TABLEPRE, $rule_id ) );
+		//$cove = dbfactory::get_one ( sprintf ( " select start_cove,end_cove from %switkey_task_cash_cove where cash_rule_id='%d'", TABLEPRE, $rule_id ) );
 		global $kekezu;
 		$cove_arr = $kekezu->get_cash_cove();
 		$cove = $cove_arr[$rule_id];

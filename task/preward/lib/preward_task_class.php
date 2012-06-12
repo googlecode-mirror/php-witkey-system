@@ -184,12 +184,12 @@ class preward_task_class extends keke_task_class {
 			$page_obj = kekezu::$_page_obj;
 			$page_obj->setAjax ( 1 );
 			$page_obj->setAjaxDom ( "gj_summery" );
-			$count = intval ( db_factory::get_count ( $count_sql . $where ) );
+			$count = intval ( dbfactory::get_count ( $count_sql . $where ) );
 			$pages = $page_obj->getPages ( $count, $p ['page_size'], $p ['page'], $p ['url'], $p ['anchor'] );
 			$pages ['count'] = $count;
 			$where .= $pages ['where'];
 		}
-		$work_info = db_factory::query ( $sql . $where );
+		$work_info = dbfactory::query ( $sql . $where );
 		$work_info = kekezu::get_arr_by_key($work_info,'work_id');
 		$work_arr ['work_info'] = $work_info;
 		$work_arr ['pages'] = $pages;
@@ -207,7 +207,7 @@ class preward_task_class extends keke_task_class {
 			$work_count = intval ( $this->_task_info ['work_count'] );
 			$count = $work_count * (1 + intval ( $this->_task_config ['work_percent'] ) / 100);
 		} else {
-			$count = db_factory::get_count ( sprintf ( "select count(work_id) from %switkey_task_work where %s and task_id='%d'", TABLEPRE, $where, $this->_task_id ) );
+			$count = dbfactory::get_count ( sprintf ( "select count(work_id) from %switkey_task_work where %s and task_id='%d'", TABLEPRE, $where, $this->_task_id ) );
 		}
 		return intval ( $count );
 	}
@@ -270,7 +270,7 @@ class preward_task_class extends keke_task_class {
 				$work_id = $work_obj->create_keke_witkey_task_work ();
 				if ($work_id) {
 					//更新附件表信息
-					$f_ids and db_factory::execute ( sprintf ( "update %switkey_file set work_id='%d',task_title='%s',obj_id='%d' where file_id in ('%s')", TABLEPRE, $work_id, $this->_task_title, $work_id, $f_ids ) );
+					$f_ids and dbfactory::execute ( sprintf ( "update %switkey_file set work_id='%d',task_title='%s',obj_id='%d' where file_id in ('%s')", TABLEPRE, $work_id, $this->_task_title, $work_id, $f_ids ) );
 					//更新任务交稿数
 					$this->plus_work_num ();
 					//更新用户交稿数
@@ -407,7 +407,7 @@ class preward_task_class extends keke_task_class {
 	public function check_if_operated($work_id, $to_status, $url = '', $output = 'normal') {
 		global $_lang;
 		if ($this->check_if_can_choose ( $url, $output )) {
-			$work_status = db_factory::get_count ( sprintf ( "select work_status from %switkey_task_work where work_id='%d'", TABLEPRE, $work_id ) );
+			$work_status = dbfactory::get_count ( sprintf ( "select work_status from %switkey_task_work where work_id='%d'", TABLEPRE, $work_id ) );
 			switch (intval ( $work_status )) {
 				case 0 :
 					if ($to_status == 6) {
@@ -604,7 +604,7 @@ class preward_task_class extends keke_task_class {
 						$auto_num = intval ( $this->_task_config ['adjourn_num'] ); //自动选稿的稿件数
 						$auto_num > intval ( $this->_task_info ['work_num'] ) and $auto_num = intval ( $this->_task_info ['work_num'] );
 						$auto_num > intval ( $this->_task_info ['work_count'] ) and $auto_num = intval ( $this->_task_info ['work_count'] );
-						$work_list = db_factory::query ( sprintf ( "select * from %switkey_task_work where task_id='%d' and work_status=0 order by work_time asc limit 0,%d", TABLEPRE, $this->_task_id, $auto_num ) );
+						$work_list = dbfactory::query ( sprintf ( "select * from %switkey_task_work where task_id='%d' and work_status=0 order by work_time asc limit 0,%d", TABLEPRE, $this->_task_id, $auto_num ) );
 						if ($work_list) {
 							foreach ( $work_list as $v ) {
 								$this->_task_info['task_union'] > 0 and $this->_union_obj->work_choose ( $v ['work_id'] );
@@ -650,7 +650,7 @@ class preward_task_class extends keke_task_class {
 	 * 设置稿件状态
 	 */
 	public function set_work_status($work_id, $to_status) {
-		return db_factory::execute ( sprintf ( "update %switkey_task_work set work_status='%d' where work_id='%d'", TABLEPRE, $to_status, $work_id ) );
+		return dbfactory::execute ( sprintf ( "update %switkey_task_work set work_status='%d' where work_id='%d'", TABLEPRE, $to_status, $work_id ) );
 	}
 	
 	/**
@@ -678,7 +678,7 @@ class preward_task_class extends keke_task_class {
 		$task_info = $this->_task_info; //任务信息
 		$url = $_K ['siteurl'] . '/index.php?do=task&task_id=' . $this->_task_id;
 		$task_status = $this->_task_status;
-		$order_info = db_factory::get_one ( sprintf ( "select order_amount,order_status from %switkey_order where order_id='%d'", TABLEPRE, intval ( $order_id ) ) );
+		$order_info = dbfactory::get_one ( sprintf ( "select order_amount,order_status from %switkey_order where order_id='%d'", TABLEPRE, intval ( $order_id ) ) );
 		$order_amount = $order_info ['order_amount'];
 		if ($order_info ['order_status'] == 'ok') {
 			$task_status == 1 && $notice = $_lang['task_pay_success_and_wait_admin_audit'];
@@ -693,7 +693,7 @@ class preward_task_class extends keke_task_class {
 					kekezu::$_prom_obj->create_prom_event ( "pub_task", $this->_guid, $this->_task_id, $this->_task_info ['task_cash'] );
 				}
 				//更改订单状态到已付款状态
-				db_factory::updatetable ( TABLEPRE . "witkey_order", array ("order_status" => "ok" ), array ("order_id" => "$order_id" ) );
+				dbfactory::updatetable ( TABLEPRE . "witkey_order", array ("order_status" => "ok" ), array ("order_id" => "$order_id" ) );
 				if ($order_amount < $task_config['audit_cash']) { //如果订单的金额比发布任务时配置的最小金额要小
 					$this->set_task_status ( 1 ); //状态更改为审核状态
 					return pay_return_fac_class::struct_response ( $_lang['operate_notice'], $_lang['task_pay_success_and_wait_admin_audit'], $url, 'success' );

@@ -65,7 +65,7 @@ if ($ac=='up_pic'){
 		}
 		$banner = serialize($banner_arr);
 		$sql = sprintf("update %switkey_shop set %s='%s' where shop_id=%d",TABLEPRE,$banner_column,$banner,$e_shop_info['shop_id']);
-		$result = db_factory::execute($sql);
+		$result = dbfactory::execute($sql);
 		kekezu::echojson('',$result ? '1' : '0',array('type'=>$img_type,'file'=>$file_name));
 		die();
 	}else{
@@ -77,7 +77,7 @@ if ($ac=='up_pic'){
 
 
  //发布的商品数 
-$pub_num = intval(db_factory::get_count(sprintf(" select count(service_id) count from %switkey_service where uid='%d' and service_status='2'",TABLEPRE,$member_id),0,null,3600));
+$pub_num = intval(dbfactory::get_count(sprintf(" select count(service_id) count from %switkey_service where uid='%d' and service_status='2'",TABLEPRE,$member_id),0,null,3600));
 
  $p_shop_info['shop_type'] == 2 and $type = "e" or $type="p"; 
 
@@ -90,7 +90,7 @@ if ($p_shop_info['shop_backstyle'] ){//空间背景图片的显示
  $ip = kekezu::get_ip();
 
  if($_COOKIE['ip']!=1){
-  	db_factory::execute ( sprintf ( " update %switkey_shop set views=views+1 where uid=%d",TABLEPRE, $member_id));
+  	dbfactory::execute ( sprintf ( " update %switkey_shop set views=views+1 where uid=%d",TABLEPRE, $member_id));
 	$_COOKIE['ip']='1';
   setcookie("ip",1,time()+3600*24,COOKIE_PATH);
  }

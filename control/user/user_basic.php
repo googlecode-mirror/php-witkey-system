@@ -20,7 +20,7 @@ $third_nav = array ("basic" => array ($_lang['basics'], $_lang['realname_ect_set
 if ($user_type == 1) {
 	$third_nav ["exp"] = array ($_lang['personal_exp'], $_lang['exp_ect_description'] );
 } else {
-	$enter_info = db_factory::get_one ( sprintf ( "select * from %switkey_auth_enterprise where uid='%d'", TABLEPRE, $uid ) );
+	$enter_info = dbfactory::get_one ( sprintf ( "select * from %switkey_auth_enterprise where uid='%d'", TABLEPRE, $uid ) );
 }
 $third_nav ["cert"] = array ($_lang['skill_cert'], $_lang['skill_cert_setting'] );
 
@@ -55,7 +55,7 @@ switch ($opp) {
 			if ($sect) {
 				foreach ( $sect as $k => $v ) {
 					if ($sect_info [$k])
-						db_factory::execute ( sprintf ( " update %switkey_member_ext set v1='%s' where k='%s' and uid='%d'", TABLEPRE, $v, $k, $uid ) );
+						dbfactory::execute ( sprintf ( " update %switkey_member_ext set v1='%s' where k='%s' and uid='%d'", TABLEPRE, $v, $k, $uid ) );
 					else {
 						$ext_obj = new Keke_witkey_member_ext_class ();
 						$ext_obj->_ext_id = null;
@@ -75,7 +75,7 @@ switch ($opp) {
 		/**
 		 * 技能*
 		 */
-		$user_info ['indus_id'] and $user_indus = db_factory::get_one ( sprintf ( " select * from %switkey_industry where indus_id='%d'", TABLEPRE, $user_info ['indus_id'] ) );
+		$user_info ['indus_id'] and $user_indus = dbfactory::get_one ( sprintf ( " select * from %switkey_industry where indus_id='%d'", TABLEPRE, $user_info ['indus_id'] ) );
 		$indus_p_arr = kekezu::$_indus_p_arr;
 		switch ($ac) {
 			case "get_skill" :
@@ -92,7 +92,7 @@ switch ($opp) {
 			case "save_skill" :
 				$skill = kekezu::unescape ( $skill );
 				$sql = sprintf ( "update %switkey_space set skill_ids = '%s' where uid = '%d'", TABLEPRE, $skill, $uid );
-				$res = db_factory::execute ( $sql );
+				$res = dbfactory::execute ( $sql );
 				$res and kekezu::echojson ( '1' ) or kekezu::echojson ( '0' );
 				break;
 		}
@@ -102,12 +102,12 @@ switch ($opp) {
 		/**
 		 * 证书*
 		 */
-		$cert_info = db_factory::query ( sprintf ( " select * from %switkey_member_ext where uid = '%d' and type='cert'", TABLEPRE, $uid ) );
+		$cert_info = dbfactory::query ( sprintf ( " select * from %switkey_member_ext where uid = '%d' and type='cert'", TABLEPRE, $uid ) );
 		if ($ac == 'del') {
 			$cert_id = intval ( $cert_id );
 			if ($cert_id) {
-				$res = db_factory::execute ( sprintf ( " delete from %switkey_member_ext where ext_id= '%d' ", TABLEPRE, $cert_id ) );
-				db_factory::execute ( sprintf ( " delete from %switkey_file where file_id='%d'", TABLEPRE, $f_id ) );
+				$res = dbfactory::execute ( sprintf ( " delete from %switkey_member_ext where ext_id= '%d' ", TABLEPRE, $cert_id ) );
+				dbfactory::execute ( sprintf ( " delete from %switkey_file where file_id='%d'", TABLEPRE, $f_id ) );
 				if ($res) {
 					kekezu::del_att_file ( $f_id );
 					kekezu::echojson ( $_lang['delete_success'], "1" );

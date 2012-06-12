@@ -294,7 +294,7 @@ if ($tag_info['tag_type']==1)
 	elseif ($tag_info['tag_type']==4)
 	{
 		$sql = $tag_info['sql'];
-		$temp_arr = db_factory::query($sql);
+		$temp_arr = dbfactory::query($sql);
 	}
 	elseif ($tag_info['tag_type']==5)
 	{

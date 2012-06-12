@@ -21,10 +21,10 @@ $sql .= " 1=1 order by a.on_time desc";
 $url = "index.php?do=case&page_size=$page_size";
 $page_size = 6; 
 $count_sql = sprintf("select count(case_id) as c from `%switkey_case`",TABLEPRE);
-$count = db_factory::get_count($count_sql,0,null,3600);
+$count = dbfactory::get_count($count_sql,0,null,3600);
 intval($page) and $page= intval($page) or $page=1 ;
 $pages = kekezu::$_page_obj->getPages ( $count, $page_size, $page, $url );
 $sql .=$pages['where'];
-$case_arr = db_factory::query($sql);
+$case_arr = dbfactory::query($sql);
 
 require keke_tpl_class::template ( $do );

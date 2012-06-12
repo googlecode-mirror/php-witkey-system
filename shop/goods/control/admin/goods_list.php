@@ -31,7 +31,7 @@ $pages = $table_arr['pages'];
 
 //操作 1.删除；2.启用；3.通过审核；4.禁用
 if($ac){
-	$service_arr  = db_factory::get_one(sprintf("select * from %switkey_service where service_id='%d' ",TABLEPRE,$service_id));
+	$service_arr  = dbfactory::get_one(sprintf("select * from %switkey_service where service_id='%d' ",TABLEPRE,$service_id));
 
 	$log_ac_arr = array("del"=>$_lang['delete'],"use"=>$_lang['open'],"disable"=>$_lang['disable'],"pass"=>$_lang['pass_audit']);
 	$log_msg = $_lang['to_witkey_goods_name_is'].$service_arr['title'].$_lang['conduct'].$log_ac_arr[$ac].$_lang['operate'];

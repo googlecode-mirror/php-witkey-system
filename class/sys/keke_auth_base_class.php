@@ -52,13 +52,13 @@ abstract class keke_auth_base_class {
 	 * @param  $status
 	 */
 	public function set_auth_record_status($uid,$status) {
-		return db_factory::execute(sprintf(" update %switkey_auth_record set auth_status = '%d' where auth_code= '%s' and uid = '%d'",TABLEPRE,$status,$this->_auth_code,$uid));
+		return dbfactory::execute(sprintf(" update %switkey_auth_record set auth_status = '%d' where auth_code= '%s' and uid = '%d'",TABLEPRE,$status,$this->_auth_code,$uid));
 	}
 	/**
 	 * 更改认证详细状态
 	 */
 	public function set_auth_status($auth_id,$status){ 
-		return db_factory::execute(sprintf(" update %s set auth_status = '$status' where %s = '%d'",TABLEPRE.$this->_auth_table_name,$this->_primary_key,$auth_id));
+		return dbfactory::execute(sprintf(" update %s set auth_status = '$status' where %s = '%d'",TABLEPRE.$this->_auth_table_name,$this->_primary_key,$auth_id));
 	}
 	
 	/**
@@ -73,7 +73,7 @@ abstract class keke_auth_base_class {
 	public function add_auth_record($uid,$username, $auth_code,$end_time, $data = array(),$auth_status='0') {
 		
 		$record_obj  = new Keke_witkey_auth_record_class ();
-		$record_info = db_factory::get_one(sprintf(" select * from %switkey_auth_record where uid = '%d' and auth_code = '%s'",TABLEPRE,$uid,$auth_code));
+		$record_info = dbfactory::get_one(sprintf(" select * from %switkey_auth_record where uid = '%d' and auth_code = '%s'",TABLEPRE,$uid,$auth_code));
 		
 		if ($record_info ['ext_data'] && $data) {//追加认证data记录
 			$odata  =  unserialize ( $record_info ['ext_data'] );
@@ -99,7 +99,7 @@ abstract class keke_auth_base_class {
 	 * @param $uid 认证用户
 	 */
 	public function del_auth_record($uid) {
-		$res=db_factory::execute(sprintf(" delete from %switkey_auth_record where uid= '%d' and auth_code = '%s'",TABLEPRE,$uid,$this->_auth_code));
+		$res=dbfactory::execute(sprintf(" delete from %switkey_auth_record where uid= '%d' and auth_code = '%s'",TABLEPRE,$uid,$this->_auth_code));
 	}
 	/**
 	 * 认证申请数据处理
@@ -125,10 +125,10 @@ abstract class keke_auth_base_class {
 	public function get_auth_info($auth_ids){
 		if(isset($auth_ids)){
 			if(!stristr($auth_ids,',')) {
-			 	return  db_factory::query(sprintf(" select * from %s where %s = '%s'",TABLEPRE.$this->_auth_table_name,$this->_primary_key,$auth_ids));
+			 	return  dbfactory::query(sprintf(" select * from %s where %s = '%s'",TABLEPRE.$this->_auth_table_name,$this->_primary_key,$auth_ids));
 			}else{
 				
-				return db_factory::query(sprintf(" select * from %s where %s in (%s) ",TABLEPRE.$this->_auth_table_name,$this->_primary_key,$auth_ids));
+				return dbfactory::query(sprintf(" select * from %s where %s in (%s) ",TABLEPRE.$this->_auth_table_name,$this->_primary_key,$auth_ids));
 			}
 		}else{
 			return array();
@@ -145,7 +145,7 @@ abstract class keke_auth_base_class {
 			$is_username=='0' and $sql.=" where uid = '$uid' " or $sql.=" where username = '$uid' ";
 			$show_id and $sql.=" and ".$this->_primary_key."=".$show_id;
 			$sql .=" order by $this->_primary_key desc";
-			$data = db_factory::query($sql);
+			$data = dbfactory::query($sql);
 			if(sizeof($data)==1){
 				return $data[0];
 			}else{
@@ -277,7 +277,7 @@ abstract class keke_auth_base_class {
 	 */
 	public function set_user_role($uid,$action='pass'){
 		$action=='pass' and $user_role='2' or $user_role='1';
-		db_factory::execute(sprintf(" update %switkey_space set user_type='%d' where uid='%d'",TABLEPRE,$user_role,$uid));
+		dbfactory::execute(sprintf(" update %switkey_space set user_type='%d' where uid='%d'",TABLEPRE,$user_role,$uid));
 	}
 
 }

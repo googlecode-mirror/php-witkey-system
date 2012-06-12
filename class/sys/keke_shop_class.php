@@ -15,7 +15,7 @@ class keke_shop_class {
 	 * @return array $service_arr
 	 */
 	public static function get_service_info($sid) {
-		return db_factory::get_one ( sprintf ( " select * from %switkey_service where service_id=%d", TABLEPRE, $sid ) );
+		return dbfactory::get_one ( sprintf ( " select * from %switkey_service where service_id=%d", TABLEPRE, $sid ) );
 	}
 	
 	/**
@@ -30,7 +30,7 @@ class keke_shop_class {
 	 * 获取用户联系方式 email,mobile
 	 */
 	public static function get_contact($uid) {
-		return db_factory::get_one ( sprintf ( " select mobile,email from %switkey_space where uid = '%d'", TABLEPRE, $uid ) );
+		return dbfactory::get_one ( sprintf ( " select mobile,email from %switkey_space where uid = '%d'", TABLEPRE, $uid ) );
 	}
 	/**
 	 * 返回当前用户关于此服务（作品）的最新订单状态
@@ -105,7 +105,7 @@ class keke_shop_class {
 			$service_url = "<a href=\"" . $_K [siteurl] . "/index.php?do=service&sid=" . $service_info [service_id] . "\">" . $order_name . "</a>";
 			$order_url = "<a href=\"" . $_K [siteurl] . "/index.php?do=user&view=finance&op=order&obj_type=service&role=1&order_id=" . $order_id . "#userCenter\">#" . $order_id . "</a>";
 			$s_notice = array ($_lang['user_action'] => $username . $_lang['order_buy'], $_lang['service_name'] => $service_url, $_lang['service_type'] => $type, $_lang['order_link'] => $order_url );
-			$contact = db_factory::get_one ( sprintf ( " select mobile,email from %switkey_space where uid='%d'", TABLEPRE, $service_info [uid] ) );
+			$contact = dbfactory::get_one ( sprintf ( " select mobile,email from %switkey_space where uid='%d'", TABLEPRE, $service_info [uid] ) );
 			
 			$msg_obj->send_message ( $service_info ['uid'], $service_info ['username'], "service_order", $_lang['you_has_new'] . $type . $_lang['order'], $s_notice, $contact ['email'], $contact ['mobile'] ); ////通知雇主
 			$feed_arr = array ("feed_username" => array ("content" => $username, "url" =>"index.php?do=space&member_id=".$uid), "action" => array ("content" => $_lang['buy'], "url" => '' ), "event" => array ("content" => $order_name, "url" =>"index.php?do=service&sid=$service_info[service_id]" ) );
@@ -129,7 +129,7 @@ class keke_shop_class {
 		b.obj_id='$sid' and b.obj_type = 'service' ";
 		$ext_condit and $where.=" and ".$ext_condit;
 		$arr = keke_table_class::format_condit_data ( $where, $order, $w, $p );
-		$sale_info = db_factory::query ( $arr ['where'] );
+		$sale_info = dbfactory::query ( $arr ['where'] );
 		$sale_arr ['sale_info'] = $sale_info;
 		$sale_arr ['pages'] = $arr ['pages'];
 		return $sale_arr;
@@ -148,7 +148,7 @@ class keke_shop_class {
 		$comm_obj = new Keke_witkey_comment_class ();
 		$where = " select * from " . TABLEPRE . "witkey_comment where obj_id = '$sid' and obj_type = 'service' ";
 		$arr = keke_table_class::format_condit_data ( $where, $order, $w, $p );
-		$comm_info = db_factory::query ( $arr ['where'] );
+		$comm_info = dbfactory::query ( $arr ['where'] );
 		$comm_arr ['comm_info'] = $comm_info;
 		$comm_arr ['pages'] = $arr ['pages'];
 		return $comm_arr;
@@ -218,7 +218,7 @@ class keke_shop_class {
 	public static function plus_view_num($sid, $s_uid) {
 		global $uid;
 		if (! $_SESSION ['service_view_' . $sid . '_' . $uid] && $uid != $s_uid) {
-			db_factory::execute ( sprintf ( " update %switkey_service set views=views+1 where service_id='%d'", TABLEPRE, $sid ) );
+			dbfactory::execute ( sprintf ( " update %switkey_service set views=views+1 where service_id='%d'", TABLEPRE, $sid ) );
 			$_SESSION ['service_view_' . $sid . '_' . $uid] = '1';
 		}
 	}
@@ -226,20 +226,20 @@ class keke_shop_class {
 	 * 更新出售次数和出售总金额
 	 */
 	public static function plus_sale_num($sid, $sale_cash) {
-		return db_factory::execute ( sprintf ( " update %switkey_service set sale_num=sale_num+1,total_sale=total_sale+'%f.2'", TABLEPRE, $sale_cash ) );
+		return dbfactory::execute ( sprintf ( " update %switkey_service set sale_num=sale_num+1,total_sale=total_sale+'%f.2'", TABLEPRE, $sale_cash ) );
 	}
 	/**
 	 * 任务评价数更新 每次+2
 	 */
 	public static function plus_mark_num($service_id) {
-		return db_factory::execute ( sprintf ( "update %switkey_service set mark_num=mark_num+2 where service_id ='%d'", TABLEPRE, $service_id ) );
+		return dbfactory::execute ( sprintf ( "update %switkey_service set mark_num=mark_num+2 where service_id ='%d'", TABLEPRE, $service_id ) );
 	}
 	/**
 	 * 检测是否购买过作品
 	 * 作品是不许重复购买的
 	 */
 	public static function check_has_buy($sid, $uid) {
-		return db_factory::get_one ( sprintf ( " select a.order_status,a.order_id from %switkey_order a left join %switkey_order_detail b
+		return dbfactory::get_one ( sprintf ( " select a.order_status,a.order_id from %switkey_order a left join %switkey_order_detail b
 					on a.order_id = b.order_id where a.order_uid ='%d' and b.obj_id='%d' and obj_type='service'", TABLEPRE, TABLEPRE, $uid, $sid ) );
 	}
 }

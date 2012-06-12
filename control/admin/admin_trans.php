@@ -23,7 +23,7 @@ if ($ac) {
 	switch ($ac) {
 		case "del" :
 			if ($report_id) {
-				$res = db_factory::execute ( sprintf ( " delete from %switkey_report where report_id='%d'", TABLEPRE, $report_id ) );
+				$res = dbfactory::execute ( sprintf ( " delete from %switkey_report where report_id='%d'", TABLEPRE, $report_id ) );
 				$res and kekezu::admin_show_msg ( $action_arr[$view].$_lang['record_delete_success'], $url, "3",'','success' ) or kekezu::admin_show_msg ($action_arr[$view]. $_lang['record_delete_fail'], $url, "3",'','warning');
 			} else
 				kekezu::admin_show_msg ($_lang['choose_delete_operate'], $url, "3",'','warning' );
@@ -36,7 +36,7 @@ if ($ac) {
 } elseif ($sbt_action) {
 	$ckb and $dels = implode ( ",", $ckb ) or $dels = array ();
 	if (! empty ( $dels )) {
-		$res = db_factory::execute ( sprintf ( " delete from %switkey_report where report_id in ('%s') ", TABLEPRE, $dels ) );
+		$res = dbfactory::execute ( sprintf ( " delete from %switkey_report where report_id in ('%s') ", TABLEPRE, $dels ) );
 		$res and kekezu::admin_show_msg ( $action_arr[$view].$_lang['record_mulit_delete_success'], $url, "3",'','success' ) or kekezu::admin_show_msg ( $action_arr[$view].$_lang['record_delete_fail'], $url, "3",'','warning' );
 	} else
 		kekezu::admin_show_msg ($_lang['choose_delete_operate'], $url, "3",'','warning' );

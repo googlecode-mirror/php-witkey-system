@@ -78,7 +78,7 @@ class dtender_task_class extends keke_task_class {
 	 */
 	public function bid_init() {
 		if ($this->_task_status >= 4) {
-			$this->_bid_info = db_factory::get_one ( sprintf ( " select *  from %switkey_task_bid where
+			$this->_bid_info = dbfactory::get_one ( sprintf ( " select *  from %switkey_task_bid where
 			 bid_status = '4' and task_id = '%d'", TABLEPRE, $this->_task_id ) );
 		} else {
 			$this->_bid_info = null;
@@ -212,7 +212,7 @@ class dtender_task_class extends keke_task_class {
 	 * Enter description here ...
 	 */
 	public function check_bid() {
-		$count = db_factory::get_count ( sprintf ( "select count(*) from %switkey_task_bid where task_id='%d' and uid='%d'", TABLEPRE, $this->_task_id, $this->_uid ) );
+		$count = dbfactory::get_count ( sprintf ( "select count(*) from %switkey_task_bid where task_id='%d' and uid='%d'", TABLEPRE, $this->_task_id, $this->_uid ) );
 		if (intval ( $count ) == 0) {
 			return true;
 		} else {
@@ -238,7 +238,7 @@ class dtender_task_class extends keke_task_class {
 			$bid_obj->setCycle ( $cycle );
 			$res = $bid_obj->edit_keke_witkey_task_bid ();
 			//删除所在计划
-			db_factory::execute ( sprintf ( "delete from %switkey_task_plan where bid_id='%d'", TABLEPRE, $bid_id ) );
+			dbfactory::execute ( sprintf ( "delete from %switkey_task_plan where bid_id='%d'", TABLEPRE, $bid_id ) );
 			$size = sizeof ( $plan_amount );
 			//插入计划
 			for($i = 0; $i < $size; $i ++) {
@@ -329,14 +329,14 @@ class dtender_task_class extends keke_task_class {
 		global $_lang;
 		$can_select = false; //是否可选标
 		if ($this->check_if_can_choose ( $url, $output )) { //处于选稿期
-			$work_status = db_factory::get_count ( sprintf ( " select bid_status from %switkey_task_bid where bid_id='%d' and uid='%d'", TABLEPRE, $work_id, $this->_uid ) );
+			$work_status = dbfactory::get_count ( sprintf ( " select bid_status from %switkey_task_bid where bid_id='%d' and uid='%d'", TABLEPRE, $work_id, $this->_uid ) );
 			
 			if ($work_status == '8') { //不可选标不能更改状态
 				kekezu::keke_show_msg ( $url, $_lang['the_work_is_not_choose_and_not_choose_the_work'], "error", $output );
 			} else {
 				switch ($to_status) {
 					case "4" : //中标时检查是否有中标
-						$has_bidwork = db_factory::get_count ( sprintf ( " select count(bid_id) from %switkey_task_bid where bid_status='4' and task_id='%d' ", TABLEPRE, $this->_task_id ) );
+						$has_bidwork = dbfactory::get_count ( sprintf ( " select count(bid_id) from %switkey_task_bid where bid_status='4' and task_id='%d' ", TABLEPRE, $this->_task_id ) );
 						if ($has_bidwork) {
 							kekezu::keke_show_msg ( $url, $_lang['task_have_bid_work_and_not_choose_the_work'], "error", $output );
 						} else {
@@ -377,7 +377,7 @@ public function hosted_amount($url = '', $output = 'normal') {
 			$quote     = floatval($this->_bid_info ['quote']);
 			//雇主还应该付款的钱
 			$amount = $real_cash-$quote;
-			$exist_id = db_factory::get_count ( sprintf ( "select b.order_id from %switkey_order_detail a left join %switkey_order b on a.order_id=b.order_id left join %switkey_task c on a.obj_id=c.task_id where b.order_status='wait' and a.obj_type='hosted' and c.task_id='%d'", TABLEPRE, TABLEPRE, TABLEPRE, $this->_task_id ) );
+			$exist_id = dbfactory::get_count ( sprintf ( "select b.order_id from %switkey_order_detail a left join %switkey_order b on a.order_id=b.order_id left join %switkey_task c on a.obj_id=c.task_id where b.order_status='wait' and a.obj_type='hosted' and c.task_id='%d'", TABLEPRE, TABLEPRE, TABLEPRE, $this->_task_id ) );
 			if($amount>=0){//如果雇主托管的任务赏金足已支付任务中标的金额，那么余的钱退还				
 				$amount>0 and $res = keke_finance_class::cash_in($this->_uid,$amount,'0', 'hosted_return', 0, 'task', $this->_task_id ) or $res=1;
 				//任务花费所需的元宝的现金
@@ -401,7 +401,7 @@ public function hosted_amount($url = '', $output = 'normal') {
 						$credit_cost = floatval($this->_task_info['credit_cost']);
 					}else{
 						//雇主现在的钱
-						$g_info = db_factory::get_one(sprintf("select balance,credit from %switkey_space where uid='&d'",TABLEPRE,$this->_guid));
+						$g_info = dbfactory::get_one(sprintf("select balance,credit from %switkey_space where uid='&d'",TABLEPRE,$this->_guid));
 						$u_balance = floatval($g_info['balance']);
 						$u_credit = floatval($g_info['credit']);
 						if($u_credit-$amount>=0){
@@ -419,7 +419,7 @@ public function hosted_amount($url = '', $output = 'normal') {
 					kekezu::keke_show_msg ( 'index.php?do=user&view=finance&op=recharge&type=hosted&obj_id=' . $this->_task_id . '&cash=' . $pay_cash, sprintf ( $_lang['online_recharge_notice'], $pay_cash ), '', $output );
 				}
 				if ($exist_id) {
-					$order_status=='ok' and db_factory::execute ( sprintf ( "update %switkey_order set order_status='ok' where order_id='%d'", TABLEPRE, $exist_id ) );
+					$order_status=='ok' and dbfactory::execute ( sprintf ( "update %switkey_order set order_status='ok' where order_id='%d'", TABLEPRE, $exist_id ) );
 				} else {
 					$order_id = keke_order_class::create_order ( $this->_model_id, '', '', $this->_task_title . $_lang['jh_task'], $amount, $_lang['task'] . "$this->_task_url" . $_lang['reward_cash_trust'], 'ok' );
 					$order_id and keke_order_class::create_order_detail ( $order_id, $this->_task_title, 'hosted', $this->_task_id, $amount );
@@ -429,7 +429,7 @@ public function hosted_amount($url = '', $output = 'normal') {
 			//如果已执行财物动作，任务状态6，有订单的改ok
 			if($res||$amount==0){
 				$this->set_task_status ( 6 );
-				db_factory::execute ( sprintf ( "update %switkey_task set task_cash='%d',credit_cost = credit_cost+'%d',cash_cost = cash_cost+'%d' where task_id='%d'", TABLEPRE, floatval ( $this->_bid_info ['quote'] ), $credit_cost, $cash_cost, $this->_task_id ) );
+				dbfactory::execute ( sprintf ( "update %switkey_task set task_cash='%d',credit_cost = credit_cost+'%d',cash_cost = cash_cost+'%d' where task_id='%d'", TABLEPRE, floatval ( $this->_bid_info ['quote'] ), $credit_cost, $cash_cost, $this->_task_id ) );
 				kekezu::notify_user ( $_lang['reward_cash_trust_notice'], $_lang['you_pub_task'] . $notice_url . $_lang['reward_cash_trust_success'], $this->_guid );
 				kekezu::keke_show_msg ( $url, $_lang['reward_cash_trust_success'], '', $output );
 			}else{
@@ -513,7 +513,7 @@ public function hosted_amount($url = '', $output = 'normal') {
 	public function plan_cash($plan_id, $title_url) {
 		global $_K, $kekezu;
 		global $_lang;
-		$plan_info = db_factory::get_one ( sprintf ( "select * from %switkey_task_plan where plan_id='%d'", TABLEPRE, $plan_id ) );
+		$plan_info = dbfactory::get_one ( sprintf ( "select * from %switkey_task_plan where plan_id='%d'", TABLEPRE, $plan_id ) );
 		if ($plan_info && $this->set_plan_status ( 2, $plan_id )) {
 			$kekezu->init_prom ();
 			$cash = floatval ( $plan_info ['plan_amount'] );
@@ -537,7 +537,7 @@ public function hosted_amount($url = '', $output = 'normal') {
 	 * Enter description here ...
 	 */
 	public function get_plan_ids() {
-		$this->_bid_info and $plan_ids = db_factory::query ( sprintf ( "select plan_id from %switkey_task_plan where bid_id='%d'", TABLEPRE, $this->_bid_info ['bid_id'] ) );
+		$this->_bid_info and $plan_ids = dbfactory::query ( sprintf ( "select plan_id from %switkey_task_plan where bid_id='%d'", TABLEPRE, $this->_bid_info ['bid_id'] ) );
 		if ($plan_ids) {
 			foreach ( $plan_ids as $v ) {
 				$return_arr [] = $v ['plan_id'];
@@ -551,7 +551,7 @@ public function hosted_amount($url = '', $output = 'normal') {
 	 * 改变计划类型
 	 */
 	public function set_plan_status($to_status, $plan_id) {
-		return db_factory::execute ( sprintf ( "update %switkey_task_plan set plan_status='%d' where plan_id='%d'", TABLEPRE, $to_status, $plan_id ) );
+		return dbfactory::execute ( sprintf ( "update %switkey_task_plan set plan_status='%d' where plan_id='%d'", TABLEPRE, $to_status, $plan_id ) );
 	}
 	
 	/**
@@ -777,12 +777,12 @@ public function hosted_amount($url = '', $output = 'normal') {
 			$page_obj = kekezu::$_page_obj;
 			$page_obj->setAjax ( 1 );
 			$page_obj->setAjaxDom ( "gj_summery" );
-			$count = intval ( db_factory::get_count ( $count_sql . $where ) );
+			$count = intval ( dbfactory::get_count ( $count_sql . $where ) );
 			$pages = $page_obj->getPages ( $count, $p ['page_size'], $p ['page'], $p ['url'], $p ['anchor'] );
 			$where .= $pages ['where'];
 		}
 		
-		$work_info = db_factory::query ( $sql . $where );
+		$work_info = dbfactory::query ( $sql . $where );
 		foreach ( $work_info as $v ) {
 			$bid_id_arr [] = $v ['bid_id'];
 		}
@@ -791,7 +791,7 @@ public function hosted_amount($url = '', $output = 'normal') {
 		
 		//获取当前任务计划列表
 		$plan_sql = " select * from " . TABLEPRE . "witkey_task_plan where task_id = '$this->_task_id' and bid_id in($bid_id_str) order by plan_step asc  ";
-		$plan_info = db_factory::query ( $plan_sql );
+		$plan_info = dbfactory::query ( $plan_sql );
 		
 		$work_arr ['work_info'] = $work_info;
 		$work_arr ['mark']      = $this->has_mark($bid_id_str);
@@ -804,14 +804,14 @@ public function hosted_amount($url = '', $output = 'normal') {
 	 * 获得单个稿件的信息
 	 */
 	public function get_single_bid($bid_id) {
-		$bid_info = db_factory::get_one ( sprintf ( "select * from %switkey_task_bid where bid_id='%d'", TABLEPRE, $bid_id ) );
+		$bid_info = dbfactory::get_one ( sprintf ( "select * from %switkey_task_bid where bid_id='%d'", TABLEPRE, $bid_id ) );
 		/* if ($bid_info ['area']) {
 			$place = implode ( ',', $bid_info ['area'] );
 			$bid_info ['province'] = $place [0];
 			$bid_info ['city'] = $place [1];
 		} */
 		if ($bid_info) {
-			$plan_info = db_factory::query ( sprintf ( "select * from %switkey_task_plan where bid_id='%d'", TABLEPRE, $bid_id ) );
+			$plan_info = dbfactory::query ( sprintf ( "select * from %switkey_task_plan where bid_id='%d'", TABLEPRE, $bid_id ) );
 			$plan_info or $plan_info = array ();
 			return array ('bid_info' => $bid_info, 'plan_info' => $plan_info );
 		} else {
@@ -826,7 +826,7 @@ public function hosted_amount($url = '', $output = 'normal') {
 	 * @return  boolean
 	 */
 	public function set_bid_status($bid_id, $to_status) {
-		return db_factory::execute ( sprintf ( " update %switkey_task_bid set bid_status='%d' where bid_id='%d'", TABLEPRE, $to_status, $bid_id ) );
+		return dbfactory::execute ( sprintf ( " update %switkey_task_bid set bid_status='%d' where bid_id='%d'", TABLEPRE, $to_status, $bid_id ) );
 	}
 	
 	/**
@@ -835,7 +835,7 @@ public function hosted_amount($url = '', $output = 'normal') {
 	 */
 	public function set_task_sp_end_time() {
 		$sp_end_time = time () + $this->_task_config ['pay_limit_time'] * 24 * 3600;
-		return db_factory::execute ( sprintf ( " update %switkey_task set sp_end_time = '%d'", TABLEPRE, $sp_end_time ) );
+		return dbfactory::execute ( sprintf ( " update %switkey_task set sp_end_time = '%d'", TABLEPRE, $sp_end_time ) );
 	}
 	
 	/**
@@ -887,7 +887,7 @@ public function hosted_amount($url = '', $output = 'normal') {
 		$task_info = $this->_task_info; //任务信息
 		$task_status = $this->_task_status;
 		$url = $_K ['siteurl'] . '/index.php?do=task&task_id=' . $this->_task_id;
-		$order_info = db_factory::get_one ( sprintf ( "select * from %switkey_order where order_id='%d'", TABLEPRE, $order_id ) );
+		$order_info = dbfactory::get_one ( sprintf ( "select * from %switkey_order where order_id='%d'", TABLEPRE, $order_id ) );
 		$order_amount = $order_info ['order_amount'];
 		if ($order_info ['order_status'] == 'ok') {
 			$task_status == 1 && $notice = $_lang['task_pay_success_and_wait_admin_audit'];
@@ -900,7 +900,7 @@ public function hosted_amount($url = '', $output = 'normal') {
 			$leave_cash = $balance + $credit - $order_amount;
 			
 			if ($leave_cash >= 0) {
-				$order_type = db_factory::get_count ( sprintf ( "select obj_type from %switkey_order_detail where order_id='%d' and obj_type in('hosted','task') ", TABLEPRE, $order_id ) );
+				$order_type = dbfactory::get_count ( sprintf ( "select obj_type from %switkey_order_detail where order_id='%d' and obj_type in('hosted','task') ", TABLEPRE, $order_id ) );
 				if ($order_type == 'hosted') {
 					$action = 'hosted_margin';
 					$to_status = 6;

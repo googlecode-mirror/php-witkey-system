@@ -19,7 +19,7 @@ $w ['page_size'] and $page_size = intval ( $w ['page_size'] ) or $page_size = 10
 $page and $page = intval ( $page ) or $page = '1';
 $url = "index.php?do=$do&view=$view&w['pay_type']=".$w['pay_type']."&w['page_size']=$page_size&w['ord']=".$w['ord']."&page=$page";
 
-$withdraw_id and $withdraw_info = db_factory::get_one ( "select * from " . TABLEPRE . "witkey_withdraw where withdraw_id = '$withdraw_id'" );
+$withdraw_id and $withdraw_info = dbfactory::get_one ( "select * from " . TABLEPRE . "witkey_withdraw where withdraw_id = '$withdraw_id'" );
 if (isset ( $ac )) { //处理财务清单申请
 	switch ($ac) {
 		case 'pass' : //审核提现申请
@@ -50,7 +50,7 @@ if (isset ( $ac )) { //处理财务清单申请
 					//kekezu::feed_add ( '<a href="index.php?do=space&member_id=' . $user_space_info ['uid'] . '" target="_blank">' . $withdraw_info ['username'] . '</a>成功提现了' . $withdraw_info ['withdraw_cash'] . $_lang['yuan'], $user_space_info ['uid'], $user_space_info ['username'], 'withdraw' );
 					//邮件
 					$message_obj = new keke_msg_class ();
-					$t_userinfo = db_factory::get_one ( " select mobile,email from " . TABLEPRE . "witkey_space where uid ='".$withdraw_info['uid']."'" );
+					$t_userinfo = dbfactory::get_one ( " select mobile,email from " . TABLEPRE . "witkey_space where uid ='".$withdraw_info['uid']."'" );
 					$v = array ($_lang['withdraw_cash'] => $withdraw_info ['withdraw_cash'] );
 					$message_obj->send_message ( $withdraw_info ['uid'], $withdraw_info ['username'], 'draw_success', $_lang['withdraw_success'], $v, $t_userinfo ['email'], $t_userinfo ['mobile'] );
 					
@@ -108,7 +108,7 @@ if (isset ( $ac )) { //处理财务清单申请
 				foreach ( $nodraw_arr as $v ) {
 					$withdraw_id = $v ['withdraw_id'];
 					$where = "withdraw_id = '$withdraw_id' ";
-					$withdraw_info = db_factory::get_one ( "select * from " . TABLEPRE . "witkey_withdraw where $where" );
+					$withdraw_info = dbfactory::get_one ( "select * from " . TABLEPRE . "witkey_withdraw where $where" );
 					$withdraw_cash = $withdraw_info ['withdraw_cash'];
 					$uid = $withdraw_info ['uid'];
 					$username = $withdraw_info ['username'];
@@ -140,7 +140,7 @@ if (isset ( $ac )) { //处理财务清单申请
 					
 					//邮件
 					$message_obj = new keke_msg_class ();
-					$t_userinfo = db_factory::get_one ( " select mobile,email from " . TABLEPRE . "witkey_space where uid ='".$withdraw_info['uid']."'" );
+					$t_userinfo = dbfactory::get_one ( " select mobile,email from " . TABLEPRE . "witkey_space where uid ='".$withdraw_info['uid']."'" );
 					$v = array ($_lang['withdraw_cash'] => $withdraw_info ['withdraw_cash'] );
 					$message_obj->send_message ( $withdraw_info ['uid'], $withdraw_info ['username'], 'draw_success', $_lang['withdraw_success'], $v, $t_userinfo ['email'], $t_userinfo ['mobile'] );
 					$feed_arr = array ("feed_username" => array ("content" => $withdraw_info ['username'], "url" => "index.php?do=space&member_id=".$space_info['uid']), "action" => array ("content" => $_lang['withdraw'], "url" => "" ), "event" => array ("content" =>$_lang['withdraw_le'].$withdraw_info['withdraw_cash']. $_lang['yuan'],"url" => "" ) );
@@ -168,7 +168,7 @@ if (isset ( $ac )) { //处理财务清单申请
 } elseif ($type == 'batch' && $pay_type == 'alipayjs') {
 	$payment_config = kekezu::get_payment_config('alipayjs');
 	require S_ROOT . "/payment/alipayjs/order.php";
-	$detail_data = db_factory::query ( sprintf ( " select withdraw_id,pay_account,pay_username,withdraw_cash fee,uid from %switkey_withdraw where withdraw_id in (%s) and withdraw_status='1'", TABLEPRE, $ids ) );
+	$detail_data = dbfactory::query ( sprintf ( " select withdraw_id,pay_account,pay_username,withdraw_cash fee,uid from %switkey_withdraw where withdraw_id in (%s) and withdraw_status='1'", TABLEPRE, $ids ) );
 	echo get_batch_url ($payment_config, $detail_data,'url');
 	die();
 } else {

@@ -18,7 +18,7 @@ if (isset($sbt_action) || ($ac=='del' && $del_id)){
 	$ckb && array_filter( $ckb, 'str2int');
 	$ids = isset($del_id) ? intval($del_id) : implode(',', $ckb);
 	$sql = sprintf("delete from %switkey_task where task_union=2 and task_id in (%s)",TABLEPRE,$ids);
-	$result = db_factory::execute($sql);
+	$result = dbfactory::execute($sql);
 	kekezu::admin_system_log('批量删除联盟task'.$ids);
 	if ($result){
 		kekezu::admin_show_msg('提示','?do=keke&view=getlist',2,'任务删除成功!!','success');

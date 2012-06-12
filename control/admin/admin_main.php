@@ -13,7 +13,7 @@ $user_obj = new Keke_witkey_space_class (); // 实例化用户对象
 $file_obj = new keke_file_class ();
 $file_size = $file_obj->getdirsize ( S_ROOT . '/data/uploads' );
 $file_size = intval ( $file_size / 1024 / 1024 ); // 获取当前附件大小
-$tables = db_factory::query ( "SHOW TABLE STATUS " );
+$tables = dbfactory::query ( "SHOW TABLE STATUS " );
 foreach ( $tables as $table ) { // 数据库大小
 	$dbsize += $table ['Data_length'] + $table ['Index_length'];
 }
@@ -36,18 +36,18 @@ $sys_info ['max_filesize'] = ini_get ( 'upload_max_filesize' );
 $sys_info ['file_uploads'] = ini_get ( 'file_uploads' );
 
 /* 新增用户留言 */
-$news_count = intval ( db_factory::get_count ( sprintf ( " select count(msg_id) from %switkey_msg where to_uid='%d' and  uid>0 ", TABLEPRE, $admin_info [uid] ) ) );
+$news_count = intval ( dbfactory::get_count ( sprintf ( " select count(msg_id) from %switkey_msg where to_uid='%d' and  uid>0 ", TABLEPRE, $admin_info [uid] ) ) );
 /* 新增发布任务 */
-$task_count = intval ( db_factory::get_count ( sprintf ( " select count(task_id) from %switkey_task where day(from_unixtime(start_time))=day('%s')", TABLEPRE, date ( 'Y-m-d H:i:s', time () ) ) ) );
+$task_count = intval ( dbfactory::get_count ( sprintf ( " select count(task_id) from %switkey_task where day(from_unixtime(start_time))=day('%s')", TABLEPRE, date ( 'Y-m-d H:i:s', time () ) ) ) );
 /* 新增注册会员 */
-$user_count = intval ( db_factory::get_count ( sprintf ( " select count(uid) from %switkey_space where day(from_unixtime(reg_time))=day('%s')", TABLEPRE, date ( 'Y-m-d H:i:s', time () ) ) ) );
+$user_count = intval ( dbfactory::get_count ( sprintf ( " select count(uid) from %switkey_space where day(from_unixtime(reg_time))=day('%s')", TABLEPRE, date ( 'Y-m-d H:i:s', time () ) ) ) );
 /* 新增提现申请 */
-$withdraw_count = intval ( db_factory::get_count ( sprintf ( " select count(withdraw_id) from %switkey_withdraw where day(from_unixtime(applic_time))=day('%s')", TABLEPRE, date ( 'Y-m-d H:i:s', time () ) ) ) );
+$withdraw_count = intval ( dbfactory::get_count ( sprintf ( " select count(withdraw_id) from %switkey_withdraw where day(from_unixtime(applic_time))=day('%s')", TABLEPRE, date ( 'Y-m-d H:i:s', time () ) ) ) );
 /* 新增用户充值 */
-$charge_count = intval ( db_factory::get_count ( sprintf ( " select count(order_id) from %switkey_order_charge where day(from_unixtime(pay_time))=day('%s') ", TABLEPRE, date ( 'Y-m-d H:i:s', time () ) ) ) );
+$charge_count = intval ( dbfactory::get_count ( sprintf ( " select count(order_id) from %switkey_order_charge where day(from_unixtime(pay_time))=day('%s') ", TABLEPRE, date ( 'Y-m-d H:i:s', time () ) ) ) );
 
 /* 新增交易维权 */
-$report_count = intval ( db_factory::get_count ( sprintf ( " select count(report_id) from %switkey_report where day(from_unixtime(on_time))=day('%s')", TABLEPRE, date ( 'Y-m-d H:i:s', time () ) ) ) );
+$report_count = intval ( dbfactory::get_count ( sprintf ( " select count(report_id) from %switkey_report where day(from_unixtime(on_time))=day('%s')", TABLEPRE, date ( 'Y-m-d H:i:s', time () ) ) ) );
 
 $pars = array (
 		'ac' => 'run',

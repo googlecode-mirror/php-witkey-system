@@ -24,7 +24,7 @@ abstract class keke_privission_class {
 		if (! $priv_item) {
 			$sql = " select a.*,b.g_title,b.m_title,c.rule,c.r_id,c.mark_rule_id from " . TABLEPRE . "witkey_priv_rule c left join " . TABLEPRE . "witkey_priv_item 
 		a on c.item_id = a.op_id left join " . TABLEPRE . "witkey_mark_rule b on c.mark_rule_id = b.mark_rule_id where a.model_id = '$model_id'";
-			$item = db_factory::query ( $sql );
+			$item = dbfactory::query ( $sql );
 			$priv_item = array ();
 			foreach ( $item as $v ) {
 				$priv_item [$v ['op_code']] [$v ['mark_rule_id']] = $v;
@@ -274,6 +274,6 @@ abstract class keke_privission_class {
 			}
 			$task_id and $sql = sprintf (" select count(%s) from %s a left join %switkey_task b on %s=b.task_id where a.uid='%d' and b.model_id='%d' and %s>%d and b.task_id='%d'", $pk,$table,TABLEPRE,$join_pk, $uid,$model_id, $time_fields, time ()-24*3600,$task_id)
 					or $sql = sprintf (" select count(%s) from %s a left join %switkey_task b on %s=b.task_id where a.uid='%d' and b.model_id='%d' and %s>%d", $pk,$table,TABLEPRE,$join_pk, $uid,$model_id, $time_fields, time ()-24*3600);
-			return db_factory::get_count ($sql);
+			return dbfactory::get_count ($sql);
 	}
 }

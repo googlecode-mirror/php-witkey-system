@@ -36,7 +36,7 @@ class keke_prom_class {
 	 *@初始推广规则配置 
 	 */
 	public static function get_prom_rule($prom_code) {
-		$p_config = db_factory::get_one(sprintf(" select * from %switkey_prom_rule where prom_code='%s'",TABLEPRE,$prom_code));//获取相应的推广配置
+		$p_config = dbfactory::get_one(sprintf(" select * from %switkey_prom_rule where prom_code='%s'",TABLEPRE,$prom_code));//获取相应的推广配置
 		$p_config ['config'] and $config = unserialize ( $p_config ['config'] ) or $config = array ();
 		return array_merge ( $p_config, $config );
 	}
@@ -58,9 +58,9 @@ class keke_prom_class {
 	 */
 	public function get_prom_relation($uid, $prom_type) {
 		$sql = " select * from %switkey_prom_relation where uid='%d' and prom_type='%s'";
-		$p_relation = db_factory::get_one ( sprintf ( $sql, TABLEPRE, $uid, $prom_type ) );
+		$p_relation = dbfactory::get_one ( sprintf ( $sql, TABLEPRE, $uid, $prom_type ) );
 		if(!$p_relation){//查找注册关系
-			$p_relation or $p_relation = db_factory::get_one ( sprintf ( $sql, TABLEPRE, $uid, 'reg' ) );
+			$p_relation or $p_relation = dbfactory::get_one ( sprintf ( $sql, TABLEPRE, $uid, 'reg' ) );
 			$reg_event = $this->get_prom_event($uid, $uid,$this->_auth_step);//查找未结算的注册认证事件
 			$reg_event and $p_relation['relation_status']=4;//注册注册事件未结算、关系状态设为失效状态、阻止其他事件产生
 		}
@@ -82,7 +82,7 @@ class keke_prom_class {
 		$sql = " select a.*,b.relation_id from %switkey_prom_event a 
 				left join %switkey_prom_relation b on a.uid=b.uid where a.obj_id='%d'
 				and a.action='%s'  and a.uid='%d' and a.event_status='%d'";
-		return db_factory::get_one ( sprintf ( $sql, TABLEPRE,TABLEPRE, $obj_id, $action, $uid, $event_status ) );
+		return dbfactory::get_one ( sprintf ( $sql, TABLEPRE,TABLEPRE, $obj_id, $action, $uid, $event_status ) );
 	}
 	/**
 	 * 计算推广相关金额项
@@ -236,7 +236,7 @@ class keke_prom_class {
 	 * @param $status 变更状态
 	 */
 	function set_relation_status($relation_id, $status) {
-		return db_factory::execute ( " update " . TABLEPRE . "witkey_prom_relation set relation_status ='$status' where relation_id ='$relation_id'" );
+		return dbfactory::execute ( " update " . TABLEPRE . "witkey_prom_relation set relation_status ='$status' where relation_id ='$relation_id'" );
 	}
 	/**
 	 * 更改事件状态
@@ -247,7 +247,7 @@ class keke_prom_class {
 	 */
 	function set_prom_event_status($p_uid, $username, $event_id, $status) {
 		global $_lang;
-		$res = db_factory::execute ( " update " . TABLEPRE . "witkey_prom_event set event_status = '$status' where event_id= '$event_id'" );
+		$res = dbfactory::execute ( " update " . TABLEPRE . "witkey_prom_event set event_status = '$status' where event_id= '$event_id'" );
 		if ($res) {
 			if ($status == 2) {
 				$title = $_lang['prom_msg_notice'];
@@ -295,7 +295,7 @@ class keke_prom_class {
 		$result = TRUE;
 		$obj_info = self::get_prom_obj_info ($prom_code,$obj_id ); //对象信息
 		if ($obj_info) {
-			$prom_config = db_factory::get_one ( sprintf ( " select * from %switkey_prom_rule where prom_code='%s'", TABLEPRE, $prom_code ) );
+			$prom_config = dbfactory::get_one ( sprintf ( " select * from %switkey_prom_rule where prom_code='%s'", TABLEPRE, $prom_code ) );
 			$prom_config = unserialize ( $prom_config ['config'] );
 			if ($prom_config ['indus_string']&&FALSE === strpos ( $prom_config ['indus_string'], $obj_info ['indus_id'] )) {
 				$result = FALSE;
@@ -313,9 +313,9 @@ class keke_prom_class {
 	 */
 	public static function get_prom_obj_info($prom_type, $obj_id) {
 		if ($prom_type == 'pub_task' || $prom_type == 'bid_task') {
-			$obj_info = db_factory::get_one ( sprintf ( " select model_id,indus_id,profit_rate,task_cash cash from %switkey_task where task_id='%d'", TABLEPRE, $obj_id ) );
+			$obj_info = dbfactory::get_one ( sprintf ( " select model_id,indus_id,profit_rate,task_cash cash from %switkey_task where task_id='%d'", TABLEPRE, $obj_id ) );
 		} elseif ($prom_type == 'service') {
-			$obj_info = db_factory::get_one ( sprintf ( " select model_id,indus_id,profit_rate,price cash from %switkey_service where service_id='%d'", TABLEPRE, $obj_id ) );
+			$obj_info = dbfactory::get_one ( sprintf ( " select model_id,indus_id,profit_rate,price cash from %switkey_service where service_id='%d'", TABLEPRE, $obj_id ) );
 		}
 		return $obj_info;
 	}

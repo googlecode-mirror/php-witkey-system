@@ -10,7 +10,7 @@ class keke_order_class {
 	public static function get_order_info($order_id) {
 		$sql = "select a.*,b.obj_type,b.obj_id from %switkey_order a left join
 		%switkey_order_detail b on a.order_id=b.order_id where a.order_id='%d'";
-		return db_factory::get_one ( sprintf ( $sql, TABLEPRE, TABLEPRE, $order_id ) );
+		return dbfactory::get_one ( sprintf ( $sql, TABLEPRE, TABLEPRE, $order_id ) );
 	
 	}
 	/**
@@ -21,7 +21,7 @@ class keke_order_class {
 	 */
 	public static function get_order_id($obj_type, $obj_id) {
 		$sql = "select order_id from %switkey_order_detail where obj_type='%s' and obj_id='%d'";
-		return db_factory::get_count ( sprintf ( $sql, TABLEPRE, $obj_type, $obj_id ) );
+		return dbfactory::get_count ( sprintf ( $sql, TABLEPRE, $obj_type, $obj_id ) );
 	}
 	/**
 	 * 获取订单的详细内容
@@ -30,7 +30,7 @@ class keke_order_class {
 	 */
 	public static function get_order_detail($order_id) {
 		$sql = "select * from %switkey_order_detail where order_id = '%d'";
-		return db_factory::query ( sprintf ( $sql, TABLEPRE, $order_id ) );
+		return dbfactory::query ( sprintf ( $sql, TABLEPRE, $order_id ) );
 	}
 	
 	/**
@@ -72,7 +72,7 @@ class keke_order_class {
 		$username or $username = $user_info ['username'];
 		$sql = "select order_id,order_status from %switkey_order_charge where uid='%d' and pay_type='%s'";
 		$obj_id and $sql .= " and obj_id='$obj_id'";
-		$order_info = db_factory::get_one ( sprintf ( $sql, TABLEPRE, $uid, $pay_type ) );
+		$order_info = dbfactory::get_one ( sprintf ( $sql, TABLEPRE, $uid, $pay_type ) );
 		$status = $order_info ['order_status'];
 		$order_id = $order_info ['order_id'];
 		
@@ -82,7 +82,7 @@ class keke_order_class {
 			$order_id and ($status == 'wait' and $update = true or $create = true);
 		}
 		$order_id or $create = true; //需创建
-		$update and db_factory::execute ( sprintf ( " update %switkey_order_charge set pay_money='%.2f',pay_time='%s' where order_id='%d'", TABLEPRE, $money, time (), $order_id ) );
+		$update and dbfactory::execute ( sprintf ( " update %switkey_order_charge set pay_money='%.2f',pay_time='%s' where order_id='%d'", TABLEPRE, $money, time (), $order_id ) );
 		if ($create) {
 			$order_obj = new Keke_witkey_order_charge_class ();
 			$order_obj->_order_id = null;
@@ -126,8 +126,8 @@ class keke_order_class {
 	 */
 	public static function del_order($order_id, $url = '', $output = 'normal') {
 		global $_lang;
-		$res = db_factory::execute ( sprintf ( " delete from %switkey_order where order_id='%d'", TABLEPRE, $order_id ) );
-		$res *= db_factory::execute ( sprintf ( " delete from %switkey_order_detail where order_id = '%d'", TABLEPRE, $order_id ) );
+		$res = dbfactory::execute ( sprintf ( " delete from %switkey_order where order_id='%d'", TABLEPRE, $order_id ) );
+		$res *= dbfactory::execute ( sprintf ( " delete from %switkey_order_detail where order_id = '%d'", TABLEPRE, $order_id ) );
 		$res and kekezu::keke_show_msg ( $url, $_lang['order_delete_success'], "", $output ) or kekezu::keke_show_msg ( $url, $_lang['order_delete_fail'], "error", $output );
 	}
 	/**
@@ -136,14 +136,14 @@ class keke_order_class {
 	 * @param string $to_status 变更状态
 	 */
 	public static function set_order_status($order_id, $to_status) {
-		return db_factory::execute ( sprintf ( " update %switkey_order set order_status='%s' where order_id='%d'", TABLEPRE, $to_status, $order_id ) );
+		return dbfactory::execute ( sprintf ( " update %switkey_order set order_status='%s' where order_id='%d'", TABLEPRE, $to_status, $order_id ) );
 	}
 	/**
 	 * 交易终止返款
 	 * @param $order_id 订单编号
 	 */
 	public static function order_cancel_return($order_id) {
-		$fina_info = db_factory::get_one ( sprintf ( " select uid,fina_cash,fina_credit from %switkey_finance where order_id ='%d'", TABLEPRE, $order_id ) );
+		$fina_info = dbfactory::get_one ( sprintf ( " select uid,fina_cash,fina_credit from %switkey_finance where order_id ='%d'", TABLEPRE, $order_id ) );
 		if ($fina_info) {
 			//根据此条财务记录来进行返款
 			return keke_finance_class::cash_in ( $fina_info ['uid'], $fina_info ['fina_cash'], $fina_info ['fina_credit'], "order_cancel", '', 'order', $order_id );
@@ -182,7 +182,7 @@ class keke_order_class {
 	 * 
 	 */
 	public static function update_fina_order($fina_id, $order_id) {
-		return db_factory::execute ( sprintf ( " update %switkey_finance set order_id = '%d' where fina_id = '%d'", TABLEPRE, $order_id, $fina_id ) );
+		return dbfactory::execute ( sprintf ( " update %switkey_finance set order_id = '%d' where fina_id = '%d'", TABLEPRE, $order_id, $fina_id ) );
 	}
 	
 	/**

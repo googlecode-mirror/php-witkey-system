@@ -32,12 +32,12 @@ class keke_task_config {
 	public static function set_time_rule($model_id, $timeOld = array(), $timeNew = array()) {
 		if (is_array ( $timeOld )) {
 			foreach ( $timeOld as $k => $v ) {
-				$res = db_factory::execute ( sprintf ( " update %switkey_task_time_rule set rule_day='%d',rule_cash='%s' where day_rule_id='%d' and model_id='%d'", TABLEPRE, $v ['rule_day'], $v ['rule_cash'], $k, $model_id ) );
+				$res = dbfactory::execute ( sprintf ( " update %switkey_task_time_rule set rule_day='%d',rule_cash='%s' where day_rule_id='%d' and model_id='%d'", TABLEPRE, $v ['rule_day'], $v ['rule_cash'], $k, $model_id ) );
 			}
 		}
 		if (is_array ( $timeNew )) {
 			foreach ( $timeNew as $v2 ) {
-				! empty ( $v2['rule_day'] )&&!empty($v2['rule_cash']) and $res = db_factory::execute ( sprintf ( " insert into %switkey_task_time_rule values('','%f','%d','%d')", TABLEPRE,  floatval ( $v2 ['rule_cash'] ), intval ( $v2 ['rule_day'] ),$model_id ) );
+				! empty ( $v2['rule_day'] )&&!empty($v2['rule_cash']) and $res = dbfactory::execute ( sprintf ( " insert into %switkey_task_time_rule values('','%f','%d','%d')", TABLEPRE,  floatval ( $v2 ['rule_cash'] ), intval ( $v2 ['rule_day'] ),$model_id ) );
 			}
 		}
 		return $res;
@@ -54,12 +54,12 @@ class keke_task_config {
 	public static function set_delay_rule($model_id, $delayOld = array(), $delayNew = array()) {
 		if (is_array ( $delayOld )) {
 			foreach ( $delayOld as $k => $v ) {
-				$res = db_factory::execute ( sprintf ( " update %switkey_task_delay_rule set defer_rate='%d' where defer_rule_id='%d' and model_id='%d'", TABLEPRE, $v ['defer_rate'], $k, $model_id ) );
+				$res = dbfactory::execute ( sprintf ( " update %switkey_task_delay_rule set defer_rate='%d' where defer_rule_id='%d' and model_id='%d'", TABLEPRE, $v ['defer_rate'], $k, $model_id ) );
 			}
 		}
 		if (is_array ( $delayNew )) {
 			foreach ( $delayNew as $v2 ) {
-				! empty ( $v2['defer_times'] )&&!empty($v2['defer_rate']) and $res = db_factory::execute ( sprintf ( " insert into %switkey_task_delay_rule values('','%d','%s','%d')", TABLEPRE, intval ( $v2 ['defer_times'] ), intval ( $v2 ['defer_rate'] ), $model_id ) );
+				! empty ( $v2['defer_times'] )&&!empty($v2['defer_rate']) and $res = dbfactory::execute ( sprintf ( " insert into %switkey_task_delay_rule values('','%d','%s','%d')", TABLEPRE, intval ( $v2 ['defer_times'] ), intval ( $v2 ['defer_rate'] ), $model_id ) );
 			}
 		}
 		return $res;
@@ -71,7 +71,7 @@ class keke_task_config {
 	 * @return boolean
 	 */
 	public static function set_task_ext_config($model_id, $conf = array()) {
-		return db_factory::execute ( sprintf ( " update %switkey_model set config='%s' where model_id='%d'", TABLEPRE, kekezu::k_input(serialize ( $conf )), $model_id ) );
+		return dbfactory::execute ( sprintf ( " update %switkey_model set config='%s' where model_id='%d'", TABLEPRE, kekezu::k_input(serialize ( $conf )), $model_id ) );
 		
 	}
 	/**
@@ -80,7 +80,7 @@ class keke_task_config {
 	 * @return boolean
 	 */
 	public static function del_time_rule($rule_id) {
-		return db_factory::execute ( sprintf ( " delete from %switkey_task_time_rule where day_rule_id='%d'", TABLEPRE, $rule_id ) );
+		return dbfactory::execute ( sprintf ( " delete from %switkey_task_time_rule where day_rule_id='%d'", TABLEPRE, $rule_id ) );
 	}
 
 	/**
@@ -89,7 +89,7 @@ class keke_task_config {
 	 * @return boolean
 	 */
 	public static function del_delay_rule($rule_id) {
-		return db_factory::execute ( sprintf ( " delete from %switkey_task_delay_rule where defer_rule_id='%d'", TABLEPRE, $rule_id ) );
+		return dbfactory::execute ( sprintf ( " delete from %switkey_task_delay_rule where defer_rule_id='%d'", TABLEPRE, $rule_id ) );
 	}
 	/**
 	 * 冻结task,任务状态为!('6','7','8','10','11')
@@ -103,26 +103,26 @@ class keke_task_config {
 			$ids = implode ( ',', $task_ids );
 			//生成要冻结的记录,并发送冻结通知,生成一系统日志
 			$sql2 = sprintf ( "select task_id,task_status,task_title,uid from %switkey_task where task_id in(%s) and task_status in (2,3,4,5)", TABLEPRE, $ids );
-			$task_arr = db_factory::query ( $sql2 );
+			$task_arr = dbfactory::query ( $sql2 );
 			foreach ( $task_arr as $v ) {
 				$sql3 = sprintf ( "insert into %switkey_task_frost (frost_status,task_id,frost_time,admin_uid,admin_username) 
         					values('%d','%d','%d','%d','%s')", TABLEPRE, $v ['task_status'], $v ['task_id'], time (), $admin_info ['uid'], $admin_info ['username'] );
-				db_factory::execute ( $sql3 );
+				dbfactory::execute ( $sql3 );
 				kekezu::admin_system_log ( $_lang['freeze_task'].":{$v['task_title']}" );
 				kekezu::notify_user ( $_lang['freeze_notcie'], $_lang['you_pub_task'].':<a href=index.php?do=task&task_id=' . $v [task_id] . '>' . $v [task_title] . '</a>'.$_lang['has_freeze'], $v [uid] );
 			}
 		} elseif ($task_ids) { //单条冻结
 			$ids = $task_ids;
 			$sql2 = sprintf ( "select task_id,task_status,task_title,uid from %switkey_task where task_id = %d and task_status  in (2,3,4,5)", TABLEPRE, $task_ids );
-			$task_info = db_factory::get_one($sql2);
+			$task_info = dbfactory::get_one($sql2);
 			$sql3 = sprintf ( "insert into %switkey_task_frost (frost_status,task_id,frost_time,admin_uid,admin_username) 
         					values(%d,%d,%d,%d,'%s')", TABLEPRE, $task_info ['task_status'], $task_info ['task_id'], time (), $admin_info ['uid'], $admin_info ['username'] );
-			db_factory::execute ( $sql3 );
+			dbfactory::execute ( $sql3 );
 			kekezu::admin_system_log ( $_lang['freeze_task'].":{$task_info['task_title']}" );
 			kekezu::notify_user ( $_lang['freeze_notcie'], $_lang['you_pub_task'].':<a href=index.php?do=task&task_id=' . $task_info [task_id] . '>' . $task_info [task_title] . '</a>'.$_lang['has_freeze'], $task_info [uid] );
 		}
 		$sql = sprintf ( "update %switkey_task set task_status = '7' where task_id in(%s) and task_status   in (2,3,4,5)", TABLEPRE, $ids );
-		return db_factory::execute ( $sql ); //执行冻结
+		return dbfactory::execute ( $sql ); //执行冻结
 	}
 	/**
 	 * 取消冻结,还原弱冻结任务到之前的状态，删除冻结记录
@@ -135,29 +135,29 @@ class keke_task_config {
 			$ids = implode ( ',', $task_ids );
 			//要恢复的任务，删除 的冻结记录
 			$sql = sprintf ( "select task_id,task_title,task_status,end_time,sub_time,uid from %switkey_task where task_status=7 and task_id in(%s)", TABLEPRE, $ids );
-			$task_arr = db_factory::query ( $sql );
+			$task_arr = dbfactory::query ( $sql );
 			foreach ( $task_arr as $v ) {
 				$sqlf = sprintf ( "select task_id,frost_status,frost_time from %switkey_task_frost", TABLEPRE, $v ['task_id'] );
-				$frost_info = db_factory::get_one ( $sqlf );
+				$frost_info = dbfactory::get_one ( $sqlf );
 				$end_time = (time () - $frost_info ['frost_time']) + $v[end_time];
 				$sub_time = (time () - $frost_info ['frost_time']) +$v[sub_time];
 				$sql2 = sprintf ( "update %switkey_task set task_status = %d,end_time='%s',sub_time='%s'  where task_id = '%d'", TABLEPRE, $frost_info ['frost_status'], $end_time,$sub_time, $v ['task_id'] );
-				db_factory::execute ( $sql2 );
-				db_factory::execute ( sprintf ( "delete from %switkey_task_frost where task_id = '%d'", TABLEPRE, $frost_info ['task_id'] ) );
+				dbfactory::execute ( $sql2 );
+				dbfactory::execute ( sprintf ( "delete from %switkey_task_frost where task_id = '%d'", TABLEPRE, $frost_info ['task_id'] ) );
 				kekezu::admin_system_log ( $_lang['unfreeze_task'].":{$v['task_title']}" );
 				kekezu::notify_user ( $_lang['task_unfreeze_notice'], $_lang['you_pub_task'].':<a href=index.php?do=task&task_id=' . $v [task_id] . '>' . $v [task_title] . '</a>'.$_lang['has_unfreeze'], $v [uid] );
 			}
 		} elseif (task_ids) { //单条恢复
 			$sql = sprintf ( "select task_id,task_title,task_status,end_time,sub_time,uid from %switkey_task where task_status=7 and task_id ='%d'", TABLEPRE, $task_ids );
-			$task_info = db_factory::get_one ( $sql );
+			$task_info = dbfactory::get_one ( $sql );
 			$sqlf = sprintf ( "select task_id,frost_status,frost_time from %switkey_task_frost", TABLEPRE, $task_info ['task_id'] );
-			$frost_info = db_factory::get_one ( $sqlf );
+			$frost_info = dbfactory::get_one ( $sqlf );
 			$end_time = (time () - $frost_info ['frost_time']) + $task_info[end_time];
 			$sub_time = (time () - $frost_info ['frost_time']) +$task_info[sub_time];
 			$sql2 = sprintf ( "update %switkey_task set task_status = %d,end_time='%s',sub_time='%s' where task_id = '%d'", TABLEPRE, $frost_info ['frost_status'], $end_time, $sub_time, $task_info ['task_id'] );
 			
-			db_factory::execute ( $sql2 );
-			db_factory::execute ( sprintf ( "delete from %switkey_task_frost where task_id = '%d'", TABLEPRE, $frost_info ['task_id'] ) );
+			dbfactory::execute ( $sql2 );
+			dbfactory::execute ( sprintf ( "delete from %switkey_task_frost where task_id = '%d'", TABLEPRE, $frost_info ['task_id'] ) );
 			kekezu::admin_system_log ( $_lang['unfreeze_task'].":{$task_info['task_title']}" );
 			kekezu::notify_user ( $_lang['task_unfreeze_notice'], $_lang['you_pub_task'].':<a href=index.php?do=task&task_id=' . $task_info [task_id] . '>' . $task_info [task_title] . '</a>'.$_lang['has_unfreeze'], $task_info [uid] );
 		}
@@ -171,7 +171,7 @@ class keke_task_config {
 		global $_lang;
 		if ($task_ids && is_array ( $task_ids )) {
 			$ids = implode ( ',', $task_ids );
-			$task_arr = db_factory::query ( sprintf ( "select task_id,task_title,task_status,uid,username,start_time,sub_time,end_time,payitem_time from %switkey_task where task_id in(%s) and task_status=1", TABLEPRE, $ids ) );
+			$task_arr = dbfactory::query ( sprintf ( "select task_id,task_title,task_status,uid,username,start_time,sub_time,end_time,payitem_time from %switkey_task where task_id in(%s) and task_status=1", TABLEPRE, $ids ) );
 			foreach ( $task_arr as $v ) {
 				kekezu::admin_system_log ( $_lang['audit_task'].":{$v['task_title']}".$_lang['pass'] );
 				kekezu::notify_user ( $_lang['task_audit_notice'], $_lang['you_pub_task'].':<a href=index.php?do=task&task_id=' . $v [task_id] . '>' . $v [task_title] . '</a>'.$_lang['audit_pass'], $v [uid] );
@@ -185,7 +185,7 @@ class keke_task_config {
 				//更改任务状态
 				$sub_time = time()+($v['sub_time']-$v['start_time']);
 				$end_time = time()+($v['end_time']-$v['start_time']);
-				$res = db_factory::execute ( sprintf ( "update %switkey_task set task_status=2 ,start_time='%d',sub_time='%d',end_time='%d',payitem_time='%s'  where task_id in(%s)", TABLEPRE,time(),$sub_time,$end_time,$payitem_time,$v['task_id']) );
+				$res = dbfactory::execute ( sprintf ( "update %switkey_task set task_status=2 ,start_time='%d',sub_time='%d',end_time='%d',payitem_time='%s'  where task_id in(%s)", TABLEPRE,time(),$sub_time,$end_time,$payitem_time,$v['task_id']) );
 				
 				$feed_arr = array ("feed_username" => array ("content" =>$v['username'], "url" => "index.php?do=space&member_id={$v['uid']}" ), "action" => array ("content" => $_lang['pub_task'], "url" => "" ), "event" => array ("content" => "{$v['task_title']}", "url" => "index.php?do=task&task_id={$v['task_id']}" ) );
 				kekezu::save_feed ( $feed_arr,$v['uid'],$v['username'], 'pub_task',$v['task_id']);
@@ -193,7 +193,7 @@ class keke_task_config {
 		} elseif ($task_ids) {
 				
 			$ids = $task_ids;
-			$task_info = db_factory::get_one ( sprintf ( "select task_id,task_title,task_status,uid,username,start_time,sub_time,end_time,payitem_time from %switkey_task where task_id = '%d' and task_status=1", TABLEPRE, $ids ) );
+			$task_info = dbfactory::get_one ( sprintf ( "select task_id,task_title,task_status,uid,username,start_time,sub_time,end_time,payitem_time from %switkey_task where task_id = '%d' and task_status=1", TABLEPRE, $ids ) );
 			if ($task_info) {
 				//增值服务到期时间更新
 				$payitem_add_time =time()- $task_info['start_time'];//所需增加的时间 
@@ -209,7 +209,7 @@ class keke_task_config {
 				$end_time = time()+($task_info['end_time']-$task_info['start_time']);
 				$sql =  sprintf ( "update %switkey_task set task_status=2 ,start_time='%d',sub_time='%d',end_time='%d',payitem_time='%s'  where task_id  ='%d' ", TABLEPRE,time(),$sub_time,$end_time,$payitem_time,$task_info['task_id'] ) ;
 		
-				$res = db_factory::execute ($sql);
+				$res = dbfactory::execute ($sql);
 			
 				kekezu::admin_system_log ( $_lang['audit_task'].":{$task_info['task_title']}".$_lang['pass'] );
 				kekezu::notify_user ( $_lang['task_audit_notice'], $_lang['you_pub_task'].':<a href=index.php?do=task&task_id=' . $task_info [task_id] . '>' . $task_info [task_title] . '</a>'.$_lang['audit_pass'], $task_info [uid] );
@@ -226,7 +226,7 @@ class keke_task_config {
 	 * @param int $task_id
 	 */
 	public static function task_recommend($task_id){
-		return db_factory::execute(sprintf("update %switkey_task set is_top=1 where task_id='%d' ",TABLEPRE,$task_id));
+		return dbfactory::execute(sprintf("update %switkey_task set is_top=1 where task_id='%d' ",TABLEPRE,$task_id));
 	}
 	/**
 	 * 
@@ -234,7 +234,7 @@ class keke_task_config {
 	 * @param int $task_id
 	 */
 	public static function task_unrecommend($task_id){
-		return db_factory::execute(sprintf("update %switkey_task set is_top=0 where task_id='%d' ",TABLEPRE,$task_id));
+		return dbfactory::execute(sprintf("update %switkey_task set is_top=0 where task_id='%d' ",TABLEPRE,$task_id));
 	}
 	/**
 	 * 任务审核不过，将task_staus =1 改为  10,审核失败
@@ -247,10 +247,10 @@ class keke_task_config {
 		global $_lang;
 		if ($task_ids && is_array ( $task_ids )) {
 			$ids = implode ( ',', $task_ids );
-			$task_arr = db_factory::get_one ( sprintf ( "select task_id,task_title,task_status,task_cash,uid from %switkey_task where task_id in(%s)", TABLEPRE, $ids ) );
+			$task_arr = dbfactory::get_one ( sprintf ( "select task_id,task_title,task_status,task_cash,uid from %switkey_task where task_id in(%s)", TABLEPRE, $ids ) );
 			foreach ( $task_arr as $v ) {
 				
-				$res = db_factory::execute ( sprintf ( "update %switkey_task set task_status=10 where task_id ='%d' ", TABLEPRE, $v ['task_id'] ) );
+				$res = dbfactory::execute ( sprintf ( "update %switkey_task set task_status=10 where task_id ='%d' ", TABLEPRE, $v ['task_id'] ) );
 				
 				keke_finance_class::cash_in ( $v ['uid'], $v ['task_cash'], 0, 'task_fail', 'admin', 'task', $v ['task_id'] );
 				kekezu::admin_system_log ( $_lang['audit_task'].":{$v['task_title']}".$_lang['not_pass'] );
@@ -259,14 +259,14 @@ class keke_task_config {
 		
 		} elseif ($task_ids) {
 			$ids = $task_ids;
-			$task_info = db_factory::get_one ( sprintf ( "select task_id,task_title,task_status,task_cash,uid,is_trust,trust_type,model_id from %switkey_task where task_id = '%d'", TABLEPRE, $ids ) );
+			$task_info = dbfactory::get_one ( sprintf ( "select task_id,task_title,task_status,task_cash,uid,is_trust,trust_type,model_id from %switkey_task where task_id = '%d'", TABLEPRE, $ids ) );
 			if ($task_info) {
 				if($task_info['is_trust']&&$trust_response==false){
 					$trust_data['refund'] = array($ids,$task_info['task_cash']);
 					$jump_url = keke_trust_fac_class::trust_task_request("pt_refund",kekezu::$_model_list[$task_info['model_id']]['model_dir'],$ids,$task_info['trust_type'],$trust_data);
 					header("Location:".$jump_url);die();	
 				}else{
-					$res = db_factory::execute ( sprintf ( "update %switkey_task set task_status=10 where task_id  ='%d' ", TABLEPRE, $ids ) );
+					$res = dbfactory::execute ( sprintf ( "update %switkey_task set task_status=10 where task_id  ='%d' ", TABLEPRE, $ids ) );
 					switch($task_info['is_trust']){
 						case "1":
 							$fina_cash = $task_info['task_cash'];
@@ -301,7 +301,7 @@ class keke_task_config {
 			$ids = $task_ids;
 			self::del_sign_task($task_ids, $model);
 		}
-		return db_factory::execute ( sprintf ( "delete from %switkey_task where task_status in(0,8,9,10) and task_id in(%s)", TABLEPRE, $ids ) );
+		return dbfactory::execute ( sprintf ( "delete from %switkey_task where task_status in(0,8,9,10) and task_id in(%s)", TABLEPRE, $ids ) );
 	}
 	/**
 	 * 删除单任务
@@ -319,20 +319,20 @@ class keke_task_config {
 			$sql = sprintf("delete from %switkey_task_bid where task_id ='%d'",TABLEPRE,$task_id);
 		}
 		//删除稿件
-		db_factory::execute($sql);
+		dbfactory::execute($sql);
 		//删除附件
 		//先查询附件
 			
 		$file_sql = sprintf("select save_name from %switkey_file where task_id = '%d' ",TABLEPRE,$task_id);
-		$files = db_factory::query($file_sql);
+		$files = dbfactory::query($file_sql);
 		//删除文件
 		foreach ($files as $v){
 			keke_file_class::del_file($v['save_name']);
 		}
 		//删除文件记录
-		db_factory::execute(sprintf("delete from %switkey_file where task_id ='%d' ",TABLEPRE,$task_id));
+		dbfactory::execute(sprintf("delete from %switkey_file where task_id ='%d' ",TABLEPRE,$task_id));
 		//添加系统日志
-		$del_title = db_factory::get_count(sprintf("select task_title from %switkey_task where task_id='%d'",TABLEPRE,$task_id));
+		$del_title = dbfactory::get_count(sprintf("select task_title from %switkey_task where task_id='%d'",TABLEPRE,$task_id));
 		kekezu::admin_system_log($_lang['delete_task'].":{$del_title}");
 	}
 	/***任务后台编辑动作***/
@@ -366,10 +366,10 @@ class keke_task_config {
 		$uid or $uid = $user_info ['uid']; //不传递默认为当前用户信息
 		/*悬赏类任务统计**/
 		$reward_sql = " select count(c.task_id) count,c.model_id from (select DISTINCT a.task_id,b.model_id from %switkey_task_work a left join %switkey_task b on a.task_id=b.task_id where a.uid='%d') c  group by c.model_id";
-		$reward_arr = db_factory::query ( sprintf ( $reward_sql, TABLEPRE, TABLEPRE, $uid ), 3600 );
+		$reward_arr = dbfactory::query ( sprintf ( $reward_sql, TABLEPRE, TABLEPRE, $uid ), 3600 );
 		/**招标类任务统计**/
 		$tender_sql = " select count(c.task_id) count,c.model_id from (select DISTINCT a.task_id,b.model_id from %switkey_task_bid a left join %switkey_task b on a.task_id=b.task_id where a.uid='%d') c  group by c.model_id";
-		$tender_arr = db_factory::query ( sprintf ( $tender_sql, TABLEPRE, TABLEPRE, $uid ), 3600 );
+		$tender_arr = dbfactory::query ( sprintf ( $tender_sql, TABLEPRE, TABLEPRE, $uid ), 3600 );
 		/**合并**/
 		$total_arr = array_merge ( $reward_arr, $tender_arr );
 		foreach ( $total_arr as $v ) {

@@ -101,7 +101,7 @@ abstract class time_base_class {
 				$user_sql .= " credit = credit+case uid ".$t_temp_sql." end";
 				$user_sql .= " where uid in (".implode(',',$t_user_uids).")";
 				
-				db_factory::execute($user_sql);
+				dbfactory::execute($user_sql);
 		}
 		//消息全处理
 		if ($this->_a_notify_arr){
@@ -114,7 +114,7 @@ abstract class time_base_class {
 				
 				$noti_sql .="('".$noti['title']."','".($noti['content'])."','".($noti['recive_uid']+0)."','{$noti['username']}',".(($noti['on_time']+0)).")";
 			}
-			db_factory::execute($noti_sql);
+			dbfactory::execute($noti_sql);
 		}
 		
 		//feed全处理
@@ -128,7 +128,7 @@ abstract class time_base_class {
 				
 				$feed_sql .="('".$feed['title']."','".($feed['uid']+0)."','".$feed['username']."','{$feed['feedtype']}','".($feed['obj_id']+0)."','".($feed['feed_time']+0)."')";
 			}
-			db_factory::execute($feed_sql);
+			dbfactory::execute($feed_sql);
 		}
 		
 		//财务记录全部插入
@@ -142,8 +142,8 @@ abstract class time_base_class {
 				
 				$fina_sql .="('".$fina['fina_type']."','".$fina['fina_action']."','".($fina['uid']+0)."','{$fina['username']}','".($fina['task_id']+0)."','".($fina['fina_cash']+0)."','".($fina['user_balance']+0)."','".($fina['fina_credit']+0)."','".($fina['user_credit']+0)."','".($fina['fina_time']+0)."','".($fina['site_profit']+0)."')";
 			}
-			db_factory::execute($fina_sql);
-			db_factory::execute("update ".TABLEPRE."witkey_finance set unique_num = CONCAT('88',LPAD(fina_id,8,'0')) where !ifnull(unique_num,0) ");
+			dbfactory::execute($fina_sql);
+			dbfactory::execute("update ".TABLEPRE."witkey_finance set unique_num = CONCAT('88',LPAD(fina_id,8,'0')) where !ifnull(unique_num,0) ");
 		}
 	}
 	

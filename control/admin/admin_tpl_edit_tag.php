@@ -15,7 +15,7 @@ $art_cat_arr = kekezu::get_table_data("*","witkey_article_category","","","","",
 
 $url = "index.php?do=tpl&view=edit_tag&tagid=$tagid";
 
-$template_arr = db_factory::query ( " select tpl_title from " . TABLEPRE . "witkey_template" );
+$template_arr = dbfactory::query ( " select tpl_title from " . TABLEPRE . "witkey_template" );
 
 $tag_type_arr = keke_global_class::get_tag_type ();
 

@@ -59,7 +59,7 @@ if (isset ( $ac )) { //µ¥¸öÉ¾³ý
 	kekezu::$_page_obj->setAjaxDom("ajax_dom");
 	$pages = kekezu::$_page_obj->getPages ( $count, $page_size, $page, $url );
 	$sql.=$where.$pages['where'];
-	$case_arr =db_factory::query($sql);
+	$case_arr =dbfactory::query($sql);
 }
 
 

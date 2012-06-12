@@ -322,7 +322,7 @@ abstract class keke_task_release_class {
 		$user_info = $this->_user_info; //用户信息
 		$task_obj = $this->_task_obj; //任务对象
 		if ($task_id) {
-			db_factory::execute ( "update " . TABLEPRE . "witkey_space set pub_num = pub_num+1 where uid=$this->_uid " );
+			dbfactory::execute ( "update " . TABLEPRE . "witkey_space set pub_num = pub_num+1 where uid=$this->_uid " );
 			//任务附件保存
 			$release_info ['file_ids'] and $this->save_task_file ( $task_id, $release_info ['txt_title'] );
 			$task_status = $task_obj->getTask_status (); //任务状态
@@ -466,7 +466,7 @@ abstract class keke_task_release_class {
 						//用
 						$v ['record_id'] = $pay_id = keke_payitem_class::payitem_cost ( $v ['item_code'], $v ['item_num'], $payitem_list [$v ['item_code']] ['item_type'], 'spend', $task_id, $task_id );
 						
-						$pay_id and db_factory::execute ( sprintf ( " update %switkey_task set point='%s',city='%s' where task_id = '%d'", TABLEPRE, $release_info ['point'], $release_info ['province'], $task_id ) );
+						$pay_id and dbfactory::execute ( sprintf ( " update %switkey_task set point='%s',city='%s' where task_id = '%d'", TABLEPRE, $release_info ['point'], $release_info ['province'], $task_id ) );
 					
 					}
 				}
@@ -602,7 +602,7 @@ abstract class keke_task_release_class {
 				break;
 			case "step4" : //无法查到刚才的任务记录。此页面10分钟类有效
 				$sql = sprintf ( " select task_id from %switkey_task where task_id = '%d' and start_time>%d", TABLEPRE, $task_id, time () - 600 );
-				$task_info = db_factory::get_one ( $sql );
+				$task_info = dbfactory::get_one ( $sql );
 				$task_info or kekezu::keke_show_msg ( "index.php?do=release&pub_mode=$this->_pub_mode", $_lang ['the_page_timeout_notice'], "error", $output );
 				return $task_info;
 				break;

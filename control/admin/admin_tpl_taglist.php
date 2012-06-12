@@ -11,7 +11,7 @@ defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 kekezu::admin_check_role (29);
 $tag_list = kekezu::get_tag ();
 $tag_obj = new Keke_witkey_tag_class ();
-$template_arr = db_factory::query ( " select tpl_title from " . TABLEPRE . "witkey_template" );
+$template_arr = dbfactory::query ( " select tpl_title from " . TABLEPRE . "witkey_template" );
 $tag_type_arr = keke_global_class::get_tag_type ();
 
 $slt_page_size and $slt_page_size=intval ( $slt_page_size ) or $slt_page_size = 10;

@@ -23,7 +23,7 @@ $url = "index.php?do=$do&view=$view&w[order_status]=$w[order_status]&w[order_id]
 
 $bank_arr     = keke_global_class::get_bank();
 if (isset ( $ac )) { //处理财务清单申请
-$order_info=db_factory::get_one(" select * from ".TABLEPRE."witkey_order_charge where order_id = ".intval($order_id));
+$order_info=dbfactory::get_one(" select * from ".TABLEPRE."witkey_order_charge where order_id = ".intval($order_id));
 //邮件
 $message_obj = new keke_msg_class ();
 $order_info or kekezu::admin_show_msg ( $_lang['charge_num_not_exist'], $url,3,'','warning');

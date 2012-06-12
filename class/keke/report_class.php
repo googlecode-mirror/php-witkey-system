@@ -66,7 +66,7 @@ abstract class keke_report_class {
 	 */
 	public static function get_report_info($report_id) {
 		$sql = sprintf ( "select * from %switkey_report where report_id='%d'", TABLEPRE, $report_id );
-		return db_factory::get_one ( $sql );
+		return dbfactory::get_one ( $sql );
 	}
 	/**
 	 * 检测是否申请举报(维权|投诉)
@@ -79,7 +79,7 @@ abstract class keke_report_class {
 	 */
 	public static function check_if_report($type, $obj, $obj_id, $uid, $to_uid) {
 		global $_lang;
-		$if_report = db_factory::get_count ( sprintf ( " select report_id from %switkey_report where report_type='%d' and obj='%s'
+		$if_report = dbfactory::get_count ( sprintf ( " select report_id from %switkey_report where report_type='%d' and obj='%s'
 		 and obj_id='%d' and uid='%d' and to_uid='%d'", TABLEPRE, $type, $obj, $obj_id, $uid, $to_uid ) );
 		$trans_name = keke_report_class::get_transrights_name ( $type ); //交易维权中文表示
 		if (! $if_report) {
@@ -99,11 +99,11 @@ abstract class keke_report_class {
 		global $_lang;
 		switch ($report_info ['obj']) { //交易维权类型
 			case "task" : //任务。
-				$obj_info = db_factory::get_one ( sprintf ( " select task_id origin_id,uid origin_uid,model_id,task_title origin_title,task_status as origin_status,real_cash as cash,is_trust,trust_type from %switkey_task where task_id='%d'", TABLEPRE, $report_info ['origin_id'] ) );
+				$obj_info = dbfactory::get_one ( sprintf ( " select task_id origin_id,uid origin_uid,model_id,task_title origin_title,task_status as origin_status,real_cash as cash,is_trust,trust_type from %switkey_task where task_id='%d'", TABLEPRE, $report_info ['origin_id'] ) );
 				$re_obj = "<a href=\"" . $_K ['siteurl'] . "/index.php?do=task&task_id=" . $obj_info ['origin_id'] . "\">" . $obj_info ['origin_title'] . "</a>";
 				break;
 			case "work" : //稿件 
-				$model_id = db_factory::get_count ( sprintf ( " select model_id from %switkey_task where task_id='%d'", TABLEPRE, $report_info ['origin_id'] ) );
+				$model_id = dbfactory::get_count ( sprintf ( " select model_id from %switkey_task where task_id='%d'", TABLEPRE, $report_info ['origin_id'] ) );
 				$model_id or kekezu::admin_show_msg ( $_lang ['friendly_notice'], 'index.php?do=trans&view=rights', 2, $_lang ['this_task_has_delete'] );
 				$model_info = kekezu::$_model_list [$model_id];
 				$sql = " select a.task_id origin_id,a.task_title origin_title,a.uid origin_uid,a.model_id,a.task_status origin_status,a.real_cash cash,a.is_trust,a.trust_type ";
@@ -113,16 +113,16 @@ abstract class keke_report_class {
 
 					$sql .= ",b.bid_id obj_id,b.uid obj_uid,b.bid_status obj_status from %switkey_task a left join %switkey_task_bid b on a.task_id=b.task_id where b.bid_id='%d'";
 					//获取中标稿件数量
-					$bid_count = db_factory::get_count ( sprintf ( " select count(bid_id) from %switkey_task_bid where task_id='%d' and bid_status='4'", TABLEPRE, $report_info ['origin_id'] ) );
+					$bid_count = dbfactory::get_count ( sprintf ( " select count(bid_id) from %switkey_task_bid where task_id='%d' and bid_status='4'", TABLEPRE, $report_info ['origin_id'] ) );
 				} else { //悬赏
 					
 
 					$sql .= ",b.work_id obj_id,b.uid obj_uid,b.work_status obj_status from %switkey_task a left join %switkey_task_work b on a.task_id=b.task_id where b.work_id='%d'";
 					//获取中标稿件数量
-					$bid_count = db_factory::get_count ( sprintf ( " select count(work_id) from %switkey_task_work where task_id='%d' and work_status not in(0,5,7,8) ", TABLEPRE, $report_info ['origin_id'] ) );
+					$bid_count = dbfactory::get_count ( sprintf ( " select count(work_id) from %switkey_task_work where task_id='%d' and work_status not in(0,5,7,8) ", TABLEPRE, $report_info ['origin_id'] ) );
 				}
 				
-				$obj_info = db_factory::get_one ( sprintf ( $sql, TABLEPRE, TABLEPRE, $report_info ['obj_id'] ) );
+				$obj_info = dbfactory::get_one ( sprintf ( $sql, TABLEPRE, TABLEPRE, $report_info ['obj_id'] ) );
 				
 				$obj_info ['bid_count'] = $bid_count;
 				$re_obj = "<a href=\"" . $_K ['siteurl'] . "/index.php?do=task&task_id=" . $obj_info ['origin_id'] . "&view=list_work&work_id=" . $obj_info ['obj_id'] . "\">" . $obj_info ['origin_title'] . "</a>";
@@ -130,14 +130,14 @@ abstract class keke_report_class {
 			case "product" : //商品
 				
 
-				$obj_info = db_factory::get_one ( sprintf ( " select service_id origin_id,uid origin_uid,model_id,title origin_title from %switkey_service where service_id='%d'", TABLEPRE, $report_info ['obj_id'] ) );
+				$obj_info = dbfactory::get_one ( sprintf ( " select service_id origin_id,uid origin_uid,model_id,title origin_title from %switkey_service where service_id='%d'", TABLEPRE, $report_info ['obj_id'] ) );
 				$re_obj = "<a href=\"" . $_K ['siteurl'] . "/shop.php?do=service&service_id=" . $obj_info ['origin_id'] . "\">" . $obj_info ['origin_title'] . "</a>";
 				break;
 			case "order" : //订单
 				$sql = " select a.obj_id obj_id,b.order_id origin_id,b.order_uid origin_uid,b.seller_uid obj_uid,
 					b.order_status obj_status,b.order_amount cash,b.model_id,b.order_name obj_title from %switkey_order b left join 
 					%switkey_order_detail a on a.order_id=b.order_id where b.order_id='%d'";
-				$obj_info = db_factory::get_one ( sprintf ( $sql, TABLEPRE, TABLEPRE, $report_info ['origin_id'] ) );
+				$obj_info = dbfactory::get_one ( sprintf ( $sql, TABLEPRE, TABLEPRE, $report_info ['origin_id'] ) );
 				break;
 		}
 		if ($report_info ['report_status'] == '1') { //变更为处理中状态
@@ -211,14 +211,14 @@ abstract class keke_report_class {
 				switch ($obj) {
 					case "task" :
 					case "work" :
-						$task_info = db_factory::get_one ( sprintf ( " select task_title from %switkey_task where task_id='%d'", TABLEPRE, $origin_id ) );
-						$res = db_factory::execute ( sprintf ( " update %switkey_task set task_status='11' where task_id='%d' ", TABLEPRE, $origin_id ) );
+						$task_info = dbfactory::get_one ( sprintf ( " select task_title from %switkey_task where task_id='%d'", TABLEPRE, $origin_id ) );
+						$res = dbfactory::execute ( sprintf ( " update %switkey_task set task_status='11' where task_id='%d' ", TABLEPRE, $origin_id ) );
 						$re_type = $_lang ['task'];
 						$re_obj = "<a href=\"" . $_K ['siteurl'] . "/index.php?do=task&task_id=" . $origin_id . "\">" . $task_info ['task_title'] . "</a>";
 						break;
 					case "order" :
-						$order_info = db_factory::get_one ( sprintf ( " select order_name origin_title from %switkey_order where order_id='%d'", TABLEPRE, $origin_id ) );
-						$res = db_factory::execute ( sprintf ( " update %switkey_order set order_status='arbitral' where order_id='%d' ", TABLEPRE, $origin_id ) );
+						$order_info = dbfactory::get_one ( sprintf ( " select order_name origin_title from %switkey_order where order_id='%d'", TABLEPRE, $origin_id ) );
+						$res = dbfactory::execute ( sprintf ( " update %switkey_order set order_status='arbitral' where order_id='%d' ", TABLEPRE, $origin_id ) );
 						$re_type = $_lang ['order'];
 						$re_obj = "<a href=\"" . $_K ['siteurl'] . "/index.php?do=user&view=finance&op=order\">" . $order_info ['origin_title'] . "</a>";
 						break;
@@ -260,16 +260,16 @@ abstract class keke_report_class {
 							} else {
 								$to_status = '8';
 							}
-							$res = db_factory::execute ( sprintf ( " update %switkey_task set task_status='%d' where task_id='%d' ", TABLEPRE, $to_status, $report_info ['origin_id'] ) );
+							$res = dbfactory::execute ( sprintf ( " update %switkey_task set task_status='%d' where task_id='%d' ", TABLEPRE, $to_status, $report_info ['origin_id'] ) );
 						} else { //还原状态
-							$res = db_factory::execute ( sprintf ( " update %switkey_task set task_status='%d' where task_id='%d' ", TABLEPRE, $front_status, $report_info ['origin_id'] ) );
+							$res = dbfactory::execute ( sprintf ( " update %switkey_task set task_status='%d' where task_id='%d' ", TABLEPRE, $front_status, $report_info ['origin_id'] ) );
 						}
 						break;
 					case "order" : //解冻
 						if ($process_type == 'pass') {
-							$res = db_factory::execute ( sprintf ( " update %switkey_order set order_status='arbitral_confirm' where order_id='%d' ", TABLEPRE, $report_info ['origin_id'] ) );
+							$res = dbfactory::execute ( sprintf ( " update %switkey_order set order_status='arbitral_confirm' where order_id='%d' ", TABLEPRE, $report_info ['origin_id'] ) );
 						} else { //还原状态
-							$res = db_factory::execute ( sprintf ( " update %switkey_order set order_status='%s' where order_id='%d' ", TABLEPRE, $front_status, $report_info ['origin_id'] ) );
+							$res = dbfactory::execute ( sprintf ( " update %switkey_order set order_status='%s' where order_id='%d' ", TABLEPRE, $front_status, $report_info ['origin_id'] ) );
 						}
 						break;
 					case "product" :
@@ -408,7 +408,7 @@ abstract class keke_report_class {
 	 */
 	public static function change_status($report_id, $status, $op_result = null, $process_result = null) {
 		$sql = sprintf ( "update %switkey_report set report_status= '%d',op_uid='%d',op_username='%s',op_result='%s',op_time='%d'  where report_id='%d'", TABLEPRE, $status, $op_result ['op_uid'], $op_result ['op_username'], $process_result, $op_result ['op_time'], $report_id );
-		return db_factory::execute ( $sql );
+		return dbfactory::execute ( $sql );
 	}
 	/**
 	 * 重置任务
@@ -418,7 +418,7 @@ abstract class keke_report_class {
 	public function reset_task($task_id, $delay_days) {
 		$end_time = time () + $delay_days * 3600 * 24;
 		$sql = sprintf ( "update %switkey_task set task_status = 2,end_time = %d where task_id = %d ", TABLEPRE, $end_time, $task_id );
-		return db_factory::execute ( $sql );
+		return dbfactory::execute ( $sql );
 	}
 	/**
 	 * 撤销中标
@@ -429,12 +429,12 @@ abstract class keke_report_class {
 		global $kekezu;
 		$model_info = kekezu::$_model_list [$this->_obj_info ['model_id']];
 		if ($model_info ['model_code'] == 'dtender' || $model_info ['model_code'] == 'tender') { //招标取消中标
-			db_factory::execute ( sprintf ( "update %switkey_task_bid set bid_status = 8 where bid_id = '%d'", TABLEPRE, $obj_id ) );
+			dbfactory::execute ( sprintf ( "update %switkey_task_bid set bid_status = 8 where bid_id = '%d'", TABLEPRE, $obj_id ) );
 		} elseif ($model_info ['model_code'] == 'sreward' || $model_info ['model_code'] == 'mreward' || $model_info ['model_code'] == 'preward') { //悬赏取消中标
-			db_factory::execute ( sprintf ( "update %switkey_task_work set work_status = 8 where work_id = '%d'", TABLEPRE, $obj_id ) );
+			dbfactory::execute ( sprintf ( "update %switkey_task_work set work_status = 8 where work_id = '%d'", TABLEPRE, $obj_id ) );
 		}
 		/** 中标次数-1**/
-		db_factory::execute ( sprintf ( " update %switkey_space set accepted_num = accepted_num-1 where uid = '%d'", TABLEPRE, $this->_obj_info ['obj_uid'] ) );
+		dbfactory::execute ( sprintf ( " update %switkey_space set accepted_num = accepted_num-1 where uid = '%d'", TABLEPRE, $this->_obj_info ['obj_uid'] ) );
 		/** 终止威客的此次推广事件*/
 		$kekezu->init_prom ();
 		$p_event = kekezu::$_prom_obj->get_prom_event ( $this->_task_id, $this->_obj_info ['obj_uid'], "bid_task" );
@@ -587,7 +587,7 @@ abstract class keke_report_class {
 		} elseif ($type == 2) {
 			$sql = sprintf ( "update %switkey_space set seller_credit = seller_credit-%d where uid=%d", TABLEPRE, $value, $uid );
 		}
-		return db_factory::execute ( $sql );
+		return dbfactory::execute ( $sql );
 	}
 	/**
 	 * 加黑名单，账号冻结多少天
@@ -598,21 +598,21 @@ abstract class keke_report_class {
 		$uid = $this->_to_user_info ['uid'];
 		if ($days) {
 			$sql = sprintf ( "update %switkey_space set status=2 where uid=%d", TABLEPRE, $uid );
-			db_factory::execute ( $sql );
+			dbfactory::execute ( $sql );
 		} else {
 			return false;
 		}
 		$expire = $days * 3600 * 24;
 		//判断是否已经在黑名单
 		$sql2 = sprintf ( "select count(*) as c  from %switkey_member_black where uid = %d ", TABLEPRE, $uid );
-		if (db_factory::get_count ( $sql2 )) {
+		if (dbfactory::get_count ( $sql2 )) {
 			//在黑名单就更新到期时间
 			$sql3 = sprintf ( "update %switkey_member_black set expire = if(expire>unix_timestamp(),expire+%d, unix_timestamp()+%d) where uid = %d ", TABLEPRE, $expire, $expire, $uid );
 		} else {
 			//不在就添加记录
 			$sql3 = sprintf ( "insert into %switkey_member_black (uid,expire,on_time) values (%d,%d,%d)", TABLEPRE, $uid, $expire, time () );
 		}
-		db_factory::execute ( $sql3 );
+		dbfactory::execute ( $sql3 );
 		return true;
 	
 	}

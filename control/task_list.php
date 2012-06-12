@@ -61,12 +61,12 @@ $where = get_where ( $path );
 $page_size = isset ( $page_size ) ? intval ( $page_size ) : 20;
 $url = "index.php?do=task_list&path=$path&min=$min&max=$max&model_ids=$model_ids&page_size=$page_size"; // 排序
 
-$count = db_factory::execute ( $sql . $where );
+$count = dbfactory::execute ( $sql . $where );
 $page = isset($page) ? $page : 1;
 $pages = $page_obj->getPages ( $count, $page_size, $page, $url );
 $limit = $pages ['where']; // 数组
                           
-$task_list_arr = db_factory::query ( $sql . $where . $limit );
+$task_list_arr = dbfactory::query ( $sql . $where . $limit );
 
 // 查询条件
 $check_arr = keke_search_class::get_path_url ( $where_arr, $path ); 
@@ -352,7 +352,7 @@ function get_wbtask_info($path) {
 	   where model_id =9 and %s";
 	}
 	if ($sql) {
-		$result_arr = db_factory::query ( sprintf ( $sql, TABLEPRE, TABLEPRE, TABLEPRE, $where ) );
+		$result_arr = dbfactory::query ( sprintf ( $sql, TABLEPRE, TABLEPRE, TABLEPRE, $where ) );
 		while ( list ( $key, $value ) = each ( $result_arr ) ) {
 			$result [$value ['task_id']] = $value ['platform'];
 		}

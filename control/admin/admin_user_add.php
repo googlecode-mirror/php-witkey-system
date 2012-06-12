@@ -12,32 +12,32 @@ $space_class = new keke_table_class ( 'witkey_space' );
 //$member_group_class=new keke_table_class ('witkey_member_group');
 $edituid and $member_arr = kekezu::get_user_info ( $edituid );
 // $edituid and $memberinfo_arr = $member_arr;
-$member_group_arr = db_factory::query ( sprintf ( "select group_id,groupname from %switkey_member_group", TABLEPRE ) );
+$member_group_arr = dbfactory::query ( sprintf ( "select group_id,groupname from %switkey_member_group", TABLEPRE ) );
 
 if ($is_submit == 1) {
 	//添加用户
 	if (! $edituid) {
 		$reg_uid = $reg_obj->user_register ( $fds [username], md5 ( $fds [password] ), $fds ['email'], null, false,$fds [password] );
 		unset ( $fds [repassword] );
-		is_null ( $fds ['group_id'] ) or db_factory::execute ( sprintf ( "update %switkey_space set group_id={$fds['group_id']} where uid=$reg_uid", TABLEPRE ) );
+		is_null ( $fds ['group_id'] ) or dbfactory::execute ( sprintf ( "update %switkey_space set group_id={$fds['group_id']} where uid=$reg_uid", TABLEPRE ) );
 		kekezu::admin_system_log ( $_lang['add_member'] . $fds ['username'] );
 		kekezu::admin_show_msg ( $_lang['operate_notice'], "index.php?do=user&view=add", 3, $_lang['user_creat_success'] ,'success');
 	} else { //编辑用户
 		//unset($fds[repassword]);
 		if ($fds ['password']) {
 			//sec_code
-			$slt = db_factory::get_count ( sprintf ( "select rand_code from %switkey_member where uid = '%d'", TABLEPRE, $edituid ) );
+			$slt = dbfactory::get_count ( sprintf ( "select rand_code from %switkey_member where uid = '%d'", TABLEPRE, $edituid ) );
 			$sec_code = keke_user_class::get_password ( $fds ['password'], $slt );
 			$fds ['sec_code'] = $sec_code;
 			$pwd = md5 ( $fds ['password'] );
 			$fds [password] = $pwd;
-			db_factory::execute ( sprintf ( "update %switkey_member set password ='%s' where uid=%d", TABLEPRE, $pwd, $edituid ) );
+			dbfactory::execute ( sprintf ( "update %switkey_member set password ='%s' where uid=%d", TABLEPRE, $pwd, $edituid ) );
 	 	}else{
 	 		unset($fds['password']);
 	 	}
  
 		$space_class->save ( $fds, array ("uid" => "$edituid" ) ); //存储信息 
-		//is_null ( $fds ['group_id'] ) or db_factory::execute ( sprintf ( "update %switkey_space set group_id={$fds['group_id']} where uid='$edituid'", TABLEPRE ) );
+		//is_null ( $fds ['group_id'] ) or dbfactory::execute ( sprintf ( "update %switkey_space set group_id={$fds['group_id']} where uid='$edituid'", TABLEPRE ) );
 		/* $add_balance = $fds ['balance'] - $member_arr ['balance']; //加钱
 		$add_credit = $fds ['credit'] - $member_arr ['credit'];
 		$message_str = "";

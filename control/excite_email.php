@@ -10,7 +10,7 @@ if($user_info){
 	if($user_info['status']=='3'){
 		$md5_code = md5($user_info['uid'].','.$user_info['username'].','.$user_info['email']);
 		if($md5_code==$excite_code){
-			$res = db_factory::execute(sprintf("update %switkey_space set status='1' where uid='%d'",TABLEPRE,$excite_uid));
+			$res = dbfactory::execute(sprintf("update %switkey_space set status='1' where uid='%d'",TABLEPRE,$excite_uid));
 			$res and kekezu::show_msg($_lang['operate_notice'],'index.php?do=login',3,$_lang['your_username_has_activation_seccess'],'success') or kekezu::show_msg($_lang['operate_notice'],'index.php',3,$_lang['your_username_activation_fail'],'warning');
 		}else{
 			kekezu::show_msg($_lang['operate_notice'],'index.php',3,$_lang['user_activation_number_error'],'warning');

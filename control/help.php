@@ -14,15 +14,15 @@ $fpid or $fpid = $fpid_arr ['0'];
 //一级菜单初始PID参数
 /**  当前选中分类的二级菜单**/
 if ($fpid) {
-	$second_nav = db_factory::query ( sprintf ( " select art_cat_id,cat_name from %switkey_article_category where art_cat_pid='%d' order by listorder asc", TABLEPRE, $fpid ), 1, 3600 );
+	$second_nav = dbfactory::query ( sprintf ( " select art_cat_id,cat_name from %switkey_article_category where art_cat_pid='%d' order by listorder asc", TABLEPRE, $fpid ), 1, 3600 );
 	$second_nav = kekezu::get_arr_by_key ( $second_nav, "art_cat_id" );
 	$spid_arr = array_keys ( $second_nav );
 	$spid or $spid = $spid_arr ['0']; //2级菜单初始PID参数
 	/** 当前选择分类的三级菜单统计*/
-	$third_list = db_factory::query ( sprintf ( " select art_cat_pid from %switkey_article_category where INSTR(art_index,%d) and art_cat_pid!='%d' order by listorder asc", TABLEPRE, $fpid, $fpid ), 1, 3600 );
+	$third_list = dbfactory::query ( sprintf ( " select art_cat_pid from %switkey_article_category where INSTR(art_index,%d) and art_cat_pid!='%d' order by listorder asc", TABLEPRE, $fpid, $fpid ), 1, 3600 );
 	$third_list = kekezu::get_arr_by_key ( $third_list, "art_cat_pid" );
 	/** 当前选中二级菜单的三级菜单**/
-	$third_nav = db_factory::query ( sprintf ( " select art_cat_id,cat_name from %switkey_article_category where art_cat_pid='%d' order by listorder asc", TABLEPRE, $spid ), 1, 3600 );
+	$third_nav = dbfactory::query ( sprintf ( " select art_cat_id,cat_name from %switkey_article_category where art_cat_pid='%d' order by listorder asc", TABLEPRE, $spid ), 1, 3600 );
 	$third_nav = kekezu::get_arr_by_key ( $third_nav, "art_cat_id" );
 	$tpid_arr = array_keys ( $third_nav );
 	$tpid or $tpid = $tpid_arr ['0'];
@@ -35,9 +35,9 @@ if ($fpid) {
 	$tpid and $hpid = $tpid or $hpid = $spid;
 	//没有三级菜单时查找二级内容
 	$sql = sprintf ( " select art_id,art_title,content,views from %switkey_article where art_cat_id='%d' order by listorder desc ", TABLEPRE, $hpid );
-	$count = intval ( db_factory::execute ( $sql ) );
+	$count = intval ( dbfactory::execute ( $sql ) );
 	$pages = $page_obj->getPages ( $count, $page_size, $page, $url );
-	$help_list = db_factory::query ( $sql . $pages ['where'], 1, 3600 );
+	$help_list = dbfactory::query ( $sql . $pages ['where'], 1, 3600 );
 	
 	/**  seo**/
 	$page_title = $page_keyword = $second_nav [$spid] ['cat_name'];

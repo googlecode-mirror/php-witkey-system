@@ -5,11 +5,11 @@
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 
 intval ( $task_id ) or kekezu::admin_show_msg ( $_lang['param_error'], 'index.php?do=model&model_id=' . $model_id . '&view=list',3,'','warning' );
-$task_info = db_factory::get_one ( sprintf ( " select * from %switkey_task where task_id='%d'", TABLEPRE, $task_id ) );
+$task_info = dbfactory::get_one ( sprintf ( " select * from %switkey_task where task_id='%d'", TABLEPRE, $task_id ) );
 
 //任务推荐操作
 if($sbt_recmmend){
-	$res = db_factory::execute(sprintf("update %switkey_task set is_top=1 where task_id='%d' ",TABLEPRE,$task_id));
+	$res = dbfactory::execute(sprintf("update %switkey_task set is_top=1 where task_id='%d' ",TABLEPRE,$task_id));
 	$res and kekezu::admin_show_msg ( $_lang['task_operate_successfully'], "index.php?do=model&model_id=$model_id&view=list",3,'','success' ) or kekezu::admin_show_msg ( $_lang['task_operate_fail'], "index.php?do=model&model_id=$model_id&view=list",3,'','warning');
 }
 if ($sbt_edit) {//编辑
@@ -54,7 +54,7 @@ if ($sbt_edit) {//编辑
 	
 }else {
 	$process_arr = keke_task_config::can_operate ( $task_info ['task_status'] );
-	$file_list = db_factory::query ( sprintf ( " select * from %switkey_file where task_id='%d'", TABLEPRE, $task_id ) );
+	$file_list = dbfactory::query ( sprintf ( " select * from %switkey_file where task_id='%d'", TABLEPRE, $task_id ) );
 	$status_arr = sreward_task_class::get_task_status ();
 	
 	$payitem_list=keke_payitem_class::get_payitem_config('employer');

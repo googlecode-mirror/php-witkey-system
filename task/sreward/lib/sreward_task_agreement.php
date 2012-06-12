@@ -63,7 +63,7 @@ class sreward_task_agreement extends keke_task_agreement {
 		$model_code = $this->_model_code; //模型code
 		$agree_info = $this->_agree_info;
 		/**双方所得金额**/
-		$cash_info = db_factory::get_one ( sprintf ( " select task_cash,real_cash from %switkey_task where task_id = '%d'", TABLEPRE, $this->_task_id ) );
+		$cash_info = dbfactory::get_one ( sprintf ( " select task_cash,real_cash from %switkey_task where task_id = '%d'", TABLEPRE, $this->_task_id ) );
 		/** 评价数+2***/
 		$this->plus_mark_num ();
 		/**威客记录**/

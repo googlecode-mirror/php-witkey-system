@@ -17,11 +17,11 @@ if($search_type=='task'){
 	$search_id and 	$where .= sprintf(" and task_id=%d",$search_id);
 	$url = "index.php?do=case&view=search&page_size=$page_size&search_type=$search_type&search_id=$search_id";
 	$page_size = 5;
-	$count = db_factory::get_count(sprintf("select count(task_id) as c from `%switkey_task` where %s ",TABLEPRE,$where));
+	$count = dbfactory::get_count(sprintf("select count(task_id) as c from `%switkey_task` where %s ",TABLEPRE,$where));
 	$page = $page ? $page : 1;
 	$pages = kekezu::$_page_obj->getPages ( $count, $page_size, $page, $url );
 	$where .=$pages['where']; 
-	$task_case_arr = db_factory::query( $sql.$where);
+	$task_case_arr = dbfactory::query( $sql.$where);
 
 }elseif($search_type=='service'){
 	$sql =sprintf("select * from %switkey_service where ",TABLEPRE);  
@@ -29,11 +29,11 @@ if($search_type=='task'){
 	$search_id and 	$where .= sprintf(" and service_id=%d",$search_id);
 	$url = "index.php?do=case&view=search&page_size=$page_size&search_type=$search_type&search_id=$search_id";
 	$page_size = 5;
-	$count = db_factory::get_count(sprintf("select count(service_id) as c from `%switkey_service` where %s",TABLEPRE,$where));
+	$count = dbfactory::get_count(sprintf("select count(service_id) as c from `%switkey_service` where %s",TABLEPRE,$where));
 	$page = $page ? $page : 1;
 	$pages = kekezu::$_page_obj->getPages ( $count, $page_size, $page, $url );
 	$where .=$pages['where']; 
-	$task_case_arr = db_factory::query( $sql.$where);
+	$task_case_arr = dbfactory::query( $sql.$where);
 	
 }
 

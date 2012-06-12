@@ -15,7 +15,7 @@ $feed_obj = new Keke_witkey_feed_class ();
 $tag_obj = new Keke_witkey_tag_class ();
 $feed_type = keke_global_class::get_feed_type ();
 
-$template_arr = db_factory::query ( " select tpl_title from " . TABLEPRE . "witkey_template", 1, null );
+$template_arr = dbfactory::query ( " select tpl_title from " . TABLEPRE . "witkey_template", 1, null );
 
 $type or $type = 'data';
 intval ( $slt_page_size ) or $slt_page_size = 10;

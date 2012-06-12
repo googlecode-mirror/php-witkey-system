@@ -66,7 +66,7 @@ switch ($op) {
 					$res = $pay_api_obj->edit_keke_witkey_pay_api ();
 					kekezu::admin_system_log ( $_lang ['edit'] . $payment );
 				} else {
-					if (! db_factory::get_count ( sprintf ( " select payment from %switkey_pay_api where payment='%s'", TABLEPRE, $payment ) )) {
+					if (! dbfactory::get_count ( sprintf ( " select payment from %switkey_pay_api where payment='%s'", TABLEPRE, $payment ) )) {
 						$pay_api_obj->setPayment ( $payment );
 						$pay_api_obj->setType ( 'offline' );
 						$pay_api_obj->setConfig ( kekezu::k_input ( $config ) );
@@ -100,7 +100,7 @@ switch ($op) {
 		$payment_config = $payment_list [$payname];
 		$pay_config = unserialize ( $payment_config ['config'] );
 		$pay_config ['pay_status'] = 1;
-		$res = db_factory::updatetable ( TABLEPRE . 'witkey_pay_api', array ("config" => serialize ( $pay_config ) ), array ("payment" => $payname ) );
+		$res = dbfactory::updatetable ( TABLEPRE . 'witkey_pay_api', array ("config" => serialize ( $pay_config ) ), array ("payment" => $payname ) );
 		$op = $ac;
 		$url = "index.php?do=$do&view=$view&op=$op";
 		kekezu::admin_system_log ( "allow" . $payname );

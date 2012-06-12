@@ -8,7 +8,7 @@ kekezu::admin_check_role ( 11 );
 if($check_uid){
 	$sql = " select count(uid) from %switkey_member where ";
 	intval($check_uid) and $sql.=" uid='%d'" or $sql.=" username='%s'";
-	$count = db_factory::get_count(sprintf($sql,TABLEPRE,$check_uid));
+	$count = dbfactory::get_count(sprintf($sql,TABLEPRE,$check_uid));
 	if($count){
 		echo true;
 	}else{
@@ -23,7 +23,7 @@ if($is_submit){
 	if(intval($user)){
 		$uid  = intval($user);
 	}else{
-		$uid = db_factory::get_count(sprintf(" select uid from %switkey_member where username='%s'",TABLEPRE,$user));
+		$uid = dbfactory::get_count(sprintf(" select uid from %switkey_member where username='%s'",TABLEPRE,$user));
 	}
 	$res = keke_finance_class::cash_in($uid, $cash,0,'admin_charge');
 	$res and kekezu::admin_show_msg($_lang['charge_success'],$url,3,'','success') or kekezu::admin_show_msg($_lang['charge_fail'],"index.php?do=$do&view=$view",3,'','warning');

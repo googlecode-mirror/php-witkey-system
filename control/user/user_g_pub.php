@@ -36,7 +36,7 @@ if (isset ( $ac )) {
 	if ($ser_id) {
 		switch ($ac) {
 			case "del" :
-				$res = db_factory::execute ( sprintf ( " delete from %switkey_service where service_id='%d'", TABLEPRE, $ser_id ) );
+				$res = dbfactory::execute ( sprintf ( " delete from %switkey_service where service_id='%d'", TABLEPRE, $ser_id ) );
 				$res and kekezu::show_msg ( $_lang ['operate_notice'], $url, 3, $_lang ['g_delete_success'], 'success' ) or kekezu::show_msg ( $_lang ['operate_notice'], $url, 3, $_lang ['g_delete_fail'], 'warning' );
 				break;
 			case "edit" :
@@ -44,7 +44,7 @@ if (isset ( $ac )) {
 				require S_ROOT.'/shop/'.$model_code.'/control/'.$model_code.'_edit.php';
 				break;
 			case "check" :
-				$res = db_factory::get_count ( sprintf ( " select a.order_id from %switkey_order a left join 
+				$res = dbfactory::get_count ( sprintf ( " select a.order_id from %switkey_order a left join 
 					%switkey_order_detail b on a.order_id=b.order_id where a.model_id='%d' and b.obj_id='%d'
 					 and b.obj_type='service' and a.order_status not in ('close','arb_confirm')", TABLEPRE, TABLEPRE, $model_id, $ser_id ) );
 				$res and kekezu::echojson ( '', 1 ) or kekezu::echojson ( '', 0 );

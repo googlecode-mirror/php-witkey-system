@@ -56,7 +56,7 @@ $ord_arr=array(" a.$id_fds desc "=>$_lang['manuscript_id_desc'],
 	$work_arr  =call_user_func(array($cln,"get_work_status"));
 	$work_arr[0] = $_lang['yet_deal_with'];
 	//**周参加任务统计**//
-	$join_count=intval(db_factory::get_count(sprintf("select count(task_id) from %s%s
+	$join_count=intval(dbfactory::get_count(sprintf("select count(task_id) from %s%s
  	where YEARWEEK(FROM_UNIXTIME(%d)) = YEARWEEK('%s') and uid='%d' ",TABLEPRE,$tab_name,$time_fds,date('Y-m-d H:i:s',time()),$uid)));
 		
 	$sql=" select a.$satus_fds,a.$time_fds,a.$id_fds,b.task_id,b.task_cash,b.task_title,b.model_id,b.task_cash_coverage,b.task_status from ".TABLEPRE
@@ -72,10 +72,10 @@ $ord_arr=array(" a.$id_fds desc "=>$_lang['manuscript_id_desc'],
 	$page_size and $page_size=intval($page_size) or $page_size='10';
 	$page and $page=intval($page) or $page='1';
 	$url="index.php?do=$do&view=$view&op=$op&model_id=$model_id&page_size=$page_size&task_status=$task_status&$satus_fds=".$$satus_fds."&page=$page";
-	$count=intval(db_factory::execute($count_sql.$where));
+	$count=intval(dbfactory::execute($count_sql.$where));
 	$pages=$page_obj->getPages($count, $page_size, $page, $url);
 
-	$task_info = db_factory::query($sql.$where.$pages['where']);
+	$task_info = dbfactory::query($sql.$where.$pages['where']);
 }
 require keke_tpl_class::template ( "user/" . $do . "_".$view."_" . $op );
 

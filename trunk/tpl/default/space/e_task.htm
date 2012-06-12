@@ -1,0 +1,40 @@
+<!--{eval require keke_tpl_class::template(SKIN_PATH."/space/{$type}_nav")}-->    
+		<div class="main_con">
+            
+            	<h1 class="font16b c000 mt_20">{$_lang['related_task']}</h1>
+                
+                <!--tab_select-->
+                <div class="tab_select mt_15 clearfix">
+                	<span {if $action=='pub'} class="select_task" {/if}><a href="index.php?do=space&member_id=$member_id&view=task&action=pub">{$_lang['pub_task']}</a></span>
+                    <span {if $action=='join'} class="select_task" {/if}><a href="index.php?do=space&member_id=$member_id&view=task&action=join">{$_lang['to_task']}</a></span>
+                    <span class="sort po_re clearfix">
+                    	  <b class="block fl_l sort_title">{$_lang['order_way']}{$_lang['zh_mh']}</b>
+                    	 {if $ord==1||!$ord} <a href="index.php?do=space&member_id=$member_id&view=task&action=$action&page=$page&page_size=$page_size&ord=2" class="select_method" >{$_lang['time']}¡ü</a>{/if}
+						  {if $ord==2}<a href="index.php?do=space&member_id=$member_id&view=task&action=$action&page=$page&page_size=$page_size&ord=1"> {$_lang['time']}¡ý</a> {/if}
+                        
+                    </span>
+                </div>
+                <!--end tab_select-->
+                
+                <!--task_list_con-->
+                <div class="task_list_con clearfix">
+                	<div class=" pt_15 clearfix">
+                		{loop $task_arr $k $v}
+                    	<p class="clearfix"><span><b class="font16">&yen;</b>$v['task_cash']</span><a href="index.php?do=task&task_id=$v['task_id']"><!--{eval echo kekezu::cutstr($v['task_title'], 50);}--></a></p>
+						{/loop}
+                       </div>
+                </div>
+                <!--end task_list_con-->
+                
+            </div>
+            <!--end wrapper_con--> 
+            <div class="clear"></div>
+                
+            <!--page ·­Ò³ start-->
+            <div class="pages">
+             $pages['page']
+            </div>
+            <!--page ·­Ò³ end-->
+            </div>
+            <div class="clear"></div>
+  <!--{template footer}-->

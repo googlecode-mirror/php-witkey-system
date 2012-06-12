@@ -1,0 +1,26 @@
+<!--{eval require keke_tpl_class::template(SKIN_PATH."/space/{$type}_nav")}-->   
+            <!--main_con-->
+            <div class="main_con">
+            
+            	<h1 class="font16b c000 s_l_title mt_20">{$_lang['corporate_members']}</h1>
+                
+                <div class="clear"></div>
+                
+            {loop $e_member_arr $k $v}
+                <div class="member_list_box mt_20 clearfix">
+                
+                	<img src="$v['member_pic']" alt="" />
+                    <div class="right_con clearfix">
+                    	<h2 class="c000">$v['truename']</h2>
+                         $v['member_desc']
+                    </div>
+                    
+                </div>
+				{/loop} 
+            </div>
+            <!--end main_con-->
+            </div>
+			
+            <div class="clear"></div>
+            
+<!--{template footer}-->

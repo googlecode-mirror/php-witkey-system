@@ -1,0 +1,191 @@
+<!--{eval require keke_tpl_class::template(SKIN_PATH."/space/{$type}_nav")}-->
+</head>
+<body>
+    <!--页面内容-->
+    <div class="container_24 clearfix">
+
+        <div class="clearfix masonry" id="container">
+			 <!--右边固定部分-->
+            <div class="corner-stamp grid_6 fl_r omega alpha pb_10 clearfix">
+                <div class="user_info grid_6 fl_r omega alpha m_bk clearfix">
+                    <div class="user_info_1">
+                        <h3 class="pad10 font12">$member_info[username]{$_lang['zh_mh']}<span class="font_normal ws_break block">
+                           {$p_shop_info[shop_slogans]}</span></h3>
+                    </div>
+                    <div class="user_info_2 clearfix pt_5 pb_5">
+                        <p class="grid_3 t_c omega">
+                            <a href="#" class="font14b">{if $member_info[seller_total_num]}<!--{eval echo ($member_info[seller_good_num]/$member_info[seller_total_num]*100)}-->{else}0{/if}%</a>
+                            <span class="block">{$_lang['favorable_rate']}</span>
+                        </p>
+                        <p class="grid_3 t_c alpha">
+                            <a href="#" class="c690 font14b">$member_info[seller_credit]</a>
+                            <span class="block">{$_lang['ability_value']}</span>
+                        </p>
+                    </div>
+                    <div class="user_info_3 pt_5 pb_5 pad20 clearfix">
+                        <!--辅助评价start-->
+						{loop $buyer_aid $k $v}
+                        <div class="clearfix">
+                                <div class="fl_l mr_10">
+                                    <b>{$v['aid_name']}</b>
+                                    {$v['avg']}{$_lang['fen']}
+                                </div>
+                                <div class="fl_l mt_5">
+                                    <div class="stars mar0">
+                                        <!--{eval echo keke_user_mark_class::gen_star($v['avg'],$k);}-->
+                                    </div>
+                                </div>
+                        </div>
+                        {/loop}<!--辅助评价end-->
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <div class="mt_10 grid_6 omega alpha fl_r  search m_bk">
+                   <div class="pad10">
+                    <form class="clearfix" action="index.php?do=space&member_id=$member_id&view=goods" method="post">
+                        <div class="po_re">
+                            <input type="text" name="title"  value={$_lang['to_search_product_name']}  title={$_lang['to_search_product_name']} id="title_search" style="color:#999; text-indent:15px"/>
+                            <div class="icon16 zoom po_ab search_img"></div>
+                        </div>
+                    </form>
+					  <div class="tags clearfix">{$_lang['skill']}
+					 </div>
+                    <div class="tags clearfix mt_5">
+                    	{if $skill_arr}
+                       	  {loop $skill_arr $v}
+								<a href="javascript:void(0);">{$v}</a>
+                          {/loop}
+						{else}{$_lang['none']}
+						{/if}
+						{if !$skill_arr&&$uid==$member_id}
+							 <a href="index.php?do=user&view=setting&op=basic&opp=skill" class="button"><span class="icon cog"></span>{$_lang['setting_skills_tab']}</a>
+						{/if}
+                    </div>
+                   </div> 
+                </div>
+            </div>			
+            <!--end 右边固定部分-->
+			
+			<!--其他浮动部分-->
+			{loop $service_arr $k $v}
+            <div class="box grid_6 alpha mb_10 goods">
+                <div class="pad10 clearfix">
+                    <div class="block po_re clearfix" onMouseover="show_new('$v[service_id]');">
+                    	<img  alt="$v[title]" onerror="this.src='{$_K[siteurl]}/{SKIN_PATH}/img/shop/shop_default.gif'" name="lazyImg" src="{if $v[pic]}$v[pic]{else}resource/img/system/shop_default_big.jpg{/if}">
+						<div class="shade" style="display:none" id="p_$v[service_id]">
+							<ul>
+	                        	<li><a href="index.php?do=service&sid=$v[service_id]" target="_blank"><div class="icon16 expand reverse"></div>{$_lang['open_new_window']}</a></li>
+	                        	<li><a href="index.php?do=shop_order&sid=$v[service_id]"><div class="icon16 download reverse"></div>{$_lang['purchase']}</a></li>
+							</ul>
+                        </div>
+					</div>
+					<div class="po_re goods_words mt_10">
+						<a href="index.php?do=service&sid=$v[service_id]" class="goods_word" title="$v[title]"><span class="mr_10 red">{$_lang['currency']}$v[price]</span>$v[title]fdsfsdg</a>
+                	</div>
+                </div>
+            </div>
+            {/loop}
+			 <!--end 其他浮动部分-->
+
+		</div>
+    </div>
+
+<script type="text/javascript">
+ 
+    // Masonry corner stamp modifications
+    $.Mason.prototype.resize = function(){
+        this._getColumns('masonry');
+        this._reLayout();
+    };
+    
+    $.Mason.prototype._reLayout = function(callback){
+        var freeCols = this.cols;
+        if (this.options.cornerStampSelector) {
+            var Test = this.element.find(this.options.cornerStampSelector), cornerStampX = Test.offset().left -
+            (this.element.offset().left + this.offset.x + parseInt(Test.css('marginLeft')));
+            freeCols = Math.floor(cornerStampX / this.columnWidth);
+        }
+        // reset columns
+        var i = this.cols;
+        this.colYs = [];
+        while (i--) {
+            this.colYs.push(this.offset.y);
+        }
+        
+        for (i = freeCols; i < this.cols; i++) {
+            this.colYs[i] = this.offset.y + Test.outerHeight(true);
+        }
+        
+        // apply layout logic to all bricks
+        this.layout(this.Bricks, callback);
+    };
+    
+    $(function(){
+    
+        $('#container').masonry({
+            itemSelector: '.box',
+            columnWidth: 30,
+            cornerStampSelector: '.corner-stamp'
+        });
+        
+        
+        
+    });
+    
+</script>
+    <script>
+        var member_id = $member_id;
+        function show_new(service_id){
+            var service_id = service_id;
+            $("#p_" + service_id).show();
+            $("#p_" + service_id).mouseout(function(){
+                $("#p_" + service_id).hide();
+            });
+        }
+        $("#title_search").blur(function(){
+            title_search();
+        });
+        $("#title_search").focus(function(){
+            $("#title_search").val('');
+        });
+        
+        function title_search(){
+			
+            var title = $("#title_search").val();
+            var url = 'index.php?do=space&member_id=' + member_id + '&view=goods&title=' + title;
+			if($.trim(title)){
+				location.href=url;
+			}else{
+				$("#title_search").val($("#title_search").attr("original-title"));
+			}
+        }
+        
+        document.getElementById("title_search").onkeydown = function(event){
+            if ($.browser.msie) {
+                if (window.event.keyCode == 13) {
+                    title_search();
+                }
+            }
+            else {
+                if (event.keyCode == 13) {
+                    title_search();
+                }
+            }
+            
+        }
+        
+        $(".goods img").mouseover(function(){
+        	var m_height = $(this).height();
+        	$(this).siblings(".shade").css('height',m_height);
+        });
+        
+        $(".goods_words,.goods").mouseover(function(){
+    		$(this).css('z-index','2');
+    	});
+    	$(".goods_words,.goods").mouseout(function(){
+    		$(this).css('z-index','1');
+    	});
+    </script>
+
+ 
+    <!--{template footer}-->

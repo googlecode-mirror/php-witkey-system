@@ -1,0 +1,58 @@
+  <!--{template control/admin/tpl/admin_header}-->
+<div class="page_title">
+    <h1>{$_lang['union_api_config_manage']}</h1>
+    <div class="tool">
+       		 <a href="index.php?do=keke&view=account&op=config" class="here">{$_lang['union_api_config']}</a>
+		{if !$config['keke_app_id']}
+			<a href="index.php?do=keke&view=account&op=apply">¡™√Àapi…Í«Î</a>
+		{/if}
+    </div>
+</div>
+<div class="box post">
+    <div class="tabcon">
+        <div class="title">
+            <h2>{$_lang['union_api_config']}</h2>
+        </div>
+        <div class="detail">
+            <form name="frm_config_kekeapi" id="frm_config_kekeapi" action="index.php?do=keke&view=account" method="post" accept-charset="{$_K['charset']}">
+            	<input type="hidden" name="op" value="{$op}" />
+            	<input type="hidden" name="old_keke_id" value="{$config['keke_app_id']}" />
+            	<input type="hidden" name="old_keke_secret" value="{$config['keke_app_secret']}" />
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tbody id="qq">
+                        <tr>
+                            <th scope="row" width="130">
+                                UNIOappid{$_lang['zh_mh']}
+                            </th>
+                            <td>
+                                <label><input type="text" size="50" name="keke_id" class="txt" value="{$config['keke_app_id']}" limit="type:int" msg="UNIOappid" title={$_lang['unionapp_id']} msgArea="txt_unio_appid_msg"/><span id="txt_unio_appid_msg"></span>({$_lang['union_api_id']})</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" width="130">
+                                UNIOappsecret{$_lang['zh_mh']}
+                            </th>
+                            <td>
+                                <label><input type="text" size="50" name="keke_secret" value="{$config['keke_app_secret']}" limit="type:string" msg="UNIOappsecret" title={$_lang['unionapp_id']} msgArea="txt_uniosecret_msg" class="txt"/><span id="txt_uniosecret_msg"></span>({$_lang['union_app_secret_id']})</label>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <th scope="row">
+                        &nbsp;
+                    </th>
+                    <td>
+                        <div class="clearfix padt10">
+                            <button class="positive pill primary button" type="submit" name='submit' value="{$_lang['submit']}">
+                                <span class="check icon"></span>{$_lang['submit']}
+                            </button>
+                            <button class="pill button" type="button" onclick="history.go(-1);" value="{$_lang['return']}">
+                                <span class="leftarrow icon"></span>{$_lang['return']}
+                            </button>
+                        </div>
+                    </td>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+<!--{template control/admin/tpl/admin_footer}-->

@@ -1,0 +1,100 @@
+<!--{template header}-->
+<!--contain start-->
+<div class="wrapper">
+    <div class="container_24">
+        <!--{template user/user_nav}--><!--main start-->
+        <section class="clearfix section">
+        <!--{template user/user_side}-->
+        <div class="show_panel container_24 po_re">
+        <div class="prefix_3">
+            <div class="panel clearfix box">
+                <!--main content-->
+                <div class="grid_21">
+                	 <!--header内容头部 start-->
+                            <header class="clearfix box_header">
+                                <h2 class="grid_4 alpha box_title t_c">{$_lang['view_message']}</h2>
+								 <nav class="box_nav ">
+	                                        <ul>
+                                            <li {if $op=='inbox'&&$opp=='system'}  class="selectedLava" {/if}>
+                                                <a href="index.php?do=$do&view=$view&op=inbox&opp=system" original-title="{$_lang['system_msg']}">{$_lang['system_msg']}</a>
+                                            </li>
+                                            <li {if $opp=='inbox'}  class="selectedLava" {/if}>
+                                                <a href="index.php?do=$do&view=$view&op=inbox&opp=inbox" original-title="{$_lang['private_message']}">{$_lang['private_message']}</a>
+                                            </li>
+                                            <li {if $op=='outbox'}  class="selectedLava" {/if}>
+                                                <a href="index.php?do=$do&view=$view&op=outbox" original-title="{$_lang['private_message']}">{$_lang['sms_has_been_sent']}</a>
+                                            </li>
+                                            <li {if $op=='send'}  class="selectedLava" {/if}>
+                                                <a href="index.php?do=$do&view=$view&op=send" original-title="{$_lang['private_message']}">{$_lang['write_message']}</a>
+                                            </li>
+											
+                                        </ul>
+                                    </nav>
+                                <div class="clear">
+                                </div>
+                            </header>
+                            <!--header内容头部 end-->
+					
+				<div class="prefix_1 suffix_1">
+                                <!--from表单 start-->
+								
+                                <div class="clearfix box font14 mt_10">
+                                	
+                                   
+                                        
+                                            <!--<b class="grid_2 t_r">
+                                             	 短信标题:
+                                            </b>-->
+											<b class="font16 c03a">$msg['title']</b>
+                                        
+										<div class="clear"></div>
+                                        <div class=" mb_5">
+                                            <lable class="font12">
+                                                                                                                                  {$_lang['to_user']}:
+                                            </lable>
+                                           <span class="font12">$msg['to_username']</span>
+                                        </div>
+										<div class=" mb_5">
+                                            <lable class="font12">
+                                                                                                                                  {$_lang['time']}:
+                                            </lable>
+                                           <span class="font12"><!--{date('Y-m-d',$msg['on_time'])}--> </span>
+                                        </div>
+										<div class=" mb_5">
+                                            <lable class="font12">
+                                                                                                                                  {$_lang['from_user']}:
+                                            </lable>
+                                           <span class="font12">{if $msg['uid']}$msg['username']{else}{$_lang['system_msg']}{/if}</span>
+                                        </div>
+										
+										<div class="clear"></div>
+										
+                                        <div class="rowElem clearfix border_t_c prefix_1 suffix_1">
+                                            <!--<b class="grid_2 t_r font14">
+                                                                                                                                   短信内容:
+                                            </b>-->
+											<div class="clear"></div>
+										    <p class="mt_5  ml_5 ws_break">$msg['content']</p>                             
+                                        </div>
+                                        
+                                        <div class="rowElem clearfix form_button">
+                                            
+											 <a  class="button mr_10" href="javascript:void(0)"  onclick="history.go(-1);"> {$_lang['return']}</button>
+                        					<a  class="button" href="index.php?do=$do&view=$view&op=$op&page=$page&ac=del&msg_id=$msg_id">{$_lang['delete']}</a>
+                                        </div>
+                                
+                                </div>
+                            </div>
+                </div>
+                <!--main content end -->
+                <div class="clear">
+                </div>
+            </div>
+        </div>
+        </section>
+        <!--main end-->
+    </div>
+</div>
+<!--contain end-->
+<!--{template user/user_footer}-->
+<!--{template footer}-->

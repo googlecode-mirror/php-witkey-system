@@ -1,0 +1,84 @@
+<!--{template header}--><!--弹窗--> 
+ <style type="text/css">
+ 	.file{position:absolute; font-size:22px;;filter:alpha(opacity=0);-moz-opacity:0;opacity:0;z-index:1}
+ </style>
+<div class="prefix_3">
+ <div class="panel clearfix box {$_K['theme']}_style">
+ <!--main content-->
+ <div class="grid_12">
+  <div class="step_progress clearfix"></div>
+  <div class="prefix_1 suffix_1">
+   <div class="clearfix box font14">
+    <!--from表单 start-->   
+	{if $service_cash>=$quote}
+		<div class="rowElem clearfix">
+	   	 <div class="grid_10 omega t_c">
+			 <div class="grid_7">
+				{$_lang['you_haved_trusted']}{$_lang['zh_mh']}
+					<font color="red">{$service_cash}</font>,
+				{$_lang['witkey']}{$_lang['tender_price']}{$_lang['zh_mh']}<font color="red">{$quote}</font>
+				</br>{$_lang['not_need_host']}{if $service_cash>$quote}{$_lang['over_will_be_return']}{/if}
+			</div>
+	  	</div>
+	 	</div> 
+	{else}
+		<div class="rowElem clearfix">
+	   	 <div class="grid_10 omega t_c">
+			 <div class="grid_7">
+				{$_lang['tender_price']}{$_lang['zh_mh']}<font color="red">{$quote}</font>,{$_lang['you_haved_trusted']}{$_lang['zh_mh']}<font color="red">{$service_cash}</font>,{$_lang['still_trust']}{$_lang['zh_mh']}<font color="red">{$sy_cash}</font> 
+			</div>
+	  	</div>
+	 	</div> 
+		<div class="rowElem clearfix">
+	       	 <div class="grid_10 omega">
+	      		 <label class="grid_2 t_r">{$_lang['now_your_balance']}{$_lang['zh_mh']} </label>
+				 <div class="grid_7">
+				 <font color="red">{$user_info[balance]}</font>{$_lang['cash']}　<font color="red">{$user_info[credit]}</font>{CREDIT_NAME}
+				  <div class="clear"></div>
+					<div class=" prefix_5 c999 t_c"></div>
+				</div>
+	      	</div>
+	     </div>   	
+		<div class="rowElem clearfix">    		
+	       	 <div class="grid_10 omega">
+	      		<label class="grid_2 t_r">{$_lang['trusted_cash']}{$_lang['zh_mh']}</label>
+				 <div class="grid_10">
+				 	<font color="red">{$sy_cash}</font>
+				 </div>
+	         </div>
+	    </div>
+	{/if}
+	<div class="rowElem clearfix form_button">
+   	 	 <button type="button" class="button" value="{$_lang['save']}" onclick="subWork()"><span class="check icon"></span>{$_lang['save']}</button>
+	 	 <button type="button" class="button" value="{$_lang['cancel']}" onclick="closeWindow('{$op}')"><span class="reload icon"></span>{$_lang['cancel']}</button>
+  	</div>  
+  <!--from表单 end-->
+  </div>
+ </div>
+ </div>
+ </div>
+</div>
+<script type="text/javascript">
+
+function subWork(){	
+	$.post(basic_url+'&op={$op}',{sbt_edit:true},
+	function(json){
+		if(json.status=='1'){
+			showDialog(json.data,'right',json.msg,"location.href='"+basic_url+"&view=work'");closeWindow('{$op}');return false;
+			}
+		else{
+			showDialog(json.data,'alert',json.msg);return false;
+		}
+	},'json');		
+}
+	
+	function closeWindow(win){
+		hideWindow(win);
+	}	
+                 
+</script>
+
+<script type="text/javascript"  >
+	In('form');
+</script>
+<!--{template footer}-->

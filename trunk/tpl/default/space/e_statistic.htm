@@ -1,0 +1,83 @@
+<!--{eval require keke_tpl_class::template(SKIN_PATH."/space/{$type}_nav")}--> 
+<div class="main_con clearfix">
+            
+            	<h1 class="font16b c000  mt_20">{$_lang['company_statistic']}</h1>
+                
+                <!--sta_num-->
+                <div class="sta_num mt_5 clearfix">
+                	<div class="sta_num_list fl_l">
+                    	<p>{$_lang['grade']}:<span>$credit_level['pic']</span></p>
+                        <p>{$_lang['credit_value']}:<span>$member_info['seller_credit']</span><b>£¨{$_lang['purchase_commodity_number']} $buy_service_num £©</b></p>
+                        <p>{$_lang['ability_value']}:<span>$member_info['buyer_credit']</span><b>£¨{$_lang['sale_goods_number']} $pub_service_num £©</b></p>
+                     	<p>{$_lang['favorable_rate']}:<span>{if $member_info['buyer_total_num']}<!--{eval echo number_format($member_info['buyer_good_num']/$member_info['buyer_total_num'],2)*100}-->{else}0{/if}%</span><b></b></p>
+                    </div>
+                	<div class="blue_bk fl_r"></div>
+				</div>
+				<!--end sta_num-->
+				
+				<div class="clear"></div>
+					<form class="stars_form sta_num_list" > 
+                          {loop $saler_aid $k $v}
+                                <div class="border_b_c clearfix">
+                                    <div class="mt_10">
+                                        <p class="grid_4 omega alpha">
+                                            {$v['aid_name']}
+                                            <font color="red">
+                                                {$v['avg']}
+                                            </font>{$_lang['fen']}
+                                        </p>
+                                       
+                                        <div class="grid_3 alpha">
+                                            <div class="stars ">
+                                                <!--{eval echo keke_user_mark_class::gen_star($v['avg'],$k);}-->
+                                            </div>
+                                        </div>
+                                        <p class="fl_r">
+                                        		 {$_lang['total']}{$v['count']}{$_lang['people']}
+                                        </p>
+                                    </div>
+                                </div>
+                                {/loop}<!--¸¨ÖúÆÀ¼Ûend-->
+                        </form> 
+                
+				<div class="clear"></div> 
+                <!--comment_box-->
+				{loop $shop_arr $k $v}
+                     <div class="comment_box clearfix">
+                	<p><!--{eval echo date("Y-m-d H:i:s","$v['mark_time']")}--></p>
+                    <p class="add_num clearfix">
+                    	{$_lang['sale_goods']}
+                        <span>¡°<a href="index.php?do=service&sid=$v['service_id']">$v['title']</a>¡±</span>
+                        {$_lang['get']}
+                        <span class="attribute">{$_lang['credit_value']}</span>
+                        <span class="points">$v['mark_value']{$_lang['point']}</span>
+                    </p>
+                    <div class="comment_con clearfix">
+                    	<p class="clearfix">
+                        	<b>{$_lang['buyer']}<a class="user_name" href="#">$v['by_username']</a>{$_lang['evaluation']}:</b>
+                        	<span>$v['mark_content']</span>
+                            <a class="more_con" href="index.php?do=service&sid=$v['service_id']&view=mark">{$_lang['view_details']}</a>
+                        </p>
+                    </div>
+                </div>
+				{/loop}
+                <!--end comment_box-->
+            
+         
+                
+            </div>
+            <!--end wrapper_con-->
+            
+            <div class="clear"></div>
+                
+            <!--page ·­Ò³ start-->
+            <div class="pages">
+                 $pages['page']
+            </div>
+            <!--page ·­Ò³ end-->
+            <div class="clear"></div>
+    <script type="text/javascript">
+		In('rating','metaData','css_rating');
+    </script>
+<!--{template footer}-->
+

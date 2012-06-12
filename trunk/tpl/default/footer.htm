@@ -1,0 +1,226 @@
+<!--{if !isset($inajax)}-->
+
+<!--“≥Ω≈ satrt-->
+<footer class="footer">
+<!--Õ¯’æ¡¥Ω”“‘º∞”Ô—‘¿∏ πÿ◊¢Œ“√« À—À˜ start-->
+<section class="site_bottom">
+</section>
+ {if $do !='space'}
+<section class="site_links clearfix">
+ <div class="container_24 ">
+  <!--Õ¯’æµÿÕº start-->
+  {if $do!='user'}
+    <div class="sitemap">
+    
+	<div class="grid_5">
+                <dl>
+                    <dt>{$_lang['recommend_cate']}</dt>
+                      <dd>
+                           <ul>
+                            {loop $indus_p_arr $k $v}
+								{if $v['is_recommend']==1}
+				            	<li><a href="index.php?do=task_list&path=A{$k}"  target="_blank">{$v['indus_name']}</a></li>
+								{/if}
+							{/loop}
+                           </ul>
+                      </dd>
+                </dl>
+      </div>
+	
+     <div class="grid_3">
+       <dl>
+         <dt>{$_lang['task_hall']}</dt>
+            <dd>
+             <ul>
+                <li><a href="index.php?do=release" target="_blank">{$_lang['pub_task']}</a></li>
+				 {loop $link_task $v}
+					{if $v['model_type']=='task'&&$v['model_status']=='1'}
+                      <li><a href="index.php?do=task_list&path=B{$v['model_id']}" target="_blank">{$v['model_name']}</a></li>
+					{/if}
+				 {/loop}
+              </ul>
+             </dd>
+        </dl>
+      </div>
+	  
+      <div class="grid_3">
+         <dl>
+            <dt>{$_lang['witkey_shop']}</dt>
+              <dd>
+                 <ul>
+				    {loop $link_task $v}
+						{if $v['model_type']=='shop'&&$v['model_status']=='1'}
+	                      <li><a href="index.php?do=shop&path=B{$v['model_id']}" target="_blank">{$v['model_name']}</a></li>
+						{/if}
+					 {/loop}
+                 </ul>
+                </dd>
+         </dl>
+     </div>
+            <div class="grid_3">
+                <dl>
+                   <dt>{$_lang['news_center']}</dt>
+                      <dd>
+                          <ul>
+                          	{loop $link_news $v}
+                          	  <li><a href="index.php?do=article&view=article_list&art_cat_id={$v['art_cat_id']}" target="_blank">{$v['cat_name']}</a></li>
+							{/loop}
+                          </ul>
+                      </dd>
+                </dl>
+            </div>
+            
+            <div class="grid_3">
+                <dl>
+                    <dt>{$_lang['case_display']}</dt>
+                      <dd>
+                     	  <ul>
+                            <li><a href="index.php?do=case" target="_blank">{$_lang['success_case']}</a></li>
+							
+                          </ul>
+                       </dd>
+                 </dl>
+            </div>
+            <div class="grid_3" style="display:none;">
+              <dl>
+                 <dt>{$_lang['talent_resource']}</dt>
+                      <dd>
+                          <ul>
+                              <li><a href="index.php?do=talent" target="_blank">{$_lang['talent_recommend']}</a></li>
+                              <li><a href="index.php?do=talent" target="_blank">{$_lang['talent_list']}</a></li>
+                          </ul>
+                      </dd>
+               </dl>
+            </div>
+                    <div class="grid_3">
+                    	<dl>
+                        	<dt>{$_lang['about_website']}</dt>
+                            <dd>
+                            	<ul>
+                                	<li><a href="index.php?do=article&view=article_list&art_cat_id=202" target="_blank">{$_lang['about_us']}</a></li>
+									<li><a href="index.php?do=link" target="_blank">{$_lang['friend_link']}</a></li>
+                                </ul>
+                            </dd>
+                        </dl>
+                    </div>
+                    <div class="grid_3">
+                    	<dl>
+                        	<dt>{$_lang['help_center']}</dt>
+                            <dd>
+                            	<ul>
+                            		
+							    	{loop $link_help $k $v}
+							       		 <li><a href="index.php?do=help&fpid={$k}" target="_blank"><span>{$v['cat_name']}</span></a></li>
+									{/loop}
+                                </ul>
+                            </dd>
+                        </dl>
+                    </div>
+                    </div>
+                    <!--Õ¯’æµÿÕº end-->
+                    <div class="line"></div>
+					{/if}
+                    <!--”Ô—‘¿∏ πÿ◊¢Œ“√« À—À˜ start-->
+                    <div class="site_attach">
+                        <div class="grid_5">
+                            <form action="" method="post" id="lan_bottom">
+                                <div class="clearfix">
+                                     <label class="fl_l t_r">{$_lang['language']}</label>
+                                     <select id="lan" name="lan" style="width:100px" onchange="setLang(this.value)">
+									  {loop $lang_list $k $v}
+									    <option value="{$k}" {if $k==$language}selected{/if}>{$v}</option>
+									  {/loop}
+                                     </select>
+                                 </div>
+                            </form>
+							
+                        </div>
+						<div class="grid_7 lineh_32">
+								<a href="index.php?do=mobile">{$_lang['wap']}</a>
+						</div>
+						{if $attent_api_open}
+                        <div class="grid_6 t_r">
+                        	<dl class="social">
+                            	<dt>{$_lang['about_us_']}</dt>
+                            	<dd>
+                                	<ul>
+                                {loop $attent_api_open $k $v}
+									{if $attent_list[$k]['v']}
+										<li>
+											<!--{eval $i = explode("_", $k);$i = $i['0'];$j=($attent_list[$k]['v']);}--> 
+											<a href="index.php?do=wb&focus=$j&wb_type=$i"><img src="resource/img/ico/{$i}_t.gif" title="$attent_list[$k]['desc']"></a> 
+										</li>
+									{/if}
+								{/loop}
+								</ul>
+                                </dd>
+                            </dl>
+                        </div>
+						{/if}
+                    </div>
+                    <!--”Ô—‘¿∏ πÿ◊¢Œ“√« À—À˜ end-->
+                    <div class="clear mb_10"></div>
+                </div>
+            </section>
+            <!--Õ¯’æ¡¥Ω”“‘º∞”Ô—‘¿∏ πÿ◊¢Œ“√« À—À˜ end-->
+			{/if}
+            <!--Õ¯’æ∞Ê»®…˘√˜ start-->
+            <section class="site_copyright clearfix">
+            	<div class="container_24 clearfix">
+                	<div class="grid_24">
+            
+                    	 	<dl>
+							<dt>
+                    	 		{$_lang['company']}{$basic_config['company']}<span class="pad10">{$_lang['address']}{$basic_config['address']}</span>{$_lang['contact_phone']}{$basic_config['phone']}
+							</dt>
+							<dd>
+                    	 	{P_NAME}{KEKE_VERSION} Copyright &copy; 2009 -2011 kekezu. All rights reserved <a href="http://icp.valu.cn/" target="_blank">{$basic_config['filing']}</a>
+								{if KEKE_DEBUG}
+								<span>
+									Querys: <!--{eval echo  database::instance()->get_query_num()}-->
+									 &nbsp;
+									Times:<!--{eval  $t =  kekezu::execute_time(); echo $t[0]}-->
+								</span>			
+								{/if}
+							</dd>  
+                    	 	</dl>
+
+						 <div class="clear"></div>
+						 <div class="clearfix">$basic_config['stats_code']</div>
+                    </div>
+                    <div class="clear mb_10"></div>
+                </div>
+            </section>
+            <!--Õ¯’æ∞Ê»®…˘√˜ end-->
+            
+            <!--∑µªÿ∂•≤ø start-->
+			
+        	<nav class="fl_r clearfix">
+                <ul>
+                    <li><a class="top" href="#pageTop" title="Back to top"><em>&diams;</em>Top</a></li>
+                </ul>
+            </nav>
+            <!--∑µªÿ∂•≤ø end-->
+    </footer>
+    <!--“≥Ω≈ end-->
+</div>
+{if $uid}
+	<!--{eval kekezu::update_oltime($uid,$username)}-->
+{/if}
+<script type="text/javascript">
+{if $exec_time_traver}
+$(function(){
+  // $.get('js.php?op=time&r='+Math.random());	
+})
+{/if}
+ //js“Ï≤Ωº”‘ÿ
+	In('header_top','custom','lavalamp','tipsy','autoIMG','slides');
+</script>
+
+
+<!--[if IE 6]></div><![endif]-->
+<!--[if IE 7]></div><![endif]-->
+<!--[if IE 8]></div><![endif]-->
+</body>
+</html>
+<!--{/if}-->

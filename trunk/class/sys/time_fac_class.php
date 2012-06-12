@@ -5,7 +5,7 @@ class time_fac_class {
 	
 	function __construct() {
 		global $kekezu;
-		$this->_basic_config = $kekezu->_sys_config;
+		$this->_basic_config = kekezu::$_sys_config;
 	}
 	function run() {
 		global $model_list;

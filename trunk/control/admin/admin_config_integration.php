@@ -17,7 +17,7 @@ if ($setting == 'del'){
 	$config_obj->setWhere("k='user_intergration'");
 	$config_obj->setV(1);
 	$config_obj->edit_keke_witkey_basic_config();
-	$kekezu->_cache_obj->gc();
+	kekezu::$_cache_obj->gc();
 
 	kekezu::admin_system_log($_lang['uninstall_log_msg']);//ÈÕÖ¾¼ÇÂ¼
 
@@ -85,7 +85,7 @@ if ($type == 'uc'){
 	 	$config_obj->setV(2);
 		$config_obj->edit_keke_witkey_basic_config();
 
-		$kekezu->_cache_obj->gc();
+		kekezu::$_cache_obj->gc();
 
 		kekezu::admin_system_log($_lang['uc_integrate_log']);
 

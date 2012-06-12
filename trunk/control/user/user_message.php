@@ -64,7 +64,7 @@ if($ac=='del'&&$msg_id&&$op=='inbox'){
 if (isset ( $check_username ) && ! empty ( $check_username )) {
 	$res =  keke_user_class::check_username ( $check_username );
 	 
-	if($kekezu->_sys_config['user_intergration']==1){
+	if(kekezu::$_sys_config['user_intergration']==1){
 		if($res){
 			echo true;
 		}

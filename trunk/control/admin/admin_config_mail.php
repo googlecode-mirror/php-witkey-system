@@ -29,7 +29,7 @@ if (isset ( $submit )) {
 	}
 	kekezu::admin_system_log($_lang['email_config_param']);
 	if ($res) {
-		$kekezu->_cache_obj->set ( "keke_witkey_basic_config", $config_basic_arr );
+		kekezu::$_cache_obj->set ( "keke_witkey_basic_config", $config_basic_arr );
 		kekezu::admin_show_msg ( $_lang['submit_success'], $url,3,'','success' );
 	} else {
 		kekezu::admin_show_msg ( $_lang['website_config_fail'], $url,3,'','warning' );

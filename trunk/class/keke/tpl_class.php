@@ -194,7 +194,7 @@ class keke_tpl_class {
 	
 	static function readtag($name) {
 		global $kekezu; 	
-		$tag_arr = $kekezu->_tag;
+		$tag_arr = kekezu::$_tag;
 		$tag_info = $tag_arr [$name];
 		if ($tag_info ['tag_type'] == 5) {
 			$content = htmlspecialchars_decode ( $tag_info ['code'] );

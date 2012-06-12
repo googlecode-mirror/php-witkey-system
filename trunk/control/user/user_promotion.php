@@ -26,7 +26,7 @@ switch ($show){
 	case "bid_task":
 	case "service":
 		$model_list = kekezu::get_table_data("model_id,model_name","witkey_model","model_status='1'","","","","model_id",3600);
-		$indus_list = $kekezu->_indus_arr;
+		$indus_list = kekezu::$_indus_arr;
 		break;
 }
 require keke_tpl_class::template("user/user_".$op);

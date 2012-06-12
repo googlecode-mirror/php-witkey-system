@@ -99,12 +99,7 @@ class keke_core_class extends keke_base_class {
 	}
 	
 	static function get_format_size($bytes) {
-		$units = array (
-				0 => 'B',
-				1 => 'kB',
-				2 => 'MB',
-				3 => 'GB' 
-		);
+		$units = array (0 => 'B',1 => 'kB',2 => 'MB',3 => 'GB'	);
 		$log = log ( $bytes, 1024 );
 		$power = ( int ) $log;
 		$size = pow ( 1024, $log - $power );
@@ -130,15 +125,9 @@ class keke_core_class extends keke_base_class {
 	}
 
 	public static function register_autoloader($callback = null) {
-		spl_autoload_unregister ( array (
-				'keke_core_class',
-				'autoload' 
-		) );
+		spl_autoload_unregister ( array ('keke_core_class','autoload') );
 		isset ( $callback ) and spl_autoload_register ( $callback );
-		spl_autoload_register ( array (
-				'keke_core_class',
-				'autoload' 
-		) );
+		spl_autoload_register ( array (	'keke_core_class','autoload') );
 	
 	}
 	public static function keke_require_once($filename, $class_name = null) {
@@ -146,7 +135,7 @@ class keke_core_class extends keke_base_class {
 	}
 	
 	public static function autoload($class_name) {
-		//try{
+		try{
 		    $class_name = strtolower($class_name);
 			$path = str_replace ( '_', '/', $class_name);
 			if (strpos ( $class_name, '_class' )) {
@@ -154,13 +143,12 @@ class keke_core_class extends keke_base_class {
 			}
 			
 			if(($class=kekezu::find_file('class', $path.EXT,$class_name.EXT))!=null){
-				//self::keke_require_once ( $class );
 				require $class;
 				return true;
 			}
-		/* }catch (Exception $e){
+		 }catch (Exception $e){
 			throw new keke_exception($e);
-		} */
+		} 
 		return false;
  	}
 	/**
@@ -228,7 +216,7 @@ class keke_core_class extends keke_base_class {
 	 */
 	public static function get_ext_type() {
 		global $kekezu;
-		$basic_config = $kekezu->_sys_config;
+		$basic_config = kekezu::$_sys_config;
 		$flie_types = explode ( '|', $basic_config ['file_type'] );
 		
 		foreach ( $flie_types as $k => $v ) {
@@ -267,7 +255,7 @@ class keke_core_class extends keke_base_class {
 	static function update_oltime() {
 		global $_K, $kekezu;
 		$res = null;
-		$login_uid = $kekezu->_uid;
+		$login_uid = kekezu::$_uid;
 		$user_oltime = dbfactory::get_one ( sprintf ( "select last_op_time from %switkey_member_oltime where uid = '%d'", TABLEPRE, $login_uid ) );
 		if ((SYS_START_TIME - $user_oltime ['last_op_time']) > $_K ['timespan']) {
 			$res = dbfactory::execute ( sprintf ( "update %switkey_member_oltime set online_total_time = online_total_time+%d,last_op_time = '%d' where uid = '%d'", TABLEPRE, $_K ['timespan'], SYS_START_TIME, $login_uid ) );
@@ -313,36 +301,34 @@ class kekezu extends keke_core_class {
 	public static $_safe_mode ;
 	public static $_magic_quote;
 	public static $_log;
-	public $_sys_config;
-	public $_basic_arr;
-	public $_uid;
-	public $_username;
-	public $_userinfo;
-	public $_template;
-	public $_model_list;
-	public $_nav_list;
-	public $_user_group;
+	public static $_sys_config;
+	public static $_uid;
+	public static $_username;
+	public static $_userinfo;
+	public static $_template;
+	public static $_model_list;
+	public static $_nav_list;
+	public static $_user_group;
 	public static $_tpl_obj;
 	public static $_cache_obj;
 	public static $_page_obj;
-	public $_session_obj;
-	public $_mark;
-	public $_finance;
-	public $_tag;
-	public $_messagecount;
-	public $_indus_p_arr;
-	public $_indus_c_arr;
-	public $_indus_arr;
-	public $_prom_obj;
-	public $_weibo_list;
-	public $_api_open;
-	public $_lang;
-	public $_lang_list;
-	public $_style_path;
-	public $_weibo_attent;
-	public $_attent_api_open;
-	public $_is_allow_fxx = 1;
-	public $_website_session;
+	public static $_session_obj;
+	public static $_mark;
+	public static $_finance;
+	public static $_tag;
+	public static $_messagecount;
+	public static $_indus_p_arr;
+	public static $_indus_c_arr;
+	public static $_indus_arr;
+	public static $_prom_obj;
+	public static $_weibo_list;
+	public static $_api_open;
+	public static $_lang;
+	public static $_lang_list;
+	public static $_style_path;
+	public static $_weibo_attent;
+	public static $_attent_api_open;
+	 
 	public static $_db;
  	
 	protected static $_files = array ();
@@ -400,19 +386,16 @@ class kekezu extends keke_core_class {
 		
 		$this->init_user ();
 		
-			// kekezu::$_cache_obj = cache::instance ();
-			// kekezu::$_tpl_obj = new keke_tpl_class ();
-			// kekezu::$_page_obj = new keke_page_class ();
-			// $this->_tag = kekezu::get_tag ();
+		kekezu::$_cache_obj = cache::instance ();
+		kekezu::$_tpl_obj = new keke_tpl_class ();
+		kekezu::$_page_obj = new keke_page_class ();
+
 		$this->init_out_put ();
-		//$this->init_model ();
-		//$this->init_industry ();
-		//$this->init_oauth ();
 		$this->init_lang ();
-		//$this->init_weibo_attent ();
+
 		self::$_log = log::instance()->attach(new keke_log_file());
-		if (!isset($_SESSION['auid']) and $this->_sys_config ['is_close'] == 1 && substr ( $_SERVER ['PHP_SELF'], - 24 ) != '/control/admin/index.php') {
-			kekezu::show_msg ( $_lang ['site_is_close_notice'], 'index.php', 20, $_lang ['site_close_reason_notice'] . $this->_sys_config ['close_reason'] . '！', 'warning' );
+		if (!isset($_SESSION['auid']) and kekezu::$_sys_config ['is_close'] == 1 && substr ( $_SERVER ['PHP_SELF'], - 24 ) != '/control/admin/index.php') {
+			kekezu::show_msg ( $_lang ['site_is_close_notice'], 'index.php', 20, $_lang ['site_close_reason_notice'] . kekezu::$_sys_config ['close_reason'] . '！', 'warning' );
 		}
 		
 		  
@@ -422,34 +405,32 @@ class kekezu extends keke_core_class {
 	 */
 	function init_config() {
 		global $i_model, $_lang, $_K;
-		$sql = sprintf("select config_id,k,v,type,listorder from %switkey_basic_config",TABLEPRE);
+		$sql = sprintf("select k,v from %switkey_basic_config",TABLEPRE);
 		
 		if(($basic_arr = cache::instance('sqlite')->generate_id($sql)->get(null))==null){
 			$basic_arr = db::query($sql)->execute();
 			cache::instance('sqlite')->generate_id($sql)->set(null,$basic_arr);
 		}
-		$this->_basic_arr = $basic_arr ;
+		kekezu::$_sys_config = $basic_arr ;
 		
 		$config_arr = array ();
 		$size = sizeof ( $basic_arr );
 		for($i = 0; $i < $size; $i ++) {
 			$config_arr [$basic_arr [$i] ['k']] = $basic_arr [$i] ['v'];
 		}
-		$mtime = explode ( ' ', microtime () );
-
 		$sql = sprintf('select * from %switkey_nav where ishide!=1 order by listorder',TABLEPRE);
 		if(($nav_list=cache::instance('sqlite')->generate_id($sql)->get(null))==null){
 			$nav_list = db::query($sql)->execute();
 			cache::instance('sqlite')->generate_id($sql)->set(null, $nav_list);
 		}
 		$nav_list = kekezu::get_arr_by_key($nav_list,'nav_id');
-		$this->_nav_list = $nav_list;
+		kekezu::$_nav_list = $nav_list;
 		$template = kekezu::get_tpl ();
-		$this->_template = $template ['tpl_title'];
+		kekezu::$_template = $template ['tpl_title'];
 		$map_config = unserialize ( $config_arr ['map_api_open'] );
 		// $map_config ['google_api'] == 1 and $map_api = 'google' or;
 		$map_api = "baidu";
-		$_K ['timestamp'] = $mtime [1];
+		$_K ['timestamp'] = $_SERVER['REQUEST_TIME'];
 		$_K ['charset'] = CHARSET;
 		$_K ['template'] = $template ['tpl_title'];
 		$_K ['theme'] = $template ['tpl_pic'];
@@ -476,23 +457,22 @@ class kekezu extends keke_core_class {
 		define ( "CREDIT_NAME", $config_arr ['credit_rename'] ? $config_arr ['credit_rename'] : $_lang ['credit'] );
 		define ( "EXP_NAME", $config_arr ['exp_rename'] ? $config_arr ['exp_rename'] : $_lang ['experience'] );
 		define ( 'FORMHASH', kekezu::formhash () );
-		$this->_sys_config = $config_arr;
-		$this->_style_path = $_K ['siteurl'] . "/" . SKIN_PATH;
+		kekezu::$_sys_config = $config_arr;
+		kekezu::$_style_path = $_K ['siteurl'] . "/" . SKIN_PATH;
 	
 	}
 	/**
 	 * 初始化用户
 	 */
 	function init_user() {
-		global $kekezu, $_K;
+		global $_K;
 		if (isset ( $_SESSION ['uid'] )) {
-			
-			$this->_uid = $_SESSION ['uid'];
-			$this->_username = $_SESSION ['username'];
-			$this->_userinfo = keke_user_class::get_user_info ( $this->_uid );
-			$this->_user_group = $this->_userinfo ['group_id'];
+			kekezu::$_uid = $_SESSION ['uid'];
+			kekezu::$_username = $_SESSION ['username'];
+			kekezu::$_userinfo = keke_user_class::get_user_info ( kekezu::$_uid );
+			kekezu::$_user_group = kekezu::$_userinfo ['group_id'];
 			$sql = "select count(msg_id) from %switkey_msg where to_uid = '%d' and view_status=0 and msg_status!=1";
-			$this->_messagecount = dbfactory::get_count ( sprintf ( $sql, TABLEPRE, $this->_uid ) );
+			kekezu::$_messagecount = dbfactory::get_count ( sprintf ( $sql, TABLEPRE, kekezu::$_uid ) );
 		} elseif (isset ( $_COOKIE ['user_login'] )) {
 			$temp = unserialize ( keke_encrypt_class::decode ( $_COOKIE ['user_login'] ) );
 			$_SESSION ['uid'] = $temp ['uid'];
@@ -501,45 +481,45 @@ class kekezu extends keke_core_class {
 		}
 	}
 	function init_prom() {
-		$this->_prom_obj = keke_prom_class::get_instance ();
+		kekezu::$_prom_obj = keke_prom_class::get_instance ();
 	}
 	function init_industry() {
 		
-		$this->_indus_p_arr =  kekezu::get_table_data ( '*', "witkey_industry", "indus_type=1 and indus_pid = 0 ", "listorder asc ", '', '', 'indus_id', 3600 );
-		$this->_indus_c_arr = kekezu::get_table_data ( '*', 'witkey_industry', 'indus_type=1 and indus_pid >0', 'listorder', '', '', 'indus_id', 3600 );
-		$this->_indus_arr = kekezu::get_table_data ( '*', 'witkey_industry', '', 'listorder', '', '', 'indus_id', 3600 );
+		kekezu::$_indus_p_arr =  kekezu::get_table_data ( '*', "witkey_industry", "indus_type=1 and indus_pid = 0 ", "listorder asc ", '', '', 'indus_id', 3600 );
+		kekezu::$_indus_c_arr = kekezu::get_table_data ( '*', 'witkey_industry', 'indus_type=1 and indus_pid >0', 'listorder', '', '', 'indus_id', 3600 );
+		kekezu::$_indus_arr = kekezu::get_table_data ( '*', 'witkey_industry', '', 'listorder', '', '', 'indus_id', 3600 );
 	
 	}
 	function init_oauth() {
 		
-		foreach ( $this->_basic_arr as $k => $v ) {
-			($v ['type'] == 'weibo' || $v ['type'] == 'interface') and $this->_weibo_list [$v ['k']] = $v ['v'];
+		foreach ( kekezu::$_basic_arr as $k => $v ) {
+			($v ['type'] == 'weibo' || $v ['type'] == 'interface') and kekezu::$_weibo_list [$v ['k']] = $v ['v'];
 		}
-		$this->_api_open = unserialize ( $this->_sys_config ['oauth_api_open'] );
+		kekezu::$_api_open = unserialize ( kekezu::$_sys_config ['oauth_api_open'] );
 	
 	}
 	/**
 	 * 微博关注
 	 */
 	function init_weibo_attent() {
-		foreach ( $this->_basic_arr as $k => $v ) {
-			$v ['type'] == 'attention' and $this->_weibo_attent [$v ['k']] = $v ['v'];
+		foreach ( kekezu::$_basic_arr as $k => $v ) {
+			$v ['type'] == 'attention' and kekezu::$_weibo_attent [$v ['k']] = $v ['v'];
 		}
-		$this->_attent_api_open = unserialize ( $this->_sys_config ['attent_api_open'] );
+		kekezu::$_attent_api_open = unserialize ( kekezu::$_sys_config ['attent_api_open'] );
 	}
 	function init_lang() {
-		$this->_lang_list = keke_lang_class::lang_type ();
-		$this->_lang = keke_lang_class::get_lang ();
+		kekezu::$_lang_list = keke_lang_class::lang_type ();
+		kekezu::$_lang = keke_lang_class::get_lang ();
 	}
 	function init_model() {
 		$model_arr = db::select ( '*' )->from ( 'witkey_model' )->cached ()->execute ();
-		$this->_model_list = kekezu::get_arr_by_key ( $model_arr, 'model_id' );
+		kekezu::$_model_list = kekezu::get_arr_by_key ( $model_arr, 'model_id' );
 	}
 	/**
 	 * 初始化标签
 	 */
 	function init_tag() {
-		 $this->_tag or $this->_tag = kekezu::get_tag ();
+		 kekezu::$_tag = kekezu::get_tag ();
 	}
 	function init_session() {
 		keke_session::get_instance ();
@@ -547,8 +527,6 @@ class kekezu extends keke_core_class {
 	}
 	function init_out_put() {
 		global  $_K;
-		//($_SERVER ['REQUEST_METHOD'] == 'GET' && ! empty ( $_SERVER ['REQUEST_URI'] )) and kekezu::filter_xss ();
-		//ob_gzhandler($buffer, $mode)
 		ob_start ();
 
 	}

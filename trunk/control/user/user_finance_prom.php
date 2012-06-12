@@ -11,7 +11,7 @@ defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 $shows = array ("relation", "income" );//关系。收益
 in_array ( $show, $shows ) or $show = 'income';
 
-$page_obj = $kekezu->_page_obj;
+$page_obj = kekezu::$_page_obj;
 $page_size and $page_size=intval ( $page_size ) or $page_size = '10';
 $page and $page=intval ( $page ) or $page = '1';
 $event_id and $event_id= intval($event_id);

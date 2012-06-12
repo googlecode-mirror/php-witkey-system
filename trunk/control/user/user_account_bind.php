@@ -17,8 +17,8 @@ $oauth_obj = new Keke_witkey_member_oauth_class();
 /**
  * 获取绑定信息
  */ 
-$api_name = keke_glob_class::get_open_api();
-$oauth_url = $kekezu->_sys_config['website_url']."/index.php?do=$do&view=$view&op=$op&ac=$ac&type=$type";
+$api_name = keke_global_class::get_open_api();
+$oauth_url = kekezu::$_sys_config['website_url']."/index.php?do=$do&view=$view&op=$op&ac=$ac&type=$type";
 $res = kekezu::get_table_data('*','witkey_member_oauth',"uid=$uid","","source",6,"source");
 $url = "index.php?do=$do&view=$view&op=$op";
 /**

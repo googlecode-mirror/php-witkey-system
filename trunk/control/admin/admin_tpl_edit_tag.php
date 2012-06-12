@@ -17,7 +17,7 @@ $url = "index.php?do=tpl&view=edit_tag&tagid=$tagid";
 
 $template_arr = db_factory::query ( " select tpl_title from " . TABLEPRE . "witkey_template" );
 
-$tag_type_arr = keke_glob_class::get_tag_type ();
+$tag_type_arr = keke_global_class::get_tag_type ();
 
 $task_status = sreward_task_class::get_task_status ();
 
@@ -103,7 +103,7 @@ if ($submit) {
 	if ($tagid) {
 		$tag_obj->setWhere ( "tag_id='{$tagid}'" );
 		$res = $tag_obj->edit_keke_witkey_tag ();
-		$kekezu->_cache_obj->del ( "tag_list_cache" );
+		kekezu::$_cache_obj->del ( "tag_list_cache" );
 		kekezu::admin_system_log ($_lang['edit_tag'] . $tagid );
 	} else {
 		$res = $tag_obj->create_keke_witkey_tag ();
@@ -111,7 +111,7 @@ if ($submit) {
 	
 	}
 	
-	$kekezu->_cache_obj->del ( 'tag_list_cache' );
+	kekezu::$_cache_obj->del ( 'tag_list_cache' );
 	if ($res) {
 		kekezu::admin_show_msg ($_lang['tag_change_success'], "index.php?do=tpl&view=taglist&tag_type=$tag_type",3,'','success' );
 	} else {
@@ -156,4 +156,4 @@ function articlefenglei_select($m, $id, $index) {
 	}
 }
 
-require  $kekezu->_tpl_obj->template ( 'control/admin/tpl/admin_tpl_' . $view . '_' . $tag_type_arr [$tag_type] ['2'] );
+require  kekezu::$_tpl_obj->template ( 'control/admin/tpl/admin_tpl_' . $view . '_' . $tag_type_arr [$tag_type] ['2'] );

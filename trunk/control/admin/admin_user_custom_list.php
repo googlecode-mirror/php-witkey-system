@@ -66,9 +66,9 @@ switch ($op) {
 		$space_obj->setWhere ( $sql );
 		$count = $space_obj->count_keke_witkey_space ();
 		$limit = $p_size;
-		$kekezu->_page_obj -> setAjax(1);
-		$kekezu->_page_obj -> setAjaxDom('ajax_dom');
-		$pages = $kekezu->_page_obj->getPages ( $count, $limit, $page, $url );
+		kekezu::$_page_obj -> setAjax(1);
+		kekezu::$_page_obj -> setAjaxDom('ajax_dom');
+		$pages = kekezu::$_page_obj->getPages ( $count, $limit, $page, $url );
 		$space_obj->setWhere ( $sql . $pages ['where'] );
 		
 		$userlist_arr = $space_obj->query_keke_witkey_space ();

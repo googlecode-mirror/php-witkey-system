@@ -90,7 +90,7 @@ abstract class keke_task_agreement {
 		$this->_task_id = $agree_info ['task_id'];
 		$this->_trust_info = db_factory::get_one ( sprintf ( " select is_trust,trust_type,is_auto_bid,task_status from %switkey_task where task_id='%d'", TABLEPRE, $this->_task_id ) ); //是否担保
 		
-		$this->_model_code = $kekezu->_model_list [$agree_info ['model_id']] ['model_code']; //模型code
+		$this->_model_code = kekezu::$_model_list [$agree_info ['model_id']] ['model_code']; //模型code
 		$this->_buyer_uid = $agree_info ['buyer_uid'];
 		$this->_buyer_status = $agree_info ['buyer_status'];
 		$this->_seller_uid = $agree_info ['seller_uid'];

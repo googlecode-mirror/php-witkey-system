@@ -63,8 +63,8 @@ class goods_shop_class {
 									keke_shop_class::notify_user ( $order_info ['seller_uid'], $order_info ['seller_username'], "order_change", $_lang['goods_order_confirm_pay'], $v_arr );
 									/** 买家上线推广产生*/
 									$kekezu->init_prom ();
-									if($kekezu->_prom_obj->is_meet_requirement ( "service", $order_info['obj_id'] )){
-										$kekezu->_prom_obj->create_prom_event ( "service", $order_info ['order_uid'], $order_info ['obj_id'], $order_info ['order_amount'] );
+									if(kekezu::$_prom_obj->is_meet_requirement ( "service", $order_info['obj_id'] )){
+										kekezu::$_prom_obj->create_prom_event ( "service", $order_info ['order_uid'], $order_info ['obj_id'], $order_info ['order_amount'] );
 									}kekezu::keke_show_msg ( '', $_lang['order_complete_and_comfirm_pay'], '', 'json' );
 								} else {
 									kekezu::keke_show_msg ( '', $_lang['order_pay_fail_for_cash_little'].'<br>'.$_lang['click'].'<a href="' . $_K['siteurl'] . '/index.php?do=pay&order_id=' . $order_id . '" target="_blank">'.$_lang['go_recharge'].'</a>', 'error', 'json' );
@@ -85,7 +85,7 @@ class goods_shop_class {
 							case "confirm" : //变更为完成状态(买家确认服务完成)
 								$res = keke_order_class::set_order_status ( $order_id, $action ); //状态变更
 								if ($res) {
-									$model_info = $kekezu->_model_list [$order_info['model_id']]; //模型信息
+									$model_info = kekezu::$_model_list [$order_info['model_id']]; //模型信息
 									$profit = $service_info ['profit_rate'] * $order_info ['order_amount'] / 100; //网站利润
 									///卖家获得款项
 									keke_finance_class::cash_in ( $order_info ['seller_uid'], $order_info ['order_amount'] - $profit, '0', 'sale_service', '', 'service', $order_info ['obj_id'], $profit );
@@ -98,7 +98,7 @@ class goods_shop_class {
 									keke_shop_class::plus_mark_num ( $order_info ['obj_id'] );
 									/** 买家上线推广结算*/
 									$kekezu->init_prom ();
-									$kekezu->_prom_obj->dispose_prom_event ( "service", $order_info ['order_uid'], $order_info ['obj_id'] );
+									kekezu::$_prom_obj->dispose_prom_event ( "service", $order_info ['order_uid'], $order_info ['obj_id'] );
 									
 									/** 通知卖家*/
 									$v_arr = array ($_lang['user'] => $order_info ['order_username'], $_lang['action'] => $_lang['buy_work_coplete'], $_lang['order_id'] => $order_id, $_lang['order_link'] => $s_order_link );

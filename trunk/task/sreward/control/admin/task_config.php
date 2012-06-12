@@ -25,7 +25,7 @@ switch ($op) {
 			$res and kekezu::admin_show_msg ( $_lang['edit_successfully'], $ac_url, 3,'','success' ) or kekezu::admin_show_msg ( "修改失败", $ac_url, 3, '', 'warning' );
 		} else {
 	
-			$indus_arr = $kekezu->_indus_arr; //任务行业
+			$indus_arr = kekezu::$_indus_arr; //任务行业
 			
 			$indus_index = kekezu::get_indus_by_index (); //索引行业
 		} 

@@ -10,7 +10,7 @@ defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 
 /**µêÆÌÁ´½Ó¼ÇÂ¼**/
 $link_obj = new Keke_witkey_link_class ();
-$page_obj = $kekezu->_page_obj;
+$page_obj = kekezu::$_page_obj;
 $where = " obj_type='shop' and obj_id='{$shop_info['shop_id']}' order by link_id desc";
 intval ( $page ) or $page = '1';
 intval ( $page_size ) or $page_size = '5';

@@ -29,7 +29,7 @@ function get_href($order_info) {
 }
 $href = get_href ( $order_info );
 //计算用户余额
-$kekezu->_sys_config ['credit_is_allow'] == 1 and $user_balance = $user_info ['credit'] + $user_info ['balance'] or $user_balance = $user_info ['balance'];
+kekezu::$_sys_config ['credit_is_allow'] == 1 and $user_balance = $user_info ['credit'] + $user_info ['balance'] or $user_balance = $user_info ['balance'];
 //应付金额
 $pay_amount = (float)$order_info ['order_amount'] - (float)$user_balance;
 $pay_amount < 0 and kekezu::show_msg ( $_lang['operate_notice'], "index.php?do=user&view=finance&op=order", 2, $_lang['this_order_need_pay'] );
@@ -41,4 +41,4 @@ if (isset($pay_mode)) {
 	$title=$_lang['confirm_pay'];
 	require keke_tpl_class::template ( "pay_cash");die();
 }
-require $kekezu->_tpl_obj->template ( $do );
+require kekezu::$_tpl_obj->template ( $do );

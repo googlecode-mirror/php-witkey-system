@@ -245,7 +245,7 @@ abstract class keke_task_class {
 	public function set_task_delay($delay_day, $delay_cash, $url = '', $output = 'normal', $trust_response = false) {
 		global $kekezu;
 		global $_lang;
-		$basic_config = $kekezu->_sys_config;
+		$basic_config = kekezu::$_sys_config;
 		kekezu::check_login ( $url, $output ); //¼ì²âµÇÂ¼
 		if ($this->check_if_over_delay ( $delay_day, $delay_cash, $url, $output )) {
 			$task_info = $this->_task_info;
@@ -416,7 +416,7 @@ abstract class keke_task_class {
 		CHARSET == 'gbk' and $comment_desc = kekezu::utftogbk ( $comment_desc );
 		$obj == 'task' and $str[op] = $_lang['task'] or $str = $_lang['workl'];
 		$this->_priv ['comment'] ['pass'] or kekezu::keke_show_msg ( $url, $this->_priv ['comment'] ['notice'] . $_lang['no_reply_rights'], "error", $output );
-		kekezu::k_match(array($kekezu->_sys_config['ban_content']),$comment_desc) and kekezu::keke_show_msg('',$_lang['sensitive_word'],'error','json');
+		kekezu::k_match(array(kekezu::$_sys_config['ban_content']),$comment_desc) and kekezu::keke_show_msg('',$_lang['sensitive_word'],'error','json');
 		$comment_obj = new Keke_witkey_comment_class ();
 		$comment_obj->_comment_id = null;
 		$comment_obj->setContent ( $comment_desc );

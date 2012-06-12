@@ -10,11 +10,11 @@
 defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 $page_title=$_lang['login'].'- '.$_K['html_title'];
 $uid and header ( "location:index.php" ); 
-$open_api_arr = $kekezu->_api_open;
-$api_name = keke_glob_class::get_open_api();
+$open_api_arr = kekezu::$_api_open;
+$api_name = keke_global_class::get_open_api();
 //初始化对象 
-$login_obj = new keke_user_login_class();   
-$inter = $kekezu->_sys_config ['user_intergration'];
+$login_obj = new keke_userlogin();  
+$inter = kekezu::$_sys_config ['user_intergration'];
 if(isset($log_remember)){
 	setcookie('log_account',$txt_account,time()+3600*24*30);
 }else{

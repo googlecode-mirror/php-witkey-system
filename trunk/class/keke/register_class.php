@@ -26,7 +26,7 @@ class keke_register_class {
 		global $kekezu;
 		$this->_space_obj = new Keke_witkey_space_class ();
 		$this->_member_obj = new Keke_witkey_member_class ();
-		$this->_sys_config = $kekezu->_sys_config;
+		$this->_sys_config = kekezu::$_sys_config;
 		$this->_message_obj = new keke_msg_class ();
 		$this->_oltime_obj = new Keke_witkey_member_oltime_class ();
 		$this->_reg_ip = kekezu::get_ip ();
@@ -48,7 +48,7 @@ class keke_register_class {
 		//判断登录的规则
 		$this->check_all ( $reg_username, $reg_email, $reg_code );
 		//判断是否整合
-		switch ($kekezu->_sys_config ['user_intergration']) {
+		switch (kekezu::$_sys_config ['user_intergration']) {
 			case 2 :
 				$notify = "UCenter";
 				require_once S_ROOT . './keke_client/ucenter/client.php';
@@ -91,7 +91,7 @@ class keke_register_class {
 		 */
 		if (isset ( $_COOKIE ['user_prom_event'] )) {
 			$kekezu->init_prom ();
-			$prom_obj = $kekezu->_prom_obj;
+			$prom_obj = kekezu::$_prom_obj;
 			$url_data = $prom_obj->extract_prom_cookie ();
 			$prom_obj->create_prom_relation ( $userinfo ['uid'], $userinfo ['username'], $url_data );
 			$url_data ['p'] == 'reg' and $obj_id = $userinfo ['uid'] or $obj_id = $url_data ['o'];
@@ -99,7 +99,7 @@ class keke_register_class {
 		}
 		$synhtml = keke_user_class::user_synlogin ( $userinfo ['uid'], md5 ( $this->_reg_pwd ) );
 		
-		//$kekezu->_tpl_obj->xml_out ( "<h1>登录成功!</h1> $synhtml <script>window.location.href='$r'</script>" );
+		//kekezu::$_tpl_obj->xml_out ( "<h1>登录成功!</h1> $synhtml <script>window.location.href='$r'</script>" );
 		if ($userinfo ['status'] == '3') {
 			$_SESSION ['uid'] = '';
 			$_SESSION ['username'] = '';

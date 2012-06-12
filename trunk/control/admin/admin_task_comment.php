@@ -5,7 +5,7 @@
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 
 kekezu::admin_check_role ( 9 );
-//$model_list = $kekezu->_model_list;
+//$model_list = kekezu::$_model_list;
 $task_model = array ("1" => $_lang['single_reward'], "2" => $_lang['more_reward'], "3" => $_lang['piece_reward'], "4" => $_lang['normal_tender'], "5" => $_lang['deposit_tender'] );
 $where = " where a.obj_type = 'task'";
 if ($wh ['comment_id']) {
@@ -31,9 +31,9 @@ $url = "index.php?do=task&view=comment&wh['comment_id']={$wh['comment_id']}&wh['
 $count = db_factory::execute ( sprintf ( $sql, TABLEPRE, TABLEPRE ) );
 $slt_page_size = intval ( $slt_page_size ) ? intval ( $slt_page_size ) : 10;
 intval ( $page ) or $page =1;
-$kekezu->_page_obj->setAjax(1);
-$kekezu->_page_obj->setAjaxDom("ajax_dom");
-$pages = $kekezu->_page_obj->getPages ( $count, $slt_page_size, $page, $url );
+kekezu::$_page_obj->setAjax(1);
+kekezu::$_page_obj->setAjaxDom("ajax_dom");
+$pages = kekezu::$_page_obj->getPages ( $count, $slt_page_size, $page, $url );
 
 $sql .= $pages ['where'];
 $comment_arr = db_factory::query ( sprintf ( $sql, TABLEPRE, TABLEPRE ) );

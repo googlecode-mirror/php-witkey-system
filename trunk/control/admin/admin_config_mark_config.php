@@ -20,7 +20,7 @@ if ($ac == 'del' && $mark_config_id) {
 	$mark_config_obj->del ( 'mark_config_id', $mark_config_id ) and kekezu::admin_show_msg ( $_lang['delete_success'], $url,3,'','success' ) or kekezu::admin_show_msg ( $_lang['delete_faile'], $url,3,'','warning' );
 
 }
-foreach ( $kekezu->_model_list as $k => $v ) {
+foreach ( kekezu::$_model_list as $k => $v ) {
 	$model_list2 [$v ['model_code']] = $v ['model_name'];
 }
 
@@ -28,4 +28,4 @@ $mark_config_arr = $mark_config_obj->get_grid ( '1=1', $url, '', 14 );
 
 $mark_config_arr = $mark_config_arr ['data'];
 
-require $kekezu->_tpl_obj->template ( "control/admin/tpl/admin_" . $do . "_" . $view . "_" . $op );
+require kekezu::$_tpl_obj->template ( "control/admin/tpl/admin_" . $do . "_" . $view . "_" . $op );

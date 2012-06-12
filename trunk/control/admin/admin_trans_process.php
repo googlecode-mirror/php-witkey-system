@@ -34,7 +34,7 @@ if ($type == 'complaint') { //Í¶Ëß
 	 $obj_info or kekezu::admin_show_msg($_lang['friendly_notice'],'index.php?do=trans&view=report',3,$_lang['deal_object_del'],'warning');
 	$report_info = keke_report_class::get_report_info ( $report_id );
 
-	$model_info = $kekezu->_model_list [$obj_info ['model_id']];
+	$model_info = kekezu::$_model_list [$obj_info ['model_id']];
 	
 	$path =  S_ROOT .$model_info ['model_type'] . "/" . $model_info ['model_dir'] . "/control/admin/admin_route.php";
 	

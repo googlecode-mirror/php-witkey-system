@@ -10,7 +10,7 @@ defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 
 kekezu::admin_check_role ( 34 );
 
-$add_service_type = keke_glob_class::get_value_add_type ();
+$add_service_type = keke_global_class::get_value_add_type ();
 
 $buy_use_type = array ("buy" => $_lang['buy'], "spend" => $_lang['spend'] );
 
@@ -37,7 +37,7 @@ $all_buy_sql = "select sum(use_cash) as cash from " . TABLEPRE . "witkey_payitem
 $all_buy_pro = db_factory::query ( $all_buy_sql );
 $all_buy_pro = $all_buy_pro [0] ? $all_buy_pro [0] : 0;
 
-$page_obj = $kekezu->_page_obj;
+$page_obj = kekezu::$_page_obj;
 $page = intval ( $page ); 
 $page or $page = 1;
 $w [page_size] and $page_size = intval ( $w [page_size] ) or $page_size = 10;

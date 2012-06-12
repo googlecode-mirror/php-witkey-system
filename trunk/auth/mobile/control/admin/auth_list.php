@@ -56,12 +56,12 @@ if (isset ( $ac )) {
 	$mobile_obj->setWhere ( $where ); //查询统计
 	$count = $mobile_obj->count_keke_witkey_auth_mobile();
 	abs(intval ( $page )) or $page = 1 ;
-	$kekezu->_page_obj->setAjax(1);
-	$kekezu->_page_obj->setAjaxDom("ajax_dom");
-	$pages = $kekezu->_page_obj->getPages ( $count, $page_size, $page, $url );
+	kekezu::$_page_obj->setAjax(1);
+	kekezu::$_page_obj->setAjaxDom("ajax_dom");
+	$pages = kekezu::$_page_obj->getPages ( $count, $page_size, $page, $url );
 	 
 	//查询结果数组
 	$mobile_obj->setWhere ( $where . $pages [where] );
 	$mobile_arr = $mobile_obj->query_keke_witkey_auth_mobile();
-	require $kekezu->_tpl_obj->template ( "auth/" . $auth_dir . "/control/admin/tpl/auth_list" );
+	require kekezu::$_tpl_obj->template ( "auth/" . $auth_dir . "/control/admin/tpl/auth_list" );
 }

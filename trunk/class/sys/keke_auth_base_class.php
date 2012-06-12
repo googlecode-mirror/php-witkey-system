@@ -109,8 +109,8 @@ abstract class keke_auth_base_class {
 		global $kekezu;
 	
 		$auth_info           = $this->get_auth_item($this->_auth_code,'auth_expir,auth_cash,auth_code','','',false);
-		$data['uid']         = $kekezu->_userinfo['uid'];
-		$data['username']    = $kekezu->_userinfo['username'];
+		$data['uid']         = kekezu::$_userinfo['uid'];
+		$data['username']    = kekezu::$_userinfo['username'];
 		$data['start_time']  = time();
 		$data['cash']        = $auth_info['auth_cash'];
 		$data['auth_status'] = '0';
@@ -217,7 +217,7 @@ abstract class keke_auth_base_class {
 		global $_lang;
 		global $kekezu;
 		$kekezu->init_prom();
-		$prom_obj = $kekezu->_prom_obj;
+		$prom_obj = kekezu::$_prom_obj;
 		is_array($auth_ids) and $auth_ids=implode(",",$auth_ids);//数组连接
 	
 		$auth_info=$this->get_auth_info($auth_ids);//认证信息获取

@@ -105,7 +105,7 @@ abstract class keke_report_class {
 			case "work" : //稿件 
 				$model_id = db_factory::get_count ( sprintf ( " select model_id from %switkey_task where task_id='%d'", TABLEPRE, $report_info ['origin_id'] ) );
 				$model_id or kekezu::admin_show_msg ( $_lang ['friendly_notice'], 'index.php?do=trans&view=rights', 2, $_lang ['this_task_has_delete'] );
-				$model_info = $kekezu->_model_list [$model_id];
+				$model_info = kekezu::$_model_list [$model_id];
 				$sql = " select a.task_id origin_id,a.task_title origin_title,a.uid origin_uid,a.model_id,a.task_status origin_status,a.real_cash cash,a.is_trust,a.trust_type ";
 				
 				if ($model_info ['model_code'] == 'dtender' || $model_info ['model_code'] == 'tender') { //招标
@@ -427,7 +427,7 @@ abstract class keke_report_class {
 	 */
 	public function cancel_bid($obj_id, $trust_response = false) {
 		global $kekezu;
-		$model_info = $kekezu->_model_list [$this->_obj_info ['model_id']];
+		$model_info = kekezu::$_model_list [$this->_obj_info ['model_id']];
 		if ($model_info ['model_code'] == 'dtender' || $model_info ['model_code'] == 'tender') { //招标取消中标
 			db_factory::execute ( sprintf ( "update %switkey_task_bid set bid_status = 8 where bid_id = '%d'", TABLEPRE, $obj_id ) );
 		} elseif ($model_info ['model_code'] == 'sreward' || $model_info ['model_code'] == 'mreward' || $model_info ['model_code'] == 'preward') { //悬赏取消中标
@@ -437,8 +437,8 @@ abstract class keke_report_class {
 		db_factory::execute ( sprintf ( " update %switkey_space set accepted_num = accepted_num-1 where uid = '%d'", TABLEPRE, $this->_obj_info ['obj_uid'] ) );
 		/** 终止威客的此次推广事件*/
 		$kekezu->init_prom ();
-		$p_event = $kekezu->_prom_obj->get_prom_event ( $this->_task_id, $this->_obj_info ['obj_uid'], "bid_task" );
-		$kekezu->_prom_obj->set_prom_event_status ( $p_event ['parent_uid'], $this->_gusername, $p_event ['event_id'], '3' );
+		$p_event = kekezu::$_prom_obj->get_prom_event ( $this->_task_id, $this->_obj_info ['obj_uid'], "bid_task" );
+		kekezu::$_prom_obj->set_prom_event_status ( $p_event ['parent_uid'], $this->_gusername, $p_event ['event_id'], '3' );
 	}
 	/**
 	 * 删除举报信息

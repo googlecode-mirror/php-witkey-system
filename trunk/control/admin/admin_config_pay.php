@@ -11,7 +11,7 @@ kekezu::admin_check_role ( 2 );
 $pay_obj = new Keke_witkey_pay_config_class ();
 
 $op or $op = 'config';
-$kekezu->_cache_obj->gc();
+kekezu::$_cache_obj->gc();
 if (isset ( $sbt_edit )) {
 	if (is_array ( $fds )) {
 		foreach ( $fds as $k => $v ) {
@@ -21,7 +21,7 @@ if (isset ( $sbt_edit )) {
 		}
 	}
 	if ($res) {
-		$kekezu->_cache_obj->del ( "keke_witkey_paypal_config" );
+		kekezu::$_cache_obj->del ( "keke_witkey_paypal_config" );
 		kekezu::admin_system_log ( $_lang ['edit_pay_config'] );
 		kekezu::admin_show_msg ( $_lang ['pay_config_set_success'], $url, 3, '', 'success' );
 	} else {
@@ -44,7 +44,7 @@ switch ($op) {
 		break;
 	case "offline" :
 		
-		$bank_arr = keke_glob_class::get_bank ();
+		$bank_arr = keke_global_class::get_bank ();
 		
 		$payment_list = kekezu::get_payment_config ( '', $op );
 		

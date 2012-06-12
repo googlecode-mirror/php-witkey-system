@@ -21,7 +21,7 @@ class sreward_report_class extends keke_report_class {
 		global $kekezu;
 		global $_lang;
 		$kekezu->init_prom ();
-		$prom_obj = $kekezu->_prom_obj;
+		$prom_obj = kekezu::$_prom_obj;
 		
 		$trans_name = $this->get_transrights_name ( $this->_report_type );
 		$op_result = $this->op_result_format ( $op_result ); //格式化处理结果
@@ -49,11 +49,11 @@ class sreward_report_class extends keke_report_class {
 								$this->process_unfreeze ( 'pass', $op_result ['process_result'] ); //解冻。通知用户
 								$this->change_status ( $this->_report_id, '4', $op_result, $op_result ['process_result'] ); //更新状态为处理完成
 								/** 终止威客的此次推广事件*/
-								$w_event = $kekezu->_prom_obj->get_prom_event ( $this->_obj_info ['origin_id'], $w_info ['uid'], "bid_task" );
-								$kekezu->_prom_obj->set_prom_event_status ( $w_event ['parent_uid'], $this->_gusername, $w_event ['event_id'], '3' );
+								$w_event = kekezu::$_prom_obj->get_prom_event ( $this->_obj_info ['origin_id'], $w_info ['uid'], "bid_task" );
+								kekezu::$_prom_obj->set_prom_event_status ( $w_event ['parent_uid'], $this->_gusername, $w_event ['event_id'], '3' );
 								/** 终止雇主的此次推广事件*/
-								$g_event = $kekezu->_prom_obj->get_prom_event ( $this->_obj_info ['origin_id'], $g_info ['uid'], "pub_task" );
-								$kekezu->_prom_obj->set_prom_event_status ( $g_event ['parent_uid'], $this->_gusername, $g_event ['event_id'], '3' );
+								$g_event = kekezu::$_prom_obj->get_prom_event ( $this->_obj_info ['origin_id'], $g_info ['uid'], "pub_task" );
+								kekezu::$_prom_obj->set_prom_event_status ( $g_event ['parent_uid'], $this->_gusername, $g_event ['event_id'], '3' );
 							}
 					}
 					$res and kekezu::admin_show_msg ( $trans_name . $_lang['deal_success'], "index.php?do=trans&view=rights&type=$type", "3" ) or kekezu::admin_show_msg ( $trans_name . $_lang['deal_fail'], "index.php?do=trans&view=process&type=$type&report_id=" . $this->_report_id, "3" );

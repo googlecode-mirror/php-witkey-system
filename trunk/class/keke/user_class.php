@@ -17,7 +17,7 @@ class keke_user_class {
 	static function get_user_info($uid, $isusername = false) {
 		$isusername and $where = " a.username = '$uid'" or $where = " a.uid = '$uid'";
 		$sql = "select a.*,b.rand_code from " . TABLEPRE . "witkey_space a left join " . TABLEPRE . "witkey_member b on a.uid=b.uid where $where";
-		return db_factory::get_one ( $sql );
+		return dbfactory::get_one ( $sql );
 	}
 	/**
 	 * 用户注册   xxxxx??????????
@@ -35,7 +35,7 @@ class keke_user_class {
 		$space_obj = new Keke_witkey_space_class ();
 		$slt = kekezu::randomkeys ( 6 );
 		$pwd = self::get_password ( $password, $slt );
-		switch ($kekezu->_sys_config ['user_intergration']) {
+		switch (kekezu::$_sys_config ['user_intergration']) {
 			case 2 :
 				require_once S_ROOT . './keke_client/ucenter/client.php';
 				$reg_uid = uc_user_register ( $username, $password, $email );
@@ -46,7 +46,7 @@ class keke_user_class {
 				break;
 		}
 		die ();
-		if ($reg_uid > 0 || $kekezu->_sys_config ['user_intergration'] == '1') {
+		if ($reg_uid > 0 || kekezu::$_sys_config ['user_intergration'] == '1') {
 			$reg_uid and $member_obj->setUid ( $reg_uid );
 			$member_obj->setEmail ( $email );
 			$member_obj->setUsername ( $username );
@@ -55,7 +55,7 @@ class keke_user_class {
 			$reg_uid = $member_obj->create_keke_witkey_member ();
 			$space_obj->setUid ( $reg_uid );
 			//开启邮件激活，将用户冻结
-			$kekezu->_sys_config [allow_reg_action] == 1 and $space_obj->setStatus ( 2 ) or $space_obj->setStatus ( 1 );
+			kekezu::$_sys_config [allow_reg_action] == 1 and $space_obj->setStatus ( 2 ) or $space_obj->setStatus ( 1 );
 			$space_obj->setUsername ( $username );
 			$space_obj->setPassword ( $pwd );
 			$space_obj->setSec_code ( $pwd );
@@ -66,7 +66,7 @@ class keke_user_class {
 			
 			$info = array ('uid' => $reg_uid, 'username' => $username, 'email' => $email );
 			//判断是否需要邮件激活，并发发送激活码到指定的邮箱
-			$kekezu->_sys_config [allow_reg_action] == 1 and self::send_email_action_user ( $info );
+			kekezu::$_sys_config [allow_reg_action] == 1 and self::send_email_action_user ( $info );
 			return $info;
 		} else {
 			return false;
@@ -115,12 +115,12 @@ class keke_user_class {
 	
 	static function user_edit($username, $oldpwd, $newpwd, $email, $nocheckold = 1, $uid = '') {
 		global $kekezu;
-		if ($kekezu->_sys_config ['user_intergration'] == 1) {
+		if (kekezu::$_sys_config ['user_intergration'] == 1) {
 			return 1;
-		} elseif ($kekezu->_sys_config ['user_intergration'] == 2) {
+		} elseif (kekezu::$_sys_config ['user_intergration'] == 2) {
 			require_once S_ROOT . './keke_client/ucenter/client.php';
 			return uc_user_edit ( $username, $oldpwd, $newpwd, $email, $nocheckold );
-		} elseif ($kekezu->_sys_config ['user_intergration'] == 3) { //整合pw
+		} elseif (kekezu::$_sys_config ['user_intergration'] == 3) { //整合pw
 			require_once (S_ROOT . './keke_client/pw_client/uc_client.php');
 			return uc_user_edit ( $uid, $username, $newpwd, $email );
 		}
@@ -136,12 +136,12 @@ class keke_user_class {
 		db_factory::execute ( sprintf ( "delete from %switkey_member_ext where uid='%d' ", TABLEPRE, $uid ) );
 		db_factory::execute ( sprintf ( "delete from %switkey_member_black where uid='%d' ", TABLEPRE, $uid ) );
 		db_factory::execute ( sprintf ( "delete from %switkey_member_oauth where uid='%d' ", TABLEPRE, $uid ) );
-		if ($kekezu->_sys_config ['user_intergration'] == 1) {
+		if (kekezu::$_sys_config ['user_intergration'] == 1) {
 			return $uid;
-		} elseif ($kekezu->_sys_config ['user_intergration'] == 2) {
+		} elseif (kekezu::$_sys_config ['user_intergration'] == 2) {
 			require_once S_ROOT . './keke_client/ucenter/client.php';
 			return uc_user_delete ( $uid );
-		} elseif ($kekezu->_sys_config ['user_intergration'] == 3) { //整合pw
+		} elseif (kekezu::$_sys_config ['user_intergration'] == 3) { //整合pw
 			require_once (S_ROOT . './keke_client/pw_client/uc_client.php');
 			return uc_user_delete ( $uid );
 		}
@@ -153,10 +153,10 @@ class keke_user_class {
  	 */
 	static function user_synlogin($uid, $pwd = null) {
 		global $kekezu;
-		if ($kekezu->_sys_config ['user_intergration'] == 2) {
+		if (kekezu::$_sys_config ['user_intergration'] == 2) {
 			require_once S_ROOT . './keke_client/ucenter/client.php';
 			return uc_user_synlogin ( $uid );
-		} elseif ($kekezu->_sys_config ['user_intergration'] == 3) { //整合pw
+		} elseif (kekezu::$_sys_config ['user_intergration'] == 3) { //整合pw
 			require_once (S_ROOT . './keke_client/pw_client/uc_client.php');
 			$syn_arr = uc_user_login ( $uid, $pwd, 1 );
 			return $syn_arr ['synlogin'];
@@ -166,10 +166,10 @@ class keke_user_class {
 	static function user_synlogout() {
 		global $kekezu;
 		
-		if ($kekezu->_sys_config ['user_intergration'] == 2) {
+		if (kekezu::$_sys_config ['user_intergration'] == 2) {
 			require_once S_ROOT . './keke_client/ucenter/client.php';
 			return uc_user_synlogout ();
-		} elseif ($kekezu->_sys_config ['user_intergration'] == 3) { //整合pw
+		} elseif (kekezu::$_sys_config ['user_intergration'] == 3) { //整合pw
 			require_once (S_ROOT . './keke_client/pw_client/uc_client.php');
 			return uc_user_synlogout ();
 		}
@@ -177,17 +177,17 @@ class keke_user_class {
 	
 	static function user_checkemail($email) {
 		global $kekezu;
-		if ($kekezu->_sys_config ['user_intergration'] == 1) {
+		if (kekezu::$_sys_config ['user_intergration'] == 1) {
 			$member_obj = new Keke_witkey_member_class ();
 			$member_obj->setWhere ( 'email="' . $email . '"' );
 			$res = $member_obj->count_keke_witkey_member ();
 			$res = $res == 0 ? 1 : - 6;
 		
-		} elseif ($kekezu->_sys_config ['user_intergration'] == 2) {
+		} elseif (kekezu::$_sys_config ['user_intergration'] == 2) {
 			require_once S_ROOT . './keke_client/ucenter/client.php';
 			$res = uc_user_checkemail ( $email );
 		
-		} elseif ($kekezu->_sys_config ['user_intergration'] == 3) { //整合pw
+		} elseif (kekezu::$_sys_config ['user_intergration'] == 3) { //整合pw
 			require_once (S_ROOT . './keke_client/pw_client/uc_client.php');
 			$res = uc_check_email ( $email );
 		}
@@ -197,15 +197,15 @@ class keke_user_class {
 	static function user_checkname($username) {
 		global $kekezu;
 	 
-		if ($kekezu->_sys_config ['user_intergration'] == 1) {
+		if (kekezu::$_sys_config ['user_intergration'] == 1) {
 			$member_obj = new Keke_witkey_member_class ();
 			$member_obj->setWhere ( 'username="' . $username . '"' );
 			$res = $member_obj->count_keke_witkey_member ();
 			$res = $res ? 0 : 1;
-		} elseif ($kekezu->_sys_config ['user_intergration'] == 2) {
+		} elseif (kekezu::$_sys_config ['user_intergration'] == 2) {
 			require_once S_ROOT . './keke_client/ucenter/client.php';
 			$res = uc_user_checkname ( $username );
-		} elseif ($kekezu->_sys_config ['user_intergration'] == 3) { //整合pw
+		} elseif (kekezu::$_sys_config ['user_intergration'] == 3) { //整合pw
 			require_once (S_ROOT . './keke_client/pw_client/uc_client.php');
 			$res = uc_check_username ( $username );
 		}
@@ -216,13 +216,13 @@ class keke_user_class {
 	
 	static function user_getprotected() {
 		global $kekezu;
-		if ($kekezu->_sys_config ['ban_users']) {
-			$limit_username = explode ( ',', $kekezu->_sys_config ['ban_users'] );
+		if (kekezu::$_sys_config ['ban_users']) {
+			$limit_username = explode ( ',', kekezu::$_sys_config ['ban_users'] );
 		}
 		
-		if ($kekezu->_sys_config ['user_intergration'] == 1) {
+		if (kekezu::$_sys_config ['user_intergration'] == 1) {
 			return $limit_username;
-		} elseif ($kekezu->_sys_config ['user_intergration'] == 2) {
+		} elseif (kekezu::$_sys_config ['user_intergration'] == 2) {
 			require_once S_ROOT . './keke_client/ucenter/client.php';
 			$limit_username = $limit_username ? $limit_username : array ();
 			uc_user_getprotected ();
@@ -244,10 +244,10 @@ class keke_user_class {
 		if (! in_array ( $size, array ('larger', 'middle', 'small' ) )) {
 			$size = 'small';
 		}
-		if ($kekezu->_sys_config ['user_intergration'] == 1 || $kekezu->_sys_config ['user_intergration'] == 3) {
+		if (kekezu::$_sys_config ['user_intergration'] == 1 || kekezu::$_sys_config ['user_intergration'] == 3) {
 			$dir = keke_useravatar_class::get_avatar ( $uid, $size );
 			return "<img src='$_K[siteurl]/data/avatar/" . $dir . "' uid='$uid' class='pic_" . $size . "'>";
-		} elseif ($kekezu->_sys_config ['user_intergration'] == 2) {
+		} elseif (kekezu::$_sys_config ['user_intergration'] == 2) {
 			require_once S_ROOT . './keke_client/ucenter/client.php';
 			return "<img src=" . UC_API . "/avatar.php?uid=$uid&size=$size uid='$uid' class='pic_" . $size . "'>";
 		}
@@ -267,12 +267,12 @@ class keke_user_class {
 			$user_info = implode ( ',', $info );
 			$excite_code = md5 ( $user_info );
 			
-			$title = $kekezu->_sys_config ['website_name'] . '--' . $_lang['activate_the_account'];
+			$title = kekezu::$_sys_config ['website_name'] . '--' . $_lang['activate_the_account'];
 			
 			$body = <<<EOT
-			<font color="red">{$kekezu->_sys_config['website_name']}--{$kekezu->lang('activate_the_account')}</font><br><br>
-			&nbsp;&nbsp;&nbsp;{$kekezu->lang('welcome_you_register')}{$kekezu->_sys_config['website_name']},{$kekezu->lang('please_onclick_this_address_activate')}
-			<a href="{$kekezu->_sys_config[website_url]}/index.php?do=excite_email&excite_code=$excite_code&excite_uid=$info[uid]" traget="_blank">
+			<font color="red">{kekezu::$_sys_config['website_name']}--{$kekezu->lang('activate_the_account')}</font><br><br>
+			&nbsp;&nbsp;&nbsp;{$kekezu->lang('welcome_you_register')}{kekezu::$_sys_config['website_name']},{$kekezu->lang('please_onclick_this_address_activate')}
+			<a href="{kekezu::$_sys_config[website_url]}/index.php?do=excite_email&excite_code=$excite_code&excite_uid=$info[uid]" traget="_blank">
 			{$kekezu->lang('onclick_activate_account')}
 			</a>
 EOT;

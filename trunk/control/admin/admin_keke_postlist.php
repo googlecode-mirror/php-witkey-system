@@ -17,8 +17,8 @@ $ad_arr = $table_obj -> get_grid($where, $url, $page, $pagesize, null, 1, 'ajax_
 $pages = $ad_arr['pages'];
 $task_arr = $ad_arr['data'];
 
-$task_status = keke_glob_class::get_taskstatus_desc();
-$indus_arr = $kekezu->_indus_arr;
+$task_status = keke_global_class::get_taskstatus_desc();
+$indus_arr = kekezu::$_indus_arr;
 
 
 

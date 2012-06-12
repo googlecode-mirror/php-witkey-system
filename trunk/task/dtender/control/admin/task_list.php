@@ -6,7 +6,7 @@ defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 //任务配置
 $task_config = unserialize ( $model_info ['config'] );
 
-$model_list = $kekezu->_model_list;
+$model_list = kekezu::$_model_list;
 //任务状态
 $task_status = dtender_task_class::get_task_status ();
 
@@ -57,7 +57,7 @@ switch ($ac) {
 		break;
 	case "nopass" : //审核不通过
 		$res =keke_task_config::task_audit_nopass ( $task_id );
-		$v_arr = array($_lang['username']=>"$task_audit_arr[username]",$_lang['task_title']=>$url,$_lang['website_name']=>"$kekezu->_sys_config['website_name']"); 
+		$v_arr = array($_lang['username']=>"$task_audit_arr[username]",$_lang['task_title']=>$url,$_lang['website_name']=>"kekezu::$_sys_config['website_name']"); 
 		keke_shop_class::notify_user($task_audit_arr['uid'], $task_audit_arr['username'], 'task_auth_fail', $task_audit_arr['task_title'],$v_arr);
 		$res and kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['operate_success'],'success') or kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['operate_fail'],"warning");
 		break;
@@ -110,4 +110,4 @@ function get_task_info($task_id){
 	return $task_info;
 
 }
-require $kekezu->_tpl_obj->template ( 'task/' . $model_info ['model_dir'] . '/control/admin/tpl/task_' . $view );
+require kekezu::$_tpl_obj->template ( 'task/' . $model_info ['model_dir'] . '/control/admin/tpl/task_' . $view );

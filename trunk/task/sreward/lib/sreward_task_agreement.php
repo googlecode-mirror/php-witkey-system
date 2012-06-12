@@ -59,7 +59,7 @@ class sreward_task_agreement extends keke_task_agreement {
 		global $kekezu;
 		$trust_info  = $this->_trust_info;
 		$kekezu->init_prom ();
-		$prom_obj = $kekezu->_prom_obj;
+		$prom_obj = kekezu::$_prom_obj;
 		$model_code = $this->_model_code; //模型code
 		$agree_info = $this->_agree_info;
 		/**双方所得金额**/

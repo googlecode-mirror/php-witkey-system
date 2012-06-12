@@ -18,7 +18,7 @@ $page_title=$_lang['weike_shop'].'- '.$_K['html_title'];
  $industry_arr = db_factory::query($indstry_sql, true, 60*60); */
 
  $clean_industry_arr = array();
- kekezu::get_tree($kekezu->_indus_arr, $clean_industry_arr, '');
+ kekezu::get_tree(kekezu::$_indus_arr, $clean_industry_arr, '');
  
  !$status && $status = 'hot' ;
  
@@ -41,5 +41,5 @@ $page_title=$_lang['weike_shop'].'- '.$_K['html_title'];
  //统计_交易中选稿中
  $sql = " select count(order_id) from %switkey_order where model_id in(6,7) and order_status in ('ok','accept','send') ";
 $count_record = db_factory::get_count ( sprintf($sql,TABLEPRE));
-	require $kekezu->_tpl_obj->template ('shop');
+	require kekezu::$_tpl_obj->template ('shop');
  

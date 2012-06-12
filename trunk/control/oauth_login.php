@@ -12,17 +12,17 @@ $type or exit(kekezu::show_msg($_lang['oprerate_notice'],"index.php?do=login",2,
 $page_title=$_lang['login'].'- '.$_K['html_title'];
 // 初始化信息
 $oa = new keke_oauth_login_class ( $type );
-$api_name = keke_glob_class::get_open_api();
+$api_name = keke_global_class::get_open_api();
 $login_obj = new keke_user_login_class ();
 $oauth_obj = new Keke_witkey_member_oauth_class ();
-$oauth_url = $kekezu->_sys_config ['website_url'] . "/index.php?do=$do&type=$type";
+$oauth_url = kekezu::$_sys_config ['website_url'] . "/index.php?do=$do&type=$type";
 //获取登录平台
-$oauth_type_arr = keke_glob_class::get_oauth_type ();
+$oauth_type_arr = keke_global_class::get_oauth_type ();
 
 //oauth登录
 if ($type && ! $_SESSION ['auth_' . $type] ['last_key']) {
 	if ($type=='sina' && $error_code=='21330'){//当用户在sina平台上拒绝oauth登陆时,给出提示
-		kekezu::show_msg($_lang['notice_message'], $kekezu->_sys_config ['website_url'].'/index.php?do=login',1,$_lang['login_in_fail'],"alert_right");
+		kekezu::show_msg($_lang['notice_message'], kekezu::$_sys_config ['website_url'].'/index.php?do=login',1,$_lang['login_in_fail'],"alert_right");
 	}
 	$oauth_vericode = $oauth_vericode;
 	$oa->login ( $call_back, $oauth_url );

@@ -12,8 +12,8 @@ kekezu::admin_check_role ( 28 );
 $config_tpl_obj = new Keke_witkey_template_class ();
 
 $tpl_arr = $config_tpl_obj->query_keke_witkey_template ();
-$skins    = keke_glob_class::get_skin_type();
-$tpls    = keke_glob_class::get_tpl_type();
+$skins    = keke_global_class::get_skin_type();
+$tpls    = keke_global_class::get_tpl_type();
  
 if ($sbt_edit) {	
 	if ($sbt_edit == $_lang['submit']) {		
@@ -34,8 +34,8 @@ if ($sbt_edit) {
 		$config_tpl_obj->setWhere ( " is_selected =1 limit 1 " );
 		$config_tpl_arr = $config_tpl_obj->query_keke_witkey_template ();
 		if ($res) {
-			$kekezu->_cache_obj->del ( "keke_witkey_template" );
-			$kekezu->_cache_obj->set ( "keke_witkey_template", $config_tpl_arr );
+			kekezu::$_cache_obj->del ( "keke_witkey_template" );
+			kekezu::$_cache_obj->set ( "keke_witkey_template", $config_tpl_arr );
 			kekezu::admin_show_msg ( $_lang['tpl_config_set_success'], 'index.php?do=config&view=tpl',3,'','success' );
 		}
 	}
@@ -126,7 +126,7 @@ if ($delid) {
 	$res = $config_tpl_obj->del_keke_witkey_template ();
 	if ($res) {
 		
-		$kekezu->_cache_obj->del ( "keke_witkey_template" );
+		kekezu::$_cache_obj->del ( "keke_witkey_template" );
 		kekezu::admin_show_msg ( $_lang['tpl_config_unloading_success'], 'index.php?do=config&view=tpl',3,'','warning' );
 	}
 }

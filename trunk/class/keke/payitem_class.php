@@ -78,7 +78,7 @@ class keke_payitem_class {
 		$order and $where .= "  order by $order " or $where .= "  order by record_id desc  ";
 	
 		if (! empty ( $p )) { //需要执行分页
-			$page_obj = $kekezu->_page_obj;
+			$page_obj = kekezu::$_page_obj;
 			intval ( $p ['page'] ) and $page = intval ( $p ['page'] ) or $page = '1';
 			intval ( $p ['page_size'] ) and $page_size = intval ( $p ['page_size'] ) or $page_size = "10";
 			$p ['url'] and $url = $p ['url'] or $url = $_SERVER ['HTTP_REFERER'];

@@ -24,7 +24,7 @@ switch ($op) {
 			
 			$res and kekezu::admin_show_msg ($_lang['update_success'],$ac_url, 3,'','success' ) or kekezu::admin_show_msg ($_lang['update_fail'],$ac_url, 3,'','warning');
 			}else{
-				$indus_arr = $kekezu->_indus_arr;//任务行业
+				$indus_arr = kekezu::$_indus_arr;//任务行业
 				$indus_index =kekezu::get_indus_by_index ();//索引行业
 			}
 		break;

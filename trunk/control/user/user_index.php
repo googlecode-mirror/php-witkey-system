@@ -35,7 +35,7 @@ $payitem_list = keke_payitem_class::get_payitem_config ( null, null, null, 'item
 
 
 //任务状态数组
-$task_status = keke_glob_class::get_taskstatus_desc ();
+$task_status = keke_global_class::get_taskstatus_desc ();
 //任务区间数组
 $task_cove = kekezu::get_table_data ( '*', "witkey_task_cash_cove", '', "start_cove", '', '', 'cash_rule_id', 3600 );
 

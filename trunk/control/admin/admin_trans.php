@@ -44,7 +44,7 @@ if ($ac) {
 } else {
 	
 	$report_obj = new Keke_witkey_report_class ();
-	$page_obj = $kekezu->_page_obj;
+	$page_obj = kekezu::$_page_obj;
 	
 	$where = " report_type = '" . $action_arr [$view] ['0'] . "'";
 	$report_id and $where .= " and report_id='$report_id'";

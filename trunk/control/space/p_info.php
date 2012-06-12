@@ -12,7 +12,7 @@ defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 //威客技能
 //$skill_arr = explode(',', $member_info['skill_ids']); 
 
-$indus_arr =  $kekezu->_indus_c_arr ;
+$indus_arr =  kekezu::$_indus_c_arr ;
 
 //技能证书 
  $skill_obj->setWhere(" uid = ".intval($member_id)." and type='cert' order by ext_id desc ");

@@ -12,7 +12,7 @@ class keke_admin_class {
 	}
 	static function get_admin_menu() {
 		global $kekezu,$_lang;
-		$menuset_arr = $kekezu->_cache_obj->get ( 'menu_resource_cache' );
+		$menuset_arr = kekezu::$_cache_obj->get ( 'menu_resource_cache' );
 		if (! $menuset_arr) {
 			$resource_obj = new Keke_witkey_resource_class ();
 			$resource_obj->setWhere ( "1=1 order by listorder asc" );
@@ -38,7 +38,7 @@ class keke_admin_class {
 			$resource_arr = $temp_arr2;
 			$menuset_arr = array ('navgat' => $navgation_arr, 'menu' => $resource_arr, 'submenu' => $submenu_set_arr, 'resource' => $resource_set_arr );
 			
-			$model_list = $kekezu->_model_list;
+			$model_list = kekezu::$_model_list;
 			$i = 0;
 			foreach ( $model_list as $model ) {
 				$init_menu = array ();
@@ -54,14 +54,14 @@ class keke_admin_class {
 				$menuset_arr ['menu'] [$model ['model_type']] [] = array ('name' => $model ['model_name'], 'items' => $mulist_arr );
 			}
 			
-			$kekezu->_cache_obj->set ( 'menu_resource_cache', $menuset_arr, null );
+			kekezu::$_cache_obj->set ( 'menu_resource_cache', $menuset_arr, null );
 		}
 		return $menuset_arr;
 	}
 	
 	static function get_user_group() {
 		global $kekezu;
-		$group_arr = $kekezu->_cache_obj->get ( "member_group_cache" );
+		$group_arr = kekezu::$_cache_obj->get ( "member_group_cache" );
 		if (! $group_arr) {
 			$membergroup_obj = new Keke_witkey_member_group_class ();
 			$group_arr = $membergroup_obj->query_keke_witkey_member_group ();
@@ -71,7 +71,7 @@ class keke_admin_class {
 				$temp_arr [$v ['group_id']] ['group_roles'] = explode ( ',', $v ['group_roles'] );
 			}
 			$group_arr = $temp_arr;
-			$kekezu->_cache_obj->set ( 'member_group_cache', $group_arr, null );
+			kekezu::$_cache_obj->set ( 'member_group_cache', $group_arr, null );
 		}
 		
 		return $group_arr;

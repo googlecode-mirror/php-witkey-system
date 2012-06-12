@@ -311,8 +311,8 @@ class dtender_task_class extends keke_task_class {
 				$this->notify_user ( "task_bid", $_lang['tender_bid'], $v, '1', $bid_info ['uid'] ); //通知威客
 				$kekezu->init_prom ();
 				/** 威客上线推广产生*/
-				if ($kekezu->_prom_obj->is_meet_requirement ( "bid_task", $this->_task_id )) {
-					$kekezu->_prom_obj->create_prom_event ( "bid_task", $bid_info ['uid'], $this->_task_id, $this->_task_info ['real_cash'] );
+				if (kekezu::$_prom_obj->is_meet_requirement ( "bid_task", $this->_task_id )) {
+					kekezu::$_prom_obj->create_prom_event ( "bid_task", $bid_info ['uid'], $this->_task_id, $this->_task_info ['real_cash'] );
 				}
 				$feed_arr = array ("feed_username" => array ("content" => $bid_info ['username'], "url" => "index.php?do=space&member_id=" . $bid_info ['uid'] ), "action" => array ("content" => "成功中标了任务", "url" => "" ), "event" => array ("content" => "$this->_task_title", "url" => "index.php?do=task&task_id=" . $this->_task_info ['task_id'] ) );
 				kekezu::save_feed ( $feed_arr, $bid_info ['uid'], $bid_info ['username'], 'work_accept', $this->_task_info ['task_id'] );
@@ -393,10 +393,10 @@ public function hosted_amount($url = '', $output = 'normal') {
 			}else{//如果不足已付任务赏金的钱
 				$amount = abs($amount);
 				$balance 	= floatval ( $this->_g_userinfo ['balance'] );
-				$credit 	= $kekezu->_sys_config['credit_is_allow']?floatval ( $this->_g_userinfo ['credit'] ):0;
+				$credit 	= kekezu::$_sys_config['credit_is_allow']?floatval ( $this->_g_userinfo ['credit'] ):0;
 				if($balance+$credit-$amount>=0){//用户余额可以支付
 					$res = keke_finance_class::cash_out ( $this->_uid, $amount, 'hosted_reward', 0, 'task', $this->_task_id );
-					if($kekezu->_sys_config['credit_is_allow']){
+					if(kekezu::$_sys_config['credit_is_allow']){
 						$cash_cost = floatval($this->_task_info['cash_cost'])+$amount;
 						$credit_cost = floatval($this->_task_info['credit_cost']);
 					}else{
@@ -481,7 +481,7 @@ public function hosted_amount($url = '', $output = 'normal') {
 				if (intval ( $plan_step ) == $size) {
 					$kekezu->init_prom ();
 					/** 雇主上线结算*/
-					$kekezu->_prom_obj->dispose_prom_event ( "pub_task", $this->_guid, $this->_task_id );
+					kekezu::$_prom_obj->dispose_prom_event ( "pub_task", $this->_guid, $this->_task_id );
 					$this->set_task_status ( 8 );
 					$this->plus_mark_num();
 					if ($this->_task_info ['task_union'] == '1') { //如果是联盟任务
@@ -520,7 +520,7 @@ public function hosted_amount($url = '', $output = 'normal') {
 			$profit_cash = $cash * intval ( $this->_task_info ['profit_rate'] ) / 100;
 			$real_cash = $cash - $profit_cash;
 			/** 威客上线结算*/
-			$kekezu->_prom_obj->dispose_prom_event ( "bid_task", $plan_info ['uid'], $plan_info ['plan_id'] );
+			kekezu::$_prom_obj->dispose_prom_event ( "bid_task", $plan_info ['uid'], $plan_info ['plan_id'] );
 			
 			//给威客打钱
 			keke_finance_class::cash_in ( $this->_bid_info ['uid'], $real_cash, 0, 'task_bid', '', '', '', $profit_cash );
@@ -646,8 +646,8 @@ public function hosted_amount($url = '', $output = 'normal') {
 		if ($res) {
 			/** 终止雇主的此次推广事件*/
 			$kekezu->init_prom ();
-			$p_event = $kekezu->_prom_obj->get_prom_event ( $this->_task_id, $this->_guid, "pub_task" );
-			$kekezu->_prom_obj->set_prom_event_status ( $p_event ['parent_uid'], $this->_gusername, $p_event ['event_id'], '3' );
+			$p_event = kekezu::$_prom_obj->get_prom_event ( $this->_task_id, $this->_guid, "pub_task" );
+			kekezu::$_prom_obj->set_prom_event_status ( $p_event ['parent_uid'], $this->_gusername, $p_event ['event_id'], '3' );
 		}
 		return array ('return_credit' => $return_credit, 'return_cash' => $return_cash );
 	}
@@ -774,7 +774,7 @@ public function hosted_amount($url = '', $output = 'normal') {
 		}
 		$where .= "  order by (CASE WHEN  a.bid_status!=0 THEN 100 ELSE 0 END) desc,bid_time asc ";
 		if (! empty ( $p )) {
-			$page_obj = $kekezu->_page_obj;
+			$page_obj = kekezu::$_page_obj;
 			$page_obj->setAjax ( 1 );
 			$page_obj->setAjaxDom ( "gj_summery" );
 			$count = intval ( db_factory::get_count ( $count_sql . $where ) );
@@ -921,8 +921,8 @@ public function hosted_amount($url = '', $output = 'normal') {
 				if ($res) {
 					/** 雇主推广事件产生*/
 					$kekezu->init_prom ();
-					if ($kekezu->_prom_obj->is_meet_requirement ( "pub_task", $this->_task_id )) {
-						$kekezu->_prom_obj->create_prom_event ( "pub_task", $this->_guid, $this->_task_id, $this->_task_info ['real_cash'] );
+					if (kekezu::$_prom_obj->is_meet_requirement ( "pub_task", $this->_task_id )) {
+						kekezu::$_prom_obj->create_prom_event ( "pub_task", $this->_guid, $this->_task_id, $this->_task_info ['real_cash'] );
 					}
 					//改变任务状态
 					$this->set_task_status ( $to_status );

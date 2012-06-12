@@ -28,7 +28,7 @@ if ($fpid) {
 	$tpid or $tpid = $tpid_arr ['0'];
 	//3级菜单初始PID参数
 	/** 当前选中三级菜单的文章**/
-	$page_obj = $kekezu->_page_obj;
+	$page_obj = kekezu::$_page_obj;
 	intval ( $page ) or $page = 1;
 	intval ( $page_size ) or $page_size = 10;
 	$url = "index.php?do=help&fpid=$fpid&spid=$spid&tpid=$tpid";
@@ -47,7 +47,7 @@ if ($fpid) {
 	}
 }
 $page_title or $page_title = $_K ['html_title'];
-$page_keyword or $page_keyword = $kekezu->_sys_config ['seo_keyword'];
-$page_description or $page_description = $kekezu->_sys_config ['seo_desc'];
+$page_keyword or $page_keyword = kekezu::$_sys_config ['seo_keyword'];
+$page_description or $page_description = kekezu::$_sys_config ['seo_desc'];
 
 require keke_tpl_class::template ( $do );

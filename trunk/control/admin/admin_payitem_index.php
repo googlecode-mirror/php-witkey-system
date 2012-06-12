@@ -12,7 +12,7 @@ $unit = array ('times' =>$_lang['times'], 'month' =>$_lang['month'], 'year' =>$_
 $type_arr = array("witkey"=>$_lang['witkey'],"employer"=>$_lang['employer']);
 $payitem_arr = keke_payitem_class::get_payitem_config ($user_type,null,null,0,null);
 $url = "index.php?do=$do&view=$view";
-$kekezu->_cache_obj->gc();
+kekezu::$_cache_obj->gc();
 if ($item_id) {
 	switch ($op) {
 		case 'close' :

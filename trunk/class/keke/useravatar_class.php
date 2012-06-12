@@ -210,7 +210,7 @@ class keke_useravatar_class extends keke_user_class {
 					break;
 			}
 		}else{
-			$sex = $kekezu->_userinfo['sex'];
+			$sex = kekezu::$_userinfo['sex'];
 			$sex==$_lang['female'] and $u='women' or $u='man';
 			$path =  "default/" . $u . "_" . $size . ".jpg";
 		}

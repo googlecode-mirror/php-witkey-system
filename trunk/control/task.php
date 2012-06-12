@@ -44,7 +44,7 @@ if (isset($task_id)) {
 } else {
 	  
 	$clean_industry_arr = array ();
-	kekezu::get_tree($kekezu->_indus_arr, $clean_industry_arr, '');
+	kekezu::get_tree(kekezu::$_indus_arr, $clean_industry_arr, '');
 	/**
 	 * 进行中任务统计*
 	 */
@@ -53,10 +53,10 @@ if (isset($task_id)) {
  
 	$advance_task = db_factory::get_count ( $count_advance_task_sql, 0, null, 180 );
 	
-	$model_list = $kekezu->_model_list; // 获取任务区间
+	$model_list = kekezu::$_model_list; // 获取任务区间
 	$task_cash_cove = kekezu::get_table_data ( '*', 'witkey_task_cash_cove', '', '', '', '', 'cash_rule_id', 3600 );
 	$task_obj = new Keke_witkey_task_class ();
-	$page_obj = $kekezu->_page_obj;
+	$page_obj = kekezu::$_page_obj;
 	$page_obj->setAjax ( 1 );
 	$page_obj->setAjaxDom ( "task_list" );
 	isset($page ) or $page = 1;

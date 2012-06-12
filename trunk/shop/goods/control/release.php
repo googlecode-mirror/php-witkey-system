@@ -39,7 +39,7 @@ switch ($r_step) { //服务发布步骤
 		} else {
 			$release_obj->check_access ( $r_step, $model_id, $release_info ); //页面进入权限检测
 			$kf_info	 = $release_obj->_kf_info; //随机客服
-			$indus_p_arr = $kekezu->_indus_p_arr; //父级行业
+			$indus_p_arr = kekezu::$_indus_p_arr; //父级行业
 			$indus_arr   = $release_obj->get_service_indus($release_info ['indus_pid']); //子集行业
 			$price_unit  = $release_obj->get_price_unit();//价格单位			
 		}

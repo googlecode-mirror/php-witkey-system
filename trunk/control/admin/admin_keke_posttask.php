@@ -10,7 +10,7 @@ defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 kekezu::admin_check_role(137);
 include S_ROOT.'/keke_client/keke/config.php';
  //任务模型数组
-$task_type_arr = keke_glob_class::get_task_type();
+$task_type_arr = keke_global_class::get_task_type();
 $task_status_arr = array(2=>"交稿中",3=>"选稿中");
 
 //查询
@@ -24,6 +24,6 @@ $page = max(intval($page), 1);
 $page_size = max(intval($page_size), 10);
 $url = "index.php?do=keke&view=posttask&task_status=$task_status&model_id=$model_id&task_id=$task_id&page=$page";
 $count = intval(db_factory::execute($sql.$where));
-$pages = $kekezu->_page_obj->getPages($count, $page_size, $page, $url);
+$pages = kekezu::$_page_obj->getPages($count, $page_size, $page, $url);
 $task_list = db_factory::query($sql.$where.$pages['where']);
-require $kekezu->_tpl_obj->template ( "control/admin/tpl/admin_{$do}_{$view}" );
+require kekezu::$_tpl_obj->template ( "control/admin/tpl/admin_{$do}_{$view}" );

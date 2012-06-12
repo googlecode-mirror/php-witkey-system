@@ -8,7 +8,7 @@
  */
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 
-$fina_action_arr = keke_glob_class::get_finance_action();
+$fina_action_arr = keke_global_class::get_finance_action();
 
 $views = array ('withdraw', 'report', 'all','analysis','recharge');
 

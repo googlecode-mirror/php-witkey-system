@@ -5,7 +5,7 @@
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 kekezu::admin_check_role ( 24 );
 //初始化 
-$page_obj = $kekezu->_page_obj;
+$page_obj = kekezu::$_page_obj;
 $edituid and $memberinfo_arr = kekezu::get_user_info ( $edituid );
 $table_class = new keke_table_class ( 'witkey_space' );
 $member_class = new keke_table_class ( 'witkey_member' );
@@ -22,7 +22,7 @@ switch ($op) {
 	case "disable" : //冻结用户
 		$sql = sprintf ( "update  %switkey_space set status=2 where uid =%d", TABLEPRE, $edituid );
 		db_factory::execute ( $sql );
-		$v_arr = array ($_lang['username'] => $memberinfo_arr['username'], $_lang['website_name'] => $kekezu->_sys_config['website_name'] );
+		$v_arr = array ($_lang['username'] => $memberinfo_arr['username'], $_lang['website_name'] => kekezu::$_sys_config['website_name'] );
 		keke_shop_class::notify_user ( $memberinfo_arr ['uid'], $memberinfo_arr ['username'], 'freeze', $_lang['user_freeze'], $v_arr );
 		kekezu::admin_system_log ( $_lang['unfreeze_member'] . $memberinfo_arr ['username'] );
 		kekezu::admin_show_msg ( $_lang['operate_success'], "index.php?do=user&view=list", 3, '', 'success' );
@@ -32,7 +32,7 @@ switch ($op) {
 		
 		$sql = sprintf ( "update  %switkey_space set status=1 where uid =%d", TABLEPRE, $edituid );
 		db_factory::execute ( $sql );
-		$v_arr = array ($_lang['username'] => $memberinfo_arr['username'], $_lang['website_name'] => $kekezu->_sys_config['website_name'] );
+		$v_arr = array ($_lang['username'] => $memberinfo_arr['username'], $_lang['website_name'] => kekezu::$_sys_config['website_name'] );
 		keke_shop_class::notify_user ( $memberinfo_arr ['uid'], $memberinfo_arr ['username'], 'unfreeze', $_lang['user_freeze'], $v_arr );
 		kekezu::admin_system_log ( $_lang['unfreeze_member'] . $memberinfo_arr ['username'] );
 		kekezu::admin_show_msg ( $_lang['operate_success'], "index.php?do=user&view=list", 3, '', 'success' );
@@ -57,7 +57,7 @@ if ($sbt_action && is_array ( $ckb )) {
 			$sql = sprintf ( "update  %switkey_space set status=2 where uid in (%s)", TABLEPRE, $ids );
 			db_factory::execute ( $sql ); //改变用户状态 
 			foreach ( $space_arr as $v ) { //邮件通知
-				$v_arr = array ($_lang['username'] => $v['username'], $_lang['website_name'] => $kekezu->_sys_config['website_name'] );
+				$v_arr = array ($_lang['username'] => $v['username'], $_lang['website_name'] => kekezu::$_sys_config['website_name'] );
 				keke_shop_class::notify_user ( $v ['uid'], $v ['username'], 'freeze', $_lang['user_freeze'], $v_arr );
 			}
 			kekezu::admin_system_log ( $_lang['freeze_user'] . "$ids" );
@@ -69,7 +69,7 @@ if ($sbt_action && is_array ( $ckb )) {
 			$sql = sprintf ( "update  %switkey_space set status=1 where uid in (%s)", TABLEPRE, $ids );
 			db_factory::execute ( $sql ); //改变用户状态 
 			foreach ( $space_arr as $v ) { //邮件通知
-				$v_arr = array ($_lang['username'] => $v['username'], $_lang['website_name'] => $kekezu->_sys_config['website_name']);
+				$v_arr = array ($_lang['username'] => $v['username'], $_lang['website_name'] => kekezu::$_sys_config['website_name']);
 				keke_shop_class::notify_user ( $v ['uid'], $v ['username'], 'unfreeze', $_lang['user_open'], $v_arr );
 			}
 			kekezu::admin_show_msg ( $_lang['operate_success'], 'index.php?do=user&view=list', 3, $_lang['mulit_open_operate_success'], 'success' );

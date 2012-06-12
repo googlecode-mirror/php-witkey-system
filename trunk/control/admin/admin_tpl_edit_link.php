@@ -55,4 +55,4 @@ if ($sbt_edit) {
 	}
 }
 
-require $kekezu->_tpl_obj->template ( 'control/admin/tpl/admin_' . $do . '_' . $view );
+require kekezu::$_tpl_obj->template ( 'control/admin/tpl/admin_' . $do . '_' . $view );

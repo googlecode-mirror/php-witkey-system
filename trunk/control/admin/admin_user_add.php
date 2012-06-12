@@ -4,7 +4,7 @@
  */
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 kekezu::admin_check_role ( 11 );
-$basic_config = $kekezu->_sys_config;
+$basic_config = kekezu::$_sys_config;
 
 $reg_obj = new keke_register_class ();
 $member_class = new keke_table_class ( 'witkey_member' );

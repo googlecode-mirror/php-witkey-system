@@ -263,7 +263,7 @@ class keke_task_config {
 			if ($task_info) {
 				if($task_info['is_trust']&&$trust_response==false){
 					$trust_data['refund'] = array($ids,$task_info['task_cash']);
-					$jump_url = keke_trust_fac_class::trust_task_request("pt_refund",$kekezu->_model_list[$task_info['model_id']]['model_dir'],$ids,$task_info['trust_type'],$trust_data);
+					$jump_url = keke_trust_fac_class::trust_task_request("pt_refund",kekezu::$_model_list[$task_info['model_id']]['model_dir'],$ids,$task_info['trust_type'],$trust_data);
 					header("Location:".$jump_url);die();	
 				}else{
 					$res = db_factory::execute ( sprintf ( "update %switkey_task set task_status=10 where task_id  ='%d' ", TABLEPRE, $ids ) );
@@ -385,7 +385,7 @@ class keke_task_config {
 	 */
 	public static function delete_task_releate_item($model_id,$task_id,$is_array=false){
 		global $kekezu;
-			$model_code = $kekezu->_model_list[$model_id]['model_code'];
+			$model_code = kekezu::$_model_list[$model_id]['model_code'];
 			$model_code=='tender'||$model_code=='dtender' and $tab_work = "task_bid" or $tab_work='task_work';
 			
 	}

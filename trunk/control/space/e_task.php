@@ -19,7 +19,7 @@ if($action == 'pub'){
 	$page_size = 10;
 	$count = db_factory::execute ( $sql.$where );
 	$page = $page ? $page : 1;
-	$pages = $kekezu->_page_obj->getPages ( $count, $page_size, $page, $url );
+	$pages = kekezu::$_page_obj->getPages ( $count, $page_size, $page, $url );
 	$where .=$pages['where']; 
 	$task_arr = db_factory::query($sql.$where);
 	

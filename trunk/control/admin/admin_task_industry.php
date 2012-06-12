@@ -96,4 +96,4 @@ function sortTree($nodeid, $arTree) {
 	return $res;
 }
 
-require $kekezu->_tpl_obj->template ( "control/admin/tpl/admin_task_$view" );
+require kekezu::$_tpl_obj->template ( "control/admin/tpl/admin_task_$view" );

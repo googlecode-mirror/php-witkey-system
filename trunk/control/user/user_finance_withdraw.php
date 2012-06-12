@@ -33,7 +33,7 @@ switch ($step) {
 		$bank_auth = keke_auth_fac_class::auth_check ( "bank", $uid );
 		$bind_list = kekezu::get_table_data("*","witkey_auth_bank","uid='$uid' and auth_status!=2","","","","bank_id",null); 
 		
-		$bank_arr=keke_glob_class::get_bank();//银行列表
+		$bank_arr=keke_global_class::get_bank();//银行列表
 		
 		$offline_list = kekezu::get_payment_config('','offline',1);
 	case "step3" :

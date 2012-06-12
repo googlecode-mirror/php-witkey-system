@@ -13,7 +13,7 @@ $ac_url=$origin_url."&op=credit";
 /**
  * 星级数组
  */
-$star_arr=keke_glob_class::get_mark_star();
+$star_arr=keke_global_class::get_mark_star();
 switch ($opp) {
 	case "grow" :
 		/**信誉**/
@@ -51,7 +51,7 @@ switch ($opp) {
 		$mark_obj->setWhere($where);
 		$count=intval($mark_obj->count_keke_witkey_mark());//总计
 		
-		$pages=$kekezu->_page_obj->getPages($count, $page_size, $page, $url,"#userCenter");
+		$pages=kekezu::$_page_obj->getPages($count, $page_size, $page, $url,"#userCenter");
 		
 		/**互评信息**/
 		$mark_obj->setWhere($where.$pages['where']);

@@ -16,4 +16,4 @@ switch ($ac){
 		break;
 		
 }
-require $kekezu->_tpl_obj->template("control/admin/tpl/admin_" .$do);
+require kekezu::$_tpl_obj->template("control/admin/tpl/admin_" .$do);

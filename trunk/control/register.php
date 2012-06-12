@@ -12,7 +12,7 @@ defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 $page_title=$_lang['register'].'-'.$_K['html_title'];
 //初始化对象
 $reg_obj = new keke_register_class();
-$api_name = keke_glob_class::get_open_api();
+$api_name = keke_global_class::get_open_api();
  
 
 if (isset($formhash)&&kekezu::submitcheck($formhash)){ 

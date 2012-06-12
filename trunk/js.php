@@ -8,7 +8,7 @@ in_array($op,$ops) or $op="time";
 
 switch ($op){
 	case "time":
-		$last_respons = $kekezu->_cache_obj->set('time_traveler_last_exec_cache',time()+300);
+		$last_respons = kekezu::$_cache_obj->set('time_traveler_last_exec_cache',time()+300);
 		if (!$last_respons){
 			$time_factory = new Time_fac_class();
 			$time_factory->run();
@@ -16,7 +16,7 @@ switch ($op){
 		break;
 	case "tag":
 		
-		$html_str = $kekezu->_cache_obj->get('tag_html_data_'.$tag_id);
+		$html_str = kekezu::$_cache_obj->get('tag_html_data_'.$tag_id);
 		$html_str = $html_str?$html_str:keke_loaddata_class::gettagHTML($tag_id);
 	
 		$html_str = str_replace("'","\'",trim($html_str));

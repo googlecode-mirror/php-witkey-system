@@ -58,7 +58,7 @@ if (isset ( $ac )) {
 if ($model_id) {
 	/**排序数组**/
 	$ord_arr = array (" service_id desc " => $_lang ['service_id_desc'], " service_id asc " => $_lang ['service_id_asc'], " on_time desc " => $_lang ['pub_time_desc'], " on_time asc " => $_lang ['pub_time_asc'] );
-	$page_obj = $kekezu->_page_obj; //分页对象
+	$page_obj = kekezu::$_page_obj; //分页对象
 	$s_obj = new Keke_witkey_service_class ();
 	
 	$where = " model_id = '$model_id' and uid= '$uid'";

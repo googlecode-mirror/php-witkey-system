@@ -29,7 +29,7 @@ abstract class keke_shop_release_class {
 		global $kekezu;
 		$this->_service_obj = new Keke_witkey_service_class ();
 		$this->_model_id = $model_id;
-		$this->_model_info = $kekezu->_model_list [$model_id];
+		$this->_model_info = kekezu::$_model_list [$model_id];
 		$this->_std_obj = new stdClass ();
 		$this->_std_obj->_release_info = array (); //商品发布信息
 		$this->init ();

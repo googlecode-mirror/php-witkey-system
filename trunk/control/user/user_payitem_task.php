@@ -9,7 +9,7 @@
 defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 $payitem_time = "1325811866,1325811866";
 $payitem_standard = keke_payitem_class::payitem_standard (); // 收费标准
-$payitem_type_arr = keke_glob_class::get_payitem_arr ();
+$payitem_type_arr = keke_global_class::get_payitem_arr ();
 $payitem_arr = explode ( ',', $payitem_time );
 
 foreach ( $payitem_arr as $k => $v ) {

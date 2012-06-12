@@ -23,10 +23,9 @@ class keke_lang_class {
 	public static function loadlang($action,$package=null){
 		global $_lang;
 		$lang = self::load_lang_file($action,$package); 
-		if ($lang){
+		if (!empty($lang)){
 		  self::$_init_lang_set = array_merge(self::$_init_lang_set,$lang);
 		  $_lang =  self::$_init_lang_set;
-		  //return $lang;
 		}
 	}
 	
@@ -58,7 +57,7 @@ class keke_lang_class {
 		$r = self::get_lang();
 		$package or $package = self::$_package;
 		$file_name = S_ROOT."lang/".$r."/{$package}/{$action}.php";
-		is_file($file_name) and  include $file_name;
+		include $file_name;
 		return $lang;
 	}
 	public  static function load_lang_class($class_name=null){

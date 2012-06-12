@@ -184,7 +184,7 @@ class mreward_task_class extends keke_task_class {
 		}
 		$where .= "  order by (CASE WHEN  a.work_status!=0 THEN 100 ELSE 0 END) desc,work_time asc ";
 		if (! empty ( $p )) {
-			$page_obj = $kekezu->_page_obj;
+			$page_obj = kekezu::$_page_obj;
 			$page_obj->setAjax ( 1 );
 			$page_obj->setAjaxDom ( "gj_summery" );
 			$count = intval ( db_factory::get_count ( $count_sql . $where ) );
@@ -291,8 +291,8 @@ class mreward_task_class extends keke_task_class {
 			$prize_date = $this->get_prize_date (); //获取各奖项对应的赏金
 			$prize_cash = $prize_date ['cash'] [$to_status];
 			/** 威客上线推广产生*/
-			if ($kekezu->_prom_obj->is_meet_requirement ( "bid_task", $this->_task_id )) {
-				$kekezu->_prom_obj->create_prom_event ( "bid_task", $work_info ['uid'], $this->_task_id, $prize_cash );
+			if (kekezu::$_prom_obj->is_meet_requirement ( "bid_task", $this->_task_id )) {
+				kekezu::$_prom_obj->create_prom_event ( "bid_task", $work_info ['uid'], $this->_task_id, $prize_cash );
 			}
 			//union task
 			if (in_array ( $to_status, array (1, 2, 3 ) )) {
@@ -441,8 +441,8 @@ class mreward_task_class extends keke_task_class {
 		if ($res) {
 			/** 终止雇主的此次推广事件*/
 			$kekezu->init_prom ();
-			$p_event = $kekezu->_prom_obj->get_prom_event ( $this->_task_id, $this->_guid, "pub_task" );
-			$kekezu->_prom_obj->set_prom_event_status ( $p_event ['parent_uid'], $this->_gusername, $p_event ['event_id'], '3' );
+			$p_event = kekezu::$_prom_obj->get_prom_event ( $this->_task_id, $this->_guid, "pub_task" );
+			kekezu::$_prom_obj->set_prom_event_status ( $p_event ['parent_uid'], $this->_gusername, $p_event ['event_id'], '3' );
 			
 			$this->set_task_status ( 9 ); //任务结束
 			
@@ -509,7 +509,7 @@ class mreward_task_class extends keke_task_class {
 		global $kekezu;
 		global $_lang;
 		$kekezu->init_prom ();
-		$prom_obj = $kekezu->_prom_obj;
+		$prom_obj = kekezu::$_prom_obj;
 		
 		if (time () > $this->_task_info ['sp_end_time'] && $this->_task_info ['task_status'] == 5) {
 			//获取获奖稿件
@@ -567,7 +567,7 @@ class mreward_task_class extends keke_task_class {
 		global $kekezu;
 		global $_lang;
 		$kekezu->init_prom ();
-		$prom_obj = $kekezu->_prom_obj;
+		$prom_obj = kekezu::$_prom_obj;
 		
 		switch ($this->_task_config ['end_action']) {
 			case "split" :
@@ -764,8 +764,8 @@ class mreward_task_class extends keke_task_class {
 			if ($res) { //支付成功
 				/** 雇主推广事件产生*/
 				$kekezu->init_prom ();
-				if ($kekezu->_prom_obj->is_meet_requirement ( "pub_task", $this->_task_id )) {
-					$kekezu->_prom_obj->create_prom_event ( "pub_task", $this->_guid, $this->_task_id, $this->_task_info ['task_cash'] );
+				if (kekezu::$_prom_obj->is_meet_requirement ( "pub_task", $this->_task_id )) {
+					kekezu::$_prom_obj->create_prom_event ( "pub_task", $this->_guid, $this->_task_id, $this->_task_info ['task_cash'] );
 				} //更改订单状态到已付款状态
 				db_factory::updatetable ( TABLEPRE . "witkey_order", array ("order_status" => "ok" ), array ("order_id" => "$order_id" ) );
 				if ($order_amount < $task_config ['audit_cash']) { //如果订单的金额比发布任务时配置的最小金额要小

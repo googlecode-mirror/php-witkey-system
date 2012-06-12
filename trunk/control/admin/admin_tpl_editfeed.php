@@ -9,7 +9,7 @@ defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 
 kekezu::admin_check_role ( 57 );
 
-$feed_type = keke_glob_class::get_feed_type ();
+$feed_type = keke_global_class::get_feed_type ();
 
 $feed_obj = new Keke_witkey_feed_class ();
 

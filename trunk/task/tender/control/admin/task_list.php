@@ -47,7 +47,7 @@ if($task_id){
 }
 switch ($ac) {
 	case "del" : //É¾³ý
-		$task_title = db_factory::get_count(sprintf("select task_title from %switkey_task where task_id='%d' ",TABLEPRE,$task_id));
+		$task_title = dbfactory::get_count(sprintf("select task_title from %switkey_task where task_id='%d' ",TABLEPRE,$task_id));
 		kekezu::admin_system_log(kekezu::lang(delete_task)."£º{$task_title}(".$_lang['normal_tender'].")");
 		$res = $table_obj->del ( 'task_id', $task_id, $url_str );
 		$res and kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['delete_success'],'success') or kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['delete_fail'],"warning");

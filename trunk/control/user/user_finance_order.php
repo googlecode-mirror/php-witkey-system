@@ -22,8 +22,8 @@ if (isset ( $ac ) && $order_id && $model_id) {
 	$model_info = kekezu::$_model_list [$model_id];
 	$class_name = $model_info ['model_code'] . "_" . $model_info ['model_type'] . "_class";
 	if ($model_info ['model_type'] == "task") {
-		$task_id = db_factory::get_count ( sprintf ( "select obj_id from %switkey_order_detail where order_id='%d'", TABLEPRE, intval ( $order_id ) ) );
-		$task_info = db_factory::get_one ( sprintf ( "select * from %switkey_task where task_id='%d'", TABLEPRE, $task_id ) );
+		$task_id = dbfactory::get_count ( sprintf ( "select obj_id from %switkey_order_detail where order_id='%d'", TABLEPRE, intval ( $order_id ) ) );
+		$task_info = dbfactory::get_one ( sprintf ( "select * from %switkey_task where task_id='%d'", TABLEPRE, $task_id ) );
 	}
 	$obj = new $class_name ( $task_info );
 	$res = $obj->dispose_order ( $order_id,$ac);
@@ -64,9 +64,9 @@ if (isset ( $ac ) && $order_id && $model_id) {
 	$order_title && $order_title != $_lang['please_input_order_name'] and $sql .= " and a.order_name like '%$order_title%'";
 	$status and $sql .= " and a.order_status = '$status'";
 	$ord and $sql.=" order by $ord " or $sql.=" order by order_id desc ";
-	$count = intval ( db_factory::execute ( $sql ) );
+	$count = intval ( dbfactory::execute ( $sql ) );
 	$pages = $page_obj->getPages ( $count, $page_size, $page, $url, '#userCenter' );
-	$order_arr = db_factory::query ( $sql . $pages ['where'] );
+	$order_arr = dbfactory::query ( $sql . $pages ['where'] );
 }
 
 

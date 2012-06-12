@@ -104,7 +104,7 @@ if ($target_id) {
 	 * 如果有,那么将广告的ad_title设置为只读,不允许修改*/
 	$is_slide = substr ( $target_arr ['code'], - 5 );
 	if (strtolower ( $is_slide ) == 'slide') {
-		$group_arr = db_factory::query ( 'select * from ' . TABLEPRE . 'witkey_tag where tagname="' . $target_arr ['name'] . '" and tag_type="9"' );
+		$group_arr = dbfactory::query ( 'select * from ' . TABLEPRE . 'witkey_tag where tagname="' . $target_arr ['name'] . '" and tag_type="9"' );
 		if (! $group_arr) {
 			kekezu::admin_show_msg ( $_lang ['add_group_msg'], 'index.php?do=tpl&view=ad_group_add&ac=add&target_id=' . $target_arr ['target_id'] . '&tagname=' . $target_arr ['name'], '3', '', 'warning' );
 		} else {
@@ -123,6 +123,6 @@ if ($target_id) {
 	$ad_count = $ad_count ['0'] ['num']; //统计广告位对应的广告条数
 	$string = rtrim ( $string, ',' ); //可投放范围
 }
-$tpl_arr = db_factory::query ( 'select tpl_id,tpl_title from ' . TABLEPRE . 'witkey_template;' );
+$tpl_arr = dbfactory::query ( 'select tpl_id,tpl_title from ' . TABLEPRE . 'witkey_template;' );
 // var_dump($ad_data,$tpl_arr);die();
 require $template_obj->template ( 'control/admin/tpl/admin_' . $do . '_' . $view );

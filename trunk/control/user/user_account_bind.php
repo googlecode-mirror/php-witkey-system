@@ -54,7 +54,7 @@ switch ($ac) {
 					}
 					$name = $oauth_user_info['name'];
 					//检查这个用户是否已经绑定过
-					$is_bind = db_factory::get_count("select count(id) from ".TABLEPRE."witkey_member_oauth  where source ='$type' and oauth_id='{$oauth_user_info['account']}' and uid='$uid'");
+					$is_bind = dbfactory::get_count("select count(id) from ".TABLEPRE."witkey_member_oauth  where source ='$type' and oauth_id='{$oauth_user_info['account']}' and uid='$uid'");
 					$is_bind and kekezu::show_msg($_lang['operate_notice'],$url,3,$_lang['account_been_bind'],'warning');
 					//得到用户信息进行绑定
 					$oauth_obj->setAccount($oauth_user_info['name']);

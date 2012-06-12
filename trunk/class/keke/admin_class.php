@@ -101,7 +101,7 @@ class keke_admin_class {
 		($_SESSION ['uid'] && $_SESSION ['auid']) or $kekezu->admin_show_msg ( $_lang['you_not_login'], 'index.php' );
 		if ($unlock_num > 0) { //解锁判断
 			/**获取当前登录用户密码**/
-			$admin_pwd = db_factory::get_count ( " select password from " . TABLEPRE . "witkey_member where uid = '" . $_SESSION ['uid'] . "'" );
+			$admin_pwd = dbfactory::get_count ( " select password from " . TABLEPRE . "witkey_member where uid = '" . $_SESSION ['uid'] . "'" );
 			$unlock_pwd = md5 ( $unlock_pwd ); //解锁密码
 			if ($admin_pwd == $unlock_pwd) {
 				$_SESSION ['lock_screen'] = '0';
@@ -142,11 +142,11 @@ class keke_admin_class {
 	 * @todo  支持子导航直接搜索
 	 */
 	function search_nav($ser_resource) {
-		$resource_info = db_factory::query ( " select resource_name,resource_url from " . TABLEPRE . "witkey_resource where INSTR(resource_name,'$ser_resource') > 0 " );
+		$resource_info = dbfactory::query ( " select resource_name,resource_url from " . TABLEPRE . "witkey_resource where INSTR(resource_name,'$ser_resource') > 0 " );
 		if ($resource_info)
 			return $resource_info;
 		else {
-			return db_factory::query ( "select resource_name,resource_url from " . TABLEPRE . "witkey_resource a left join " . TABLEPRE . "witkey_resource_submenu b
+			return dbfactory::query ( "select resource_name,resource_url from " . TABLEPRE . "witkey_resource a left join " . TABLEPRE . "witkey_resource_submenu b
 			 on a.submenu_id = b.submenu_id where INSTR(b.submenu_name,'$ser_resource')>0" );
 		}
 	}
@@ -154,7 +154,7 @@ class keke_admin_class {
 	 * 获取快捷方式
 	 */
 	public function get_shortcuts_list() {
-		return db_factory::query ( " select b.resource_id,b.resource_name,b.resource_url from " . TABLEPRE . "witkey_shortcuts a left join " . TABLEPRE . "witkey_resource b on a.resource_id = b.resource_id where a.uid = '$this->_uid' order by a.s_id desc " );
+		return dbfactory::query ( " select b.resource_id,b.resource_name,b.resource_url from " . TABLEPRE . "witkey_shortcuts a left join " . TABLEPRE . "witkey_resource b on a.resource_id = b.resource_id where a.uid = '$this->_uid' order by a.s_id desc " );
 	}
 	/**
 	 *添加快捷（常用菜单) 
@@ -164,7 +164,7 @@ class keke_admin_class {
 	function add_fast_menu($r_id) {
 		global $_lang;
 		$shortcuts_obj = new Keke_witkey_shortcuts_class ();
-		$in_shortcuts_list = db_factory::execute ( " select resource_id from " . TABLEPRE . "witkey_shortcuts where resource_id = '$r_id'" );
+		$in_shortcuts_list = dbfactory::execute ( " select resource_id from " . TABLEPRE . "witkey_shortcuts where resource_id = '$r_id'" );
 		if (! $in_shortcuts_list) {
 			$shortcuts_obj->_s_id = null;
 			$shortcuts_obj->setUid ( $this->_uid );
@@ -189,12 +189,12 @@ class keke_admin_class {
 	function rm_fast_menu($r_id) {
 		global $_lang;
 		$shortcuts_obj = new Keke_witkey_shortcuts_class ();
-		$shortcuts_list = db_factory::get_one ( " select uid,resource_id from " . TABLEPRE . "witkey_shortcuts where resource_id = '$r_id' and uid = '$this->_uid'" );
+		$shortcuts_list = dbfactory::get_one ( " select uid,resource_id from " . TABLEPRE . "witkey_shortcuts where resource_id = '$r_id' and uid = '$this->_uid'" );
 		if ($shortcuts_list) {
 			if ($shortcuts_list ['uid'] != $this->_uid) {
 				kekezu::echojson ( $_lang['not_delete_others_shortcuts'], '2' );
 			} else {
-				$success = db_factory::execute ( " delete from " . TABLEPRE . "witkey_shortcuts where resource_id = '$r_id' and uid = '$this->_uid'" );
+				$success = dbfactory::execute ( " delete from " . TABLEPRE . "witkey_shortcuts where resource_id = '$r_id' and uid = '$this->_uid'" );
 				if ($success) {
 					kekezu::echojson ( $_lang['shortcuts_delete_success'], '4' );
 					die ();

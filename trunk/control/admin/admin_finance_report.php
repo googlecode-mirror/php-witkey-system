@@ -7,7 +7,7 @@
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 kekezu::admin_check_role ( 3 );
 
-$year_arr = db_factory::query ( sprintf ( "SELECT DISTINCT(YEAR(FROM_UNIXTIME(fina_time))) as year from %switkey_finance order by year desc", TABLEPRE ) ); // 生成年份
+$year_arr = dbfactory::query ( sprintf ( "SELECT DISTINCT(YEAR(FROM_UNIXTIME(fina_time))) as year from %switkey_finance order by year desc", TABLEPRE ) ); // 生成年份
 $income_path = 'tpl/anychart_files/xml/income_%s.xml';
 $analysis_path = 'tpl/anychart_files/xml/analysis_%s.xml';
 if (isset ( $ac ) && $ac == 'update') {
@@ -46,7 +46,7 @@ function update_xml($path, $data, $category) {
 function income_data($path, $every_year = false) {
 	global $_lang;
 	// 年份
-	$year_arr = db_factory::query ( sprintf ( "SELECT DISTINCT(YEAR(FROM_UNIXTIME(fina_time))) as year from %switkey_finance", TABLEPRE ) );
+	$year_arr = dbfactory::query ( sprintf ( "SELECT DISTINCT(YEAR(FROM_UNIXTIME(fina_time))) as year from %switkey_finance", TABLEPRE ) );
 	$month_init_arr = array (); // 初始化月份数组
 	$series_arr = array (); // 要生成的series节点数组
 	for($i = 1; $i <= 12; $i ++) {
@@ -58,7 +58,7 @@ function income_data($path, $every_year = false) {
 	foreach ( $year_arr as $key => $value ) {
 		$month_arr = $month_init_arr;
 		$sql = " SELECT MONTH(FROM_UNIXTIME(fina_time)) as mon,sum(fina_cash) as cash,sum(fina_credit) as credit from %switkey_finance where year(FROM_UNIXTIME(fina_time))='%s' GROUP BY mon order by mon desc";
-		$temp = db_factory::query ( sprintf ( $sql, TABLEPRE, $value ['year'] ) );
+		$temp = dbfactory::query ( sprintf ( $sql, TABLEPRE, $value ['year'] ) );
 		$point = array ();
 		while ( list ( $k, $v ) = each ( $temp ) ) { // 循环月份
 			$point [$v ['mon']] = '<point name="' . ( int ) $v ['mon'] . '" y="' . ($v ['cash'] + $v ['credit']) . '"/>';
@@ -90,16 +90,16 @@ function analysis_data($path, $every_year = false) {
 	$total = $bid_ins = $service_ins = $item_ins = $auth_ins = 0; 
 	foreach ( $year_arr as $key => $value ) {
 		//任务中标
-		$bid_in = db_factory::get_count ( sprintf ( " select sum(site_profit) as cash from %switkey_finance where (fina_action='task_bid' or fina_action='pub_task') and site_profit>0   and (fina_type='in' or fina_type='out') and YEAR(FROM_UNIXTIME(fina_time))=%d", TABLEPRE, $value ['year'] ) );
+		$bid_in = dbfactory::get_count ( sprintf ( " select sum(site_profit) as cash from %switkey_finance where (fina_action='task_bid' or fina_action='pub_task') and site_profit>0   and (fina_type='in' or fina_type='out') and YEAR(FROM_UNIXTIME(fina_time))=%d", TABLEPRE, $value ['year'] ) );
 		$bid_ins += $bid_in;
 		//服务出售
-		$service_in = db_factory::get_count ( sprintf ( " select sum(site_profit) as cash from %switkey_finance where fina_action='sale_service' and fina_type='in' and YEAR(FROM_UNIXTIME(fina_time))=%d", TABLEPRE, $value ['year'] ) );
+		$service_in = dbfactory::get_count ( sprintf ( " select sum(site_profit) as cash from %switkey_finance where fina_action='sale_service' and fina_type='in' and YEAR(FROM_UNIXTIME(fina_time))=%d", TABLEPRE, $value ['year'] ) );
 		$service_ins += $service_in;
 		//增项收入
-		$item_in = db_factory::get_count ( sprintf ( " select sum(site_profit) as cash from %switkey_finance where fina_action='payitem' and fina_type='out' and YEAR(FROM_UNIXTIME(fina_time))=%d", TABLEPRE, $value ['year'] ) );
+		$item_in = dbfactory::get_count ( sprintf ( " select sum(site_profit) as cash from %switkey_finance where fina_action='payitem' and fina_type='out' and YEAR(FROM_UNIXTIME(fina_time))=%d", TABLEPRE, $value ['year'] ) );
 		$item_ins += $item_in;
 		//认证收入
-		$auth_in = db_factory::get_count ( sprintf ( " select sum(site_profit) as cash from %switkey_finance where INSTR(fina_action,'_auth') and fina_type='out' and YEAR(FROM_UNIXTIME(fina_time))=%d", TABLEPRE, $value ['year'] ) );
+		$auth_in = dbfactory::get_count ( sprintf ( " select sum(site_profit) as cash from %switkey_finance where INSTR(fina_action,'_auth') and fina_type='out' and YEAR(FROM_UNIXTIME(fina_time))=%d", TABLEPRE, $value ['year'] ) );
 		$auth_ins += $auth_in;
 		
 		$point = '';

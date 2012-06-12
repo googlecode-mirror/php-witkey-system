@@ -39,7 +39,7 @@ switch ($step){
 		
 		//卡号验证
 		if($check_card){
-			$card_exists=db_factory::get_count(sprintf(" select card_num from %switkey_member_bank where bind_status='1' and card_num='%d'",TABLEPRE,$check_card));
+			$card_exists=dbfactory::get_count(sprintf(" select card_num from %switkey_member_bank where bind_status='1' and card_num='%d'",TABLEPRE,$check_card));
 			if($card_exists){
 				$notice= $_lang['this_account_has_been_bound_to_others'];
 				CHARSET=='gbk' and $notice=kekezu::gbktoutf($notice);
@@ -60,7 +60,7 @@ switch ($step){
 			$bank_id=$bank_obj->save($conf);
 			
 			if($bank_id){
-				db_factory::execute(sprintf(" update %switkey_member_bank set bind_status='1' where bank_id='%d'",TABLEPRE,$bank_id));
+				dbfactory::execute(sprintf(" update %switkey_member_bank set bind_status='1' where bank_id='%d'",TABLEPRE,$bank_id));
 				unset($_SESSION['bank_zone']);
 				unset($_SESSION['bank_zone_detail']);
 				kekezu::show_msg($_lang['account_binding_successful'],$ac_url."&step=step4&bank_type=$bank_type&bank_id=$bank_id#userCenter","3",'','success');
@@ -72,7 +72,7 @@ switch ($step){
 		break;
 	case "step4":
 		$bank_arr=keke_global_class::get_bank();//银行列表
-		$bank_info=db_factory::get_one(sprintf(" select * from %switkey_member_bank where bank_id='%d' and uid='%d' and bind_status='1' ",TABLEPRE,$bank_id,$uid));
+		$bank_info=dbfactory::get_one(sprintf(" select * from %switkey_member_bank where bank_id='%d' and uid='%d' and bind_status='1' ",TABLEPRE,$bank_id,$uid));
 		$bank_info or kekezu::show_msg( $_lang['no_binding_account_please_bind'],"$ac_url&step=step1","3","","warning");
 		break;
 }

@@ -184,11 +184,11 @@ abstract class keke_task_class {
 	public function get_task_related($same = true, $lasted = true) {
 		$related = array ();
 		if ($same) {
-			$same_task = db_factory::query ( sprintf ( " select task_title,task_id,task_cash from %switkey_task where indus_id = '%d' and model_id='%d' and task_id!='%d' and task_status in(2,3) and focus_num>0 order by task_cash desc limit 0,5", TABLEPRE, $this->_task_info ['indus_id'], $this->_model_id, $this->_task_id ) );
+			$same_task = dbfactory::query ( sprintf ( " select task_title,task_id,task_cash from %switkey_task where indus_id = '%d' and model_id='%d' and task_id!='%d' and task_status in(2,3) and focus_num>0 order by task_cash desc limit 0,5", TABLEPRE, $this->_task_info ['indus_id'], $this->_model_id, $this->_task_id ) );
 			$same_task and $related ['same'] = $same_task;
 		}
 		if ($lasted) {
-			$favor_task = db_factory::query ( sprintf ( " select task_title,task_id,task_cash from %switkey_task where indus_id = '%d' and model_id='%d' and task_status in(2,3) and task_id!='%d' order by view_num desc limit 0,5", TABLEPRE, $this->_task_info ['indus_id'], $this->_model_id, $this->_task_id ) );
+			$favor_task = dbfactory::query ( sprintf ( " select task_title,task_id,task_cash from %switkey_task where indus_id = '%d' and model_id='%d' and task_status in(2,3) and task_id!='%d' order by view_num desc limit 0,5", TABLEPRE, $this->_task_info ['indus_id'], $this->_model_id, $this->_task_id ) );
 			$favor_task and $related ['favor'] = $favor_task;
 		}
 		return $related;
@@ -204,9 +204,9 @@ abstract class keke_task_class {
 	public static function get_comment($obj_type, $task_id, $obj_id, $work_uid) {
 		global $uid;
 		$condit = "  from " . TABLEPRE . "witkey_comment where obj_type='$obj_type' and obj_id='$obj_id' and origin_id='$task_id'";
-		$comment_arr = db_factory::query ( " select * " . $condit );
+		$comment_arr = dbfactory::query ( " select * " . $condit );
 		if ($comment_arr && $work_uid == $uid) {
-			db_factory::execute ( sprintf ( " update %switkey_comment set status = '1' where obj_id= '%d' and origin_id='$task_id'", TABLEPRE, $obj_id ) );
+			dbfactory::execute ( sprintf ( " update %switkey_comment set status = '1' where obj_id= '%d' and origin_id='$task_id'", TABLEPRE, $obj_id ) );
 		}
 		return $comment_arr;
 	}
@@ -279,13 +279,13 @@ abstract class keke_task_class {
 						//任务投稿中，直接更改任务结束时间
 						$add_time = $delay_day * 24 * 3600;
 						$real_cash_add = $delay_cash * (100 - $this->_profit_rate) / 100;
-						db_factory::execute ( sprintf ( " update %switkey_task set end_time=end_time+'%s',sub_time=sub_time+'%s',is_delay =ifnull(is_delay,0)+1
+						dbfactory::execute ( sprintf ( " update %switkey_task set end_time=end_time+'%s',sub_time=sub_time+'%s',is_delay =ifnull(is_delay,0)+1
 							,credit_cost=credit_cost+'%s',cash_cost=cash_cost+'%s',real_cash=real_cash+'%s',task_cash=task_cash+'%s' where task_id='%d'", TABLEPRE, $add_time, $add_time, $credit_cost, $cash_cost, $real_cash_add, $delay_cash, $this->_task_id ) );
 						//订单更改
-						db_factory::updatetable ( TABLEPRE . "witkey_order", array ("order_amount" =>($task_info['task_cash']+$delay_cash) ), array ("order_id" =>$task_info['order_id']) );
+						dbfactory::updatetable ( TABLEPRE . "witkey_order", array ("order_amount" =>($task_info['task_cash']+$delay_cash) ), array ("order_id" =>$task_info['order_id']) );
 						if ($this->_model_id == 3) {
 							$add_single = $delay_cash / intval ( $this->_task_info [work_count] );
-							db_factory::execute ( sprintf ( "update %switkey_task set single_cash = single_cash+'%s' where task_id='%d'", TABLEPRE, $add_single, $this->_task_id ) );
+							dbfactory::execute ( sprintf ( "update %switkey_task set single_cash = single_cash+'%s' where task_id='%d'", TABLEPRE, $add_single, $this->_task_id ) );
 						}
 						if($this->_model_code=='mreward'){
 							mreward_task_class::task_delay($this->_task_id,$task_info['task_cash'],$delay_cash);
@@ -307,9 +307,9 @@ abstract class keke_task_class {
 	public static function set_task_comment($comment_arr, $is_reply = false) {
 		strtolower ( CHARSET ) == 'gbk' and $comment_arr ['content'] = kekezu::utftogbk ( $comment_arr ['content'] );
 		$comment_arr ['content'] = kekezu::escape ( kekezu::str_filter ( $comment_arr ['content'] ) );
-		$lid = db_factory::inserttable ( TABLEPRE . "witkey_comment", $comment_arr, 1 );
+		$lid = dbfactory::inserttable ( TABLEPRE . "witkey_comment", $comment_arr, 1 );
 		//任务留言数加1
-		$is_reply or db_factory::execute ( sprintf ( "update %switkey_task set leave_num = leave_num+1 where task_id = '%d'", TABLEPRE, $comment_arr ['obj_id'] ) );
+		$is_reply or dbfactory::execute ( sprintf ( "update %switkey_task set leave_num = leave_num+1 where task_id = '%d'", TABLEPRE, $comment_arr ['obj_id'] ) );
 		return $lid;
 	}
 	
@@ -331,7 +331,7 @@ abstract class keke_task_class {
 	 * @param unknown_type $special_fields  特殊字段     可以","分隔   默认为查询手机，邮箱
 	 */
 	public function get_user_special($uid, $special_fields = 'mobile,email') {
-		return db_factory::get_one ( sprintf ( " select %s from %switkey_space where uid = '%d' ", $special_fields, TABLEPRE, $uid ) );
+		return dbfactory::get_one ( sprintf ( " select %s from %switkey_space where uid = '%d' ", $special_fields, TABLEPRE, $uid ) );
 	}
 	/**
 	 * 获取不同状态的任务稿件信息   用户业务类调取数据
@@ -344,7 +344,7 @@ abstract class keke_task_class {
 		$pk = $fields_arr ['pk'];
 		$st = $fields_arr ['st'];
 		if ($work_id) {
-			return db_factory::get_one ( sprintf ( " select * from %s%s where %s='%d'", TABLEPRE, $tab, $pk, $work_id ) );
+			return dbfactory::get_one ( sprintf ( " select * from %s%s where %s='%d'", TABLEPRE, $tab, $pk, $work_id ) );
 		} else {
 			$where = " 1 = 1 and task_id = '" . $this->_task_id . "' ";
 			strpos ( $work_status, "," ) == FALSE and $where .= " and $st = '$work_status' " or $where .= " and $st in ($work_status) ";
@@ -358,7 +358,7 @@ abstract class keke_task_class {
 	public static function get_work_file($file_ids) {
 		$sql = " select * from " . TABLEPRE . "witkey_file where obj_type='work' and  file_id ";
 		strpos ( $file_ids, "," ) !== FALSE and $sql .= " in (" . $file_ids . ")" or $sql .= " = '$file_ids' ";
-		return db_factory::query ( $sql );
+		return dbfactory::query ( $sql );
 	}
 	public function get_mark_count() {
 		return kekezu::get_table_data ( " count(mark_id) count,mark_status", "witkey_mark", "model_code='" . $this->_model_code . "' and origin_id='$this->_task_id'", "", "mark_status", "", "mark_status", 3600 );
@@ -376,7 +376,7 @@ abstract class keke_task_class {
 	 * @return boolean
 	 */
 	public function set_task_status($to_status) {
-		return db_factory::execute ( sprintf ( " update %switkey_task set task_status='%d' where task_id='%d'", TABLEPRE, $to_status, $this->_task_id ) );
+		return dbfactory::execute ( sprintf ( " update %switkey_task set task_status='%d' where task_id='%d'", TABLEPRE, $to_status, $this->_task_id ) );
 	}
 	
 	/**
@@ -470,10 +470,10 @@ abstract class keke_task_class {
 		$tab = $fields_arr ['tab'];
 		$pk = $fields_arr ['pk'];
 		$st = $fields_arr ['st'];
-		$res = db_factory::execute ( sprintf ( " delete from %s%s where %s = '%d'", TABLEPRE, $tab, $pk, $work_id ) );
-		//$num = db_factory::execute ( sprintf ( "delete from %switkey_comment where origin_id='%d' and obj_id = '%d'", TABLEPRE, $this->_task_id, $work_id ) );
+		$res = dbfactory::execute ( sprintf ( " delete from %s%s where %s = '%d'", TABLEPRE, $tab, $pk, $work_id ) );
+		//$num = dbfactory::execute ( sprintf ( "delete from %switkey_comment where origin_id='%d' and obj_id = '%d'", TABLEPRE, $this->_task_id, $work_id ) );
 		if ($res) {
-			db_factory::execute ( sprintf ( "update %switkey_task set work_num = work_num-1 where task_id = '%d'", TABLEPRE, $this->_task_id ) );
+			dbfactory::execute ( sprintf ( "update %switkey_task set work_num = work_num-1 where task_id = '%d'", TABLEPRE, $this->_task_id ) );
 			kekezu::keke_show_msg ( $url, $_lang['manuscript_delete_success'], "", $output );
 		} else {
 			kekezu::keke_show_msg ( $url, $_lang['manuscript_delete_fail'], "error", $output );
@@ -596,7 +596,7 @@ abstract class keke_task_class {
 	 */
 	public function check_if_good_mark($mark_id, $to_status, $url = '', $output = 'normal') {
 		global $_lang;
-		$mark_status = db_factory::get_count ( sprintf ( " select mark_status from %switkey_mark where mark_id='%d'", TABLEPRE, $mark_id ) );
+		$mark_status = dbfactory::get_count ( sprintf ( " select mark_status from %switkey_mark where mark_id='%d'", TABLEPRE, $mark_id ) );
 		if ($mark_status == 1 && $mark_status != $to_status) { //阻止好评变更为其他状态
 			kekezu::keke_show_msg ( $url, $_lang['good_values_can_not_update'], "error", $output );
 		} else
@@ -681,7 +681,7 @@ abstract class keke_task_class {
 	public function plus_view_num() {
 		if (! $_SESSION ['task_views_' . $this->_task_id . '_' . $this->_uid] && $this->_uid != $this->_guid) {
 			$_SESSION ['task_views_' . $this->_task_id . '_' . $this->_uid] = 1;
-			return db_factory::execute ( sprintf ( 'update %switkey_task set view_num=view_num+1 where task_id=%d', TABLEPRE, $this->_task_id ) );
+			return dbfactory::execute ( sprintf ( 'update %switkey_task set view_num=view_num+1 where task_id=%d', TABLEPRE, $this->_task_id ) );
 		}
 	}
 	/**
@@ -689,7 +689,7 @@ abstract class keke_task_class {
 	 * @return boolean
 	 */
 	public function plus_work_num() {
-		return db_factory::execute ( sprintf ( "update %switkey_task set work_num=work_num+1 where task_id ='%d'", TABLEPRE, $this->_task_id ) ); //更新任务稿件数量
+		return dbfactory::execute ( sprintf ( "update %switkey_task set work_num=work_num+1 where task_id ='%d'", TABLEPRE, $this->_task_id ) ); //更新任务稿件数量
 	}
 	/**
 	 * 用户中标次数更新
@@ -697,28 +697,28 @@ abstract class keke_task_class {
 	 * @return boolean
 	 */
 	public function plus_accepted_num($uid) {
-		return db_factory::execute ( sprintf ( "update %switkey_space set accepted_num = accepted_num+1 where uid='%d'", TABLEPRE, intval ( $uid ) ) );
+		return dbfactory::execute ( sprintf ( "update %switkey_space set accepted_num = accepted_num+1 where uid='%d'", TABLEPRE, intval ( $uid ) ) );
 	}
 	/**
 	 * 用户交稿数量更新
 	 * @return boolean
 	 */
 	public function plus_take_num() {
-		return db_factory::execute ( sprintf ( "update %switkey_space set take_num = take_num+1 where uid ='%d'", TABLEPRE, $this->_uid ) );
+		return dbfactory::execute ( sprintf ( "update %switkey_space set take_num = take_num+1 where uid ='%d'", TABLEPRE, $this->_uid ) );
 	}
 	/**
 	 * 任务留言量更新
 	 * @return boolean
 	 */
 	public function plus_leave_num() {
-		return db_factory::execute ( sprintf ( "update %switkey_task set leave_num=leave_num+1 where task_id ='%d'", TABLEPRE, $this->_task_id ) );
+		return dbfactory::execute ( sprintf ( "update %switkey_task set leave_num=leave_num+1 where task_id ='%d'", TABLEPRE, $this->_task_id ) );
 	}
 	/**
 	 * 任务关注数更新
 	 * @return boolean
 	 */
 	public function plus_focus_num() {
-		return db_factory::execute ( sprintf ( "update %switkey_task set focus_num=focus_num+1 where task_id ='%d'", TABLEPRE, $this->_task_id ) );
+		return dbfactory::execute ( sprintf ( "update %switkey_task set focus_num=focus_num+1 where task_id ='%d'", TABLEPRE, $this->_task_id ) );
 	}
 	/**
 	 * 悬赏
@@ -729,13 +729,13 @@ abstract class keke_task_class {
 		$fields_arr = $this->get_work_fields ();
 		$tab = $fields_arr ['tab'];
 		$pk = $fields_arr ['pk'];
-		return db_factory::execute ( sprintf ( "update %s%s set comment_num=comment_num+1 where %s ='%d'", TABLEPRE, $tab, $pk, $work_id ) );
+		return dbfactory::execute ( sprintf ( "update %s%s set comment_num=comment_num+1 where %s ='%d'", TABLEPRE, $tab, $pk, $work_id ) );
 	}
 	/**
 	 * 任务评价数更新 每次+2
 	 */
 	public function plus_mark_num() {
-		return db_factory::execute ( sprintf ( "update %switkey_task set mark_num=ifnull(mark_num,0)+2 where task_id ='%d'", TABLEPRE, $this->_task_id ) );
+		return dbfactory::execute ( sprintf ( "update %switkey_task set mark_num=ifnull(mark_num,0)+2 where task_id ='%d'", TABLEPRE, $this->_task_id ) );
 	}
 	public static function process_desc() {
 		global $_lang;
@@ -747,7 +747,7 @@ abstract class keke_task_class {
 	 * @param $days 互评的最大期限时间
 	 */
 	public static function hp_timeout($days = 7) {
-		$mark_list = db_factory::query ( sprintf ( "select * from %switkey_mark where mark_status=0 and mark_time<'%d'-'%d'", TABLEPRE, time (), 7 * 24 * 3600 ) );
+		$mark_list = dbfactory::query ( sprintf ( "select * from %switkey_mark where mark_status=0 and mark_time<'%d'-'%d'", TABLEPRE, time (), 7 * 24 * 3600 ) );
 		if (is_array ( $mark_list )) {
 			foreach ( $mark_list as $v ) {
 				keke_user_mark_class::exec_mark_process ( $v [mark_id], '', 1 );

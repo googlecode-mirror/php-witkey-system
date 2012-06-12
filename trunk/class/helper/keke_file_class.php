@@ -451,7 +451,7 @@ class keke_file_class {
 	 * @param $filepath ÎÄ¼þÂ·¾¶        	
 	 */
 	public static function del_file($filepath,$is_db=true) {
-		if ( $is_db and db_factory::get_count ( sprintf ( " select count(file_id) from %switkey_file where save_name='%s'", TABLEPRE, $filepath ) )) {
+		if ( $is_db and dbfactory::get_count ( sprintf ( " select count(file_id) from %switkey_file where save_name='%s'", TABLEPRE, $filepath ) )) {
 			if (is_file ( $filepath )) {
 				return unlink ( $filepath );
 			}else{

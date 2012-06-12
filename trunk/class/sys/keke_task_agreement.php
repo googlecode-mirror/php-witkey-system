@@ -83,12 +83,12 @@ abstract class keke_task_agreement {
 	 */
 	public function get_agreement_info() {
 		global $_K, $uid, $kekezu;
-		$agree_info = db_factory::get_one ( sprintf ( " select * from %switkey_agreement where agree_id = '%d'", TABLEPRE, $this->_agree_id ) );
+		$agree_info = dbfactory::get_one ( sprintf ( " select * from %switkey_agreement where agree_id = '%d'", TABLEPRE, $this->_agree_id ) );
 		$this->_agree_info = $agree_info;
 		$uid == $agree_info ['buyer_uid'] and $this->_user_role = '2' or $this->_user_role = '1';
 		$this->_agree_status = $agree_info ['agree_status'];
 		$this->_task_id = $agree_info ['task_id'];
-		$this->_trust_info = db_factory::get_one ( sprintf ( " select is_trust,trust_type,is_auto_bid,task_status from %switkey_task where task_id='%d'", TABLEPRE, $this->_task_id ) ); //是否担保
+		$this->_trust_info = dbfactory::get_one ( sprintf ( " select is_trust,trust_type,is_auto_bid,task_status from %switkey_task where task_id='%d'", TABLEPRE, $this->_task_id ) ); //是否担保
 		
 		$this->_model_code = kekezu::$_model_list [$agree_info ['model_id']] ['model_code']; //模型code
 		$this->_buyer_uid = $agree_info ['buyer_uid'];
@@ -102,7 +102,7 @@ abstract class keke_task_agreement {
 	 * 获取买家相关联系信息
 	 */
 	public function buyer_contact_init() {
-		$info = db_factory::get_one ( sprintf ( " select a.contact,a.username,b.truename,b.phone from %switkey_task a left join %switkey_space b on a.uid=b.uid where a.task_id='%d'", TABLEPRE, TABLEPRE, $this->_task_id ) );
+		$info = dbfactory::get_one ( sprintf ( " select a.contact,a.username,b.truename,b.phone from %switkey_task a left join %switkey_space b on a.uid=b.uid where a.task_id='%d'", TABLEPRE, TABLEPRE, $this->_task_id ) );
 		$this->_buyer_username = $info ['username'];
 		$contact = unserialize ( $info ['contact'] );
 		$this->_buyer_contact = array_merge ( $info, $contact );
@@ -111,7 +111,7 @@ abstract class keke_task_agreement {
 	 * 获取卖家相关联系信息
 	 */
 	public function seller_contact_init() {
-		$info = db_factory::get_one ( sprintf ( " select truename,username,qq,mobile,email,msn,phone from %switkey_space where uid='%d'", TABLEPRE, $this->_seller_uid ) );
+		$info = dbfactory::get_one ( sprintf ( " select truename,username,qq,mobile,email,msn,phone from %switkey_space where uid='%d'", TABLEPRE, $this->_seller_uid ) );
 		$this->_seller_username = $info ['username'];
 		$this->_seller_contact = $info;
 	}
@@ -138,7 +138,7 @@ abstract class keke_task_agreement {
 						$res = $this->set_agreement_status ( 'seller_status', '2' ); //更改状态
 						if ($res) {
 							/** 更新签署时间 */
-							db_factory::execute ( sprintf ( " update %switkey_agreement set seller_accepttime='%s' where seller_uid='%d' and agree_id ='%d'", TABLEPRE, time (), $this->_seller_uid, $this->_agree_id ) );
+							dbfactory::execute ( sprintf ( " update %switkey_agreement set seller_accepttime='%s' where seller_uid='%d' and agree_id ='%d'", TABLEPRE, time (), $this->_seller_uid, $this->_agree_id ) );
 							/** 买家(雇主)签署状态判断**/
 							switch ($buyer_status) {
 								case "1" :
@@ -162,7 +162,7 @@ abstract class keke_task_agreement {
 						$res = $this->set_agreement_status ( 'buyer_status', '2' ); //更改状态
 						if ($res) {
 							/** 更新签署时间 */
-							db_factory::execute ( sprintf ( " update %switkey_agreement set buyer_accepttime='%s' where buyer_uid ='%d' and agree_id='%d'", TABLEPRE, time (), $this->_buyer_uid, $this->_agree_id) );
+							dbfactory::execute ( sprintf ( " update %switkey_agreement set buyer_accepttime='%s' where buyer_uid ='%d' and agree_id='%d'", TABLEPRE, time (), $this->_buyer_uid, $this->_agree_id) );
 							/** 威客(卖家)签署状态判断**/
 							switch ($seller_sattus) {
 								case "1" :
@@ -200,7 +200,7 @@ abstract class keke_task_agreement {
 		global $_lang;
 		$uid != $this->_seller_uid and kekezu::keke_show_msg ( $url, $_lang['warning_you_no_rights_submit'], "error", $output );
 		$file_ids = implode ( ",", array_filter ( explode ( ",", $file_ids ) ) );
-		$res = db_factory::execute ( sprintf ( " update %switkey_agreement set seller_confirmtime = UNIX_TIMESTAMP(),file_ids = '%s' where agree_id='%d'", TABLEPRE, $file_ids, $this->_agree_id ) );
+		$res = dbfactory::execute ( sprintf ( " update %switkey_agreement set seller_confirmtime = UNIX_TIMESTAMP(),file_ids = '%s' where agree_id='%d'", TABLEPRE, $file_ids, $this->_agree_id ) );
 		$res *= $this->set_agreement_status ( 'seller_status', '3' ); //变更卖家为等待接收状态
 		$res *= $this->set_agreement_status ( 'buyer_status', '3' ); //变更买家为确认接收状态
 		
@@ -224,8 +224,8 @@ abstract class keke_task_agreement {
 		$uid != $this->_buyer_uid and kekezu::keke_show_msg ( $url, $_lang['warning_you_no_rights_confirm'], "error", $output );
 		$trust_info = $this->_trust_info;
 		if ($this->_agree_status == 2 && $this->_seller_status == 3 && $this->_buyer_status == 3) {
-				$res = db_factory::execute ( sprintf ( " update %switkey_agreement set buyer_confirmtime = UNIX_TIMESTAMP() where agree_id ='%d'", TABLEPRE, $this->_agree_id ) );
-				db_factory::execute ( sprintf ( " update %switkey_task set task_status = '8' where task_id ='%d'", TABLEPRE, $this->_task_id ) );
+				$res = dbfactory::execute ( sprintf ( " update %switkey_agreement set buyer_confirmtime = UNIX_TIMESTAMP() where agree_id ='%d'", TABLEPRE, $this->_agree_id ) );
+				dbfactory::execute ( sprintf ( " update %switkey_task set task_status = '8' where task_id ='%d'", TABLEPRE, $this->_task_id ) );
 				$res *= $this->set_agreement_status ( 'seller_status', '4' ); //进入互评阶段
 				$res *= $this->set_agreement_status ( 'buyer_status', '4' ); //进入互评阶段
 				$res *= $this->set_agreement_status ( 'agree_status', '3' ); //交付完成
@@ -248,7 +248,7 @@ abstract class keke_task_agreement {
 	 * 任务评价数更新 每次+2
 	 */
 	public function plus_mark_num() {
-		return db_factory::execute ( sprintf ( "update %switkey_task set mark_num=ifnull(mark_num,0)+2 where task_id ='%d'", TABLEPRE, $this->_task_id ) );
+		return dbfactory::execute ( sprintf ( "update %switkey_task set mark_num=ifnull(mark_num,0)+2 where task_id ='%d'", TABLEPRE, $this->_task_id ) );
 	}
 	/**
 	 * 任务(稿件)维权(仲裁)
@@ -291,7 +291,7 @@ abstract class keke_task_agreement {
 	 */
 	public function get_file_list() {
 		if ($this->_agree_info ['file_ids']) {
-			return db_factory::query ( sprintf ( " select file_id,file_name,save_name from %switkey_file where obj_type='agreement' and obj_id='%d'", TABLEPRE, $this->_agree_id ) );
+			return dbfactory::query ( sprintf ( " select file_id,file_name,save_name from %switkey_file where obj_type='agreement' and obj_id='%d'", TABLEPRE, $this->_agree_id ) );
 		}
 	}
 	/**
@@ -308,7 +308,7 @@ abstract class keke_task_agreement {
 	 * @param string $type 要更改状态的字段名 默认协议状态  可填buyer_status seller_status
 	 */
 	public function set_agreement_status($type = 'agree_status', $to_status) {
-		return db_factory::execute ( sprintf ( " update %switkey_agreement set %s = '%d' where agree_id = '%d'", TABLEPRE, $type, $to_status, $this->_agree_id ) );
+		return dbfactory::execute ( sprintf ( " update %switkey_agreement set %s = '%d' where agree_id = '%d'", TABLEPRE, $type, $to_status, $this->_agree_id ) );
 	}
 	/**
 	 * 获取交付状态信息

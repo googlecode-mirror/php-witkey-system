@@ -97,9 +97,9 @@ class keke_user_class {
 		global $kekezu;
 		//没有开用户整合
 		$pwd = md5 ( $password );
-		$check_username = db_factory::get_count ( sprintf ( " select username from %switkey_member where username='%s'", TABLEPRE, $username ) );
+		$check_username = dbfactory::get_count ( sprintf ( " select username from %switkey_member where username='%s'", TABLEPRE, $username ) );
 		if ($check_username) {
-			$check_pass = db_factory::get_one ( sprintf ( " select * from %switkey_member where username='%s' and password='%s'", TABLEPRE, $username, $pwd ) );
+			$check_pass = dbfactory::get_one ( sprintf ( " select * from %switkey_member where username='%s' and password='%s'", TABLEPRE, $username, $pwd ) );
 			if ($check_pass) {
 				$u = array ('uid' => $check_pass ['uid'], 'username' => $check_pass ['username'], 'email' => $check_pass ['email'] );
 			} else {
@@ -130,12 +130,12 @@ class keke_user_class {
 	static function user_delete($uid) {
 		global $kekezu;
 		//删除space，member，member_band，member_ext，member_black，member_oauth六张表中uid
-		db_factory::execute ( sprintf ( "delete from %switkey_space where uid='%d' ", TABLEPRE, $uid ) );
-		db_factory::execute ( sprintf ( "delete from %switkey_member where uid='%d' ", TABLEPRE, $uid ) );
-		db_factory::execute ( sprintf ( "delete from %switkey_member_bank where uid='%d' ", TABLEPRE, $uid ) );
-		db_factory::execute ( sprintf ( "delete from %switkey_member_ext where uid='%d' ", TABLEPRE, $uid ) );
-		db_factory::execute ( sprintf ( "delete from %switkey_member_black where uid='%d' ", TABLEPRE, $uid ) );
-		db_factory::execute ( sprintf ( "delete from %switkey_member_oauth where uid='%d' ", TABLEPRE, $uid ) );
+		dbfactory::execute ( sprintf ( "delete from %switkey_space where uid='%d' ", TABLEPRE, $uid ) );
+		dbfactory::execute ( sprintf ( "delete from %switkey_member where uid='%d' ", TABLEPRE, $uid ) );
+		dbfactory::execute ( sprintf ( "delete from %switkey_member_bank where uid='%d' ", TABLEPRE, $uid ) );
+		dbfactory::execute ( sprintf ( "delete from %switkey_member_ext where uid='%d' ", TABLEPRE, $uid ) );
+		dbfactory::execute ( sprintf ( "delete from %switkey_member_black where uid='%d' ", TABLEPRE, $uid ) );
+		dbfactory::execute ( sprintf ( "delete from %switkey_member_oauth where uid='%d' ", TABLEPRE, $uid ) );
 		if (kekezu::$_sys_config ['user_intergration'] == 1) {
 			return $uid;
 		} elseif (kekezu::$_sys_config ['user_intergration'] == 2) {
@@ -263,7 +263,7 @@ class keke_user_class {
 		global $_lang;
 		if (! empty ( $info ) && function_exists ( 'fsockopen' )) {
 			//更改用户状态为未激活
-			db_factory::execute(sprintf("update %switkey_space set status='3' where uid='%d'",TABLEPRE,$info['uid']));
+			dbfactory::execute(sprintf("update %switkey_space set status='3' where uid='%d'",TABLEPRE,$info['uid']));
 			$user_info = implode ( ',', $info );
 			$excite_code = md5 ( $user_info );
 			
@@ -372,9 +372,9 @@ EOT;
 		isset($_COOKIE['relation_id']) and $relation_id=$_COOKIE['relation_id'];
 		if (isset($relation_id)){
 			$query_sql = "select count(*) as total from `%switkey_task_relation` where `relation_id`=%d";
-			$count = db_factory::get_count(sprintf($query_sql,TABLEPRE,intval($relation_id)),'total');
+			$count = dbfactory::get_count(sprintf($query_sql,TABLEPRE,intval($relation_id)),'total');
 			if ($count<1) return false;
-			db_factory::execute(sprintf("update %switkey_task_relation set uid=%s where relation_id=%d",TABLEPRE,$uid,$relation_id));
+			dbfactory::execute(sprintf("update %switkey_task_relation set uid=%s where relation_id=%d",TABLEPRE,$uid,$relation_id));
 			setcookie('relation_id','',-20000);
 		}
 	}

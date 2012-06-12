@@ -34,7 +34,7 @@ is_array($w['ord']) and $where .= ' order by '.$w['ord'][0].' '.$w['ord'][1];
 
 //用户购买总支出
 $all_buy_sql = "select sum(use_cash) as cash from " . TABLEPRE . "witkey_payitem_record where use_type='buy'";
-$all_buy_pro = db_factory::query ( $all_buy_sql );
+$all_buy_pro = dbfactory::query ( $all_buy_sql );
 $all_buy_pro = $all_buy_pro [0] ? $all_buy_pro [0] : 0;
 
 $page_obj = kekezu::$_page_obj;

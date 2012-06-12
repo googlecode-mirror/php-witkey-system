@@ -62,8 +62,8 @@ switch ($auth_step) {
 		}
 		if($ac=='reauth'&&$bank_a_id){
 			$ac_url = "{$origin_url}&op={$op}&auth_code={$auth_code}&step=step4&show=list&ver=1";
-			$res = db_factory::execute(sprintf(" delete from %switkey_auth_bank where bank_a_id='%d'",TABLEPRE,$bank_a_id));
-			$res .=db_factory::execute(sprintf(" delete from %switkey_auth_record where ext_data='%d'",TABLEPRE,$bank_a_id));
+			$res = dbfactory::execute(sprintf(" delete from %switkey_auth_bank where bank_a_id='%d'",TABLEPRE,$bank_a_id));
+			$res .=dbfactory::execute(sprintf(" delete from %switkey_auth_record where ext_data='%d'",TABLEPRE,$bank_a_id));
 			$res and kekezu::show_msg($_lang['unbind_successful'],$ac_url."#userCenter",3,'','success') or kekezu::show_msg($_lang['unbind_fail'],$ac_url."#userCenter",3,'','warning');
 		}
 		break;

@@ -9,7 +9,7 @@
 defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 
 //获取最新任务信息
-$new_task_arr  = db_factory::query("select a.task_id,a.task_title,a.task_status,a.start_time,b.uid,b.username,b.residency,point from ".TABLEPRE."witkey_task a left join  ".TABLEPRE."witkey_space b on a.uid = b.uid where a.task_status >1 and pay_item like '%4%' and ifnull(point,0)>0 order by a.start_time desc limit 0,50 ",1,3600*24);
+$new_task_arr  = dbfactory::query("select a.task_id,a.task_title,a.task_status,a.start_time,b.uid,b.username,b.residency,point from ".TABLEPRE."witkey_task a left join  ".TABLEPRE."witkey_space b on a.uid = b.uid where a.task_status >1 and pay_item like '%4%' and ifnull(point,0)>0 order by a.start_time desc limit 0,50 ",1,3600*24);
 
 
 if($_K['map_api']=='baidu'){

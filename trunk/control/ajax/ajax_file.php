@@ -12,7 +12,7 @@ defined ( 'IN_KEKE' ) or exit('Access Denied');
 	switch ($ajax){
 		case "load":
 			if($work_id){
-				$file_ids = db_factory::get_count(sprintf(" select work_file from %switkey_task_work where work_id='%d'",TABLEPRE,$work_id));
+				$file_ids = dbfactory::get_count(sprintf(" select work_file from %switkey_task_work where work_id='%d'",TABLEPRE,$work_id));
 				$file_list = keke_task_class::get_work_file($file_ids);
 			}
 			break;
@@ -35,7 +35,7 @@ defined ( 'IN_KEKE' ) or exit('Access Denied');
 			$res and kekezu::echojson ( '', 1 ) or kekezu::echojson ( '', '0' );
 			die ();
 		case "goods_filedown"://店铺文件下载
-			$service_info = db_factory::get_one(sprintf(" select file_path,submit_method,uid from %switkey_service where service_id='%d'",TABLEPRE,$_GET['sid']));
+			$service_info = dbfactory::get_one(sprintf(" select file_path,submit_method,uid from %switkey_service where service_id='%d'",TABLEPRE,$_GET['sid']));
 			//检测是否购买过
 			$has_buy = keke_shop_class::check_has_buy($_GET['sid'], $user_info['uid']);
 			if($has_buy['order_status']=='confirm'||$service_info['uid']==$user_info['uid']){
@@ -43,7 +43,7 @@ defined ( 'IN_KEKE' ) or exit('Access Denied');
 			}
 			break;
 		case "help_search":
-			$keyword and $search_list = db_factory::query(sprintf(" select a.art_title,a.content from %switkey_article a left join %switkey_article_category b on a.art_cat_id=b.art_cat_id where b.cat_type='help' and INSTR(a.art_title,'%s')",TABLEPRE,TABLEPRE,$keyword));
+			$keyword and $search_list = dbfactory::query(sprintf(" select a.art_title,a.content from %switkey_article a left join %switkey_article_category b on a.art_cat_id=b.art_cat_id where b.cat_type='help' and INSTR(a.art_title,'%s')",TABLEPRE,TABLEPRE,$keyword));
 		break;
 	}
 	

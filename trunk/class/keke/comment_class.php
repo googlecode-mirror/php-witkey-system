@@ -66,9 +66,9 @@ class keke_comment_class {
 		if(!$is_reply){
 		
 			if($this->_comment_type=='task'){
-				$res = db_factory::execute(sprintf(" update %switkey_task set leave_num =ifnull(leave_num,0)+1 where task_id='%d'",TABLEPRE,$obj_id));
+				$res = dbfactory::execute(sprintf(" update %switkey_task set leave_num =ifnull(leave_num,0)+1 where task_id='%d'",TABLEPRE,$obj_id));
 			}elseif($this->_comment_type=='service'){
-				$res = db_factory::execute(sprintf(" update %switkey_service set leave_num =ifnull(leave_num,0)+1 where service_id='%d'",TABLEPRE,$obj_id));
+				$res = dbfactory::execute(sprintf(" update %switkey_service set leave_num =ifnull(leave_num,0)+1 where service_id='%d'",TABLEPRE,$obj_id));
 			}
 	
 		}
@@ -81,12 +81,12 @@ class keke_comment_class {
 	 * @param unknown_type $comment_id
 	 */
 	function del_comment($comment_id,$obj_id,$is_reply=false){
-		$res =  db_factory::execute(sprintf("delete from %switkey_comment where comment_id='%d' or p_id='%d'",TABLEPRE,$comment_id,$comment_id));
+		$res =  dbfactory::execute(sprintf("delete from %switkey_comment where comment_id='%d' or p_id='%d'",TABLEPRE,$comment_id,$comment_id));
 		if(!$is_reply){
 			if($this->_comment_type=='task'){
-			$res and 	$res = db_factory::execute(sprintf(" update %switkey_task set leave_num =ifnull(leave_num,0)-1 where task_id='%d'",TABLEPRE,$obj_id));
+			$res and 	$res = dbfactory::execute(sprintf(" update %switkey_task set leave_num =ifnull(leave_num,0)-1 where task_id='%d'",TABLEPRE,$obj_id));
 			}elseif($this->_comment_type=='service'){
-			$res and $res = db_factory::execute(sprintf(" update %switkey_service set leave_num =ifnull(leave_num,0)-1 where service_id='%d'",TABLEPRE,$obj_id));
+			$res and $res = dbfactory::execute(sprintf(" update %switkey_service set leave_num =ifnull(leave_num,0)-1 where service_id='%d'",TABLEPRE,$obj_id));
 			}
 			
 		}

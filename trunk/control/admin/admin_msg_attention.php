@@ -31,7 +31,7 @@ if (isset ( $submit )) {
 } else {
 	
 	//关注开启列表
-	$attent_api = db_factory::get_count ( sprintf ( " select v from %switkey_basic_config where type='attent_api'", TABLEPRE ) );
+	$attent_api = dbfactory::get_count ( sprintf ( " select v from %switkey_basic_config where type='attent_api'", TABLEPRE ) );
 	$attent_api = unserialize($attent_api);
 	//关注列表
 	$attent_list = kekezu::get_table_data ( "k,v,desc", "witkey_basic_config", "type='attention'", 'listorder asc ', "", "", "k" );

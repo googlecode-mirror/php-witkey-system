@@ -23,7 +23,7 @@ if($ajax=='show_indus'){
 	die();	
 }
 
-$service_info = db_factory::get_one(sprintf("select * from %switkey_service where service_id='%d'",TABLEPRE,$service_id));
+$service_info = dbfactory::get_one(sprintf("select * from %switkey_service where service_id='%d'",TABLEPRE,$service_id));
 $service_info and extract($service_info) or $service_info=array();
 $indus_pid and $indus_arr = kekezu::get_industry($indus_pid,0) or $indus_arr=array();
 if($sbt_edit){

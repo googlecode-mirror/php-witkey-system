@@ -33,7 +33,7 @@ switch ($view) {
 		$sql =" select count(a.order_id) from %switkey_order a left join %switkey_order_detail b
 				 on a.order_id=b.order_id where b.obj_id='$sid' and b.obj_type='service' 
 				 and day(date(from_unixtime(a.order_time)))=day(curdate()) and order_status='confirm'";
-		$today_sale   = db_factory::get_count(sprintf($sql,TABLEPRE,TABLEPRE,$sid));//今日统计
+		$today_sale   = dbfactory::get_count(sprintf($sql,TABLEPRE,TABLEPRE,$sid));//今日统计
 		
 		intval ( $page ) and $p ['page'] = intval ( $page ) or $p ['page']='1';
 		intval ( $page_size ) and $p ['page_size'] = intval ( $page_size ) or $p['page_size']='10';

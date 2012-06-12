@@ -30,7 +30,7 @@ class keke_msg_class {
 	}
 	function config_init($k) {
 		$this->_k = $k;
-		$this->_config = db_factory::get_one ( " select * from " . TABLEPRE . "witkey_msg_config where k='$k'" );
+		$this->_config = dbfactory::get_one ( " select * from " . TABLEPRE . "witkey_msg_config where k='$k'" );
 		$this->_v = unserialize ( $this->_config ['v'] );
 	}
 	function setUid($uid) {

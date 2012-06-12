@@ -7,7 +7,7 @@ defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 kekezu::admin_check_role ( 33 );
 
 $space_obj = new Keke_witkey_space_class ();
-$member_group_arr = db_factory::query ( sprintf ( "select group_id,groupname from %switkey_member_group", TABLEPRE ), 1, 3600 );
+$member_group_arr = dbfactory::query ( sprintf ( "select group_id,groupname from %switkey_member_group", TABLEPRE ), 1, 3600 );
 $edituid = intval ( $edituid );
 $edituid and $spaceinfo = kekezu::get_user_info ( intval ( $edituid ) );
 if($ac=='get_user_info'){

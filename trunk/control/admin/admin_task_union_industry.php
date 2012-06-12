@@ -16,14 +16,14 @@ if (isset($sbt_edit)){
 		$indus_hb_arr = kekezu::get_industry($to_indus_id);
 		//改变他们的indus_pid
 		foreach ($indus_hb_arr as  $k=>$v){
-			db_factory::execute("update ".TABLEPRE."witkey_industry set indus_pid = $slt_indus_id where indus_id = {$v['indus_id']}"); 
+			dbfactory::execute("update ".TABLEPRE."witkey_industry set indus_pid = $slt_indus_id where indus_id = {$v['indus_id']}"); 
 		}
 		//删除被合并的父类
-		db_factory::execute("delete from ".TABLEPRE."witkey_industry where indus_id = $to_indus_id");
+		dbfactory::execute("delete from ".TABLEPRE."witkey_industry where indus_id = $to_indus_id");
 		//更新相应的indus_pid 
-		db_factory::execute("update ".TABLEPRE."witkey_task set indus_pid = $slt_indus_id where indus_pid = $to_indus_id");
-		db_factory::execute("update ".TABLEPRE."witkey_shop set indus_pid = $slt_indus_id where indus_pid = $to_indus_id");
-		db_factory::execute("update ".TABLEPRE."witkey_service set indus_pid = $slt_indus_id where indus_pid = $to_indus_id");  
+		dbfactory::execute("update ".TABLEPRE."witkey_task set indus_pid = $slt_indus_id where indus_pid = $to_indus_id");
+		dbfactory::execute("update ".TABLEPRE."witkey_shop set indus_pid = $slt_indus_id where indus_pid = $to_indus_id");
+		dbfactory::execute("update ".TABLEPRE."witkey_service set indus_pid = $slt_indus_id where indus_pid = $to_indus_id");  
 		kekezu::admin_show_msg($_lang['industry_union_success'],$url,3,'','success');
 } 
 require_once $template_obj->template ( 'control/admin/tpl/admin_'.$do.'_' . $view );

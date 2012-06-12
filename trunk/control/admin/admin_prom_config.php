@@ -27,10 +27,10 @@ if (isset ( $sbt_edit )) {
 			$rule_obj->setConfig ( serialize ( $config ) );
 			$result .= $rule_obj->edit_keke_witkey_prom_rule ();
 			//修改对应认证信息
-			$result .= db_factory::execute ( 'update ' . TABLEPRE . $table_name . ' set cash="' . floatval( $prom_cash) . '" , credit="' . floatval ($prom_credit) . '" where prom_code="' . $allow_prom_reg . '";' );
+			$result .= dbfactory::execute ( 'update ' . TABLEPRE . $table_name . ' set cash="' . floatval( $prom_cash) . '" , credit="' . floatval ($prom_credit) . '" where prom_code="' . $allow_prom_reg . '";' );
 			//修改basic_config记录
-			$result .= db_factory::execute ( 'update ' . TABLEPRE . 'witkey_basic_config set v="' . intval ( $prom_reg_is_open ) . '" where k="prom_open";' );
-			$result .= db_factory::execute ( 'update ' . TABLEPRE . 'witkey_basic_config set v="' . intval ( $prom_period ) . '" where k="prom_period";' );
+			$result .= dbfactory::execute ( 'update ' . TABLEPRE . 'witkey_basic_config set v="' . intval ( $prom_reg_is_open ) . '" where k="prom_open";' );
+			$result .= dbfactory::execute ( 'update ' . TABLEPRE . 'witkey_basic_config set v="' . intval ( $prom_period ) . '" where k="prom_period";' );
 			
 			$message = $result ? $_lang['register_prom_config_edit_success'] : $_lang['no_change'];
 			kekezu::admin_system_log ( $_lang['edit_register_prom_config'] );
@@ -52,7 +52,7 @@ if (isset ( $sbt_edit )) {
 					$pub_task_rate && $ext_config ['pub_task_rate'] = floatval ( $pub_task_rate ); //小数
 					//修改config记录
 					$ext_config = serialize ( $ext_config );
-					$result = db_factory::execute ( 'update ' . TABLEPRE . $table_name . " set config='$ext_config',cash='" . $pub_task_cash . "' , credit='" . $pub_task_credit . "' , rate='" . $pub_task_rate . "' where prom_code='pub_task';" );
+					$result = dbfactory::execute ( 'update ' . TABLEPRE . $table_name . " set config='$ext_config',cash='" . $pub_task_cash . "' , credit='" . $pub_task_credit . "' , rate='" . $pub_task_rate . "' where prom_code='pub_task';" );
 					kekezu::admin_system_log ( $_lang['update_task_prom_config'] );
 					$result and kekezu::admin_show_msg($_lang['task_prom_config_update_success'],$url,3,'','success') or kekezu::admin_show_msg( $_lang['record_no_change'],$url,3,'','warning');
 					
@@ -61,13 +61,13 @@ if (isset ( $sbt_edit )) {
 					$bid_task_rake && $ext_config ['bid_task_rake'] = intval ( $bid_task_rake );
 					//修改config记录
 					$ext_config = serialize ( $ext_config );
-					$result = db_factory::execute ( 'update ' . TABLEPRE . $table_name . " set config='$ext_config',rate='" . intval ( $bid_task_rake ) . " ' where prom_code='bid_task';" );
+					$result = dbfactory::execute ( 'update ' . TABLEPRE . $table_name . " set config='$ext_config',rate='" . intval ( $bid_task_rake ) . " ' where prom_code='bid_task';" );
 					kekezu::admin_system_log ( $_lang['update_bid_prom_config'] );					
 					$result and kekezu::admin_show_msg ($_lang['bid_prom_config_update_success'],$url,3,'','success') or kekezu::admin_show_msg($_lang['record_no_change'],$url,3,'','warning');
 					break;
 				case 'service' :
 					$ext_config = serialize ( $ext_config );
-					$result = db_factory::execute ( 'update ' . TABLEPRE . $table_name . " set rate='" . intval ( $service_rate ) . "', config='" . $ext_config . "' where prom_code='service';" );
+					$result = dbfactory::execute ( 'update ' . TABLEPRE . $table_name . " set rate='" . intval ( $service_rate ) . "', config='" . $ext_config . "' where prom_code='service';" );
 					kekezu::admin_system_log ( $_lang['update_goods_prom_config'] );					
 					$result and kekezu::admin_show_msg ($_lang['goods_prom_config_success'],$url,3,'','success') or kekezu::admin_show_msg($_lang['record_no_change'],$url,3,'','warning');
 					break;

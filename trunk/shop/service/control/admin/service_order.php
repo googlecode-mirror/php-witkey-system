@@ -37,7 +37,7 @@ $pages = $table_arr['pages'];
 
 //É¾³ı²Ù×÷
 if($ac=="del"){
-	$ac_name = db_factory::get_count(sprintf("select order_name from %switkey_order where order_id='%d' ",TABLEPRE,$order_id));
+	$ac_name = dbfactory::get_count(sprintf("select order_name from %switkey_order where order_id='%d' ",TABLEPRE,$order_id));
 	kekezu::admin_system_log($_lang['has_delete_order_name_is'].$ac_name.$_lang['of_witkey_service_order']);
 	
 	$res = $table_obj->del('order_id', $order_id,$url_str);

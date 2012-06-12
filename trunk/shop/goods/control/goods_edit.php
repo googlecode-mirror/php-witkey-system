@@ -30,9 +30,9 @@ if ($sbt_edit) {
 	$title = $_lang ['edit_goods'];
 	$ext = '.jpg,.jpeg,.gif,.png,.bmp';
 	$model_list [$model_id] ['config'] && $config = unserialize ( $model_list [$model_id] ['config'] );
-	$ser_info = db_factory::get_one ( sprintf ( " select floor(price) price,indus_id,indus_pid,title,unite_price,pic,
+	$ser_info = dbfactory::get_one ( sprintf ( " select floor(price) price,indus_id,indus_pid,title,unite_price,pic,
 				content,submit_method,file_path from %switkey_service where service_id='%d' and uid='%d'", TABLEPRE, $ser_id, $uid ) );
-	$ser_info['pic']&&$f_info = db_factory::get_one(sprintf(" select file_id,file_name from %switkey_file where obj_type='service'
+	$ser_info['pic']&&$f_info = dbfactory::get_one(sprintf(" select file_id,file_name from %switkey_file where obj_type='service'
 					and uid='%d' and save_name='%s'", TABLEPRE, $uid, $ser_info ['pic'] ) );
 	$fid	   = intval($f_info['file_id']);
 	$file_name = $f_info['file_name'];

@@ -15,10 +15,10 @@ $sql = "select a.* ,b.* from " . TABLEPRE . "witkey_shop_case as a left join " .
 
 $url = "index.php?do=space&member_id=$member_id&view=case&page_size=$page_size";
 $page_size = 10;
-$count = db_factory::execute ( $sql );
+$count = dbfactory::execute ( $sql );
 $page = $page ? $page : 1;
 $pages = kekezu::$_page_obj->getPages ( $count, $page_size, $page, $url );
 $where = $pages ['where'];
-$shop_arr = db_factory::query ( $sql . $where );
+$shop_arr = dbfactory::query ( $sql . $where );
 require keke_tpl_class::template ( SKIN_PATH . "/space/{$type}_{$view}" );
 

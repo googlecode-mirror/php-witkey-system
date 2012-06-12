@@ -10,9 +10,9 @@ defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 $case_obj = new Keke_witkey_case_class ();
 $task_obj = new Keke_witkey_task_class ();
  
-$case_id and $case_info = db_factory::get_one ( " select * from " . TABLEPRE . "witkey_case where case_id ='$case_id'" );
+$case_id and $case_info = dbfactory::get_one ( " select * from " . TABLEPRE . "witkey_case where case_id ='$case_id'" );
 
-$txt_task_id and $case_info = db_factory::get_one ( " select * from " . TABLEPRE . "witkey_task where task_id = '$txt_task_id'" );
+$txt_task_id and $case_info = dbfactory::get_one ( " select * from " . TABLEPRE . "witkey_task where task_id = '$txt_task_id'" );
 
 $url ="index.php?do=case&view=list" ;
 
@@ -58,9 +58,9 @@ if (isset ( $sbt_edit )) { //±à¼­
  */
 function case_obj_exists($id, $obj = 'task') {
 	if ($obj == 'task') {
-		$search_obj = db_factory::get_count ( sprintf ( "select count(task_id) from %switkey_task where task_id='%d' ", TABLEPRE, $id ) );
+		$search_obj = dbfactory::get_count ( sprintf ( "select count(task_id) from %switkey_task where task_id='%d' ", TABLEPRE, $id ) );
 	} elseif ($obj =='service') {
-		$search_obj = db_factory::get_count ( sprintf ( "select count(service_id) from %switkey_service where service_id='%d' ", TABLEPRE, $id ) );
+		$search_obj = dbfactory::get_count ( sprintf ( "select count(service_id) from %switkey_service where service_id='%d' ", TABLEPRE, $id ) );
 	}
 	if ($search_obj) {
 		return true;

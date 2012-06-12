@@ -151,7 +151,7 @@ switch ($view) {
 		$work_status = $task_obj->get_work_status ();//获取稿件状态数组
 		$sql = sprintf("select a.*,b.* from %switkey_task_bid as a left join %switkey_space as b on a.uid=b.uid where a.task_id=%d",TABLEPRE,TABLEPRE,$task_id) ;
 		$url = "index.php?do=task&task_id=$task_id&view=work&page_size=$page_size&$page=$page";
-		$count = db_factory::execute($sql); 
+		$count = dbfactory::execute($sql); 
 		$page = $page ? $page : 1;
 		$page_size = intval ( $page_size ) ? intval ( $page_size ) : 5;
 		$sql .=" order by (CASE WHEN  a.bid_status!=0 THEN 100 ELSE 0 END) desc"; 
@@ -159,7 +159,7 @@ switch ($view) {
 		$page_obj->setAjaxDom("gj_summery");
 		$pages = $page_obj->getPages ( $count, $page_size, $page, $url ); 
 		$sql = $sql.$pages['where'];
-		$bid_info = db_factory::query($sql);
+		$bid_info = dbfactory::query($sql);
 		
 		///*检测是否有新留言**/
 		$has_new  = $task_obj->has_new_comment($page,$page_size);

@@ -41,7 +41,7 @@ $payitem_standard = keke_payitem_class::payitem_standard (); //收费标准
 				$payitem_arr_desc[$payitem_arr[$k]['item_code']]>time() and $payitem_arr_desc[$payitem_arr[$k]['item_code']] = 3600*24*$v+$payitem_arr_desc[$payitem_arr[$k]['item_code']] or $payitem_arr_desc[$payitem_arr[$k]['item_code']]=time()+3600*24*$v; 
 			} else{
 				//地图增值服务   
-				db_factory::execute(sprintf("update %switkey_task set point='%s',city='%s' where task_id=%d",TABLEPRE,$_POST['point'],$province,$task_id));
+				dbfactory::execute(sprintf("update %switkey_task set point='%s',city='%s' where task_id=%d",TABLEPRE,$_POST['point'],$province,$task_id));
 				//更新任务属性  
 		  	} 
 			$cost_res = keke_payitem_class::payitem_cost ( $payitem_arr[$k]['item_code'], $v, 'task', 'spend', $task_id, $task_id );
@@ -49,7 +49,7 @@ $payitem_standard = keke_payitem_class::payitem_standard (); //收费标准
  	}   	
  	$pay_item = ltrim($pay_item,",");
  	if(strlen($pay_item)){
- 		db_factory::execute(sprintf("update %switkey_task set pay_item='%s' where task_id=%d",TABLEPRE,$pay_item,$task_id));//更新任务属性
+ 		dbfactory::execute(sprintf("update %switkey_task set pay_item='%s' where task_id=%d",TABLEPRE,$pay_item,$task_id));//更新任务属性
  	}
 	$res = keke_payitem_class::set_payitem_time($payitem_arr_desc, $task_id, 'task'); 
 	//更新增值服务结束时间

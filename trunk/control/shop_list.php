@@ -39,14 +39,14 @@ $where = get_where ( $path );unset($indus_id);
 $url = "index.php?do=shop_list&page_size=$page_size&min=$min&max=$max&path=$path";
 //排序  
 $page_size = intval ( $page_size ) ? intval ( $page_size ) : 20;
-$count = db_factory::execute ( $sql . $where );
+$count = dbfactory::execute ( $sql . $where );
 $page = $page ? $page : 1;
 $pages = kekezu::$_page_obj->getPages ( $count, $page_size, $page, $url );
 $where .= $pages ['where'];  
 
 /*结果数组赋值*/ 
 
-$service_arr = db_factory::query ( $sql . $where );
+$service_arr = dbfactory::query ( $sql . $where );
 //商品数组
 $check_arr = keke_search_class::get_path_url( $where_arr, $path );
 //生成链接

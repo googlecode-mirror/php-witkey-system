@@ -35,7 +35,7 @@ function get_art_cate() {
  */
 function get_art_by_year() {
 	$sql2 = "select count(a.art_id) as c ,YEAR(FROM_UNIXTIME(a.pub_time)) as y from %switkey_article as a  left join %switkey_article_category as b  \n" . "on a.art_cat_id = b.art_cat_id where b.cat_type='article'\n" . "GROUP BY y";
-	return  db_factory::query ( sprintf ( $sql2, TABLEPRE, TABLEPRE ), true, 5*60);
+	return  dbfactory::query ( sprintf ( $sql2, TABLEPRE, TABLEPRE ), true, 5*60);
 }
 /**
  * 
@@ -51,11 +51,11 @@ function get_art_list($page, $page_size, $url, $where,$static=0) {
 	$sql = "select a.* ,b.cat_name from " . TABLEPRE . "witkey_article a left join " . TABLEPRE . "witkey_article_category b on a.art_cat_id=b.art_cat_id where b.cat_type='article'  $where";
 	$csql = "select count(a.art_id) as c  from " . TABLEPRE . "witkey_article a left join " . TABLEPRE . "witkey_article_category b on a.art_cat_id=b.art_cat_id where b.cat_type='article'  $where";
 
-	$count = intval ( db_factory::get_count ( $csql,0,null, 10*60 ) );
+	$count = intval ( dbfactory::get_count ( $csql,0,null, 10*60 ) );
 	
 	kekezu::$_page_obj->setStatic($static);
 	$pages = kekezu::$_page_obj->getPages ( $count, $page_size, $page, $url );
-	$art_arr = db_factory::query ( $sql . $pages ['where'], 5*60 );
+	$art_arr = dbfactory::query ( $sql . $pages ['where'], 5*60 );
 	return array("date"=>$art_arr,"pages"=>$pages);//返回分页数据和文章数组组成的多维数组
 }
 

@@ -7,7 +7,7 @@
  */
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 
-$prom_arr = db_factory::query('select prom_id,prom_item,prom_code from ' . TABLEPRE . 'witkey_prom_rule where type!="auth";') ; //推广类型 prom_type
+$prom_arr = dbfactory::query('select prom_id,prom_item,prom_code from ' . TABLEPRE . 'witkey_prom_rule where type!="auth";') ; //推广类型 prom_type
 $tab_obj  = keke_table_class::get_instance("witkey_prom_relation");
 //update数据
 if( isset($sbt_edit) ) {	
@@ -23,6 +23,6 @@ if( isset($sbt_edit) ) {
 }
 
 //查找 有relation_id则为编辑, 没有则为添加
-isset($relation_id) && $relation_info = db_factory::get_one(" select * from ".TABLEPRE."witkey_prom_relation where relation_id = '$relation_id'");
+isset($relation_id) && $relation_info = dbfactory::get_one(" select * from ".TABLEPRE."witkey_prom_relation where relation_id = '$relation_id'");
 
 require $template_obj->template('control/admin/tpl/admin_'.$do."_".$view);

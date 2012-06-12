@@ -13,11 +13,11 @@ $msg_obj =new Keke_witkey_msg_tpl_class();
 $config_msg_arr = $kekezu->get_table_data ( "*", "witkey_msg_config", " 1 = 1 ", "config_id desc ", '', '', 'config_id' );
 //当前短信类型
 
-$now_msg_arr = db_factory::get_one ( " select * from " . TABLEPRE . "witkey_msg_config where k='$slt_tpl_code'" );
+$now_msg_arr = dbfactory::get_one ( " select * from " . TABLEPRE . "witkey_msg_config where k='$slt_tpl_code'" );
 
 $now_v = unserialize ( $now_msg_arr ['v'] );
 if (isset ( $tpl_code )) {
-	$msg_tpl = db_factory::query(" select * from " . TABLEPRE . "witkey_msg_tpl where tpl_code='$tpl_code'" );
+	$msg_tpl = dbfactory::query(" select * from " . TABLEPRE . "witkey_msg_tpl where tpl_code='$tpl_code'" );
 	if ($msg_tpl) {
 		kekezu::echojson ( '', 1, $msg_tpl );
 	} else {
@@ -33,7 +33,7 @@ if ($slt_tpl_code) {
 		$res = $msg_obj->edit_keke_witkey_msg_tpl();
 	}
 	if ($tar_phone_temp_content_2) {
-		$has_mobile_tpl=db_factory::get_count(" select * from ".TABLEPRE."witkey_msg_tpl where tpl_code='$slt_tpl_code' and send_type=2");
+		$has_mobile_tpl=dbfactory::get_count(" select * from ".TABLEPRE."witkey_msg_tpl where tpl_code='$slt_tpl_code' and send_type=2");
 		if($has_mobile_tpl){
 			$msg_obj->setWhere ( "tpl_code='$slt_tpl_code' and send_type=2" );
 			$msg_obj->setContent($tar_phone_temp_content_2 );
@@ -53,9 +53,9 @@ if ($slt_tpl_code) {
 		kekezu::admin_show_msg ( $_lang['save_sms_tpl_success'], 'index.php?do=msg&view=intertpl&slt_tpl_code=' . $slt_tpl_code,3,'','success' );
 	}
 }
-$msg_tpl = db_factory::get_one ( "select content from " . TABLEPRE . "witkey_msg_tpl where tpl_code='$slt_tpl_code' and send_type=1" );
+$msg_tpl = dbfactory::get_one ( "select content from " . TABLEPRE . "witkey_msg_tpl where tpl_code='$slt_tpl_code' and send_type=1" );
 $msg_tpl = $msg_tpl ['content'];
-$phone_tpl = db_factory::get_one ( "select content from " . TABLEPRE . "witkey_msg_tpl where tpl_code='$slt_tpl_code' and send_type=2" );
+$phone_tpl = dbfactory::get_one ( "select content from " . TABLEPRE . "witkey_msg_tpl where tpl_code='$slt_tpl_code' and send_type=2" );
 $phone_tpl = $phone_tpl ['content'];
 
 require kekezu::$_tpl_obj->template ( 'control/admin/tpl/admin_msg_' . $view );

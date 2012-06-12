@@ -177,7 +177,7 @@ class keke_payitem_class {
 	 * @param int $record_id
 	 */
 	public static function payitem_del($record_id) {
-		return db_factory::execute ( sprintf ( " delete frm %switkey_payitem_record where record_id='%d'", TABLEPRE, $record_id ) );
+		return dbfactory::execute ( sprintf ( " delete frm %switkey_payitem_record where record_id='%d'", TABLEPRE, $record_id ) );
 	}
 	/**
 	 * 收费标准
@@ -197,15 +197,15 @@ class keke_payitem_class {
 		if($payitem_arr){ 
 			
 			foreach ($payitem_arr as $k=>$v) { 
-				$buy_count = db_factory::get_count ( sprintf ( " select sum(use_num) from %switkey_payitem_record where uid = '%d'  and item_code = '%s' and use_type = 'buy'", TABLEPRE, $uid,  $v[item_code] ) );
-				$use_count = db_factory::get_count ( sprintf ( " select sum(use_num) from %switkey_payitem_record where uid = '%d'  and item_code = '%s' and use_type = 'spend'", TABLEPRE, $uid,  $v[item_code] ) );
+				$buy_count = dbfactory::get_count ( sprintf ( " select sum(use_num) from %switkey_payitem_record where uid = '%d'  and item_code = '%s' and use_type = 'buy'", TABLEPRE, $uid,  $v[item_code] ) );
+				$use_count = dbfactory::get_count ( sprintf ( " select sum(use_num) from %switkey_payitem_record where uid = '%d'  and item_code = '%s' and use_type = 'spend'", TABLEPRE, $uid,  $v[item_code] ) );
 				$payitem_info [$v[item_code]]  = intval($buy_count - $use_count); 
 	
 			} 
 			
 		}else{ 
-		$buy_count = db_factory::get_count ( sprintf ( " select sum(use_num) from %switkey_payitem_record where uid = '%d' and item_code = '%s' and use_type = 'buy'", TABLEPRE, $uid, $item_code ) );
-		$use_count = db_factory::get_count ( sprintf ( " select sum(use_num) from %switkey_payitem_record where uid = '%d'  and item_code = '%s' and use_type = 'spend'", TABLEPRE, $uid, $item_code ) );
+		$buy_count = dbfactory::get_count ( sprintf ( " select sum(use_num) from %switkey_payitem_record where uid = '%d' and item_code = '%s' and use_type = 'buy'", TABLEPRE, $uid, $item_code ) );
+		$use_count = dbfactory::get_count ( sprintf ( " select sum(use_num) from %switkey_payitem_record where uid = '%d'  and item_code = '%s' and use_type = 'spend'", TABLEPRE, $uid, $item_code ) );
 
 		$payitem_info = intval($buy_count - $use_count);
 		} 
@@ -225,7 +225,7 @@ class keke_payitem_class {
 		$obj_type and $sql .= " and a.obj_type = '$obj_type' ";
 		$obj_id and $sql .= " and a.obj_id = '$obj_id' ";
 		
-		return db_factory::query ( $sql );
+		return dbfactory::query ( $sql );
 	}
 
 	
@@ -250,7 +250,7 @@ class keke_payitem_class {
 			$service_payitem_arr = unserialize($payitem_time);	//改变增值服务的时间 
 			$service_payitem_arr[top] = $add_time+$service_payitem_arr[top];
 			$new_payitem_time = serialize($service_payitem_arr);
-			$res = db_factory::execute(sprintf("update %switkey_service set payitem_time='%s' where service_id=%d",TABLEPRE,$new_payitem_time,$service_id)); 
+			$res = dbfactory::execute(sprintf("update %switkey_service set payitem_time='%s' where service_id=%d",TABLEPRE,$new_payitem_time,$service_id)); 
 			return $res;
 	}
 	
@@ -272,7 +272,7 @@ class keke_payitem_class {
 				$sql = sprintf("update %switkey_service set payitem_time='%s' where service_id=%d",TABLEPRE,$payitem_end_time,$obj_id);
 				break; 
 		}   
-		$res = db_factory::execute($sql); 
+		$res = dbfactory::execute($sql); 
 		return $res;
 	}
 	

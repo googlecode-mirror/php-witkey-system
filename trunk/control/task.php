@@ -51,7 +51,7 @@ if (isset($task_id)) {
 	$count_advance_task_sql = 'select count(task_id) count from ' . TABLEPRE . 'witkey_task where task_status in (2,3)';
 	
  
-	$advance_task = db_factory::get_count ( $count_advance_task_sql, 0, null, 180 );
+	$advance_task = dbfactory::get_count ( $count_advance_task_sql, 0, null, 180 );
 	
 	$model_list = kekezu::$_model_list; // 获取任务区间
 	$task_cash_cove = kekezu::get_table_data ( '*', 'witkey_task_cash_cove', '', '', '', '', 'cash_rule_id', 3600 );

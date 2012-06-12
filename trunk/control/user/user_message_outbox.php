@@ -25,7 +25,7 @@ if($ac=='del'&&$msg_id){
    $res = $msg_obj->del("msg_id", array_filter($ckb));
    if($ckb){
 	   	$sql = "update ".TABLEPRE."witkey_msg set msg_status=1 where msg_id in(".implode(',', $ckb).")";
-		$res = db_factory::execute($sql);
+		$res = dbfactory::execute($sql);
 	    $res and kekezu::show_msg( $_lang['delete_selected_success'],$url_str."&page=$page",3,'','success') or kekezu::show_msg( $_lang['select_null_for_delete'],$url_str."&page=$page",3,"","warning") ;
    }else{
     	kekezu::show_msg( $_lang['select_null_for_delete'],$url_str."&page=$page",3,"","warning") ;

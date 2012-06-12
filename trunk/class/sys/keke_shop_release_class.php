@@ -193,7 +193,7 @@ abstract class keke_shop_release_class {
 		$service_obj->setIndus_id ( $release_info [indus_id] );
 		$service_obj->setIndus_pid ( $release_info ['indus_pid'] );
 		
-		$shop_id = db_factory::get_count ( sprintf ( " select shop_id from %switkey_shop where uid ='%d'", TABLEPRE, $this->_uid ) );
+		$shop_id = dbfactory::get_count ( sprintf ( " select shop_id from %switkey_shop where uid ='%d'", TABLEPRE, $this->_uid ) );
 		$service_obj->setShop_id ( $shop_id ); //店铺编号
 		$service_obj->setUid ( $this->_uid );
 		$service_obj->setUsername ( $this->_username );
@@ -294,7 +294,7 @@ abstract class keke_shop_release_class {
 				$remain or keke_payitem_class::payitem_cost ( $v ['item_code'], $v[item_num],'', 'buy', $service_id, $service_id ); //买
 				//用
 				$v ['record_id'] = $pay_id = keke_payitem_class::payitem_cost ( $v ['item_code'], $v[item_num], 'service', 'spend', $service_id, $service_id );
-				$pay_id and db_factory::execute ( sprintf ( " update %switkey_service set point='%s',city='%s' where service_id = '%d'", TABLEPRE, $release_info ['point'], $release_info ['province'], $service_id ) );
+				$pay_id and dbfactory::execute ( sprintf ( " update %switkey_service set point='%s',city='%s' where service_id = '%d'", TABLEPRE, $release_info ['point'], $release_info ['province'], $service_id ) );
 			}
 		}
 		return $att_info;
@@ -446,7 +446,7 @@ abstract class keke_shop_release_class {
 				break;
 			case "step4" : //无法查到刚才的商品记录。此页面10分钟有效
 				$sql = sprintf ( " select service_status,service_id from %switkey_service where service_id = '%d' and on_time>%d", TABLEPRE, $service_id, time () - 600 );
-				$service_info = db_factory::get_one ( $sql );
+				$service_info = dbfactory::get_one ( $sql );
 				$service_info or kekezu::keke_show_msg ( "index.php?do=shelves", $_lang['page_expired_notice'], "error", $output );
 				return $service_info;
 				break;

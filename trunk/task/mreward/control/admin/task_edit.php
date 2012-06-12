@@ -5,7 +5,7 @@
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 
 intval ( $task_id ) or kekezu::admin_show_msg ( $_lang['param_error'], 'index.php?do=model&model_id=' . $model_id . '&view=list',3,'','warning' );
-$task_info = db_factory::get_one ( sprintf ( " select * from %switkey_task where task_id='%d'", TABLEPRE, $task_id ) );
+$task_info = dbfactory::get_one ( sprintf ( " select * from %switkey_task where task_id='%d'", TABLEPRE, $task_id ) );
 if ($sbt_edit) {//±à¼­
 	$task_obj = new Keke_witkey_task_class ();
 	$task_obj->setWhere(" task_id ='$task_id'");
@@ -49,7 +49,7 @@ if ($sbt_edit) {//±à¼­
 	
 }else {
 	$process_arr = keke_task_config::can_operate ( $task_info ['task_status'] );
-	$file_list = db_factory::query ( sprintf ( " select * from %switkey_file where task_id='%d'", TABLEPRE, $task_id ) );
+	$file_list = dbfactory::query ( sprintf ( " select * from %switkey_file where task_id='%d'", TABLEPRE, $task_id ) );
 	$status_arr = sreward_task_class::get_task_status ();
 	
 	$payitem_list=keke_payitem_class::get_payitem_config('employer');

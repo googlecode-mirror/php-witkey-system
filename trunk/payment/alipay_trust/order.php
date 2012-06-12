@@ -22,7 +22,7 @@ switch ($interface){
 	case "cancel_bind":
 		$sql = " select uid sns_user_id,username sns_user_name,bind_key from %switkey_member_oauth 
 			where uid='%d' and source='alipay_trust'";
-		$extra_info = db_factory::get_one ( sprintf ( $sql, TABLEPRE, $uid ) );
+		$extra_info = dbfactory::get_one ( sprintf ( $sql, TABLEPRE, $uid ) );
 		break;
 }
 $alipayService = new AlipayService ($interface, $payment_config,$sign_type, strtoupper ( CHARSET ) );

@@ -15,14 +15,14 @@ $feed_obj = new Keke_witkey_feed_class ();
 
 $tag_obj = new Keke_witkey_tag_class ();
 
-$template_arr = db_factory::query ( " select tpl_title from " . TABLEPRE . "witkey_template", 1, null );
+$template_arr = dbfactory::query ( " select tpl_title from " . TABLEPRE . "witkey_template", 1, null );
 
 $type or $type = 'manage';
 
 $url = "index.php?do=$do&view=$view&type=$type&tag_id=$tag_id";
 
 if ($type === 'manage') {
-	$tag_id and $feed_info = db_factory::get_one ( " select tagname,tag_id,cache_time,tag_code,tpl_type,code from " . TABLEPRE . "witkey_tag where tag_type=8 and tag_id='$tag_id'" );
+	$tag_id and $feed_info = dbfactory::get_one ( " select tagname,tag_id,cache_time,tag_code,tpl_type,code from " . TABLEPRE . "witkey_tag where tag_type=8 and tag_id='$tag_id'" );
   	$code = unserialize($feed_info['code']);
 }
 
@@ -57,7 +57,7 @@ if ($sbt_edit) {
 			$tag_obj->setTag_id ( $hdn_tag_id );
 			$res = $tag_obj->edit_keke_witkey_tag ();
 		} else { //´´½¨±êÇ©
-			$check_exixts = db_factory::execute ( "select tagname from " . TABLEPRE . "witkey_tag where tagname='$txt_tag_name'" );
+			$check_exixts = dbfactory::execute ( "select tagname from " . TABLEPRE . "witkey_tag where tagname='$txt_tag_name'" );
 			$check_exixts and kekezu::admin_show_msg ( $_lang['add_fail_alerady_exists'], $url,3,'','warning' );
 			$res = $tag_obj->create_keke_witkey_tag ();
 		}

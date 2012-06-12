@@ -159,7 +159,7 @@ class keke_loaddata_class {
 	}
 	static function load_autosql_data($tag_info) {
 		$sql = stripslashes ( $tag_info ['tag_sql'] );
-		$temp_arr = db_factory::query ( $sql );
+		$temp_arr = dbfactory::query ( $sql );
 		return $temp_arr;
 	}
 	static function load_category_data($tag_info) {
@@ -440,13 +440,13 @@ class keke_loaddata_class {
 			}
 			$pos_config = unserialize ( $ad_target ['position'] ); //位置配置数组
 			/** 更新本类过期广告*/
-			//db_factory::execute ( sprintf ( " update %switkey_ad set is_allow='0' where target_id='%d' and  end_time>0 and end_time>%d", TABLEPRE, $ad_target ['target_id'], time () ));
+			//dbfactory::execute ( sprintf ( " update %switkey_ad set is_allow='0' where target_id='%d' and  end_time>0 and end_time>%d", TABLEPRE, $ad_target ['target_id'], time () ));
 			
 			/** 获取指定条数广告*/
 			$sql = " select a.ad_id,a.ad_name,a.ad_file,a.ad_content,a.ad_url,a.width,a.height,
 			a.ad_type,a.ad_position,a.on_time from %switkey_ad a left join %switkey_ad_target b on a.target_id=b.target_id 
 			where b.code='%s' and a.is_allow='1' order by a.ad_id desc limit 0,%d";
-			$ad_arr = db_factory::query ( sprintf ( $sql, TABLEPRE, TABLEPRE, $code, $ad_target ['ad_num'] ),true,$_K['timespan'] );
+			$ad_arr = dbfactory::query ( sprintf ( $sql, TABLEPRE, TABLEPRE, $code, $ad_target ['ad_num'] ),true,$_K['timespan'] );
 			
 			$ad_list = kekezu::get_arr_by_key($ad_arr,'ad_position'); 
 			 
@@ -490,9 +490,9 @@ class keke_loaddata_class {
 	   global $_K,$kekezu;
 	     if((SYS_START_TIME - intval($ad_info['on_time']))>$_K['timespan']){
 	      //更新时间值
-	      db_factory::execute(sprintf('update %switkey_ad set on_time  = %s where ad_id = %d',TABLEPRE,time()+$_K['timespan'],$ad_info['ad_id']));   
+	      dbfactory::execute(sprintf('update %switkey_ad set on_time  = %s where ad_id = %d',TABLEPRE,time()+$_K['timespan'],$ad_info['ad_id']));   
 	      //更新广告生命
-	      db_factory::execute(sprintf("update %switkey_ad set is_allow='0' where target_id='%d' and  end_time>0 and end_time>%d",TABLEPRE,$ad_info['ad_id'],time()));	
+	      dbfactory::execute(sprintf("update %switkey_ad set is_allow='0' where target_id='%d' and  end_time>0 and end_time>%d",TABLEPRE,$ad_info['ad_id'],time()));	
 	   }
 		
 	}

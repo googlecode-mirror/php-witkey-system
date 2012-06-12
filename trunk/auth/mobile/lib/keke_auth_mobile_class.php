@@ -67,7 +67,7 @@ class keke_auth_mobile_class extends keke_auth_base_class{
 		$fdata['cash'] > 0 and keke_finance_class::cash_out ($fdata['uid'],$fdata ['cash'],$this->_auth_name, $fdata ['cash'], $this->_auth_name, null );
 	
 	
-		$auth_info = db_factory::get_one(sprintf("select * from %switkey_auth_mobile where uid='%d'",TABLEPRE,$user_info[uid]));
+		$auth_info = dbfactory::get_one(sprintf("select * from %switkey_auth_mobile where uid='%d'",TABLEPRE,$user_info[uid]));
 
 		if($auth_info){//修改数据
 			$moblie_obj->setWhere('uid='.$fdata[uid]);
@@ -84,7 +84,7 @@ class keke_auth_mobile_class extends keke_auth_base_class{
 			$moblie_obj->create_keke_witkey_auth_mobile();
 		}
 		
-		db_factory::execute(" update ".TABLEPRE."witkey_space set mobile='$fdata[mobile]' where uid = '$fdata[uid]' ");
+		dbfactory::execute(" update ".TABLEPRE."witkey_space set mobile='$fdata[mobile]' where uid = '$fdata[uid]' ");
 		$fdata['start_time']==$fdata['end_time'] and $end_time=$fdata['end_time'] or $end_time=0;
 		$res = $this->add_auth_record($fdata['uid'], $fdata['username'], $this->_auth_code,$end_time,0);//添加进入认证记录
 		parse_str($_SERVER['QUERY_STRING'],$arr);

@@ -24,9 +24,9 @@ switch ($show){
 			$res=$case_obj->save($conf,$pk);
 			$res and kekezu::show_msg($_lang['case_operate_success'],$ac_url."&show=list#userCenter",3,'','success') or kekezu::show_msg($_lang['case_operate_fail'],$ac_url."&show=add&case_id=$case_id#userCenter",3,'','warning');
 		}else{
-			$case_id and $case_info=db_factory::get_one(sprintf(" select * from %switkey_shop_case where case_id='%d'",TABLEPRE,$case_id));
+			$case_id and $case_info=dbfactory::get_one(sprintf(" select * from %switkey_shop_case where case_id='%d'",TABLEPRE,$case_id));
 			//自定义分类列表
-// 			$cate_list=db_factory::query(sprintf(" select * from %switkey_shop_cate where shop_id='%d'",TABLEPRE,$shop_info['shop_id']));//被干掉了
+// 			$cate_list=dbfactory::query(sprintf(" select * from %switkey_shop_cate where shop_id='%d'",TABLEPRE,$shop_info['shop_id']));//被干掉了
 		}
 		switch ($ac){
 			case "show_indus":
@@ -41,7 +41,7 @@ switch ($show){
 				die ();
 				break;
 			case "show_service":
-				$service_list=db_factory::query(sprintf(" select * from %switkey_service where shop_id='%d'",TABLEPRE,$shop_info['shop_id']));
+				$service_list=dbfactory::query(sprintf(" select * from %switkey_service where shop_id='%d'",TABLEPRE,$shop_info['shop_id']));
 				$str_html="<option value=''>".$_lang['please_select']."</option>";
 				foreach ($service_list as $v) {
 					$case_info['service_id']==$v['service_id'] and $selected=" selected " or $selected="";
@@ -55,7 +55,7 @@ switch ($show){
 		break;
 	case "list":
 		if($ac=='del'){//删除
-			$res=db_factory::execute(sprintf(" delete from %switkey_shop_case where case_id='%d'",TABLEPRE,$case_id));
+			$res=dbfactory::execute(sprintf(" delete from %switkey_shop_case where case_id='%d'",TABLEPRE,$case_id));
 			$res and kekezu::echojson($_lang['delete_success'],"1") or kekezu::echojson($_lang['delete_fail'],"0");
 			die();
 		}else{

@@ -14,7 +14,7 @@ switch ($ajax) {
 		$take_num  		= intval($user_info['take_num']);
 		$accepted_num   = intval($user_info['accepted_num']);
 		$auth_info	    = keke_auth_fac_class::get_submit_auth_record ( $user_id, 1 );
-		$order_count	= intval ( db_factory::get_count ( sprintf ( " select count(order_id) from %switkey_order where order_status='confirm' and seller_uid='%d' and model_id in(6,7)", TABLEPRE, $user_id ) ) );
+		$order_count	= intval ( dbfactory::get_count ( sprintf ( " select count(order_id) from %switkey_order where order_status='confirm' and seller_uid='%d' and model_id in(6,7)", TABLEPRE, $user_id ) ) );
 		$buyer_aid	    = keke_user_mark_class::get_user_aid ( $user_id, '2', null, '1' );
 		break;
 	case 'show_secode':
@@ -29,7 +29,7 @@ switch ($ajax) {
 	case "load_comment" :
 	case "load_reply" :
 		if ($comment_id) {
-			$comm_info = db_factory::get_one ( sprintf ( " select * from %switkey_comment where comment_id = '%d'", TABLEPRE, $comment_id ) );
+			$comm_info = dbfactory::get_one ( sprintf ( " select * from %switkey_comment where comment_id = '%d'", TABLEPRE, $comment_id ) );
 		} else {
 			die ();
 		}

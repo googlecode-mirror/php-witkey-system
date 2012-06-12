@@ -36,18 +36,18 @@ class keke_trust_fac_class {
 				switch ($this->_data ['is_success']) {
 					case "T" :
 						$uid = $this->_data['sns_user_id'];
-						$username = db_factory::get_count(sprintf("select username from %switkey_member where uid='%d'",TABLEPRE,$uid));
+						$username = dbfactory::get_count(sprintf("select username from %switkey_member where uid='%d'",TABLEPRE,$uid));
 						$key = $this->_data['key'];
 						$account = $this->_data['alipay_login_id'];
 						$oauth_id = $this->_data['alipay_card_no'];
 						
-						$id = db_factory::get_count ( sprintf ( " select id from %switkey_member_oauth where uid='%d' and username='%d' and source='alipay_trust'", TABLEPRE, $uid, $username ) );
+						$id = dbfactory::get_count ( sprintf ( " select id from %switkey_member_oauth where uid='%d' and username='%d' and source='alipay_trust'", TABLEPRE, $uid, $username ) );
 						if ($id) {
 							$sql = " update %switkey_member_oauth set account='%s',oauth_id='%s',bind_key='%s' where id='%d'";
-							$res = db_factory::execute ( sprintf ( $sql, TABLEPRE, $account, $oauth_id, $key, $id ) );
+							$res = dbfactory::execute ( sprintf ( $sql, TABLEPRE, $account, $oauth_id, $key, $id ) );
 						} else {
 							$sql = " insert into %switkey_member_oauth values('','alipay_trust','%s','%d','%s','%d','%s','%s')";
-							$res = db_factory::execute ( sprintf ( $sql, TABLEPRE, $account, $uid, $username, time (), $oauth_id, $key ) );
+							$res = dbfactory::execute ( sprintf ( $sql, TABLEPRE, $account, $uid, $username, time (), $oauth_id, $key ) );
 						}
 							break;
 						case "F" ://”处理失败“
@@ -61,7 +61,7 @@ class keke_trust_fac_class {
 						case "T" :
 							$uid = $this->_data ['sns_user_id'];
 							$sql = " delete from  %switkey_member_oauth where uid='%d' and source='alipay_trust'";
-							$res = db_factory::execute ( sprintf ( $sql, TABLEPRE, $uid ) );
+							$res = dbfactory::execute ( sprintf ( $sql, TABLEPRE, $uid ) );
 							break;
 						case "F" ://”处理失败“
 							$res = false;
@@ -110,7 +110,7 @@ class keke_trust_fac_class {
 	 * @param int $to_status
 	 */
 	public static function set_task_status($task_id,$to_status) {
-		return db_factory::execute ( sprintf ( " update %switkey_task set task_status='%d' where task_id='%d'", TABLEPRE, intval ( $to_status ),$task_id) );
+		return dbfactory::execute ( sprintf ( " update %switkey_task set task_status='%d' where task_id='%d'", TABLEPRE, intval ( $to_status ),$task_id) );
 	}
 	/**
 	 * 重定向至支付宝
@@ -137,7 +137,7 @@ class keke_trust_fac_class {
 	 * @param $bind_type 绑定类型 alipay_trust/alipay
 	 */
 	public static function verify_bind($uid, $bind_type) {
-		return db_factory::get_one( sprintf ( " select uid,oauth_id from %switkey_member_oauth where uid = '%d' and source='%s'", TABLEPRE, $uid, $bind_type ) );
+		return dbfactory::get_one( sprintf ( " select uid,oauth_id from %switkey_member_oauth where uid = '%d' and source='%s'", TABLEPRE, $uid, $bind_type ) );
 	}
 	
 	/**

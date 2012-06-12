@@ -24,7 +24,7 @@ $link_obj->setWhere ( $where . $pages ['where'] );
 $shop_link = $link_obj->query_keke_witkey_link ();
 switch ($ac) {
 	case "del" :
-		$res = db_factory::execute ( sprintf ( " delete from %switkey_link where link_id='%d'", TABLEPRE, $link_id ) );
+		$res = dbfactory::execute ( sprintf ( " delete from %switkey_link where link_id='%d'", TABLEPRE, $link_id ) );
 		$res and kekezu::echojson ( $_lang['delete_success'], "1" ) or kekezu::echojson ( $_lang['delete_fail'], "0" );
 		die ();
 		break;

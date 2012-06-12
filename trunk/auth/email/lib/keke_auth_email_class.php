@@ -50,7 +50,7 @@ public static function get_instance($auth_code='email') {
 				//认证收费。产生财务记录
 				$data['cash'] > 0 and keke_finance_class::cash_out ($data['uid'],$data ['cash'],$this->_auth_name, $data ['cash'], $this->_auth_name, $success );
 				$data['start_time']==$data['end_time'] and $end_time=$data['end_time'] or $end_time=0;
-				db_factory::execute(" update ".TABLEPRE."witkey_space set email = '$data[email]' where uid = '$data[uid]'");//更新邮箱
+				dbfactory::execute(" update ".TABLEPRE."witkey_space set email = '$data[email]' where uid = '$data[uid]'");//更新邮箱
 				return $this->add_auth_record($data['uid'], $data['username'], $this->_auth_code,$end_time,$data);//添加进入认证记录
 			}
 		}

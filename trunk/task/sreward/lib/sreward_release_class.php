@@ -76,7 +76,7 @@ class sreward_release_class extends keke_task_release_class {
 				if (! $release_info) {
 					$sql = " select model_id,task_title,task_desc,indus_id,indus_pid,
 						task_cash from %switkey_task where task_id='%d' and model_id='%d'";
-					$task_info = db_factory::get_one ( sprintf ( $sql, TABLEPRE, $data ['t_id'] ,$this->_model_id));
+					$task_info = dbfactory::get_one ( sprintf ( $sql, TABLEPRE, $data ['t_id'] ,$this->_model_id));
 					$task_info or kekezu::show_msg($_lang['operate_notice'],$_SERVER['HTTP_REFERER'],3,$_lang['not_exsist_relation_task_and_not_user_onekey'],"warning");
 					$release_info = $this->onekey_mode_format($task_info);
 					$allow_time = $kekezu->get_show_day ( $task_info['task_cash'], $this->_model_id );

@@ -64,10 +64,10 @@ class goods_report_class extends keke_report_class {
 					$res.=$this->to_black ( $op_result ['freeze_day'] );
 				}
 				if ($op_result ['deduct_credit'] && $op_result [$this->_credit_info ['name']] && $this->_process_can ['deduct']) { //扣信誉(能力)
-					$res.=db_factory::execute ( sprintf ( " update %switkey_space set %s=%s-%d where uid='%d'", TABLEPRE, $this->_credit_info ['name'], $this->_credit_info ['name'], intval($op_result [$this->_credit_info ['name']]), $this->_to_user_info ['uid'] ) );
+					$res.=dbfactory::execute ( sprintf ( " update %switkey_space set %s=%s-%d where uid='%d'", TABLEPRE, $this->_credit_info ['name'], $this->_credit_info ['name'], intval($op_result [$this->_credit_info ['name']]), $this->_to_user_info ['uid'] ) );
 				}
 				if ($op_result ['product_remove']&& $this->_process_can ['product_remove']) { //商品下架成立
-					$res.=db_factory::execute(sprintf(" update %switkey_service set service_status='3' where service_id='%d'",TABLEPRE,$this->_obj_info['origin_id']));	
+					$res.=dbfactory::execute(sprintf(" update %switkey_service set service_status='3' where service_id='%d'",TABLEPRE,$this->_obj_info['origin_id']));	
 				}
 				if($res){
 					$this->process_notify('pass',$this->_report_info, $this->_user_info, $this->_to_userinfo,$op_result ['process_result']);//通知用户

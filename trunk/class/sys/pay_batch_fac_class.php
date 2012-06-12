@@ -101,13 +101,13 @@ class pay_batch_fac_class {
 				switch ($v ['status']) {
 					case "S" :
 						/** 提现成功*/
-						$res = db_factory::execute ( sprintf ( " update %switkey_withdraw set withdraw_status='2' where withdraw_id ='%d'", TABLEPRE, $k ) );
+						$res = dbfactory::execute ( sprintf ( " update %switkey_withdraw set withdraw_status='2' where withdraw_id ='%d'", TABLEPRE, $k ) );
 						/** 用户消息提示*/
 						kekezu::notify_user ( $_lang['tx_pay_success_notice'], $_lang['your_alipay_tx_apply_notice'] . $v [fee] . $_lang['yusn_check_your_accout'], $info [$k] ['uid'], $info [$k] ['username'] );
 						break;
 					case "F" :
 						/** 提现失败*/
-						$res = db_factory::execute ( sprintf ( " update %switkey_withdraw set withdraw_status='3' where withdraw_id ='%d'", TABLEPRE, $k ) );
+						$res = dbfactory::execute ( sprintf ( " update %switkey_withdraw set withdraw_status='3' where withdraw_id ='%d'", TABLEPRE, $k ) );
 						kekezu::notify_user ( $_lang['tx_pay_fail_notice'], $_lang['tx_pay_fail_case_is'] . $v ['desc'], $info [$k] ['uid'], $info [$k] ['username'] );
 						break;
 				}

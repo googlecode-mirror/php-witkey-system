@@ -23,7 +23,7 @@ if ($sbt_edit) {
 		
 		if(is_array($skin)&&!empty($skin)){
 			foreach($skin as $k=>$v){
-				db_factory::execute(sprintf(" update %switkey_template set tpl_pic ='%s' where tpl_title='%s'",TABLEPRE,$v,$k));
+				dbfactory::execute(sprintf(" update %switkey_template set tpl_pic ='%s' where tpl_title='%s'",TABLEPRE,$v,$k));
 			}
 		}
 		

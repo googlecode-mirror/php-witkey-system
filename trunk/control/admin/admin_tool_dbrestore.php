@@ -35,7 +35,7 @@ switch ($ac) {
 		}
 		
 		foreach ( $ret as $vvv ) {
-			empty ( $vvv ) or $res .= db_factory::execute ( $vvv );
+			empty ( $vvv ) or $res .= dbfactory::execute ( $vvv );
 		}
 		if ($res) {
 			kekezu::admin_system_log ( $_lang['restore_database_operate_success'] . $file_arr [$restore_name] [name] );

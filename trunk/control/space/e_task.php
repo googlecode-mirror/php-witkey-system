@@ -17,11 +17,11 @@ if($action == 'pub'){
 	
 	$url = "index.php?do=space&member_id=$member_id&view=task&page_size=$page_size&action=$action&ord=$ord";
 	$page_size = 10;
-	$count = db_factory::execute ( $sql.$where );
+	$count = dbfactory::execute ( $sql.$where );
 	$page = $page ? $page : 1;
 	$pages = kekezu::$_page_obj->getPages ( $count, $page_size, $page, $url );
 	$where .=$pages['where']; 
-	$task_arr = db_factory::query($sql.$where);
+	$task_arr = dbfactory::query($sql.$where);
 	
 }elseif($action == 'join'){
 	//参加的任务
@@ -31,11 +31,11 @@ if($action == 'pub'){
 	
 	$url = "index.php?do=space&member_id=$member_id&view=task&page_size=$page_size&action=$action&ord=$ord";
 	$page_size = 10;
-	$count = db_factory::execute ( $sql.$where );
+	$count = dbfactory::execute ( $sql.$where );
 	$page = $page ? $page : 1;
 	$pages = $page_obj->getPages ( $count, $page_size, $page, $url );
 	$where .=$pages['where']; 
-	$task_arr = db_factory::query($sql.$where);
+	$task_arr = dbfactory::query($sql.$where);
  
 }
  

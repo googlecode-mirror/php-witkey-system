@@ -46,7 +46,7 @@ if (isset($sbt_action) || isset($add,$add_index,$add_id)) {//写库
 		$log_ids.=$value['keke_task_id'].',';
 	}
 	$sql = rtrim($sql,',');
-	$result = db_factory::execute( sprintf($sql,TABLEPRE));
+	$result = dbfactory::execute( sprintf($sql,TABLEPRE));
 	kekezu::admin_system_log('[批量]添加联盟任务'.$result);
 	if ($result){//操作成功
 		$data = array(
@@ -100,7 +100,7 @@ function get_cover_id( $price_range ){
 	$start_cover = floor($cover_arr[0]);
 	$end_cover = floor($cover_arr[1]);
 	$sql = "select cash_rule_id from %switkey_task_cash_cove where `start_cove`<=%d and `end_cove`>=%d and `start_cove`+`end_cove`>=%d";
-	$cove_id = db_factory::get_count(sprintf($sql,TABLEPRE,$start_cover,$end_cover,$start_cover+$end_cover));
+	$cove_id = dbfactory::get_count(sprintf($sql,TABLEPRE,$start_cover,$end_cover,$start_cover+$end_cover));
 	return $cove_id;
 }
 

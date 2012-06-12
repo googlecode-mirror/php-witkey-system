@@ -43,7 +43,7 @@ $pages = $table_arr['pages'];
 
 //²Ù×÷ 1.É¾³ý£»2..½ûÓÃ£»3.ÉóºË 4.ÆôÓÃ
 if($service_id){
-	$service_arr = db_factory::get_one(sprintf("select * from %switkey_service where service_id='%d' ",TABLEPRE,$service_id));
+	$service_arr = dbfactory::get_one(sprintf("select * from %switkey_service where service_id='%d' ",TABLEPRE,$service_id));
 
 	$log_ac_arr = array("del"=>$_lang['delete'],"use"=>$_lang['use'],"pass"=>$_lang['audit'],"disable"=>$_lang['disable']);
 	$log_msg = $_lang['to_witkey_service_name_to'].$service_arr[title].$_lang['in'].$log_ac_arr[$ac].$_lang['operate'];

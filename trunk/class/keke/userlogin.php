@@ -128,7 +128,7 @@ class keke_userlogin {
 	function valid_moble_auth() {
 		global $_lang;
 		$sql = sprintf ( "select * from %switkey_auth_record where auth_code='mobile' and auth_status = 1", TABLEPRE, $this->_account );
-		$auth_arr = db_factory::get_one ( $sql );
+		$auth_arr = dbfactory::get_one ( $sql );
 		if ($auth_arr) {
 			$user_info = keke_user_class::get_user_info ( $auth_arr [uid] );
 			$user_info [login_type] = 'mobile';
@@ -205,7 +205,7 @@ class keke_userlogin {
 		} elseif ($u == - 1) {
 			$this->show_msg ( $_lang ['you_input_username_not_exist'], 4 );
 		} else {
-			$exists = db_factory::get_count ( sprintf ( " select uid from %switkey_member where uid='%d' ", TABLEPRE, $u ['uid'] ) );
+			$exists = dbfactory::get_count ( sprintf ( " select uid from %switkey_member where uid='%d' ", TABLEPRE, $u ['uid'] ) );
 			if (! $exists) { //与三方用户UID冲突
 				$reg_obj = new keke_register_class ();
 				$reg_obj->_reg_pwd = $pwd;
@@ -250,7 +250,7 @@ class keke_userlogin {
 		$user_obj->edit_keke_witkey_space ();
 		
 		keke_user_class::set_union_relation ( $user_info ['uid'] ); //更新联盟关系
-		db_factory::execute ( sprintf ( "update %switkey_member_oltime set last_op_time=%d where uid = %d", TABLEPRE, time (), $user_info ['uid'] ) );
+		dbfactory::execute ( sprintf ( "update %switkey_member_oltime set last_op_time=%d where uid = %d", TABLEPRE, time (), $user_info ['uid'] ) );
 		
 		/**
 		 * 推广关系创建

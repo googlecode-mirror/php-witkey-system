@@ -8,7 +8,7 @@
 
 defined ( 'IN_KEKE' ) or exit('Access Denied');
 /**µÍ∆Ã–≈œ¢**/
-$shop_info=db_factory::get_one(sprintf(" select * from %switkey_shop where uid='%d' ",TABLEPRE,$uid));
+$shop_info=dbfactory::get_one(sprintf(" select * from %switkey_shop where uid='%d' ",TABLEPRE,$uid));
 $opps = array('basic','link','member','case','member','cate','notice');
 in_array($opp,$opps) or $opp ="basic";
 
@@ -36,10 +36,10 @@ if($shop_info){
 		$space_fds = array('user_type','summary','residency','address','truename','mobile','email','indus_id','indus_pid');
 		$where  = null_sql($space_fds);
 		$where .=' and uid='.$uid;
-		$res = intval(db_factory::get_count(sprintf("select count(*) from %switkey_space where %s",TABLEPRE,$where)));
+		$res = intval(dbfactory::get_count(sprintf("select count(*) from %switkey_space where %s",TABLEPRE,$where)));
 		$enter_fds = array('company','legal','licen_num');
 		$e_where = null_sql($enter_fds);
-		$e_res = intval(db_factory::get_count(sprintf("select count(*) from %switkey_auth_enterprise where %s and uid='%d'",TABLEPRE,$e_where,$uid)));
+		$e_res = intval(dbfactory::get_count(sprintf("select count(*) from %switkey_auth_enterprise where %s and uid='%d'",TABLEPRE,$e_where,$uid)));
 		if(!$res||!$e_res){
 			$access = 1;			
 			$url = "index.php?do=register_wizard&step=e2";
@@ -50,7 +50,7 @@ if($shop_info){
 		$fds = array('user_type','sex','residency','birthday','truename','mobile','indus_id','indus_pid','summary');
 		$where = null_sql($fds);
 		$where .= ' and uid='.$uid;
-		$res = db_factory::get_count(sprintf("select count(*) from %switkey_space where %s",TABLEPRE,$where));
+		$res = dbfactory::get_count(sprintf("select count(*) from %switkey_space where %s",TABLEPRE,$where));
 		$res = intval($res);
 		if(!$res){
 			$access=1;			

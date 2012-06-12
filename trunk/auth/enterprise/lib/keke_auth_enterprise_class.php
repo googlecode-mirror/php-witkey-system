@@ -51,12 +51,12 @@ class keke_auth_enterprise_class extends keke_auth_base_class{
 			if($auth_info){
 				$success=$this->_tab_obj->save($data,array($this->_primary_key=>$auth_info[$this->_primary_key]));
 				$this->set_auth_record_status($user_info['uid'], '0');
-				db_factory::execute(sprintf(" update %switkey_space set user_type='2' where uid='%d'",TABLEPRE,$auth_info[uid]));//更新用户角色为企业
+				dbfactory::execute(sprintf(" update %switkey_space set user_type='2' where uid='%d'",TABLEPRE,$auth_info[uid]));//更新用户角色为企业
 			}else{
 				$success=$this->_tab_obj->save($data);
 			}
 			/**企业空间降级**/
-			$shop_info=db_factory::get_one(sprintf(" select shop_id,shop_type,shop_name from %switkey_shop where uid='%d'",TABLEPRE,$user_info[uid]));
+			$shop_info=dbfactory::get_one(sprintf(" select shop_id,shop_type,shop_name from %switkey_shop where uid='%d'",TABLEPRE,$user_info[uid]));
 			if($shop_info&&$shop_info['shop_type']=='2'){
 				$msg=new Keke_msg_class();
 				if ($msg->validate ( 'space_change' )) {

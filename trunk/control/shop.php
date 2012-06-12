@@ -15,7 +15,7 @@ $page_title=$_lang['weike_shop'].'- '.$_K['html_title'];
  				 b.indus_pid = a.indus_id where a.indus_pid = 0  )
  				 UNION (select c.indus_id,c.indus_pid,c.indus_name,c.is_recommend from  '.TABLEPRE.'witkey_industry c
  				 where c.indus_pid = 0 and c.is_recommend = 1 )';
- $industry_arr = db_factory::query($indstry_sql, true, 60*60); */
+ $industry_arr = dbfactory::query($indstry_sql, true, 60*60); */
 
  $clean_industry_arr = array();
  kekezu::get_tree(kekezu::$_indus_arr, $clean_industry_arr, '');
@@ -40,6 +40,6 @@ $page_title=$_lang['weike_shop'].'- '.$_K['html_title'];
 
  //统计_交易中选稿中
  $sql = " select count(order_id) from %switkey_order where model_id in(6,7) and order_status in ('ok','accept','send') ";
-$count_record = db_factory::get_count ( sprintf($sql,TABLEPRE));
+$count_record = dbfactory::get_count ( sprintf($sql,TABLEPRE));
 	require kekezu::$_tpl_obj->template ('shop');
  

@@ -59,12 +59,12 @@ $page_size = isset($page_size)&&intval ( $page_size ) ? intval ( $page_size ) : 
 $url = "index.php?do=task_map&path=$path&min=$min&max=$max&model_ids=$model_ids&page_size=$page_size";
 
  
-$count = db_factory::execute ( $sql . $where );
+$count = dbfactory::execute ( $sql . $where );
 $page = isset($page) ? intval($page) : 1;
 
 $pages = $page_obj->getPages ( $count, $page_size, $page, $url ); 
 $where .= $pages ['where'];
-$task_list_arr = db_factory::query ( $sql . $where );  
+$task_list_arr = dbfactory::query ( $sql . $where );  
 
 $check_arr =keke_search_class::get_path_url ( $where_arr, $path );//²éÑ¯Ìõ¼ş
 $check_url_arr = $check_arr ['url'];

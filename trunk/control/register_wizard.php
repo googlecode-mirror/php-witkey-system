@@ -34,7 +34,7 @@ if(($step=='e2'||$step=='p2')&&$user_type>0){
 switch ($step) {
 	case "e2":  
 		$page_title=$_lang['perfect_data'].$_lang['two_step'].'-'.$_lang['fill_data'].'-'.$_K['html_title'];
-		$enter_info = db_factory::get_one(sprintf("select * from %switkey_auth_enterprise where uid='%d'",TABLEPRE,$uid));
+		$enter_info = dbfactory::get_one(sprintf("select * from %switkey_auth_enterprise where uid='%d'",TABLEPRE,$uid));
 		$real_pass=keke_auth_fac_class::auth_check("enterprise", $uid);
 		$refer = isset($refer)?$refer:"index.php";
 		if (isset($formhash)&&kekezu::submitcheck($formhash)) {

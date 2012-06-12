@@ -12,7 +12,7 @@ $payment_config = kekezu::get_payment_config ( $payname, $type );
 //var_dump($payment_config);die();
 
 $pay_config = unserialize ( $payment_config ['config'] );
-$payment_exist =db_factory::get_count(" select payment from ".TABLEPRE."witkey_pay_api where payment='$payname' and type='$type'");
+$payment_exist =dbfactory::get_count(" select payment from ".TABLEPRE."witkey_pay_api where payment='$payname' and type='$type'");
 $payment_config or kekezu::admin_show_msg ( $_lang['wrong_model_directory'], "index.php?do=config&view=pay",3,'','warning' );
 
 $temp = array ();

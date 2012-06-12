@@ -62,7 +62,7 @@ class keke_auth_fac_class {
 			$file_path = S_ROOT . "./auth/" . $auth_dir . "/control/admin/auth_config_inc.php";
 			if(file_exists ( $file_path )){
 				require $file_path;
-			$exists    = db_factory::get_count(" select auth_code from ".TABLEPRE."witkey_auth_item where auth_dir = '$auth_dir'");
+			$exists    = dbfactory::get_count(" select auth_code from ".TABLEPRE."witkey_auth_item where auth_dir = '$auth_dir'");
 			$exists and kekezu::admin_show_msg($_lang['auth_item_exist_add_fail'],$_SERVER['HTTP_REFERER'],'3','','error');
 			
 			$res=$tab_obj->save($auth_config);//°²×°
@@ -160,11 +160,11 @@ class keke_auth_fac_class {
 	public static function auth_check($auth_code,$uid,$auth_status='1'){
 		if(!is_array($auth_code)){
 			$auth_table=TABLEPRE."witkey_auth_".$auth_code;
-			$data = db_factory::get_one(" select * from ".$auth_table."  where uid ='$uid' and auth_status='$auth_status'");
+			$data = dbfactory::get_one(" select * from ".$auth_table."  where uid ='$uid' and auth_status='$auth_status'");
 			return $data;
 		}else{
 			$t = implode(",",$auth_code);
-			return db_factory::query(" select a.auth_code,a.auth_status,b.auth_title,b.auth_small_ico from ".TABLEPRE."witkey_auth_record a left join ".TABLEPRE."witkey_auth_item b on a.auth_code=b.auth_code where a.uid ='$uid' and FIND_IN_SET(a.auth_code,'$t') and a.auth_status='$auth_status'",1,3600);
+			return dbfactory::query(" select a.auth_code,a.auth_status,b.auth_title,b.auth_small_ico from ".TABLEPRE."witkey_auth_record a left join ".TABLEPRE."witkey_auth_item b on a.auth_code=b.auth_code where a.uid ='$uid' and FIND_IN_SET(a.auth_code,'$t') and a.auth_status='$auth_status'",1,3600);
 		}
 	}
 }

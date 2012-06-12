@@ -48,10 +48,10 @@ class keke_service_class {
 				global  $_K;
 				$app_key = $data['source_app_id'];
 				$r_task_id = $data['r_task_id'];
-				$relation_arr = db_factory::get_one(sprintf("select `relation_id` from %switkey_task_relation where `task_id`=%d and `app_id`=%s",TABLEPRE,intval($task_id), $app_key));
+				$relation_arr = dbfactory::get_one(sprintf("select `relation_id` from %switkey_task_relation where `task_id`=%d and `app_id`=%s",TABLEPRE,intval($task_id), $app_key));
 				if(!empty($relation_arr)){
 					global $uid;
-					db_factory::execute(sprintf("update `%switkey_task_relation` set `uid`=%d where `task_id`=%d and `app_id`=%s",TABLEPRE, $uid, intval($task_id), $app_key));
+					dbfactory::execute(sprintf("update `%switkey_task_relation` set `uid`=%d where `task_id`=%d and `app_id`=%s",TABLEPRE, $uid, intval($task_id), $app_key));
 					setcookie( 'relation_id', $relation_arr['relation_id'], time()+3600, COOKIE_PATH );
 				} else {
 					$t_obj = keke_table_class::get_instance('witkey_task_relation');

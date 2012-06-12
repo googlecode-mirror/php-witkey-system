@@ -7,7 +7,7 @@
  */
 defined ( 'IN_KEKE' ) or exit('Access Denied');
 kekezu::check_login();
-$agree_info = db_factory::get_one(sprintf("select model_id,buyer_uid,seller_uid from %switkey_agreement where agree_id='%d'",TABLEPRE,$agree_id));
+$agree_info = dbfactory::get_one(sprintf("select model_id,buyer_uid,seller_uid from %switkey_agreement where agree_id='%d'",TABLEPRE,$agree_id));
 
 $agree_info or kekezu::keke_show_msg("index.php",$_lang['illegal_in_no_exits'],'error');
 

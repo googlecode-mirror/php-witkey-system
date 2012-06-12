@@ -198,58 +198,18 @@
                     	<!--用户登录后内容 start-->
                         <ul class="user_logined clearfix">
                             <li id="avatar">
-                            	<a href="index.php?do=user&view=index" title="{$username}">
-                            		<!--{userpic($uid,'small')}-->
-                                    <span class="user_named">{$username}</span>
+                            	<a href="index.php?do=user&view=index">
+                            		
+                                   
                             	</a>
-								<!--用户登录后导航菜单 start-->
-			                    <div id="user_menu" class="user_nav_pop grid_5 alpha omega hidden">
-			                        <ul class="nav_list clearfix">
-                                    	<li class="clearfix"><a href="index.php?do=user&view=finance&op=detail" title="{$_lang['money']} | {CREDIT_NAME}" id="money"> <div class="icon16 cur-yen reverse"></div><!--{eval echo number_format($user_info['balance'],2,'.','')}--> RMB | <!--{eval echo number_format($user_info['credit'],2,'.','')}--></a></li>
-                                        <li class="clearfix"><a href="index.php?do=release" title="{$_lang['pub_task']}" class="selected" ><div class="icon16 doc-new reverse"></div>{$_lang['pub_task']}</a></li>
-										<li class="clearfix"><a href="index.php?do=shop_release" title="{$_lang['pub_goods']}" class="selected"><div class="icon16 doc-new reverse"></div>{$_lang['pub_goods']}</a></li>
-										 <li class="clearfix {if $uid ==ADMIN_UID || $user_info['group_id']>0}{else}hidden{/if}" id="manage_center"><a href="control/admin/index.php" title="{$_lang['manage_center']}" ><div class="icon16 key reverse"></div>{$_lang['manage_center']}</a></li>
-										<li class="clearfix"><a href="index.php?do=user&view=index" title="{$_lang['user_config']}"><div class="icon16 cog reverse"></div>{$_lang['user_config']}</a></li>
-										<li class="clearfix"><a href="index.php?do=space&member_id={$uid}" title="{$_lang['my_space']}" id="space"><div class="icon16 compass reverse"></div>{$_lang['my_space']}</a></li>
-										<li class="clearfix"><a href="index.php?do=user&view=message" title="{$_lang['website_msg']}"><div class="icon16 mail reverse"></div>{$_lang['website_msg']}</a></li>
-			                         </ul>
-			                    </div>
-			                    <!--用户登录后导航菜单 end-->
+								 
 							</li>
-                            <li class="line"></li>
-                            <li class="logout"><a onclick="showWindow('out',this.href);return false;" title="{$_lang['logout']}" href="index.php?do=logout">{$_lang['logout']}</a></li>
-                            <li class="clear"></li>
+                             
                         </ul>
-                        <!--用户登录后内容 end-->
-						
-						
-                    </div>
-                    <!--登录成功 end-->
-                    
-                    
-                    <div class="clear"></div>
+        </div>
+                      <div class="clear"></div>
                 </div>
-                <!--用户登录注册 end-->
-            </div>
-            
-            <div class="grid_2">
-            	<!--语言栏 start-->
-            	<div class="language">
-            		<div class="lan_selcecter">
-                      <div id="lan_menu" class="lan_options">
-                      <a href="javascript:void(0);" rel="{$language}" class="selected">{$lang_list[$language]}▼</a>
-					  {loop $lang_list $k $v}
-                     	 <a href="javascript:void(0);" rel="{$k}" class="hidden">{$v}</a>
-					  {/loop}
-                      </div>
-                 	</div>
-                </div>
-                <!--语言栏 end-->
-            </div>
-            
-            
-            
-            <div class="clear"></div>
+             </div>
+             <div class="clear"></div>
         </div>
     </header>
-    <!--头部 end-->

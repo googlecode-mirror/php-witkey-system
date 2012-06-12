@@ -77,6 +77,7 @@ class session_file_class {
 	function __construct() {
 		$path = S_ROOT . 'data' . DIRECTORY_SEPARATOR . 'session';
 		ini_set ( 'session.save_handler', 'files' );
+		session_cache_limiter(false);
 		session_save_path ( $path );
 		session_start ();
 	}

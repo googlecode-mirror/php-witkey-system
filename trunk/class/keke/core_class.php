@@ -6,8 +6,8 @@
  * 
  */
 
-(defined ( "IN_KEKE" ) || defined ( 'ADMIN_KEKE' )) or die ( "Access Denied" );
-include "base_class.php";
+defined ( "IN_KEKE" ) or die ( "Access Denied" );
+include 'base_class.php';
 class keke_core_class extends keke_base_class {
 	protected  static $_core_class = array ();
 	protected static $_caching = true;
@@ -100,7 +100,11 @@ class keke_core_class extends keke_base_class {
 	
 	static function get_format_size($bytes) {
 		$units = array (
-				0 => 'B',1 => 'kB',	2 => 'MB',3 => 'GB'	);
+				0 => 'B',
+				1 => 'kB',
+				2 => 'MB',
+				3 => 'GB' 
+		);
 		$log = log ( $bytes, 1024 );
 		$power = ( int ) $log;
 		$size = pow ( 1024, $log - $power );
@@ -236,9 +240,9 @@ class keke_core_class extends keke_base_class {
 	
 	public static function get_tpl() {
 		$sql = sprintf ( "select tpl_title,tpl_pic from %switkey_template where is_selected = '1' limit 1", TABLEPRE );
-		if(($res= cache::instance('sqlite')->generate_id($sql)->get(null))==null){
+		if(($res= cache::instance()->generate_id($sql)->get(null))==null){
 			$res = database::instance()->get_one_row($sql);
-			cache::instance('sqlite')->generate_id($sql)->set(null, $res);
+			cache::instance()->generate_id($sql)->set(null, $res);
 		}
 		return $res;
 	}
@@ -346,14 +350,14 @@ class kekezu extends keke_core_class {
 	
 	public static function &get_instance() {
 		static $obj = null;
-		if ($obj == null) {
+		if ($obj === null) {
 			$obj = new kekezu ();
 		}
 		return $obj;
 	}
 	function __construct() {
 		$this->init ();
-		//keke_lang_class::loadlang ( 'public', 'public' );
+		keke_lang_class::loadlang ( 'public', 'public' );
 	}
 	
 	function init() {
@@ -371,6 +375,7 @@ class kekezu extends keke_core_class {
 		if(kekezu::$_caching === true){
 			kekezu::$_core_class = kekezu::cache('loader_class');
 		}
+		
 		self::register_autoloader ();
 		if (( int ) KEKE_DEBUG == 1) {
 			set_exception_handler ( array (	'keke_exception','handler' ) );
@@ -388,19 +393,23 @@ class kekezu extends keke_core_class {
 		$_POST = kekezu::k_stripslashes($_POST);
 		$_COOKIE = kekezu::k_stripslashes($_COOKIE);
 			// self::$_db = database::instance ();
+		
 		$this->init_config ();
-		//$this->init_session ();
-		//$this->init_user ();
+		
+		$this->init_session ();
+		
+		$this->init_user ();
+		
 			// kekezu::$_cache_obj = cache::instance ();
 			// kekezu::$_tpl_obj = new keke_tpl_class ();
 			// kekezu::$_page_obj = new keke_page_class ();
 			// $this->_tag = kekezu::get_tag ();
-			// $close_allow_fxx == 1 or $this->init_out_put ();
+		$this->init_out_put ();
 		//$this->init_model ();
 		//$this->init_industry ();
 		//$this->init_oauth ();
-		//$this->init_lang ();
-		$this->init_weibo_attent ();
+		$this->init_lang ();
+		//$this->init_weibo_attent ();
 		self::$_log = log::instance()->attach(new keke_log_file());
 		if (!isset($_SESSION['auid']) and $this->_sys_config ['is_close'] == 1 && substr ( $_SERVER ['PHP_SELF'], - 24 ) != '/control/admin/index.php') {
 			kekezu::show_msg ( $_lang ['site_is_close_notice'], 'index.php', 20, $_lang ['site_close_reason_notice'] . $this->_sys_config ['close_reason'] . '£¡', 'warning' );
@@ -414,6 +423,7 @@ class kekezu extends keke_core_class {
 	function init_config() {
 		global $i_model, $_lang, $_K;
 		$sql = sprintf("select config_id,k,v,type,listorder from %switkey_basic_config",TABLEPRE);
+		
 		if(($basic_arr = cache::instance('sqlite')->generate_id($sql)->get(null))==null){
 			$basic_arr = db::query($sql)->execute();
 			cache::instance('sqlite')->generate_id($sql)->set(null,$basic_arr);
@@ -424,8 +434,7 @@ class kekezu extends keke_core_class {
 		$size = sizeof ( $basic_arr );
 		for($i = 0; $i < $size; $i ++) {
 			$config_arr [$basic_arr [$i] ['k']] = $basic_arr [$i] ['v'];
-		} 
-		
+		}
 		$mtime = explode ( ' ', microtime () );
 
 		$sql = sprintf('select * from %switkey_nav where ishide!=1 order by listorder',TABLEPRE);
@@ -437,7 +446,7 @@ class kekezu extends keke_core_class {
 		$this->_nav_list = $nav_list;
 		$template = kekezu::get_tpl ();
 		$this->_template = $template ['tpl_title'];
-		$map_config = unserialize ( $config_arr ['map_api_open']);
+		$map_config = unserialize ( $config_arr ['map_api_open'] );
 		// $map_config ['google_api'] == 1 and $map_api = 'google' or;
 		$map_api = "baidu";
 		$_K ['timestamp'] = $mtime [1];
@@ -457,7 +466,7 @@ class kekezu extends keke_core_class {
 		$_K ['refer'] = "index.php";
 		$_K ['block_search'] = $_K ['block_replace'] = array ();
 		$_lang = array ();
-		@include (S_ROOT . '/config/lic.php');
+		is_file ( S_ROOT . '/config/lic.php' ) and include (S_ROOT . '/config/lic.php');
 		$config_arr ['seo_title'] and $_K ['html_title'] = $config_arr ['seo_title'] or $_K ['html_title'] = $config_arr ['website_name'];
 		define ( 'SKIN_PATH', 'tpl/' . $_K ['template'] );
 		define ( 'UPLOAD_RULE', date ( 'Y/m/d' ) );
@@ -534,11 +543,12 @@ class kekezu extends keke_core_class {
 	}
 	function init_session() {
 		keke_session::get_instance ();
-		//session_start();
+		
 	}
 	function init_out_put() {
 		global  $_K;
-		($_SERVER ['REQUEST_METHOD'] == 'GET' && ! empty ( $_SERVER ['REQUEST_URI'] )) and kekezu::filter_xss ();
+		//($_SERVER ['REQUEST_METHOD'] == 'GET' && ! empty ( $_SERVER ['REQUEST_URI'] )) and kekezu::filter_xss ();
+		//ob_gzhandler($buffer, $mode)
 		ob_start ();
 
 	}
@@ -624,12 +634,12 @@ class kekezu extends keke_core_class {
 }
 
 $ipath = dirname ( dirname ( dirname ( __FILE__ ) ) ) . DIRECTORY_SEPARATOR . "data" . DIRECTORY_SEPARATOR . "keke_kppw_install.lck";
-file_exists ( $ipath ) == true or header ( "Location: install/index.php" );
+file_exists ( $ipath ) == true or header ( "Location: install/index.php" ); 
 
 $kekezu = kekezu::get_instance ();
 
-//keke_lang_class::load_lang_class ( 'keke_core_class' );
+keke_lang_class::load_lang_class ( 'keke_core_class' );
 $_cache_obj = kekezu::$_cache_obj;
 $page_obj = kekezu::$_page_obj;
-$template_obj = kekezu::$_tpl_obj;
+$template_obj = kekezu::$_tpl_obj; 
 

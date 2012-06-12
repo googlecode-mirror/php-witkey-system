@@ -1,0 +1,170 @@
+<!--{template header}--><!--Ò³ÃæÑùÊ½	-->
+<div class="wrapper">
+	<div class="container_24">
+    	<section class="clearfix section">
+        	<div class="box model green ">
+        		<div class="inner">
+            		<header class="box_header clearfix ">
+            			<div class="grid_5 alpha omega">
+            				<h1 class="box_title">{$_lang['register']} Register</h1>
+						</div>
+						<div class="grid_18">
+							<nav class="box_nav clearfix">
+								<ul> 
+                					<li><a href="<!--{eval echo kekezu::refer_url();}-->">{$_lang['has_account_now_to_login']}</a></li>
+								</ul>
+							</nav>
+						</div>
+					</header>
+        			<div class="box_detail clearfix po_re box pt_10 pl_5">
+            			<div class="grid_17">
+                		<!--from±íµ¥ start-->
+                			<div class="form_box clearfix border_n">
+                    			<form action="index.php?do=register" method="post" id="register_frm" name="register_frm">
+                        			<input type="hidden" name="formhash" id="formhash" value="{FORMHASH}">
+                        			<input type="hidden" name="hdn_refer" id="hdn_refer" value="{$_K['refer']}">
+									<input type="hidden" name="handlekey" value="register_frm1"><!--ÕËºÅ-->
+                        			<div class="rowElem clearfix po_re">
+                            			<label class="grid_4">
+                                			{$_lang['account']}
+                            			</label>
+                            			<div class="grid_6">
+                                			<input type="text" class="txt" autocomplete="off" name="txt_account" id="txt_account" limit="required:true;len:2-20;type:string;general:true" msg="{$_lang['username_input_error']}" ajax="index.php?do=register&check_username=" title="{$_lang['user_can_not_phone_email']}" msgArea="login_account_msg" style="width:200px;" />
+                            			</div>
+										<span class="login_msg" id="login_account_msg">{$_lang['please_input_register_account']}</span>
+                        			</div>
+                        			<div class="prefix_4 ml_5">
+                        			</div>
+                        		<!--end ÕËºÅ--><!--ÃÜÂë-->
+                        			<div class="rowElem clearfix po_re">
+                            			<label class="grid_4">
+                                			{$_lang['password']}
+                            			</label>
+                            			<div class="grid_6">
+                                			<input style="width:200px;" type="password" name="pwd_password" id="pwd_password" maxlength="20" limit="required:true;len:6-20" msg="{$_lang['password_input_error']}" title="{$_lang['password_input_limit']}" msgArea="password_msg"/>
+                            			</div>
+										<span class="" id="password_msg">{$_lang['please_input_password']}</span>
+                        			</div>
+                        			<div class="rowElem clearfix po_re">
+                            			<label class="grid_4">
+                                			{$_lang['confirm_password']}
+                            			</label>
+                            			<div class="grid_6">
+                                			<input style="width:200px;" type="password" name="pwd_password2" id="pwd_password2" maxlength="20" limit="required:true;equals:pwd_password" msg="{$_lang['repeat_password_error']}" title="{$_lang['please_input_repeat_password']}" msgArea="password2_msg"/>
+                            			</div>
+										<span class="" id="password2_msg">{$_lang['please_input_password_again']}</span>
+                        			</div> 
+                        		<!--end ÃÜÂë-->
+								<!--ÓÊÏä-->
+                        			<div class="rowElem clearfix po_re">
+                            			<label class="grid_4">
+                                			{$_lang['email']}
+                            			</label>
+                            			<div class="grid_6">
+                                			<input style="width:200px;" autocomplete="off" type="text" class="txt" name="txt_email" id="txt_email"limit="type:email;required:true;len:6-50" msg="{$_lang['email_format_error']}" title="{$_lang['email_format']}user@qq.com" ajax="index.php?do=register&check_email=" msgArea="email_msg"/>
+                            			</div>
+										<span class="" id="email_msg">{$_lang['please_input_eamil']}</span>
+                        			</div>
+                        	<!--end ÓÊÏä-->					
+								<!--ÑéÖ¤Âë-->
+                        			<div class="rowElem clearfix po_re">
+                            			<label class="grid_4">
+                                			{$_lang['auth_code']}
+                            			</label>
+                            			<div class="grid_6">
+                                			<input name="txt_code" type="text" size="8" id="txt_code"
+								 			limit="required:true;len:4"
+								  			msg="{$_lang['auth_code_error']}"
+											msgArea="secode_msg"
+								 			ajax="index.php?do=ajax&view=code&txt_code=" 
+								 			onfocus="showSecode();">
+								 
+								 		<a id="show_secode" href='index.php?do=ajax&view=menu&ajax=show_secode'></a>
+                            			</div>
+                            			<span class="" id="secode_msg">{$_lang['please_input_auth_code']}</span>
+                        			</div>						
+                        	<!--end ÑéÖ¤Âë-->
+							
+                        <div class="mt_20 prefix_4 ml_5">
+                            <button type="submit" class="button" onclick="return user_register();">
+                                <span class="clock icon"></span>
+                                {$_lang['register']}
+                            </button>
+                        </div>
+												
+                        <p class="mt_20 prefix_4 ml_5">
+                            <input name="inputtext" type="checkbox" checked="checked" id="inputtext" limit="required:true"
+							msg="{$_lang['you_should_agree_agreement']}" msgArea="login_msg"/> &nbsp;{$_lang['i_has_read_and_accpet']}<a  href="index.php?do=protocol&pro_id=219" target="_blank">{$_lang['register_agreement']}</a>{$_lang['and_copyright_notice']}
+                        	<span id="login_msg"></span>
+						</p>
+                    </form>
+                </div>
+            </div>
+            <div class="grid_6 omega border_l_c">
+                    <div class="pad10">
+
+                     <div class=" pl_20">
+                        <span>{$_lang['from_cooperation_website_login']}</span>
+							{loop $api_open $k $v}
+								{if $weibo_list[$k.'_app_id']}
+								 <div class="mt_10">
+									<a href="index.php?do=oauth_login&type={$k}" alt="{$api_name[$k]['name']}" title="{$api_name[$k]['name']}">
+										<img src="resource/img/ico/{$k}_t.gif" alt="{$api_name[$k]['name']}" title="{$api_name[$k]['name']}">
+									</a>
+									<a href="index.php?do=oauth_login&type={$k}" class="ml_5">{$api_name[$k]['name']}{$_lang['login']}</a>
+									</div>
+			                   {/if}			
+							{/loop}
+                    </div>
+                </div>
+            </div>
+        				</div>
+		</div>
+			</div>
+        </section>
+        <div id="login_msg">
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+   In('form');
+    //×¢²á
+    function user_register(){
+		var i = checkForm(document.getElementById("register_frm"));
+        if (i) {
+			 showWindow('register_frm1', 'register_frm', 'post',0,{cover:1});
+         }else{
+      		return false;
+		 }
+    }
+function showSecode(){
+	var codeObj = $('#txt_code');
+		codeObj.val('');
+	var obj 	= $('#show_secode').get(0);
+	var menuObj = $('#show_secode_menu');
+		if(menuObj.length){
+			if(menuObj.get(0).style.display=='none'){
+				ajaxmenu(obj, 250,'1','3','42');
+			}else{
+				codeObj.blur(function(){
+					var v = codeObj.val();
+						v&&hideSecode();
+				})
+			}
+		}else{
+			ajaxmenu(obj, 250,'1','3','42');
+			codeObj.blur(function(){
+				var v = codeObj.val();
+					v&&hideSecode();
+			})
+		}
+	return false;
+}
+function hideSecode(){
+	hideMenu("show_secode_menu");
+	return false;
+}
+</script>
+<!--{template footer}-->

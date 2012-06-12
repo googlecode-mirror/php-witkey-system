@@ -1,0 +1,42 @@
+<!--{eval require keke_tpl_class::template(SKIN_PATH."/space/{$type}_nav")}-->
+
+
+
+<!--{template footer}-->
+
+
+		<div class="main_con clearfix">
+            
+            	<h1 class="font16b c000 s_l_title  mt_20">{$_lang['goods_display']}</h1>
+                
+                <ul class="pro_img_list mt_20">
+                	{loop $shop_arr $k $v}
+                	<!--{eval $n = $k+1;}-->
+					<li>
+                    	<a href="index.php?do=service&sid=$v['service_id']" title="$v['title']">
+                    		<img src='' alt=""  onerror="this.src='{$_K['siteurl']}/{SKIN_PATH}/img/shop_default.gif'" name="lazyImg" lazy_src="{if $v['pic']}$v['pic']{else}resource/img/system/shop_default_big.jpg{/if}"/>
+						<p><!--{eval echo kekezu::cutstr($v['title'], 10);}--></p>
+						<span><b class="font_normal">{$_lang['currency']}</b>$v['price']/$v['unite_price'] {$_lang['yuan']}</span></a>
+                    </li> 
+					{/loop}
+                   </ul> 
+                
+            </div>
+            <!--end wrapper_con-->
+        
+            <div class="clear"></div>
+                
+            <!--page ·­Ò³ start-->
+            <div class="pages">
+            $pages['page']
+            </div>
+            <!--page ·­Ò³ end-->
+            <div class="clear"></div>
+            
+<script type="text/javascript" >
+In.add('lazy',{path:"resource/js/system/lazy.js",type:'js'});
+	In('lazy',function(){
+	loadPics();
+	})
+</script>
+

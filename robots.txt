@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /control/
+Disallow: /model/
+Disallow: /resource/
+Disallow: /task/
+Disallow: /shop/
+Disallow: /data/backup/
+Disallow: /config/

@@ -1,0 +1,193 @@
+<?php
+class keke_db_query {
+	// Query type
+	protected $_type;
+	
+	// Execute the query during a cache hit
+	protected $_force_execute = FALSE;
+	
+	// Cache lifetime
+	protected $_lifetime = NULL;
+	
+	// SQL statement
+	protected $_sql;
+	
+	// Quoted query parameters
+	protected $_parameters = array ();
+	
+	// Return results as associative arrays or objects
+	protected $_as_object = FALSE;
+	
+	// Parameters for __construct when using object results
+	protected $_object_params = array ();
+	/**
+	 * Creates a new SQL query of the specified type.
+	 *
+	 * @param   integer  query type: Database::SELECT, Database::INSERT, etc
+	 * @param   string   query string
+	 * @return  void
+	 */
+	public function __construct($sql, $type) {
+		if($type===null){
+			$type = database::SELECT;
+		}
+		$this->_type = $type;
+		$this->_sql = $sql;
+	}
+	final public function __toString() {
+		try {
+			// 返回sql字符串
+			return $this->compile ( database::instance () );
+		} catch ( Exception $e ) {
+			return keke_exception::text ( $e );
+		}
+	}
+	/**
+	 * 返回查询类型
+	 */
+	public function type() {
+		return $this->_type;
+	}
+	/**
+	 * Enables the query to be cached for a specified amount of time.
+	 * 开启查询缓存,并定义缓存的生命周期
+	 * 
+	 * @param  int lifetime 缓存的时间秒数，0 删除对应的缓存
+	 * @param  boolean 是否开启缓存命中查询
+	 * @return keke_db_query
+	 */
+	public function cached($lifetime = NULL, $force = FALSE) {
+		if ($lifetime === NULL) {
+			// 默认缓存时间
+			$lifetime = cache::DEFAULT_CACHE_LIFE_TIME;
+		}
+		$this->_force_execute = $force;
+		$this->_lifetime = $lifetime;
+		
+		return $this;
+	}
+	/**
+	 * 返回关联数组结果
+	 * @return keke_db_query
+	 */
+	public function as_assoc() {
+		$this->_as_object = FALSE;
+		$this->_object_params = array ();
+		return $this;
+	}
+	
+	/**
+	 * 将结果作为对象返回
+	 * @param string $class 类名 TRUE for 基类
+	 * @param $params 对象参数     	
+	 * @return keke_db_query
+	 */
+	public function as_object($class = TRUE, array $params = NULL) {
+		$this->_as_object = $class;
+		if ($params) {
+			// 添加对象的参数
+			$this->_object_params = $params;
+		}
+		
+		return $this;
+	}
+	
+	/**
+	 * 设置查询参数的值
+	 * @param  string $param key to replace
+	 * @param  string $value to use
+	 * @return keke_db_query
+	 */
+	public function param($param, $value) {
+		// Add or overload a new parameter
+		$this->_parameters [$param] = $value;
+		
+		return $this;
+	}
+	
+	/**
+	 * 绑定变量的查询参数
+	 *
+	 * @param string $param key to replace
+	 * @param string $var variable to use
+	 * @return keke_db_query
+	 */
+	public function bind($param, & $var) {
+		// 组绑定的变量赋值
+		$this->_parameters [$param] = & $var;
+		
+		return $this;
+	}
+	
+	/**
+	 * 添加多个查询的参数
+	 * @param  array $params list of parameters
+	 * @return keke_db_query
+	 */
+	public function parameters(array $params) {
+		// 合并参数
+		$this->_parameters = $params + $this->_parameters;
+		
+		return $this;
+	}
+	
+	/**
+	 * 编译SQL查询，并返回它。替换绑定的参数。
+	 * @param  object database instance
+	 * @return string
+	 */
+	public function compile($db) {
+		// 导入本地的sql
+		$sql = $this->_sql;
+		if (! empty ( $this->_parameters )) {
+			// 转义处理sql 中的值
+			$values = array_map ( array ($db, 'quote_string' ), $this->_parameters );
+			// 替换sql中的值
+			$sql = strtr ( $sql, $values );
+		}
+		
+		return $sql;
+	}
+	
+	/**
+	 * 执行当前的查询
+	 *
+	 * @param  $db 数据库对象
+	 *       	 
+	 * @param  string result object classname, TRUE for stdClass or FALSE for array
+	 * @param	array result object constructor arguments
+	 *       	
+	 * @return object keke_db_query for SELECT queries
+	 * @return mixed the insert id for INSERT queries
+	 * @return integer number of affected rows for all other queries
+	 */
+	public function execute($db = NULL) {
+		if (! is_object ( $db )) {
+			// Get the database instance
+			$db = database::instance ( $db );
+		}
+		
+		// 生成sql语句
+		$sql = $this->compile ( $db );
+		// 使用数据库实例与sql作为缓存的键名
+		$cache_key = cache::instance()->generate_id( $sql);
+		
+		if ($this->_lifetime !== NULL and $this->_type === database::SELECT) {
+			//先读取缓存再去删除lifetime<=0 的缓存
+				return cache::instance()->get($cache_key);
+		}
+		
+		// Execute the query
+		$result = $db->query ( $sql,$this->_type );
+		
+		if (isset ( $cache_key ) and $this->_lifetime > 0) {
+			// Cache the result array
+			cache::instance()->set($cache_key, $result, $this->_lifetime );
+		}
+		
+		return $result;
+	}
+
+}
+
+?>

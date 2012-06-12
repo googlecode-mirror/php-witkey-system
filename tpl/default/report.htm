@@ -1,0 +1,120 @@
+<!--{template header}-->
+ <style type="text/css">
+ 	.file{position:absolute;font-size:23px;filter:alpha(opacity=0);-moz-opacity:0;opacity:0;z-index:1}
+ </style>
+<div class="winbody">
+ <div class="clearfix box {$_K['theme']}_style pad10">
+    <!--from表单 start-->
+    <form method="post" id="frm_report" name="frm_report" action=''>
+     <input type="hidden" name="obj" value="{$obj}">
+     <input type="hidden" name="obj_id" value="{$obj_id}">
+     <input type="hidden" name="type" value="{$type}">
+     <input type="hidden" name="to_uid" value="{$to_uid}">
+     <input type="hidden" name="to_username" value="{$to_username}">
+     <div class="rowElem clearfix" id="upload_tip">
+      		 <label class="fl_l t_r">{$_lang['attachment_upload']}</label>
+			 <div class="fl_l">
+			 	<input type="hidden" name="file_url" id="file_url">
+			 	<input type="file" class="file" name="upload" id="upload" size="1" ext=".doc,.docx,.rar,.zip" onchange="isExtName(this,1);uploadBlur();">
+		  	 	<a href="javascript:void(0);" id="file_upload" class="button"><span class="icon uparrow"></span>{$_lang['click_upload']}</a>
+                {$_lang['only_one_upload']}
+				<p>{$_lang['upload_notice']}{$basic_config['max_size']}{$_lang['size_notice']}</p>
+      	</div>
+      </div>
+	   <div class="rowElem clearfix">
+			 	<ul id="upfile" class="mt_10 mb_10" style="padding-left:60px;width:400px"></ul>
+      </div>
+       <div class="rowElem clearfix" id="desc">
+      		 <label class="fl_l t_r">{$transname}{$_lang['cause']} </label>
+			 <div class="fl_l">
+      		 <textarea cols="70" rows="3" name="tar_content" id="tar_content"  class="txt_input" onkeydown="checkInner(this,'100',event)"></textarea>
+      		<div class="clear"></div>
+             <div class="c999" id="length_show">{$_lang['input_cause_msg_notice']}</div>
+			 </div>
+      </div>
+	 <div class="rowElem clearfix" style="padding-left:60px;width:400px">
+          <div class="messages clearfix">
+             
+                <span class="icon16"></span><label>{$_lang['process']}</label>
+             
+             <div class="pl_10">
+                    <ul>
+                        <li class="clearfix">{$_lang['website_notice1']}{$_K['html_title']}{$_lang['website_notice2']}</li>
+                        <li class="clearfix">{$_lang['website_notice3']}{$_K['html_title']}{$_lang['website_notice4']}</li>
+                    </ul>
+            </div>
+          </div>
+      </div>
+      <div class="rowElem clearfix form_button">
+       	 	 <button type="button" class="button" value="{$_lang['save']}" onclick="subReport()"><span class="check icon"></span>{$_lang['save']}</button>
+		 	 <button type="button" class="button" value="{$_lang['cancel']}" onclick="hideWindow('report')"><span class="reload icon"></span>{$_lang['cancel']}</button>
+      </div>
+   </form>
+  <!--from表单 end-->
+
+
+
+ </div>
+</div>
+<script type="text/javascript">
+		In.add('pop_window',{path:"resource/js/system/pop_window.js",type:'js'});  
+		In('form','ajaxfileupload','pop_window'); 
+</script>
+
+<script type="text/javascript">
+	uploadBlur=function(){
+		if(ifOut('upfile',1,1,'upload_tip')&&$("#upload").val()){
+			upload("upload",'att','front','{$task_id}','{$obj_id}','{$obj_type}','','',1,'upload_tip');
+		}else{
+			return false;
+		}
+	}
+	function subReport(){
+		var i = checkForm(document.getElementById('frm_report'));
+		if(i){
+		var shtml 	 = contentCheck('tar_content','{$title}',5,100,1,'upload_tip');
+			if(shtml){
+		
+				var data = $("#frm_report").serialize();
+				$.post(basic_url+'&op={$op}&'+data,{sbt_edit:true},
+				function(json){
+					if(json.status=='1'){
+						showDialog(json.data,'right',json.msg);hideWindow('report');return false;
+						}
+					else{
+						showDialog(json.data,'alert',json.msg);return false;
+					}
+			},'json');
+			}
+		}
+	}
+	/**
+	 * 上传完成后的后续操作
+	 * @param {Object} data 响应的json对象
+	 */
+	function uploadResponse(json){
+		if($("#"+json.fid).length<1){
+			var file=$('<li class="clearfix border_t_c border_b_c" id="'+json.fid+'" style="display:none">'
+	              +'<div class="font14"><a href="'+json.msg.url
+				  +'" target="_blank">'+json.msg.localname+'</a></div><a href="javascript:;"'
+				  +' onclick="del_file('+json.fid+')"'
+				  +' class="fl_r mr_30" >{$_lang['delete']}</a></li>');
+				file.appendTo("#upfile").fadeIn(1000);
+				loadingControl("#upfile li","#loading_"+json.fid,2000);
+					$("#file_url").val(json.msg.url);
+					$("#upload").val('');
+			}
+	}
+	/**
+	 * 上传附件删除
+ 	* @param file_id 附件编号
+ 	*/
+	function del_file(file_id){
+		$.getJSON("index.php?do=ajax&view=file&ajax=delete&file_id="+file_id,function(json){
+			if(json.status=='1')
+				$("#"+file_id).remove();
+				$("#file_url").val('');
+		})	
+	}
+</script>
+<!--{template footer}-->

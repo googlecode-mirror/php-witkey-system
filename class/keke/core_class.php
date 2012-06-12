@@ -1,0 +1,639 @@
+<?php
+/**
+ * this not free,powered by keke-tech
+ * @version 2.0
+ * @auther xujie
+ * 
+ */
+
+(defined ( "IN_KEKE" ) || defined ( 'ADMIN_KEKE' )) or die ( "Access Denied" );
+include "base_class.php";
+class keke_core_class extends keke_base_class {
+	protected  static $_core_class = array ();
+	protected static $_caching = true;
+	protected static $_files_changed = false;
+	/**
+	 * 用于后台页面跳转提示
+	 *
+	 * @param $type string
+	 *        	{'info'=>默认,'success'=>'成功','warning'=>'警告'}
+	 */
+	static function admin_show_msg($title = "", $url = "", $time = 3, $content = "", $type = "info") {
+		global $_K, $_lang;
+		$url ? $url : $_K ['refer'];
+		require keke_tpl_class::template ( 'control/admin/tpl/show_msg' );
+		die ();
+	}
+	/**
+	 * 用于页面跳转提示
+	 *
+	 * @param $type string
+	 *        	inajax
+	 *        	{'alert_info'=>'提示','alert_right'=>'成功','confirm_info'=>'确认','alert_error'=>'错误'}
+	 *        	非ajax {'info'=>默认,'success'=>'成功','warning'=>'警告'}
+	 */
+	static function show_msg($title = "", $url = "", $time = 3, $content = "", $type = 'info') {
+		global $_K, $basic_config, $username, $uid, $nav_list, $_lang;
+		
+		$r = $_REQUEST;
+		$msgtype = $type;
+		require keke_tpl_class::template ( 'show_msg' );
+		die ();
+	}
+	
+	/**
+	 * 清除全局缓存
+	 */
+	static function empty_cache() {
+		$file_obj = new keke_file_class ();
+		TPL_CACHE and $file_obj->delete_files ( S_ROOT . "/data/tpl_c" );
+		IS_CACHE and $file_obj->delete_files ( S_ROOT . "/data/cache" );
+	}
+	/**
+	 * 安全码SESSION重置
+	 *
+	 * @param $verify boolean
+	 *        	是否需验证
+	 */
+	static function reset_secode_session($verify) {
+		global $uid;
+		if ($verify) { // 需验证。不管之前是否验证过。强制重新验证
+			unset ( $_SESSION ['check_secode_' . $uid] );
+			return TRUE;
+		} else { // 不需验证
+			if ($_SESSION ['check_secode_' . $uid]) { //
+				return FALSE;
+			} else { // 虽然外部指示不需验证。但是由于安全码session不存在。此时强制需验证
+				return TRUE;
+			}
+		}
+	}
+	/**
+	 * 获取showWindw的弹窗链接
+	 */
+	static function get_window_url() {
+		global $_K;
+		$post_url = $_SERVER ['QUERY_STRING'];
+		preg_match ( '/(.*)&infloat/U', $post_url, $match );
+		return $_K ['siteurl'] . '/index.php?' . $match ['1'];
+	}
+	
+	/**
+	 * 盖楼函数
+	 *
+	 * @param $int $nodeid
+	 *        	-- 顶级父ID的值
+	 * @param $arTree array
+	 *        	-- 数组
+	 */
+	static function sort_tree($nodeid, $data_arr, $pid = "indus_pid", $id = "indus_id") {
+		$res = array ();
+		for($i = 0; $i < sizeof ( $data_arr ); $i ++)
+			if ($data_arr [$i] ["$pid"] == $nodeid) {
+				array_push ( $res, $data_arr [$i] );
+				$subres = self::sort_tree ( $data_arr [$i] ["$id"], $data_arr, $pid, $id );
+				for($j = 0; $j < sizeof ( $subres ); $j ++)
+					array_push ( $res, $subres [$j] );
+			}
+		return $res;
+	}
+	
+	static function get_format_size($bytes) {
+		$units = array (
+				0 => 'B',
+				1 => 'kB',
+				2 => 'MB',
+				3 => 'GB' 
+		);
+		$log = log ( $bytes, 1024 );
+		$power = ( int ) $log;
+		$size = pow ( 1024, $log - $power );
+		return round ( $size, 2 ) . ' ' . $units [$power];
+	
+	}
+	/**
+	 * 将很长的数字转换成 xx万
+	 *
+	 * @param $number int、float..
+	 *        	数字
+	 * @param $unit string
+	 *        	单位
+	 */
+	static function pretty_format($number, $unit = '') {
+		global $_lang;
+		$unit == '' && $unit = $_lang ['million'];
+		if ($number < 10000) {
+			return $number;
+		}
+		return ((round ( $number / 1000 )) / 10) . $unit; // round四舍五入 ceil进一法取整
+			                                                  // floor舍去法取整
+	}
+
+	public static function register_autoloader($callback = null) {
+		spl_autoload_unregister ( array (
+				'keke_core_class',
+				'autoload' 
+		) );
+		isset ( $callback ) and spl_autoload_register ( $callback );
+		spl_autoload_register ( array (
+				'keke_core_class',
+				'autoload' 
+		) );
+	
+	}
+	public static function keke_require_once($filename, $class_name = null) {
+		isset ( $GLOBALS ['class'] [$filename] ) or (($GLOBALS ['class'] [$filename] = 1) and require $filename);
+	}
+	
+	public static function autoload($class_name) {
+		//try{
+		    $class_name = strtolower($class_name);
+			$path = str_replace ( '_', '/', $class_name);
+			if (strpos ( $class_name, '_class' )) {
+				$path = str_replace ( '/class', '_class', $path );
+			}
+			
+			if(($class=kekezu::find_file('class', $path.EXT,$class_name.EXT))!=null){
+				//self::keke_require_once ( $class );
+				require $class;
+				return true;
+			}
+		/* }catch (Exception $e){
+			throw new keke_exception($e);
+		} */
+		return false;
+ 	}
+	/**
+	 * 本方法要缓存系统初始化加的类文件
+	 *
+	 * @example kekezu::cache('name'); 获取缓存
+	 * @example kekezu::cache('name',$data); 写缓存
+	 * @param string $name
+	 *        	缓存名称
+	 * @param string $data
+	 *        	缓存内容
+	 * @param int $lifetime
+	 *        	缓存时间
+	 */
+	public static function cache($name, $data = NULL, $lifetime = NULL) {
+		// 缓存文件
+		$file = md5 ( $name ) . '.txt';
+		// 缓存目录
+		$dir = S_ROOT . 'data/cache' . DIRECTORY_SEPARATOR;
+		if ($lifetime === NULL) {
+			// 默认60分钟缓存
+			$lifetime = 3600;
+		}
+		if ($data === NULL) {
+			if (is_file ( $dir . $file )) {
+				if ((time () - filemtime ( $dir . $file )) < $lifetime) {
+					return  unserialize ( file_get_contents ( $dir . $file ) );
+					
+				} else {
+					unlink ( $dir . $file );
+				}
+			}
+			return NULL;
+		}
+		$data = serialize ( $data );
+		return ( bool ) file_put_contents ( $dir . $file, $data, LOCK_EX );
+	}
+	
+	public static function keke_show_msg($url, $content, $type = 'success', $output = 'normal') {
+		global $_lang;
+		switch ($output) {
+			case "normal" :
+				$type == 'success' or $type = 'warning';
+				kekezu::show_msg ( $_lang ['operate_notice'], $url, '3', $content, $type );
+				break;
+			case "json" :
+				$type == 'error' or $status = '1'; // 非错误提示,即正确
+				kekezu::echojson ( $_lang ['operate_notice'], intval ( $status ), $content );
+				die ();
+				break;
+		}
+	}
+	
+	/**
+	 * $fileds,$where可以为数组 , $pk为@return数组的key , 对dbfactory -> select()的改进,添加缓存
+	 *
+	 * @return array($pk => data)
+	 */
+	public static function get_table_data($fileds = '*', $table, $where = '', $order = '', $group = '', $limit = '', $pk = '', $cachetime = 0) {
+		return dbfactory::get_table_data ( $fileds, $table, $where, $order, $group, $limit, $pk, $cachetime );
+	}
+	
+	/**
+	 * 获取附件类型
+	 */
+	public static function get_ext_type() {
+		global $kekezu;
+		$basic_config = $kekezu->_sys_config;
+		$flie_types = explode ( '|', $basic_config ['file_type'] );
+		
+		foreach ( $flie_types as $k => $v ) {
+			$k and $ext .= ",";
+			$ext .= '.' . $v;
+		}
+		return $ext;
+	}
+	
+	public static function get_tpl() {
+		$sql = sprintf ( "select tpl_title,tpl_pic from %switkey_template where is_selected = '1' limit 1", TABLEPRE );
+		if(($res= cache::instance('sqlite')->generate_id($sql)->get(null))==null){
+			$res = database::instance()->get_one_row($sql);
+			cache::instance('sqlite')->generate_id($sql)->set(null, $res);
+		}
+		return $res;
+	}
+	static function execute_time() {
+		$stime = explode ( ' ', SYS_START_TIME );
+		$etime = explode ( ' ', microtime ( 1 ) );
+		$ex_time = ($etime [0] - $stime[0]);
+		
+		$memory = sprintf ( ' memory usage: %s', self::get_format_size ( memory_get_usage() ) );
+		return array (
+				$ex_time,
+				$memory 
+		);
+	
+	}
+	
+	static function lang($key) {
+		return keke_lang_class::lang ( $key );
+	}
+	
+	// 获取用户最后操作时间
+	static function update_oltime() {
+		global $_K, $kekezu;
+		$res = null;
+		$login_uid = $kekezu->_uid;
+		$user_oltime = dbfactory::get_one ( sprintf ( "select last_op_time from %switkey_member_oltime where uid = '%d'", TABLEPRE, $login_uid ) );
+		if ((SYS_START_TIME - $user_oltime ['last_op_time']) > $_K ['timespan']) {
+			$res = dbfactory::execute ( sprintf ( "update %switkey_member_oltime set online_total_time = online_total_time+%d,last_op_time = '%d' where uid = '%d'", TABLEPRE, $_K ['timespan'], SYS_START_TIME, $login_uid ) );
+		}
+		return $res;
+	}
+	
+	/**
+	 * 错误监听
+	 */
+	static function error_handler($code, $error, $file = NULL, $line = NULL) {
+		if (error_reporting () && $code !== 8) {
+			ob_get_level () and ob_clean ();
+			keke_exception::handler ( new ErrorException ( $error, $code, 0, $file, $line ) );
+		}
+		return TRUE;
+	}
+	/**
+	 * 异常监听
+	 */
+	static function shutdown_handler() {
+		if(!kekezu::$_inited){
+			return ;
+		}
+		if (self::$_caching === TRUE AND self::$_files_changed === TRUE){
+			kekezu::cache('loader_class', self::$_core_class);
+		}
+		
+		if (KEKE_DEBUG and $error = error_get_last () and in_array ( $error ['type'], array (
+				E_PARSE,
+				E_ERROR,
+				E_USER_ERROR 
+		) )) {
+			ob_get_level () and ob_clean ();
+			keke_exception::handler ( new ErrorException ( $error ['message'], $error ['type'], 0, $error ['file'], $error ['line'] ) );
+			exit ( 1 );
+		}
+	}
+
+}
+class kekezu extends keke_core_class {
+	public static $_inited = false;
+	public static $_safe_mode ;
+	public static $_magic_quote;
+	public static $_log;
+	public $_sys_config;
+	public $_basic_arr;
+	public $_uid;
+	public $_username;
+	public $_userinfo;
+	public $_template;
+	public $_model_list;
+	public $_nav_list;
+	public $_user_group;
+	public static $_tpl_obj;
+	public static $_cache_obj;
+	public static $_page_obj;
+	public $_session_obj;
+	public $_mark;
+	public $_finance;
+	public $_tag;
+	public $_messagecount;
+	public $_indus_p_arr;
+	public $_indus_c_arr;
+	public $_indus_arr;
+	public $_prom_obj;
+	public $_weibo_list;
+	public $_api_open;
+	public $_lang;
+	public $_lang_list;
+	public $_style_path;
+	public $_weibo_attent;
+	public $_attent_api_open;
+	public $_is_allow_fxx = 1;
+	public $_website_session;
+	public static $_db;
+ 	
+	protected static $_files = array ();
+	public static $_errors = true;
+	
+	public static function &get_instance() {
+		static $obj = null;
+		if ($obj == null) {
+			$obj = new kekezu ();
+		}
+		return $obj;
+	}
+	function __construct() {
+		$this->init ();
+		keke_lang_class::loadlang ( 'public', 'public' );
+	}
+	
+	function init() {
+		global $close_allow_fxx, $_K, $_lang;
+		if(self::$_inited){
+			return;
+		}
+		self::$_inited = true;
+		define ( 'LIB', S_ROOT . 'class' . DIRECTORY_SEPARATOR );
+		define ( 'EXT', '.php' );
+		include (S_ROOT . 'config/config.inc.php');
+		define ( 'KEKE_VERSION', '2.1' );
+		define ( 'KEKE_RELEASE', '2012-06-2' );
+		define ( "P_NAME", 'KPPW' );
+		if(kekezu::$_caching === true){
+			kekezu::$_core_class = kekezu::cache('loader_class');
+		}
+		self::register_autoloader ();
+		if (( int ) KEKE_DEBUG == 1) {
+			set_exception_handler ( array (	'keke_exception','handler' ) );
+			set_error_handler ( array ('keke_core_class','error_handler' ) );
+		}
+		register_shutdown_function ( array ('keke_core_class','shutdown_handler') );
+		if(ini_get('register_globals')){
+			self::globals();
+		}
+		//安全模式
+		kekezu::$_safe_mode  = (bool)ini_get('safe_mode');
+		kekezu::$_magic_quote = (bool)get_magic_quotes_gpc();
+		//处理全局变量
+		$_GET = kekezu::k_stripslashes($_GET);
+		$_POST = kekezu::k_stripslashes($_POST);
+		$_COOKIE = kekezu::k_stripslashes($_COOKIE);
+			// self::$_db = database::instance ();
+		$this->init_config ();
+		$this->init_session ();
+		$this->init_user ();
+			// kekezu::$_cache_obj = cache::instance ();
+			// kekezu::$_tpl_obj = new keke_tpl_class ();
+			// kekezu::$_page_obj = new keke_page_class ();
+			// $this->_tag = kekezu::get_tag ();
+			// $close_allow_fxx == 1 or $this->init_out_put ();
+		$this->init_model ();
+		$this->init_industry ();
+		$this->init_oauth ();
+		$this->init_lang ();
+		$this->init_weibo_attent ();
+		self::$_log = log::instance()->attach(new keke_log_file());
+		if (!isset($_SESSION['auid']) and $this->_sys_config ['is_close'] == 1 && substr ( $_SERVER ['PHP_SELF'], - 24 ) != '/control/admin/index.php') {
+			kekezu::show_msg ( $_lang ['site_is_close_notice'], 'index.php', 20, $_lang ['site_close_reason_notice'] . $this->_sys_config ['close_reason'] . '！', 'warning' );
+		}
+		
+		  
+	}
+	/**
+	 * 初始化配置信息
+	 */
+	function init_config() {
+		global $i_model, $_lang, $_K;
+		$sql = sprintf("select config_id,k,v,type,listorder from %switkey_basic_config",TABLEPRE);
+		
+		if(($basic_arr = cache::instance('sqlite')->generate_id($sql)->get(null))==null){
+			$basic_arr = db::query($sql)->execute();
+			cache::instance()->generate_id($sql)->set(null,$basic_arr);
+		}
+		$this->_basic_arr = $basic_arr ;
+		
+		$config_arr = array ();
+		$size = sizeof ( $basic_arr );
+		for($i = 0; $i < $size; $i ++) {
+			$config_arr [$basic_arr [$i] ['k']] = $basic_arr [$i] ['v'];
+		}
+		$mtime = explode ( ' ', microtime () );
+
+		$sql = sprintf('select * from %switkey_nav where ishide!=1 order by listorder',TABLEPRE);
+		if(($nav_list=cache::instance('sqlite')->generate_id($sql)->get(null))==null){
+			$nav_list = db::query($sql)->execute();
+			cache::instance()->generate_id($sql)->set(null, $nav_list);
+		}
+		$nav_list = kekezu::get_arr_by_key($nav_list,'nav_id');
+		$this->_nav_list = $nav_list;
+		$template = kekezu::get_tpl ();
+		$this->_template = $template ['tpl_title'];
+		$map_config = unserialize ( $config_arr ['map_api_open'] );
+		// $map_config ['google_api'] == 1 and $map_api = 'google' or;
+		$map_api = "baidu";
+		$_K ['timestamp'] = $mtime [1];
+		$_K ['charset'] = CHARSET;
+		$_K ['template'] = $template ['tpl_title'];
+		$_K ['theme'] = $template ['tpl_pic'];
+		$_K ['sitename'] = $config_arr ['website_name'];
+		$_K ['siteurl'] = $config_arr ['website_url'];
+		$_K ['inajax'] = 0;
+		$_K ['block_search'] = array ();
+		$_K ['is_rewrite'] = $config_arr ['is_rewrite'];
+		$_K ['map_api'] = $map_api;
+		$_K ['google_api'] = $config_arr ['google_api'];
+		$_K ['baidu_api'] = $config_arr ['baidu_api'];
+		$_K ['timespan'] = '600';
+		$_K ['i'] = 0;
+		$_K ['refer'] = "index.php";
+		$_K ['block_search'] = $_K ['block_replace'] = array ();
+		$_lang = array ();
+		is_file ( S_ROOT . '/config/lic.php' ) and include (S_ROOT . '/config/lic.php');
+		$config_arr ['seo_title'] and $_K ['html_title'] = $config_arr ['seo_title'] or $_K ['html_title'] = $config_arr ['website_name'];
+		define ( 'SKIN_PATH', 'tpl/' . $_K ['template'] );
+		define ( 'UPLOAD_RULE', date ( 'Y/m/d' ) );
+		define ( 'UPLOAD_ROOT', S_ROOT . '/data/uploads/' . UPLOAD_RULE ); // 附件保存物理路径
+		define ( 'UPLOAD_ALLOWEXT', '' . $config_arr ['file_type'] ); // 允许上传的文件后缀，多个后缀用“|”分隔
+		define ( 'UPLOAD_MAXSIZE', '' . $config_arr ['max_size'] * 1024 * 1024 ); // 允许上传的附件最大值
+		define ( "CREDIT_NAME", $config_arr ['credit_rename'] ? $config_arr ['credit_rename'] : $_lang ['credit'] );
+		define ( "EXP_NAME", $config_arr ['exp_rename'] ? $config_arr ['exp_rename'] : $_lang ['experience'] );
+		define ( 'FORMHASH', kekezu::formhash () );
+		$this->_sys_config = $config_arr;
+		$this->_style_path = $_K ['siteurl'] . "/" . SKIN_PATH;
+	
+	}
+	/**
+	 * 初始化用户
+	 */
+	function init_user() {
+		global $kekezu, $_K;
+		if (isset ( $_SESSION ['uid'] )) {
+			
+			$this->_uid = $_SESSION ['uid'];
+			$this->_username = $_SESSION ['username'];
+			$this->_userinfo = keke_user_class::get_user_info ( $this->_uid );
+			$this->_user_group = $this->_userinfo ['group_id'];
+			$sql = "select count(msg_id) from %switkey_msg where to_uid = '%d' and view_status=0 and msg_status!=1";
+			$this->_messagecount = dbfactory::get_count ( sprintf ( $sql, TABLEPRE, $this->_uid ) );
+		} elseif (isset ( $_COOKIE ['user_login'] )) {
+			$temp = unserialize ( keke_encrypt_class::decode ( $_COOKIE ['user_login'] ) );
+			$_SESSION ['uid'] = $temp ['uid'];
+			$_SESSION ['username'] = $temp ['username'];
+			unset ( $temp );
+		}
+	}
+	function init_prom() {
+		$this->_prom_obj = keke_prom_class::get_instance ();
+	}
+	function init_industry() {
+		
+		$this->_indus_p_arr =  kekezu::get_table_data ( '*', "witkey_industry", "indus_type=1 and indus_pid = 0 ", "listorder asc ", '', '', 'indus_id', 3600 );
+		$this->_indus_c_arr = kekezu::get_table_data ( '*', 'witkey_industry', 'indus_type=1 and indus_pid >0', 'listorder', '', '', 'indus_id', 3600 );
+		$this->_indus_arr = kekezu::get_table_data ( '*', 'witkey_industry', '', 'listorder', '', '', 'indus_id', 3600 );
+	
+	}
+	function init_oauth() {
+		
+		foreach ( $this->_basic_arr as $k => $v ) {
+			($v ['type'] == 'weibo' || $v ['type'] == 'interface') and $this->_weibo_list [$v ['k']] = $v ['v'];
+		}
+		$this->_api_open = unserialize ( $this->_sys_config ['oauth_api_open'] );
+	
+	}
+	/**
+	 * 微博关注
+	 */
+	function init_weibo_attent() {
+		foreach ( $this->_basic_arr as $k => $v ) {
+			$v ['type'] == 'attention' and $this->_weibo_attent [$v ['k']] = $v ['v'];
+		}
+		$this->_attent_api_open = unserialize ( $this->_sys_config ['attent_api_open'] );
+	}
+	function init_lang() {
+		$this->_lang_list = keke_lang_class::lang_type ();
+		$this->_lang = keke_lang_class::get_lang ();
+	}
+	function init_model() {
+		$model_arr = db::select ( '*' )->from ( 'witkey_model' )->cached ()->execute ();
+		$this->_model_list = kekezu::get_arr_by_key ( $model_arr, 'model_id' );
+	}
+	/**
+	 * 初始化标签
+	 */
+	function init_tag() {
+		 $this->_tag or $this->_tag = kekezu::get_tag ();
+	}
+	function init_session() {
+		//keke_session::get_instance ();
+		session_start();
+	}
+	function init_out_put() {
+		global  $_K;
+		($_SERVER ['REQUEST_METHOD'] == 'GET' && ! empty ( $_SERVER ['REQUEST_URI'] )) and kekezu::filter_xss ();
+		ob_start ();
+
+	}
+	/**
+	 * 查指定目录中的文件
+	 *
+	 * @param string $dir        	
+	 * @param string $file        	
+	 */
+	public static function find_file($dir,$file,$class_name) {
+		$path = $dir . DIRECTORY_SEPARATOR . $file;
+		//有缓存，直接返回
+		if (kekezu::$_caching===true and isset ( kekezu::$_core_class [$path] )) {
+			return kekezu::$_core_class [$path];
+		}
+		$class = S_ROOT . $path ;
+		
+		$helper =S_ROOT.$dir.DIRECTORY_SEPARATOR.'helper'.DIRECTORY_SEPARATOR.$class_name;
+		$sys =  S_ROOT.$dir.DIRECTORY_SEPARATOR.'sys'.DIRECTORY_SEPARATOR.$class_name;
+		$model = S_ROOT.$dir.DIRECTORY_SEPARATOR.'model'.DIRECTORY_SEPARATOR.$class_name;
+		$models = array ('cache','database');
+		$found = false;
+		if (is_file ( $class )) {
+			$found = $class;
+		}elseif(is_file($model)){
+			$found = $model;
+		}elseif(is_file($sys)){
+			$found = $sys;
+		}elseif(is_file($helper)){
+			$found = $helper;
+		} elseif(isset($models)) {
+			foreach ( $models as $d ) {
+				$class = S_ROOT . $dir . DIRECTORY_SEPARATOR . $d.DIRECTORY_SEPARATOR.$file ;
+			 	if (is_file ( $class )) {
+					$found = $class;
+					break;
+				}
+			}
+		}
+		 
+		if(kekezu::$_caching===true){
+			kekezu::$_core_class[$path] = $found;
+			kekezu::$_files_changed = true;
+		}
+		return $found;
+	
+	}
+	public function deinit() {
+		if (self::$_inited) {
+			spl_autoload_unregister ( array (
+					'keke_core_class',
+					'autoload' 
+			) );
+			if (kekezu::$_errors) {
+				restore_error_handler ();
+				restore_exception_handler ();
+			}
+			self::$_inited = false;
+		}
+	}
+	
+	/**
+	 * 删除全局变量
+	 * @return void();
+	 */
+	public static function globals(){
+		if (isset($_REQUEST['GLOBALS']) OR isset($_FILES['GLOBALS'])){
+			echo "Global variable overload attack detected! Request aborted.\n";
+			exit(1);
+		}
+		// 获取变量名通过全局变量
+		$global_variables = array_keys($GLOBALS);
+	
+		// 删除下列标准的全局变量
+		$global_variables = array_diff($global_variables, array(
+				'_COOKIE','_ENV','_GET','_FILES','_POST','_REQUEST','_SERVER','_SESSION','GLOBALS',
+		));
+		foreach ($global_variables as $name){
+			// 删除全局变量
+			unset($GLOBALS[$name]);
+		}
+	}
+}
+
+$ipath = dirname ( dirname ( dirname ( __FILE__ ) ) ) . DIRECTORY_SEPARATOR . "data" . DIRECTORY_SEPARATOR . "keke_kppw_install.lck";
+file_exists ( $ipath ) == true or header ( "Location: install/index.php" );
+
+$kekezu = kekezu::get_instance ();
+
+keke_lang_class::load_lang_class ( 'keke_core_class' );
+$_cache_obj = kekezu::$_cache_obj;
+$page_obj = kekezu::$_page_obj;
+$template_obj = kekezu::$_tpl_obj;
+

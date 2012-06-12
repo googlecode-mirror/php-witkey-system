@@ -1,0 +1,452 @@
+<!--{eval $page_title=$service_info['title'].'--'.$_K['html_title']}--><!--{template header}-->
+<link href="{SKIN_PATH}/css/shop.css" rel="stylesheet" type="text/css">
+<link href="{SKIN_PATH}/css/task.css" rel="stylesheet" type="text/css">
+<link href="{SKIN_PATH}/theme/{$_K['theme']}/css/shop.css" rel="stylesheet" type="text/css">
+<link href="{SKIN_PATH}/theme/{$_K['theme']}/css/task.css" rel="stylesheet" type="text/css">
+ <!--页面内容区-->
+<div class="wrapper">
+<!--页面头部-->
+<header class="clearfix ">
+    <div class="container_24">
+    <!--面包屑-->
+    <div class="breadcrumbs clearfix">
+          <a href="index.php">{$_lang['home']}</a> \
+		  <a href="index.php?do=shop_list&path=C{$model_id}">{$_lang['witkey_shop']}</a> \
+		  <a href="index.php?do=shop_list&path=C{$model_id}A{$service_info['indus_pid']}">{$indus_p_arr[$service_info['indus_pid']]['indus_name']}</a> \
+          <a href="index.php?do=shop_list&path=C{$model_id}A{$service_info['indus_id']}">{$indus_arr[$service_info['indus_id']]['indus_name']}</a>
+    </div>
+	<!--end 面包屑-->
+	<!--页面标题布局-->
+	<div class="grid_20">
+		<!--页面标题-->
+    	<div class="page_title clearfix">
+    		<!--页面标题头像-->
+            <div class="fl_l pt_10 mr_5">
+                <a href="index.php?do=space&member_id={$owner_info['uid']}" title="{$owner_info['username']}"><!--{userpic($owner_info['uid'],'small')}--></a>
+            </div>
+			<!--页面标题头像 end-->
+			
+            <div class=" page_title">
+                <h2 class="title"><a href="javascript:void(0);">{$service_info['title']}</a></h2>
+                <div class="clearfix page_sub_title c666">
+                    <span>{$_lang['type']}{$_lang['zh_mh']}{$model_info['model_name']} </span>
+                    <span class="border_l_c mar10"></span>
+                    <span>{$_lang['id']}{$_lang['zh_mh']}#{$sid} </span>
+                    <span class="border_l_c mar10"></span>
+                    <span>{$_lang['pub_time']}{$_lang['zh_mh']}<!--{date('Y-m-d H:i:s',$service_info['on_time'])}--></span>
+                    <span class="border_l_c mar10"></span>
+                    <span>{$_lang['pub_people']}{$_lang['zh_mh']}<a href="index.php?do=space&member_id={$owner_info['uid']}" target="_blank">{$owner_info['username']}</a></span>
+                    <span class="font_simsun">·</span>
+                    <a href="javascript:void(0)" onclick="sendMessage($owner_info['uid'],'$owner_info['username']')">{$_lang['send_web_msg']}</a>
+            		<!--{eval $time = time();}-->
+					{if $payitem_arr['top']>$time&&$item_config['2']['small_pic']}
+						<img src="{$_K['siteurl']}/$item_config['2']['small_pic']" alt="{$_lang['top']}" title="{$_lang['top']}">
+					{/if}
+					<!--{eval $is_map =  stristr($service_info['pay_item'], '4');}-->
+				 	{if $is_map&&$item_config['4']['small_pic']}<img src="{$_K['siteurl']}/$item_config['4']['small_pic']" alt="{$_lang['map']}" title="{$_lang['map']}">{/if}
+					 
+			  </div>
+            </div>
+		</div>
+		<!--页面标题 end-->
+	</div>
+	<!--页面标题布局 end-->
+	<!--操作区-->
+	<div id="taskScroll" class="grid_4">
+     <div class="control clearfix">
+             
+				{if $uid!=$owner_info['uid']}
+                     <a href="index.php?do=shop_order&sid=$sid" class="submit">{$_lang['now_buy']}</a>
+                {/if}
+            </div>
+			</div>
+	<!--操作区 end-->
+	<div class="clear"></div>
+        <!--页面子导航-->
+		<div class="po_re">
+        <nav class="clearfix page_nav po_re" id="top_nav">
+            <ul>
+                <li {if !$view||$view=='base'}class="selected"{/if}>
+                    <a href="{$basic_url}" title="{$_lang['goods_recommend']}"><span class="icon16 box mr_5">icon</span>{$_lang['goods_recommend']}</a>
+                </li>
+                <li {if $view=='sale'}class="selected"{/if}>
+                    <a href="{$basic_url}&view=sale" title="{$_lang['buy_record']}"><span class="icon16 doc-lines-stright mr_5">icon</span>{$_lang['buy_record']} <span class="c999">[{$service_info['sale_num']}]</span></a>
+                </li>
+                <li {if $view=='comment'}class="selected"{/if}>
+                    <a href="{$basic_url}&view=comment" title="{$_lang['leave_word']}"><span class="icon16 spechbubble-2 mr_5">icon</span>{$_lang['leave_word']} <span class="c999">[{$service_info['leave_num']}]</span></a>
+                </li>
+                <li {if $view=='mark'}class="selected"{/if}>
+                    <a href="{$basic_url}&view=mark" title="{$_lang['evaluation']}"><span class="icon16 cert mr_5">icon</span>{$_lang['evaluation']}<span class="c999">[{$service_info['mark_num']}]</span></a>
+                </li>
+				{if $uid==$service_info['uid']}
+				 <li {if $view=='tools'} class="selected" {/if}>
+		            <a href="{$basic_url}&view=tools" title="{$_lang['evaluation']}"><span class="icon16 cert mr_5">icon</span>{$_lang['tool']}<span class="c999"></span></a>
+		         </li>
+				{/if}
+                <li class="border_n">
+                    <a href="javascript:void(0);" title="{$_lang['stop_in_left']}"><span class="icon16 arrow-bottom-left" id="arrow-bottom-left">icon</span></a>
+                </li>
+            </ul>
+            
+        </nav>
+        <!--end 页面子导航-->
+		
+			<!--工具栏-->
+            <div class="operate po_ab">
+                <a href="index.php?do=help&fpid=291" title="{$_lang['help_center']}" target="_blank"><span class="icon16 help"></span></a>
+                <a href="javascript:void(0);" onclick="favor('service_id','service','{$model_code}','{$owner_info['uid']}','{$sid}','{$service_info['title']}','{$sid}')" title="{$_lang['favorit']}"><span class="icon16 star-fav-empty"></span></a>
+                {if $uid&&$uid!=$owner_info['uid']}
+                	<!--start 作品举报-->
+                    <a href="javascript:void(0)" onclick="report('product','2','{$sid}','{$owner_info['uid']}','{$owner_info['username']}');" title="{$_lang['works_report']}"><span class="icon16 hand-1"></span></a>
+					<!--end 作品举报-->
+					<!--start 作品投诉-->
+                    <a href="javascript:void(0)" onclick="report('product','3','{$sid}','{$owner_info['uid']}','{$owner_info['username']}');" title="{$_lang['works_complaints']}"><span class="icon16 bell"></span></a>
+					<!--end 作品投诉-->
+				{/if}
+				<a href="index.php?do=ajax&view=share&oid=1&title={$service_info['title']}" class="" id="share1" onmouseover="share(this)" title="{$_lang['share']}"><span class="icon16 share"></span></a>
+                <a href="index.php?do=service&sid={$sid}" class="" title="{$_lang['return_home']}"><span class="icon16 home"></span></a>
+            </div>
+            <!--end 工具栏-->
+			<div class="clear"></div>
+    	</div>
+	</div>
+</header>
+<!--end 页面头部-->
+<!--主内容-->
+<section class="clearfix content">
+    <div class="container_24">
+	<!--左边导航 start-->
+	<div class="second_menu container_24 po_ab hidden" id="left_nav">
+        <div class="suffix_23 pull_1">
+            <nav class="minor_nav box">
+                <ul class="nav_group">
+                    <li>
+                    	<a href="{$basic_url}" {if !$view||$view=='base'}class="selected"{/if} title="{$_lang['goods_recommend']}"><span class="icon16 box">icon</span></a>
+	                </li>
+	                <li>
+	                    <a href="{$basic_url}&view=sale" {if $view=='sale'}class="selected"{/if} title="{$_lang['buy_record']} [{$service_info['sale_num']}]"><span class="icon16 doc-lines-stright">icon</span></a>
+	                </li>
+	                <li>
+	                    <a href="{$basic_url}&view=comment" {if $view=='comment'}class="selected"{/if} title="{$_lang['leave_word']} [{$service_info['leave_num']}]"><span class="icon16 spechbubble-2">icon</span></a>
+	                </li>
+	                <li >
+	                    <a href="{$basic_url}&view=mark" {if $view=='mark'}class="selected"{/if} title="{$_lang['evaluation']} [{$service_info['mark_num']}]"><span class="icon16 cert">icon</span></a>
+	                </li>
+			        
+                </ul>
+                <ul class="nav_group">
+					<li>
+			         	<a href="javascript:void(0);" class="" title="{$_lang['stop_in_top']}">
+			            	<div class="icon16 arrow-top-right" id="arrow-top-right">{$_lang['stop_in_top']}</div>
+			            </a>
+			         </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+	<!--左边导航 end-->	
+		<section class="clearfix section">
+        	
+            <div class="show_panel container_24 po_re">
+                <div class="po_re clearfix box">
+                    <div class="panel clearfix box">
+                    {if !$view||$view=='base'}
+                        <!--left-->
+                        <div class="grid_16 omega pt_10">
+                            <div class="prefix_1 suffix_1">
+                                <div class="product_desc t_c pad10">
+                                    <img  alt="{$service_info['title']}" onerror="this.src='resource/img/style/shop_default_big.jpg'" name="lazyImg" lazy_src="{if $service_info['pic']}$service_info['pic']{else}resource/img/system/shop_default_big.jpg{/if}">
+                                    <p class="mt_10">
+                                        <a href="javascript:void(0);" class="button" onclick="zoom(this,'{$service_info['pic']}')"><span class="icon16 eye mr_5"></span>{$_lang['preview']}</a>
+                                        <a href="javascript:void(0);" class="button ml_10" onclick="favor('service_id','service','{$model_code}','{$owner_info['uid']}','{$sid}','{$service_info['title']}','{$sid}')"><span class="icon16 star-fav-empty mr_5"></span>{$_lang['favorit']}</a>
+                                    </p>
+                                </div>
+                                <div class="describe mt_20 ws_prewrap ws_break">
+                                    <h2 class="border_b_c mb_10"><span class="font16">{$_lang['recommend']}</span></h2>
+                                    <!--{eval echo kekezu::escape($service_info['content'])}-->
+                                </div>
+								<!--任务地图-->
+	{if $service_info['point']}
+	<details open  class="mb_20">       
+        <summary class="pad5 fontb">{$_lang['shop_map']}<em class="c999 font_normal"></em></summary> 
+		{if $_K['map_api']=='baidu'}
+		<!--{template tpl/default/task/task_info_map_baidu}-->
+		{else}
+		<!--{template tpl/default/task/task_info_map_google}-->
+		{/if}     
+    </details>	
+	{/if}
+	<!--end任务地图-->
+                            </div>
+                            <div class="prefix_1 suffix_1">
+                                <!--免责声明&提醒-->
+                                <div class="notice pad10 mt_20">
+                                    <p class="clearfix">
+                                        <span class="grid_2 t_r omega alpha">{$_lang['disclaimer']}{$_lang['zh_mh']}</span>
+                                        <span class="grid_11 alpha omega">{$_lang['law_notice']}</span>
+                                    </p>
+                                    <p class="clearfix">
+                                        <span class="grid_2 t_r omega alpha">{$_lang['friendly_notice']}{$_lang['zh_mh']}</span>
+                                        <span class="grid_11 alpha omega">{$_lang['alipay_order_notice']}</span>
+                                    </p>
+                                </div>
+                                <!--end 免责声明&提醒-->
+                                <div class="clear">
+                                </div>
+                                <!--其他作品-->
+                                <div class="mt_30 other_product pt_20">
+                                    <div class="clearfix">
+                                       {if $more_list}
+                                        {loop $more_list $v}
+											<a class="grid_3 alpha" href="index.php?do=service&sid={$v['service_id']}" title="{$v['title']}" target="_blank">
+											{if file_exists($v['pic'])}
+													 <!--{eval $tmp=explode('/',$v['pic']);$size=sizeof($tmp);}-->
+													<!--{eval $tmp[$size-1]='100_'.$tmp[$size-1];$small=implode('/',$tmp);}-->
+	                             			<img src="{$small}" alt="{$v['title']}">
+											{else}
+												<img src="{$style_path}/img/shop/shop_default.gif" alt="{$v['title']}">
+											{/if}
+											</a>
+										{/loop}
+                                        {/if}
+                                    </div><a class="block" href="index.php?do=space&member_id={$service_info['uid']}&view=goods" target="_blank">{$_lang['more']}<span class="fontb">{$owner_info['username']}</span>{$_lang['de_works']}&gt;&gt;</a>
+                                </div>
+                                <!--end 其他作品-->
+                            </div>
+                        </div>
+                        <!--end left--><!--right-->
+                        <div class="grid_8 alpha omega pt_10">
+                            <!--人数统计-->
+                            <div class="statistics mt_10 mb_10clearfix ">
+                            	<ul>
+                                <li>
+                                    
+                                        <strong class="digital t_c">{$service_info['sale_num']}</strong>
+                                        <span>{$_lang['buy_people']}</span>
+                                   
+                                </li>
+                                <li class="border_l_c">
+                                    
+                                        <strong class="digital t_c">{$service_info['focus_num']}</strong>
+                                        <span>{$_lang['collection_people']}</span>
+                                    
+                                </li>
+                                <li class="border_l_c">
+                                    
+                                        <strong class="digital t_c">{$service_info['views']}</strong>
+                                        <span>{$_lang['browse_people']}</span>
+                                    
+                                </li>
+                                <li class="border_l_c">
+                                    
+                                        <strong class="digital t_c">{$service_info['leave_num']}</strong>
+                                        <span>{$_lang['leave_word']}</span>
+                                    
+                                </li>
+								</ul>
+                            </div>
+                            <!--end 人数统计--><!--现在购买-->
+                            <div class="buyNow mt_10 clearfix po_re">
+                                <span class="po_ab shop_arrow"></span>
+                                <span class="fontb c900 fl_l ml_10">{$_lang['currency']}{$service_info['price']}</span>
+							</div>
+                            <!--end 现在购买--><!--附加信息-->
+                            <div class="shop_otherInfo bord_c mt_10">
+                                <ul>
+                                    <li>
+                                        <span>{$_lang['company']}</span>{$service_info['unite_price']}
+                                    </li>
+                                    <li>
+                                        <span>{$_lang['type']}</span>{$model_info['model_name']}
+                                    </li>
+                                    <li>
+                                        <span>{$_lang['class']}</span>{$indus_p_arr[$service_info['indus_pid']]['indus_name']}/
+                                        {$indus_arr[$service_info['indus_id']]['indus_name']}
+                                    </li>
+                                    <li>
+                                        <span>{$_lang['pay_money']}</span>{if $service_info['submit_method']=='inside'}{$_lang['website_in_download']}{else}{$_lang['website_out_pay']}{/if}
+                                    </li>
+                                </ul>
+                            </div>
+                            <!--end 附加信息--><!--作者信息-->
+                            <div class="shop_author bord_c mt_10 pad10 clearfix">
+                                <div class="t_c fl_l portrait mr_10">
+                                    <div style="height:118;width:120">
+                                        <!--{userpic($owner_info['uid'],'middle')}-->
+                                    </div>
+                                    <a href="index.php?do=space&member_id={$owner_info['uid']}" class="button mt_10"><b class="fl_l">{$_lang['into_space']}</b><span class="icon16 top-right-expand fl_r"></span></a>
+                                </div>
+                                <div class="fl_l ml_10">
+                                    <p class="shop_sign">
+                                        <b><a href="index.php?do=space&member_id={$owner_info['uid']}" class="pt_10 font14b" target="_blank">{$owner_info['username']}</a> $user_level['pic']</b>
+                                        <div class="clear">
+                                        </div>
+                                        <span>{if $owner_info['residency']}$owner_info['residency']{else}{$_lang['now_no']}{/if}</span>
+                                    </p>
+                                    <p>
+                                        {loop $auth_info $k $v}<a href="javascript:void(0)" title="{$v['auth_title']}" class="mr_5"><img src="{$_K['siteurl']}/{$v['auth_small_ico']}" alt=''></a>{/loop}
+                                    </p>
+                                    <div class="shop_sum1 clearfix">
+                                        <ul>
+                                            <li class="border_r_c fl_l">
+                                                <a href="javascript:void(0);" class="font14b block">{if $owner_info['seller_total_num']}<!--{eval echo number_format($owner_info['seller_good_num']/$owner_info['seller_total_num'],4)*100}-->{else}0{/if}%</a>
+                                                <span>{$_lang['good_evaluation_rate']}</span>
+                                            </li>
+                                            <li class="border_r_c fl_l">
+                                                <a href="javascript:void(0);" class="font14b block"><!--{eval echo intval($owner_info['accepted_num'])}--></a>
+                                                <span>{$_lang['win_bid']}</span>
+                                            </li>
+                                            <li class="fl_l">
+                                                <a href="javascript:void(0);" class="font14b block"><!--{eval echo intval($service_info['sale_num'])}--></a>
+                                                <span>{$_lang['sell']}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!--loading 加载 start-->
+                                    <div class="loading_bar">
+                                        <div class="progress_bar" grade="{$user_level['grade_rate']}">
+                                            {$user_level['grade_rate']}%
+                                        </div>
+                                    </div>
+                                    <!--loading 加载 end-->
+                                </div>
+                            </div>
+                            <!--end 作者信息-->
+                            
+                            <div class="shop_intrest mt_20 pt_10 m_h">
+                                <h3><span class="font14 pl_10">{$_lang['you_may_interested_goods']}</span></h3>
+                                {if $related_list}
+                                {loop $related_list $v}
+								<a href="index.php?do=service&sid={$v['service_id']}" target="_blank" title="{$v['title']}">
+								{if file_exists($v['pic'])}
+										<!--{eval $tmp=explode('/',$v['pic']);$size=sizeof($tmp);}-->
+										<!--{eval $tmp[$size-1]='100_'.$tmp[$size-1];$small=implode('/',$tmp);}-->
+	                             		<img src="{$small}" alt="{$v['title']}">
+									{else}
+										<img src="{$style_path}/img/shop/shop_default.gif" alt="{$v['title']}">
+									{/if}
+								</a>
+								{/loop}
+                                {else}
+									<div class="t_c">
+					                      {$_lang['now_no']}
+									</div>
+                                {/if}
+                            </div>
+                        </div><!--right-->
+                        <div class="clear"></div>
+						
+						  {elseif $view=='sale'}<!--{template shop/goods/tpl/default/service_sale}-->
+                          {elseif $view=='comment'}<!--{template shop/goods/tpl/default/service_comment}-->
+                          {elseif $view=='mark'}<!--{template shop/goods/tpl/default/service_mark}-->
+						  {elseif $view=='tools'&&$uid==$service_info['uid']}
+	 								<!--{eval require S_ROOT.'/control/shop_payitem_tools.php'}-->
+                          {/if}	
+                          <!--右下角的返回顶部-->
+                          <div class="operate fl_r mt_10">
+                              <a href="index.php?do=service&sid={$sid}" title="{$_lang['return_home']}"><span class="icon16 home"></span></a>
+                              <a href="javascript:void(0)" title="{$_lang['return_top']}"><span class="icon16 arrow-top"></span></a>
+                          </div>
+                          <!--end右下角的返回顶部-->
+                        
+                    </div>
+					</div>
+                </div>
+
+              
+		</section>
+		
+				
+			<aside class="clearfix">	
+                    <div class="clearfix mt_20">
+                        <div class="grid_12">
+                            <div class="bord_c example clearfix pb_10">
+                                <h3 class="mb_10 mt_10"><span class="font14 ml_10">{$_lang['same_hot_case']}</span></h3>
+                                {if $hot_list}
+								<!--{eval $i=0}-->
+                                {loop $hot_list $v}
+								<!--{eval $i++}-->
+                                <div class="grid_4 t_c alpha">
+                                    <div {if $i%3!==0} class="border_r_c" {/if}>
+                                        <a href="index.php?do=service&sid={$v['service_id']}" target="_blank">
+	                                        {if file_exists($v['pic'])}
+												<!--{eval $tmp=explode('/',$v['pic']);$size=sizeof($tmp);}-->
+												<!--{eval $tmp[$size-1]='100_'.$tmp[$size-1];$small=implode('/',$tmp);}-->
+		                             			<img src="{$small}" alt="{$v['title']}">
+											{else}
+												<img src="{$style_path}/img/shop/shop_default.gif" alt="{$v['title']}">
+											{/if}
+										</a>
+                                        <p>
+                                            <span class="c900 font14">{$_lang['currency']}{$v['price']}{$_lang['yuan']}</span>
+                                        </p>
+                                        <a href="index.php?do=service&sid={$v['service_id']}" target="_blank" title="{$v['title']}"><!--{eval echo kekezu::cutstr($v['title'],24)}--></a>
+  						          </div>
+                                </div>
+                                {/loop}
+                                {else}
+									<div class="t_c">
+					                      {$_lang['now_no']}
+									</div>
+                                {/if}
+                                <div class="clear">
+                                </div>
+                                <a class="block t_r mr_20 mt_20" href="index.php?do=shop_list&path=;4,{$model_id}" target="_blank">{$_lang['view_more_case']}&gt;&gt;</a>
+                            </div>
+                        </div>
+                        <div class="grid_12 alpha omega">
+                            <div class="bord_c example clearfix pb_10 shop_list">
+                                <h3 class="mb_10 mt_10"><span class="font14 ml_10">{$_lang['relevant_class_task_list']}</span></h3>
+                                {if $task_list}<!--{eval $i=0;}-->
+                                <div class="grid_6 alpha omega">
+                                    <ul class="border_r_c task_list">
+                                        {loop $task_list $k $v}
+                                        {if $k<7}<!--{eval $i++;}-->
+                                        <li>
+                                            <a href="index.php?do=task&task_id={$v['task_id']}" title="<!--{eval echo kekezu::cutstr($v['task_title'],28)}-->"><span class="c900">{$_lang['currency']}{$v['task_cash']}</span><span class="bk_color"> <!--{eval echo kekezu::cutstr($v['task_title'],28)}--></span></a>
+										</li>
+                                        {/if}
+                                        {/loop}
+                                    </ul>
+                                </div>
+                                {if $i==7}
+                                <div class="grid_6 alpha omega">
+                                    <ul class="border_r_c task_list">
+                                        {loop $task_list $j $v}
+                                        {if $j>6}
+                                        <li>
+                                            <a href="index.php?do=task&task_id={$v['task_id']}" title="<!--{eval echo kekezu::cutstr($v['task_title'],28)}-->"><span class="c900">{$_lang['currency']}{$v['task_cash']}</span><span class="bk_color"> <!--{eval echo kekezu::cutstr($v['task_title'],28)}--></span></a>
+                                        </li>
+                                        {/if}
+                                        {/loop}
+                                    </ul>
+                                </div>
+                                {/if}
+                                {/if}<a class="block t_r mr_20 mt_20" href="index.php?do=task_list" target="_blank">{$_lang['view_more_task']}&gt;&gt;</a>
+                            </div>
+                        </div>
+					</div>
+             </aside>      
+            
+        
+    </div>
+</section>
+<!--end 主内容-->
+</div>
+ <!--end 页面内容区-->
+ 
+
+<script type="text/javascript">
+    var uid = parseInt('{$uid}') + 0;
+    var sid= parseInt('{$sid}') + 0;
+    var basic_url = "index.php?do=service&sid=" + sid;
+</script>
+
+<script type="text/javascript" >
+	In.add('service',{path:"resource/js/system/service.js",type:'js'});
+	In('service'); 
+	In('lazy',function(){
+	loadPics();
+	})
+</script>
+<!--{template footer}-->

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="<!--{$_K['charset']}-->">
+<title>{$e_shop_nav[$view]}-{$e_shop_info['shop_name']}-{$_K['html_title']}</title>
+<meta http-equiv="Content-Type" content="text/html;">
+<!--页面样式初始化-->
+<link href="resource/css/reset.css" rel="stylesheet" type="text/css">
+
+<!--box样式-->
+<link href="resource/css/box.css" rel="stylesheet" type="text/css">
+
+<!--按钮样式-->
+<link href="resource/css/button/stylesheets/css3buttons.css" rel="stylesheet" type="text/css">
+<!--公用样式-->
+<link href="resource/css/base.css" rel="stylesheet" type="text/css">
+<!--布局调用-->
+<link href="resource/css/layout/960.min.css" rel="stylesheet" type="text/css"> 
+
+<!--企业样式-->
+<link href="{SKIN_PATH}/css/enterprise.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="resource/js/system/html5.js"></script>
+<script type="text/javascript" src="resource/js/jquery.js"></script>
+<script type="text/javascript" src="resource/js/system/keke.js"></script>
+<script type="text/javascript" src="resource/js/jqplugins/easySlider1.7.js"></script>
+<script type="text/javascript" src="resource/js/jqplugins/jquery.masonry.min.js"></script>
+<link href="resource/js/jqplugins/starrating/jquery.rating.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="resource/js/jqplugins/starrating/jquery.rating.js"></script>
+<script type="text/javascript" src="resource/js/jqplugins/starrating/jquery.MetaData.js"></script>
+<script src="resource/js/in.js"></script>
+<script type="text/javascript">
+In.add('mouseDelay',{path:"resource/js/jqplugins/jQuery.mouseDelay.js",type:'js'});
+In.add('waypoints',{path:"resource/js/jqplugins/waypoints/waypoints.min.js",type:'js'});
+In.add('custom',{path:"resource/js/system/custom.js",type:'js',rely:['waypoints']});
+In.add('form',{path:"resource/js/system/form_and_validation.js",type:'js'});
+In.add('print',{path:"resource/js/jqplugins/jquery.print.js",type:'js'});
+In.add('task',{path:"resource/js/system/task.js",type:'js'});
+In.add('calendar',{path:"resource/js/system/script_calendar.js",type:'js'}); 
+In.add('xheditor',{path:"resource/js/xheditor/xheditor.js",type:'js'});  
+In.add('script_city',{path:"resource/js/system/script_city.js",type:'js'}); 
+In.add('rating',{path:"resource/js/jqplugins/starrating/jquery.rating.js",type:'js'}); 
+In.add('metaData',{path:"resource/js/jqplugins/starrating/jquery.MetaData.js",type:'js'}); 
+In.add('lavalamp',{path:"resource/js/jqplugins/lavalamp/jquery.lavalamp-1.3.5.min.js",type:'js'});
+In.add('tipsy',{path:"resource/js/jqplugins/tipsy/jquery.tipsy.js",type:'js'});
+In.add('autoIMG',{path:"resource/js/jqplugins/autoimg/jQuery.autoIMG.min.js",type:'js'});
+In.add('slides',{path:"resource/js/jqplugins/slides.min.jquery.js",type:'js'});
+In.add('ajaxfileupload',{path:"resource/js/system/ajaxfileupload.js",type:'js'});
+
+	$(function (){
+		var view ='$view' ;
+		if(view=='index'||!view){
+				$("#slider").easySlider({
+				auto: true, 
+				continuous: true,
+				prevText: '<<',
+				nextText: '>>'
+				});  
+		}
+	
+	});
+</script>
+{if $e_shop_info['shop_background']}
+<style type="text/css">
+	.default .container_con,
+	.hs .container_con,
+	.zs .container_con,
+	.js .container_con,
+	.qy .container_con,
+	.ty .container_con{background:url('{$e_shop_info['shop_background']}') {$shop_backstyle};}
+</style>
+{/if}
+</head>
+<body>
+        <div id="append_parent">
+        </div>
+        <div id="ajaxwaitid">
+        </div>
+		<!--无刷新临时替换层-->
+        <div id="noflushwarper">
+        	<div id="noflushwarper_sub"></div>
+        </div>
+	<!--wrapper-->
+	<div class="clearfix {if $e_shop_info['shop_skin']}$e_shop_info['shop_skin']{else}default{/if}" id="wrapper">
+    	<!--顶端导航-->
+		<div class=" topnav  ov_hide clearfix po_re">
+        	<div class="container_24 ">
+            	<div class="fl_r topnav_list">
+            	 
+                	<a href="index.php?do=ajax&view=share&oid=share_shop&title={$e_shop_info['shop_name']}" class="" id="share_shop" onclick="return false;" onmouseover="share(this);return false;" title={$_lang['share']}><div class="icon16 share"></div><span>{$_lang['share']}</span></a>
+                	<a href="index.php?do=user" class="" title={$_lang['return_home']}><div class="icon16 home"></div><span>{$_lang['return_home']}</span></a>
+                	{if $uid==$e_shop_info['uid']}
+					<a href="index.php?do=user&view=setting&op=space&opp=basic#userCenter" class="" title={$_lang['custom']}><div class="icon16 wrench-plus"></div><span>{$_lang['custom']}</span></a>
+           			<a href="index.php?do=user&view=message"  title="" ><div class="icon16  sound"></div><span>{$_lang['short_message']}</span></a>
+					<a href="index.php?do=logout"  title="" onclick="showWindow('out',this.href);return false;" ><div class="icon16  on-off"></div><span>{$_lang['logout']}</span></a> 
+					{/if}
+			    </div>
+            </div>
+        </div>
+        <!--end 顶端导航-->
+        
+        <div class="clear"></div>
+        
+        <!--头部-->
+        <header class="header_style clearfix">
+        
+        	<div class="container_24">
+            
+            	<div class="logo clearfix">
+                	<a href="#" class="font36b fl_l">$e_shop_info['shop_name']</a> 
+                </div>
+            	
+				<div class="clear"></div>
+                <div class="main_nav clearfix">
+
+                	<div class="nav_list clearfix">
+                    	<ul >
+                    		{loop $e_shop_nav $k $v}
+                               	 <li {if $k=='statistic'} class="no_bk"{/if}>
+                               	 	<a href="index.php?do=space&member_id=$member_id&view={$k}" title="{$v}"  {if $view==$k} class="  select  lbk" {else}class="lbk" {/if}>
+                               	 		<span class="rbk">
+                               	 			<span>{$v}</span>
+										</span>
+									</a>
+								</li>
+							{/loop}
+                        </ul>
+                    </div>
+
+            	</div>
+            
+            </div>
+            
+        </header>	
+        <!--end 头部-->
+        
+        <div class="clear"></div>
+		<div class="shadow po_re"></div>
+		  <!--main-->
+        <div class="container_con clearfix po_re">
+        	<div class="container_24 main clearfix">
+                <!--banner-->
+				<div class="banner po_re ">
+				{if $view =='index'||!$view}
+					
+                <div class="clearfix" id="slider">
+                	<ul id="show_pic" >
+                		{loop $e_route_arr $key $value}
+                		<li onmouseover="$('#up_pic_{$key}').show();" onmouseout="$('#up_pic_{$key}').hide();" >
+                			<a href="index.php?do=space&member_id={$member_id}&view={$value}">
+                				<img src="{$banner_arr[$key]}" width="960" height="275" alt="" title="" />
+                			</a>
+                			{if $member_id==$uid}
+                			<div id="up_pic_{$key}" style="z-index:99;position:absolute;left:0;top:0; cursor:pointer;display:none;">
+								<a href="#" onclick="upPic('{$key}');" class="button">{$_lang['replace_picture']}</a>
+							</div>
+                			{/if}
+                		</li>
+                		{/loop}
+                	</ul>      
+                </div>
+				{else}
+				  <div class="banner po_re clearfix" >
+                	<ul> 
+                	<li onmouseover="$('#up_pic').show();" onmouseout="$('#up_pic').hide();">
+                		{if $member_id==$uid}
+                			<div id="up_pic" style="z-index:99;position:absolute;left:0;top:0; cursor:pointer;display:none;">
+                				<a href="#" onclick="upPic('{$key}');" class="button">{$_lang['replace_picture']}</a>
+                			</div>
+                		{/if}
+                		<a href="index.php?do=space&member_id={$member_id}&view={$view}">
+                			<img src="{$banner_arr[$e_banner_keys[$view]]}"  width="960" height="275" alt="" title="" />
+                		</a>
+                	</li>
+                	</ul>  
+                        
+                </div>
+				
+				{/if}
+				</div>
+			
+				<!--end banner-->
+                <script type="text/javascript">
+                function upPic(key) {
+                	var url = "index.php?do=space&ac=up_pic&member_id={$member_id}&view={$view}";
+                	if(key){
+                		url +="&slide_index="+key;
+                	}
+                	showWindow("up_pic",url,"get",'1');
+                }
+                </script>

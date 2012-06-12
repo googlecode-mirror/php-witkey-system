@@ -1,0 +1,39 @@
+<!--{eval require keke_tpl_class::template(SKIN_PATH."/space/{$type}_nav")}-->  
+				<div class="main_con">
+            
+	            	<h1 class="font16b c000 s_l_title mt_20">{$_lang['success_case']}</h1>
+	                
+	                <div class="clear"></div>
+	                
+	                <!--suc_list_box-->
+	                {loop $shop_arr $k $v}
+					<div class="suc_list_box mt_20 clearfix">
+	                
+	                	<img src="{$v['case_pic']}" alt="" />
+	                    <div class="right_con clearfix">
+	                    	<h2 class="c000"><!--{eval echo kekezu::cutstr($v['title'], 30);}--></h2>
+	                        <p>{$_lang['service_address']}{$_lang['zh_mh']}<a href="index.php?do=service&sid=$v['service_id']">$d_url/index.php?do=service&sid=$v['service_id']</a></p>
+	                        <p>  $v['content']</p>
+	                    </div>
+	                </div>
+					{/loop}
+	                <!--end suc_list_box-->
+	                
+          
+ 
+            </div>
+            <!--end main_con-->
+            
+            <div class="clear"></div>
+                
+            <!--page ·­Ò³ start-->
+            <div class="pages">
+                   $pages['page']
+            </div>
+            <!--page ·­Ò³ end-->
+            </div>
+            <div class="clear"></div>
+            
+ <!--{template footer}-->
+ 
+

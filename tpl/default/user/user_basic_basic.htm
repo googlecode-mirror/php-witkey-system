@@ -1,0 +1,258 @@
+<!--{template header}-->
+<!--contain start-->
+<div class="wrapper">
+    <div class="container_24">
+    	<!--{template user/user_nav}-->
+        <!--main start-->
+        <section class="clearfix section">
+            <!--{template user/user_side}-->
+            <div class="show_panel container_24 po_re">
+                <div class="prefix_3">
+                    <div class="panel clearfix box">
+                        <!--main content-->
+                        <div class="grid_21">
+                            <!--header内容头部 start-->
+                            <header class="clearfix box_header">
+                                <h2 class="grid_4 alpha box_title t_c">{$_lang['basics']}</h2>
+                                <div class="grid_17 omega">
+                                    <nav class="box_nav">
+                                        <ul>
+                                            {loop $third_nav $k $v}
+                                            <li {if $k==$opp}class="selectedLava"{/if}>
+                                                <a href="{$ac_url}&opp={$k}#userCenter" title="{$v['1']}">{$v['0']}</a>
+                                            </li>
+                                            {/loop}
+                                        </ul>
+                                    </nav>
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </header>
+                            <!--header内容头部 end-->
+                            <div class="step_progress clearfix">
+                                
+                                <div class="messages m_infor">
+                                     <div class="icon16">warning</div>
+                                         {$_lang['zz_notice1']}
+                                     <a href="###" class="close">&times;</a>
+                               </div>
+						 
+                            </div>
+                            <div class="prefix_1 suffix_1">
+                                <div class="clearfix box font14">
+                                    <!--from表单 start-->
+                                    <form action="{$ac_url}&opp={$opp}" method="post" id="frm" name="frm">
+                                        <input type="hidden" name="pk[uid]" value="{$uid}"><!--基本资料start-->
+					                     <div class="rowElem clearfix">
+                                            <label class="grid_3 t_r">
+                                            	{$_lang['belong_industry']}
+                                            </label>
+						                    <div class="fl_l ml_5">
+						                        <select name="conf[indus_pid]" id="indus_pid" title="{$_lang['select_industry']}" onchange="showIndus(this.value)" limit = "required:false;between:5-10" msg = '{$_lang['industry_no_choose']}' msgArea="span_indus">
+						                            <option value="">{$_lang['select_industry']}</option>
+						                      		{loop $indus_p_arr $v}
+														 <option value="{$v['indus_id']}" {if $user_info['indus_pid']==$v['indus_id']}selected{/if}>{$v['indus_name']}</option>
+													{/loop}
+												 </select>
+												 <div id="span_indus"></div>
+						                    </div>
+						                    <div class="fl_l" id="reload_indus">
+						                        <select name="conf[indus_id]" id="indus_id" limit = "required:false;between:5-10" msg='{$_lang['child_industry_no_choose']}' title='{$_lang['choose_child_industry']}' msgArea="span_indus"><span id="span_indus"></span>
+						                            <option value="">{$_lang['choose_child_industry']}</option>
+													{if $user_info['indus_id']}}
+													{loop $indus_arr $k $v}
+						                           		 <option value="{$v['indus_id']}" {if $user_info['indus_id']==$v['indus_id']}selected{/if}>{$v['indus_name']}</option>
+													{/loop}
+													{/if}
+						                        </select>
+						                    </div>										
+                                        </div>
+										{if $user_type==2}
+										<div class="rowElem clearfix">
+                                            <label class="grid_3 t_r">
+                                                	{$_lang['company']}{$_lang['name']}{$_lang['zh_mh']}
+                                            </label>
+                                            <div class="grid_8">
+                                                <input name="fds[company]" size="39" {if $real_pass}disabled="disabled"  style="color:#999"{/if}  type="text" value="{$enter_info['company']}" title="{$_lang['company']}{$_lang['name']}"
+												 id="company" limit="required:false;len:4-100" msg="{$_lang['company_name_error']}" msgArea="span_company"/>
+                                            </div>
+                                            <div class="grid_7 t_r">
+                                            	<span id="span_company"></span>
+												{if $real_pass} 
+                                                	{$_lang['company_can_not_edit']}
+												{/if}
+                                            </div>
+                                        </div>										
+										<div class="rowElem clearfix">
+                                            <label class="grid_3 t_r">
+                                                	{$_lang['licen_num']}{$_lang['zh_mh']}
+                                            </label>
+                                            <div class="grid_8">
+                                                <input name="fds[licen_num]" size="39" type="text" value="{$enter_info['licen_num']}" title="{$_lang['company']}{$_lang['licen_num']}"
+												 id="licen_num" limit="required:false;len:5-30;type:int" msg="{$_lang['licen_num_error']}" msgArea="span_clicen_num" onkeyup="clearstr(this)"/>
+                                            </div>
+                                            <div class="grid_7 t_r">
+                                            	<span id="span_licen_num"></span>	
+                                            </div>
+                                        </div>
+										<div class="rowElem clearfix">
+                                            <label class="grid_3 t_r">
+                                                	{$_lang['legal']}{$_lang['zh_mh']}
+                                            </label>
+                                            <div class="grid_8">
+                                                <input name="fds[legal]" size="39" type="text" value="{$enter_info['legal']}" title="{$_lang['company']}{$_lang['legal']}"
+												 id="legal" limit="required:false;len:2-10" msg="{$_lang['legal_error']}" msgArea="span_legal"/>
+                                            </div>
+                                            <div class="grid_7 t_r">
+                                            	<span id="span_legal"></span>	
+                                            </div>
+                                        </div>
+										<div class="rowElem clearfix">
+                                            <label class="grid_3 t_r">
+                                                	{$_lang['staff_num']}{$_lang['zh_mh']}
+                                            </label>
+                                            <div class="grid_8">
+                                                <input name="fds[legal]" size="39" type="text" value="{$enter_info['staff_num']}" title="{$_lang['company']}{$_lang['staff_num']}"
+												 id="staff_num" limit="required:false;type:int;len:1-" msg="{$_lang['staff_num_error']}" msgArea="span_staff_num"/>
+                                            </div>
+                                            <div class="grid_7 t_r">
+                                            	<span id="span_staff_num"></span>	
+                                            </div>
+                                        </div>
+										<div class="rowElem clearfix">
+                                            <label class="grid_3 t_r">
+                                                	{$_lang['run_years']}{$_lang['zh_mh']}
+                                            </label>
+                                            <div class="grid_8">
+                                                <input name="fds[run_years]" size="39" type="text" value="{$enter_info['run_years']}" title="{$_lang['company']}{$_lang['run_years']}"
+												 id="run_years" limit="required:false;type:int;len:1-" msg="{$_lang['run_years_error']}" msgArea="span_run_years"/>{$_lang['year']}
+                                            </div>
+                                            <div class="grid_7 t_r">
+                                            	<span id="span_run_years"></span>	
+                                            </div>
+                                        </div>
+										<div class="rowElem clearfix">
+                                            <label class="grid_3 t_r">
+                                                	{$_lang['company_url']}{$_lang['zh_mh']}
+                                            </label>
+                                            <div class="grid_8">
+                                                <input name="fds[url]" size="39" type="text" {if $enter_info['url']}value="{$enter_info['url']}"{else}http://{/if} title="{$_lang['company_url']}"
+												 id="run_years" limit="required:false;type:url" msg="{$_lang['company_url_error']}" msgArea="span_domain"/>
+                                            </div>
+                                            <div class="grid_7 t_r">
+                                            	<span id="span_domain"></span>	
+                                            </div>
+                                        </div>
+										{/if}										
+                                        <div class="rowElem clearfix">
+                                            <label class="grid_3 t_r">
+                                                {if $user_type==1}{$_lang['real_name']}{else}{$_lang['contact']}{/if}{$_lang['zh_mh']}
+                                            </label>
+                                            <div class="grid_8">
+                                                <input name="conf[truename]" size="39" {if $real_pass}disabled="disabled"  style="color:#999"{/if}  type="text" value="{$user_info['truename']}" title="{$_lang['real_name_tip']}"
+												 id="truename" limit="required:false;len:2-10" msg="{if $user_type==1}{$_lang['realname_can_not_more_than_ten']}{else}{$_lang['contact_at_most_ten']}{/if}" msgArea="span_truename"/>
+                                            </div>
+                                            <div class="grid_7 t_r">
+                                            	<span id="span_truename"></span>
+												{if $real_pass} 
+                                                	{$_lang['has_been_pass_by_realname_cannot_change']}
+												{/if}
+                                            </div>
+                                        </div>
+										{if $user_type==1}
+										 <div class="rowElem clearfix">
+                                            <label class="grid_3 t_r">
+                                                {$_lang['sex']}{$_lang['zh_mh']}
+                                            </label>
+                                            <input type="radio" name="conf[sex]" value="{$_lang['privary']}" {if !$user_info['sex']||$user_info['sex']==kekezu::lang('privary')}checked{/if} />
+                                            <label>
+                                                {$_lang['privary']}
+                                            </label>
+                                            <input type="radio" name="conf[sex]" value="{$_lang['man']}" {if $user_info['sex']==kekezu::lang('man')}checked{/if} />
+                                            <label>
+                                                {$_lang['man']}
+                                            </label>
+                                            <input type="radio" name="conf[sex]" value="{$_lang['woman']}" {if $user_info['sex']==kekezu::lang('woman')}checked{/if} />
+                                            <label>
+                                                {$_lang['woman']}
+                                            </label>
+                                        </div>
+                                        <div class="rowElem clearfix">
+                                            <label class="grid_3 t_r">
+                                               {$_lang['birthday']}{$_lang['zh_mh']}
+                                            </label>
+                                            <div class="grid_6">
+                                                <input name="conf[birthday]" {if $user_info['realname_auth']==1}disabled="disabled"{/if}
+ 												type="text" size="39" value="{if $user_info['birthday']}<!--{date('Y-m-d',$user_info['birthday'])}-->{/if}"
+												 onclick="showcalendar(event, this, 0)" title="{$_lang['birthday_tip']}<!--{eval echo date('Y-m-d',time()-15*365*24*3600)}-->" msgArea="span_birthday" 
+ 												 limit="required:true;type:date;less:<!--{eval echo date('Y-m-d',time()-15*365*24*3600)}-->" msg="{$_lang['wrong_format_about_birthday']}" id="birthday" />
+												 <span id="span_birthday"></span>
+                                            </div>
+                                        </div>
+										{/if}
+                                        <div class="rowElem clearfix">
+                                            <label class="grid_3 t_r">
+                                                {$_lang['location']}{$_lang['zh_mh']}
+                                            </label>
+											<div class="grid_15">
+											<select name="province"></select><select name="city"></select><select name="area"></select>
+											</div>
+						                </div>
+                                       	{if $user_type==2}
+										<div class="rowElem clearfix">
+                                            <label class="grid_3 t_r">
+                                                	{$_lang['detail_address']}{$_lang['zh_mh']}
+                                            </label>
+                                            <div class="grid_8">
+                                                <input name="conf[address]" size="39"  type="text" value="{$user_info['address']}" title="{$_lang['company']}{$_lang['detail_address']}"
+												 id="address" limit="required:false;len:5-" msg="{$_lang['detail_address_error']}" msgArea="span_address"/>
+                                            </div>
+                                            <div class="grid_7 t_r">
+                                            	<span id="span_address"></span>												
+                                            </div>
+                                        </div>
+										{/if}
+                                        <div class="rowElem clearfix">
+                                            <div class="grid_18 alpha omega">
+                                                <label class="grid_3 t_r">
+                                                 {if $user_type==1}{$_lang['about_me']}{else}{$_lang['company_summary']}{/if}{$_lang['zh_mh']}
+                                                </label>
+												<div class="ml_5 clearfix fl_l">
+                                                <textarea cols="80" rows="8" name="conf[summary]" class="xheditor-simple {skin:'nostyle'}" style="width:400px;">{$user_info['summary']}</textarea>
+												 <div class="ui_note">
+                                                {$_lang['please_take_it_seriously']}
+                                            </div>
+												</div>
+                                            </div>
+                                           
+                                        </div>
+                                        <!--基本资料end-->
+                                        <div class="rowElem clearfix form_button">
+                                            <button type="submit" name="sbt_edit" class="button" value="{$_lang['save']}" onclick="return checkForm(document.getElementById('frm'))">
+                                                <span class="check icon"></span>{$_lang['save']}
+                                            </button>
+                                        </div>
+                                    </form>
+                                    <!--from表单 end-->
+                                </div>
+                            </div>
+                            <!--detail内容 end-->
+                        </div>
+                        <!--main content end-->
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--main end-->
+    </div>
+</div>		
+<script type="text/javascript">
+	In('form','custom','xheditor','pcas',function(){
+	    new PCAS("province","city","area","{$loca['0']}","{$loca['1']}","{$loca['2']}");
+	}) ;
+</script>
+<!--contain end-->
+<!--{template user/user_footer}-->
+<!--{template footer}-->

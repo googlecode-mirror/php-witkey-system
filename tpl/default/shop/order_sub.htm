@@ -1,0 +1,182 @@
+<!--{eval $page_title=$service_info['title'].'--'.$_K['html_title'];}--><!--{template header}--><!--页面内容区-->
+<!--页面样式-->
+
+<div class="wrapper">
+<!--页面头部-->
+ <header class="clearfix page_header">
+   <div class="container_24 clearfix">
+	   	<!--面包屑-->
+	    <div class="breadcrumbs clearfix">
+	          <a href="index.php">{$_lang['home']}</a> \
+			  <a href="index.php?do=shop_list&model_id={$model_id}">{$_lang['witkey_shop']}</a> \
+			  <a href="index.php?do=shop_list&model_id={$model_id}&indus_pid={$service_info['indus_pid']}">{$indus_p_arr[$service_info['indus_pid']]['indus_name']}</a> \
+	          <a href="index.php?do=shop_list&model_id={$model_id}&indus_id={$service_info['indus_id']}">{$indus_arr[$service_info['indus_id']]['indus_name']}</a>
+	    </div>
+		<!--end 面包屑-->
+		<!--页面标题布局-->
+		<div class="grid_24">
+			<!--页面标题-->
+	    	<div class="page_title clearfix">
+	    		<!--页面标题头像-->
+	            <div class="fl_l pt_10 mr_5">
+	                <a href="index.php?do=space&member_id={$owner_info['uid']}" title="{$owner_info['username']}"><!--{userpic($owner_info['uid'],'small')}--></a>
+	            </div>
+				<!--页面标题头像 end-->
+				
+	            <div class="grid_22 page_title">
+	                <h2 class="title"><a href="javascript:void(0);">{$service_info['title']}</a></h2>
+	                <div class="clearfix page_sub_title c666">
+	                    <span>{$_lang['type']}{$_lang['zh_mh']}{$model_info['model_name']} </span>
+	                    <span class="border_l_c mar10"></span>
+	                    <span>{$_lang['id']}{$_lang['zh_mh']}#{$sid} </span>
+	                    <span class="border_l_c mar10"></span>
+	                    <span>{$_lang['pub_time']}{$_lang['zh_mh']}<!--{date('Y-m-d H:i:s',$service_info['on_time'])}--></span>
+	                    <span class="border_l_c mar10"></span>
+	                    <span>{$_lang['pub_people']}{$_lang['zh_mh']}<a href="index.php?do=space&member_id={$owner_info['uid']}" target="_blank">{$owner_info['username']}</a></span>
+	                    <span class="font_simsun">·</span>
+	                    <a href="javascript:void(0)" onclick="sendMessage('station')">{$_lang['send_web_msg']}</a>
+	            		<!--{eval $time = time();}-->
+						{if $payitem_arr['top']>$time}<img src="{$_K['siteurl']}/$item_config['2']['small_pic']" alt="置顶" title="置顶">{/if}
+						<!--{eval $is_map =  stristr($service_info['pay_item'], '4');}-->
+					 	{if $is_map}<img src="{$_K['siteurl']}/$item_config['4']['small_pic']" alt="地图" title="地图">{/if}
+						 
+				  </div>
+	            </div>
+			</div>
+			<!--页面标题 end-->
+		</div>
+		<!--页面标题布局 end-->
+		<div class="clear"></div>
+   		<div class="po_re">
+   			<!--工具栏-->
+            <div class="operate po_ab">
+                <a href="index.php?do=help&fpid=291" title="{$_lang['help_center']}" target="_blank"><span class="icon16 help"></span></a>
+                <a href="javascript:void(0);" onclick="favor('service_id','service','{$model_code}','{$owner_info['uid']}','{$sid}','{$service_info['title']}','{$sid}')" title="{$_lang['favorit']}"><span class="icon16 star-fav-empty"></span></a>
+                {if $uid&&$uid!=$owner_info['uid']}
+                	<!--start 作品举报-->
+                    <a href="javascript:void(0)" onclick="report('product','2','{$sid}','{$owner_info['uid']}','{$owner_info['username']}');" title="{$_lang['works_report']}"><span class="icon16 hand-1"></span></a>
+					<!--end 作品举报-->
+					<!--start 作品投诉-->
+                    <a href="javascript:void(0)" onclick="report('product','3','{$sid}','{$owner_info['uid']}','{$owner_info['username']}');" title="{$_lang['works_complaints']}"><span class="icon16 bell"></span></a>
+					<!--end 作品投诉-->
+				{/if}
+				<a href="index.php?do=ajax&view=share&oid=1&title={$service_info['title']}" class="" id="share1" onmouseover="share(this)" title="{$_lang['share']}"><span class="icon16 share"></span></a>
+                <a href="index.php?do=service&sid={$sid}" class="" title="{$_lang['return_home']}"><span class="icon16 home"></span></a>
+            </div>
+            <!--end 工具栏-->
+   		</div>
+   </div>
+ </header>
+<!--end 页面头部-->
+<!--详细内容区-->
+ <section class="content box">
+ <!--布局框-->  
+  <div class="container_24">
+    <div class="content_d mt_10">
+                    
+   <!--步骤下部所有内容-->
+
+	<div class="box normal clearfix">
+		
+     <!--左边部分-->
+       <div class="grid_17">
+         <div class="pad10">
+           <!--服务详细内容-->
+             <div class="clearfix" id="agreement">
+                 <div class="clearfix box font14">
+                  <!--from表单 start-->
+                   <div class="rowElem clearfix">
+                    <label class="grid_2 t_r">{$_lang['goods_title']}</label>
+                      <div class="grid_8">{$service_info['title']}</div>
+                   </div>
+                   <div class="rowElem clearfix">
+                    <label class="grid_2 t_r">{$_lang['goods_sell_price']}</label>
+                      <div class="grid_8">{$service_info['price']}{$_lang['yuan']}</div>
+                   </div>
+                   <div class="rowElem clearfix">
+                     <label class="grid_2 t_r">{$_lang['goods_recommend']}{$_lang['zh_mh']}</label>
+                     <div class="grid_13 ws_prewrap ws_break">{$service_info['content']}</div>
+                   </div>
+                   <div class="rowElem clearfix form_button">
+                     <button type="button" class="button" value="{$_lang['confirm_buy']}" onclick="sub_order('{$_lang['goods']}','{$sid}','{$owner_info['uid']}')">
+                        <span class="check icon"></span>{$_lang['confirm_buy']}
+                     </button>
+                   </div>
+                 </div>
+              </div>
+           <!--end 服务详细内容-->
+    	   </div>
+       </div>
+	   
+    <!--end 左边部分-->
+     <!--右边部分-->
+       
+	   <div class="grid_7 alpha">
+         <div class="ml_20 pt_10">
+          <!--作者信息-->
+            <div class="t_c fl_l portrait">
+              <div style="height:118;width:120"><!--{userpic($owner_info['uid'],'middle')}--></div>
+			  <a href="index.php?do=space&member_id={$owner_info['uid']}" class="button mt_10"><span class="icon16 top-right-expand mr_5"></span>{$_lang['into_space']}</a>
+            </div>
+            <div class="fl_l ml_10">
+              <div class="shop_sign">
+                 <a href="index.php?do=space&member_id={$owner_info['uid']}" class="pt_10 font14b" target="_blank">{$owner_info['username']}</a>
+                 $user_level['pic']
+              </div>
+			  <div>
+               {if $owner_info['residency']}$owner_info['residency']{else}{$_lang['now_no']}{/if}
+			  </div>
+              <div>
+			{loop $auth_info $k $v}
+				<a href="javascript:void(0)" title="{$v['auth_title']}"><img src="{$_K['siteurl']}/{$v['auth_small_ico']}" alt=''></a>
+			{/loop}
+              </div>
+              <div class="shop_sum1 clearfix">
+                <ul>
+                    <li class="border_r_c fl_l pr_5">
+                       <a href="javascript:void(0);" class="font14b block">{if $owner_info['seller_total_num']}<!--{eval echo number_format($owner_info['seller_good_num']/$owner_info['seller_total_num'],2)}-->{else}0{/if}%</a>
+                       <span>{$_lang['good_evaluation_rate']}</span>
+                    </li>
+                    <li class="border_r_c fl_l">
+                       <a href="javascript:void(0);" class="font14b block">{if $owner_info['accepted_num']}{$owner_info['accepted_num']}{else}0{/if}</a>
+                       <span>{$_lang['win_bid']}</span>
+                    </li>
+                    <li class="fl_l">
+                       <a href="javascript:void(0);" class="font14b block">{if $service_info['sale_num']}$service_info['sale_num']{else}0{/if}</a>
+                       <span>{$_lang['sell']}</span>
+                    </li>
+                 </ul>
+             </div>
+              <!--loading 加载 start-->
+                  <div class="loading_bar mt_20">
+                     <div class="progress_bar" grade="{$user_level['grade_rate']}">{$user_level['grade_rate']}%</div>
+                 </div>
+             <!--loading 加载 end-->
+          </div>
+        <!--end 作者信息-->
+         </div>
+       </div>
+     <!--end 右边部分-->
+    </div>
+
+   <!--end 步骤下部所有内容--> 
+  </div>
+ </div>
+  <!--end 布局框-->     	
+ </section>
+<!--end 详细内容区-->
+</div>
+<!--end 页面内容区-->
+ 
+<script type="text/javascript">
+	In.add('service',{path:"resource/js/system/service.js",type:'js'});
+	In('service','custom');
+	In.add('css_public',{path:"resource/css/public.css",type:'css'}); 
+	In.add('css_shop',{path:"{SKIN_PATH}/css/shop.css",type:'css'}); 
+	In.add('css_theme_shop',{path:"{SKIN_PATH}/theme/{$_K['theme']}/css/shop.css",type:'css'}); 
+	In('css_public','css_shop','css_theme_shop');
+	var sid = "{$sid}";
+    var basic_url = "index.php?do=service&sid=" + sid;
+	var uid = parseInt('{$uid}')+0;
+</script>
+<!--{template footer}-->

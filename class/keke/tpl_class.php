@@ -20,8 +20,6 @@ class keke_tpl_class {
 	static function parse_template($tpl) {
 		global $_K;
 		//°üº¬Ä£°å
-		// 		$sub_tpls = array ($tpl );
-		
 
 		$tplfile = S_ROOT . './' . $tpl . '.htm';
 		$objfile = S_ROOT . './data/tpl_c/' . str_replace ( '/', '_', $tpl ) . '.php';
@@ -38,6 +36,7 @@ class keke_tpl_class {
 		empty ( $template ) and exit ( "Template file : $tplfile Not found or have no access!" );
 		
 		$template = keke_tpl_class::parse_rule ( $template, $tpl );
+		
 		//write
 		keke_tpl_class::swritefile ( $objfile, $template ) or exit ( "File: $objfile can not be write!" );
 	
@@ -253,6 +252,7 @@ class keke_tpl_class {
 		global $_K;
 		
 		$tpl = keke_tpl_class::tpl_exists ( $name );
+		
 		$objfile = S_ROOT . 'data/tpl_c/' . str_replace ( '/', '_', $tpl ) . '.php';
 		(! file_exists ( $objfile ) || ! TPL_CACHE) and keke_tpl_class::parse_template ( $tpl );
 		return $objfile;
@@ -313,20 +313,19 @@ class keke_tpl_class {
 		}
 		keke_tpl_class::obclean ();
 		($_K ['inajax']) and self::xml_out ( $content );
-		
-		//header('Cache-Control: max-age=800');
+		header ( 'Content-Type: text/html; charset='.CHARSET);
 		echo $content;
-		
 	}
 	static function obclean() {
 		global $_K;
-		 ob_end_clean();
-		 if($_K['inajax']==1 or GZIP===false){
-		 	ob_start();
-		 }else{
-		 	CHARSET==='utf-8' and ob_end_flush();
+		ob_get_length()>0 and ob_end_clean();
+		if($_K['inajax']==1){
+			ob_start();
+		}else{
 			ob_start('ob_gzhandler');
-		 }
+		}
+		
+
 		 
 	}
 	static function rewrite_url($pre, $para, $hot = '') {
@@ -337,7 +336,7 @@ class keke_tpl_class {
 		$url = http_build_query ( $s );
 		
 		$url = str_replace ( array ("do=", '&', '=' ), array ("", '-', '-' ), $url );
-		 
+ 
 		$hot = $hot ? "#" . $hot : '';
 		return '<a href="'.$url . '.html' . $hot . '"';
 	}

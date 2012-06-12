@@ -24,7 +24,7 @@ $dynamic_arr = kekezu::get_feed ( " feedtype='pub_task' or feedtype='work_accept
 $cash_cove_arr = kekezu::get_table_data ( '*', 'witkey_task_cash_cove', '', '', '', '', 'cash_rule_id', null );
 $website_url = "index.php?" . $_SERVER ['QUERY_STRING']; // 当前连接
 $task_cash_arr = keke_search_class::get_cash_cove (); // 任务赏金数组
-$end_time_arr = keke_glob_class::get_taskstatus_desc ();
+$end_time_arr = keke_global_class::get_taskstatus_desc ();
  
 $where_arr = get_where_arr ();
 if (isset ( $search_key )) { 
@@ -338,15 +338,15 @@ function get_wbtask_info($path) {
 	$result = array ();
 	global $kekezu;
 	
-	if ($kekezu->_model_list ['8'] ['model_status'] && $kekezu->_model_list ['9'] ['model_status']) {
+	if (kekezu::$_model_list ['8'] ['model_status'] && kekezu::$_model_list ['9'] ['model_status']) {
 		$sql = "SELECT d.*,a.task_id, concat(IFNULL(b.wb_platform,''),ifnull(c.wb_platform,'')) as platform  FROM `%switkey_task` a left join %switkey_task_wbzf b on  a.task_id = b.task_id LEFT JOIN  %switkey_task_wbdj c on a.task_id = c.task_id  
 	  left join " . TABLEPRE . "witkey_task_cash_cove d on a.task_cash_coverage=d.cash_rule_id
 	  where model_id =8 or model_id =9 and %s";
-	} elseif ($kekezu->_model_list ['8'] ['model_status']) {
+	} elseif (kekezu::$_model_list ['8'] ['model_status']) {
 		$sql = "SELECT d.*,a.task_id, IFNULL(b.wb_platform,'') as platform  FROM `%switkey_task` a left join %switkey_task_wbzf b on  a.task_id = b.task_id  
 		left join " . TABLEPRE . "witkey_task_cash_cove d on a.task_cash_coverage=d.cash_rule_id
 	  where model_id =8  and %s";
-	} elseif ($kekezu->_model_list ['9'] ['model_status']) {
+	} elseif (kekezu::$_model_list ['9'] ['model_status']) {
 		$sql = "SELECT d.*,a.task_id, ifnull(c.wb_platform,'') as platform  FROM `%switkey_task` a LEFT JOIN  %switkey_task_wbdj c on a.task_id = c.task_id 
 		left join " . TABLEPRE . "witkey_task_cash_cove d on a.task_cash_coverage=d.cash_rule_id
 	   where model_id =9 and %s";
@@ -372,4 +372,4 @@ function get_model() {
 	return $res;
 }
 
-require $kekezu->_tpl_obj->template ( $do );
+require kekezu::$_tpl_obj->template ( $do );

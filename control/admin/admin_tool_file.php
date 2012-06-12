@@ -8,7 +8,7 @@
  */
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 kekezu::admin_check_role (21);
-$file_type_arr = keke_glob_class::get_file_type();
+$file_type_arr = keke_global_class::get_file_type();
 $file_obj = new Keke_witkey_file_class (); //实例化附件表对象
  
 $backup_patch = S_ROOT . './data/uploads/';

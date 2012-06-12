@@ -104,7 +104,7 @@ class dtender_release_class extends keke_task_release_class {
 	
 	public function set_dtask_status($total_cash, $task_cash) {
 		global $kekezu;
-		$basic_config = $kekezu->_sys_config;
+		$basic_config = kekezu::$_sys_config;
 		$balance = $this->_user_info ['balance'];
 		$credit = $this->_user_info ['credit'];
 		if ($balance + $credit >= $total_cash) { //用户金额满足总花费的情况下

@@ -12,7 +12,7 @@ $status = array (0 => $_lang['to_be_evaluated'], 1 => $_lang['good_value'], 2 =>
 $form = array (1 => $_lang['witkey'], 2 => $_lang['employer'] );
 
 $obj_arr = array ('task' => $_lang['task'], 'work' => $_lang['workl'], 'shop' => $_lang['goods'] );
-$model_type_arr = keke_glob_class::get_model_type ();
+$model_type_arr = keke_global_class::get_model_type ();
 $model_list = kekezu::get_table_data ( '*', 'witkey_model', '', 'model_id asc ', '', '', 'model_code');
 $mark_obj = keke_table_class::get_instance ( 'witkey_mark' );
 $page and $page=intval ( $page ) or $page = 1;
@@ -38,4 +38,4 @@ if ($ac == 'del' && $mark_id) {
 	$pages = $data ['pages'];
 }
 
-require $kekezu->_tpl_obj->template ( "control/admin/tpl/admin_" . $do . "_" . $view . "_" . $op );
+require kekezu::$_tpl_obj->template ( "control/admin/tpl/admin_" . $do . "_" . $view . "_" . $op );

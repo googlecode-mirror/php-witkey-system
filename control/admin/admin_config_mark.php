@@ -19,7 +19,7 @@ if (isset ( $op )) {
 				$mark_info = $mark_rule_obj->query_keke_witkey_mark_rule ();
 				$mark_info = $mark_info ['0'];
 			}
-			require $kekezu->_tpl_obj->template ( "control/admin/tpl/admin_" . $do . "_" . $view . "_edit" );
+			require kekezu::$_tpl_obj->template ( "control/admin/tpl/admin_" . $do . "_" . $view . "_edit" );
 			break;
 		case "del" :
 			intval ( $mark_rule_id ) or kekezu::admin_show_msg ($_lang['parameter_error_fail_to_delete'], $url,3,'','warning' );
@@ -61,5 +61,5 @@ if (isset ( $op )) {
 } else {//ап╠М
 	 
 	$mark_rule = $mark_rule_obj->query_keke_witkey_mark_rule ();
-	require $kekezu->_tpl_obj->template ( "control/admin/tpl/admin_{$do}_{$view}" );
+	require kekezu::$_tpl_obj->template ( "control/admin/tpl/admin_{$do}_{$view}" );
 }

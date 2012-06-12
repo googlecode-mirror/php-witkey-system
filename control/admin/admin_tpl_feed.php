@@ -13,7 +13,7 @@ kekezu::admin_check_role (57);
 $feed_obj = new Keke_witkey_feed_class ();
  
 $tag_obj = new Keke_witkey_tag_class ();
-$feed_type = keke_glob_class::get_feed_type ();
+$feed_type = keke_global_class::get_feed_type ();
 
 $template_arr = db_factory::query ( " select tpl_title from " . TABLEPRE . "witkey_template", 1, null );
 
@@ -53,9 +53,9 @@ if ($type === 'manage') {
 }
 
 $limit = $slt_page_size;
-$kekezu->_page_obj->setAjax(1);
-$kekezu->_page_obj->setAjaxDom("ajax_dom");
-$pages = $kekezu->_page_obj->getPages ( $count, $limit, $page, $url );
+kekezu::$_page_obj->setAjax(1);
+kekezu::$_page_obj->setAjaxDom("ajax_dom");
+$pages = kekezu::$_page_obj->getPages ( $count, $limit, $page, $url );
 
 //查询结果数组
 if ($type == 'data' || ! isset ( $type ) || $type == '') {
@@ -118,4 +118,4 @@ if (isset ( $sbt_action ) && $sbt_action == $_lang['mulit_delete']) {
 	}
 }
 
-require $kekezu->_tpl_obj->template ( 'control/admin/tpl/admin_tpl_' . $view . '_' . $type );
+require kekezu::$_tpl_obj->template ( 'control/admin/tpl/admin_tpl_' . $view . '_' . $type );

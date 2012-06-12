@@ -11,8 +11,8 @@ defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 kekezu::admin_check_role (76 );
 
 $recharge_obj = new Keke_witkey_order_charge_class(); //实例化充值表对象
-$page_obj = $kekezu->_page_obj; //实例化分页对象
-$charge_type_arr=keke_glob_class::get_charge_type();/*充值订单类型*/
+$page_obj = kekezu::$_page_obj; //实例化分页对象
+$charge_type_arr=keke_global_class::get_charge_type();/*充值订单类型*/
 $status_arr = keke_order_class::get_order_status();
 $offline_pay=kekezu::get_table_data ( "*", "witkey_pay_api", " type='offline'", '', '', '', 'payment' ); //线下支付方式
 //var_dump($offline_pay);
@@ -21,7 +21,7 @@ $w [page_size] and $page_size = intval ( $w [page_size] ) or $page_size =10;
 intval ( $page ) or $page = '1';
 $url = "index.php?do=$do&view=$view&w[order_status]=$w[order_status]&w[order_id]=$w[order_id]&w[order_type]=$w[order_type]&w[username]=$w[username]&w[page_size]=$page_size&w[ord]=$w[ord]&page=$page";
 
-$bank_arr     = keke_glob_class::get_bank();
+$bank_arr     = keke_global_class::get_bank();
 if (isset ( $ac )) { //处理财务清单申请
 $order_info=db_factory::get_one(" select * from ".TABLEPRE."witkey_order_charge where order_id = ".intval($order_id));
 //邮件

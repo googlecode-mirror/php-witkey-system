@@ -53,7 +53,7 @@ if ($sbt_edit) {//±à¼­
 	
 	$payitem_list=keke_payitem_class::get_payitem_config('employer');
 	/*ÐÐÒµ*/
-	$indus_arr = $kekezu->_indus_arr;
+	$indus_arr = kekezu::$_indus_arr;
 	$temp_arr = array ();
 	$indus_option_arr = $indus_arr;
 	kekezu::get_tree ( $indus_option_arr, $temp_arr, "option", $task_info ['indus_id'] );
@@ -62,4 +62,4 @@ if ($sbt_edit) {//±à¼­
 if($res){
 	kekezu::admin_show_msg ( $_lang['task_operate_success'], "index.php?do=model&model_id=$model_id&view=list",3,'','success' );
 }
-require $kekezu->_tpl_obj->template ( 'task/' . $model_info ['model_dir'] . '/control/admin/tpl/task_edit' );
+require kekezu::$_tpl_obj->template ( 'task/' . $model_info ['model_dir'] . '/control/admin/tpl/task_edit' );

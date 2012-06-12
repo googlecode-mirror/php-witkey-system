@@ -104,7 +104,7 @@ if($ac=='del')
 		
 		$art_cat_obj->setWhere('art_cat_id='.$art_cat_id);
 		$res = $art_cat_obj->del_keke_witkey_article_category();
-		$kekezu->_cache_obj->del('keke_witkey_article_category');
+		kekezu::$_cache_obj->del('keke_witkey_article_category');
 		kekezu::admin_system_log($_lang['delete_cate'] . $art_cat_id); //日志记录
 		kekezu::admin_show_msg($_lang['cate_delete_successfully'],'index.php?do='.$do.'&view='.$view.'&type='.$type,3,'','success');
 	}
@@ -138,7 +138,7 @@ if (isset ( $sbt_action ))
 			break;
 			;
 	}
-	$kekezu->_cache_obj->del('keke_witkey_article_category');
+	kekezu::$_cache_obj->del('keke_witkey_article_category');
 	kekezu::admin_system_log($_lang['mulit_delete_cate'] . $ids ); //日志记录
 	if($res)
 	{

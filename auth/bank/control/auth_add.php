@@ -15,7 +15,7 @@ $ac_url = $origin_url . "&op=$op&auth_code=$auth_code&ver=".intval($ver);
 /*关联账号列表*/
 $account_list = kekezu::get_table_data("*","witkey_member_bank"," uid = '$uid' and bind_status='1'",'','','','bank_id');
 
-$bank_arr=keke_glob_class::get_bank();//银行列表
+$bank_arr=keke_global_class::get_bank();//银行列表
 $auth_info[1] and $show='list';//存在多条认证记录。显示列表
 switch ($auth_step) {
 	case "step1" :

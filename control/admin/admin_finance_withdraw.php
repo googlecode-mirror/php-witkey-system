@@ -10,10 +10,10 @@ defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 kekezu::admin_check_role ( 5 );
 $withdraw_obj = new Keke_witkey_withdraw_class (); //实例化提现表对象
 $user_space_obj = new Keke_witkey_space_class (); //实例化用户信息表对象
-$page_obj = $kekezu->_page_obj; //实例化分页对象
+$page_obj = kekezu::$_page_obj; //实例化分页对象
 $paytype_list = kekezu::get_table_data ( "payment,config", "witkey_pay_api", " type!='trust'", "", "", "", "payment" );
-$status_arr  = keke_glob_class::withdraw_status();
-$bank_arr = keke_glob_class::get_bank();
+$status_arr  = keke_global_class::withdraw_status();
+$bank_arr = keke_global_class::get_bank();
 //分页
 $w ['page_size'] and $page_size = intval ( $w ['page_size'] ) or $page_size = 10;
 $page and $page = intval ( $page ) or $page = '1';
@@ -60,7 +60,7 @@ if (isset ( $ac )) { //处理财务清单申请
 					kekezu::admin_system_log ( $_lang['audit_withdraw_apply'] . $withdraw_id );
 					kekezu::admin_show_msg ( $_lang['audit_withdraw_pass'], 'index.php?do=' . $do . '&view=' . $view,3,'','success');
 				}else{
-					$bank_arr=keke_glob_class::get_bank();
+					$bank_arr=keke_global_class::get_bank();
 					$k_arr   = array_keys($bank_arr);
 				}
 				require $template_obj->template ( 'control/admin/tpl/admin_finance_withdraw_info' );

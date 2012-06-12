@@ -53,8 +53,8 @@ function get_art_list($page, $page_size, $url, $where,$static=0) {
 
 	$count = intval ( db_factory::get_count ( $csql,0,null, 10*60 ) );
 	
-	$kekezu->_page_obj->setStatic($static);
-	$pages = $kekezu->_page_obj->getPages ( $count, $page_size, $page, $url );
+	kekezu::$_page_obj->setStatic($static);
+	$pages = kekezu::$_page_obj->getPages ( $count, $page_size, $page, $url );
 	$art_arr = db_factory::query ( $sql . $pages ['where'], 5*60 );
 	return array("date"=>$art_arr,"pages"=>$pages);//返回分页数据和文章数组组成的多维数组
 }

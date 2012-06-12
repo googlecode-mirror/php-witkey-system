@@ -76,7 +76,7 @@ switch ($opp) {
 		 * ¼¼ÄÜ*
 		 */
 		$user_info ['indus_id'] and $user_indus = db_factory::get_one ( sprintf ( " select * from %switkey_industry where indus_id='%d'", TABLEPRE, $user_info ['indus_id'] ) );
-		$indus_p_arr = $kekezu->_indus_p_arr;
+		$indus_p_arr = kekezu::$_indus_p_arr;
 		switch ($ac) {
 			case "get_skill" :
 				$skill_arr = kekezu::get_skill ();

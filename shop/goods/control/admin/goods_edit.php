@@ -8,7 +8,7 @@
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 $pk['service_id'] and $service_id=$pk['service_id'];
 $service_id or kekezu::admin_show_msg($_lang['please_choose_should_edit_goods'],'index.php?do=model&model_id=6&view=list',3,'','warning');
-$indus_p_arr = $kekezu->_indus_p_arr;
+$indus_p_arr = kekezu::$_indus_p_arr;
 $goods_status_arr = goods_shop_class::get_goods_status();
 //$status_arr = array("1"=>"¥˝…Û∫À","4"=>"Ω˚”√","5"=>"∆Ù”√");
 

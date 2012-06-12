@@ -52,9 +52,9 @@ if (isset ( $ac )) {//É¾³ı
 	//·ÖÒ³
 	$prom_event_obj->setWhere ( $where );
 	$count = $prom_event_obj->count_keke_witkey_prom_event ();
-	$kekezu->_page_obj->setAjax(1);
-	$kekezu->_page_obj->setAjaxDom('ajax_dom');
-	$pages = $kekezu->_page_obj->getPages ( $count, $page_size, $page, $url );
+	kekezu::$_page_obj->setAjax(1);
+	kekezu::$_page_obj->setAjaxDom('ajax_dom');
+	$pages = kekezu::$_page_obj->getPages ( $count, $page_size, $page, $url );
 	
 	$prom_event_obj->setWhere ( $where . $pages ['where'] );
 	$prom_event_arr = $prom_event_obj->query_keke_witkey_prom_event ();

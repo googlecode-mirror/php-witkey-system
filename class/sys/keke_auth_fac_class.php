@@ -98,7 +98,7 @@ class keke_auth_fac_class {
 					$auth_item['auth_big_ico']     and keke_file_class::del_file($auth_item['auth_big_ico']); 
 					$auth_item_obj->setWhere ("auth_code='$auth_code'" );
 					$res = $auth_item_obj->del_keke_witkey_auth_item ();
-					$res and $kekezu->_cache_obj->del ( $cash_name );
+					$res and kekezu::$_cache_obj->del ( $cash_name );
 					$res and kekezu::admin_system_log ( $_lang['delete_auth_item'] . $auth_item['auth_title'] );
 					
 					if (file_exists ( S_ROOT . "./auth/" . $auth_item['auth_dir'] . "/control/admin/uninstall_sql.php" )) {
@@ -143,7 +143,7 @@ class keke_auth_fac_class {
 // 		var_dump($data);
 		$res=$tab_obj->save($data,$pk);//±£´æ.±à¼­
 		if($res){
-			$kekezu->_cache_obj->del('auth_item_cache_list');
+			kekezu::$_cache_obj->del('auth_item_cache_list');
 			kekezu::admin_system_log($_lang['edit_auth_item'].$auth_item['auth_title']);
 			kekezu::admin_show_msg($_lang['auth_item_edit_success'],$_SERVER['HTTP_REFERER'],3,'','success');
 		}else{

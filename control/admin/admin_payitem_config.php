@@ -9,7 +9,7 @@
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 
 $payitem=keke_payitem_class::get_payitem_config(null,null,$item_code,0);
-$payitem_type = keke_glob_class::get_payitem_type();
+$payitem_type = keke_global_class::get_payitem_type();
 $ac=='download' and keke_file_class::file_down($file_name, $file_path);
 if($sbt_edit){
 	$payitem_obj=keke_table_class::get_instance("witkey_payitem");
@@ -26,11 +26,11 @@ if($sbt_edit){
 	}else 
 		kekezu::admin_show_msg($payitem['item_name'].$_lang['edit_fail'],$_SERVER['HTTP_REFERER'],"3",'','warning');
 }else{
-	$model_list=$kekezu->_model_list;
+	$model_list=kekezu::$_model_list;
     $code_arr=explode(",",$payitem['model_code']);
 	
 }
-$kekezu->_cache_obj->gc();
+kekezu::$_cache_obj->gc();
 require keke_tpl_class::template("/control/payitem/$item_code/tpl/admin_config");
 function get_fid($path){//删除图片时获取图片对应的fid,图片的存放形式是e.g ...img.jpg?fid=1000
 	if(!path){ return false;}

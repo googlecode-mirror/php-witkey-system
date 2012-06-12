@@ -170,7 +170,7 @@ class tender_task_class extends keke_task_class {
 			$this->plus_work_num (); // 更新任务稿件数量
 			$this->plus_take_num (); // 更新用户交稿数量
 			$url = '<a href ="' . $_K ['siteurl'] . '/index.php?do=task&task_id=' . $this->_task_id . '">' . $this->_task_title . '</a>';
-			$v_arr = array ($_lang['username'] => "$this->_gusername", $_lang['user'] => $this->_username, $_lang['call'] => $_lang['you'], $_lang['task_title'] => $url, $_lang['website_name'] => $kekezu->_sys_config ['website_name'] );
+			$v_arr = array ($_lang['username'] => "$this->_gusername", $_lang['user'] => $this->_username, $_lang['call'] => $_lang['you'], $_lang['task_title'] => $url, $_lang['website_name'] => kekezu::$_sys_config ['website_name'] );
 			keke_shop_class::notify_user ( $this->_guid, $this->_gusername, 'task_hand', $_lang['hand_work_notice'], $v_arr );
 			
 			kekezu::notify_user ( $_lang['hand_work_notice'], $_lang['you_pub_tender_task_'] . '<a href=index.php?do=task&task_id=' . $this->_task_id . '&view=work>' . $this->_task_info ['task_title'] . '</a>' . $_lang['have_new_work'], $this->_guid );
@@ -303,7 +303,7 @@ class tender_task_class extends keke_task_class {
 		}
 		$where .= " order by work_time desc ";
 		if (! empty ( $p )) {
-			$page_obj = $kekezu->_page_obj;
+			$page_obj = kekezu::$_page_obj;
 			$count = intval ( db_factory::get_count ( $count_sql . $where ) );
 			$pages = $page_obj->getPages ( $count, $p ['page_size'], $p ['page'], $p ['url'], $p ['anchor'] );
 			$where .= $pages ['where'];
@@ -579,8 +579,8 @@ class tender_task_class extends keke_task_class {
 					 * 雇主推广事件产生
 					 */
 					$kekezu->init_prom ();
-					if ($kekezu->_prom_obj->is_meet_requirement ( "pub_task", $this->_task_id )) {
-						$kekezu->_prom_obj->create_prom_event ( "pub_task", $this->_guid, $task_info ['task_id'], $task_info ['task_cash'] );
+					if (kekezu::$_prom_obj->is_meet_requirement ( "pub_task", $this->_task_id )) {
+						kekezu::$_prom_obj->create_prom_event ( "pub_task", $this->_guid, $task_info ['task_id'], $task_info ['task_cash'] );
 					}
 					// 更改订单状态到已付款状态
 					db_factory::updatetable ( TABLEPRE . "witkey_order", array ("order_status" => "ok" ), array ("order_id" => "$order_id" ) );

@@ -58,7 +58,7 @@ class keke_comment_class {
 	function save_comment($comment_arr,$obj_id,$is_reply=false){
 		global $_lang,$kekezu;
 		strtolower ( CHARSET ) == 'gbk' and $comment_arr ['content'] = kekezu::utftogbk ( kekezu::escape($comment_arr ['content']) );
-		if(kekezu::k_match(array($kekezu->_sys_config['ban_content']),$comment_arr['content'])){
+		if(kekezu::k_match(array(kekezu::$_sys_config['ban_content']),$comment_arr['content'])){
 			return 3;
 			die();
 		}

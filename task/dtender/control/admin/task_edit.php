@@ -6,7 +6,7 @@
  * 2011-09-10 13:51:34
  */
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
-$model_list = $kekezu->_model_list;
+$model_list = kekezu::$_model_list;
 
 $task_status = dtender_task_class::get_task_status();
 $task_id = $task_id ? $task_id : kekezu::admin_show_msg ($_lang['param_error'], "index.php?do=model&model_id=$model_id&view=list",3,'','warning' );
@@ -48,7 +48,7 @@ if ($sbt_edit) {
 		kekezu::admin_show_msg ( $_lang['task_edit_fail'], "index.php?do=model&model_id=$model_id&view=edit&task_id=$task_id",3,'','warning' );
 	}
 }
-$indus_arr = $kekezu->_indus_arr;
+$indus_arr = kekezu::$_indus_arr;
 $temp_arr = array ();
 $indus_option_arr = $indus_arr;
 $indus_arr = kekezu::get_industry ( 1 );

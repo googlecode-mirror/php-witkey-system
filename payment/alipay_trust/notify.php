@@ -18,7 +18,7 @@ $sign_type = "DSA";
 
 $uid = $_SESSION['uid'];
 $username = $_SESSION['username'];
-$user_info = $kekezu->_userinfo;
+$user_info = kekezu::$_userinfo;
 //计算得出通知验证结果
 $alipayNotify = new AlipayNotify ( $payment_config ['seller_id'], $sign_type, $_input_charset );
 $verify_result = $alipayNotify->verifyNotify ();

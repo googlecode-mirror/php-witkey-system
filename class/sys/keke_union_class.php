@@ -69,7 +69,7 @@ class keke_union_class {
 				if (! $task_info) {
 					return false;
 				}
-				$model_code = $kekezu->_model_list [$task_info ['model_id']] ['model_code'];
+				$model_code = kekezu::$_model_list [$task_info ['model_id']] ['model_code'];
 				$task_info ['task_cash_coverage'] and $task_info ['cash_coveage'] = self::get_cash_cove ( $task_info ['task_cash_coverage'] );
 				$class_name = $model_code. '_task_class'; //对应的class name
 				$task_status_arr = call_user_func ( array ($class_name, 'get_task_union_status' ) ); //对应的状态数组
@@ -241,7 +241,7 @@ class keke_union_class {
 	 */
 	private function get_model_code() {
 		global $kekezu;
-		$model_arr = $kekezu->_model_list;
+		$model_arr = kekezu::$_model_list;
 		return $model_arr [$this->_model_id] ['model_code'];
 	}
 	static function jump($url) {

@@ -61,6 +61,6 @@ kekezu::get_tree ( $indus_arr, $temp_arr, 'option', NULL, 'indus_id', 'indus_pid
 $indus_arr = $temp_arr;
 
 unset ( $temp_arr );
-require $kekezu->_tpl_obj->template ( 'control/admin/tpl/admin_task_' . $view );
+require kekezu::$_tpl_obj->template ( 'control/admin/tpl/admin_task_' . $view );
 
 

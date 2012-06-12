@@ -74,7 +74,7 @@ class keke_auth_bank_class extends keke_auth_base_class {
 			if ($res) {
 				/** ×¢²áÍÆ¹ã½áËã*/
 				$kekezu->init_prom();
-				$kekezu->_prom_obj->dispose_prom_event($this->_auth_name,$uid,$uid);
+				kekezu::$_prom_obj->dispose_prom_event($this->_auth_name,$uid,$uid);
 				 $feed_arr = array(	
 			 		"feed_username"=>array("content"=>$username,"url"=>"index.php?do=space&member_id=$uid "),
 					"action"=>array("content"=>$_lang['have_passed'],"url"=>""),

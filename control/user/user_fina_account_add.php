@@ -33,7 +33,7 @@ switch ($step){
 		$enterprise_auth=keke_auth_fac_class::auth_check('enterprise', $uid);
 		!$enterprise_auth&&$bank_type=='2' and  kekezu::show_msg( $_lang['enterprise_auth_not_pass'],$ac_url."#userCenter","3",'','warning');
 		
-		$bank_arr=keke_glob_class::get_bank();//银行列表
+		$bank_arr=keke_global_class::get_bank();//银行列表
 		$bank_zone=$_SESSION['bank_zone'];//银行地区
 		$bank_detail=$_SESSION['bank_zone_detail'];//银行详细地区所在
 		
@@ -71,7 +71,7 @@ switch ($step){
 		}
 		break;
 	case "step4":
-		$bank_arr=keke_glob_class::get_bank();//银行列表
+		$bank_arr=keke_global_class::get_bank();//银行列表
 		$bank_info=db_factory::get_one(sprintf(" select * from %switkey_member_bank where bank_id='%d' and uid='%d' and bind_status='1' ",TABLEPRE,$bank_id,$uid));
 		$bank_info or kekezu::show_msg( $_lang['no_binding_account_please_bind'],"$ac_url&step=step1","3","","warning");
 		break;

@@ -8,7 +8,7 @@
  */
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 kekezu::admin_check_role(20);
-$indus_p_arr = $kekezu->_indus_p_arr;  
+$indus_p_arr = kekezu::$_indus_p_arr;  
 $url = "index.php?do=$do&view=$view";
 if (isset($sbt_edit)){
         $to_indus_id or kekezu::admin_show_msg($_lang['target_industry_not_top'],$url,2,'','warning');

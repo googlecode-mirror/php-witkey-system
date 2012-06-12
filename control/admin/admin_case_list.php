@@ -55,9 +55,9 @@ if (isset ( $ac )) { //µ¥¸öÉ¾³ý
 	is_array($w['ord']) and $where .= ' order by '.$w['ord']['0'].' '.$w['ord']['1'];
 	
 	//$w ['ord'] and $where .= " order by $w['ord']" or $where .= " order by case_id desc";//ÅÅÐò
-	$kekezu->_page_obj->setAjax(1);
-	$kekezu->_page_obj->setAjaxDom("ajax_dom");
-	$pages = $kekezu->_page_obj->getPages ( $count, $page_size, $page, $url );
+	kekezu::$_page_obj->setAjax(1);
+	kekezu::$_page_obj->setAjaxDom("ajax_dom");
+	$pages = kekezu::$_page_obj->getPages ( $count, $page_size, $page, $url );
 	$sql.=$where.$pages['where'];
 	$case_arr =db_factory::query($sql);
 }

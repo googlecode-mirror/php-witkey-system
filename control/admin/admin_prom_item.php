@@ -48,7 +48,7 @@ $w ['ord'] and $where .= " order by {$w['ord']} " or $where .= " order by item_i
 
 $prom_item_obj->setWhere ( $where );
 $count = $prom_item_obj->count_keke_witkey_prom_item ();
-$pages = $kekezu->_page_obj->getPages ( $count, $page_size, $page, $url );
+$pages = kekezu::$_page_obj->getPages ( $count, $page_size, $page, $url );
 $prom_item_obj->setWhere ( $where . $pages ['where'] );
 $prom_item_arr = $prom_item_obj->query_keke_witkey_prom_item ();
 

@@ -33,9 +33,9 @@ if ($model_id) {
 	/**排序数组**/
 	$model_id = intval($model_id);
 	$ord_arr = array (" order_id desc " => $_lang['order_id_desc'], " order_id asc " => $_lang['order_id_asc'], " order_time desc " => $_lang['buy_time_desc'], " order_time asc " => $_lang['buy_time_asc'] );
-	$page_obj = $kekezu->_page_obj; //分页对象
+	$page_obj = kekezu::$_page_obj; //分页对象
 	$order_obj = new Keke_witkey_order_class();
-	$model_code = $kekezu->_model_list[$model_id]['model_code'];
+	$model_code = kekezu::$_model_list[$model_id]['model_code'];
 	
 	$status_arr = call_user_func(array($model_code."_shop_class","get_order_status")); //订单状态
 	

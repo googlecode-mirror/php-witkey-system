@@ -25,7 +25,7 @@ $task_cash_arr = keke_search_class::get_cash_cove();
 //任务赏金数组 
 $task_indus_type = kekezu::get_industry (0);
 //获取行业分类 
-$indus_all_arr = $kekezu->_indus_arr;
+$indus_all_arr = kekezu::$_indus_arr;
 //所有行业的数组 
 $where_arr = get_where_arr();
 //条件大数组 
@@ -41,7 +41,7 @@ $url = "index.php?do=shop_list&page_size=$page_size&min=$min&max=$max&path=$path
 $page_size = intval ( $page_size ) ? intval ( $page_size ) : 20;
 $count = db_factory::execute ( $sql . $where );
 $page = $page ? $page : 1;
-$pages = $kekezu->_page_obj->getPages ( $count, $page_size, $page, $url );
+$pages = kekezu::$_page_obj->getPages ( $count, $page_size, $page, $url );
 $where .= $pages ['where'];  
 
 /*结果数组赋值*/ 
@@ -159,4 +159,4 @@ function get_where_arr(){
 
  
 
-require $kekezu->_tpl_obj->template ( $do );
+require kekezu::$_tpl_obj->template ( $do );

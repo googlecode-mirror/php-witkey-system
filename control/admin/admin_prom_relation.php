@@ -51,9 +51,9 @@ if (isset ( $ac )) { //单个操作
 	//echo $where;
 	$prom_relation_obj->setWhere ( $where );
 	$count = $prom_relation_obj->count_keke_witkey_prom_relation ();
-	$kekezu->_page_obj->setAjax(1);
-	$kekezu->_page_obj->setAjaxDom('ajax_dom');
-	$pages = $kekezu->_page_obj->getPages ( $count, $page_size, $page, $url ); //分页
+	kekezu::$_page_obj->setAjax(1);
+	kekezu::$_page_obj->setAjaxDom('ajax_dom');
+	$pages = kekezu::$_page_obj->getPages ( $count, $page_size, $page, $url ); //分页
 	//查询结果数组
 	$prom_relation_obj->setWhere ( $where . $pages ['where'] );
 	$prom_relation_arr = $prom_relation_obj->query_keke_witkey_prom_relation ();

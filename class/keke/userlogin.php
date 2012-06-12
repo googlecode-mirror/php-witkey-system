@@ -7,7 +7,7 @@
  * 2010-7-6上午11:52:51
  */
 keke_lang_class::load_lang_class ( 'keke_user_login_class' );
-class keke_user_login_class {
+class keke_userlogin {
 	protected $_space_obj;
 	protected $_login_uid;
 	protected $_username;
@@ -24,10 +24,10 @@ class keke_user_login_class {
 	function __construct() {
 		//信息初始化
 		global $kekezu;
-		$this->_space_obj = new Keke_witkey_space_class ();
-		$this->_auth_record_obj = new Keke_witkey_auth_record_class ();
-		$this->_auth_email_obj = new Keke_witkey_auth_email_class ();
-		$this->_sys_config = $kekezu->_sys_config;
+		$this->_space_obj = new keke_witkey_space();
+		$this->_auth_record_obj = new keke_witkey_auth_record();
+		$this->_auth_email_obj = new keke_witkey_auth_email();
+		$this->_sys_config = kekezu::$_sys_config;
 	
 		//用户登录	
 	
@@ -225,7 +225,7 @@ class keke_user_login_class {
 		global $_lang;
 		$_SESSION ['uid'] = $user_info ['uid'];
 		$_SESSION ['username'] = $user_info ['username'];
-		/*	$_SESSION [$uid."_".$kekezu->_sys_config[website_url]] = 1;*/
+		/*	$_SESSION [$uid."_".kekezu::$_sys_config[website_url]] = 1;*/
 		$oauth_login = intval ( $oauth_login );
 		$login_type = $this->_login_type;
 		if (isset($ckb_cookie)&&$ckb_cookie == 1) {
@@ -257,7 +257,7 @@ class keke_user_login_class {
 		 */
 		if (isset($_COOKIE ['user_prom_event'])&&$_COOKIE ['user_prom_event']) {
 			$kekezu->init_prom ();
-			$prom_obj = $kekezu->_prom_obj;
+			$prom_obj = kekezu::$_prom_obj;
 			$url_data = $prom_obj->extract_prom_cookie ();
 			$url_data ['p'] == 'reg' or $prom_obj->create_prom_relation ( $user_info ['uid'], $user_info ['username'], $url_data, '2' );
 		}
@@ -288,7 +288,7 @@ class keke_user_login_class {
 			if ($oauth_login == 1) {
 				kekezu::show_msg ( $_lang ['notice_message'], $r, 1, $_lang ['login_success'] . "$synhtml", "alert_right" );
 			
-		//$kekezu->_tpl_obj->xml_out ( "<h1>登录成功!</h1> $synhtml <script>window.location.href='$r'</script>" );
+		//kekezu::$_tpl_obj->xml_out ( "<h1>登录成功!</h1> $synhtml <script>window.location.href='$r'</script>" );
 			} else {
 				echo "$synhtml<script>window.location.href='$r';hideWindow('oauth_login_frm1')</script>";
 			}

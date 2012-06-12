@@ -15,8 +15,8 @@ $g_uid = $task_obj->_guid;
 $model_id = $task_obj->_model_id;
 $task_status = $task_obj->_task_status;
 //$indus_all_arr = kekezu::get_industry(0); 
-$indus_arr = $kekezu->_indus_c_arr; //子行业集
-$indus_p_arr = $kekezu->_indus_p_arr; //父行业集
+$indus_arr = kekezu::$_indus_c_arr; //子行业集
+$indus_p_arr = kekezu::$_indus_p_arr; //父行业集
 $cove_arr = kekezu::get_table_data("*","witkey_task_cash_cove","","","","","cash_rule_id");
 $trust_mode=$task_obj->_trust_mode;//担保模式
 $status_arr = $task_obj->_task_status_arr; //任务状态数组
@@ -79,7 +79,7 @@ switch ($op) {
 			$max_day  = intval($task_config['max_delay']);//配置最大延期天数
 			$this_min_cash = intval($delay_rule[$delay_count]['defer_rate']*$task_info['task_cash']/100);//本次最小延期金额
 			$min_cash>$this_min_cash and $real_min = $min_cash or $real_min = $this_min_cash;//真正最小金额
-			$credit_allow =  intval($kekezu->_sys_config ['credit_is_allow']);//金币开启
+			$credit_allow =  intval(kekezu::$_sys_config ['credit_is_allow']);//金币开启
 			require keke_tpl_class::template("task/task_delay");
 		die();
 		break;

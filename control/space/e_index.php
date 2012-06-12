@@ -8,11 +8,11 @@
 
 defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 //任务描述 
-$end_time_arr = keke_glob_class::get_taskstatus_desc();
+$end_time_arr = keke_global_class::get_taskstatus_desc();
 
 //任务模型
-$model_list = $kekezu->_model_list; 
-$indus_arr_all = $kekezu->_indus_arr;
+$model_list = kekezu::$_model_list; 
+$indus_arr_all = kekezu::$_indus_arr;
 //发布的任务
 $sql = sprintf("select * from %switkey_task where uid=%d and task_status!=0 and task_status!=1 order by start_time desc limit 0,5",TABLEPRE,$member_id);
 $pub_task_arr = db_factory::query($sql);

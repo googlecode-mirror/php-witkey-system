@@ -28,12 +28,12 @@ if ($ac === 'del') {
 	$auth_item_obj->setWhere ( $where );
 	$count = $auth_item_obj->count_keke_witkey_auth_item ();
 	$page or $page = 1 and $page = intval ( $page );
-	$kekezu->_page_obj->setAjax(1);
-	$kekezu->_page_obj->setAjaxDom("ajax_dom");
-	$pages = $kekezu->_page_obj->getPages ( $count, $page_size, $page, $url );
+	kekezu::$_page_obj->setAjax(1);
+	kekezu::$_page_obj->setAjaxDom("ajax_dom");
+	$pages = kekezu::$_page_obj->getPages ( $count, $page_size, $page, $url );
 	$where .= " order by listorder asc ";
 	$auth_item_obj->setWhere ( $where . $pages ['where'] );
 	$auth_item_arr = $auth_item_obj->query_keke_witkey_auth_item ();
 }
 
-require $kekezu->_tpl_obj->template ( 'control/admin/tpl/admin_' . $do . '_' . $view );
+require kekezu::$_tpl_obj->template ( 'control/admin/tpl/admin_' . $do . '_' . $view );

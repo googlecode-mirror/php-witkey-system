@@ -47,7 +47,7 @@ class keke_shop_class {
 		$order_info = self::check_has_buy ( $sid, $uid );
 		$order_status = $order_info ['order_status'];
 		$order_id = intval ( $order_info ['order_id'] );
-		$model_code = $kekezu->_model_list [$model_id] ['model_code'];
+		$model_code = kekezu::$_model_list [$model_id] ['model_code'];
 		if (! $order_status) {
 			return true;
 		} else {

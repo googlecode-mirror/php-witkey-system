@@ -8,7 +8,7 @@
 
 defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 
-$page_obj = $kekezu->_page_obj;
+$page_obj = kekezu::$_page_obj;
 $action or $action = 'basic';
 /**三级菜单**/
 $third_nav=array("basic"=>array($_lang['finance_detail'],$_lang['finance_record_stats']),
@@ -24,7 +24,7 @@ switch ($action) {
 	case "basic" :
 		
 		$fina_obj = new Keke_witkey_finance_class ();
-		$action_arr = keke_glob_class::get_finance_action (); //财务用途
+		$action_arr = keke_global_class::get_finance_action (); //财务用途
 		$ord_arr = array (" fina_id desc " =>$_lang['finance_id_desc'], " fina_id asc " =>$_lang['finance_id_asc'], " fina_time desc " =>$_lang['pay_time_desc'], " fina_time asc " => $_lang['pay_time_asc']);
 		$fina_count =kekezu::get_table_data(" sum(fina_cash) as cash, sum(fina_credit) as credit,fina_type ","witkey_finance"," $where    and fina_action not in ('withdraw','offline_recharge','online_charge')",""," fina_type","","fina_type");
 		/**搜索条件 start**/
@@ -42,8 +42,8 @@ switch ($action) {
 		break;
 	case "charge" :
 		$charge_obj=new Keke_witkey_order_charge_class();//充值记录表
-		$order_type_arr=keke_glob_class::get_charge_type();/*充值订单类型*/
-		$bank_arr=keke_glob_class::get_bank();
+		$order_type_arr=keke_global_class::get_charge_type();/*充值订单类型*/
+		$bank_arr=keke_global_class::get_bank();
 		$status_arr = keke_order_class::get_order_status();
 		$ord_arr = array (" order_id desc " =>$_lang['recharge_id_desc'], " order_id asc " => $_lang['recharge_id_asc'], " pay_time desc " =>$_lang['recharge_time_desc'], " pay_time asc " =>$_lang['recharge_time_asc']);
 		$fina_count =kekezu::get_table_data(" sum(pay_money) as cash,order_status ","witkey_order_charge"," $where ",""," order_status","","order_status");
@@ -60,7 +60,7 @@ switch ($action) {
 		$charge_arr=$charge_obj->query_keke_witkey_order_charge();
 		break;
 	case "withdraw" :
-		$status_arr  = keke_glob_class::withdraw_status();
+		$status_arr  = keke_global_class::withdraw_status();
 		$withdraw_obj=new Keke_witkey_withdraw_class();//提现记录表
 		$fina_count =kekezu::get_table_data(" sum(withdraw_cash) as cash,withdraw_status ","witkey_withdraw"," $where ",""," withdraw_status","","withdraw_status");
 	

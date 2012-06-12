@@ -8,7 +8,7 @@
 
 defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /*获取绑定列表*/
-$bank_arr=keke_glob_class::get_bank();//银行列表
+$bank_arr=keke_global_class::get_bank();//银行列表
 $ac_url=$origin_url."&op=$op&opp=$opp";
 if($rebind){
 	if($bank_id){

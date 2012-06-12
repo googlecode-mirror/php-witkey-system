@@ -13,7 +13,7 @@ $agree_info or kekezu::keke_show_msg("index.php",$_lang['illegal_in_no_exits'],'
 
 $agree_info['buyer_uid']!=$uid&&$agree_info['seller_uid']!=$uid and kekezu::keke_show_msg("index.php",$_lang['wain_you_no_double']);
 
-$model_info = $kekezu->_model_list[$agree_info['model_id']];
+$model_info = kekezu::$_model_list[$agree_info['model_id']];
 //任务模型
 $model_info or kekezu::keke_show_msg("index.php",$_lang['now_model_no_exits_no_in'],'error');
 

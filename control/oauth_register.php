@@ -10,10 +10,10 @@ defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 // 初始化对象
 $type or exit(kekezu::show_msg($_lang['operate_notice'],"index.php?do=login",2,$_lang['type_no_empty'],"warning"));
 $page_title=$_lang['login']."-".$_K['html_title'];
-$open_api_arr = keke_glob_class::get_open_api ();
+$open_api_arr = keke_global_class::get_open_api ();
 //获取登录平台
-$oauth_type_arr = keke_glob_class::get_oauth_type ();
-$oauth_url = $kekezu->_sys_config ['website_url'] . "/index.php?do=$do&type=$type";
+$oauth_type_arr = keke_global_class::get_oauth_type ();
+$oauth_url = kekezu::$_sys_config ['website_url'] . "/index.php?do=$do&type=$type";
 //aouth登录
 
 $oa = new keke_oauth_login_class ( $type );

@@ -45,8 +45,8 @@ switch ($ajax) {
 		$promtext or $promtext = $_K ['html_title'];
 		break;
 	case "prom_list" :
-		$model_list = $kekezu->_model_list;
-		$page_obj = $kekezu->_page_obj;
+		$model_list = kekezu::$_model_list;
+		$page_obj = kekezu::$_page_obj;
 		$page_obj->setAjax ( '1' );
 		$page_obj->setAjaxDom ( 'ajax_list' );
 		$page or $page = 1;

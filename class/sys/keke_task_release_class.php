@@ -34,7 +34,7 @@ abstract class keke_task_release_class {
 		$this->_model_id = $model_id;
 		$this->_pub_mode = $pub_mode;
 		
-		$this->_model_info = $kekezu->_model_list [$model_id];
+		$this->_model_info = kekezu::$_model_list [$model_id];
 		
 		$this->_std_obj = new stdClass ();
 		$this->_std_obj->_release_info = array (); //任务发布信息
@@ -90,7 +90,7 @@ abstract class keke_task_release_class {
 			$bind_indus = implode ( ',', array_filter ( explode ( ',', $this->_model_info ['indus_bid'] ) ) );
 			return kekezu::get_table_data ( '*', "witkey_industry", "indus_id in (select indus_pid from " . TABLEPRE . "witkey_industry where indus_id in({$bind_indus}))", 'listorder desc', '', '', 'indus_id', null );
 		} else {
-			return $this->_indus_arr = $kekezu->_indus_p_arr;
+			return $this->_indus_arr = kekezu::$_indus_p_arr;
 		
 		}
 	}
@@ -184,7 +184,7 @@ abstract class keke_task_release_class {
 	 */
 	public function set_task_status($total_cash, $task_cash) {
 		global $kekezu;
-		$basic_config = $kekezu->_sys_config;
+		$basic_config = kekezu::$_sys_config;
 		$balance = $this->_user_info ['balance'];
 		$credit = $this->_user_info ['credit'];
 		if ($balance + $credit >= $total_cash) { //用户金额满足总花费的情况下
@@ -389,7 +389,7 @@ abstract class keke_task_release_class {
 		if ($this->_model_info ['model_code'] != 'tender') {
 			$this->_model_info ['model_code'] == 'dtender' and $task_cash = $task_obj->getReal_cash () or $task_cash = $task_obj->getTask_cash ();
 			$kekezu->init_prom ();
-			$prom_obj = $kekezu->_prom_obj;
+			$prom_obj = kekezu::$_prom_obj;
 			if ($prom_obj->is_meet_requirement ( "pub_task", $task_id )) {
 				$prom_obj->create_prom_event ( "pub_task", $this->_uid, $task_id, $task_cash );
 			}

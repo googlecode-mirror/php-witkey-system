@@ -20,8 +20,8 @@ class keke_prom_class {
 	}
 	public function __construct() {
 		global $kekezu;
-		$this->_prom_open = intval ( $kekezu->_sys_config ['prom_open'] );//判断后台是否开启推广
-		$this->_prom_period = intval ( $kekezu->_sys_config ['prom_period'] );//推广的有效期限
+		$this->_prom_open = intval ( kekezu::$_sys_config ['prom_open'] );//判断后台是否开启推广
+		$this->_prom_period = intval ( kekezu::$_sys_config ['prom_period'] );//推广的有效期限
 		$this->auth_step_init();
 	}
 	/**

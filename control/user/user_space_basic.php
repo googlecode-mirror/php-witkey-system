@@ -9,10 +9,10 @@
 defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 
 $record_obj = new Keke_witkey_auth_record_class();
-$p_space_style = keke_glob_class::get_p_space_style (); //获取个人空间风格
-$p_style_arr = keke_glob_class::get_p_space_name (); //获取个人空间名字
-$e_space_style = keke_glob_class::get_e_space_style (); //获取企业空间风格
-$e_style_arr = keke_glob_class::get_e_space_name (); //获取企业空间名字
+$p_space_style = keke_global_class::get_p_space_style (); //获取个人空间风格
+$p_style_arr = keke_global_class::get_p_space_name (); //获取个人空间名字
+$e_space_style = keke_global_class::get_e_space_style (); //获取企业空间风格
+$e_style_arr = keke_global_class::get_e_space_name (); //获取企业空间名字
 
 $bg_repeat = array('no-repeat'=>$_lang['not_repeat'],'repeat-x'=>$_lang['x_repeat'],'repeat-y'=>$_lang['y_repeat'],'repeat'=>$_lang['default']);//跟空间的背景有关验证数组
 $bg_scroll = array('scroll'=>$_lang['scroll'],'fixed'=>$_lang['fixed']);//跟空间的背景有关验证数组

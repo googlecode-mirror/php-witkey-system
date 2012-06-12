@@ -10,7 +10,7 @@ defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 kekezu::admin_check_role ( 4 );
 
 $finace_obj = new Keke_witkey_finance_class (); //实例化财务清单表对象
-$page_obj = $kekezu->_page_obj; //实例化分页对象
+$page_obj = kekezu::$_page_obj; //实例化分页对象
 
 
 //分页

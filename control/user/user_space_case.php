@@ -12,8 +12,8 @@ in_array($show,$shows) or $show="list";
 switch ($show){
 	case "add":
 		$indus_arr = kekezu::get_indus_by_index ( 1 ); //行业索引分类列表
-		$indus_p_arr=$kekezu->_indus_p_arr;//顶级行业
-		$indus_c_arr=$kekezu->_indus_c_arr;//子集行业
+		$indus_p_arr=kekezu::$_indus_p_arr;//顶级行业
+		$indus_c_arr=kekezu::$_indus_c_arr;//子集行业
 		
 		if($sbt_action){
 			$case_obj=keke_table_class::get_instance("witkey_shop_case");//案例实例
@@ -59,9 +59,9 @@ switch ($show){
 			$res and kekezu::echojson($_lang['delete_success'],"1") or kekezu::echojson($_lang['delete_fail'],"0");
 			die();
 		}else{
-			$indus_c_arr=$kekezu->_indus_c_arr;//子集行业列表
+			$indus_c_arr=kekezu::$_indus_c_arr;//子集行业列表
 			$case_obj=new Keke_witkey_shop_case_class();
-			$page_obj=$kekezu->_page_obj;
+			$page_obj=kekezu::$_page_obj;
 			$where=" shop_id='{$shop_info['shop_id']}' order by on_time desc ";
 			intval($page) or $page='1';
 			intval($page_size) or $page_size='4';

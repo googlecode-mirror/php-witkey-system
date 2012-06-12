@@ -58,7 +58,7 @@ class keke_auth_mobile_class extends keke_auth_base_class{
 		$fdata['valid_code'] = $valid_code;
 		$fdata[auth_time]=time();//认证时间 
 		$msg_obj = new keke_msg_class(); 
-		$content = $_lang['mobile_auth_code']."{$fdata['valid_code']}-".$_lang['from']."{$kekezu->_sys_config[website_name]}";
+		$content = $_lang['mobile_auth_code']."{$fdata['valid_code']}-".$_lang['from']."{kekezu::$_sys_config[website_name]}";
 		//发送手机应证码 
 		$msg_res = $msg_obj->send_phone_sms($fdata['mobile'],$content); 
 		
@@ -126,7 +126,7 @@ class keke_auth_mobile_class extends keke_auth_base_class{
 			if($res2){
 				/** 注册推广结算*/
 				$kekezu->init_prom();
-				$kekezu->_prom_obj->dispose_prom_event($this->_auth_name,$uid,$uid);
+				kekezu::$_prom_obj->dispose_prom_event($this->_auth_name,$uid,$uid);
 				kekezu::empty_cache();
 				kekezu::show_msg ( $this->auth_lang().$_lang['success'],$url, 3, $this->auth_lang().$_lang['auth_audit_success'],'success' );
 			}

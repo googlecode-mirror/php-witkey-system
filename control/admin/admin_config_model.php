@@ -60,5 +60,5 @@ if ($op == "open") {
 	kekezu::admin_system_log ( $_lang ['edit_task_model'] . $model_list [$model_id] [model_name] );
 	die ();
 }
-$model_list = $kekezu->_model_list;
+$model_list = kekezu::$_model_list;
 require $template_obj->template ( 'control/admin/tpl/admin_config_model' );

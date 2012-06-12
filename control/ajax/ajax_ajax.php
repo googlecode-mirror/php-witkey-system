@@ -23,7 +23,7 @@ switch ($ac) {
 		exit();
 		break;
 	case "safe_secode":
-		$user_info = $kekezu->_userinfo;
+		$user_info = kekezu::$_userinfo;
 		$sec_code=keke_user_class::get_password ( $sec_code, $user_info['rand_code'] );
 		$refer = $_SERVER['HTTP_REFERER'];
 		strrpos($refer,"#userCenter")!==FALSE and $refer=str_replace("#userCenter","&ver=1#userCenter", $refer) or $refer.="&ver=1";

@@ -41,7 +41,7 @@ switch ($show){
 			die();
 		}else{
 			$member_obj=new Keke_witkey_shop_member_class();
-			$page_obj=$kekezu->_page_obj;
+			$page_obj=kekezu::$_page_obj;
 			$where=" shop_id='{$shop_info['shop_id']}' order by member_id desc ";
 			intval($page) or $page='1';
 			intval($page_size) or $page_size='4';

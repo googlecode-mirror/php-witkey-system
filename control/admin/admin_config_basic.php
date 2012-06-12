@@ -38,7 +38,7 @@ if (isset ( $_POST ) && ! empty ( $_POST )) {
 	
 	if ($res) {
 		
-		$kekezu->_cache_obj->set ( "keke_witkey_basic_config", $config_basic_arr );
+		kekezu::$_cache_obj->set ( "keke_witkey_basic_config", $config_basic_arr );
 		
 		kekezu::admin_show_msg ( $_lang ['submit_success'], $url, 3, '', 'success' );
 	
@@ -49,7 +49,7 @@ if (isset ( $_POST ) && ! empty ( $_POST )) {
 }
 if ($ac == 'get_url_rule') {
    $rule_arr = get_url_rule();
-   require $kekezu->_tpl_obj->template( 'control/admin/tpl/admin_config_get_rule' );
+   require kekezu::$_tpl_obj->template( 'control/admin/tpl/admin_config_get_rule' );
    die();
 }
 function get_url_rule() {

@@ -5,7 +5,7 @@
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 kekezu::admin_check_role(66);
 require '../../keke_client/sms/postmsg.php';
-$account_info = $kekezu->_sys_config; //手机账号信息
+$account_info = kekezu::$_sys_config; //手机账号信息
 $mobile_u = $account_info ['mobile_username'];
 $mobile_p = $account_info ['mobile_password'];
 $op and $op = $op or $op = 'config';

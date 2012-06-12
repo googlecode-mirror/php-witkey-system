@@ -12,7 +12,7 @@ kekezu::admin_check_role (29);
 $tag_list = kekezu::get_tag ();
 $tag_obj = new Keke_witkey_tag_class ();
 $template_arr = db_factory::query ( " select tpl_title from " . TABLEPRE . "witkey_template" );
-$tag_type_arr = keke_glob_class::get_tag_type ();
+$tag_type_arr = keke_global_class::get_tag_type ();
 
 $slt_page_size and $slt_page_size=intval ( $slt_page_size ) or $slt_page_size = 10;
 $page and $page=intval ( $page ) or $page = 1; 
@@ -21,7 +21,7 @@ if ($op == 'del') {
 	$delid = $delid ? $delid : kekezu::admin_show_msg ($_lang['wrong_parameters'], $url,3,'','warning' );	
 	$tag_obj->setWhere ( "tag_id='{$delid}'" );
 	$tag_obj->del_keke_witkey_tag ();
-	$kekezu->_cache_obj->del ( 'tag_list_cache' );
+	kekezu::$_cache_obj->del ( 'tag_list_cache' );
 	kekezu::admin_system_log ( $_lang['delete_tag']."$delid" );
 	kekezu::admin_show_msg ($_lang['operate_success'], $url,3,'','success' );
 } elseif (isset ( $sbt_action )) { //ÅúÁ¿²Ù×÷	
@@ -31,7 +31,7 @@ if ($op == 'del') {
 	if (count ( $ids )) {
 		$tag_obj->setWhere ( ' tag_id in (' . $ids . ') ' );
 		$tag_obj->del_keke_witkey_tag ();
-		$kekezu->_cache_obj->del ( 'tag_list_cache' );
+		kekezu::$_cache_obj->del ( 'tag_list_cache' );
 		kekezu::admin_system_log ($_lang['delete_tag']. "$ids" );
 		kekezu::admin_show_msg ($_lang['mulit_operate_success'], $url,3,'','success' );
 	} else {

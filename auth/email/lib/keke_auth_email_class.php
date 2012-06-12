@@ -62,7 +62,7 @@ public static function get_instance($auth_code='email') {
 	 */
 	public function audit_auth($active_code,$email_a_id){
 		global $kekezu,$_lang;
-		$user_info=$kekezu->_userinfo;
+		$user_info=kekezu::$_userinfo;
 		if(md5($user_info['uid'].$user_info['username'].$user_info['email'])==$active_code){
 			$auth_info=$this->get_auth_info($email_a_id);//认证信息获取
 			$auth_info or kekezu::show_msg($_lang['operate_notice'],'index.php?do=user&view=payitem&op=auth&auth_code=email&ver=1','3',$this->auth_lang().$_lang['apply_not_exist_nopass'],'warning');
@@ -70,7 +70,7 @@ public static function get_instance($auth_code='email') {
 			$this->set_auth_record_status($auth_info[0]['uid'], '1');//更改record表状态
 			/** 注册推广结算*/
 			$kekezu->init_prom();
-			$kekezu->_prom_obj->dispose_prom_event($this->_auth_name,$user_info['uid'],$user_info['uid']);
+			kekezu::$_prom_obj->dispose_prom_event($this->_auth_name,$user_info['uid'],$user_info['uid']);
 			$feed_arr = array(	
 			 		"feed_username"=>array("content"=>$user_info[username],"url"=>"index.php?do=space&member_id=$user_info[uid] "),
 					"action"=>array("content"=>$_lang['have_passed'],"url"=>""),

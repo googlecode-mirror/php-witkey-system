@@ -48,9 +48,9 @@ class keke_ajax_upload_class {
 	function __construct($query_string) {
 		global $kekezu;
 		$this->_ext_url = explode ( "|", UPLOAD_ALLOWEXT );
-		$this->_uid = $kekezu->_uid;
-		$this->_username = $kekezu->_username;
-		$this->_max_filesize = $kekezu->_sys_config ['max_size'];
+		$this->_uid = kekezu::$_uid;
+		$this->_username = kekezu::$_username;
+		$this->_max_filesize = kekezu::$_sys_config ['max_size'];
 		$this->file_info_init ( $query_string );
 	}
 	public function file_info_init($query_string) {

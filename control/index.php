@@ -11,8 +11,8 @@ $nav_active_index = "index";
 /**
  * 首页行业
  */
-$indus_list = $kekezu->_indus_p_arr;
-$indus_c_arr = $kekezu->_indus_c_arr;
+$indus_list = kekezu::$_indus_p_arr;
+$indus_c_arr = kekezu::$_indus_c_arr;
 
 /**
  * 首页最近二周任务中标额统计
@@ -61,7 +61,7 @@ $two_week_auth ['0'] ['count'] >= $two_week_auth ['1'] ['count'] and $auth_count
  */
 
 $feed_list = db_factory::query ( "select uid,username,title,feed_time from " . TABLEPRE . "witkey_feed order by feed_time desc limit 0,4", 1, 3600 );
-$mode_list = $kekezu->_model_list;
+$mode_list = kekezu::$_model_list;
 $cash_coverage = kekezu::get_table_data ( "cash_rule_id,start_cove,end_cove", "witkey_task_cash_cove", "", "", "", "", "cash_rule_id", 3600 );
 
 /**

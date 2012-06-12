@@ -21,7 +21,7 @@ $url = "index.php?do=space&member_id=" . intval ( $member_id ) . "&view=statisti
 $page_size = 10;
 $count = db_factory::execute ( $sql );
 $page = $page ? $page : 1;
-$pages = $kekezu->_page_obj->getPages ( $count, $page_size, $page, $url );
+$pages = kekezu::$_page_obj->getPages ( $count, $page_size, $page, $url );
 $where = $pages ['where'];
 $shop_arr = db_factory::query ( $sql . $where );
 require keke_tpl_class::template ( SKIN_PATH . "/space/{$type}_{$view}" );

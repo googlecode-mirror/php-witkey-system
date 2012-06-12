@@ -195,7 +195,7 @@ class keke_msg_class {
 		 
 			include_once S_ROOT . '/keke_client/sms/postmsg.php';
 			global $kekezu;
-			$account_info = $kekezu->_sys_config; //手机账号信息
+			$account_info = kekezu::$_sys_config; //手机账号信息
 			$mobile_u = $account_info ['mobile_username'];
 			$mobile_p = $account_info ['mobile_password'];
 			$this->_mobile and $mobile = $this->_mobile or $mobile = $mobile_arr;

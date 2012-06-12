@@ -26,9 +26,9 @@ class keke_loaddata_class {
 	}
 	static function readfeed($loadcount, $type = '', $uid = '', $objid = '', $templatename = "", $cachename = "", $cachetime = 300) {
 		global $kekezu,$_lang;
-		$tag_arr = $kekezu->_tag;
+		$tag_arr = kekezu::$_tag;
 		$tag_info = $tag_arr [$templatename];
-		$feed_arr = $cachename ? $kekezu->_cache_obj->get ( "feed_" . $cachename . "_cache" ) : null;
+		$feed_arr = $cachename ? kekezu::$_cache_obj->get ( "feed_" . $cachename . "_cache" ) : null;
 		if (! $feed_arr) {
 			$feed_obj = new keke_witkey_feed();
 			$limit = $loadcount ? "limit 0,$loadcount" : "";
@@ -47,7 +47,7 @@ class keke_loaddata_class {
 				}
 			}
 			$feed_arr = $temp_arr;
-			$cachename ? $kekezu->_cache_obj->set ( "feed_" . $cachename . "_cache", $feed_arr, $cachetime ) : null;
+			$cachename ? kekezu::$_cache_obj->set ( "feed_" . $cachename . "_cache", $feed_arr, $cachetime ) : null;
 		}
 		$datalist = $feed_arr;
 		require keke_tpl_class::parse_code ( htmlspecialchars_decode ( $tag_info [tag_code] ), $tag_info [tag_id] );
@@ -59,18 +59,18 @@ class keke_loaddata_class {
 
 	static function readtag($name) { 
 		global $kekezu,$_lang;
-        $kekezu->_tag or $kekezu->init_tag(); 
-		$tag_arr = $kekezu->_tag; 
+        kekezu::$_tag or $kekezu->init_tag(); 
+		$tag_arr = kekezu::$_tag; 
  		$tag_info = $tag_arr [$name];
 	    if ($tag_info ['tag_type'] == 5) {
 			echo htmlspecialchars_decode ( $tag_info ['code'] );
 		}else{
 	 		if ($tag_info ['cache_time']) { 
 				$cid = 'db_tag_' . $tag_info ['tag_id'];
-				$datalist = $kekezu->_cache_obj->get ( $cid );
+				$datalist = kekezu::$_cache_obj->get ( $cid );
 				if (! $datalist) {
 					$datalist = keke_loaddata_class::loaddata ( $tag_info );
-					$kekezu->_cache_obj->set ( $cid, $datalist, $tag_info ['cache_time'] );
+					kekezu::$_cache_obj->set ( $cid, $datalist, $tag_info ['cache_time'] );
 				}
 			 
 				require keke_tpl_class::parse_code ( htmlspecialchars_decode ( $tag_info [tag_code] ), $tag_info [tag_id] );
@@ -121,7 +121,7 @@ class keke_loaddata_class {
 	//´¿¶ÁÊı¾İ
 	static function loaddata($tag_info) {
 		global $_K;
-		$tag_type = keke_glob_class::get_tag_type ();
+		$tag_type = keke_global_class::get_tag_type ();
 		if ($tag_info [tag_type] != 5) {
 			$func_name = "load_" . $tag_type [$tag_info ['tag_type']] [2] . "_data";
 			$temp_arr = self::$func_name ( $tag_info );
@@ -531,9 +531,9 @@ class keke_loaddata_class {
 	 */
 	static function adgroup($adname,$ad_limit_num) {
 		global $kekezu,$_K;
-		$kekezu->_tag or $kekezu->init_tag();
+		kekezu::$_tag or $kekezu->init_tag();
 		$datalist = kekezu::get_ad ( $adname,$ad_limit_num );
-		$tag_arr = $kekezu->_tag;
+		$tag_arr = kekezu::$_tag;
 		$tag_info = $tag_arr [$adname];
 		require keke_tpl_class::parse_code ( htmlspecialchars_decode ( $tag_info ['tag_code'] ), $tag_info ['tag_id'] );
 	}

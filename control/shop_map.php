@@ -24,7 +24,7 @@ $website_url = "index.php?" . $_SERVER ['QUERY_STRING'];
  
 $task_cash_arr =   keke_search_class::get_cash_cove();
 //任务赏金数组 
-$indus_all_arr = $kekezu->_indus_arr;
+$indus_all_arr = kekezu::$_indus_arr;
 //所有行业的数组
 $where_arr = get_where_arr();
 if($area){
@@ -43,7 +43,7 @@ $url = "index.php?do=shop_list&page_size=$page_size&min=$min&max=$max&path=$path
 $page_size = intval ( $page_size ) ? intval ( $page_size ) : 10;
 $count = db_factory::execute ( $sql . $where );
 $page = $page ? $page : 1;
-$pages = $kekezu->_page_obj->getPages ( $count, $page_size, $page, $url ); 
+$pages = kekezu::$_page_obj->getPages ( $count, $page_size, $page, $url ); 
 $where .= $pages ['where'];  
 //数组
  

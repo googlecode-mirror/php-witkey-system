@@ -22,7 +22,7 @@ if(isset($sbt_edit)){
 		$msg.= $_lang['template_cache_empty'];
 	}
 	if(CACHE_TYPE!='file' && IS_CACHE ==1){
-		$kekezu->_cache_obj->flush();
+		kekezu::$_cache_obj->flush();
 	}
 	//kekezu::admin_system_log($_lang['cache_empty']);
 	kekezu::admin_show_msg($msg,'index.php?do='.$do.'&view='.$view,2,'','success');

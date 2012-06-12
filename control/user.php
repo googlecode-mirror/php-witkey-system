@@ -27,7 +27,7 @@ $_K['is_rewrite'] = 0 ;
  
 kekezu::check_login ();
 
-$user_info=$kekezu->_userinfo;
+$user_info=kekezu::$_userinfo;
 /* 中心最顶级url*/
 $origin_url="index.php?do=$do&view=$view";
 

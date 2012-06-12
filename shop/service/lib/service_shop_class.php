@@ -110,8 +110,8 @@ class service_shop_class {
 								if ($res) {
 									/** 买家上线推广产生*/
 									$kekezu->init_prom ();
-									if($kekezu->_prom_obj->is_meet_requirement ( "service", $order_info[obj_id] )){
-										$kekezu->_prom_obj->create_prom_event ( "service", $order_info ['order_uid'], $order_info ['obj_id'], $order_info ['order_amount'] );
+									if(kekezu::$_prom_obj->is_meet_requirement ( "service", $order_info[obj_id] )){
+										kekezu::$_prom_obj->create_prom_event ( "service", $order_info ['order_uid'], $order_info ['obj_id'], $order_info ['order_amount'] );
 									}/** 通知买家*/
 									$v_arr = array ($_lang['user'] => $order_info ['seller_username'], $_lang['action'] => $_lang['recept_your_order'], $_lang['order_id'] => $order_id, $_lang['order_link'] => $b_order_link );
 									keke_shop_class::notify_user ( $order_info ['order_uid'], $order_info ['order_username'], "order_change", $_lang['goods_order_recept'], $v_arr );
@@ -134,7 +134,7 @@ class service_shop_class {
 							case "confirm" : //变更为完成状态(买家确认服务完成)
 								$res = keke_order_class::set_order_status ( $order_id, $action ); //状态变更
 								if ($res) {
-									$model_info = $kekezu->_model_list [$order_info['model_id']]; //模型信息
+									$model_info = kekezu::$_model_list [$order_info['model_id']]; //模型信息
 									$profit = $service_info ['profit_rate'] * $order_info ['order_amount'] / 100; //网站利润
 									///卖家获得款项
 									keke_finance_class::cash_in ( $order_info ['seller_uid'], $order_info ['order_amount'] - $profit, '0', 'sale_service', '', 'service', $order_info ['obj_id'], $profit );
@@ -147,7 +147,7 @@ class service_shop_class {
 									keke_shop_class::plus_mark_num ( $order_info ['obj_id'] );
 									/** 买家上线推广结算*/
 									$kekezu->init_prom ();
-									$kekezu->_prom_obj->dispose_prom_event ( "service", $order_info ['order_uid'], $order_info ['obj_id'] );
+									kekezu::$_prom_obj->dispose_prom_event ( "service", $order_info ['order_uid'], $order_info ['obj_id'] );
 									
 									/** 通知卖家*/
 									$v_arr = array ($_lang['user'] => $order_info ['order_username'], $_lang['action'] => $_lang['confirm_service_complete'], $_lang['order_id'] => $order_id, $_lang['order_link'] => $s_order_link );

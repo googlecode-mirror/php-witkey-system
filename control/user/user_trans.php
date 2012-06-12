@@ -61,7 +61,7 @@ if ($ac) {
 	 * @todo 排序
 	 */
 	$ord_arr = array (" report_id desc " => $action_arr[$op] . $_lang['num_desc'], " report_id asc " => $action_arr[$op] . $_lang['num_asc'], " on_time desc " => $_lang['submit_time_desc'], " on_time asc " => $_lang['submit_time_asc'] );
-	$page_obj = $kekezu->_page_obj; //分页对象
+	$page_obj = kekezu::$_page_obj; //分页对象
 	$role == 1 and $where .= " and uid='$uid' " or $where .= " and to_uid='$uid' ";
 	$status and $where .= " and report_status='$status'";
 	$obj and $where .= " and obj='$obj'";

@@ -41,7 +41,7 @@ if (isset ( $ac )) {
 }
 if ($model_id) {
 	$task_obj = new Keke_witkey_task_class ();
-	$page_obj = $kekezu->_page_obj;
+	$page_obj = kekezu::$_page_obj;
 	/**获取对应任务的状态值**/
 	$cls = $model_list [$model_id] ['model_code'] . "_task_class";
 	$status_arr = call_user_func ( array ($cls, "get_task_status" ) );
@@ -67,7 +67,7 @@ if ($model_id) {
 	$task_info = db_factory::query ( $sql . $where . $pages ['where'] );
 }
 if ($ac == 'pay' && $task_id && $model_id) {
-	$model_info = $kekezu->_model_list [$model_id];
+	$model_info = kekezu::$_model_list [$model_id];
 	if ($model_info ['model_type'] == "task") {
 		$class_name = $model_info ['model_code'] . "_task_class";
 		$order_id = db_factory::get_count ( sprintf ( " select order_id from %switkey_order_detail where obj_id='%d'", TABLEPRE, $task_id ) );

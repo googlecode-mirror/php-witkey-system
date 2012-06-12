@@ -27,9 +27,9 @@ if (isset ( $ac ) && $ac == 'del') {
 	$email_obj->setWhere ( $where ); //查询统计
 	$count = $email_obj->count_keke_witkey_auth_email ();
 	intval ( $page ) or $page = 1 and $page = intval ( $page );
-	$kekezu->_page_obj->setAjax(1);
-	$kekezu->_page_obj->setAjaxDom("ajax_dom");
-	$pages = $kekezu->_page_obj->getPages ( $count, $page_size, $page, $url );
+	kekezu::$_page_obj->setAjax(1);
+	kekezu::$_page_obj->setAjaxDom("ajax_dom");
+	$pages = kekezu::$_page_obj->getPages ( $count, $page_size, $page, $url );
 	
 	$email_obj->setWhere ( $where . $pages ['where'] );
 	$email_arr = $email_obj->query_keke_witkey_auth_email (); //认证信息列表

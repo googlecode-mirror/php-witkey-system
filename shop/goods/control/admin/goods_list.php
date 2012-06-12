@@ -7,7 +7,7 @@
  */
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 $table_obj = keke_table_class::get_instance('witkey_service');
-$indus_p_arr = $kekezu->_indus_p_arr;
+$indus_p_arr = kekezu::$_indus_p_arr;
 $goods_status_arr = goods_shop_class::get_goods_status();
 $status_arr = array("1"=>$_lang['wait_audit'],"4"=>$_lang['disable'],"5"=>$_lang['open']);
 //¼ìË÷Ìõ¼ş

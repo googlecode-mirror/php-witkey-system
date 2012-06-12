@@ -23,7 +23,7 @@ in_array ( $show, $shows ) or $show = 'buy';
 switch ($show){
 	case 'buy':
 		$payitem_list = keke_payitem_class::get_payitem_config (null, null, null,'item_code'); //可购买服务		
-		$payitem_type = keke_glob_class::get_payitem_type (); //使用范围
+		$payitem_type = keke_global_class::get_payitem_type (); //使用范围
 		$payitem_standard = keke_payitem_class::payitem_standard (); //收费标准		
 		if ($item_code) { //购买页面加载
 			in_array ( $item_code, array('top','urgent','workhide','map') ) or kekezu::show_msg($_lang['operate_notice'],'index.php?do=user&view=payitem&op=toolbox',3,$_lang['param_error'],'warning');

@@ -27,7 +27,7 @@ class keke_finance_class {
 	public static function init($uid = null) {
 		global $kekezu;
 		global $_lang;
-		self::$_basic_config =$kekezu->_sys_config;
+		self::$_basic_config =kekezu::$_sys_config;
 		if ($uid) {
 			try{
 				self::$_userinfo = kekezu::get_user_info ( $uid );

@@ -19,7 +19,7 @@ $page_size or $page_size = 10;
 $url = $origin_url . "&op=$op&obj_type=$obj_type&role=$role&page_size=$page_size&status=$status&page=$page";
 
 if (isset ( $ac ) && $order_id && $model_id) {
-	$model_info = $kekezu->_model_list [$model_id];
+	$model_info = kekezu::$_model_list [$model_id];
 	$class_name = $model_info ['model_code'] . "_" . $model_info ['model_type'] . "_class";
 	if ($model_info ['model_type'] == "task") {
 		$task_id = db_factory::get_count ( sprintf ( "select obj_id from %switkey_order_detail where order_id='%d'", TABLEPRE, intval ( $order_id ) ) );
@@ -39,7 +39,7 @@ if (isset ( $ac ) && $order_id && $model_id) {
 	$ajax ="goods_filedown";
 	require "control/ajax/ajax_file.php";
 }else {
-	$model_list = $kekezu->_model_list;
+	$model_list = kekezu::$_model_list;
 	$obj_arr = keke_order_class::get_order_obj (); //订单对象数组
 	$sql = " select a.*,b.obj_type,b.obj_id from " . TABLEPRE . "witkey_order a left join " . TABLEPRE . "witkey_order_detail b on a.order_id = b.order_id 
 			where b.obj_type = '$obj_type' ";
@@ -58,7 +58,7 @@ if (isset ( $ac ) && $order_id && $model_id) {
 	$ord_arr = array ('a.order_id desc' => $_lang['order_id_desc'], "a.order_id asc" => $_lang['order_id_asc']);
 	
 	$order_obj = new Keke_witkey_order_class ();
-	$page_obj = $kekezu->_page_obj;
+	$page_obj = kekezu::$_page_obj;
 	
 	$order_id && $order_id != $_lang['please_input_order_id'] and $sql .= " and a.order_id = ".$order_id;
 	$order_title && $order_title != $_lang['please_input_order_name'] and $sql .= " and a.order_name like '%$order_title%'";

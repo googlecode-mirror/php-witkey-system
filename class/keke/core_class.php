@@ -519,7 +519,7 @@ class kekezu extends keke_core_class {
 	 * ≥ı ºªØ±Í«©
 	 */
 	function init_tag() {
-		 kekezu::$_tag = kekezu::get_tag ();
+		// kekezu::$_tag = kekezu::get_tag ();
 	}
 	function init_session() {
 		keke_session::get_instance ();

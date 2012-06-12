@@ -156,6 +156,5 @@ function get_art($cat_id) {
  					where a.art_cat_id = $cat_id  or b.art_cat_pid like '%{ $cat_id }%' order by a.pub_time desc limit 4";
 	return dbfactory::query ( $sql, 0, 600 );
 }
-echo kekezu::execute_time ();
-die ();
+ 
 require keke_tpl_class::template ( $do );

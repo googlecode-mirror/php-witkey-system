@@ -19,7 +19,7 @@ $step_arr=array("step1"=>array($_lang['step_one'], $_lang['input_email_address']
 
 $auth_step= keke_auth_email_class::get_auth_step($auth_step,$auth_info);
 
-//$verify = kekezu::reset_secode_session($ver?0:1);//安全码输入
+//$verify = Keke::reset_secode_session($ver?0:1);//安全码输入
 $verify   = 0;
 $ac_url = $origin_url . "&op=$op&auth_code=$auth_code&ver=".intval($ver);
  
@@ -32,12 +32,12 @@ switch ($auth_step){
 		
 		if($resend){
 			$succ=$auth_obj->send_mail($auth_info['email_a_id'],$auth_info); 
-			$succ and kekezu::echojson( $_lang['send_success_confirm_as_soon'],"1") or kekezu::echojson( $_lang['email_send_fail'],"0");
+			$succ and Keke::echojson( $_lang['send_success_confirm_as_soon'],"1") or Keke::echojson( $_lang['email_send_fail'],"0");
 			die();
 		}
 		if($send_mail){
 			$succ=$auth_obj->add_auth($email);//邮箱认证提交 
-			$succ and kekezu::echojson( $_lang['send_success_confirm_as_soon'],"1") or kekezu::echojson( $_lang['email_send_fail'],"0");
+			$succ and Keke::echojson( $_lang['send_success_confirm_as_soon'],"1") or Keke::echojson( $_lang['email_send_fail'],"0");
 			die();
 		}
 		

@@ -49,8 +49,8 @@ abstract class keke_report_class {
 		$this->_report_status = $report_info ['report_status'];
 		$this->_report_type = $report_info ['report_type'];
 		$this->_obj = $report_info ['obj'];
-		$user_info and $this->_user_info = $user_info or $this->_user_info = kekezu::get_user_info ( $report_info ['uid'] ); //提交者信息
-		$to_userinfo and $this->_to_user_info = $to_userinfo or $this->_to_user_info = kekezu::get_user_info ( $report_info ['to_uid'] ); //对方信息
+		$user_info and $this->_user_info = $user_info or $this->_user_info = Keke::get_user_info ( $report_info ['uid'] ); //提交者信息
+		$to_userinfo and $this->_to_user_info = $to_userinfo or $this->_to_user_info = Keke::get_user_info ( $report_info ['to_uid'] ); //对方信息
 		$obj_info and $this->_obj_info = $obj_info or $obj_info = $this->obj_info_init ( $report_info, $user_info ); //获取交易维权对象信息
 		$this->init ();
 	}
@@ -85,7 +85,7 @@ abstract class keke_report_class {
 		if (! $if_report) {
 			return true;
 		} else {
-			kekezu::keke_show_msg ( '', $_lang ['you_has_to_this_user'] . $trans_name . "," . $_lang ['please_not_repeat_operate'], "error", 'json' );
+			Keke::keke_show_msg ( '', $_lang ['you_has_to_this_user'] . $trans_name . "," . $_lang ['please_not_repeat_operate'], "error", 'json' );
 		}
 	}
 	/**
@@ -104,8 +104,8 @@ abstract class keke_report_class {
 				break;
 			case "work" : //稿件 
 				$model_id = dbfactory::get_count ( sprintf ( " select model_id from %switkey_task where task_id='%d'", TABLEPRE, $report_info ['origin_id'] ) );
-				$model_id or kekezu::admin_show_msg ( $_lang ['friendly_notice'], 'index.php?do=trans&view=rights', 2, $_lang ['this_task_has_delete'] );
-				$model_info = kekezu::$_model_list [$model_id];
+				$model_id or Keke::admin_show_msg ( $_lang ['friendly_notice'], 'index.php?do=trans&view=rights', 2, $_lang ['this_task_has_delete'] );
+				$model_info = Keke::$_model_list [$model_id];
 				$sql = " select a.task_id origin_id,a.task_title origin_title,a.uid origin_uid,a.model_id,a.task_status origin_status,a.real_cash cash,a.is_trust,a.trust_type ";
 				
 				if ($model_info ['model_code'] == 'dtender' || $model_info ['model_code'] == 'tender') { //招标
@@ -206,7 +206,7 @@ abstract class keke_report_class {
 		global $_K, $user_info;
 		global $_lang;
 		if ($report_type == '1') {
-			$to_user_info = kekezu::get_user_info ( $to_uid ); //被维权方信息
+			$to_user_info = Keke::get_user_info ( $to_uid ); //被维权方信息
 			if ($report_satus == '1') { //未处理的才可以执行此方法
 				switch ($obj) {
 					case "task" :
@@ -370,8 +370,8 @@ abstract class keke_report_class {
 		self::check_if_report ( $report_type, $obj, $obj_id, $uid, $to_uid );
 		$transname = self::get_transrights_name ( $report_type );
 		if (CHARSET == 'gbk') {
-			$desc = kekezu::utftogbk ( $desc );
-			$to_username = kekezu::utftogbk ( $to_username );
+			$desc = Keke::utftogbk ( $desc );
+			$to_username = Keke::utftogbk ( $to_username );
 		}
 		$report_obj = new Keke_witkey_report_class ();
 		$report_obj->setObj ( $obj );
@@ -394,9 +394,9 @@ abstract class keke_report_class {
 			self::process_freeze ( $report_id, $report_type, '1', $to_uid, $obj, $obj_id, $origin_id, $desc ); //维权冻结
 		}
 		if ($report_id) {
-			kekezu::keke_show_msg ( '', $transname . $_lang ['submit_success_wait_website_process'], "", 'json' );
+			Keke::keke_show_msg ( '', $transname . $_lang ['submit_success_wait_website_process'], "", 'json' );
 		} else {
-			kekezu::keke_show_msg ( '', $transname . $_lang ['submit_fail'], "error", 'json' );
+			Keke::keke_show_msg ( '', $transname . $_lang ['submit_fail'], "error", 'json' );
 		}
 	}
 	/**
@@ -427,7 +427,7 @@ abstract class keke_report_class {
 	 */
 	public function cancel_bid($obj_id, $trust_response = false) {
 		global $kekezu;
-		$model_info = kekezu::$_model_list [$this->_obj_info ['model_id']];
+		$model_info = Keke::$_model_list [$this->_obj_info ['model_id']];
 		if ($model_info ['model_code'] == 'dtender' || $model_info ['model_code'] == 'tender') { //招标取消中标
 			dbfactory::execute ( sprintf ( "update %switkey_task_bid set bid_status = 8 where bid_id = '%d'", TABLEPRE, $obj_id ) );
 		} elseif ($model_info ['model_code'] == 'sreward' || $model_info ['model_code'] == 'mreward' || $model_info ['model_code'] == 'preward') { //悬赏取消中标
@@ -437,8 +437,8 @@ abstract class keke_report_class {
 		dbfactory::execute ( sprintf ( " update %switkey_space set accepted_num = accepted_num-1 where uid = '%d'", TABLEPRE, $this->_obj_info ['obj_uid'] ) );
 		/** 终止威客的此次推广事件*/
 		$kekezu->init_prom ();
-		$p_event = kekezu::$_prom_obj->get_prom_event ( $this->_task_id, $this->_obj_info ['obj_uid'], "bid_task" );
-		kekezu::$_prom_obj->set_prom_event_status ( $p_event ['parent_uid'], $this->_gusername, $p_event ['event_id'], '3' );
+		$p_event = Keke::$_prom_obj->get_prom_event ( $this->_task_id, $this->_obj_info ['obj_uid'], "bid_task" );
+		Keke::$_prom_obj->set_prom_event_status ( $p_event ['parent_uid'], $this->_gusername, $p_event ['event_id'], '3' );
 	}
 	/**
 	 * 删除举报信息
@@ -515,7 +515,7 @@ abstract class keke_report_class {
 		if ($this->_report_info ['user_type'] == '1') {
 			if ($obj_info ['origin_uid'] != $report_info ['to_uid']) { //投诉双方都是威客
 				$userinfo_arr ['wk'] = $this->_user_info;
-				$userinfo_arr ['gz'] = kekezu::get_user_info ( $obj_info ['origin_uid'] );
+				$userinfo_arr ['gz'] = Keke::get_user_info ( $obj_info ['origin_uid'] );
 				$userinfo_arr ['third'] = $this->_to_user_info;
 			} else { //被投诉方是雇主
 				$userinfo_arr ['wk'] = $this->_user_info;

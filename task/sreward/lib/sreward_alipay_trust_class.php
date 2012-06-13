@@ -25,10 +25,10 @@ class sreward_alipay_trust_class {
 				on a.model_id=b.model_id and b.order_id=c.order_id left join %switkey_member_oauth d
 				on a.uid=d.uid where a.task_id='%d' and d.source='alipay_trust'";
 		$task_info = dbfactory::get_one ( sprintf ( $sql, TABLEPRE, TABLEPRE, TABLEPRE, TABLEPRE, $this->_task_id ) );
-		$task_info and $task_info ['model_code'] = kekezu::$_model_list [$task_info ['model_id']] ['model_dir'];
+		$task_info and $task_info ['model_code'] = Keke::$_model_list [$task_info ['model_id']] ['model_dir'];
 		$this->_task_info = $task_info;
 		$this->_model_id = $task_info ['model_id'];
-		$this->_task_config = unserialize ( kekezu::$_model_list [$task_info ['model_id']] ['config'] );
+		$this->_task_config = unserialize ( Keke::$_model_list [$task_info ['model_id']] ['config'] );
 	}
 	/**
 	 * 任务创建
@@ -222,7 +222,7 @@ class sreward_alipay_trust_class {
 						$report_obj->process_report($op_result,'report',true);
 						break;
 					case "F"://后台跳转提示
-						kekezu::admin_show_msg($_lang['operate_notice'],"index.php?do=model&view=list&model_id=1",3,$_lang['report_deal_fail']);
+						Keke::admin_show_msg($_lang['operate_notice'],"index.php?do=model&view=list&model_id=1",3,$_lang['report_deal_fail']);
 						break;
 				}
 				break;

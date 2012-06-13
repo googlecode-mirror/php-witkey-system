@@ -2,7 +2,7 @@
 require_once (dirname ( dirname ( dirname ( __FILE__ ) ) ) . DIRECTORY_SEPARATOR . 'app_comm.php');
 
 require_once ("PayResponseHandler.php");
-$pay_arr = kekezu::get_payment_config ( "tenpay" );
+$pay_arr = Keke::get_payment_config ( "tenpay" );
 @extract ( $pay_arr );
 $key = $safekey;
 

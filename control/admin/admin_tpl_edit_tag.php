@@ -9,9 +9,9 @@
 
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 
-kekezu::admin_check_role (29);
-$indus_arr = kekezu::get_industry (); 
-$art_cat_arr = kekezu::get_table_data("*","witkey_article_category","","","","","art_cat_id",null);
+Keke::admin_check_role (29);
+$indus_arr = Keke::get_industry (); 
+$art_cat_arr = Keke::get_table_data("*","witkey_article_category","","","","","art_cat_id",null);
 
 $url = "index.php?do=tpl&view=edit_tag&tagid=$tagid";
 
@@ -29,13 +29,13 @@ if ($tagid) {
 }
 
 if ($submit) {
-	$txt_tagname or kekezu::admin_show_msg ($_lang['enter_tag_name'], $url,3,'','warning' );
+	$txt_tagname or Keke::admin_show_msg ($_lang['enter_tag_name'], $url,3,'','warning' );
 	
 	//ÑéÖ¤Î¨Ò»
 	$tag_obj2 = new Keke_witkey_tag_class ();
 	$tag_obj2->setWhere ( "tagname = '{$txt_tagname}' and tag_id!='$tagid'" );
 	if ($tag_obj2->query_keke_witkey_tag ()) {
-		kekezu::admin_show_msg ($_lang['tag_name_inuse_please_replace'], $url,3,'','warning' );
+		Keke::admin_show_msg ($_lang['tag_name_inuse_please_replace'], $url,3,'','warning' );
 	}
 	$tag_obj->setTagname ( $txt_tagname );
 	$tag_obj->setTag_type ( $tag_type );
@@ -45,13 +45,13 @@ if ($submit) {
 		$tag_obj->setTask_type ( $slt_task_type );
 	}
 	$tag_obj->setTask_status ( $slt_task_status );
-	$txt_start_time1 = $txt_start_time1 ? kekezu::sstrtotime ( $txt_start_time1 ) : 0;
+	$txt_start_time1 = $txt_start_time1 ? Keke::sstrtotime ( $txt_start_time1 ) : 0;
 	$tag_obj->setStart_time1 ( $txt_start_time1 );
-	$txt_start_time2 = $txt_start_time2 ? kekezu::sstrtotime ( $txt_start_time2 ) : 0;
+	$txt_start_time2 = $txt_start_time2 ? Keke::sstrtotime ( $txt_start_time2 ) : 0;
 	$tag_obj->setStart_time2 ( $txt_start_time2 );
-	$txt_end_time1 = $txt_end_time1 ? kekezu::sstrtotime ( $txt_end_time1 ) : 0;
+	$txt_end_time1 = $txt_end_time1 ? Keke::sstrtotime ( $txt_end_time1 ) : 0;
 	$tag_obj->setEnd_time1 ( $txt_end_time1 );
-	$txt_end_time2 = $txt_end_time2 ? kekezu::sstrtotime ( $txt_end_time2 ) : 0;
+	$txt_end_time2 = $txt_end_time2 ? Keke::sstrtotime ( $txt_end_time2 ) : 0;
 	$tag_obj->setEnd_time2 ( $txt_end_time2 );
 	$tag_obj->setLeft_day ( $txt_left_day ? $txt_left_day : 0 );
 	$tag_obj->setLeft_hour ( $txt_left_hour ? $txt_left_hour : 0 );
@@ -65,9 +65,9 @@ if ($submit) {
 	
 	$tag_obj->setArt_cat_id ( $slt_art_cat_id );
 	$tag_obj->setArt_cat_ids ( $txt_art_cat_ids );
-	$txt_art_time1 = kekezu::sstrtotime ( $txt_art_time1 ) ? kekezu::sstrtotime ( $txt_art_time1 ) : 0;
+	$txt_art_time1 = Keke::sstrtotime ( $txt_art_time1 ) ? Keke::sstrtotime ( $txt_art_time1 ) : 0;
 	$tag_obj->setArt_time1 ( $txt_art_time1 );
-	$txt_art_time2 = kekezu::sstrtotime ( $txt_art_time2 ) ? kekezu::sstrtotime ( $txt_art_time2 ) : 0;
+	$txt_art_time2 = Keke::sstrtotime ( $txt_art_time2 ) ? Keke::sstrtotime ( $txt_art_time2 ) : 0;
 	$tag_obj->setArt_time2 ( $txt_art_time2 );
 	$tag_obj->setArt_ids ( $txt_art_ids );
 	$tag_obj->setArt_iscommend ( $ckb_art_iscommend ? 1 : 0 );
@@ -103,19 +103,19 @@ if ($submit) {
 	if ($tagid) {
 		$tag_obj->setWhere ( "tag_id='{$tagid}'" );
 		$res = $tag_obj->edit_keke_witkey_tag ();
-		kekezu::$_cache_obj->del ( "tag_list_cache" );
-		kekezu::admin_system_log ($_lang['edit_tag'] . $tagid );
+		Keke::$_cache_obj->del ( "tag_list_cache" );
+		Keke::admin_system_log ($_lang['edit_tag'] . $tagid );
 	} else {
 		$res = $tag_obj->create_keke_witkey_tag ();
-		kekezu::admin_system_log ($_lang['create_tag'] . $res );
+		Keke::admin_system_log ($_lang['create_tag'] . $res );
 	
 	}
 	
-	kekezu::$_cache_obj->del ( 'tag_list_cache' );
+	Keke::$_cache_obj->del ( 'tag_list_cache' );
 	if ($res) {
-		kekezu::admin_show_msg ($_lang['tag_change_success'], "index.php?do=tpl&view=taglist&tag_type=$tag_type",3,'','success' );
+		Keke::admin_show_msg ($_lang['tag_change_success'], "index.php?do=tpl&view=taglist&tag_type=$tag_type",3,'','success' );
 	} else {
-		kekezu::admin_show_msg ($_lang['tag_change_fail'], "index.php?do=tpl&view=edit_tag&tagid=$tagid&tag_type=$tag_type",3,'','warning' );
+		Keke::admin_show_msg ($_lang['tag_change_fail'], "index.php?do=tpl&view=edit_tag&tagid=$tagid&tag_type=$tag_type",3,'','warning' );
 	}
 
 }
@@ -156,4 +156,4 @@ function articlefenglei_select($m, $id, $index) {
 	}
 }
 
-require  kekezu::$_tpl_obj->template ( 'control/admin/tpl/admin_tpl_' . $view . '_' . $tag_type_arr [$tag_type] ['2'] );
+require  Keke::$_tpl_obj->template ( 'control/admin/tpl/admin_tpl_' . $view . '_' . $tag_type_arr [$tag_type] ['2'] );

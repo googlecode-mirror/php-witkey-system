@@ -181,7 +181,7 @@ class preward_task_class extends keke_task_class {
 			$where .= ",work_time asc ";
 		}
 		if (! empty ( $p )) {
-			$page_obj = kekezu::$_page_obj;
+			$page_obj = Keke::$_page_obj;
 			$page_obj->setAjax ( 1 );
 			$page_obj->setAjaxDom ( "gj_summery" );
 			$count = intval ( dbfactory::get_count ( $count_sql . $where ) );
@@ -190,7 +190,7 @@ class preward_task_class extends keke_task_class {
 			$where .= $pages ['where'];
 		}
 		$work_info = dbfactory::query ( $sql . $where );
-		$work_info = kekezu::get_arr_by_key($work_info,'work_id');
+		$work_info = Keke::get_arr_by_key($work_info,'work_id');
 		$work_arr ['work_info'] = $work_info;
 		$work_arr ['pages'] = $pages;
 		$work_arr ['mark']  = $this->has_mark(implode(',',array_keys($work_info)));
@@ -242,8 +242,8 @@ class preward_task_class extends keke_task_class {
 	 * @param string $work_desc 交稿描述
 	 * @param int    $hidework 稿件隐藏  1=>隐藏,2=>不隐藏  默认为不隐藏
 	 * @param string $file_ids 稿件附件编号串  eg:1,2,3,4,5
-	 * @param string $url    操作提示链接  具体参见 kekezu::keke_show_msg
-	 * @param string $output 消息输出方式 具体参见 kekezu::keke_show_msg
+	 * @param string $url    操作提示链接  具体参见 Keke::keke_show_msg
+	 * @param string $output 消息输出方式 具体参见 Keke::keke_show_msg
 	 * @see keke_task_class::work_hand()
 	 */
 	public function work_hand($work_desc, $file_ids, $hidework = '2', $url = '', $output = 'normal') {
@@ -256,7 +256,7 @@ class preward_task_class extends keke_task_class {
 				$work_obj->setTask_id ( $this->_task_id );
 				$work_obj->setUid ( $this->_uid );
 				$work_obj->setUsername ( $this->_username );
-				CHARSET == 'gbk' and $work_desc = kekezu::utftogbk ( $work_desc );
+				CHARSET == 'gbk' and $work_desc = Keke::utftogbk ( $work_desc );
 				$work_obj->setWork_desc ( $work_desc );
 				$work_obj->setWork_status ( 0 );
 				$work_obj->setWork_title ( $this->_task_title );
@@ -286,12 +286,12 @@ class preward_task_class extends keke_task_class {
 					$this->_task_info['task_union'] > 0 and $res = $this->_union_obj->work_hand ( $work_id ); //向联盟发信息
 					
 
-					kekezu::keke_show_msg ( $url, $_lang['congratulate_you_hand_work_success'], '', $output );
+					Keke::keke_show_msg ( $url, $_lang['congratulate_you_hand_work_success'], '', $output );
 				} else {
-					kekezu::keke_show_msg ( $url, $_lang['hand_work_fail_and_operate_agian'], 'error', $output );
+					Keke::keke_show_msg ( $url, $_lang['hand_work_fail_and_operate_agian'], 'error', $output );
 				}
 			} else {
-				kekezu::keke_show_msg ( $url, $_lang['hand_work_fail_for_the_work_full'], 'error', $output );
+				Keke::keke_show_msg ( $url, $_lang['hand_work_fail_for_the_work_full'], 'error', $output );
 			}
 		
 		}
@@ -299,14 +299,14 @@ class preward_task_class extends keke_task_class {
 	}
 	/**
 	 * 任务选稿
-	 * @param string $url    消息提示链接  具体参见 kekezu::keke_show_msg
-	 * @param string $output 消息输出方式 具体参见 kekezu::keke_show_msg
+	 * @param string $url    消息提示链接  具体参见 Keke::keke_show_msg
+	 * @param string $output 消息输出方式 具体参见 Keke::keke_show_msg
 	 * @see keke_task_class::work_choose()
 	 */
 	public function work_choose($work_id, $to_status, $url = '', $output = 'normal', $trust_response = false) {
 		global $_K, $kekezu;
 		global $_lang;
-		kekezu::check_login ( $_K ['siteurl'] . '/index.php?do=login', $output );
+		Keke::check_login ( $_K ['siteurl'] . '/index.php?do=login', $output );
 		//是否可以选稿
 		$this->check_if_operated ( $work_id, $to_status, $url, $output );
 		$work_status_arr = $this->_work_status_arr;
@@ -325,18 +325,18 @@ class preward_task_class extends keke_task_class {
 						$this->_task_info['task_union'] > 0 and $this->_union_obj->change_status (); //改变联盟任务状态
 						/** 雇主上线推广结算*/
 						$kekezu->init_prom ();
-						kekezu::$_prom_obj->dispose_prom_event ( "pub_task", $this->_guid, $this->_task_id );
-						kekezu::notify_user ( $_lang['task_over_notice'], $_lang['you_pub_task'] . $title_url . $_lang['haved_pefect_over'], $this->_guid, $this->_gusername );
+						Keke::$_prom_obj->dispose_prom_event ( "pub_task", $this->_guid, $this->_task_id );
+						Keke::notify_user ( $_lang['task_over_notice'], $_lang['you_pub_task'] . $title_url . $_lang['haved_pefect_over'], $this->_guid, $this->_gusername );
 					}
 				}
 			} elseif ($to_status == 7) {
 				
-				kekezu::notify_user ( $_lang['work_no_recept'], $_lang['you_submit_to'] . $title_url . $_lang['task_work_no_recept_to_employer'], $work_info ['uid'], $work_info ['username'] );
+				Keke::notify_user ( $_lang['work_no_recept'], $_lang['you_submit_to'] . $title_url . $_lang['task_work_no_recept_to_employer'], $work_info ['uid'], $work_info ['username'] );
 			}
 			
-			kekezu::keke_show_msg ( $url, $_lang['work'] . $work_status_arr [$to_status] . $_lang['set_success'], '', $output );
+			Keke::keke_show_msg ( $url, $_lang['work'] . $work_status_arr [$to_status] . $_lang['set_success'], '', $output );
 		} else {
-			kekezu::keke_show_msg ( $url, $_lang['work'] . $work_status_arr [$to_status] . $_lang['set_fail'], 'error', $output );
+			Keke::keke_show_msg ( $url, $_lang['work'] . $work_status_arr [$to_status] . $_lang['set_fail'], 'error', $output );
 		}
 	
 	}
@@ -356,20 +356,20 @@ class preward_task_class extends keke_task_class {
 		keke_finance_class::cash_in ( $work_info ['uid'], $real_cash, 0, 'task_bid', '', '', '', $profit_cash );
 		//通知威客				
 		$url = '<a href ="' . $_K['siteurl'] . '/index.php?do=task&task_id=' . $this->_task_id . '">' . $this->_task_title . '</a>';
-		$v = array ($_lang['username'] => $work_info ['username'], $_lang['website_name'] => kekezu::$_sys_config['website_name'], $_lang['task_id'] => "#" . $this->_task_id, $_lang['task_title'] => $url );
+		$v = array ($_lang['username'] => $work_info ['username'], $_lang['website_name'] => Keke::$_sys_config['website_name'], $_lang['task_id'] => "#" . $this->_task_id, $_lang['task_title'] => $url );
 		$this->notify_user ( "task_bid", $_lang['work_bid'], $v, '1', $work_info ['uid'] );
-		kekezu::notify_user ( $_lang['work_bid'], $_lang['you_submit_to'] . $title_url . $_lang['task_work_bid_and_get_cash'] . $real_cash . $_lang['yuan'], $work_info ['uid'] );
+		Keke::notify_user ( $_lang['work_bid'], $_lang['you_submit_to'] . $title_url . $_lang['task_work_bid_and_get_cash'] . $real_cash . $_lang['yuan'], $work_info ['uid'] );
 		//写入feed表 
 		$feed_arr = array ("feed_username" => array ("content" => $work_info ['username'], "url" => "index.php?do=space&member_id=$work_info[uid] " ), "action" => array ("content" => $_lang['success_bid_haved'], "url" => "" ), "event" => array ("content" => "$this->_task_title", "url" => "index.php?do=task&task_id=$this->_task_id" ) );
-		kekezu::save_feed ( $feed_arr, $work_info ['uid'], $work_info ['username'], 'work_accept', $this->_task_id );
+		Keke::save_feed ( $feed_arr, $work_info ['uid'], $work_info ['username'], 'work_accept', $this->_task_id );
 		
 		//更改威额稿件被采纳次数
 		$this->plus_accepted_num ( $work_info ['uid'] );
 		$this->plus_mark_num (); //更新互评次数;
 		/** 威客上线推广产生、结算*/
-		if (kekezu::$_prom_obj->is_meet_requirement ( "bid_task", $this->_task_id )) {
-			kekezu::$_prom_obj->create_prom_event ( "bid_task", $work_info ['uid'], $this->_task_id, $single_cash );
-			kekezu::$_prom_obj->dispose_prom_event ( "bid_task", $work_info ['uid'], $work_info ['work_id'] );
+		if (Keke::$_prom_obj->is_meet_requirement ( "bid_task", $this->_task_id )) {
+			Keke::$_prom_obj->create_prom_event ( "bid_task", $work_info ['uid'], $this->_task_id, $single_cash );
+			Keke::$_prom_obj->dispose_prom_event ( "bid_task", $work_info ['uid'], $work_info ['work_id'] );
 		}
 		/**威客对雇主记录**/
 		keke_user_mark_class::create_mark_log ( $this->_model_code, '1', $work_info ['uid'], $this->_guid, $work_info ['work_id'], $this->_task_info ['single_cash'], $this->_task_id, $work_info ['username'], $this->_gusername );
@@ -383,20 +383,20 @@ class preward_task_class extends keke_task_class {
 	public function work_cancel($work_id, $url, $output) {
 		global $_K;
 		global $_lang;
-		$this->_task_status == '8' and kekezu::keke_show_msg ( $url, $_lang['present_task_status_not_cancel_bid'], 'error', $output );
+		$this->_task_status == '8' and Keke::keke_show_msg ( $url, $_lang['present_task_status_not_cancel_bid'], 'error', $output );
 		$work_info = $this->get_task_work ( $work_id );
-		$work_info['work_status'] != '6' and kekezu::keke_show_msg ( $url, $_lang['present_work_not_bid_and_not_cancel_bid'], 'error', $output );
-		$this->_userinfo ['group_id'] != 7 and kekezu::keke_show_msg ( $url, $_lang['you_not_rights_operate_to_the_work'], 'error', $output );
+		$work_info['work_status'] != '6' and Keke::keke_show_msg ( $url, $_lang['present_work_not_bid_and_not_cancel_bid'], 'error', $output );
+		$this->_userinfo ['group_id'] != 7 and Keke::keke_show_msg ( $url, $_lang['you_not_rights_operate_to_the_work'], 'error', $output );
 		//改变稿件状态
 		if ($this->set_work_status ( $work_id, 0 )) {
 			//扣除中标者所得金额
 			$cash = floatval ( $this->_task_info['single_cash'] ) * floatval ( $this->_task_info ['profit_rate'] );
 			keke_finance_class::cash_out ( $work_info ['uid'], $cash, 0, 'sdfsd' );
 			$task_url = "<a href=\"{$_K[siteurl]}/index.php?do=task&task_id=$this->_task_id\">$this->_task_title</a>";
-			kekezu::notify_user ( $_lang['cancel_bid_notice'], $_lang['you_in_task'] . $task_url . $_lang['de_hand_work_jh'] . $work_id . $_lang['by_site_kf_cancel_bid'], $work_info['uid'] );
-			kekezu::keke_show_msg ( $url, $_lang['work_cancel_bid_set_success'], '', $output );
+			Keke::notify_user ( $_lang['cancel_bid_notice'], $_lang['you_in_task'] . $task_url . $_lang['de_hand_work_jh'] . $work_id . $_lang['by_site_kf_cancel_bid'], $work_info['uid'] );
+			Keke::keke_show_msg ( $url, $_lang['work_cancel_bid_set_success'], '', $output );
 		} else {
-			kekezu::keke_show_msg ( $url, $_lang['work_cancel_bid_set_fail'], 'error', $output );
+			Keke::keke_show_msg ( $url, $_lang['work_cancel_bid_set_fail'], 'error', $output );
 		}
 	}
 	
@@ -414,24 +414,24 @@ class preward_task_class extends keke_task_class {
 						if ($this->check_work_if_standard ( 'hege' )) {
 							return true;
 						} else {
-							kekezu::keke_show_msg ( $url, $_lang['task_hg_work_full_and_not_operate_bid_work'], 'error', $output );
+							Keke::keke_show_msg ( $url, $_lang['task_hg_work_full_and_not_operate_bid_work'], 'error', $output );
 						}
 					} else {
 						return true;
 					}
 					break;
 				case 6 :
-					kekezu::keke_show_msg ( $url, $_lang['task_bid_work_full_and_not_operate_choose_work'], 'error', $output );
+					Keke::keke_show_msg ( $url, $_lang['task_bid_work_full_and_not_operate_choose_work'], 'error', $output );
 					break;
 				case 7 :
-					kekezu::keke_show_msg ( $url, $_lang['task_not_recept_work_full_and_not_operate_choose_work'], 'error', $output );
+					Keke::keke_show_msg ( $url, $_lang['task_not_recept_work_full_and_not_operate_choose_work'], 'error', $output );
 					break;
 				case 8 :
-					kekezu::keke_show_msg ( $url, $_lang['task_not_operate_work_and_not_operate_choose_work'], 'error', $output );
+					Keke::keke_show_msg ( $url, $_lang['task_not_operate_work_and_not_operate_choose_work'], 'error', $output );
 					break;
 			}
 		} else {
-			kekezu::keke_show_msg ( $url, $_lang['now_status_can_not_choose'], "error", $output );
+			Keke::keke_show_msg ( $url, $_lang['now_status_can_not_choose'], "error", $output );
 		}
 	}
 	
@@ -509,7 +509,7 @@ class preward_task_class extends keke_task_class {
 	 */
 	public function dispose_task_return($action) {
 		$uid = $this->_uid;
-		$prom_obj = kekezu::$_prom_obj;
+		$prom_obj = Keke::$_prom_obj;
 		$refund_type = $this->_task_config ['defeated']; //退款方式
 		$task_cash = floatval ( $this->_task_info ['task_cash'] ); //实际金额		
 		$refund_rate = floatval ( $this->_task_info ['task_fail_rate'] ) / 100; //任务失败返金抽成比例
@@ -563,7 +563,7 @@ class preward_task_class extends keke_task_class {
 				if (intval ( $this->_task_info ['work_num'] ) > 0) { //如果有稿件
 					if ($this->set_task_status ( 3 )) {
 						//发消息
-						kekezu::notify_user ( $_lang['task_timeout_notice'], $_lang['you_pub_task'] . $task_url . $_lang['hand_work_timeout_and_choose'], $this->_guid, $this->_gusername );
+						Keke::notify_user ( $_lang['task_timeout_notice'], $_lang['you_pub_task'] . $task_url . $_lang['hand_work_timeout_and_choose'], $this->_guid, $this->_gusername );
 					}
 				} else {
 					if ($this->set_task_status ( 9 )) { //任务失败
@@ -572,14 +572,14 @@ class preward_task_class extends keke_task_class {
 						$refund = $this->dispose_task_return ( 'task_fail' );
 						/** 终止雇主的此次推广事件*/
 						$kekezu->init_prom ();
-						$p_event = kekezu::$_prom_obj->get_prom_event ( $this->_task_id, $this->_guid, "pub_task" );
-						kekezu::$_prom_obj->set_prom_event_status ( $p_event ['parent_uid'], $this->_gusername, $p_event ['event_id'], '3' );
+						$p_event = Keke::$_prom_obj->get_prom_event ( $this->_task_id, $this->_guid, "pub_task" );
+						Keke::$_prom_obj->set_prom_event_status ( $p_event ['parent_uid'], $this->_gusername, $p_event ['event_id'], '3' );
 						
 						//发消息
 						$refund ['refund_cash'] || $refund ['refund_credit'] and $send_str = $_lang['sys_haved_return'];
 						$refund ['refund_cash'] and $send_str .= $_lang['task_cach_'] . $refund ['refund_cash'] . $_lang['yuan'];
 						$refund ['refund_credit'] and $send_str .= $_lang['task_credit_'] . $refund ['refund_credit'];
-						kekezu::notify_user ( $_lang['task_fail_notice'], $_lang['you_pub_task'] . $task_url . $_lang['hand_work_timeout_no_works_and_task_fail'] . $send_str, $this->_guid, $this->_gusername );
+						Keke::notify_user ( $_lang['task_fail_notice'], $_lang['you_pub_task'] . $task_url . $_lang['hand_work_timeout_no_works_and_task_fail'] . $send_str, $this->_guid, $this->_gusername );
 					}
 				}
 			}
@@ -622,9 +622,9 @@ class preward_task_class extends keke_task_class {
 				$refund ['refund_cash'] and $send_str .= $_lang['task_cach_'] . $refund ['refund_cash'] . $_lang['yuan'];
 				$refund ['refund_credit'] and $send_str .= $_lang['task_credit_'] . $refund ['refund_credit'];
 				//发消息
-				kekezu::notify_user ( $_lang['task_over_notice'], $_lang['you_pub_task'] . "<a href=\"$_K[siteurl]/index.php?do=task&task_id=$this->_task_id \">$this->_task_title</a>" . $_lang['choose_timeout_and_task_fail'] . $send_str, $this->_guid );
+				Keke::notify_user ( $_lang['task_over_notice'], $_lang['you_pub_task'] . "<a href=\"$_K[siteurl]/index.php?do=task&task_id=$this->_task_id \">$this->_task_title</a>" . $_lang['choose_timeout_and_task_fail'] . $send_str, $this->_guid );
 				/** 结算雇主推广事件*/
-				kekezu::$_prom_obj->dispose_prom_event ( "pub_task", $this->_guid, $this->_task_id );
+				Keke::$_prom_obj->dispose_prom_event ( "pub_task", $this->_guid, $this->_task_id );
 			}
 		}
 	}
@@ -689,8 +689,8 @@ class preward_task_class extends keke_task_class {
 			if ($res) { //支付成功
 				/** 雇主推广事件产生*/
 				$kekezu->init_prom ();
-				if (kekezu::$_prom_obj->is_meet_requirement ( "pub_task", $this->_task_id )) {
-					kekezu::$_prom_obj->create_prom_event ( "pub_task", $this->_guid, $this->_task_id, $this->_task_info ['task_cash'] );
+				if (Keke::$_prom_obj->is_meet_requirement ( "pub_task", $this->_task_id )) {
+					Keke::$_prom_obj->create_prom_event ( "pub_task", $this->_guid, $this->_task_id, $this->_task_info ['task_cash'] );
 				}
 				//更改订单状态到已付款状态
 				dbfactory::updatetable ( TABLEPRE . "witkey_order", array ("order_status" => "ok" ), array ("order_id" => "$order_id" ) );

@@ -1,6 +1,6 @@
 <?php
 
-final class keke_cache_sqlite extends keke_cache_class {
+final class Keke_cache_sqlite extends Keke_cache_class {
 	public  $_config = array ();
 	protected static $_db;
 	private $_gcProbability=100;

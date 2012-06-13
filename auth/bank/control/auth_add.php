@@ -10,16 +10,16 @@ defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 $page_title = $_lang['bank_auth'];
 $step_arr = array ("step1" => array ($_lang['step_one'], $_lang['choose_account'] ), "step2" => array ($_lang['step_two'], $_lang['payment_of_charges'] ), "step3" => array ($_lang['step_three'], $_lang['enter_throw_into_cash'] ), "step4" => array ($_lang['step_four'], $_lang['auth_pass'] ) );
 $auth_step= keke_auth_bank_class::get_auth_step($auth_step,$auth_info);
-$verify = kekezu::reset_secode_session($ver?0:1);//安全码输入
+$verify = Keke::reset_secode_session($ver?0:1);//安全码输入
 $ac_url = $origin_url . "&op=$op&auth_code=$auth_code&ver=".intval($ver);
 /*关联账号列表*/
-$account_list = kekezu::get_table_data("*","witkey_member_bank"," uid = '$uid' and bind_status='1'",'','','','bank_id');
+$account_list = Keke::get_table_data("*","witkey_member_bank"," uid = '$uid' and bind_status='1'",'','','','bank_id');
 
 $bank_arr=keke_global_class::get_bank();//银行列表
 $auth_info[1] and $show='list';//存在多条认证记录。显示列表
 switch ($auth_step) {
 	case "step1" :
-		$bind_list = kekezu::get_table_data("bank_id","witkey_auth_bank","uid='$uid' and auth_status!=2","","","","bank_id",null);
+		$bind_list = Keke::get_table_data("bank_id","witkey_auth_bank","uid='$uid' and auth_status!=2","","","","bank_id",null);
 		if($reset){
 			unset($_SESSION['auth_bank_id']);
 		}elseif($bank_id){
@@ -29,13 +29,13 @@ switch ($auth_step) {
 		break;
 	case "step2" :
 		if($bank_id){//检测是否选取过关联账户
-			$bank_id!=$_SESSION['auth_bank_id'] and kekezu::show_msg($_lang['warn_different_account'],$ac_url."&auth_step=step1",'3','','warning');
+			$bank_id!=$_SESSION['auth_bank_id'] and Keke::show_msg($_lang['warn_different_account'],$ac_url."&auth_step=step1",'3','','warning');
 		}else{
-			kekezu::show_msg($_lang['warn_need_selected_the_associative_account'],$ac_url."&auth_step=step1",'3','','warning');
+			Keke::show_msg($_lang['warn_need_selected_the_associative_account'],$ac_url."&auth_step=step1",'3','','warning');
 		}
 		
 		$account_info=$account_list[$bank_id];//当前选取的关联账户
-		$account_info or kekezu::show_msg($_lang['warn_associated_bank_account_inexistent'],$ac_url."&auth_step=step1",'3','','warning');
+		$account_info or Keke::show_msg($_lang['warn_associated_bank_account_inexistent'],$ac_url."&auth_step=step1",'3','','warning');
 		
 		if($sbt_pay){ //认证申请提交
 			$data['bank_name']=$account_info['bank_name'];
@@ -47,7 +47,7 @@ switch ($auth_step) {
 		}
 		break;
 	case "step3" :
-		$auth_info or kekezu::show_msg($_lang['warn_illegal_entry'],$ac_url."&auth_step=step1",'3','','warning');
+		$auth_info or Keke::show_msg($_lang['warn_illegal_entry'],$ac_url."&auth_step=step1",'3','','warning');
 		$account_info=$account_list[$auth_info['bank_id']];//当前认证的关联账户
 		$user_get_cash and $auth_obj->auth_confirm($auth_info,$user_get_cash);//认证确认
 		break;
@@ -57,14 +57,14 @@ switch ($auth_step) {
 		}else{
 			if($show_id||!$auth_info[1]){
 				$account_info=$account_list[$auth_info['bank_id']];//当前认证的关联账户
-				$account_info or kekezu::show_msg($_lang['tips_about_bank_account_inexistent'],$ac_url."&auth_step=step1",'3','','warning');
+				$account_info or Keke::show_msg($_lang['tips_about_bank_account_inexistent'],$ac_url."&auth_step=step1",'3','','warning');
 			}
 		}
 		if($ac=='reauth'&&$bank_a_id){
 			$ac_url = "{$origin_url}&op={$op}&auth_code={$auth_code}&step=step4&show=list&ver=1";
 			$res = dbfactory::execute(sprintf(" delete from %switkey_auth_bank where bank_a_id='%d'",TABLEPRE,$bank_a_id));
 			$res .=dbfactory::execute(sprintf(" delete from %switkey_auth_record where ext_data='%d'",TABLEPRE,$bank_a_id));
-			$res and kekezu::show_msg($_lang['unbind_successful'],$ac_url."#userCenter",3,'','success') or kekezu::show_msg($_lang['unbind_fail'],$ac_url."#userCenter",3,'','warning');
+			$res and Keke::show_msg($_lang['unbind_successful'],$ac_url."#userCenter",3,'','success') or Keke::show_msg($_lang['unbind_fail'],$ac_url."#userCenter",3,'','warning');
 		}
 		break;
 }

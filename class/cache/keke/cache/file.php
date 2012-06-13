@@ -1,7 +1,7 @@
 <?php
 // keke_lang_class::load_lang_class('file_cache_class');
 // require_once 'acache_class.php';
-class keke_cache_file extends keke_cache_class {
+class Keke_cache_file extends Keke_cache_class {
 
 	private $path;
 	private $contents;

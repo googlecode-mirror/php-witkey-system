@@ -10,7 +10,7 @@ defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * 统计
  */
-$count_arr = kekezu::get_table_data ( "model_id,count(service_id) count", "witkey_service", " model_id IN(6,7) and uid='$uid'", "", "model_id", "", "model_id", 3600 );
+$count_arr = Keke::get_table_data ( "model_id,count(service_id) count", "witkey_service", " model_id IN(6,7) and uid='$uid'", "", "model_id", "", "model_id", 3600 );
 /**
  * 三级横向菜单
  */
@@ -37,7 +37,7 @@ if (isset ( $ac )) {
 		switch ($ac) {
 			case "del" :
 				$res = dbfactory::execute ( sprintf ( " delete from %switkey_service where service_id='%d'", TABLEPRE, $ser_id ) );
-				$res and kekezu::show_msg ( $_lang ['operate_notice'], $url, 3, $_lang ['g_delete_success'], 'success' ) or kekezu::show_msg ( $_lang ['operate_notice'], $url, 3, $_lang ['g_delete_fail'], 'warning' );
+				$res and Keke::show_msg ( $_lang ['operate_notice'], $url, 3, $_lang ['g_delete_success'], 'success' ) or Keke::show_msg ( $_lang ['operate_notice'], $url, 3, $_lang ['g_delete_fail'], 'warning' );
 				break;
 			case "edit" :
 				$url = "$origin_url&op=$op&model_id=$model_id&ac=edit&ser_id=$ser_id";
@@ -47,18 +47,18 @@ if (isset ( $ac )) {
 				$res = dbfactory::get_count ( sprintf ( " select a.order_id from %switkey_order a left join 
 					%switkey_order_detail b on a.order_id=b.order_id where a.model_id='%d' and b.obj_id='%d'
 					 and b.obj_type='service' and a.order_status not in ('close','arb_confirm')", TABLEPRE, TABLEPRE, $model_id, $ser_id ) );
-				$res and kekezu::echojson ( '', 1 ) or kekezu::echojson ( '', 0 );
+				$res and Keke::echojson ( '', 1 ) or Keke::echojson ( '', 0 );
 				die ();
 				break;
 		}
 	} else {
-		kekezu::show_msg ( $_lang ['operate_notice'], $url, 3, $_lang ['please_choose_delete_sid'], "warning" );
+		Keke::show_msg ( $_lang ['operate_notice'], $url, 3, $_lang ['please_choose_delete_sid'], "warning" );
 	}
 }
 if ($model_id) {
 	/**排序数组**/
 	$ord_arr = array (" service_id desc " => $_lang ['service_id_desc'], " service_id asc " => $_lang ['service_id_asc'], " on_time desc " => $_lang ['pub_time_desc'], " on_time asc " => $_lang ['pub_time_asc'] );
-	$page_obj = kekezu::$_page_obj; //分页对象
+	$page_obj = Keke::$_page_obj; //分页对象
 	$s_obj = new Keke_witkey_service_class ();
 	
 	$where = " model_id = '$model_id' and uid= '$uid'";

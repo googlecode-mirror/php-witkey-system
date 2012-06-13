@@ -20,8 +20,8 @@ class keke_prom_class {
 	}
 	public function __construct() {
 		global $kekezu;
-		$this->_prom_open = intval ( kekezu::$_sys_config ['prom_open'] );//判断后台是否开启推广
-		$this->_prom_period = intval ( kekezu::$_sys_config ['prom_period'] );//推广的有效期限
+		$this->_prom_open = intval ( Keke::$_sys_config ['prom_open'] );//判断后台是否开启推广
+		$this->_prom_period = intval ( Keke::$_sys_config ['prom_period'] );//推广的有效期限
 		$this->auth_step_init();
 	}
 	/**
@@ -146,16 +146,16 @@ class keke_prom_class {
 		$relate_obj =  new Keke_witkey_prom_relation_class ();
 		if ($this->_prom_open) {
 			if ($url_data ['uid'] == $uid) { //无法推广自己
-				kekezu::notify_user ( $_lang['prom_fail'], $_lang['you_can_not_prom_self'], $url_data ['u'] );
+				Keke::notify_user ( $_lang['prom_fail'], $_lang['you_can_not_prom_self'], $url_data ['u'] );
 				return false;
 			} else {
 				$prom_relation = $this->get_prom_relation ( $uid, $url_data ['p'] ); //获取此下线推广关系
 				$r_status      = intval($prom_relation['relation_status']);
 				$r_status==3||$r_status==0 and $p_status =1 or $p_status=2;//没有失效则阻止
 				if ($p_status==2) { //已有推广关系
-					kekezu::notify_user ( $_lang['prom_fail'], $_lang['your_prom_user_has_promer'], $url_data ['u'] );
+					Keke::notify_user ( $_lang['prom_fail'], $_lang['your_prom_user_has_promer'], $url_data ['u'] );
 				} else {
-					$p_info = kekezu::get_user_info ( $url_data ['u'] ); //上线用户信息
+					$p_info = Keke::get_user_info ( $url_data ['u'] ); //上线用户信息
 					$relate_obj->setUid ( $uid );
 					$relate_obj->setUsername ( $username );
 					$relate_obj->setProm_uid ( $p_info ['uid'] );
@@ -167,7 +167,7 @@ class keke_prom_class {
 				}
 			}
 		} else {
-			kekezu::notify_user ( $_lang['prom_fail'], $_lang['prom_system_closed'], $url_data ['u'] );
+			Keke::notify_user ( $_lang['prom_fail'], $_lang['prom_system_closed'], $url_data ['u'] );
 			return false;
 		}
 	}
@@ -256,14 +256,14 @@ class keke_prom_class {
 				$title = $_lang['prom_msg_notice'];
 				$content = $_lang['you_prom_offline'] . $username . $_lang['event_fail_notice'];
 			}
-			$title && $content and kekezu::notify_user ( $title, $content, $p_uid );
+			$title && $content and Keke::notify_user ( $title, $content, $p_uid );
 		}
 	}
 	/**
 	 * 推广收益查询
 	 */
 	function prom_income_rank() {
-		return kekezu::get_table_data ( " uid,username,sum(fina_cash) cash,sum(fina_credit) credit", "witkey_finance", " INSTR(fina_action,'prom_')", "", "uid", "", "uid", 3600 );
+		return Keke::get_table_data ( " uid,username,sum(fina_cash) cash,sum(fina_credit) credit", "witkey_finance", " INSTR(fina_action,'prom_')", "", "uid", "", "uid", 3600 );
 	}
 	/**
 	 * 创建推广cookie
@@ -278,7 +278,7 @@ class keke_prom_class {
 			if ($url_data ['u'] != $uid && $url_data ['p']) {
 				if ($this->get_prom_relation ( $uid, $url_data ['p'] )) { //有上线了
 					/** 通知用户*/
-					kekezu::notify_user ( $_lang['prom_fail'], $_lang['from_you_prom_website_user'] . "【".$username."】" . $_lang['already_exist_prom_promotion_fail'], $url_data ['u'] );
+					Keke::notify_user ( $_lang['prom_fail'], $_lang['from_you_prom_website_user'] . "【".$username."】" . $_lang['already_exist_prom_promotion_fail'], $url_data ['u'] );
 				} else {
 					$this->create_prom_relation ( $uid, $username, $url_data,2 );
 				}
@@ -368,6 +368,6 @@ class keke_prom_class {
 	 * 获取推广类型
 	 */
 	public static function get_prom_type(){
-		return kekezu::get_table_data("prom_code,prom_item,type","witkey_prom_rule","","","","","prom_code",3600);
+		return Keke::get_table_data("prom_code,prom_item,type","witkey_prom_rule","","","","","prom_code",3600);
 	}
 }

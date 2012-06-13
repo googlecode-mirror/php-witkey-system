@@ -8,18 +8,18 @@
 
 
 defined ( 'ADMIN_KEKE' )or exit ( 'Access Denied' );
-kekezu::admin_check_role(14);
+Keke::admin_check_role(14);
 $art_cat_obj = new Keke_witkey_article_category_class();
 
-$need_index_art = kekezu::get_table_data('*',"witkey_article_category"," art_index='' or art_index is null","",'','','art_cat_id');
+$need_index_art = Keke::get_table_data('*',"witkey_article_category"," art_index='' or art_index is null","",'','','art_cat_id');
 
 if ($op == "repair_index")
 {
-	$need_index_art = kekezu::get_table_data('*',"witkey_article_category","","",'','art_cat_id',null);
+	$need_index_art = Keke::get_table_data('*',"witkey_article_category","","",'','art_cat_id',null);
 }
 if ($need_index_art)
 {
-	$art_cat_arr = kekezu::get_table_data('*',"witkey_article_category","","","",'',"art_cat_id",null);
+	$art_cat_arr = Keke::get_table_data('*',"witkey_article_category","","","",'',"art_cat_id",null);
 	$record_id = '';//+
 	foreach ($need_index_art as $n_art)
 	{
@@ -37,7 +37,7 @@ if ($need_index_art)
 		$record_id .= $n_art['art_cat_id'] . ',';//+
 	}
  
-    kekezu::admin_system_log($_lang['mulit_edit_cate'] . $record_id); //日志记录
+    Keke::admin_system_log($_lang['mulit_edit_cate'] . $record_id); //日志记录
 }
 
 
@@ -50,15 +50,15 @@ $type = (! empty ( $type ) && in_array ( $type, $types )) ? $type : 'art';
 switch ( $type )
 {
 	case 'art':
-		$art_cat_arr = kekezu::get_table_data('*',"witkey_article_category","art_index like '%{1}%'"," art_cat_id desc",'','','art_cat_id',null);
+		$art_cat_arr = Keke::get_table_data('*',"witkey_article_category","art_index like '%{1}%'"," art_cat_id desc",'','','art_cat_id',null);
 		$where.=" and art_index like ('%{1}%') ";
-		kekezu::admin_check_role(31);
+		Keke::admin_check_role(31);
 		break;
 		;
 	case 'help':
-		$art_cat_arr = kekezu::get_table_data('*',"witkey_article_category","art_index like '%{100}%'"," art_cat_id desc",'','','art_cat_id',null);
+		$art_cat_arr = Keke::get_table_data('*',"witkey_article_category","art_index like '%{100}%'"," art_cat_id desc",'','','art_cat_id',null);
 		$where.=" and art_index like ('%{100}%') ";
-		kekezu::admin_check_role(44);
+		Keke::admin_check_role(44);
 }
 
 
@@ -82,7 +82,7 @@ $art_cat_show_arr = $art_cat_obj->query_keke_witkey_article_category();
 
 
 $temp_arr = array();
-kekezu::get_tree($art_cat_show_arr,$temp_arr,'list',NULL,'art_cat_id','art_cat_pid','cat_name');
+Keke::get_tree($art_cat_show_arr,$temp_arr,'list',NULL,'art_cat_id','art_cat_pid','cat_name');
 
 $cat_show_arr = $temp_arr;
 unset($temp_arr);
@@ -100,17 +100,17 @@ if($ac=='del')
 {
 	if($art_cat_id)
 	{
-		if (in_array($art_cat_id,array(1,100,200))){kekezu::admin_show_msg($_lang['first_classification_can_not_be_deleted'],'index.php?do='.$do.'&view='.$view.'&type='.$type,3,'','warning');}
+		if (in_array($art_cat_id,array(1,100,200))){Keke::admin_show_msg($_lang['first_classification_can_not_be_deleted'],'index.php?do='.$do.'&view='.$view.'&type='.$type,3,'','warning');}
 		
 		$art_cat_obj->setWhere('art_cat_id='.$art_cat_id);
 		$res = $art_cat_obj->del_keke_witkey_article_category();
-		kekezu::$_cache_obj->del('keke_witkey_article_category');
-		kekezu::admin_system_log($_lang['delete_cate'] . $art_cat_id); //日志记录
-		kekezu::admin_show_msg($_lang['cate_delete_successfully'],'index.php?do='.$do.'&view='.$view.'&type='.$type,3,'','success');
+		Keke::$_cache_obj->del('keke_witkey_article_category');
+		Keke::admin_system_log($_lang['delete_cate'] . $art_cat_id); //日志记录
+		Keke::admin_show_msg($_lang['cate_delete_successfully'],'index.php?do='.$do.'&view='.$view.'&type='.$type,3,'','success');
 	}
 	else
 	{
-		kekezu::admin_show_msg($_lang['cate_does_not_exist_delete_fail'],'index.php?do='.$do.'&view='.$view.'&type='.$type,3,'','success');
+		Keke::admin_show_msg($_lang['cate_does_not_exist_delete_fail'],'index.php?do='.$do.'&view='.$view.'&type='.$type,3,'','success');
 	}
 }
 
@@ -124,7 +124,7 @@ if (isset ( $sbt_action ))
 	 {
 	 	$ids = implode(',',$keyids);
 	 }
-	if ( ! count ( $keyids )) kekezu::admin_show_msg($_lang['choose_operate_item'],'index.php?do='.$do.'&view='.$view.'&type='.$type,3,'','warning');
+	if ( ! count ( $keyids )) Keke::admin_show_msg($_lang['choose_operate_item'],'index.php?do='.$do.'&view='.$view.'&type='.$type,3,'','warning');
 	
 	$art_cat_obj->setWhere(' art_cat_id in ('.$ids.') ');
 	switch ($sbt_action) 
@@ -138,15 +138,15 @@ if (isset ( $sbt_action ))
 			break;
 			;
 	}
-	kekezu::$_cache_obj->del('keke_witkey_article_category');
-	kekezu::admin_system_log($_lang['mulit_delete_cate'] . $ids ); //日志记录
+	Keke::$_cache_obj->del('keke_witkey_article_category');
+	Keke::admin_system_log($_lang['mulit_delete_cate'] . $ids ); //日志记录
 	if($res)
 	{
-		kekezu::admin_show_msg($_lang['mulit_operate_success'],'index.php?do='.$do.'&view='.$view.'&type='.$type,3,'','success');//批量操作成功
+		Keke::admin_show_msg($_lang['mulit_operate_success'],'index.php?do='.$do.'&view='.$view.'&type='.$type,3,'','success');//批量操作成功
 	}
 	else
 	{
-		kekezu::admin_show_msg($_lang['mulit_operate_fail'],'index.php?do='.$do.'&view='.$view.'&type='.$type,3,'','warning');
+		Keke::admin_show_msg($_lang['mulit_operate_fail'],'index.php?do='.$do.'&view='.$view.'&type='.$type,3,'','warning');
 	}
 
 }
@@ -155,14 +155,14 @@ if ($op == 'listorder') {
 	$art_obj->setWhere ( "art_cat_id='$art_cat_id'" );
 	$art_obj->setListorder (intval($value));
 	$art_obj->edit_keke_witkey_article_category(); 
-	kekezu::admin_system_log($_lang['edit_cate_order'].$art_cat_id);
+	Keke::admin_system_log($_lang['edit_cate_order'].$art_cat_id);
 	die ();
 } 
 
  
 //递归分类列表
 $temp_arr = array();
-kekezu::get_tree($art_cat_arr,$temp_arr,'option',NULL,'art_cat_id','art_cat_pid','cat_name');
+Keke::get_tree($art_cat_arr,$temp_arr,'option',NULL,'art_cat_id','art_cat_pid','cat_name');
 $cat_arr = $temp_arr;
 unset($temp_arr);
  

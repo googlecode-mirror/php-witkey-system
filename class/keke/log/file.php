@@ -1,6 +1,6 @@
 <?php
 
-class keke_log_file extends keke_log_write {
+class Keke_log_file extends Keke_log_write {
 	
 	protected $_directory;
 	/**

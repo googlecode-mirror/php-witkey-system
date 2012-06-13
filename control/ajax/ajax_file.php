@@ -21,18 +21,18 @@ defined ( 'IN_KEKE' ) or exit('Access Denied');
 			break;
 		case "delete":
 			$res = keke_file_class::del_att_file($file_id, $filepath);
-			$res and kekezu::echojson ( '', '1' ) or kekezu::echojson ( '', '0' );
+			$res and Keke::echojson ( '', '1' ) or Keke::echojson ( '', '0' );
 			die ();
 			break;
 		case "del"://通过路径删除
 			//三个条件任何一个不成就die掉
 			if(strtolower($_SERVER['REQUEST_METHOD'])!='post' || !isset($fid) || !isset($filepath)){	
-				kekezu::echojson ( '', '0' );die();
+				Keke::echojson ( '', '0' );die();
 			}
 			$fid = intval($fid);//file_id
-			$size = kekezu::escape($size);//图片的不同尺寸
+			$size = Keke::escape($size);//图片的不同尺寸
 			$res = keke_file_class::del_att_file($fid,$filepath,$size);
-			$res and kekezu::echojson ( '', 1 ) or kekezu::echojson ( '', '0' );
+			$res and Keke::echojson ( '', 1 ) or Keke::echojson ( '', '0' );
 			die ();
 		case "goods_filedown"://店铺文件下载
 			$service_info = dbfactory::get_one(sprintf(" select file_path,submit_method,uid from %switkey_service where service_id='%d'",TABLEPRE,$_GET['sid']));

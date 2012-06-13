@@ -7,7 +7,7 @@
  * 2011-8-15
  */
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
-kekezu::admin_check_role(73);
+Keke::admin_check_role(73);
 $msg_obj =new Keke_witkey_msg_tpl_class();
 //所有短信类型
 $config_msg_arr = $kekezu->get_table_data ( "*", "witkey_msg_config", " 1 = 1 ", "config_id desc ", '', '', 'config_id' );
@@ -19,7 +19,7 @@ $now_v = unserialize ( $now_msg_arr ['v'] );
 if (isset ( $tpl_code )) {
 	$msg_tpl = dbfactory::query(" select * from " . TABLEPRE . "witkey_msg_tpl where tpl_code='$tpl_code'" );
 	if ($msg_tpl) {
-		kekezu::echojson ( '', 1, $msg_tpl );
+		Keke::echojson ( '', 1, $msg_tpl );
 	} else {
 		echo json_encode ( array ("status" => 0 ) );
 	}
@@ -47,10 +47,10 @@ if ($slt_tpl_code) {
 		}	
 	}
 	if ($res) {
-		kekezu::admin_system_log ( $_lang['edit_sms_tpl'] );
-		kekezu::admin_show_msg ( $_lang['edit_sms_tpl_success'], 'index.php?do=msg&view=intertpl&slt_tpl_code=' . $slt_tpl_code,3,'','success' );
+		Keke::admin_system_log ( $_lang['edit_sms_tpl'] );
+		Keke::admin_show_msg ( $_lang['edit_sms_tpl_success'], 'index.php?do=msg&view=intertpl&slt_tpl_code=' . $slt_tpl_code,3,'','success' );
 	} else {
-		kekezu::admin_show_msg ( $_lang['save_sms_tpl_success'], 'index.php?do=msg&view=intertpl&slt_tpl_code=' . $slt_tpl_code,3,'','success' );
+		Keke::admin_show_msg ( $_lang['save_sms_tpl_success'], 'index.php?do=msg&view=intertpl&slt_tpl_code=' . $slt_tpl_code,3,'','success' );
 	}
 }
 $msg_tpl = dbfactory::get_one ( "select content from " . TABLEPRE . "witkey_msg_tpl where tpl_code='$slt_tpl_code' and send_type=1" );
@@ -58,4 +58,4 @@ $msg_tpl = $msg_tpl ['content'];
 $phone_tpl = dbfactory::get_one ( "select content from " . TABLEPRE . "witkey_msg_tpl where tpl_code='$slt_tpl_code' and send_type=2" );
 $phone_tpl = $phone_tpl ['content'];
 
-require kekezu::$_tpl_obj->template ( 'control/admin/tpl/admin_msg_' . $view );
+require Keke::$_tpl_obj->template ( 'control/admin/tpl/admin_msg_' . $view );

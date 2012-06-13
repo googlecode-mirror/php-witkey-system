@@ -210,7 +210,7 @@ class keke_service_class {
 	 */
 	function notify_verify() {
 		$veryfy_url = $this->_gateway . "service=keke.notify.verify" . "&app_id=" . $this->_app_id . "&notify_id=" . $_POST ["notify_id"];
-		$veryfy_result = kekezu::socket_request( $veryfy_url );
+		$veryfy_result = Keke::socket_request( $veryfy_url );
  		
 		if (empty ( $_POST )) { 
 			return false;
@@ -234,7 +234,7 @@ class keke_service_class {
 	 */
 	function return_verify() {
 		$veryfy_url = $this->_gateway. "service=keke.notify.verify" . "&app_id=" . $this->_app_id . "&notify_id=" . $_GET["notify_id"];
-		$veryfy_result = kekezu::socket_request( $veryfy_url );
+		$veryfy_result = Keke::socket_request( $veryfy_url );
 		if (empty ( $_GET )) {
 			return false;
 		} else {
@@ -313,9 +313,9 @@ class keke_service_class {
 $xml_str
 XML;
 		$xml_o = simplexml_load_string ( $string );
-		$xml_arr = kekezu::objtoarray ( $xml_o );
+		$xml_arr = Keke::objtoarray ( $xml_o );
 		if ($charset== "GBK") {
-			$xml_arr = kekezu::utftogbk ( $xml_arr );
+			$xml_arr = Keke::utftogbk ( $xml_arr );
 		}
 		return $xml_arr;
 	}

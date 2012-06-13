@@ -29,7 +29,7 @@ final class tender_time_class extends time_base_class {
 		foreach ($task_arr as $k=>$v){//改变任务状态
 			$count = $this->get_task_work($v['task_id'], 0);
 			if($count){
-				kekezu::notify_user($_lang['tender_notice'], $_lang['you_pub_tender_task']."<a href=index.php?do=task&task_id=".$v['task_id']." >".$v['task_title']."</a>".$_lang['has_choose_tender_please_choose'], $v['uid']);
+				Keke::notify_user($_lang['tender_notice'], $_lang['you_pub_tender_task']."<a href=index.php?do=task&task_id=".$v['task_id']." >".$v['task_title']."</a>".$_lang['has_choose_tender_please_choose'], $v['uid']);
 				$this->set_task_status($v['task_id'],3);
 			}else{ 
 				$this->set_task_status($v['task_id'],9);
@@ -37,8 +37,8 @@ final class tender_time_class extends time_base_class {
 					$union_obj = new keke_union_class($v['task_id']);
 					$union_obj -> change_status('failure');
 				}
-			//	kekezu::feed_add("$v['username']发布的招标任务:<a href=index.php?do=task&task_id=".$v['task_id']." >".$v['task_title']."</a>,投标期没有威客投标，已失败", $v['uid'], $v['username']);
-				kekezu::notify_user($_lang['tender_fail'],$_lang['you_pub_tender_task']."<a href=index.php?do=task&task_id=".$v['task_id']." >".$v['task_title']."</a>".$_lang['submit_tender_no_witkey_fail'], $v['uid']);
+			//	Keke::feed_add("$v['username']发布的招标任务:<a href=index.php?do=task&task_id=".$v['task_id']." >".$v['task_title']."</a>,投标期没有威客投标，已失败", $v['uid'], $v['username']);
+				Keke::notify_user($_lang['tender_fail'],$_lang['you_pub_tender_task']."<a href=index.php?do=task&task_id=".$v['task_id']." >".$v['task_title']."</a>".$_lang['submit_tender_no_witkey_fail'], $v['uid']);
 			}
 		}
 	}
@@ -55,7 +55,7 @@ final class tender_time_class extends time_base_class {
 		foreach ($task_arr as  $k=>$v){
 			$count = $this->get_task_work($v['task_id'],4);
 			if($count){
-				kekezu::notify_user($_lang['tender_notice'], $_lang['you_pub_tender_task']."<a href=index.php?do=task&task_id=".$v['task_id']." >".$v['task_title']."</a>".$_lang['has_success_end'], $v['uid']);
+				Keke::notify_user($_lang['tender_notice'], $_lang['you_pub_tender_task']."<a href=index.php?do=task&task_id=".$v['task_id']." >".$v['task_title']."</a>".$_lang['has_success_end'], $v['uid']);
 				$this->set_task_status($v['task_id'],5);
 			}else{  
 				$this->set_task_status($v['task_id'],9);
@@ -63,7 +63,7 @@ final class tender_time_class extends time_base_class {
 					$union_obj = new keke_union_class($v['task_id']);
 					$union_obj -> change_status('failure');
 				}
-				kekezu::notify_user($_lang['tender_fail'],$_lang['you_pub_tender_task']."<a href=index.php?do=task&task_id=".$v['task_id']." >".$v['task_title']."</a>".$_lang['choose_tender_no_choose_fail'], $v['uid']);
+				Keke::notify_user($_lang['tender_fail'],$_lang['you_pub_tender_task']."<a href=index.php?do=task&task_id=".$v['task_id']." >".$v['task_title']."</a>".$_lang['choose_tender_no_choose_fail'], $v['uid']);
 			}			
 		}
 	}

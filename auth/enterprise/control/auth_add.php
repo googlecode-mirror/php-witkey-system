@@ -14,7 +14,7 @@ $step_arr=array("step1"=>array( $_lang['step_one'], $_lang['auth_intro']),
 				"step4"=>array( $_lang['step_four'], $_lang['auth_pass']));
 
 $auth_step= keke_auth_enterprise_class::get_auth_step($auth_step,$auth_info);
-//$verify = kekezu::reset_secode_session($ver?0:1);//安全码输入
+//$verify = Keke::reset_secode_session($ver?0:1);//安全码输入
 $verify   = 0;
 $ac_url = $origin_url . "&op=$op&auth_code=$auth_code&ver=".intval($ver);
 switch ($auth_step){

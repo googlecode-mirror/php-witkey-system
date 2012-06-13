@@ -26,9 +26,9 @@ class keke_loaddata_class {
 	}
 	static function readfeed($loadcount, $type = '', $uid = '', $objid = '', $templatename = "", $cachename = "", $cachetime = 300) {
 		global $kekezu,$_lang;
-		$tag_arr = kekezu::$_tag;
+		$tag_arr = Keke::$_tag;
 		$tag_info = $tag_arr [$templatename];
-		$feed_arr = $cachename ? kekezu::$_cache_obj->get ( "feed_" . $cachename . "_cache" ) : null;
+		$feed_arr = $cachename ? Keke::$_cache_obj->get ( "feed_" . $cachename . "_cache" ) : null;
 		if (! $feed_arr) {
 			$feed_obj = new keke_witkey_feed();
 			$limit = $loadcount ? "limit 0,$loadcount" : "";
@@ -42,12 +42,12 @@ class keke_loaddata_class {
 			$temp_arr = array ();
 			if (is_array ( $feed_arr )) {
 				foreach ( $feed_arr as $v ) {
-					$v ['on_time'] = kekezu::get_gmdate ( $v ['feed_time'] );
+					$v ['on_time'] = Keke::get_gmdate ( $v ['feed_time'] );
 					$temp_arr [] = $v;
 				}
 			}
 			$feed_arr = $temp_arr;
-			$cachename ? kekezu::$_cache_obj->set ( "feed_" . $cachename . "_cache", $feed_arr, $cachetime ) : null;
+			$cachename ? Keke::$_cache_obj->set ( "feed_" . $cachename . "_cache", $feed_arr, $cachetime ) : null;
 		}
 		$datalist = $feed_arr;
 		require keke_tpl_class::parse_code ( htmlspecialchars_decode ( $tag_info [tag_code] ), $tag_info [tag_id] );
@@ -59,18 +59,18 @@ class keke_loaddata_class {
 
 	static function readtag($name) { 
 		global $kekezu,$_lang;
-        kekezu::$_tag or $kekezu->init_tag(); 
-		$tag_arr = kekezu::$_tag; 
+        Keke::$_tag or $kekezu->init_tag(); 
+		$tag_arr = Keke::$_tag; 
  		$tag_info = $tag_arr [$name];
 	    if ($tag_info ['tag_type'] == 5) {
 			echo htmlspecialchars_decode ( $tag_info ['code'] );
 		}else{
 	 		if ($tag_info ['cache_time']) { 
 				$cid = 'db_tag_' . $tag_info ['tag_id'];
-				$datalist = kekezu::$_cache_obj->get ( $cid );
+				$datalist = Keke::$_cache_obj->get ( $cid );
 				if (! $datalist) {
 					$datalist = keke_loaddata_class::loaddata ( $tag_info );
-					kekezu::$_cache_obj->set ( $cid, $datalist, $tag_info ['cache_time'] );
+					Keke::$_cache_obj->set ( $cid, $datalist, $tag_info ['cache_time'] );
 				}
 			 
 				require keke_tpl_class::parse_code ( htmlspecialchars_decode ( $tag_info [tag_code] ), $tag_info [tag_id] );
@@ -87,7 +87,7 @@ class keke_loaddata_class {
 		global $_K, $kekezu; 
 		$url = $_K ['siteurl'] . "/control/admin/plu.php?do=previewtag&tagid=" . $tagid; 
 		if (function_exists ( "curl_init" )) { 
-			$content = kekezu::curl_request($url) ; 
+			$content = Keke::curl_request($url) ; 
 		} else {
 			$content = file_get_contents ( $url ); 
 		} 
@@ -232,7 +232,7 @@ class keke_loaddata_class {
 			if ($tag_info ['task_indus_ids']) {
 				$where .= "and indus_id in ({$tag_info['task_indus_ids']}) ";
 			} else if ($tag_info ['task_indus_id']) {
-				$indus_index = kekezu::get_indus_by_index ( 1, $tag_info ['task_indus_id'] );
+				$indus_index = Keke::get_indus_by_index ( 1, $tag_info ['task_indus_id'] );
 				$indus_index = $indus_index [$tag_info ['task_indus_id']];
 				$ind_str = $tag_info ['task_indus_id'];
 				foreach ( $indus_index as $ind ) {
@@ -329,7 +329,7 @@ class keke_loaddata_class {
 		$task_arr = $task_obj->query_keke_witkey_task ();
 		
 		$temp_arr = array ();
-		$task_cash_rule = kekezu::get_config_rule ( "witkey_task_cash_cove" );
+		$task_cash_rule = Keke::get_config_rule ( "witkey_task_cash_cove" );
 		
 		if (empty ( $task_arr )) {
 			return false;
@@ -433,7 +433,7 @@ class keke_loaddata_class {
 	 */
 	static function ad_show($code, $do = 'index',$is_slide=null) {
 		global $_lang,$_K;
-		$ad_target = database::instance()->get_one_row ( sprintf ( " select * from %switkey_ad_target where code='%s' and INSTR(targets,'%s') and is_allow=1", TABLEPRE, $code, $do ),3600*24);
+		$ad_target = Database::instance()->get_one_row ( sprintf ( " select * from %switkey_ad_target where code='%s' and INSTR(targets,'%s') and is_allow=1", TABLEPRE, $code, $do ),3600*24);
 		if ($ad_target) {
 			if($is_slide){
 			    return self::adgroup($is_slide,$ad_target ['ad_num']);
@@ -448,7 +448,7 @@ class keke_loaddata_class {
 			where b.code='%s' and a.is_allow='1' order by a.ad_id desc limit 0,%d";
 			$ad_arr = dbfactory::query ( sprintf ( $sql, TABLEPRE, TABLEPRE, $code, $ad_target ['ad_num'] ),true,$_K['timespan'] );
 			
-			$ad_list = kekezu::get_arr_by_key($ad_arr,'ad_position'); 
+			$ad_list = Keke::get_arr_by_key($ad_arr,'ad_position'); 
 			 
 
 			$ad_str = "";
@@ -463,7 +463,7 @@ class keke_loaddata_class {
 							break;
 						case "text" :
 						case "code" :
-							$ad_str .= kekezu::k_stripslashes($ad_info ['ad_content']);
+							$ad_str .= Keke::k_stripslashes($ad_info ['ad_content']);
 							break;
 						case "image" :
 							$ad_str .= "<a href='" . $ad_info ['ad_url'] . "' target='_blank'><img src='" . $ad_info ['ad_file']
@@ -501,7 +501,7 @@ class keke_loaddata_class {
 	 * @param int $adid
 	 */
 	static function ad($adid) {
-		$ad_arr = kekezu::get_ad ();
+		$ad_arr = Keke::get_ad ();
 		$size = sizeof ( $ad_arr );
 		$temp = array ();
 		for($i = 0; $i < $size; $i ++) {
@@ -531,9 +531,9 @@ class keke_loaddata_class {
 	 */
 	static function adgroup($adname,$ad_limit_num) {
 		global $kekezu,$_K;
-		kekezu::$_tag or $kekezu->init_tag();
-		$datalist = kekezu::get_ad ( $adname,$ad_limit_num );
-		$tag_arr = kekezu::$_tag;
+		Keke::$_tag or $kekezu->init_tag();
+		$datalist = Keke::get_ad ( $adname,$ad_limit_num );
+		$tag_arr = Keke::$_tag;
 		$tag_info = $tag_arr [$adname];
 		require keke_tpl_class::parse_code ( htmlspecialchars_decode ( $tag_info ['tag_code'] ), $tag_info ['tag_id'] );
 	}

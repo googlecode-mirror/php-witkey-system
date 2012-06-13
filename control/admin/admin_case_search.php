@@ -6,10 +6,10 @@
  * 2011-12-14
  */
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
-kekezu::admin_check_role(52); 
+Keke::admin_check_role(52); 
 $model_type_arr  = keke_global_class::get_task_type();
-kekezu::$_page_obj->setAjax(1);
-kekezu::$_page_obj->setAjaxDom('ajax_dom');
+Keke::$_page_obj->setAjax(1);
+Keke::$_page_obj->setAjaxDom('ajax_dom');
 //ÈÎÎñËÑË÷
 if($search_type=='task'){
 	$sql =sprintf("select * from %switkey_task where ",TABLEPRE);  
@@ -19,7 +19,7 @@ if($search_type=='task'){
 	$page_size = 5;
 	$count = dbfactory::get_count(sprintf("select count(task_id) as c from `%switkey_task` where %s ",TABLEPRE,$where));
 	$page = $page ? $page : 1;
-	$pages = kekezu::$_page_obj->getPages ( $count, $page_size, $page, $url );
+	$pages = Keke::$_page_obj->getPages ( $count, $page_size, $page, $url );
 	$where .=$pages['where']; 
 	$task_case_arr = dbfactory::query( $sql.$where);
 
@@ -31,7 +31,7 @@ if($search_type=='task'){
 	$page_size = 5;
 	$count = dbfactory::get_count(sprintf("select count(service_id) as c from `%switkey_service` where %s",TABLEPRE,$where));
 	$page = $page ? $page : 1;
-	$pages = kekezu::$_page_obj->getPages ( $count, $page_size, $page, $url );
+	$pages = Keke::$_page_obj->getPages ( $count, $page_size, $page, $url );
 	$where .=$pages['where']; 
 	$task_case_arr = dbfactory::query( $sql.$where);
 	

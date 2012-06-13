@@ -4,7 +4,7 @@ class keke_backup_class {
 	static function run_backup() {
 		global $_lang;
 		$output = array();
-		$db_factory = new db_factory ();
+		$db_factory = new Dbfactory();
 		$tables = $db_factory->query ( " show table status from `".DBNAME."`");
 		$temp_arr = array ();
 		foreach ( $tables as $v ) {
@@ -73,7 +73,7 @@ class keke_backup_class {
 						$sqlmsg .= ",";
 					}
 					if ($v) {
-						$sqlmsg .= "'" . kekezu::k_addslashes ( $v ) . "'";
+						$sqlmsg .= "'" . Keke::k_addslashes ( $v ) . "'";
 					} else {
 						$sqlmsg .= "'0'";
 					}
@@ -86,8 +86,8 @@ class keke_backup_class {
 		$sqlmsg .= "\n "; //½áÊø
 		$path = S_ROOT . './data/backup/backup_' . time () . '_' . DBNAME . ".sql";
 		keke_tpl_class::swritefile ( $path, $sqlmsg );
-		kekezu::admin_system_log ( $_lang['backup_database'] . '' . "backup_" . time () . '_' . DBNAME . ".sql" );
-		file_exists ( $path ) and kekezu::echojson('',1,$output) or kekezu::echojson('',0,$output);
+		Keke::admin_system_log ( $_lang['backup_database'] . '' . "backup_" . time () . '_' . DBNAME . ".sql" );
+		file_exists ( $path ) and Keke::echojson('',1,$output) or Keke::echojson('',0,$output);
 		die();
 	}
 }

@@ -9,9 +9,9 @@ error_reporting(E_ALL|E_STRICT);
 date_default_timezone_set ( 'PRC' );
 define ( "S_ROOT", dirname ( __FILE__ ).DIRECTORY_SEPARATOR);
 ini_set('unserialize_callback_func', 'spl_autoload_call');
-require (dirname ( __FILE__ ) . DIRECTORY_SEPARATOR . 'class/keke/core_class.php');
+require (dirname ( __FILE__ ) . DIRECTORY_SEPARATOR . 'class/keke/core.php');
 
-$exec_time_traver = kekezu::exec_js('get');
+$exec_time_traver = Keke::exec_js('get');
 (!isset($exec_time_traver)||$exec_time_traver<time()) and $exec_time_traver = true or $exec_time_traver = false;
 
 isset($_GET) and extract($_GET);

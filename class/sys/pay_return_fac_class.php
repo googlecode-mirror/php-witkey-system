@@ -12,7 +12,7 @@ class pay_return_fac_class {
 	public $_pay_type;
 	
 	function __construct($charge_type, $model_id = '', $uid = '', $obj_id = '', $order_id = '', $total_fee = '', $pay_type) {
-		$this->_userinfo = kekezu::get_user_info ( $uid );
+		$this->_userinfo = Keke::get_user_info ( $uid );
 		$this->_model_id = intval ( $model_id );
 		$this->_uid = intval ( $uid );
 		$this->_username = $this->_userinfo ['username'];
@@ -77,7 +77,7 @@ class pay_return_fac_class {
 	public function return_notify($pay_mode,$response=array()){
 		global $_K;
 		global $_lang;
-		$pay_config   = kekezu::get_payment_config ( $pay_mode );
+		$pay_config   = Keke::get_payment_config ( $pay_mode );
 		$pre = $pay_config ['payname'] . $_lang['pay'];
 		if(empty($response)){
 			$response['title']   = $_lang['operate_notice'];
@@ -88,7 +88,7 @@ class pay_return_fac_class {
 			$response['type']=='success' and $pre.=$_lang['success'] or $pre.=$_lang['fail'];
 			$response['content'] = $pre.$response['content'];
 		}
-		kekezu::show_msg($response['title'],$response['url'],3,$response['content'],$response['type']);
+		Keke::show_msg($response['title'],$response['url'],3,$response['content'],$response['type']);
 	}
 	/**
 	 * 构造响应数组

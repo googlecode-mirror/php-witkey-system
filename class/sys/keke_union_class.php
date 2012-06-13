@@ -51,7 +51,7 @@ class keke_union_class {
 	public static function union_request($service,$comm_data= array(),$return_type = 'url', $method = 'post',$sign_type = 'MD5',$_input_charset = 'GBK'){
 		global $config;
 		$request = keke_tool_class::union_build($config, $service,$comm_data,$return_type,$method,$sign_type,$_input_charset);
-		kekezu::socket_request ( $request );
+		Keke::socket_request ( $request );
 	}
 	/**
 	 * 创建联盟任务
@@ -69,7 +69,7 @@ class keke_union_class {
 				if (! $task_info) {
 					return false;
 				}
-				$model_code = kekezu::$_model_list [$task_info ['model_id']] ['model_code'];
+				$model_code = Keke::$_model_list [$task_info ['model_id']] ['model_code'];
 				$task_info ['task_cash_coverage'] and $task_info ['cash_coveage'] = self::get_cash_cove ( $task_info ['task_cash_coverage'] );
 				$class_name = $model_code. '_task_class'; //对应的class name
 				$task_status_arr = call_user_func ( array ($class_name, 'get_task_union_status' ) ); //对应的状态数组
@@ -123,7 +123,7 @@ class keke_union_class {
 				$inter = 'hand_work'; //对应接口
 				$comm_data = array ('model_code' => $this->_model_code, 'task_id' => $this->_task_id, 'r_task_id' => $this->_r_task_id, 'source_app_id' => $relation_arr ['app_id'], 'work_id' => intval ( $work_id ) );
 				$url = keke_tool_class::union_build ( $this->_config, $inter, $comm_data );
-				kekezu::socket_request ( $url, $this->_config ['_input_charset'] );
+				Keke::socket_request ( $url, $this->_config ['_input_charset'] );
 				break;
 			case true :
 				$response = array ();
@@ -156,7 +156,7 @@ class keke_union_class {
 		$inter = 'change_status'; //对应接口
 		$comm_data = array ('model_code' => $this->_model_code, 'task_id' => $this->_task_id, 'r_task_id' => $this->_r_task_id, 'work_id' => intval ( $work_id ), 'work_status' => $status_arr [$to_status] );
 		$url = keke_tool_class::union_build ( $this->_config, $inter, $comm_data );
-		kekezu::socket_request ( $url, $this->_config ['_input_charset'] ); //更改状态，直接从server端获取。
+		Keke::socket_request ( $url, $this->_config ['_input_charset'] ); //更改状态，直接从server端获取。
 	}
 	
 	/**
@@ -173,7 +173,7 @@ class keke_union_class {
 				$inter = 'change_status'; //对应接口
 				$comm_data = array ('model_code' => $this->_model_code, 'task_id' => $this->_task_id, 'r_task_id' => $this->_r_task_id, 'task_status' => $status );
 				$url = keke_tool_class::union_build ( $this->_config, $inter, $comm_data );
-				kekezu::socket_request ( $url, $this->_config ['_input_charset'] ); //更改状态，直接从server端获取。
+				Keke::socket_request ( $url, $this->_config ['_input_charset'] ); //更改状态，直接从server端获取。
 				break;
 			case true :
 				$data = $this->_data;
@@ -241,7 +241,7 @@ class keke_union_class {
 	 */
 	private function get_model_code() {
 		global $kekezu;
-		$model_arr = kekezu::$_model_list;
+		$model_arr = Keke::$_model_list;
 		return $model_arr [$this->_model_id] ['model_code'];
 	}
 	static function jump($url) {

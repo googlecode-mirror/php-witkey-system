@@ -1,6 +1,6 @@
 <?php
 
-class keke_db_update {
+class Keke_db_update {
 
 }
 

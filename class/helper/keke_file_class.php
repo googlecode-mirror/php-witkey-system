@@ -409,7 +409,7 @@ class keke_file_class {
 		global $_lang;
 		$filename = S_ROOT . $file_path;
 		if (! file_exists ( $filename ) || strrpos ( $filename, ".php" ) !== false) {
-			kekezu::show_msg ( $_lang ['file_not_exist'], $_SERVER ['HTTP_REFERER'], "3" );
+			Keke::show_msg ( $_lang ['file_not_exist'], $_SERVER ['HTTP_REFERER'], "3" );
 		}
 		
 		$downfilename = str_replace(' ','%20',$file_name);
@@ -530,10 +530,10 @@ class keke_file_class {
 				$err = $files;
 				switch ($output) {
 					case "normal" :
-						kekezu::show_msg ( $_lang ['operate_notice'], '', 2, $err, 'warning' );
+						Keke::show_msg ( $_lang ['operate_notice'], '', 2, $err, 'warning' );
 						break;
 					case "json" :
-						echo kekezu::json_encode_k ( array (
+						echo Keke::json_encode_k ( array (
 								'err' => $err 
 						) );
 						die ();
@@ -579,7 +579,7 @@ class keke_file_class {
 		$str .= ' <embed src="' . $src . '" quality="high" width="' . $width . '" height="' . $height . '" ';
 		$str .= ' pluginspage="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash"';
 		$str .= ' type="application/x-shockwave-flash" wmode="transparent"/></embed></object>';
-		return kekezu::k_stripslashes ( $str );
+		return Keke::k_stripslashes ( $str );
 	}
 	// function according_size_get_name($filepath,$size=array()){
 	// if (is_null($size)){

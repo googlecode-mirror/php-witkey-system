@@ -15,7 +15,7 @@ $ops = array (
 );
 in_array ( $op, $ops ) or $op = 'apply';
 trim ( $config ['keke_app_id'] )&& $op = 'config';
-kekezu::admin_check_role ( 133 );
+Keke::admin_check_role ( 133 );
 $reg_ip = $_SERVER ['REMOTE_ADDR'];
 
 if ( $op=='config' ) {//≈‰÷√
@@ -29,7 +29,7 @@ if ( $op=='config' ) {//≈‰÷√
 		"keke_app_secret'] = '$keke_secret'",
 		), $data);
 		if(file_put_contents($path, $res)){
-			kekezu::admin_show_msg('≈‰÷√≥…π¶', '', 3);
+			Keke::admin_show_msg('≈‰÷√≥…π¶', '', 3);
 		}
 	}
 }

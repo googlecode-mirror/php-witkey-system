@@ -19,7 +19,7 @@ if($view=='witkey'){
 	$role_id='order_uid';$u="seller_uid";$n="seller_username";$s=$_lang['buy_in'];$t=$_lang['seller'];$w= " order_uid='$uid' and order_status='confirm'";
 }
 
-$order_count = kekezu::get_table_data("model_id,count(order_id) count","witkey_order",$w." and model_id IN(6,7)","","model_id=6,model_id=7","","model_id",3600);
+$order_count = Keke::get_table_data("model_id,count(order_id) count","witkey_order",$w." and model_id IN(6,7)","","model_id=6,model_id=7","","model_id",3600);
 
 /**
  * 三级横向菜单
@@ -33,9 +33,9 @@ if ($model_id) {
 	/**排序数组**/
 	$model_id = intval($model_id);
 	$ord_arr = array (" order_id desc " => $_lang['order_id_desc'], " order_id asc " => $_lang['order_id_asc'], " order_time desc " => $_lang['buy_time_desc'], " order_time asc " => $_lang['buy_time_asc'] );
-	$page_obj = kekezu::$_page_obj; //分页对象
+	$page_obj = Keke::$_page_obj; //分页对象
 	$order_obj = new Keke_witkey_order_class();
-	$model_code = kekezu::$_model_list[$model_id]['model_code'];
+	$model_code = Keke::$_model_list[$model_id]['model_code'];
 	
 	$status_arr = call_user_func(array($model_code."_shop_class","get_order_status")); //订单状态
 	

@@ -5,7 +5,7 @@
  * @date 2012-2-29 上午11:11:16
  */
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
-kekezu::admin_check_role ( 3 );
+Keke::admin_check_role ( 3 );
 
 $year_arr = dbfactory::query ( sprintf ( "SELECT DISTINCT(YEAR(FROM_UNIXTIME(fina_time))) as year from %switkey_finance order by year desc", TABLEPRE ) ); // 生成年份
 $income_path = 'tpl/anychart_files/xml/income_%s.xml';
@@ -13,11 +13,11 @@ $analysis_path = 'tpl/anychart_files/xml/analysis_%s.xml';
 if (isset ( $ac ) && $ac == 'update') {
 	income_data ( $income_path, true );
 	$res = analysis_data ( $analysis_path, true );
-	kekezu::admin_system_log ( $_lang['generation_finance_report'] );
+	Keke::admin_system_log ( $_lang['generation_finance_report'] );
 	if ($res) {
-		kekezu::admin_show_msg ( $_lang['report_generation_success'], 'index.php?do=finance&view=report', 3, '', 'success' ); // die();
+		Keke::admin_show_msg ( $_lang['report_generation_success'], 'index.php?do=finance&view=report', 3, '', 'success' ); // die();
 	}
-	kekezu::admin_show_msg ( $_lang['report_generation_success'], 'index.php?do=finance&view=report', 3, '', 'warning' );
+	Keke::admin_show_msg ( $_lang['report_generation_success'], 'index.php?do=finance&view=report', 3, '', 'warning' );
 }
 /**
  * 生成文件
@@ -53,7 +53,7 @@ function income_data($path, $every_year = false) {
 		$month_init_arr [$i] = '<point name="' . $i . '" y="0"/>';
 	}
 	if (strtolower ( CHARSET ) != 'utf-8') {
-		$y = kekezu::gbktoutf ( $_lang['year'] );
+		$y = Keke::gbktoutf ( $_lang['year'] );
 	}
 	foreach ( $year_arr as $key => $value ) {
 		$month_arr = $month_init_arr;
@@ -83,7 +83,7 @@ function analysis_data($path, $every_year = false) {
 	global $year_arr,$_lang;
 	$detail_arr = array ($_lang['total'], $_lang['witkey_task'], $_lang['witkey_shop'], $_lang['payitem_service'], $_lang['user_auth'] );
 	if (strtolower ( CHARSET ) == 'gbk') {
-		$detail_arr = kekezu::gbktoutf ( $detail_arr );
+		$detail_arr = Keke::gbktoutf ( $detail_arr );
 	}
 	$series = '';
 	// 蛋疼

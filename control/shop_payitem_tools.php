@@ -9,7 +9,7 @@
 
 defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 $nav_active_index = 'shop';
-$uid != $service_info ['uid'] and kekezu::show_msg ( $_lang['friendly_notice'], 'index.php?do=index', 3, '您不能访问此页面' );
+$uid != $service_info ['uid'] and Keke::show_msg ( $_lang['friendly_notice'], 'index.php?do=index', 3, '您不能访问此页面' );
 $payitem_arr = keke_payitem_class::get_payitem_info ( 'employer', $model_list [$service_info ['model_id']] ['model_code'] );
 $exist_payitem_arr = keke_payitem_class::payitem_exists ( $uid, false, '', $payitem_arr ); 
 //获取已购买的增值服务 
@@ -19,7 +19,7 @@ $payitem_standard = keke_payitem_class::payitem_standard (); //收费标准
 if ($formhash) {
 	is_array($payitem_num) or $payitem_num=array();
 	if (! array_filter ( $payitem_num )) {
-		kekezu::show_msg ( $_lang['friendly_notice'], 'index.php?do=service&sid='.$sid.'&view=tools', 3, $_lang['no_choose_any_tools'] );
+		Keke::show_msg ( $_lang['friendly_notice'], 'index.php?do=service&sid='.$sid.'&view=tools', 3, $_lang['no_choose_any_tools'] );
 	}
 	$keys_arr = array_keys ( $payitem_arr_desc );
 	$pay_item = $service_info ['pay_item'];
@@ -45,7 +45,7 @@ if ($formhash) {
 	}
 	$res = keke_payitem_class::set_payitem_time ( $payitem_arr_desc, $sid, 'service' ); 
 	//更新增值服务结束时间
-	$res || $cost_res and kekezu::show_msg ( $_lang['friendly_notice'], "index.php?do=service&sid=$sid&view=tools", '3', '操作成功', 'success' );
+	$res || $cost_res and Keke::show_msg ( $_lang['friendly_notice'], "index.php?do=service&sid=$sid&view=tools", '3', '操作成功', 'success' );
 }
 
 require keke_tpl_class::template ( "shop_payitem_tools" );

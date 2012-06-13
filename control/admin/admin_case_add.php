@@ -18,7 +18,7 @@ $url ="index.php?do=case&view=list" ;
 
 //查询案例编号
 if ($ac == 'ajax' && $id&&$obj) {
-	case_obj_exists ( $id, $obj ) and kekezu::echojson ( $_lang['echojson_msg'],1 ) or kekezu::echojson ( $_lang['echojosn_erreor_msg'],0 );
+	case_obj_exists ( $id, $obj ) and Keke::echojson ( $_lang['echojson_msg'],1 ) or Keke::echojson ( $_lang['echojosn_erreor_msg'],0 );
 }
 
 //编辑、添加案例
@@ -33,20 +33,20 @@ if (isset ( $sbt_edit )) { //编辑
 	$case_obj->setObj_type ( $case_type );
 	$case_obj->setCase_auther ( $fds ['case_auther'] );
 	$case_obj->setCase_price ( $fds ['case_price'] );
-	$case_obj->setCase_desc ( kekezu::escape($fds ['case_desc']) );
-	$case_obj->setCase_title ( kekezu::escape($fds ['case_title']) );
+	$case_obj->setCase_desc ( Keke::escape($fds ['case_desc']) );
+	$case_obj->setCase_title ( Keke::escape($fds ['case_title']) );
 	$case_obj->setOn_time ( time () );
 	//如果有上传文件优先选择上传文件
 	($case_img = keke_file_class::upload_file ( "fle_case_img" )) or $case_img = $hdn_case_img;
 	$case_obj->setCase_img ($case_img );//上传图片
 	if ($hdn_case_id) {//编辑
 		$res = $case_obj->edit_keke_witkey_case ();
-		kekezu::admin_system_log ( $_lang['edit_case'].':' . $hdn_case_id ); //日志记录
-		$res and kekezu::admin_show_msg ( $_lang['modify_case_success'], 'index.php?do=case&view=lise',3,'','success' ) or kekezu::admin_show_msg ( $_lang['modify_case_fail'], 'index.php?do=case&view=lise',3,'','warning' );
+		Keke::admin_system_log ( $_lang['edit_case'].':' . $hdn_case_id ); //日志记录
+		$res and Keke::admin_show_msg ( $_lang['modify_case_success'], 'index.php?do=case&view=lise',3,'','success' ) or Keke::admin_show_msg ( $_lang['modify_case_fail'], 'index.php?do=case&view=lise',3,'','warning' );
 	}else{//添加
 		$res = $case_obj->create_keke_witkey_case ();
-		kekezu::admin_system_log ( $_lang['add_case'] ); //日志记录
-		$res and kekezu::admin_show_msg ( $_lang['add_case_success'],'index.php?do=case&view=lise',3,'','success' ) or kekezu::admin_show_msg ( $_lang['add_case_fail'],'index.php?do=case&view=add',3,'','warning' );
+		Keke::admin_system_log ( $_lang['add_case'] ); //日志记录
+		$res and Keke::admin_show_msg ( $_lang['add_case_success'],'index.php?do=case&view=lise',3,'','success' ) or Keke::admin_show_msg ( $_lang['add_case_fail'],'index.php?do=case&view=add',3,'','warning' );
 	}
 	
 }

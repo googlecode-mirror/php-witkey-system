@@ -106,7 +106,7 @@ class tender_task_class extends keke_task_class {
 	 * 获取任务区间
 	 */
 	public function get_task_coverage() {
-		$covers = kekezu::get_cash_cove ();
+		$covers = Keke::get_cash_cove ();
 		/*
 		 * $this->_cash_cove_obj->setWhere("cash_rule_id =
 		 * ".$this->_task_info['task_cash_coverage']); $cover_info =
@@ -135,9 +135,9 @@ class tender_task_class extends keke_task_class {
 	 * @param $qq string
 	 * 用户QQ
 	 * @param $url string
-	 * 消息提示链接 具体参见 kekezu::keke_show_msg
+	 * 消息提示链接 具体参见 Keke::keke_show_msg
 	 * @param $output string
-	 * 消息输出方式 具体参见 kekezu::keke_show_msg
+	 * 消息输出方式 具体参见 Keke::keke_show_msg
 	 * @see keke_task_class::work_hand()
 	 */
 	public function tender_work_hand($work_info, $url = '', $output = 'normal') {
@@ -147,7 +147,7 @@ class tender_task_class extends keke_task_class {
 			// 判断是否已交稿
 			$this->_task_bid_obj->setWhere ( "task_id = $this->_task_id and uid = $this->_uid and bid_status=0" );
 			$is_hand = $this->_task_bid_obj->count_keke_witkey_task_bid ();
-			$is_hand and kekezu::keke_show_msg ( '', $_lang['you_haved_tender'], 'error', $output );
+			$is_hand and Keke::keke_show_msg ( '', $_lang['you_haved_tender'], 'error', $output );
 			$this->_task_bid_obj->setUid ( $this->_uid );
 			$this->_task_bid_obj->setUsername ( $this->_username );
 			$this->_task_bid_obj->setArea ( $work_info ['area'] );
@@ -170,11 +170,11 @@ class tender_task_class extends keke_task_class {
 			$this->plus_work_num (); // 更新任务稿件数量
 			$this->plus_take_num (); // 更新用户交稿数量
 			$url = '<a href ="' . $_K ['siteurl'] . '/index.php?do=task&task_id=' . $this->_task_id . '">' . $this->_task_title . '</a>';
-			$v_arr = array ($_lang['username'] => "$this->_gusername", $_lang['user'] => $this->_username, $_lang['call'] => $_lang['you'], $_lang['task_title'] => $url, $_lang['website_name'] => kekezu::$_sys_config ['website_name'] );
+			$v_arr = array ($_lang['username'] => "$this->_gusername", $_lang['user'] => $this->_username, $_lang['call'] => $_lang['you'], $_lang['task_title'] => $url, $_lang['website_name'] => Keke::$_sys_config ['website_name'] );
 			keke_shop_class::notify_user ( $this->_guid, $this->_gusername, 'task_hand', $_lang['hand_work_notice'], $v_arr );
 			
-			kekezu::notify_user ( $_lang['hand_work_notice'], $_lang['you_pub_tender_task_'] . '<a href=index.php?do=task&task_id=' . $this->_task_id . '&view=work>' . $this->_task_info ['task_title'] . '</a>' . $_lang['have_new_work'], $this->_guid );
-			kekezu::keke_show_msg ( $url, $_lang['tender_success'], 'right', $output );
+			Keke::notify_user ( $_lang['hand_work_notice'], $_lang['you_pub_tender_task_'] . '<a href=index.php?do=task&task_id=' . $this->_task_id . '&view=work>' . $this->_task_info ['task_title'] . '</a>' . $_lang['have_new_work'], $this->_guid );
+			Keke::keke_show_msg ( $url, $_lang['tender_success'], 'right', $output );
 		
 		}
 	}
@@ -183,9 +183,9 @@ class tender_task_class extends keke_task_class {
 	 * 中标
 	 * 
 	 * @param $url string
-	 * 消息提示链接 具体参见 kekezu::keke_show_msg
+	 * 消息提示链接 具体参见 Keke::keke_show_msg
 	 * @param $output string
-	 * 消息输出方式 具体参见 kekezu::keke_show_msg
+	 * 消息输出方式 具体参见 Keke::keke_show_msg
 	 * @see keke_task_class::work_choose()
 	 */
 	public function work_choose($work_id, $to_status, $url = '', $output = 'json', $trust_response = false) {
@@ -206,15 +206,15 @@ class tender_task_class extends keke_task_class {
 				}
 				// 写入feed
 				$feed_arr = array ("feed_username" => array ("content" => $bid_info ['username'], "url" => "index.php?do=space&member_id=$bid_info[uid] " ), "action" => array ("content" => $_lang['success_bid_haved'], "url" => "" ), "event" => array ("content" => "$this->_task_title", "url" => "index.php?do=task&task_id={$this->_task_id}" ) );
-				kekezu::save_feed ( $feed_arr, $bid_info ['uid'], $bid_info ['username'], 'work_accept', $this->_task_info ['task_id'] );
+				Keke::save_feed ( $feed_arr, $bid_info ['uid'], $bid_info ['username'], 'work_accept', $this->_task_info ['task_id'] );
 			}
 			// 通知威客
 			$url = '<a href ="' . $_K ['siteurl'] . '/index.php?do=task&task_id=' . $this->_task_id . '" target="_blank" >' . $this->_task_title . '</a>';
 			$v = array ($_lang['action'] => $status_arr [$to_status], $_lang['task_id'] => $this->_task_id, $_lang['task_title'] => $url );
 			$this->notify_user ( "task_bid", $_lang['work'] . $status_arr [$to_status], $v, '1', $bid_info ['uid'] ); // 通知威客
-			kekezu::keke_show_msg ( $url, $_lang['choose_tender_success'], '', $output );
+			Keke::keke_show_msg ( $url, $_lang['choose_tender_success'], '', $output );
 		} else {
-			kekezu::keke_show_msg ( $url, $_lang['choose_tender_fail'], 'error', $output );
+			Keke::keke_show_msg ( $url, $_lang['choose_tender_fail'], 'error', $output );
 		}
 	}
 	
@@ -227,15 +227,15 @@ class tender_task_class extends keke_task_class {
 		// 判读是否已有中标稿件
 		$this->_task_bid_obj->setWhere ( " task_id = " . intval ( $this->_task_id ) . " and bid_status = 4" );
 		$count = $this->_task_bid_obj->count_keke_witkey_task_bid ();
-		$count > 0 and kekezu::keke_show_msg ( $url, $_lang['haved_bid_work'], '', $output );
+		$count > 0 and Keke::keke_show_msg ( $url, $_lang['haved_bid_work'], '', $output );
 		// 改变稿件状态值
 		$res = $this->set_work_status ( $work_id, $to_status );
 		// 通知威客
-		kekezu::notify_user ( $_lang['work_notice'], $_lang['you_join_normal_tender_task'] . '<a href=index.php?do=task&task_id=' . $this->_task_id . ">" . $this->_task_info ['task_title'] . "</a>" . $_lang['work_out'], $bid_info ['uid'] );
+		Keke::notify_user ( $_lang['work_notice'], $_lang['you_join_normal_tender_task'] . '<a href=index.php?do=task&task_id=' . $this->_task_id . ">" . $this->_task_info ['task_title'] . "</a>" . $_lang['work_out'], $bid_info ['uid'] );
 		// 写入feed
 		$feed_arr = array ("feed_username" => array ("content" => $bid_info ['username'], "url" => "index.php?do=space&member_id={$bid_info['uid']} " ), "action" => array ("content" => $_lang['success_bid_haved'], "url" => "" ), "event" => array ("content" => "$this->_task_title", "url" => "index.php?do=task&task_id=$this->_task_info ['task_id']" ) );
-		kekezu::save_feed ( $feed_arr, $bid_info ['uid'], $bid_info ['username'], 'work_accept', $this->_task_info ['task_id'] );
-		// kekezu::feed_add ( '<a target="_blank"
+		Keke::save_feed ( $feed_arr, $bid_info ['uid'], $bid_info ['username'], 'work_accept', $this->_task_info ['task_id'] );
+		// Keke::feed_add ( '<a target="_blank"
 		// href="index.php?do=space&member_id=' . $bid_info ['uid'] . '">' .
 		// $bid_info ['username'] . '</a>成功中标了任务<a
 		// href="index.php?do=task&task_id=' . $this->_task_info ['task_id'] .
@@ -244,9 +244,9 @@ class tender_task_class extends keke_task_class {
 		// 更新中标次数
 		$this->plus_accepted_num ( $bid_info ['uid'] );
 		if ($res) {
-			kekezu::keke_show_msg ( $url, $_lang['operate_success'], '', $output );
+			Keke::keke_show_msg ( $url, $_lang['operate_success'], '', $output );
 		} else {
-			kekezu::keke_show_msg ( $url, $_lang['operate_fail'], 'error', $output );
+			Keke::keke_show_msg ( $url, $_lang['operate_fail'], 'error', $output );
 		}
 	}
 	
@@ -256,14 +256,14 @@ class tender_task_class extends keke_task_class {
 	public function select_bid_check($work_id, $url) {
 		global $_lang;
 		// 判断是否为雇主
-		$this->_uid != $this->_guid and kekezu::keke_show_msg ( $url, $_lang['sorry_you_not_rightS_operate'] );
+		$this->_uid != $this->_guid and Keke::keke_show_msg ( $url, $_lang['sorry_you_not_rightS_operate'] );
 		// 判断是否已中标或淘汰
 		$this->_task_bid_obj->setWhere ( " bid_id = " . $work_id );
 		$bid_info = $this->_task_bid_obj->query_keke_witkey_task_bid ();
 		$bid_info = $bid_info ['0'];
-		$bid_info ['bid_status'] and kekezu::keke_show_msg ( $url, $_lang['please_not_repeat_bid'] );
+		$bid_info ['bid_status'] and Keke::keke_show_msg ( $url, $_lang['please_not_repeat_bid'] );
 		// 判断是否为选标时间
-		$this->_task_info ['task_status'] != 3 && $this->_task_config ['open_select'] != 'open' and kekezu::keke_show_msg ( $url, $_lang['present_status_not_choose_work'] );
+		$this->_task_info ['task_status'] != 3 && $this->_task_config ['open_select'] != 'open' and Keke::keke_show_msg ( $url, $_lang['present_status_not_choose_work'] );
 		
 		return $bid_info;
 	
@@ -303,7 +303,7 @@ class tender_task_class extends keke_task_class {
 		}
 		$where .= " order by work_time desc ";
 		if (! empty ( $p )) {
-			$page_obj = kekezu::$_page_obj;
+			$page_obj = Keke::$_page_obj;
 			$count = intval ( dbfactory::get_count ( $count_sql . $where ) );
 			$pages = $page_obj->getPages ( $count, $p ['page_size'], $p ['page'], $p ['url'], $p ['anchor'] );
 			$where .= $pages ['where'];
@@ -579,8 +579,8 @@ class tender_task_class extends keke_task_class {
 					 * 雇主推广事件产生
 					 */
 					$kekezu->init_prom ();
-					if (kekezu::$_prom_obj->is_meet_requirement ( "pub_task", $this->_task_id )) {
-						kekezu::$_prom_obj->create_prom_event ( "pub_task", $this->_guid, $task_info ['task_id'], $task_info ['task_cash'] );
+					if (Keke::$_prom_obj->is_meet_requirement ( "pub_task", $this->_task_id )) {
+						Keke::$_prom_obj->create_prom_event ( "pub_task", $this->_guid, $task_info ['task_id'], $task_info ['task_cash'] );
 					}
 					// 更改订单状态到已付款状态
 					dbfactory::updatetable ( TABLEPRE . "witkey_order", array ("order_status" => "ok" ), array ("order_id" => "$order_id" ) );

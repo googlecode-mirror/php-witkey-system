@@ -9,7 +9,7 @@ defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 $nav_active_index = 'task';
 $basic_url = "index.php?do=task&task_id=$task_id"; //基本链接
 $task_obj = dtender_task_class::get_instance ( $task_info );
-$cove_arr = kekezu::get_table_data("*","witkey_task_cash_cove","","","","","cash_rule_id");
+$cove_arr = Keke::get_table_data("*","witkey_task_cash_cove","","","","","cash_rule_id");
 //时间类处理
 $task_obj->task_tb_timeout();
 $task_obj->task_xb_timeout();
@@ -18,7 +18,7 @@ $task_obj->task_tg_timeout();//托管
 $task_config =$task_obj->_task_config;
 $model_id = $task_info ['model_id'];
 $task_status = $task_obj->_task_status;
-$cash_cove = kekezu::get_cash_cove('dtender');//订金招标任务金额范围数组
+$cash_cove = Keke::get_cash_cove('dtender');//订金招标任务金额范围数组
 $task_info['task_covery'] = $cash_cove[$task_info['task_cash_coverage']]['cove_desc'];//任务招标范围
 $status_arr = $task_obj->_task_status_arr; //任务状态数组
 $time_desc = $task_obj->get_task_timedesc (); //任务时间描述
@@ -35,7 +35,7 @@ $show_payitem = $task_obj->show_payitem();
 $loca = explode(",",$user_info['residency']); 
 switch ($op) {
 	case "reqedit" : //需求补充
-		$title = kekezu::lang("supply_demand");
+		$title = Keke::lang("supply_demand");
 		if ($sbt_edit) {
 			$task_obj->set_task_reqedit ( $tar_content, '', 'json' );
 		} else{
@@ -45,11 +45,11 @@ switch ($op) {
 		}
 		break;
 	case "work_hand" : //交稿
-		$title = kekezu::lang("hand_work");
+		$title = Keke::lang("hand_work");
 		if($sbt_edit){
 			$province and $area = $province;
 			$city and $area = $area.','.$city;	
-			$area = kekezu::utftogbk($area);
+			$area = Keke::utftogbk($area);
 			$task_obj->bid_hand($quote, $cycle, $area, $tar_content, $plan_amount, $start_time, $end_time, $plan_title,$bid_hide,'','json');
 		}else{
 			
@@ -59,11 +59,11 @@ switch ($op) {
 		}
 		break;
 	case "work_edit"://稿件编辑		
-		$title = kekezu::lang("edit_work");
+		$title = Keke::lang("edit_work");
 		if($sbt_edit){
 			$province and $area = $province;
 			$city and $area = $area.','.$city.','.$area;
-			$area = kekezu::utftogbk($area);
+			$area = Keke::utftogbk($area);
 			$task_obj->bid_edit($bid_id, $quote, $cycle, $area, $tar_contnet, $plan_amount, $start_time, $end_time, $plan_title,'','json');
 		}else{
 			$bid_info = $task_obj->get_single_bid($bid_id);
@@ -78,7 +78,7 @@ switch ($op) {
 		$task_obj->work_choose ( $work_id, $to_status,'','json');
 		break;
 	case "hosted_amount"://赏金托管
-		$title=kekezu::lang("trust_reward");
+		$title=Keke::lang("trust_reward");
 		if($sbt_edit){
 			$task_obj->hosted_amount('','json');
 		}else{
@@ -123,7 +123,7 @@ switch ($op) {
 		}
 		break;
 	case "message" : //发送消息
-		$title = kekezu::lang("send_msg");
+		$title = Keke::lang("send_msg");
 		if ($sbt_edit) {
 			$task_obj->send_message($title,$tar_content,$to_uid, $to_username,'','json');
 		} else{
@@ -195,9 +195,9 @@ switch ($view) {
 	    			//更新个人信息 
 	    			$res = $comment_obj->del_comment($comment_id,$task_id,$comment_info['p_id']);
 	    		}else{
-	    			kekezu::keke_show_msg("", $_lang['please_login_now'],"error","json");
+	    			Keke::keke_show_msg("", $_lang['please_login_now'],"error","json");
 	    		}
-	    		$res and kekezu::keke_show_msg("", $_lang['delete_success'],"","json") or kekezu::keke_show_msg("",$_lang['system_is_busy'],"error","json");
+	    		$res and Keke::keke_show_msg("", $_lang['delete_success'],"","json") or Keke::keke_show_msg("",$_lang['system_is_busy'],"error","json");
 	    		break;	
 	    } 
 		break;

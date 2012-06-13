@@ -44,9 +44,9 @@ $sub_nav = array(
  		"recharge" => array ($_lang['account_recharge'], "cur-yen" ),
  		"withdraw" => array ($_lang['account_withdraw'], "clipboard-copy" ))
 	);
-$pay_arr = kekezu::get_table_data ( "k,v", "witkey_pay_config", '', '', '', '', 'k' ); //提现、充值配置
-$payment_list = kekezu::get_payment_config (); //线上支付接口配置
-$offline_pay_list = kekezu::get_table_data ( "*", "witkey_pay_api", " type='offline'", '', '', '', 'payment' ); //线下支付方式
+$pay_arr = Keke::get_table_data ( "k,v", "witkey_pay_config", '', '', '', '', 'k' ); //提现、充值配置
+$payment_list = Keke::get_payment_config (); //线上支付接口配置
+$offline_pay_list = Keke::get_table_data ( "*", "witkey_pay_api", " type='offline'", '', '', '', 'payment' ); //线下支付方式
 
 
 require 'user_' . $view . '_' . $op . '.php';

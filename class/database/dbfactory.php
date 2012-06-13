@@ -1,39 +1,39 @@
 <?php
-class dbfactory {
+class Dbfactory {
 	
 	public static $db_obj = null;
 	public static $instance = null;
 	public static function execute($sql) {
-		return database::instance ()->execute ( $sql );
+		return Database::instance ()->execute ( $sql );
 	}
 	public static function query($sql, $is_cache = 0, $cache_time = 0, $is_unbuffer = 0) {
-		return database::instance ()->query ( $sql );
+		return Database::instance ()->query ( $sql );
 	}
 	public static function select($sql) {
 		
-		return database::instance ()->query ( $sql, database::SELECT );
+		return Database::instance ()->query ( $sql, Database::SELECT );
 	}
 	public static function insert($sql) {
-		return database::instance ()->query ( $sql, database::INSERT );
+		return Database::instance ()->query ( $sql, Database::INSERT );
 	}
 	public static function update($sql) {
-		return database::instance ()->query ( $sql, database::UPDATE );
+		return Database::instance ()->query ( $sql, Database::UPDATE );
 	}
 	public static function delete($sql) {
-		return database::instance ()->query ( $sql, database::DELETE );
+		return Database::instance ()->query ( $sql, Database::DELETE );
 	}
 	
 	public static function inserttable($tablename, $insertsqlarr, $returnid = 1, $replace = false) {
-		return database::instance ()->insert ( $tablename, $insertsqlarr, $returnid, $replace );
+		return Database::instance ()->insert ( $tablename, $insertsqlarr, $returnid, $replace );
 	}
 	public static function updatetable($tablename, $setsqlarr, $wheresqlarr) {
-		return database::instance ()->update ( $tablename, $setsqlarr, $wheresqlarr );
+		return Database::instance ()->update ( $tablename, $setsqlarr, $wheresqlarr );
 	}
 	public static function get_one($sql, $cache_time = 0) {
-		return database::instance ()->get_one_row ( $sql );
+		return Database::instance ()->get_one_row ( $sql );
 	}
 	
 	public static function get_table_data($fileds = '*', $table, $where = '', $order = '', $group = '', $limit = '', $pk = '', $cachetime = 0) {
-		return database::instance ()->select ( $fileds, $table, $where, $order, $group, $limit, $pk,$cachetime );
+		return Database::instance ()->select ( $fileds, $table, $where, $order, $group, $limit, $pk,$cachetime );
 	}
 }

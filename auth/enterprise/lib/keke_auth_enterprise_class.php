@@ -43,7 +43,7 @@ class keke_auth_enterprise_class extends keke_auth_base_class{
 		$file_name and $licen_pic = keke_file_class::upload_file($file_name);//认证图片上传
 		
 		if (! $licen_pic || ! $data ['licen_num']) {
-			kekezu::show_msg ( $this->auth_lang().$_lang['apply_submit_fail'],$_SERVER['HTTP_REFERER'], 3, $this->auth_lang().$_lang['apply_submit_fail_for_info_little'], 'warning' );
+			Keke::show_msg ( $this->auth_lang().$_lang['apply_submit_fail'],$_SERVER['HTTP_REFERER'], 3, $this->auth_lang().$_lang['apply_submit_fail_for_info_little'], 'warning' );
 		} 
 		else {
 			$licen_pic and $data[$file_name]=$licen_pic;
@@ -72,7 +72,7 @@ class keke_auth_enterprise_class extends keke_auth_base_class{
 			$data['start_time']==$data['end_time'] and $end_time=$data['end_time'] or $end_time=0;
 			$this->add_auth_record($data['uid'], $data['username'], $this->_auth_code,$end_time);//添加进入认证记录
 			if($is_jump){
-				kekezu::show_msg ( $this->auth_lang().$_lang['apply_submit_success'],"index.php?do=user&view=payitem&op=auth&auth_code=enterprise&auth_step=step3&ver=1#userCenter", 3, $this->auth_lang().$_lang['apply_success_and_wait_audit'] ,'success');
+				Keke::show_msg ( $this->auth_lang().$_lang['apply_submit_success'],"index.php?do=user&view=payitem&op=auth&auth_code=enterprise&auth_step=step3&ver=1#userCenter", 3, $this->auth_lang().$_lang['apply_success_and_wait_audit'] ,'success');
 			}else{
 				return true;
 			}

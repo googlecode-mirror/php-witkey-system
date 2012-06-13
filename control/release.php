@@ -3,7 +3,7 @@
  * 任务的发布入口页
  */
 defined ( 'IN_KEKE' ) or exit('Access Denied');
- kekezu::check_login();
+ Keke::check_login();
  //语言包
 keke_lang_class::package_init("task");
 keke_lang_class::loadlang($do);
@@ -17,17 +17,17 @@ switch($pub_mode){
 	case "onekey":
 		$init_info = array("t_id"=>$t_id);
 		$r_step or $r_step = "step2";
-		$t_id or kekezu::show_msg($_lang['warning'],$_SERVER['HTTP_REFERER'],3,$_lang['onekey_pub_notice'],"warning");
+		$t_id or Keke::show_msg($_lang['warning'],$_SERVER['HTTP_REFERER'],3,$_lang['onekey_pub_notice'],"warning");
 		break;
 }
 $page_title= $_lang['pub_task'].'--' . $_K ['html_title'];
 
-$model_list = kekezu::get_table_data ( '*', 'witkey_model', " model_type = 'task' and model_status='1'", 'model_id asc ', '', '', 'model_id', 3600 );
+$model_list = Keke::get_table_data ( '*', 'witkey_model', " model_type = 'task' and model_status='1'", 'model_id asc ', '', '', 'model_id', 3600 );
 if(!$model_id){
 	$model_ids = array_keys($model_list);
 	$model_id = $model_ids['0'];
 }
-$model_id and $model_info = $model_list[$model_id] or kekezu::keke_show_msg("index.php","{lang:no_model}","error");
+$model_id and $model_info = $model_list[$model_id] or Keke::keke_show_msg("index.php","{lang:no_model}","error");
 /*阶段导航**/
 $stage_nav=array("1"=>array("step1",$_lang['stage_nav_step1_a'],$_lang['stage_nav_step1_b']),
 				"2"=>array("step2",$_lang['stage_nav_step2_a'],$_lang['stage_nav_step2_b']),
@@ -49,7 +49,7 @@ if($ac=='show_map'){
 }
 
 if($act=='agreement'){
-	$title=kekezu::lang("agreement");
+	$title=Keke::lang("agreement");
 	require keke_tpl_class::template("task/release_agree");
 }
 require "task/".$model_info['model_dir']."/control/release.php";

@@ -17,8 +17,8 @@ if ($sbt_pay_to_user) {
 	$bank_obj->setPay_time ( time () );
 	$res = $bank_obj->edit_keke_witkey_auth_bank();
 	$bank_info = dbfactory::get_one(sprintf(" select uid,username from %switkey_auth_bank where bank_a_id = '%d'",TABLEPRE,$fds[bank_a_id]));
-	kekezu::notify_user ( $_lang['bank_auth_notice'],$_lang['admin_give_cach_notice'].'<a href="index.php?do=user&view=auth">'.$_lang['admin_give_cach_notice'].'</a>'.$_lang['confirm_gain_cach'], $bank_info [uid], $bank_info [username] );
-	$res and kekezu::admin_show_msg ( $_lang['give_cach_success'],$_SERVER['HTTP_REFERER'],'3','','success');
+	Keke::notify_user ( $_lang['bank_auth_notice'],$_lang['admin_give_cach_notice'].'<a href="index.php?do=user&view=auth">'.$_lang['admin_give_cach_notice'].'</a>'.$_lang['confirm_gain_cach'], $bank_info [uid], $bank_info [username] );
+	$res and Keke::admin_show_msg ( $_lang['give_cach_success'],$_SERVER['HTTP_REFERER'],'3','','success');
 }else{
 	$bank_a_id and $bank_info = dbfactory::get_one(sprintf(" select * from %switkey_auth_bank where bank_a_id = '%d'",TABLEPRE,$bank_a_id));
 }

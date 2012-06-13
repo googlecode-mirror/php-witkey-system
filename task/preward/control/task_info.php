@@ -9,7 +9,7 @@ $model_id = $task_info ['model_id'];
 $task_obj->task_jg_timeout();
 $task_obj->task_xg_timeout();
 keke_task_class::hp_timeout();
-$cove_arr = kekezu::get_table_data("*","witkey_task_cash_cove","","","","","cash_rule_id");
+$cove_arr = Keke::get_table_data("*","witkey_task_cash_cove","","","","","cash_rule_id");
 $trust_mode=$task_obj->_trust_mode;//担保模式
 $process_can = $task_obj->process_can();//可操作按钮
 $process_desc = $task_obj->process_desc();//按钮文字
@@ -58,7 +58,7 @@ switch ($op){
 			$max_day  = intval($task_config['max_delay']);//配置最大延期天数
 			$this_min_cash = intval($delay_rule[$delay_count]['defer_rate']*$task_info['task_cash']/100);//本次最小延期金额
 			$min_cash>$this_min_cash and $real_min = $min_cash or $real_min = $this_min_cash;//真正最小金额
-			$credit_allow =  intval(kekezu::$_sys_config ['credit_is_allow']);//金币开启
+			$credit_allow =  intval(Keke::$_sys_config ['credit_is_allow']);//金币开启
 			require keke_tpl_class::template("task/task_delay");
 		}		
 		die();
@@ -165,9 +165,9 @@ switch ($view){
 	    			//更新个人信息 
 	    			$res = $comment_obj->del_comment($comment_id,$task_id,$comment_info['p_id']);
 	    		}else{
-	    			kekezu::keke_show_msg("", $_lang['please_login_now'],"error","json");
+	    			Keke::keke_show_msg("", $_lang['please_login_now'],"error","json");
 	    		}
-	    		$res and kekezu::keke_show_msg("", $_lang['delete_success'],"","json") or kekezu::keke_show_msg("",$_lang['system_is_busy'],"error","json");
+	    		$res and Keke::keke_show_msg("", $_lang['delete_success'],"","json") or Keke::keke_show_msg("",$_lang['system_is_busy'],"error","json");
 	    		break;	
 	    } 
 		break;
@@ -192,7 +192,7 @@ switch ($view){
 	default:
 		$task_file = $task_obj->get_task_file();
 		$kekezu->init_prom();
-		$can_prom = kekezu::$_prom_obj->is_meet_requirement ( "bid_task", $task_id );
+		$can_prom = Keke::$_prom_obj->is_meet_requirement ( "bid_task", $task_id );
 		break;
 }
 

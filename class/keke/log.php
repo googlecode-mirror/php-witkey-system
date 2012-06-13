@@ -1,6 +1,6 @@
 <?php
 
-class keke_log {
+class Keke_log {
  
 	const EMERGENCY = LOG_EMERG; // 0
 	const ALERT = LOG_ALERT; // 1
@@ -26,11 +26,11 @@ class keke_log {
 	 * @return log
 	 */
 	public static function instance() {
-		if (log::$_instance === NULL) {
-			log::$_instance = new log;
-			register_shutdown_function ( array (log::$_instance,'write') );
+		if (Log::$_instance === NULL) {
+			Log::$_instance = new Log;
+			register_shutdown_function ( array (Log::$_instance,'write') );
 		}
-		return log::$_instance;
+		return Log::$_instance;
 	}
 	
 	/**
@@ -110,12 +110,12 @@ class keke_log {
 		
 		// Create a new message and timestamp it
 		$this->_messages [] = array (
-				'time' => date(log::$timestamp, time() ),
+				'time' => date(Log::$timestamp, time() ),
 				'level' => $level,
 				'body' => $message 
 		);
 		
-		if (log::$write_on_add) {
+		if (Log::$write_on_add) {
 			// Write logs as they are added
 			$this->write ();
 		}

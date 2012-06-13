@@ -11,8 +11,8 @@ defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 $end_time_arr = keke_global_class::get_taskstatus_desc();
 
 //任务模型
-$model_list = kekezu::$_model_list; 
-$indus_arr_all = kekezu::$_indus_arr;
+$model_list = Keke::$_model_list; 
+$indus_arr_all = Keke::$_indus_arr;
 //发布的任务
 $sql = sprintf("select * from %switkey_task where uid=%d and task_status!=0 and task_status!=1 order by start_time desc limit 0,5",TABLEPRE,$member_id);
 $pub_task_arr = dbfactory::query($sql);
@@ -39,7 +39,7 @@ function task_time_desc($model_id,$status, $end_time) {
 	global $end_time_arr;
 	$now_time = time ();
 	$desc_time = $end_time - $now_time;
-	$sy_time = kekezu::time2Units ( $desc_time );
+	$sy_time = Keke::time2Units ( $desc_time );
 	if(!$end_time){
 		return $end_time_arr[$model_id][$status]['desc'];
 	}

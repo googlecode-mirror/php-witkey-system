@@ -1,5 +1,5 @@
 <?php
-abstract class db extends  keke_db {
+abstract class DB extends  Keke_db {
 
 }
 

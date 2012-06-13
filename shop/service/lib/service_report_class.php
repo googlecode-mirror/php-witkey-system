@@ -29,7 +29,7 @@ class service_report_class extends keke_report_class {
 					$gz_get = floatval ( $op_result ['gz_get'] ); //雇主分得佣金
 					$wk_get = floatval ( $op_result ['wk_get'] ); //威客分得佣金
 					if ($total_cash != $gz_get + $wk_get) {
-						kekezu::admin_show_msg ( $_lang['wain_you_give_cash_error_notice'], "index.php?do=trans&view=process&type=$type&report_id=" . $this->_report_id, "3", "", "error" );
+						Keke::admin_show_msg ( $_lang['wain_you_give_cash_error_notice'], "index.php?do=trans&view=process&type=$type&report_id=" . $this->_report_id, "3", "", "error" );
 					} else {
 						$res = keke_finance_class::cash_in ( $g_info ['uid'], $gz_get, '0', 'rights_return' ); //给雇主返钱
 						$res .= keke_finance_class::cash_in ( $w_info ['uid'], $wk_get, '0', 'rights_return' ); //给威客返钱
@@ -38,15 +38,15 @@ class service_report_class extends keke_report_class {
 							$this->change_status ( $this->_report_id, '4',$op_result, $op_result ['process_result'] ); //更新状态为处理完成
 						}
 					}
-					$res and kekezu::admin_show_msg ( $trans_name . $_lang['deal_success'], "index.php?do=trans&view=rights&type=$type", "3" ) or kekezu::admin_show_msg ( $trans_name . $_lang['deal_fail'], "index.php?do=trans&view=process&type=$type&report_id=" . $this->_report_id, "3" );
+					$res and Keke::admin_show_msg ( $trans_name . $_lang['deal_success'], "index.php?do=trans&view=rights&type=$type", "3" ) or Keke::admin_show_msg ( $trans_name . $_lang['deal_fail'], "index.php?do=trans&view=process&type=$type&report_id=" . $this->_report_id, "3" );
 				} else {
-					kekezu::admin_show_msg ( $trans_name . $_lang['deal_fail_and_not_part_cash'], "index.php?do=trans&view=process&type=$type&report_id=" . $this->_report_id, "3" );
+					Keke::admin_show_msg ( $trans_name . $_lang['deal_fail_and_not_part_cash'], "index.php?do=trans&view=process&type=$type&report_id=" . $this->_report_id, "3" );
 				}
 				break;
 			case "nopass" :
 				$this->process_unfreeze ('nopass', $op_result ['reply'] ); //解冻。并通知用户
 				$res=$this->change_status ( $this->_report_id, '3', $op_result, $op_result ['reply'] ); //更新状态为未成立
-				$res and kekezu::admin_show_msg ( $trans_name . $_lang['deal_success'], "index.php?do=trans&view=rights&type=$type", "3" ) or kekezu::admin_show_msg ( $trans_name . $_lang['deal_fail'], "index.php?do=trans&view=process&type=$type&report_id=" . $this->_report_id, "3" );
+				$res and Keke::admin_show_msg ( $trans_name . $_lang['deal_success'], "index.php?do=trans&view=rights&type=$type", "3" ) or Keke::admin_show_msg ( $trans_name . $_lang['deal_fail'], "index.php?do=trans&view=process&type=$type&report_id=" . $this->_report_id, "3" );
 				break;
 		}
 	}
@@ -72,13 +72,13 @@ class service_report_class extends keke_report_class {
 				if($res){
 					$this->process_notify('pass',$this->_report_info, $this->_user_info, $this->_to_userinfo,$op_result ['process_result']);//通知用户
 					$this->change_status ( $this->_report_id, '4', $op_result,$op_result ['process_result'] ); //更新状态为处理完成
-					$res and kekezu::admin_show_msg ( $trans_name . $_lang['deal_success'], "index.php?do=trans&view=report&type=$type", "3" ) or kekezu::admin_show_msg ( $trans_name . $_lang['deal_fail'], "index.php?do=trans&view=process&type=$type&report_id=" . $this->_report_id, "3" );
+					$res and Keke::admin_show_msg ( $trans_name . $_lang['deal_success'], "index.php?do=trans&view=report&type=$type", "3" ) or Keke::admin_show_msg ( $trans_name . $_lang['deal_fail'], "index.php?do=trans&view=process&type=$type&report_id=" . $this->_report_id, "3" );
 				}
 				break;
 			case "nopass" :
 				$this->process_notify('nopass',$this->_report_info, $this->_user_info, $this->_to_userinfo,$op_result ['process_result']);//通知用户
 				$res=$this->change_status ( $this->_report_id, '3', $op_result,$op_result, $op_result ['reply'] ); //更新状态为未成立
-				$res and kekezu::admin_show_msg ( $trans_name . $_lang['deal_success'], "index.php?do=trans&view=rights&type=$type", "3" ) or kekezu::admin_show_msg ( $trans_name . $_lang['deal_fail'], "index.php?do=trans&view=process&type=$type&report_id=" . $this->_report_id, "3" );
+				$res and Keke::admin_show_msg ( $trans_name . $_lang['deal_success'], "index.php?do=trans&view=rights&type=$type", "3" ) or Keke::admin_show_msg ( $trans_name . $_lang['deal_fail'], "index.php?do=trans&view=process&type=$type&report_id=" . $this->_report_id, "3" );
 				break;
 		}
 	}

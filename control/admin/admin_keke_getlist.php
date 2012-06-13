@@ -7,28 +7,28 @@
  */
 
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
-kekezu::admin_check_role(136);
+Keke::admin_check_role(136);
 include S_ROOT.'/keke_client/keke/config.php';
 // var_dump($_SERVER);
 
 if (isset($sbt_action) || ($ac=='del' && $del_id)){
 	if (!$ckb && !$del_id){
-		kekezu::admin_show_msg('提示','?do=keke&view=gettask',2,'任务删除失败,参数缺失','warning');
+		Keke::admin_show_msg('提示','?do=keke&view=gettask',2,'任务删除失败,参数缺失','warning');
 	}
 	$ckb && array_filter( $ckb, 'str2int');
 	$ids = isset($del_id) ? intval($del_id) : implode(',', $ckb);
 	$sql = sprintf("delete from %switkey_task where task_union=2 and task_id in (%s)",TABLEPRE,$ids);
 	$result = dbfactory::execute($sql);
-	kekezu::admin_system_log('批量删除联盟task'.$ids);
+	Keke::admin_system_log('批量删除联盟task'.$ids);
 	if ($result){
-		kekezu::admin_show_msg('提示','?do=keke&view=getlist',2,'任务删除成功!!','success');
+		Keke::admin_show_msg('提示','?do=keke&view=getlist',2,'任务删除成功!!','success');
 	} else {
-		kekezu::admin_show_msg('提示','?do=keke&view=getlist',2,'任务删除失败!','warning');
+		Keke::admin_show_msg('提示','?do=keke&view=getlist',2,'任务删除失败!','warning');
 	}
 	die();
 }
 
-$cove_arr = kekezu::get_cash_cove();
+$cove_arr = Keke::get_cash_cove();
 $pagesize = isset($page_size) ? intval($page_size) : '10' ;
 $page = max(intval($page),1);
 $url = 'index.php?do=keke&view=getlist&page='.$page;

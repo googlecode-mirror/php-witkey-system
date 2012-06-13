@@ -7,7 +7,7 @@
  * 2010-5-21ÏÂÎç02:31:40
  */
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
-kekezu::admin_check_role (73);
+Keke::admin_check_role (73);
 $msg_obj = new Keke_witkey_msg_config_class();
 
 $message_send_type = keke_global_class::get_message_send_type ();
@@ -45,12 +45,12 @@ if (isset ( $sbt_edit )) {
 		}
 	}
 	if ($res) {
-		kekezu::admin_system_log($_lang['msg_config_log']);
-		kekezu::$_cache_obj->set ( "keke_witkey_msg_config", $msg_config );
-		kekezu::admin_show_msg ( $_lang['sms_internal_config_success'], "index.php?do=msg&view=internal",3,'','success' );
+		Keke::admin_system_log($_lang['msg_config_log']);
+		Keke::$_cache_obj->set ( "keke_witkey_msg_config", $msg_config );
+		Keke::admin_show_msg ( $_lang['sms_internal_config_success'], "index.php?do=msg&view=internal",3,'','success' );
 	}
 }else{
-	$page_obj=kekezu::$_page_obj;
+	$page_obj=Keke::$_page_obj;
 	$where=" 1 = 1 ";
 	intval($page) 	   or $page='1';
 	intval($page_size) or $page_size='10';

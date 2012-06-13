@@ -1,6 +1,6 @@
 <?php
 // require_once 'acache_class.php';
-final class keke_cache_eacc extends keke_cache_class {
+final class Keke_cache_eacc extends Keke_cache_class {
 	
 	function __construct(){
 		if(!function_exists('eaccelerator_get')){ 

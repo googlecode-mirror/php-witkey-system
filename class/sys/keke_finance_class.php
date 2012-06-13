@@ -27,10 +27,10 @@ class keke_finance_class {
 	public static function init($uid = null) {
 		global $kekezu;
 		global $_lang;
-		self::$_basic_config =kekezu::$_sys_config;
+		self::$_basic_config =Keke::$_sys_config;
 		if ($uid) {
 			try{
-				self::$_userinfo = kekezu::get_user_info ( $uid );
+				self::$_userinfo = Keke::get_user_info ( $uid );
 			}catch (Exception $e){
 				keke_exception::handler($e);
 			}
@@ -214,7 +214,7 @@ class keke_finance_class {
 	 */
 	public static function get_to_cash($cash){
 		//ªÒ»°Õ¯’æ≈‰÷√
-		$config_info = kekezu::get_table_data("*","witkey_pay_config"," k in('per_charge','per_low','per_high')",'','','','k');
+		$config_info = Keke::get_table_data("*","witkey_pay_config"," k in('per_charge','per_low','per_high')",'','','','k');
 		 $min_cash = $config_info['per_low']['v'];
 		 $middle_profit = $config_info['per_charge']['v'];
 		 $max_cash = $config_info['per_high']['v'];

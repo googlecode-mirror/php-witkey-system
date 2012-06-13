@@ -11,7 +11,7 @@ $process_obj=goods_report_class::get_instance($report_id,$report_info,$obj_info,
 if($op_result){
 //	$log_type_arr = array("rights"=>"维权","report"=>"举报","complaint"=>"投诉");
 //	$log_msg = "对威客作品进行了".$log_type_arr[$op_result]."操作";
-//	kekezu::admin_system_log($log_msg);
+//	Keke::admin_system_log($log_msg);
 	switch ($type){
 		case "rights"://维权
 			$res=$process_obj->process_rights($op_result,$type);

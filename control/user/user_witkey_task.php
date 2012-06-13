@@ -7,7 +7,7 @@
  */
 
 defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
-$cove_arr = kekezu::get_table_data("*","witkey_task_cash_cove","","","","","cash_rule_id");
+$cove_arr = Keke::get_table_data("*","witkey_task_cash_cove","","","","","cash_rule_id");
 /**
  * 三级横向菜单
  */
@@ -49,7 +49,7 @@ $ord_arr=array(" a.$id_fds desc "=>$_lang['manuscript_id_desc'],
 		   " a.$time_fds desc "=>$_lang['submit_time_desc'],
 		   " a.$time_fds asc "=>$_lang['submit_time_asc']);
 	$cln     =$model_info['model_code']."_task_class";
-	$page_obj=kekezu::$_page_obj;
+	$page_obj=Keke::$_page_obj;
 	/**获取对应任务的状态值**/
 	$status_arr=call_user_func(array($cln,"get_task_status"));
 	/*获取稿件状态**/

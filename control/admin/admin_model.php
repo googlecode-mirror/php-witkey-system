@@ -9,7 +9,7 @@
 
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 
-$model_id or kekezu::admin_show_msg ( $_lang['error_model_param'], "index.php?do=info",3,'','warning' );
+$model_id or Keke::admin_show_msg ( $_lang['error_model_param'], "index.php?do=info",3,'','warning' );
 
 $model_info = dbfactory::get_one ( " select * from " . TABLEPRE . "witkey_model where model_id = '$model_id'" );
 

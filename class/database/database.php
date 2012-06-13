@@ -1,2 +1,2 @@
 <?php
-abstract class database extends keke_database {}
+abstract class Database extends Keke_database {}

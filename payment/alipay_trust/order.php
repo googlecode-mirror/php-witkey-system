@@ -7,7 +7,7 @@ require_once (dirname ( dirname ( dirname ( __FILE__ ) ) ) . DIRECTORY_SEPARATOR
 require_once ("lib/alipay_service.class.php");
 
 /** 担保配置*/
-$alipaydb_info = kekezu::get_payment_config ( 'alipay_trust','trust');
+$alipaydb_info = Keke::get_payment_config ( 'alipay_trust','trust');
 $payment_config = unserialize ( $alipaydb_info ['config'] );
 
 $interface or $interface = 'create';//调用接口缩写

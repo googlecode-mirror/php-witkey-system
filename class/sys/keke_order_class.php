@@ -88,7 +88,7 @@ class keke_order_class {
 			$order_obj->_order_id = null;
 			$order_obj->setOrder_type ( $order_type );
 			$order_obj->setUid ( $uid );
-			$pay_info = kekezu::unescape ( $pay_info );
+			$pay_info = Keke::unescape ( $pay_info );
 			$order_obj->setPay_info ( $pay_info );
 			$order_obj->setPay_type ( $pay_type );
 			$order_obj->setObj_id ( $obj_id );
@@ -128,7 +128,7 @@ class keke_order_class {
 		global $_lang;
 		$res = dbfactory::execute ( sprintf ( " delete from %switkey_order where order_id='%d'", TABLEPRE, $order_id ) );
 		$res *= dbfactory::execute ( sprintf ( " delete from %switkey_order_detail where order_id = '%d'", TABLEPRE, $order_id ) );
-		$res and kekezu::keke_show_msg ( $url, $_lang['order_delete_success'], "", $output ) or kekezu::keke_show_msg ( $url, $_lang['order_delete_fail'], "error", $output );
+		$res and Keke::keke_show_msg ( $url, $_lang['order_delete_success'], "", $output ) or Keke::keke_show_msg ( $url, $_lang['order_delete_fail'], "error", $output );
 	}
 	/**
 	 * 更新订单状态
@@ -167,12 +167,12 @@ class keke_order_class {
 		$transname = keke_report_class::get_transrights_name ( $report_type ); //举报投诉中文
 		if ($order_info ['order_uid'] == $uid || $order_info ['seller_uid'] == $uid) {
 			if ($order_info ['order_uid'] == $uid && $uid == $to_uid) {
-				kekezu::keke_show_msg ( '', $_lang['buyer_can_not_to_self'] . $transname, 'error', 'json' );
+				Keke::keke_show_msg ( '', $_lang['buyer_can_not_to_self'] . $transname, 'error', 'json' );
 			} elseif ($order_info ['seller_uid'] == $uid && $uid == $to_uid) {
-				kekezu::keke_show_msg ( '', $_lang['seller_can_not_to_self'] . $transname, 'error', 'json' );
+				Keke::keke_show_msg ( '', $_lang['seller_can_not_to_self'] . $transname, 'error', 'json' );
 			}
 		} else {
-			kekezu::keke_show_msg ( '', $_lang['no_trans_not_to_order'] . $transname, 'error', 'json' );
+			Keke::keke_show_msg ( '', $_lang['no_trans_not_to_order'] . $transname, 'error', 'json' );
 		}
 		$uid == $order_info ['order_uid'] and $user_type = '2' or $user_type = '1'; //角色
 		$res = keke_report_class::add_report ( 'order', $order_info ['obj_id'], $to_uid, $to_username, $desc, $report_type, $order_info ['order_status'], $order_id, $user_type, $file_name );

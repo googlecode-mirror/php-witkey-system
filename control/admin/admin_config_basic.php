@@ -8,7 +8,7 @@
 
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 
-kekezu::admin_check_role ( 1 );
+Keke::admin_check_role ( 1 );
 
 $config_basic_obj = new Keke_witkey_basic_config_class ();
 
@@ -29,27 +29,27 @@ $log_nav_arr = array (
 if (isset ( $_POST ) && ! empty ( $_POST )) {
 	foreach ( $_POST as $k => $v ) {
 		$config_basic_obj->setWhere ( "k = '$k'" );
-		$config_basic_obj->setV (kekezu::k_input($v));
+		$config_basic_obj->setV (Keke::k_input($v));
 		$res += $config_basic_obj->edit_keke_witkey_basic_config ();
 	
 	}
 	
-	kekezu::admin_system_log ( $_lang ['update'] . $log_nav_arr [$op] );
+	Keke::admin_system_log ( $_lang ['update'] . $log_nav_arr [$op] );
 	
 	if ($res) {
 		
-		kekezu::$_cache_obj->set ( "keke_witkey_basic_config", $config_basic_arr );
+		Keke::$_cache_obj->set ( "keke_witkey_basic_config", $config_basic_arr );
 		
-		kekezu::admin_show_msg ( $_lang ['submit_success'], $url, 3, '', 'success' );
+		Keke::admin_show_msg ( $_lang ['submit_success'], $url, 3, '', 'success' );
 	
 	} else {
 		
-		kekezu::admin_show_msg ( $_lang ['website_config_fail'], $url, 3, '', 'warning' );
+		Keke::admin_show_msg ( $_lang ['website_config_fail'], $url, 3, '', 'warning' );
 	}
 }
 if ($ac == 'get_url_rule') {
    $rule_arr = get_url_rule();
-   require kekezu::$_tpl_obj->template( 'control/admin/tpl/admin_config_get_rule' );
+   require Keke::$_tpl_obj->template( 'control/admin/tpl/admin_config_get_rule' );
    die();
 }
 function get_url_rule() {

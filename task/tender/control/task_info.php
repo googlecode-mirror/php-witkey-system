@@ -14,15 +14,15 @@ $task_config =$task_obj->_task_config;
 $g_uid = $task_obj->_guid;
 $model_id = $task_obj->_model_id;
 $task_status = $task_obj->_task_status;
-//$indus_all_arr = kekezu::get_industry(0); 
-$indus_arr = kekezu::$_indus_c_arr; //子行业集
-$indus_p_arr = kekezu::$_indus_p_arr; //父行业集
-$cove_arr = kekezu::get_table_data("*","witkey_task_cash_cove","","","","","cash_rule_id");
+//$indus_all_arr = Keke::get_industry(0); 
+$indus_arr = Keke::$_indus_c_arr; //子行业集
+$indus_p_arr = Keke::$_indus_p_arr; //父行业集
+$cove_arr = Keke::get_table_data("*","witkey_task_cash_cove","","","","","cash_rule_id");
 $trust_mode=$task_obj->_trust_mode;//担保模式
 $status_arr = $task_obj->_task_status_arr; //任务状态数组
 $time_desc = $task_obj->get_task_timedesc (); //任务时间描述
 
-$uid !=$g_uid&&task_status==1 and kekezu::show_msg($_lang['friendly_notice'],'index.php?do=index',2,'任务审核中');
+$uid !=$g_uid&&task_status==1 and Keke::show_msg($_lang['friendly_notice'],'index.php?do=index',2,'任务审核中');
  
 $stage_desc = $task_obj->get_task_stage_desc (); //任务阶段样式
 $related_task = $task_obj->get_task_related ();//获取相关任务
@@ -46,7 +46,7 @@ switch ($op) {
 		$bid_info  = $task_obj->get_bid_info();
 
 		$res = $task_obj->set_agreement_status($bid_info['bid_id'], 1);
-		$res  and kekezu::keke_show_msg("index.php?do=task&task_id=$task_id",$_lang['operate_success'],'') or kekezu::keke_show_msg("index.php?do=task&task_id=$task_id",$_lang['operate_fail'], 'error');
+		$res  and Keke::keke_show_msg("index.php?do=task&task_id=$task_id",$_lang['operate_success'],'') or Keke::keke_show_msg("index.php?do=task&task_id=$task_id",$_lang['operate_fail'], 'error');
 	
 		
 		break;
@@ -58,7 +58,7 @@ switch ($op) {
 			$union_obj -> change_status('end');
 		}
 		$res = $task_obj->set_agreement_status($bid_info['bid_id'], 2);
-		$res  and kekezu::keke_show_msg("index.php?do=task&task_id=$task_id",$_lang['operate_success'],'') or kekezu::keke_show_msg("index.php?do=task&task_id=$task_id",$_lang['operate_fail'], 'error');
+		$res  and Keke::keke_show_msg("index.php?do=task&task_id=$task_id",$_lang['operate_success'],'') or Keke::keke_show_msg("index.php?do=task&task_id=$task_id",$_lang['operate_fail'], 'error');
 		die();
 		break;
 	case "reqedit" : //需求补充
@@ -79,7 +79,7 @@ switch ($op) {
 			$max_day  = intval($task_config['max_delay']);//配置最大延期天数
 			$this_min_cash = intval($delay_rule[$delay_count]['defer_rate']*$task_info['task_cash']/100);//本次最小延期金额
 			$min_cash>$this_min_cash and $real_min = $min_cash or $real_min = $this_min_cash;//真正最小金额
-			$credit_allow =  intval(kekezu::$_sys_config ['credit_is_allow']);//金币开启
+			$credit_allow =  intval(Keke::$_sys_config ['credit_is_allow']);//金币开启
 			require keke_tpl_class::template("task/task_delay");
 		die();
 		break;
@@ -88,8 +88,8 @@ switch ($op) {
 		
 		if($sbt_edit){
 			if(CHARSET=='gbk'){ 
-				$work_frm['area'] = kekezu::utftogbk($province.",".$city.','.$area);
-				$work_frm['tar_content'] = kekezu::utftogbk($work_frm['tar_content']);
+				$work_frm['area'] = Keke::utftogbk($province.",".$city.','.$area);
+				$work_frm['tar_content'] = Keke::utftogbk($work_frm['tar_content']);
 			}
 			$task_obj->tender_work_hand ( $work_frm,'','json');
 		}else{
@@ -206,9 +206,9 @@ switch ($view) {
 	    			//更新个人信息 
 	    			$res = $comment_obj->del_comment($comment_id,$task_id,$comment_info['p_id']);
 	    		}else{
-	    			kekezu::keke_show_msg("", $_lang['please_login_now'],"error","json");
+	    			Keke::keke_show_msg("", $_lang['please_login_now'],"error","json");
 	    		}
-	    		$res and kekezu::keke_show_msg("", $_lang['delete_success'],"","json") or kekezu::keke_show_msg("",$_lang['system_is_busy'],"error","json");
+	    		$res and Keke::keke_show_msg("", $_lang['delete_success'],"","json") or Keke::keke_show_msg("",$_lang['system_is_busy'],"error","json");
 	    		break;	
 	    } 
 		break; 

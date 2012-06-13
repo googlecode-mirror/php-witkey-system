@@ -40,14 +40,14 @@ class keke_auth_bank_class extends keke_auth_base_class {
 		$data['pay_to_user_cash']='0';
 		$data['user_get_cash']   ='0';
 		$data['pay_time']   ='0';
-		$data ['bank_name']&&$data ['bank_account'] or kekezu::show_msg ( $this->auth_lang() .$_lang['apply_submit_fail'], $_SERVER ['HTTP_REFERER'], 3, $this->auth_lang() .$_lang['apply_fail_and_info_fail'], 'warning' );
+		$data ['bank_name']&&$data ['bank_account'] or Keke::show_msg ( $this->auth_lang() .$_lang['apply_submit_fail'], $_SERVER ['HTTP_REFERER'], 3, $this->auth_lang() .$_lang['apply_fail_and_info_fail'], 'warning' );
 		$success=$this->_tab_obj->save($data);
 		if ($success) { //财务记录
 			//认证收费。产生财务记录
 			$data ['cash'] > 0 and keke_finance_class::cash_out ( $data ['uid'], $data ['cash'], $this->_auth_name, $data ['cash'], $this->_auth_name, $success );
 			$data ['start_time'] == $data ['end_time'] and $end_time = $data ['end_time'] or $end_time = 0;
 			$this->add_auth_record ( $data ['uid'], $data ['username'], $this->_auth_code, $end_time,$success); //添加进入认证记录
-			kekezu::show_msg ( $this->auth_lang() . $_lang['apply_submit_success'], "index.php?do=user&view=payitem&op=auth&auth_code=bank&ver=1&auth_step=step3&show_id=".$success."#userCenter", 3, $this->auth_lang() . $_lang['apply_success_and_wait_audit'] ,'success');
+			Keke::show_msg ( $this->auth_lang() . $_lang['apply_submit_success'], "index.php?do=user&view=payitem&op=auth&auth_code=bank&ver=1&auth_step=step3&show_id=".$success."#userCenter", 3, $this->auth_lang() . $_lang['apply_success_and_wait_audit'] ,'success');
 		}
 	}
 	/**
@@ -63,7 +63,7 @@ class keke_auth_bank_class extends keke_auth_base_class {
 		$auth_id=$auth_info[$this->_primary_key];
 		$ac_url="index.php?do=user&view=payitem&op=auth&auth_code=".$this->_auth_code."&ver=1&show_id=".$auth_id."#userCenter";
 		
-		$user_get_cash or kekezu::show_msg($_lang['input_your_get_cash'],$ac_url,3,"",'warning');
+		$user_get_cash or Keke::show_msg($_lang['input_your_get_cash'],$ac_url,3,"",'warning');
 	
 		$data['user_get_cash']=$user_get_cash;
 		$pk[$this->_primary_key]=$auth_id;
@@ -74,23 +74,23 @@ class keke_auth_bank_class extends keke_auth_base_class {
 			if ($res) {
 				/** 注册推广结算*/
 				$kekezu->init_prom();
-				kekezu::$_prom_obj->dispose_prom_event($this->_auth_name,$uid,$uid);
+				Keke::$_prom_obj->dispose_prom_event($this->_auth_name,$uid,$uid);
 				 $feed_arr = array(	
 			 		"feed_username"=>array("content"=>$username,"url"=>"index.php?do=space&member_id=$uid "),
 					"action"=>array("content"=>$_lang['have_passed'],"url"=>""),
 					"event"=>array("content"=>$this->auth_lang(),"url"=>"")
 			 	);
-				kekezu::save_feed($feed_arr, $uid, $username,$this->_auth_name ); 
-				kekezu::notify_user ( $this->auth_lang().$_lang['success'], $_lang['your'].$this->auth_lang().$_lang['have_passed_and_to'].'<a href="'.$ac_url.'">'.$_lang['auth_center'].'</a>'.$_lang['look_detail'], $uid, $username );
-				kekezu::empty_cache();
-				kekezu::show_msg ( $this->auth_lang().$_lang['success'], $ac_url, 3, $this->auth_lang().$_lang['success'],'success' );
+				Keke::save_feed($feed_arr, $uid, $username,$this->_auth_name ); 
+				Keke::notify_user ( $this->auth_lang().$_lang['success'], $_lang['your'].$this->auth_lang().$_lang['have_passed_and_to'].'<a href="'.$ac_url.'">'.$_lang['auth_center'].'</a>'.$_lang['look_detail'], $uid, $username );
+				Keke::empty_cache();
+				Keke::show_msg ( $this->auth_lang().$_lang['success'], $ac_url, 3, $this->auth_lang().$_lang['success'],'success' );
 			}
 		} else {
 			$res=$this->set_auth_status($auth_id,'2');//更新认证状态
 			$this->set_auth_record_status($uid,'2');//更新认证记录状态
 					
-			kekezu::notify_user ($this->auth_lang().$_lang['fail'], $_lang['your'].$this->auth_lang().$_lang['no_pass_connect_kf'], $uid, $username );
-			kekezu::show_msg ( $this->auth_lang().$_lang['fail'], $ac_url, 3, $_lang['input_cash_not_equal_admin_cash'].$this->auth_lang().$_lang['input_cash_not_equal_admin_cash'], 'warning' );
+			Keke::notify_user ($this->auth_lang().$_lang['fail'], $_lang['your'].$this->auth_lang().$_lang['no_pass_connect_kf'], $uid, $username );
+			Keke::show_msg ( $this->auth_lang().$_lang['fail'], $ac_url, 3, $_lang['input_cash_not_equal_admin_cash'].$this->auth_lang().$_lang['input_cash_not_equal_admin_cash'], 'warning' );
 			
 		}
 	}

@@ -71,12 +71,12 @@ if ($sbt_action) {
 		}
 		$ad_obj->setWhere ( 'ad_id=' . intval ( $ad_id ) );
 		$result = $ad_obj->edit_keke_witkey_ad ();
-		kekezu::admin_system_log ( $_lang ['edit_ads_data'] . $ad_id );
-		kekezu::admin_show_msg ( $result ? $_lang ['edit_ads_success_jump_adslist'] : $_lang ['not_make_changes_return_again'], 'index.php?do=tpl&view=ad_add&ac=edit&ad_id=' . $ad_id, 3, '', $result ? 'success' : 'warning' ); //die掉了
+		Keke::admin_system_log ( $_lang ['edit_ads_data'] . $ad_id );
+		Keke::admin_show_msg ( $result ? $_lang ['edit_ads_success_jump_adslist'] : $_lang ['not_make_changes_return_again'], 'index.php?do=tpl&view=ad_add&ac=edit&ad_id=' . $ad_id, 3, '', $result ? 'success' : 'warning' ); //die掉了
 	}
 	$result = $ad_obj->create_keke_witkey_ad ();
-	kekezu::admin_system_log ( $_lang ['add_ads_data'] );
-	kekezu::admin_show_msg ( $result ? $_lang ['add_ads_success'] : $_lang ['add_fail_return_again'], 'index.php?do=tpl&view=ad_list&target_id=' . $hdn_target_id, 3, '', $result ? 'success' : 'warning' ); //die掉了
+	Keke::admin_system_log ( $_lang ['add_ads_data'] );
+	Keke::admin_show_msg ( $result ? $_lang ['add_ads_success'] : $_lang ['add_fail_return_again'], 'index.php?do=tpl&view=ad_list&target_id=' . $hdn_target_id, 3, '', $result ? 'success' : 'warning' ); //die掉了
 }
 $page_tips = $_lang ['add'];
 $ad_data = array ();
@@ -85,7 +85,7 @@ $target_id && $tagname and $ad_data ['ad_name'] = $tagname; //从广告组添加页面跳
 
 //编辑 获取单条数据
 if ($ac && $ac == 'edit') {
-	empty ( $ad_id ) && kekezu::admin_show_msg ( $_lang ['edit_parameter_error_jump_listpage'], 'index.php?do=tpl&view=ad_list', 3, '', 'warning' );
+	empty ( $ad_id ) && Keke::admin_show_msg ( $_lang ['edit_parameter_error_jump_listpage'], 'index.php?do=tpl&view=ad_list', 3, '', 'warning' );
 	$page_tips = $_lang ['edit'];
 	unset ( $ad_data );
 	$ad_id = intval ( $ad_id );
@@ -97,7 +97,7 @@ if ($ac && $ac == 'edit') {
 }
 //获取对应的(一条)广告位相关信息
 if ($target_id) {
-	$target_arr = kekezu::get_table_data ( '*', 'witkey_ad_target', 'target_id=' . intval ( $target_id ) );
+	$target_arr = Keke::get_table_data ( '*', 'witkey_ad_target', 'target_id=' . intval ( $target_id ) );
 	$target_arr = $target_arr ['0'];
 	/* 如果是幻灯片 ,则要判断有没有对应的广告组, 
 	 * 如果没有跳转至广告组添加页面
@@ -106,7 +106,7 @@ if ($target_id) {
 	if (strtolower ( $is_slide ) == 'slide') {
 		$group_arr = dbfactory::query ( 'select * from ' . TABLEPRE . 'witkey_tag where tagname="' . $target_arr ['name'] . '" and tag_type="9"' );
 		if (! $group_arr) {
-			kekezu::admin_show_msg ( $_lang ['add_group_msg'], 'index.php?do=tpl&view=ad_group_add&ac=add&target_id=' . $target_arr ['target_id'] . '&tagname=' . $target_arr ['name'], '3', '', 'warning' );
+			Keke::admin_show_msg ( $_lang ['add_group_msg'], 'index.php?do=tpl&view=ad_group_add&ac=add&target_id=' . $target_arr ['target_id'] . '&tagname=' . $target_arr ['name'], '3', '', 'warning' );
 		} else {
 			$tagname = $group_arr ['0'] ['tagname'];
 			$ad_data ['ad_name'] = $tagname;
@@ -119,7 +119,7 @@ if ($target_id) {
 	foreach ( $target_arr_range as $key => $value ) {
 		$string .= $target_range_arr [$value] . ',';
 	}
-	$ad_count = kekezu::get_table_data ( 'count(*) as num', 'witkey_ad', 'target_id=' . intval ( $target_id ), '', '', '', '', null );
+	$ad_count = Keke::get_table_data ( 'count(*) as num', 'witkey_ad', 'target_id=' . intval ( $target_id ), '', '', '', '', null );
 	$ad_count = $ad_count ['0'] ['num']; //统计广告位对应的广告条数
 	$string = rtrim ( $string, ',' ); //可投放范围
 }

@@ -8,7 +8,7 @@
  */
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 
-kekezu::admin_check_role ( 30 );
+Keke::admin_check_role ( 30 );
 //实例化友情链接表对象
 $link_obj = new Keke_witkey_link_class ();
 
@@ -43,16 +43,16 @@ if ($sbt_edit) {
 		$link_obj->setLink_id ( $hdn_link_id );
 		$res = $link_obj->edit_keke_witkey_link (); //编辑友情链接
 		if ($res) {
-			kekezu::admin_system_log ( $_lang['links_edit'] . $hdn_link_id );
-			kekezu::admin_show_msg ( $_lang['links_edit_success'], 'index.php?do=' . $do . '&view=link&page='.$page,3,'','success' );
+			Keke::admin_system_log ( $_lang['links_edit'] . $hdn_link_id );
+			Keke::admin_show_msg ( $_lang['links_edit_success'], 'index.php?do=' . $do . '&view=link&page='.$page,3,'','success' );
 		}
 	} else {
 		$res = $link_obj->create_keke_witkey_link (); //添加友情链接
 		if ($res) {
-			kekezu::admin_system_log ( $_lang['links_add'] . $res );
-			kekezu::admin_show_msg ( $_lang['links_edit_success'], 'index.php?do=' . $do . '&view=link&page='.$page,3,'','success' );
+			Keke::admin_system_log ( $_lang['links_add'] . $res );
+			Keke::admin_show_msg ( $_lang['links_edit_success'], 'index.php?do=' . $do . '&view=link&page='.$page,3,'','success' );
 		}
 	}
 }
 
-require kekezu::$_tpl_obj->template ( 'control/admin/tpl/admin_' . $do . '_' . $view );
+require Keke::$_tpl_obj->template ( 'control/admin/tpl/admin_' . $do . '_' . $view );

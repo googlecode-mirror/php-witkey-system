@@ -15,7 +15,7 @@ $url = "index.php?do=space&member_id=$member_id&view=goods&page_size=$page_size"
 $page_size = 12;
 $count = intval ( dbfactory::get_count ( $csql . $where, 0, null, 3600 ) );
 $page = $page ? $page : 1;
-$pages = kekezu::$_page_obj->getPages ( $count, $page_size, $page, $url );
+$pages = Keke::$_page_obj->getPages ( $count, $page_size, $page, $url );
 $where .= $pages ['where'];
 $shop_arr = dbfactory::query ( $sql . $where );
 

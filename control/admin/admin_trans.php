@@ -6,7 +6,7 @@
  * 2010-10-31 ÏÂÎç13£º30
  */
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
-kekezu::admin_check_role(80);
+Keke::admin_check_role(80);
 $views = array ("rights", "report", "complaint", "process" );
 
 in_array ( $view, $views ) or $view = "rights";
@@ -24,9 +24,9 @@ if ($ac) {
 		case "del" :
 			if ($report_id) {
 				$res = dbfactory::execute ( sprintf ( " delete from %switkey_report where report_id='%d'", TABLEPRE, $report_id ) );
-				$res and kekezu::admin_show_msg ( $action_arr[$view].$_lang['record_delete_success'], $url, "3",'','success' ) or kekezu::admin_show_msg ($action_arr[$view]. $_lang['record_delete_fail'], $url, "3",'','warning');
+				$res and Keke::admin_show_msg ( $action_arr[$view].$_lang['record_delete_success'], $url, "3",'','success' ) or Keke::admin_show_msg ($action_arr[$view]. $_lang['record_delete_fail'], $url, "3",'','warning');
 			} else
-				kekezu::admin_show_msg ($_lang['choose_delete_operate'], $url, "3",'','warning' );
+				Keke::admin_show_msg ($_lang['choose_delete_operate'], $url, "3",'','warning' );
 			break;
 		case "download" :
 			keke_file_class::file_down ( $filename, $filepath );
@@ -37,14 +37,14 @@ if ($ac) {
 	$ckb and $dels = implode ( ",", $ckb ) or $dels = array ();
 	if (! empty ( $dels )) {
 		$res = dbfactory::execute ( sprintf ( " delete from %switkey_report where report_id in ('%s') ", TABLEPRE, $dels ) );
-		$res and kekezu::admin_show_msg ( $action_arr[$view].$_lang['record_mulit_delete_success'], $url, "3",'','success' ) or kekezu::admin_show_msg ( $action_arr[$view].$_lang['record_delete_fail'], $url, "3",'','warning' );
+		$res and Keke::admin_show_msg ( $action_arr[$view].$_lang['record_mulit_delete_success'], $url, "3",'','success' ) or Keke::admin_show_msg ( $action_arr[$view].$_lang['record_delete_fail'], $url, "3",'','warning' );
 	} else
-		kekezu::admin_show_msg ($_lang['choose_delete_operate'], $url, "3",'','warning' );
+		Keke::admin_show_msg ($_lang['choose_delete_operate'], $url, "3",'','warning' );
 
 } else {
 	
 	$report_obj = new Keke_witkey_report_class ();
-	$page_obj = kekezu::$_page_obj;
+	$page_obj = Keke::$_page_obj;
 	
 	$where = " report_type = '" . $action_arr [$view] ['0'] . "'";
 	$report_id and $where .= " and report_id='$report_id'";

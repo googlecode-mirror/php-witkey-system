@@ -21,7 +21,7 @@ switch ($r_step) { //任务发布步骤
 				$release_obj->get_max_day ( $task_cash );
 				break;
 		}
-		if (kekezu::submitcheck($formhash)) {
+		if (Keke::submitcheck($formhash)) {
 			$release_info and $_POST = array_merge ( $release_info, $_POST );
 			$release_obj->save_task_obj ( $_POST, $std_cache_name ); //信息保存
 			header ( "location:index.php?do=release&pub_mode=$pub_mode&t_id=$t_id&model_id={$model_id}&r_step=step2" );
@@ -31,12 +31,12 @@ switch ($r_step) { //任务发布步骤
 		}
 		break;
 	case "step2" :		
-		if (kekezu::submitcheck($formhash)) {
+		if (Keke::submitcheck($formhash)) {
 			
 			$release_info and $_POST = array_merge ( $release_info, $_POST,$release_obj->user_contact($_POST['contact_type']));
- 			$_POST['txt_title'] = kekezu::escape($txt_title);
+ 			$_POST['txt_title'] = Keke::escape($txt_title);
  			
- 			$_POST['tar_content'] = kekezu::escape($tar_content);
+ 			$_POST['tar_content'] = Keke::escape($tar_content);
  	
 			$release_obj->save_task_obj ($_POST, $std_cache_name ); //信息保存
 			header ( "location:index.php?do=release&pub_mode=$pub_mode&t_id=$t_id&model_id={$model_id}&r_step=step3" );
@@ -46,7 +46,7 @@ switch ($r_step) { //任务发布步骤
 			$kf_info	 = $release_obj->_kf_info; //随机客服
 			$indus_p_arr = $release_obj->get_bind_indus(); //父级行业
 			$indus_arr   = $release_obj->get_task_indus($release_info ['indus_pid']); //子集行业
-			$ext_types   = kekezu::get_ext_type (); //附件允许类型
+			$ext_types   = Keke::get_ext_type (); //附件允许类型
  		}
 		break;
 	case "step3" : 
@@ -61,7 +61,7 @@ switch ($r_step) { //任务发布步骤
 				$release_obj->remove_pay_item ( $item_id, $std_cache_name );
 				break;
 		}
-		if (kekezu::submitcheck($formhash)) {
+		if (Keke::submitcheck($formhash)) {
 		//if($formhash){
 			$release_info and $_POST = array_merge ( $release_info, $_POST );
 			$release_obj->save_task_obj ( $_POST, $std_cache_name ); //信息保存

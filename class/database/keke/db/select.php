@@ -7,7 +7,7 @@
  *
  */
 defined('IN_KEKE') OR die('access on priv!');
-class keke_db_select {
+class Keke_db_select {
 	
 	protected $_query_list = array ();
 	protected $_lifetime;
@@ -17,7 +17,7 @@ class keke_db_select {
 	public function select($fields) {
 		$field = "";
 		if ($fields !== '*' and $field = explode ( ',', $fields )) {
-			$db = database::instance();
+			$db = Database::instance();
 			array_walk ( $field, array($db,'quote_field') );
 			$fields = implode ( ',', $field );
 		}
@@ -76,7 +76,7 @@ class keke_db_select {
 	public function cached($lifetime = NULL) {
 		if ($lifetime === NULL) {
 			// Ä¬ÈÏ»º´æÊ±¼ä
-			$lifetime = cache::DEFAULT_CACHE_LIFE_TIME;
+			$lifetime = Cache::DEFAULT_CACHE_LIFE_TIME;
 		}
 		$this->_lifetime = $lifetime;
 		return $this;
@@ -141,16 +141,16 @@ class keke_db_select {
 	}
 	
 	public function cache_data($sql,$db=null, $default = 'null') {
-		$key = cache::instance ()->generate_id ( $sql )->get_id();
-		if ($this->_lifetime > 0 and $datalist = cache::instance ()->get ( $key )) {
+		$key = Cache::instance ()->generate_id ( $sql )->get_id();
+		if ($this->_lifetime > 0 and $datalist = Cache::instance ()->get ( $key )) {
 			return $datalist;
 		} elseif ($this->_lifetime <= 0) {
-			cache::instance ()->del ( $key );
+			Cache::instance ()->del ( $key );
 		}
-		$datalist = $data =  database::instance($db)->query($sql,database::SELECT);
+		$datalist = $data =  Database::instance($db)->query($sql,Database::SELECT);
 		if(isset($key) and $this->_lifetime>0){
 			empty ( $data ) and $data = $default;
-			cache::instance()->set($key,$data,$this->_lifetime);
+			Cache::instance()->set($key,$data,$this->_lifetime);
 		}
 		return $datalist;
 	}

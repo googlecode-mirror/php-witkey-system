@@ -8,14 +8,14 @@
 defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 
 //如果是管理员添加用户就不作判断
-($uid && !isset($_SESSION['auid'])) and kekezu::show_msg ( $_lang['friendly_notice'], 'index.php', 3, $_lang['you_has_login'],'warning');
+($uid && !isset($_SESSION['auid'])) and Keke::show_msg ( $_lang['friendly_notice'], 'index.php', 3, $_lang['you_has_login'],'warning');
 $page_title=$_lang['register'].'-'.$_K['html_title'];
 //初始化对象
 $reg_obj = new keke_register_class();
 $api_name = keke_global_class::get_open_api();
  
 
-if (isset($formhash)&&kekezu::submitcheck($formhash)){ 
+if (isset($formhash)&&Keke::submitcheck($formhash)){ 
 	
 	//用户注册
 	$reg_uid = $reg_obj->user_register($txt_account, md5($pwd_password), $txt_email,$txt_code,1,$pwd_password);

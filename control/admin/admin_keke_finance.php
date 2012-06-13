@@ -42,7 +42,7 @@ $w['fina_period'] and $comm_data ['fina_period'] = $w['fina_period'];
 
 if ($sbt_search){
     $request 	= keke_tool_class::union_build( $config, $service,$comm_data );
-	$xml = kekezu::curl_request($request,'get');
+	$xml = Keke::curl_request($request,'get');
 	$dxml = xml2array($xml);
 }
 require $template_obj->template ( "control/admin/tpl/admin_{$do}_{$view}" );

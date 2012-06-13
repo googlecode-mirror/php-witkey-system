@@ -7,7 +7,7 @@
  * 2011-12-14
  */
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
-kekezu::admin_check_role ( 40 );
+Keke::admin_check_role ( 40 );
 $table_obj = keke_table_class::get_instance ( 'witkey_comment' );
 $wh = " obj_type = 6";
 $w ['comment_id'] and $wh .= " and comment_id = " . $w ['comment_id'];
@@ -27,22 +27,22 @@ $pages = $table_info ['pages'];
 //…æ≥˝
 if ($ac == 'del') {
 	$res = $table_obj->del ( 'comment_id', $comment_id, $url_str );
-	$res and kekezu::admin_show_msg ( $_lang['delete_success'], "index.php?do=$do&view=$view", 3,'','success' ) or kekezu::admin_show_msg ( $_lang['delete_faile'], "index.php?do=$do&view=$view", 3,'','warning' );
+	$res and Keke::admin_show_msg ( $_lang['delete_success'], "index.php?do=$do&view=$view", 3,'','success' ) or Keke::admin_show_msg ( $_lang['delete_faile'], "index.php?do=$do&view=$view", 3,'','warning' );
 }
 //≈˙¡ø…æ≥˝
 if ($sbt_action) {
 	$res = $table_obj->del ( 'comment_id', $ckb, $url_str );
-	$res and kekezu::admin_show_msg ( $_lang['mulit_operate_success'], "index.php?do=$do&view=$view", 3,'','success' ) or kekezu::admin_show_msg ( $_lang['mulit_operate_fail'], "index.php?do=$do&view=$view", 3 ,'','warning');
+	$res and Keke::admin_show_msg ( $_lang['mulit_operate_success'], "index.php?do=$do&view=$view", 3,'','success' ) or Keke::admin_show_msg ( $_lang['mulit_operate_fail'], "index.php?do=$do&view=$view", 3 ,'','warning');
 }
 
 //ªÿ∏¥¡Ù—‘
 if ($by) {
-	$t_userinfo = kekezu::get_user_info ( $to_uid );
+	$t_userinfo = Keke::get_user_info ( $to_uid );
 	$to_username = $t_userinfo ['username'];
 	if (CHARSET == 'gbk')
-		$fds = kekezu::utftogbk ( $fds );
+		$fds = Keke::utftogbk ( $fds );
 	if ($ac) {
-		kekezu::notify_user ( $fds ['msg_title'], $fds ['msg_content'], $to_uid, $to_username );
+		Keke::notify_user ( $fds ['msg_title'], $fds ['msg_content'], $to_uid, $to_username );
 		$str = $_lang['reply_success'];
 		echo $str;
 		die ();

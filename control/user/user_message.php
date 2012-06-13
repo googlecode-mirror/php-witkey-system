@@ -28,14 +28,14 @@ $sub_nav=array(
 /*É¾³ý¶¯×÷*/
 if($ac=='del'&&$msg_id&&$op=='inbox'){
     $res = $msg_obj->del("msg_id", intval($msg_id));
-    $res and kekezu::show_msg( $_lang['delete_success'],$url_str."&page=$page",3,'','success') or kekezu::show_msg( $_lang['delete_fail'],$url_str."&page=$page",3,"","warning");
+    $res and Keke::show_msg( $_lang['delete_success'],$url_str."&page=$page",3,'','success') or Keke::show_msg( $_lang['delete_fail'],$url_str."&page=$page",3,"","warning");
 }elseif($ckb){
    $res = $msg_obj->del("msg_id", array_filter($ckb));
-   $res and kekezu::show_msg( $_lang['delete_selected_success'],$url_str."&page=$page",3,'','success') or kekezu::show_msg( $_lang['select_null_for_delete'],$url_str."&page=$page",3,"","warning") ;
+   $res and Keke::show_msg( $_lang['delete_selected_success'],$url_str."&page=$page",3,'','success') or Keke::show_msg( $_lang['select_null_for_delete'],$url_str."&page=$page",3,"","warning") ;
 }elseif($ac=='view'){
 	$msg  = $msg_obj->get_table_info("msg_id", $msg_id);	
 	if ($msg['uid']!=$uid&&$msg['to_uid']!=$uid){
-		kekezu::show_msg( $_lang['message_does_not_exist'],$url_str,3,"","warning");
+		Keke::show_msg( $_lang['message_does_not_exist'],$url_str,3,"","warning");
 	}elseif($msg['view_status']==0){
 		$msg_obj->save(array("view_status"=>"1"),array("msg_id"=>$msg_id));
 	}
@@ -64,7 +64,7 @@ if($ac=='del'&&$msg_id&&$op=='inbox'){
 if (isset ( $check_username ) && ! empty ( $check_username )) {
 	$res =  keke_user_class::check_username ( $check_username );
 	 
-	if(kekezu::$_sys_config['user_intergration']==1){
+	if(Keke::$_sys_config['user_intergration']==1){
 		if($res){
 			echo true;
 		}

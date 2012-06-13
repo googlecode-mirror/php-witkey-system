@@ -1,5 +1,5 @@
 <?php
-abstract class keke_database {
+abstract class Keke_database {
 	const SELECT = 1;
 	const INSERT = 2;
 	const UPDATE = 3;
@@ -11,19 +11,19 @@ abstract class keke_database {
 	 * @param $name string
 	 *       	 mysql,mysqli,sqlite ...
 	 * @param $config array       	
-	 * @return keke_driver_mysql
+	 * @return Keke_driver_mysql
 	 */
 	public static function instance($name = null, $config = null) {
 		if ($name === null) {
-			$name = database::$default;
+			$name = Database::$default;
 		}
-		if (isset ( database::$instances [$name] )) {
-			return database::$instances [$name];
+		if (isset ( Database::$instances [$name] )) {
+			return Database::$instances [$name];
 		}
-		$class = "keke_driver_{$name}";
-		//kekezu::keke_require_once ( S_ROOT . 'base' . DIRECTORY_SEPARATOR . 'db_factory' . DIRECTORY_SEPARATOR . $class . '.php' );
-		database::$instances [$name] = new $class ( $config );
-		return database::$instances [$name];
+		$class = "Keke_driver_{$name}";
+		//Keke::keke_require_once ( S_ROOT . 'base' . DIRECTORY_SEPARATOR . 'db_factory' . DIRECTORY_SEPARATOR . $class . '.php' );
+		Database::$instances [$name] = new $class ( $config );
+		return Database::$instances [$name];
 	}
 	/**
 	 * 执行插入
@@ -103,7 +103,7 @@ abstract class keke_database {
 	 * @param $is_unbuffer boolene       	
 	 * @return array
 	 */
-	abstract public function query($sql, $type = database::SELECT, $is_unbuffer = 0);
+	abstract public function query($sql, $type = Database::SELECT, $is_unbuffer = 0);
 	/**
 	 * 事务开始
 	 */
@@ -122,14 +122,14 @@ abstract class keke_database {
 	protected function __construct($name, array $config) {
 		$this->_instance = $name;
 		$this->_config = $config;
-		database::$instances [$name] = $this;
+		Database::$instances [$name] = $this;
 	}
 	
 	final public function __destruct() {
 		$this->disconnect ();
 	}
 	final public function disconnect() {
-		unset ( database::$instances [$this->_instance] );
+		unset ( Database::$instances [$this->_instance] );
 		return true;
 	}
 	public function quote_field(&$value) {

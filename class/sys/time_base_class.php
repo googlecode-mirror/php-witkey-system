@@ -40,7 +40,7 @@ abstract class time_base_class {
 	protected function get_user_info($uid){
 		if (!$this->_a_uinfo[$uid])
 		{
-			$this->_a_uinfo[$uid] = kekezu::get_user_info($uid);
+			$this->_a_uinfo[$uid] = Keke::get_user_info($uid);
 		}
 		return $this->_a_uinfo[$uid];
 	}
@@ -48,7 +48,7 @@ abstract class time_base_class {
 	protected function getusercredit($uid){
 		if (!$this->_a_uinfo[$uid])
 		{
-			$this->_a_uinfo[$uid] = kekezu::get_user_info($uid);
+			$this->_a_uinfo[$uid] = Keke::get_user_info($uid);
 		}
 		return $this->_a_uinfo[$uid]['credit']+$this->_a_uedit_arr[$uid]['credit'];
 	}
@@ -56,7 +56,7 @@ abstract class time_base_class {
 	protected function getusercash($uid){
 		if (!$this->_a_uinfo[$uid])
 		{
-			$this->_a_uinfo[$uid] = kekezu::get_user_info($uid);
+			$this->_a_uinfo[$uid] = Keke::get_user_info($uid);
 		}
 		return $this->_a_uinfo[$uid]['balance']+$this->_a_uedit_arr[$uid]['balance'];
 	}

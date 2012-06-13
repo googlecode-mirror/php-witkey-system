@@ -10,7 +10,7 @@
 
 defined ( 'ADMIN_KEKE' ) or 	exit ( 'Access Denied' );
 
-kekezu::admin_check_role (29);
+Keke::admin_check_role (29);
 $filename = S_ROOT.'./control/admin/tpl/template_tag_'.$tplname.'.htm';
 $code_content = "";
 

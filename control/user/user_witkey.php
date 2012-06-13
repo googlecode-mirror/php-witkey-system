@@ -21,7 +21,7 @@ $sub_nav = array(
  		   "shop" => array ($_lang['goods_trans'], "box" ))
 );
 $op=='task' and $model_type='task' or $model_type='shop';
-$model_list=kekezu::get_table_data ( '*', 'witkey_model', " model_type = '$model_type'", 'model_id asc ', '', '', 'model_id', 3600 );
+$model_list=Keke::get_table_data ( '*', 'witkey_model', " model_type = '$model_type'", 'model_id asc ', '', '', 'model_id', 3600 );
 $model_fds = array_keys($model_list);
 $model_id or $model_id = intval($model_fds['0']);
 		

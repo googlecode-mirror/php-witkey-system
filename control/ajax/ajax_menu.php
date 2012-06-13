@@ -24,7 +24,7 @@ switch ($ajax) {
 	break;
 	case "set_comment" :
 		$comment_arr = array ("obj_id" => $obj_id, "origin_id" => $origin_id, "obj_type" => $obj_type, "p_id" => $p_id, "uid" => $uid, "username" => $username, "content" => $tar_content, "on_time" => time () );
-		kekezu::set_leave ( $comment_arr, $type, $pk, '', 'json' );
+		Keke::set_leave ( $comment_arr, $type, $pk, '', 'json' );
 		break;
 	case "load_comment" :
 	case "load_reply" :
@@ -35,7 +35,7 @@ switch ($ajax) {
 		}
 		break;
 	case "del_comment" :
-		kekezu::del_comment ( $pk, $obj_type, $comment_id, $origin_id, '', 'json' );
+		Keke::del_comment ( $pk, $obj_type, $comment_id, $origin_id, '', 'json' );
 		break;
 	case "prom_link" :
 		$title = "获取推广链接";
@@ -45,8 +45,8 @@ switch ($ajax) {
 		$promtext or $promtext = $_K ['html_title'];
 		break;
 	case "prom_list" :
-		$model_list = kekezu::$_model_list;
-		$page_obj = kekezu::$_page_obj;
+		$model_list = Keke::$_model_list;
+		$page_obj = Keke::$_page_obj;
 		$page_obj->setAjax ( '1' );
 		$page_obj->setAjaxDom ( 'ajax_list' );
 		$page or $page = 1;

@@ -10,7 +10,7 @@ keke_lang_class::package_init ( 'auth' );
 keke_lang_class::loadlang ( 'auth_add' );  
 $keys = array_keys ( $auth_item_list );
 $auth_code or $auth_code = $keys ['0']; //默认认证项 
-$auth_code or kekezu::show_msg ( $_lang['param_error'], "index.php?do=auth",3,'','warning' );
+$auth_code or Keke::show_msg ( $_lang['param_error'], "index.php?do=auth",3,'','warning' );
 
 if($auth_item_list[$auth_code]){
 	$auth_class = "keke_auth_".$auth_code."_class";
@@ -21,5 +21,5 @@ if($auth_item_list[$auth_code]){
 	require "auth/$auth_code/control/auth_add.php";
 }else{
 	
-	kekezu::show_msg($_lang['param_unlaw_or_no_open'],"index.php",3,'','warning');
+	Keke::show_msg($_lang['param_unlaw_or_no_open'],"index.php",3,'','warning');
 }

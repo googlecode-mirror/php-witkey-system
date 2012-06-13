@@ -27,7 +27,7 @@ class keke_userlogin {
 		$this->_space_obj = new keke_witkey_space();
 		$this->_auth_record_obj = new keke_witkey_auth_record();
 		$this->_auth_email_obj = new keke_witkey_auth_email();
-		$this->_sys_config = kekezu::$_sys_config;
+		$this->_sys_config = Keke::$_sys_config;
 	
 		//用户登录	
 	
@@ -36,7 +36,7 @@ class keke_userlogin {
 	function account_init($account) {
 		$this->_account = $account;
 	
-		//CHARSET=='gbk' and $account = kekezu::utftogbk($account);
+		//CHARSET=='gbk' and $account = Keke::utftogbk($account);
 	
 
 	}
@@ -56,7 +56,7 @@ class keke_userlogin {
 	 */
 	function user_login($account, $password, $code = null, $login_type = 0) {
 		global $_lang;
-		($login_type == 3 and strtolower ( CHARSET ) == 'gbk') and $account = kekezu::utftogbk ( $account );
+		($login_type == 3 and strtolower ( CHARSET ) == 'gbk') and $account = Keke::utftogbk ( $account );
 		$this->account_init ( $account );
 		$this->password_init ( $password );
 		$this->login_type ( $login_type );
@@ -114,9 +114,9 @@ class keke_userlogin {
 	
 	//匹配登录方式      返回账号类型
 	function get_login_type() {
-		if (kekezu::is_email ( $this->_account )) {
+		if (Keke::is_email ( $this->_account )) {
 			$this->_account_type = 'email';
-		} elseif (kekezu::is_mobile ( $this->_account )) {
+		} elseif (Keke::is_mobile ( $this->_account )) {
 			$this->_account_type = 'mobile';
 		} else {
 			$this->_account_type = 'username';
@@ -157,7 +157,7 @@ class keke_userlogin {
 	//账号登录判断
 	function valid_username() {
 		global $_lang;
-		$user_info = kekezu::get_user_info ( $this->_account, 1 );
+		$user_info = Keke::get_user_info ( $this->_account, 1 );
 		
 		if ($user_info) {
 			$user_info ['login_type'] = 'username';
@@ -213,7 +213,7 @@ class keke_userlogin {
 			}
 		}
 		
-		//is_array($u) and $user_info = kekezu::get_user_info($u['uid']);
+		//is_array($u) and $user_info = Keke::get_user_info($u['uid']);
 		
 
 		return $u;
@@ -225,7 +225,7 @@ class keke_userlogin {
 		global $_lang;
 		$_SESSION ['uid'] = $user_info ['uid'];
 		$_SESSION ['username'] = $user_info ['username'];
-		/*	$_SESSION [$uid."_".kekezu::$_sys_config[website_url]] = 1;*/
+		/*	$_SESSION [$uid."_".Keke::$_sys_config[website_url]] = 1;*/
 		$oauth_login = intval ( $oauth_login );
 		$login_type = $this->_login_type;
 		if (isset($ckb_cookie)&&$ckb_cookie == 1) {
@@ -257,14 +257,14 @@ class keke_userlogin {
 		 */
 		if (isset($_COOKIE ['user_prom_event'])&&$_COOKIE ['user_prom_event']) {
 			$kekezu->init_prom ();
-			$prom_obj = kekezu::$_prom_obj;
+			$prom_obj = Keke::$_prom_obj;
 			$url_data = $prom_obj->extract_prom_cookie ();
 			$url_data ['p'] == 'reg' or $prom_obj->create_prom_relation ( $user_info ['uid'], $user_info ['username'], $url_data, '2' );
 		}
 		
 		if ($login_type == 1) {
 			if (strtolower ( $_SERVER ['REQUEST_METHOD'] ) == 'post') {
-				kekezu::show_msg ( $_lang ['notice_message'], $r, 1, $_lang ['login_success'] . "$synhtml", "alert_right" );
+				Keke::show_msg ( $_lang ['notice_message'], $r, 1, $_lang ['login_success'] . "$synhtml", "alert_right" );
 			} elseif (strtolower ( $_SERVER ['REQUEST_METHOD'] ) == 'get') {
 				echo "$synhtml<script>window.location.href='$r';</script>";
 				die ();
@@ -280,15 +280,15 @@ class keke_userlogin {
 			$return_info ['pic'] = keke_user_class::get_user_pic ( $user_info ['uid'] );
 			$return_info ['syn'] = $synhtml;
 			($user_info ['uid'] == ADMIN_UID || $user_info ['group_id'] > 0) and $return_info ['is_admin'] = 1;
-			kekezu::echojson ( $_lang ['login_success'], '1', $return_info );
+			Keke::echojson ( $_lang ['login_success'], '1', $return_info );
 			die ();
 		
 		} else {
 			
 			if ($oauth_login == 1) {
-				kekezu::show_msg ( $_lang ['notice_message'], $r, 1, $_lang ['login_success'] . "$synhtml", "alert_right" );
+				Keke::show_msg ( $_lang ['notice_message'], $r, 1, $_lang ['login_success'] . "$synhtml", "alert_right" );
 			
-		//kekezu::$_tpl_obj->xml_out ( "<h1>登录成功!</h1> $synhtml <script>window.location.href='$r'</script>" );
+		//Keke::$_tpl_obj->xml_out ( "<h1>登录成功!</h1> $synhtml <script>window.location.href='$r'</script>" );
 			} else {
 				echo "$synhtml<script>window.location.href='$r';hideWindow('oauth_login_frm1')</script>";
 			}
@@ -305,19 +305,19 @@ class keke_userlogin {
 		$oauth_obj->setUid ( $user_info [uid] );
 		$oauth_obj->setUsername ( $user_info [username] );
 		$oauth_obj->setOn_time ( time () );
-		$oauth_obj->create_keke_witkey_member_oauth () or kekezu::show_msg ( '提示信息', 'index.php?do=user_login', 2, '绑定失败' );
+		$oauth_obj->create_keke_witkey_member_oauth () or Keke::show_msg ( '提示信息', 'index.php?do=user_login', 2, '绑定失败' );
 	
 	}*/
 	function show_msg($content, $status) {
 		global $_lang;
 		switch ($this->_login_type) {
 			case "3" :
-				kekezu::echojson ( $content, $status );
+				Keke::echojson ( $content, $status );
 				die ();
 				break;
 			case "0" :
 			case "1" :
-				kekezu::show_msg ( $_lang ['friendly_notice'], '', 5, $content );
+				Keke::show_msg ( $_lang ['friendly_notice'], '', 5, $content );
 				break;
 		}
 	}

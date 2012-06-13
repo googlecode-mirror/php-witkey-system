@@ -1,3 +1,3 @@
 <?php
 
-class log extends keke_log {}
+class Log extends Keke_log {}

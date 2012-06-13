@@ -9,7 +9,7 @@ abstract  class model {
 	public $_where;
 	public static $instances = array ();
 	public function __construct($table_name=null){
-		$this->_db = database::instance();
+		$this->_db = Database::instance();
 		$this->_tablename = '`'.DBNAME.'`.`'.TABLEPRE . $table_name.'`';
 	}
 	/**
@@ -22,8 +22,8 @@ abstract  class model {
       		return Model::instance($this->_tablename);
       	}
        	$class = $this->_tablename.'class';
-      	database::$instances [$this->_tablename] = new $class ( );
-      	return database::$instances [$this->_tablename];
+      	Database::$instances [$this->_tablename] = new $class ( );
+      	return Database::$instances [$this->_tablename];
 	}  */
 	
 	

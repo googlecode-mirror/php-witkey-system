@@ -8,7 +8,7 @@
 
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 
-kekezu::admin_check_role (57);
+Keke::admin_check_role (57);
 
 $feed_obj = new Keke_witkey_feed_class ();
  
@@ -53,9 +53,9 @@ if ($type === 'manage') {
 }
 
 $limit = $slt_page_size;
-kekezu::$_page_obj->setAjax(1);
-kekezu::$_page_obj->setAjaxDom("ajax_dom");
-$pages = kekezu::$_page_obj->getPages ( $count, $limit, $page, $url );
+Keke::$_page_obj->setAjax(1);
+Keke::$_page_obj->setAjaxDom("ajax_dom");
+$pages = Keke::$_page_obj->getPages ( $count, $limit, $page, $url );
 
 //查询结果数组
 if ($type == 'data' || ! isset ( $type ) || $type == '') {
@@ -78,7 +78,7 @@ $feed_arr = $new_feed_arr;
 
 
 if ($ac == 'del') {
-	$delid or kekezu::admin_show_msg ( $_lang['err_parameter'], $url,3,'','warning' );
+	$delid or Keke::admin_show_msg ( $_lang['err_parameter'], $url,3,'','warning' );
 	if ($type == 'data' || ! isset ( $type ) || $type == '') {
 		$feed_obj->setWhere ( "feed_id='{$delid}'" );
 		$res = $feed_obj->del_keke_witkey_feed ();
@@ -87,9 +87,9 @@ if ($ac == 'del') {
 		$res = $tag_obj->del_keke_witkey_tag ();
 	}
 	if ($res) {
-		kekezu::admin_show_msg ( $_lang['delete_success'], $url ,3,'','success' );
+		Keke::admin_show_msg ( $_lang['delete_success'], $url ,3,'','success' );
 	} else {
-		kekezu::admin_show_msg ( $_lang['delete_fail'], $url ,3,'','warning' );
+		Keke::admin_show_msg ( $_lang['delete_fail'], $url ,3,'','warning' );
 	}
 }
 
@@ -108,14 +108,14 @@ if (isset ( $sbt_action ) && $sbt_action == $_lang['mulit_delete']) {
 			$res = $tag_obj->del_keke_witkey_tag ();
 		}
 		if ($res) {
-			kekezu::admin_show_msg ( $_lang['mulit_operate_success'], $url,3,'','success' );
+			Keke::admin_show_msg ( $_lang['mulit_operate_success'], $url,3,'','success' );
 		} else {
-			kekezu::admin_show_msg ( $_lang['mulit_operate_fail'], $url ,3,'','warning');
+			Keke::admin_show_msg ( $_lang['mulit_operate_fail'], $url ,3,'','warning');
 		}
 	
 	} else {
-		kekezu::admin_show_msg ( $_lang['choose_operate_item'], $url ,3,'','warning');
+		Keke::admin_show_msg ( $_lang['choose_operate_item'], $url ,3,'','warning');
 	}
 }
 
-require kekezu::$_tpl_obj->template ( 'control/admin/tpl/admin_tpl_' . $view . '_' . $type );
+require Keke::$_tpl_obj->template ( 'control/admin/tpl/admin_tpl_' . $view . '_' . $type );

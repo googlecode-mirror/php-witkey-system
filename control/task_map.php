@@ -14,9 +14,9 @@ $page_title=$_lang['task_map'].'-'.$_K['html_title'];
 keke_lang_class::package_init ( "task" );
 keke_lang_class::loadlang ( $do );
 $feed_time = time () - 3600 * 24; 
-$dynamic_arr = kekezu::get_feed ( " feedtype='pub_task' or feedtype='work_accept' and $feed_time>feed_time ", "feed_time desc", 5 ); //动态信息
+$dynamic_arr = Keke::get_feed ( " feedtype='pub_task' or feedtype='work_accept' and $feed_time>feed_time ", "feed_time desc", 5 ); //动态信息
 $website_url = "index.php?" . $_SERVER ['QUERY_STRING']; //当前连接
-$cove_arr = kekezu::get_table_data("*","witkey_task_cash_cove","","","","","cash_rule_id");
+$cove_arr = Keke::get_table_data("*","witkey_task_cash_cove","","","","","cash_rule_id");
 $task_cash_arr = keke_search_class::get_cash_cove();//任务赏金数组   
 
 $where_arr = get_where_arr();//获取数组 
@@ -80,7 +80,7 @@ $hid_save_cookie = isset($hid_save_cookie)?$hid_save_cookie:'';
 //清空历史记录
 if (isset($hid_del_cookie)&&$hid_del_cookie) {
 	$res = setcookie ( 'map_save_cookie', '' );
-	$res and kekezu::echojson ( '', 1 );
+	$res and Keke::echojson ( '', 1 );
 	die();
 } 
 //获取任务金额条件
@@ -199,7 +199,7 @@ function get_where($path) {
 function get_where_arr(){
 	global $model_list,$search_key;
 	global $_lang;
-	$task_indus_type = kekezu::get_industry ( 0 );//获取行业分类
+	$task_indus_type = Keke::get_industry ( 0 );//获取行业分类
 	foreach ( $model_list as $v ) {
 		if ($v ['model_id'] != 6 && $v ['model_id'] != 7) {
 		$v['model_status']==1 and 	$display_model [$v ['model_id']] = $v;
@@ -254,7 +254,7 @@ if($_K['map_api']=='baidu'){
 	$map_script='';
 	foreach ($task_list_arr as $k=>$v) {
 		$v['user_pic'] = keke_user_class::get_user_pic($v['uid']);
-		$v['start_time'] = kekezu::time2Units(time()-$v['start_time']) ;
+		$v['start_time'] = Keke::time2Units(time()-$v['start_time']) ;
 		$point = explode(',',$v ['point']);
 		$v['point'] = $point['1'].','.$point['0']; 
 		$arr_point .= 'new BMap.Point(' . $v ['point'] . '),';
@@ -291,7 +291,7 @@ END;
 
 	foreach ($task_list_arr as $k=>$v) {
 		$v['user_pic'] = keke_user_class::get_user_pic($v['uid']);
-		$v['start_time'] = kekezu::time2Units(time()-$v['start_time']) ;
+		$v['start_time'] = Keke::time2Units(time()-$v['start_time']) ;
 		$arr_point .= 'new google.maps.LatLng(' . $v ['point'] . '),';
 		$arr_marker .= '  new google.maps.Marker({ position: point[' . $k . '], map: map}),';
 		$arr_infoWindow .= ' new google.maps.InfoWindow({content:"<div class=basic_style map_info><div class=fl_l mr_10><a target=_blank  href=index.php?do=space&member_id='.$v['uid'].'>'.$v['user_pic'].'</a></div><strong><a  target=_blank href=index.php?do=task&task_id='.$v['task_id'].'   target=_blank>'.$v['task_title'].'</a></strong><div class=font12><a href=index.php?do=space&member_id='.$v['uid'].' target=_blank  class=font12>'.$v['username'].'</a></b>&nbsp;&nbsp;'.$v['start_time']. $_lang['front_release'] .'</div></div>"}),';

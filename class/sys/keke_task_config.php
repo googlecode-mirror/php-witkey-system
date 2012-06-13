@@ -12,7 +12,7 @@ class keke_task_config {
 	 * @param int $cache_time 缓存时间
 	 */
 	public static function get_time_rule($model_id, $cache_time = null) {
-		return kekezu::get_table_data ( "*", "witkey_task_time_rule", "model_id='$model_id'", "rule_cash", "", "", "", "", $cache_time );
+		return Keke::get_table_data ( "*", "witkey_task_time_rule", "model_id='$model_id'", "rule_cash", "", "", "", "", $cache_time );
 	}
 	/**
 	 * 获取任务延期规则
@@ -20,7 +20,7 @@ class keke_task_config {
 	 * @param int $cache_time 缓存时间
 	 */
 	public static function get_delay_rule($model_id, $cache_time = null) {
-		return kekezu::get_table_data ( "*", "witkey_task_delay_rule", "model_id='$model_id'", "defer_rate", "", "", "", "", $cache_time );
+		return Keke::get_table_data ( "*", "witkey_task_delay_rule", "model_id='$model_id'", "defer_rate", "", "", "", "", $cache_time );
 	}
 	/**
 	 * 设置任务时间规则
@@ -71,7 +71,7 @@ class keke_task_config {
 	 * @return boolean
 	 */
 	public static function set_task_ext_config($model_id, $conf = array()) {
-		return dbfactory::execute ( sprintf ( " update %switkey_model set config='%s' where model_id='%d'", TABLEPRE, kekezu::k_input(serialize ( $conf )), $model_id ) );
+		return dbfactory::execute ( sprintf ( " update %switkey_model set config='%s' where model_id='%d'", TABLEPRE, Keke::k_input(serialize ( $conf )), $model_id ) );
 		
 	}
 	/**
@@ -108,8 +108,8 @@ class keke_task_config {
 				$sql3 = sprintf ( "insert into %switkey_task_frost (frost_status,task_id,frost_time,admin_uid,admin_username) 
         					values('%d','%d','%d','%d','%s')", TABLEPRE, $v ['task_status'], $v ['task_id'], time (), $admin_info ['uid'], $admin_info ['username'] );
 				dbfactory::execute ( $sql3 );
-				kekezu::admin_system_log ( $_lang['freeze_task'].":{$v['task_title']}" );
-				kekezu::notify_user ( $_lang['freeze_notcie'], $_lang['you_pub_task'].':<a href=index.php?do=task&task_id=' . $v [task_id] . '>' . $v [task_title] . '</a>'.$_lang['has_freeze'], $v [uid] );
+				Keke::admin_system_log ( $_lang['freeze_task'].":{$v['task_title']}" );
+				Keke::notify_user ( $_lang['freeze_notcie'], $_lang['you_pub_task'].':<a href=index.php?do=task&task_id=' . $v [task_id] . '>' . $v [task_title] . '</a>'.$_lang['has_freeze'], $v [uid] );
 			}
 		} elseif ($task_ids) { //单条冻结
 			$ids = $task_ids;
@@ -118,8 +118,8 @@ class keke_task_config {
 			$sql3 = sprintf ( "insert into %switkey_task_frost (frost_status,task_id,frost_time,admin_uid,admin_username) 
         					values(%d,%d,%d,%d,'%s')", TABLEPRE, $task_info ['task_status'], $task_info ['task_id'], time (), $admin_info ['uid'], $admin_info ['username'] );
 			dbfactory::execute ( $sql3 );
-			kekezu::admin_system_log ( $_lang['freeze_task'].":{$task_info['task_title']}" );
-			kekezu::notify_user ( $_lang['freeze_notcie'], $_lang['you_pub_task'].':<a href=index.php?do=task&task_id=' . $task_info [task_id] . '>' . $task_info [task_title] . '</a>'.$_lang['has_freeze'], $task_info [uid] );
+			Keke::admin_system_log ( $_lang['freeze_task'].":{$task_info['task_title']}" );
+			Keke::notify_user ( $_lang['freeze_notcie'], $_lang['you_pub_task'].':<a href=index.php?do=task&task_id=' . $task_info [task_id] . '>' . $task_info [task_title] . '</a>'.$_lang['has_freeze'], $task_info [uid] );
 		}
 		$sql = sprintf ( "update %switkey_task set task_status = '7' where task_id in(%s) and task_status   in (2,3,4,5)", TABLEPRE, $ids );
 		return dbfactory::execute ( $sql ); //执行冻结
@@ -144,8 +144,8 @@ class keke_task_config {
 				$sql2 = sprintf ( "update %switkey_task set task_status = %d,end_time='%s',sub_time='%s'  where task_id = '%d'", TABLEPRE, $frost_info ['frost_status'], $end_time,$sub_time, $v ['task_id'] );
 				dbfactory::execute ( $sql2 );
 				dbfactory::execute ( sprintf ( "delete from %switkey_task_frost where task_id = '%d'", TABLEPRE, $frost_info ['task_id'] ) );
-				kekezu::admin_system_log ( $_lang['unfreeze_task'].":{$v['task_title']}" );
-				kekezu::notify_user ( $_lang['task_unfreeze_notice'], $_lang['you_pub_task'].':<a href=index.php?do=task&task_id=' . $v [task_id] . '>' . $v [task_title] . '</a>'.$_lang['has_unfreeze'], $v [uid] );
+				Keke::admin_system_log ( $_lang['unfreeze_task'].":{$v['task_title']}" );
+				Keke::notify_user ( $_lang['task_unfreeze_notice'], $_lang['you_pub_task'].':<a href=index.php?do=task&task_id=' . $v [task_id] . '>' . $v [task_title] . '</a>'.$_lang['has_unfreeze'], $v [uid] );
 			}
 		} elseif (task_ids) { //单条恢复
 			$sql = sprintf ( "select task_id,task_title,task_status,end_time,sub_time,uid from %switkey_task where task_status=7 and task_id ='%d'", TABLEPRE, $task_ids );
@@ -158,8 +158,8 @@ class keke_task_config {
 			
 			dbfactory::execute ( $sql2 );
 			dbfactory::execute ( sprintf ( "delete from %switkey_task_frost where task_id = '%d'", TABLEPRE, $frost_info ['task_id'] ) );
-			kekezu::admin_system_log ( $_lang['unfreeze_task'].":{$task_info['task_title']}" );
-			kekezu::notify_user ( $_lang['task_unfreeze_notice'], $_lang['you_pub_task'].':<a href=index.php?do=task&task_id=' . $task_info [task_id] . '>' . $task_info [task_title] . '</a>'.$_lang['has_unfreeze'], $task_info [uid] );
+			Keke::admin_system_log ( $_lang['unfreeze_task'].":{$task_info['task_title']}" );
+			Keke::notify_user ( $_lang['task_unfreeze_notice'], $_lang['you_pub_task'].':<a href=index.php?do=task&task_id=' . $task_info [task_id] . '>' . $task_info [task_title] . '</a>'.$_lang['has_unfreeze'], $task_info [uid] );
 		}
 		return true;
 	}
@@ -173,8 +173,8 @@ class keke_task_config {
 			$ids = implode ( ',', $task_ids );
 			$task_arr = dbfactory::query ( sprintf ( "select task_id,task_title,task_status,uid,username,start_time,sub_time,end_time,payitem_time from %switkey_task where task_id in(%s) and task_status=1", TABLEPRE, $ids ) );
 			foreach ( $task_arr as $v ) {
-				kekezu::admin_system_log ( $_lang['audit_task'].":{$v['task_title']}".$_lang['pass'] );
-				kekezu::notify_user ( $_lang['task_audit_notice'], $_lang['you_pub_task'].':<a href=index.php?do=task&task_id=' . $v [task_id] . '>' . $v [task_title] . '</a>'.$_lang['audit_pass'], $v [uid] );
+				Keke::admin_system_log ( $_lang['audit_task'].":{$v['task_title']}".$_lang['pass'] );
+				Keke::notify_user ( $_lang['task_audit_notice'], $_lang['you_pub_task'].':<a href=index.php?do=task&task_id=' . $v [task_id] . '>' . $v [task_title] . '</a>'.$_lang['audit_pass'], $v [uid] );
 				//增值服务到期时间更新
 				$payitem_add_time =time()- $v['start_time'];//所需增加的时间
 				$payitem_arr = unserialize($v['payitem_time']);
@@ -188,7 +188,7 @@ class keke_task_config {
 				$res = dbfactory::execute ( sprintf ( "update %switkey_task set task_status=2 ,start_time='%d',sub_time='%d',end_time='%d',payitem_time='%s'  where task_id in(%s)", TABLEPRE,time(),$sub_time,$end_time,$payitem_time,$v['task_id']) );
 				
 				$feed_arr = array ("feed_username" => array ("content" =>$v['username'], "url" => "index.php?do=space&member_id={$v['uid']}" ), "action" => array ("content" => $_lang['pub_task'], "url" => "" ), "event" => array ("content" => "{$v['task_title']}", "url" => "index.php?do=task&task_id={$v['task_id']}" ) );
-				kekezu::save_feed ( $feed_arr,$v['uid'],$v['username'], 'pub_task',$v['task_id']);
+				Keke::save_feed ( $feed_arr,$v['uid'],$v['username'], 'pub_task',$v['task_id']);
 			}
 		} elseif ($task_ids) {
 				
@@ -211,11 +211,11 @@ class keke_task_config {
 		
 				$res = dbfactory::execute ($sql);
 			
-				kekezu::admin_system_log ( $_lang['audit_task'].":{$task_info['task_title']}".$_lang['pass'] );
-				kekezu::notify_user ( $_lang['task_audit_notice'], $_lang['you_pub_task'].':<a href=index.php?do=task&task_id=' . $task_info [task_id] . '>' . $task_info [task_title] . '</a>'.$_lang['audit_pass'], $task_info [uid] );
+				Keke::admin_system_log ( $_lang['audit_task'].":{$task_info['task_title']}".$_lang['pass'] );
+				Keke::notify_user ( $_lang['task_audit_notice'], $_lang['you_pub_task'].':<a href=index.php?do=task&task_id=' . $task_info [task_id] . '>' . $task_info [task_title] . '</a>'.$_lang['audit_pass'], $task_info [uid] );
 				
 				$feed_arr = array ("feed_username" => array ("content" =>$task_info['username'], "url" => "index.php?do=space&member_id={$task_info['uid']}" ), "action" => array ("content" => $_lang['pub_task'], "url" => "" ), "event" => array ("content" => "{$task_info['task_title']}", "url" => "index.php?do=task&task_id={$task_info['task_id']}" ) );
-				kekezu::save_feed ( $feed_arr,$task_info['uid'],$task_info['username'], 'pub_task',$task_info['task_id']);
+				Keke::save_feed ( $feed_arr,$task_info['uid'],$task_info['username'], 'pub_task',$task_info['task_id']);
 			}
 		}
 		return $res;
@@ -253,8 +253,8 @@ class keke_task_config {
 				$res = dbfactory::execute ( sprintf ( "update %switkey_task set task_status=10 where task_id ='%d' ", TABLEPRE, $v ['task_id'] ) );
 				
 				keke_finance_class::cash_in ( $v ['uid'], $v ['task_cash'], 0, 'task_fail', 'admin', 'task', $v ['task_id'] );
-				kekezu::admin_system_log ( $_lang['audit_task'].":{$v['task_title']}".$_lang['not_pass'] );
-				kekezu::notify_user ( $_lang['task_audit_notice'], $_lang['you_pub_task'].':<a href=index.php?do=task&task_id=' . $v [task_id] . '>' . $v [task_title] . '</a>'.$_lang['audit_not_pass'], $v [uid] );
+				Keke::admin_system_log ( $_lang['audit_task'].":{$v['task_title']}".$_lang['not_pass'] );
+				Keke::notify_user ( $_lang['task_audit_notice'], $_lang['you_pub_task'].':<a href=index.php?do=task&task_id=' . $v [task_id] . '>' . $v [task_title] . '</a>'.$_lang['audit_not_pass'], $v [uid] );
 			}
 		
 		} elseif ($task_ids) {
@@ -263,7 +263,7 @@ class keke_task_config {
 			if ($task_info) {
 				if($task_info['is_trust']&&$trust_response==false){
 					$trust_data['refund'] = array($ids,$task_info['task_cash']);
-					$jump_url = keke_trust_fac_class::trust_task_request("pt_refund",kekezu::$_model_list[$task_info['model_id']]['model_dir'],$ids,$task_info['trust_type'],$trust_data);
+					$jump_url = keke_trust_fac_class::trust_task_request("pt_refund",Keke::$_model_list[$task_info['model_id']]['model_dir'],$ids,$task_info['trust_type'],$trust_data);
 					header("Location:".$jump_url);die();	
 				}else{
 					$res = dbfactory::execute ( sprintf ( "update %switkey_task set task_status=10 where task_id  ='%d' ", TABLEPRE, $ids ) );
@@ -277,8 +277,8 @@ class keke_task_config {
 							keke_finance_class::cash_in ( $task_info ['uid'], $task_info ['task_cash'], 0, 'task_fail', 'admin', 'task', $task_info ['task_id'] );
 							break;
 					}
-					kekezu::admin_system_log ( $_lang['audit_task'].":{$task_info['task_title']}".$_lang['not_pass'] );
-					kekezu::notify_user ( $_lang['task_audit_notice'],  $_lang['you_pub_task'].':<a href=index.php?do=task&task_id=' . $task_info [task_id] . '>' . $task_info [task_title] . '</a>'.$_lang['audit_not_pass'], $task_info [uid] );
+					Keke::admin_system_log ( $_lang['audit_task'].":{$task_info['task_title']}".$_lang['not_pass'] );
+					Keke::notify_user ( $_lang['task_audit_notice'],  $_lang['you_pub_task'].':<a href=index.php?do=task&task_id=' . $task_info [task_id] . '>' . $task_info [task_title] . '</a>'.$_lang['audit_not_pass'], $task_info [uid] );
 				}
 			}
 		}
@@ -333,7 +333,7 @@ class keke_task_config {
 		dbfactory::execute(sprintf("delete from %switkey_file where task_id ='%d' ",TABLEPRE,$task_id));
 		//添加系统日志
 		$del_title = dbfactory::get_count(sprintf("select task_title from %switkey_task where task_id='%d'",TABLEPRE,$task_id));
-		kekezu::admin_system_log($_lang['delete_task'].":{$del_title}");
+		Keke::admin_system_log($_lang['delete_task'].":{$del_title}");
 	}
 	/***任务后台编辑动作***/
 	public static function can_operate($status) {
@@ -385,7 +385,7 @@ class keke_task_config {
 	 */
 	public static function delete_task_releate_item($model_id,$task_id,$is_array=false){
 		global $kekezu;
-			$model_code = kekezu::$_model_list[$model_id]['model_code'];
+			$model_code = Keke::$_model_list[$model_id]['model_code'];
 			$model_code=='tender'||$model_code=='dtender' and $tab_work = "task_bid" or $tab_work='task_work';
 			
 	}

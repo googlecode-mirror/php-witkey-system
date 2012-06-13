@@ -36,12 +36,12 @@ class keke_exception extends Exception {
 				}
 			}
 			$error = keke_exception::text ( $e );
-			if(is_object(kekezu::$_log)){
-				kekezu::$_log->add(log::ERROR, $error);
+			if(is_object(Keke::$_log)){
+				Keke::$_log->add(log::ERROR, $error);
 				$strace = keke_exception::text($e)."\n--\n" . $e->getTraceAsString();
-				kekezu::$_log->add(log::STRACE, $strace);
+				Keke::$_log->add(log::STRACE, $strace);
                 //生成日志文件
-				kekezu::$_log->write();
+				Keke::$_log->write();
 			}
 			$data ['type'] = $type;
 			$data ['code'] = $code;

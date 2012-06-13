@@ -1,6 +1,6 @@
 <?php
 // require_once 'acache_class.php';
-final class keke_cache_apc extends keke_cache_class {
+final class Keke_cache_apc extends Keke_cache_class {
 	function __construct() {
 		if(!extension_loaded('apc')) { 
 			throw new keke_exception( "apc_cache dosn't load ,please loaded!");

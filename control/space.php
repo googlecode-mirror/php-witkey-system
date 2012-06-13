@@ -11,7 +11,7 @@
 defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 $member_id = intval ( $member_id );
 keke_lang_class::package_init($do);
-$member_info = kekezu::get_user_info($member_id);
+$member_info = Keke::get_user_info($member_id);
 $e_route_arr = array ("index", "statistic", "goods","member","intr","case","task" );//只能是一维或者是索引数组,不然对首页的幻灯片的(显示,更改)有影响
 $e_banner_keys = array('index'=>'sy','intr'=>'gsjs','member'=>'qycy','task'=>'xgrw','goods'=>'spzs','case'=>'cgal','statistic'=>'gstj');
 $p_route_arr = array ("index", "info", "goods","statistic"); 
@@ -22,7 +22,7 @@ $p_route_arr = array ("index", "info", "goods","statistic");
  $p_shop_info = $shop_obj->query_keke_witkey_shop();
  if (!$p_shop_info){//空间还没有开通
  	$jump_url = $member_id == $uid ? 'index.php?do=user&view=setting&op=space' : 'index.php';
- 	kekezu::show_msg($_lang['this_user_no_open_space'], $jump_url);
+ 	Keke::show_msg($_lang['this_user_no_open_space'], $jump_url);
  }
  $p_shop_info = $p_shop_info['0'];
  $e_shop_info = $p_shop_info;
@@ -52,11 +52,11 @@ if ($ac=='up_pic'){
 	$ext = '.jpg,.jpeg,.png,.gif';
 	if ($sbt){
 		if ($p_shop_info['shop_type'] != 2 || $member_id!=$uid){//判断权限
-			kekezu::echojson($_lang['insufficient_permissions'],'0',array('type'=>$img_type,'file'=>$file_name));die();
+			Keke::echojson($_lang['insufficient_permissions'],'0',array('type'=>$img_type,'file'=>$file_name));die();
 		}
 		if ($view=='index' || !$view){//首页幻灯片
 			if (!isset($slide_index) || intval($slide_index)>4){
-				kekezu::echojson(intval($slide_index).$_lang['insufficient_permissions'],'0',array('type'=>$img_type,'file'=>$file_name));die();
+				Keke::echojson(intval($slide_index).$_lang['insufficient_permissions'],'0',array('type'=>$img_type,'file'=>$file_name));die();
 			}
 			unset($banner_arr); $banner_arr = unserialize($p_shop_info[$banner_column]);//如果这样的话,如果只更换一张图片,那么其他的(默认的)图片将无法显示
 			$banner_arr[intval($slide_index)] = $file_name;
@@ -66,7 +66,7 @@ if ($ac=='up_pic'){
 		$banner = serialize($banner_arr);
 		$sql = sprintf("update %switkey_shop set %s='%s' where shop_id=%d",TABLEPRE,$banner_column,$banner,$e_shop_info['shop_id']);
 		$result = dbfactory::execute($sql);
-		kekezu::echojson('',$result ? '1' : '0',array('type'=>$img_type,'file'=>$file_name));
+		Keke::echojson('',$result ? '1' : '0',array('type'=>$img_type,'file'=>$file_name));
 		die();
 	}else{
 		$title=$_lang['change_the_slide'];
@@ -87,7 +87,7 @@ if ($p_shop_info['shop_backstyle'] ){//空间背景图片的显示
 	$shop_backstyle = unserialize($p_shop_info['shop_backstyle']);
 	$shop_backstyle = implode(' ', array_values($shop_backstyle));//关联数组implode是?
 }
- $ip = kekezu::get_ip();
+ $ip = Keke::get_ip();
 
  if($_COOKIE['ip']!=1){
   	dbfactory::execute ( sprintf ( " update %switkey_shop set views=views+1 where uid=%d",TABLEPRE, $member_id));

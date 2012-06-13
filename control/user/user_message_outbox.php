@@ -20,15 +20,15 @@ if($ac=='del'&&$msg_id){
 	 $msg_m->setMsg_id($msg_id);
 	 $res = $msg_m->edit_keke_witkey_msg();
 	
-    $res and kekezu::show_msg( $_lang['delete_success'],$url_str."&page=$page",3,'','success') or kekezu::show_msg( $_lang['delete_fail'],$url_str."&page=$page",3,"","warning");
+    $res and Keke::show_msg( $_lang['delete_success'],$url_str."&page=$page",3,'','success') or Keke::show_msg( $_lang['delete_fail'],$url_str."&page=$page",3,"","warning");
 }elseif($ckb){
    $res = $msg_obj->del("msg_id", array_filter($ckb));
    if($ckb){
 	   	$sql = "update ".TABLEPRE."witkey_msg set msg_status=1 where msg_id in(".implode(',', $ckb).")";
 		$res = dbfactory::execute($sql);
-	    $res and kekezu::show_msg( $_lang['delete_selected_success'],$url_str."&page=$page",3,'','success') or kekezu::show_msg( $_lang['select_null_for_delete'],$url_str."&page=$page",3,"","warning") ;
+	    $res and Keke::show_msg( $_lang['delete_selected_success'],$url_str."&page=$page",3,'','success') or Keke::show_msg( $_lang['select_null_for_delete'],$url_str."&page=$page",3,"","warning") ;
    }else{
-    	kekezu::show_msg( $_lang['select_null_for_delete'],$url_str."&page=$page",3,"","warning") ;
+    	Keke::show_msg( $_lang['select_null_for_delete'],$url_str."&page=$page",3,"","warning") ;
    }
 }else{
 	$where.="and uid=$uid and msg_status!=1 ";

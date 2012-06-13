@@ -4,7 +4,7 @@
  */
 
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
-kekezu::admin_check_role(136);
+Keke::admin_check_role(136);
 
 include S_ROOT.'/keke_client/keke/config.php';
 $pagesize = isset($page_size) ? intval($page_size) : '10' ;
@@ -18,7 +18,7 @@ $pages = $ad_arr['pages'];
 $task_arr = $ad_arr['data'];
 
 $task_status = keke_global_class::get_taskstatus_desc();
-$indus_arr = kekezu::$_indus_arr;
+$indus_arr = Keke::$_indus_arr;
 
 
 
@@ -29,7 +29,7 @@ function task_time_desc($model_id, $status, $end_time) {
 	//var_dump($end_time_arr[$model_id][$status]['time']);
 	$now_time = time ();
 	$desc_time = $end_time - $now_time;
-	$sy_time = kekezu::time2Units ( $desc_time );
+	$sy_time = Keke::time2Units ( $desc_time );
 	if (! $end_time) {
 		return $end_time_arr [$model_id] [$status] ['desc'];
 	}

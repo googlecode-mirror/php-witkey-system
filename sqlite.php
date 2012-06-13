@@ -9,7 +9,7 @@ if(!$res=$sqlite->get('test')){
 	$sqlite->set('test', 'ÖĞÎÄ¼ş²âÊÔ',20);
 }
 var_dump($res);
-var_dump(kekezu::execute_time());
+var_dump(Keke::execute_time());
 echo time();
 
 

@@ -20,8 +20,8 @@ $page_title = $_lang ['task_list'] . '-' . $_K ['html_title'];
 keke_lang_class::package_init ( "task" );
 keke_lang_class::loadlang ( $do );
 $feed_time = time () - 3600 * 24;
-$dynamic_arr = kekezu::get_feed ( " feedtype='pub_task' or feedtype='work_accept' and $feed_time>feed_time ", "feed_time desc", 10 ); // 动态信息
-$cash_cove_arr = kekezu::get_table_data ( '*', 'witkey_task_cash_cove', '', '', '', '', 'cash_rule_id', null );
+$dynamic_arr = Keke::get_feed ( " feedtype='pub_task' or feedtype='work_accept' and $feed_time>feed_time ", "feed_time desc", 10 ); // 动态信息
+$cash_cove_arr = Keke::get_table_data ( '*', 'witkey_task_cash_cove', '', '', '', '', 'cash_rule_id', null );
 $website_url = "index.php?" . $_SERVER ['QUERY_STRING']; // 当前连接
 $task_cash_arr = keke_search_class::get_cash_cove (); // 任务赏金数组
 $end_time_arr = keke_global_class::get_taskstatus_desc ();
@@ -29,7 +29,7 @@ $end_time_arr = keke_global_class::get_taskstatus_desc ();
 $where_arr = get_where_arr ();
 if (isset ( $search_key )) { 
 	$search_key = htmlspecialchars ( $search_key );
-	$search_key = kekezu::escape ( $search_key );
+	$search_key = Keke::escape ( $search_key );
 }
 // 获取数组
 
@@ -86,7 +86,7 @@ isset($cookie_arr) and $cookie_arr = str_replace ( "&hid_save_cookie=1", "", $co
 // 清空历史记录
 if (isset($hid_del_cookie)) {
 	$res = setcookie ( 'save_cookie', '' );
-	$res and kekezu::echojson ( '', 1 );
+	$res and Keke::echojson ( '', 1 );
 	die ();
 }
 // 获取任务金额条件
@@ -215,7 +215,7 @@ function get_where($path) {
  */
 function get_where_arr() {
 	global $model_list, $_lang,$search_key;
-	$task_indus_type = kekezu::get_industry ( 0 ); // 获取行业分类
+	$task_indus_type = Keke::get_industry ( 0 ); // 获取行业分类
 
 	foreach ( $model_list as $v ) {
 		if ($v ['model_id'] != 6 && $v ['model_id'] != 7) {
@@ -338,15 +338,15 @@ function get_wbtask_info($path) {
 	$result = array ();
 	global $kekezu;
 	
-	if (kekezu::$_model_list ['8'] ['model_status'] && kekezu::$_model_list ['9'] ['model_status']) {
+	if (Keke::$_model_list ['8'] ['model_status'] && Keke::$_model_list ['9'] ['model_status']) {
 		$sql = "SELECT d.*,a.task_id, concat(IFNULL(b.wb_platform,''),ifnull(c.wb_platform,'')) as platform  FROM `%switkey_task` a left join %switkey_task_wbzf b on  a.task_id = b.task_id LEFT JOIN  %switkey_task_wbdj c on a.task_id = c.task_id  
 	  left join " . TABLEPRE . "witkey_task_cash_cove d on a.task_cash_coverage=d.cash_rule_id
 	  where model_id =8 or model_id =9 and %s";
-	} elseif (kekezu::$_model_list ['8'] ['model_status']) {
+	} elseif (Keke::$_model_list ['8'] ['model_status']) {
 		$sql = "SELECT d.*,a.task_id, IFNULL(b.wb_platform,'') as platform  FROM `%switkey_task` a left join %switkey_task_wbzf b on  a.task_id = b.task_id  
 		left join " . TABLEPRE . "witkey_task_cash_cove d on a.task_cash_coverage=d.cash_rule_id
 	  where model_id =8  and %s";
-	} elseif (kekezu::$_model_list ['9'] ['model_status']) {
+	} elseif (Keke::$_model_list ['9'] ['model_status']) {
 		$sql = "SELECT d.*,a.task_id, ifnull(c.wb_platform,'') as platform  FROM `%switkey_task` a LEFT JOIN  %switkey_task_wbdj c on a.task_id = c.task_id 
 		left join " . TABLEPRE . "witkey_task_cash_cove d on a.task_cash_coverage=d.cash_rule_id
 	   where model_id =9 and %s";
@@ -372,4 +372,4 @@ function get_model() {
 	return $res;
 }
 
-require kekezu::$_tpl_obj->template ( $do );
+require Keke::$_tpl_obj->template ( $do );

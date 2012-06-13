@@ -146,7 +146,7 @@ class sreward_task_class extends keke_task_class {
 		}
 		$where .= "   order by (CASE WHEN  a.work_status!=0 THEN work_id ELSE 0 END) desc,work_id asc ";
 		if (! empty ( $p )) {
-			$page_obj = kekezu::$_page_obj;
+			$page_obj = Keke::$_page_obj;
 			$page_obj->setAjax ( 1 );
 			$page_obj->setAjaxDom ( "gj_summery" );
 			$count = intval ( dbfactory::get_count ( $count_sql . $where ) );
@@ -155,7 +155,7 @@ class sreward_task_class extends keke_task_class {
 			$pages ['count'] = $count;
 		}
 		$work_info = dbfactory::query ( $sql . $where );
-		$work_info = kekezu::get_arr_by_key($work_info,'work_id');
+		$work_info = Keke::get_arr_by_key($work_info,'work_id');
 		$work_arr ['work_info'] = $work_info;
 		$work_arr ['pages'] = $pages;
 		$work_arr ['mark']  = $this->has_mark(implode(',',array_keys($work_info)));
@@ -183,7 +183,7 @@ class sreward_task_class extends keke_task_class {
 			$work_obj->setWork_status ( 0 );
 			$work_obj->setWork_title ( $this->_task_title . $_lang['de_work'] );
 			$work_obj->setHide_work ( intval ( $hidework ) );
-			CHARSET == 'gbk' and $work_desc = kekezu::utftogbk ( $work_desc );
+			CHARSET == 'gbk' and $work_desc = Keke::utftogbk ( $work_desc );
 			$work_obj->setWork_desc ( $work_desc );
 			$work_obj->setWork_time ( time () );
 			
@@ -209,9 +209,9 @@ class sreward_task_class extends keke_task_class {
 				$w_notice = array ($_lang['user'] => $_lang['you'], $_lang['call'] => $this->_gusername, $_lang['task_title'] => $notice_url );
 				$this->notify_user ( "task_hand", $_lang['task_hand'], $g_notice ); //通知雇主
 				$this->notify_user ( "task_hand", $_lang['task_hand'], $w_notice, 1 ); //通知威客
-				kekezu::keke_show_msg ( $url, $_lang['congratulate_you_hand_work_success'], "", $output );
+				Keke::keke_show_msg ( $url, $_lang['congratulate_you_hand_work_success'], "", $output );
 			} else {
-				kekezu::keke_show_msg ( $url, $_lang['pity_hand_work_fail'], "error", $output );
+				Keke::keke_show_msg ( $url, $_lang['pity_hand_work_fail'], "error", $output );
 			}
 		}
 	}
@@ -225,14 +225,14 @@ class sreward_task_class extends keke_task_class {
 	public function work_choose($work_id, $to_status, $url = '', $output = 'normal', $trust_response = false) {
 		global $kekezu, $_K;
 		global $_lang;
-		kekezu::check_login ( $url, $output ); //检测登录
+		Keke::check_login ( $url, $output ); //检测登录
 		$this->check_if_operated ( $work_id, $to_status, $url, $output ); //检测是否可选/是否中标
 		$status_arr = $this->get_work_status ();
 		
 		$task_info = $this->_task_info;
 		if ($to_status == 4 && $this->_trust_mode && $trust_response == false) { //担保模式
 			$jump_url = keke_trust_fac_class::trust_task_request ( "confirm", 'sreward', $this->_task_id, $task_info ['trust_type'], array ("work_id" => $work_id ) );
-			kekezu::keke_show_msg ( $url, $jump_url, "", $output );
+			Keke::keke_show_msg ( $url, $jump_url, "", $output );
 		} else {
 			$work_info = $this->get_task_work ( $work_id ); //稿件信息
 			if ($to_status == 4) { //中标提示用户
@@ -244,12 +244,12 @@ class sreward_task_class extends keke_task_class {
 				$this->set_task_status ( '5' ); //*更改任务状态为公示**/
 				$this->set_task_sp_end_time ();
 				$feed_arr = array ("feed_username" => array ("content" => $work_info['username'], "url" => "index.php?do=space&member_id={$work_info['uid']} " ), "action" => array ("content" => "成功中标了", "url" => "" ), "event" => array ("content" => "$this->_task_title", "url" => "index.php?do=task&task_id=$this->_task_id" ) );
-				kekezu::save_feed ( $feed_arr, $work_info ['uid'], $work_info ['username'], 'work_accept', $this->_task_id );
+				Keke::save_feed ( $feed_arr, $work_info ['uid'], $work_info ['username'], 'work_accept', $this->_task_id );
 				$this->plus_accepted_num ( $work_info ['uid'] );
 				/** 威客推广产生*/
 				$kekezu->init_prom ();
-				if (kekezu::$_prom_obj->is_meet_requirement ( "bid_task", $this->_task_id )) {
-					kekezu::$_prom_obj->create_prom_event ( "bid_task", $work_info ['uid'], $this->_task_id, $this->_task_info ['task_cash'] );
+				if (Keke::$_prom_obj->is_meet_requirement ( "bid_task", $this->_task_id )) {
+					Keke::$_prom_obj->create_prom_event ( "bid_task", $work_info ['uid'], $this->_task_id, $this->_task_info ['task_cash'] );
 				}
 			}
 			$res = $this->set_work_status ( $work_id, $to_status );
@@ -257,9 +257,9 @@ class sreward_task_class extends keke_task_class {
 			$v = array ($_lang['action'] => $status_arr [$to_status], $_lang['task_id'] => $this->_task_id, $_lang['task_title'] => $notify_url );
 			$this->notify_user ( "task_bid", $_lang['work'] . $status_arr [$to_status], $v, 1, $work_info ['uid'] ); //通知威客
 			if ($res) {
-				kekezu::keke_show_msg ( $url, $_lang['work'] . $status_arr [$to_status] . $_lang['set_success'], "", $output );
+				Keke::keke_show_msg ( $url, $_lang['work'] . $status_arr [$to_status] . $_lang['set_success'], "", $output );
 			} else {
-				kekezu::keke_show_msg ( $url, $_lang['work'] . $status_arr [$to_status] . $_lang['set_fail'], "error", $output );
+				Keke::keke_show_msg ( $url, $_lang['work'] . $status_arr [$to_status] . $_lang['set_fail'], "error", $output );
 			}
 		}
 	}
@@ -394,14 +394,14 @@ class sreward_task_class extends keke_task_class {
 			$vote_obj->setWork_id ( $work_id );
 			$vote_obj->setUid ( $this->_uid );
 			$vote_obj->setUsername ( $this->_username );
-			$vote_obj->setVote_ip ( kekezu::get_ip () );
+			$vote_obj->setVote_ip ( Keke::get_ip () );
 			$vote_obj->setVote_time ( time () );
 			$vote_id = $vote_obj->create_keke_witkey_vote ();
 			if ($vote_id) {
 				dbfactory::execute ( sprintf ( " update %switkey_task_work set vote_num=vote_num+1 where work_id ='%d'", TABLEPRE, $work_id ) );
-				kekezu::keke_show_msg ( $url, $_lang['vote_success'], "", $output );
+				Keke::keke_show_msg ( $url, $_lang['vote_success'], "", $output );
 			} else {
-				kekezu::keke_show_msg ( $url, $_lang['vote_fail'], "error", $output );
+				Keke::keke_show_msg ( $url, $_lang['vote_fail'], "error", $output );
 			}
 		}
 	}
@@ -456,8 +456,8 @@ class sreward_task_class extends keke_task_class {
 			if ($res) {
 				/** 终止雇主的此次推广事件*/
 				$kekezu->init_prom ();
-				$p_event = kekezu::$_prom_obj->get_prom_event ( $this->_task_id, $this->_guid, "pub_task" );
-				kekezu::$_prom_obj->set_prom_event_status ( $p_event ['parent_uid'], $this->_gusername, $p_event ['event_id'], '3' );
+				$p_event = Keke::$_prom_obj->get_prom_event ( $this->_task_id, $this->_guid, "pub_task" );
+				Keke::$_prom_obj->set_prom_event_status ( $p_event ['parent_uid'], $this->_gusername, $p_event ['event_id'], '3' );
 				switch ($this->_trust_mode) {
 					case "0" :
 						$this->set_task_status ( 9 ); //任务失败
@@ -468,7 +468,7 @@ class sreward_task_class extends keke_task_class {
 						break;
 					case "1" :
 						$this->set_task_status ( 12 ); //担保退款成功
-						kekezu::admin_show_msg ( $_lang['operate_notice'], "index.php?do=model&view=list&model_id=" . $this->_mode_id, 3, "担保退款处理成功" ); //担保处理完成
+						Keke::admin_show_msg ( $_lang['operate_notice'], "index.php?do=model&view=list&model_id=" . $this->_mode_id, 3, "担保退款处理成功" ); //担保处理完成
 						break;
 				}
 			}
@@ -492,7 +492,7 @@ class sreward_task_class extends keke_task_class {
 						break;
 					case "1" : //担保。直接失败
 						$this->set_task_status ( 9 );
-						kekezu::notify_user ( $_lang['task_fail_notice'], $_lang['your_jh'] . $this->_task_id . $_lang['choose_no_body_hand_work'], $this->_guid );
+						Keke::notify_user ( $_lang['task_fail_notice'], $_lang['your_jh'] . $this->_task_id . $_lang['choose_no_body_hand_work'], $this->_guid );
 						break;
 				}
 			}
@@ -522,15 +522,15 @@ class sreward_task_class extends keke_task_class {
 				/** 威客上线推广产生*/
 				$kekezu->init_prom ();
 				
-				if (kekezu::$_prom_obj->is_meet_requirement ( "bid_task", $this->_task_id )) {
-					kekezu::$_prom_obj->create_prom_event ( "bid_task", $bid_work ['uid'], $this->_task_id, $this->_task_info ['task_cash'] );
+				if (Keke::$_prom_obj->is_meet_requirement ( "bid_task", $this->_task_id )) {
+					Keke::$_prom_obj->create_prom_event ( "bid_task", $bid_work ['uid'], $this->_task_id, $this->_task_info ['task_cash'] );
 				}
 				$url = '<a href =\"' . $_K['siteurl'] . '/index.php?do=task&task_id=' . $this->_task_id . '\" target=\"_blank\" >' . $this->_task_title . '</a>';
 				$v = array ($_lang['task_id'] => $this->_task_id, $_lang['task_title'] => $url );
 				$this->notify_user ( "task_bid", $_lang['work_vote_bid'], $v, 1, $bid_work ['uid'] ); //通知威客
 				//写入feed表
 				$feed_arr = array ("feed_username" => array ("content" => $bid_work['username'], "url" => "index.php?do=space&member_id={$bid_work['uid']}" ), "action" => array ("content" => "成功中标了", "url" => "" ), "event" => array ("content" => "$this->_task_title ", "url" => "index.php?do=task&task_id=$this->_task_id" ) );
-				kekezu::save_feed ( $feed_arr, $bid_work['uid'], $bid_work['username'], 'work_accept', $this->_task_id );
+				Keke::save_feed ( $feed_arr, $bid_work['uid'], $bid_work['username'], 'work_accept', $this->_task_id );
 			} else {
 				/** 没人投，将入围稿件更改为不合格 .任务退款**/
 				dbfactory::execute ( sprintf ( " update %switkey_task_work set work_status='7' where work_status = '5' and task_id = '%d'", TABLEPRE, $this->_task_id ) );
@@ -540,7 +540,7 @@ class sreward_task_class extends keke_task_class {
 						break;
 					case "1" : //担保。直接失败
 						$this->set_task_status ( 9 );
-						kekezu::notify_user ( $_lang['task_fail_notice'], $_lang['your_r'] . $this->_task_id . "投票期无人进行投票、任务已失败、由于是担保任务，请等待管理员解冻任务款项。", $this->_guid );
+						Keke::notify_user ( $_lang['task_fail_notice'], $_lang['your_r'] . $this->_task_id . "投票期无人进行投票、任务已失败、由于是担保任务，请等待管理员解冻任务款项。", $this->_guid );
 						break;
 				}
 			}
@@ -567,19 +567,19 @@ class sreward_task_class extends keke_task_class {
 					/** 威客上线推广产生*/
 					$kekezu->init_prom ();
 					
-					if (kekezu::$_prom_obj->is_meet_requirement ( "bid_task", $this->_task_id )) {
-						kekezu::$_prom_obj->create_prom_event ( "bid_task", $rw_work ['uid'], $this->_task_id, $this->_task_info ['task_cash'] );
+					if (Keke::$_prom_obj->is_meet_requirement ( "bid_task", $this->_task_id )) {
+						Keke::$_prom_obj->create_prom_event ( "bid_task", $rw_work ['uid'], $this->_task_id, $this->_task_info ['task_cash'] );
 					}
 					$this->set_task_status ( 5 ); //把任务状态设为公示
 					$this->set_task_sp_end_time ( "notice_period" ); //设置公示时间
 					/*将任务标识为自动选标任务*/
 					dbfactory::execute ( sprintf ( " update %switkey_task set is_auto_bid='1' where task_id='%d'", TABLEPRE, $this->_task_id ) );
 					//发送站内短信给雇主
-					kekezu::notify_user ( $_lang['task_timeout'], $_lang['your_task'] . '<a href="index.php?do=task&task_id=' . $this->_task_id . '">' . $this->_task_title . '</a>' . $_lang['timeout_sys_default_in_and_bid'], $this->_guid, $this->_gusername );
+					Keke::notify_user ( $_lang['task_timeout'], $_lang['your_task'] . '<a href="index.php?do=task&task_id=' . $this->_task_id . '">' . $this->_task_title . '</a>' . $_lang['timeout_sys_default_in_and_bid'], $this->_guid, $this->_gusername );
 				} elseif ($rw_count > 1) { //多个入围
 					$this->set_task_status ( 4 ); //将任务状态设为投票中
 					$this->set_task_sp_end_time ( "vote_period" ); //设置投票结束时间
-					kekezu::notify_user ( $_lang['task_timeout'], $_lang['your_task'] . '<a href="index.php?do=task&task_id=' . $this->_task_id . '">' . $this->_task_title . '</a>' . $_lang['timeout_sys_default_vote_status'], $this->_guid, $this->_gusername );
+					Keke::notify_user ( $_lang['task_timeout'], $_lang['your_task'] . '<a href="index.php?do=task&task_id=' . $this->_task_id . '">' . $this->_task_title . '</a>' . $_lang['timeout_sys_default_vote_status'], $this->_guid, $this->_gusername );
 				} else { //无入围，进入自动选稿
 					$this->auto_choose (); //自动选稿
 				}
@@ -590,7 +590,7 @@ class sreward_task_class extends keke_task_class {
 						break;
 					case "1" : //担保。直接失败
 						$this->set_task_status ( 9 );
-						kekezu::notify_user ( $_lang['task_fail_notice'], $_lang['your_r'] . $this->_task_id . $_lang['choose_no_body_hand_work'], $this->_guid );
+						Keke::notify_user ( $_lang['task_fail_notice'], $_lang['your_r'] . $this->_task_id . $_lang['choose_no_body_hand_work'], $this->_guid );
 						break;
 				}
 			}
@@ -652,7 +652,7 @@ class sreward_task_class extends keke_task_class {
 						$single_cash = number_format ( $task_info ['task_cash'] / $split_num, 2 ); //单人分配金额
 						if ($split_num) {
 							$kekezu->init_prom ();
-							$prom_obj = kekezu::$_prom_obj;
+							$prom_obj = Keke::$_prom_obj;
 							
 							$site_profit = $single_cash * $this->_profit_rate / 100; //网站利润
 							$cash = $single_cash - $site_profit; //每人可分实际金额
@@ -700,14 +700,14 @@ class sreward_task_class extends keke_task_class {
 				$union_obj = new keke_union_class ( $this->_task_id );
 				$union_obj->change_status ( 'end' );
 			}
-			kekezu::notify_user ( $_lang['aito_choose_work_notice'], $_lang['your_r'] . $this->_task_id . $_lang['task_timeout_and_sys_auto_choose_work'], $this->_guid );
+			Keke::notify_user ( $_lang['aito_choose_work_notice'], $_lang['your_r'] . $this->_task_id . $_lang['task_timeout_and_sys_auto_choose_work'], $this->_guid );
 		} else { //任务失败
 			$this->set_task_status ( 9 );
 			if ($this->_task_info ['task_union'] == '1') { //如果是联盟任务,更改任务状态
 				$union_obj = new keke_union_class ( $this->_task_id );
 				$union_obj->change_status ( 'failure' );
 			}
-			kekezu::notify_user ( $_lang['task_fail_notice'], $_lang['your_r'] . $this->_task_id . $_lang['task_fail_and_wait_amin_unfreeze_task'], $this->_guid );
+			Keke::notify_user ( $_lang['task_fail_notice'], $_lang['your_r'] . $this->_task_id . $_lang['task_fail_and_wait_amin_unfreeze_task'], $this->_guid );
 		}
 	}
 	/**
@@ -746,16 +746,16 @@ class sreward_task_class extends keke_task_class {
 			$work_status = dbfactory::get_count ( sprintf ( " select work_status from %switkey_task_work where work_id='%d'
 					 and uid='%d'", TABLEPRE, $work_id, $this->_uid ) );
 			if ($work_status == '8') { //不可选标不能更改状态
-				kekezu::keke_show_msg ( $url, $_lang['the_work_is_not_choose_and_not_choose_the_work'], "error", $output );
+				Keke::keke_show_msg ( $url, $_lang['the_work_is_not_choose_and_not_choose_the_work'], "error", $output );
 			} else {
 				switch ($to_status) {
 					case "4" : //中标时检查是否有中标
 						$has_bidwork = dbfactory::get_count ( sprintf ( " select count(work_id) from %switkey_task_work where work_status='4' and task_id = '%d' ", TABLEPRE, $this->_task_id ) );
 						if ($has_bidwork) {
-							kekezu::keke_show_msg ( $url, $_lang['task_have_bid_work_and_not_choose_the_work'], "error", $output );
+							Keke::keke_show_msg ( $url, $_lang['task_have_bid_work_and_not_choose_the_work'], "error", $output );
 						} else {
 							if ($work_status == '7') { //淘汰(不可选标)不能改为中标
-								kekezu::keke_show_msg ( $url, $_lang['the_work_is_out_and_not_choose_the_work'], "error", $output );
+								Keke::keke_show_msg ( $url, $_lang['the_work_is_out_and_not_choose_the_work'], "error", $output );
 							} else {
 								return true;
 							}
@@ -764,13 +764,13 @@ class sreward_task_class extends keke_task_class {
 					case "5" : //中标、淘汰、入围稿件不能更改为入围
 						switch ($work_status) {
 							case "4" :
-								kekezu::keke_show_msg ( $url, $_lang['the_work_haved_bid_and_not_change_stutus_to_in'], "error", $output );
+								Keke::keke_show_msg ( $url, $_lang['the_work_haved_bid_and_not_change_stutus_to_in'], "error", $output );
 								break;
 							case "5" :
-								kekezu::keke_show_msg ( $url, $_lang['the_work_haved_in_and_not_repeat'], "error", $output );
+								Keke::keke_show_msg ( $url, $_lang['the_work_haved_in_and_not_repeat'], "error", $output );
 								break;
 							case "7" :
-								kekezu::keke_show_msg ( $url, $_lang['the_work_is_bid_and_not_change_status_to_in'], "error", $output );
+								Keke::keke_show_msg ( $url, $_lang['the_work_is_bid_and_not_change_status_to_in'], "error", $output );
 								break;
 						}
 						return true;
@@ -778,10 +778,10 @@ class sreward_task_class extends keke_task_class {
 					case "7" : //中标、淘汰稿件无法变更为淘汰。入围稿件可以变更为淘汰
 						switch ($work_status) {
 							case "4" :
-								kekezu::keke_show_msg ( $url, $_lang['the_work_is_bid_and_not_change_status'], "error", $output );
+								Keke::keke_show_msg ( $url, $_lang['the_work_is_bid_and_not_change_status'], "error", $output );
 								break;
 							case "7" :
-								kekezu::keke_show_msg ( $url, $_lang['the_work_is_out_and_not_repeat'], "error", $output );
+								Keke::keke_show_msg ( $url, $_lang['the_work_is_out_and_not_repeat'], "error", $output );
 								break;
 						}
 						return true;
@@ -789,7 +789,7 @@ class sreward_task_class extends keke_task_class {
 				}
 			}
 		} else { //不是选稿期
-			kekezu::keke_show_msg ( $url, $_lang['now_status_can_not_choose'], "error", $output );
+			Keke::keke_show_msg ( $url, $_lang['now_status_can_not_choose'], "error", $output );
 		}
 	}
 	/**
@@ -799,10 +799,10 @@ class sreward_task_class extends keke_task_class {
 	public function check_start_vote($url = '', $output = 'normal') {
 		global $_lang;
 		if ($this->_uid != $this->_guid) { //非雇主无法发起
-			kekezu::keke_show_msg ( $url, $_lang['start_vote_fail_and_employer_can_vote'], "error", $output );
+			Keke::keke_show_msg ( $url, $_lang['start_vote_fail_and_employer_can_vote'], "error", $output );
 		} else {
 			if (! $this->_process_can ['task_vote']) {
-				kekezu::keke_show_msg ( $url, $_lang['work_num_limit_notice'], "error", $output );
+				Keke::keke_show_msg ( $url, $_lang['work_num_limit_notice'], "error", $output );
 			} else {
 				return true;
 			}
@@ -816,9 +816,9 @@ class sreward_task_class extends keke_task_class {
 	public function check_if_voted($work_id, $url = '', $output = 'normal') {
 		global $_lang;
 		$vote_count = dbfactory::get_count ( sprintf ( " select count(vote_id) from %switkey_vote where
-		 work_id='%d' and uid='%d' and vote_ip='%s'", TABLEPRE, $work_id, $this->_uid, kekezu::get_ip () ) );
+		 work_id='%d' and uid='%d' and vote_ip='%s'", TABLEPRE, $work_id, $this->_uid, Keke::get_ip () ) );
 		if ($vote_count > 0) {
-			kekezu::keke_show_msg ( $url, $_lang['you_have_vote'], "error", $output );
+			Keke::keke_show_msg ( $url, $_lang['you_have_vote'], "error", $output );
 		} else {
 			return true;
 		}
@@ -890,8 +890,8 @@ class sreward_task_class extends keke_task_class {
 				case "1" : //支付成功
 					/** 雇主推广事件产生*/
 					$kekezu->init_prom ();
-					if (kekezu::$_prom_obj->is_meet_requirement ( "pub_task", $this->_task_id )) {
-						kekezu::$_prom_obj->create_prom_event ( "pub_task", $this->_guid, $task_info ['task_id'], $task_info ['task_cash'] );
+					if (Keke::$_prom_obj->is_meet_requirement ( "pub_task", $this->_task_id )) {
+						Keke::$_prom_obj->create_prom_event ( "pub_task", $this->_guid, $task_info ['task_id'], $task_info ['task_cash'] );
 					} //更改订单状态到已付款状态
 					dbfactory::updatetable ( TABLEPRE . "witkey_order", array ("order_status" => "ok" ), array ("order_id" => "$order_id" ) );
 					if ($order_amount < $task_config ['audit_cash'] && ! $this->_trust_mode) { //如果订单的金额比发布任务时配置的审核金额要小

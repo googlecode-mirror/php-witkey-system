@@ -48,9 +48,9 @@ class keke_ajax_upload_class {
 	function __construct($query_string) {
 		global $kekezu;
 		$this->_ext_url = explode ( "|", UPLOAD_ALLOWEXT );
-		$this->_uid = kekezu::$_uid;
-		$this->_username = kekezu::$_username;
-		$this->_max_filesize = kekezu::$_sys_config ['max_size'];
+		$this->_uid = Keke::$_uid;
+		$this->_username = Keke::$_username;
+		$this->_max_filesize = Keke::$_sys_config ['max_size'];
 		$this->file_info_init ( $query_string );
 	}
 	public function file_info_init($query_string) {
@@ -80,8 +80,8 @@ class keke_ajax_upload_class {
 				$w = $img_info [0];
 				if ($this->_img_width != $w) {
 					$err = $_lang ['upload_fail_picture_width_is'] . $w . "," . $_lang ['picture_limit_width'] . $this->_img_width . "," . $_lang ['picture_adjust_and_then_upload'];
-					$_K ['charset'] == 'gbk' and $err = kekezu::gbktoutf ( $err );
-					echo kekezu::json_encode_k ( array ('err' => $err, 'msg' => 'error' ) );
+					$_K ['charset'] == 'gbk' and $err = Keke::gbktoutf ( $err );
+					echo Keke::json_encode_k ( array ('err' => $err, 'msg' => 'error' ) );
 					die ();
 				}
 			}
@@ -92,8 +92,8 @@ class keke_ajax_upload_class {
 				$h = $img_info [1];
 				if ($this->_img_height != $h) {
 					$err = $_lang ['upload_fail_picture_heigth'] . $h . "," . $_lang ['picture_limit_height'] . $this->_img_height . "," . $_lang ['picture_adjust_and_then_upload'];
-					$_K ['charset'] == 'gbk' and $err = kekezu::gbktoutf ( $err );
-					echo kekezu::json_encode_k ( array ('err' => $err, 'msg' => 'error' ) );
+					$_K ['charset'] == 'gbk' and $err = Keke::gbktoutf ( $err );
+					echo Keke::json_encode_k ( array ('err' => $err, 'msg' => 'error' ) );
 					die ();
 				}
 			}
@@ -116,7 +116,7 @@ class keke_ajax_upload_class {
 				$file_pic = 'data/uploads/sys/' . $this->_task_id . '/' . $savename [0] [saveName];
 			}
 			$real_file = $savename [0] [name];
-			($this->_flash&&CHARSET == 'gbk') && $real_file = kekezu::utftogbk ( $real_file );
+			($this->_flash&&CHARSET == 'gbk') && $real_file = Keke::utftogbk ( $real_file );
 			if ($this->_file_type == 'link') {
 				$msg = array ('url' => $file_pic . ',' . $real_file, 'localname' => $real_file, 'id' => '1', 'up_file' => $file_pic );
 			} else if ($this->_file_type == 'att' || $this->_file_type == 'sys') {
@@ -141,8 +141,8 @@ class keke_ajax_upload_class {
 			$err = $savename;
 			$msg = $savename;
 		}
-		$_K ['charset'] != 'utf-8' and $msg = kekezu::gbktoutf ( $msg );
-		echo kekezu::json_encode_k ( array ('err' => $err, 'msg' => $msg, 'fid' => $res ) );
+		$_K ['charset'] != 'utf-8' and $msg = Keke::gbktoutf ( $msg );
+		echo Keke::json_encode_k ( array ('err' => $err, 'msg' => $msg, 'fid' => $res ) );
 		die ();
 	}
 	
@@ -156,13 +156,13 @@ class keke_ajax_upload_class {
 			$echo_str = 'data/uploads/' . UPLOAD_RULE . $savename [0] ['saveName'];
 			$filename = $savename [0] ['saveName'];
 			$real_file = $savename [0] [name];
-			($this->_flash&&CHARSET == 'gbk') && $real_file = kekezu::utftogbk ( $real_file );
+			($this->_flash&&CHARSET == 'gbk') && $real_file = Keke::utftogbk ( $real_file );
 			$err = '';
 		} else {
 			$err = $savename;
 		}
 		$fid = time ();
-		echo kekezu::json_encode_k ( array ('err' => $err, 'path' => $echo_str, 'filename' => $filename, 'localname' => $real_file, 'fid' => $fid ) );
+		echo Keke::json_encode_k ( array ('err' => $err, 'path' => $echo_str, 'filename' => $filename, 'localname' => $real_file, 'fid' => $fid ) );
 		die ();
 	}
 	//return three pic size:100*100,210*210,
@@ -178,7 +178,7 @@ class keke_ajax_upload_class {
 		if (! filepath) {
 			return false;
 		}
-		CHARSET == 'gbk' && $real_file = kekezu::utftogbk ( $real_file );
+		CHARSET == 'gbk' && $real_file = Keke::utftogbk ( $real_file );
 		//存放到数据库
 		$file_obj = new Keke_witkey_file_class ();
 		$file_obj->setUid ( $this->_uid );
@@ -194,9 +194,9 @@ class keke_ajax_upload_class {
 		$size_b = array (210, 210 );
 		$result = keke_img_class::resize ( $filepath, $size_a, $size_b, true ); //缩放后进行裁切
 		$msg = array ('path' => $filepath, 'filename' => $filename, 'localname' => $real_file, 'fid' => $fid, 'size' => $size_a [0] . ',' . $size_b [0] );
-		($this->_flash&&CHARSET == 'gbk') && $msg = kekezu::gbktoutf ( $msg );
-		$_K ['charset'] != 'utf-8' and $msg = kekezu::gbktoutf ( $msg );
-		echo kekezu::json_encode_k ( $msg );
+		($this->_flash&&CHARSET == 'gbk') && $msg = Keke::gbktoutf ( $msg );
+		$_K ['charset'] != 'utf-8' and $msg = Keke::gbktoutf ( $msg );
+		echo Keke::json_encode_k ( $msg );
 		die ();
 	}
 }

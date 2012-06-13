@@ -68,7 +68,7 @@ $pars = array (
 $data = http_build_query ( $pars );
 
 $lic = $_K ['ci'];
-$str_lic = kekezu::set_star($lic,5,5,'3','*');
+$str_lic = Keke::set_star($lic,5,5,'3','*');
 $verify = md5 ( $data . $lic );
 $notice = "http://www.kekezu.com/update.php?" . $data . "&lic=" . urlencode ( $lic ) . "&verify=" . $verify ;
 $sys = array (

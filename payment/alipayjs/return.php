@@ -4,12 +4,12 @@ define ( "IN_KEKE", true );
 require_once (dirname ( dirname ( dirname ( __FILE__ ) ) ) . DIRECTORY_SEPARATOR . 'app_comm.php');
 require_once ('alipay_notify.php');
 
-//$pay_arr = kekezu::get_config('paypal');
+//$pay_arr = Keke::get_config('paypal');
 //@extract($pay_arr);
 
 
 $_input_charset = strtoupper(CHARSET);
-$payment_config = kekezu::get_payment_config ( 'alipayjs' );
+$payment_config = Keke::get_payment_config ( 'alipayjs' );
 $payment_config or die ( "支付配置错误，支付无法完成，请联系管理员。" );
 
 $seller_id = $payment_config ['seller_id'];

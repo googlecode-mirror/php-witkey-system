@@ -85,9 +85,9 @@ class service_shop_class {
 									/** 通知卖家*/
 									$v_arr = array ($_lang['user'] => $order_info ['order_username'], $_lang['action'] => $_lang['haved_confim_pay'], $_lang['order_id'] => $order_id, $_lang['order_link'] => $s_order_link );
 									keke_shop_class::notify_user ( $order_info ['seller_uid'], $order_info ['seller_username'], "order_change", $_lang['goods_order_confirm_pay'], $v_arr );
-									kekezu::keke_show_msg ( '', $_lang['order_complete_and_comfirm_pay'], '', 'json' );
+									Keke::keke_show_msg ( '', $_lang['order_complete_and_comfirm_pay'], '', 'json' );
 								} else {
-									kekezu::keke_show_msg ( '', $_lang['order_pay_fail_for_cash_little'].'<br>'.$_lang['click'].'<a href="' . $_K['siteurl'] . '/index.php?do=pay&order_id=' . $order_id . '" target="_blank">'.$_lang['go_recharge'].'</a>', 'error', 'json' );
+									Keke::keke_show_msg ( '', $_lang['order_pay_fail_for_cash_little'].'<br>'.$_lang['click'].'<a href="' . $_K['siteurl'] . '/index.php?do=pay&order_id=' . $order_id . '" target="_blank">'.$_lang['go_recharge'].'</a>', 'error', 'json' );
 								}
 								break;
 							case "close" : //变更为关闭状态close(买家关闭订单)
@@ -100,9 +100,9 @@ class service_shop_class {
 									$v_arr = array ($_lang['user'] => $order_info ['order_username'], $_lang['action'] => $_lang['close_order_have'], $_lang['order_id'] => $order_id, $_lang['order_link'] => $s_order_link );
 									keke_shop_class::notify_user ( $order_info ['seller_uid'], $order_info ['seller_username'], "order_change", $_lang['goods_order_close'], $v_arr );
 									
-									kekezu::keke_show_msg ( '', $_lang['order_deal_complete_and_close'], '', 'json' );
+									Keke::keke_show_msg ( '', $_lang['order_deal_complete_and_close'], '', 'json' );
 								} else {
-									kekezu::keke_show_msg ( '', $_lang['order_deal_fail_and_link_kf'], 'error', 'json' );
+									Keke::keke_show_msg ( '', $_lang['order_deal_fail_and_link_kf'], 'error', 'json' );
 								}
 								break;
 							case "accept" : //变更为接受(卖家确认接收订单)
@@ -110,14 +110,14 @@ class service_shop_class {
 								if ($res) {
 									/** 买家上线推广产生*/
 									$kekezu->init_prom ();
-									if(kekezu::$_prom_obj->is_meet_requirement ( "service", $order_info[obj_id] )){
-										kekezu::$_prom_obj->create_prom_event ( "service", $order_info ['order_uid'], $order_info ['obj_id'], $order_info ['order_amount'] );
+									if(Keke::$_prom_obj->is_meet_requirement ( "service", $order_info[obj_id] )){
+										Keke::$_prom_obj->create_prom_event ( "service", $order_info ['order_uid'], $order_info ['obj_id'], $order_info ['order_amount'] );
 									}/** 通知买家*/
 									$v_arr = array ($_lang['user'] => $order_info ['seller_username'], $_lang['action'] => $_lang['recept_your_order'], $_lang['order_id'] => $order_id, $_lang['order_link'] => $b_order_link );
 									keke_shop_class::notify_user ( $order_info ['order_uid'], $order_info ['order_username'], "order_change", $_lang['goods_order_recept'], $v_arr );
-									kekezu::keke_show_msg ( '', $_lang['order_deal_complete_and_order_recept'], '', 'json' );
+									Keke::keke_show_msg ( '', $_lang['order_deal_complete_and_order_recept'], '', 'json' );
 								} else {
-									kekezu::keke_show_msg ( '', $_lang['order_deal_fail_and_link_kf'], 'error', 'json' );
+									Keke::keke_show_msg ( '', $_lang['order_deal_fail_and_link_kf'], 'error', 'json' );
 								}
 								break;
 							case "send" : //变更为已服务状态(卖家确认服务完成)
@@ -126,15 +126,15 @@ class service_shop_class {
 									/** 通知买家*/
 									$v_arr = array ($_lang['user'] => $order_info ['seller_username'], $_lang['action'] => $_lang['confirm_service_complete'], $_lang['order_id'] => $order_id, $_lang['order_link'] => $b_order_link );
 									keke_shop_class::notify_user ( $order_info ['order_uid'], $order_info ['order_username'], "order_change", $_lang['service_order_confirm_complete'], $v_arr );
-									kekezu::keke_show_msg ( '', $_lang['order_deal_complete_and_order_comfirm'], '', 'json' );
+									Keke::keke_show_msg ( '', $_lang['order_deal_complete_and_order_comfirm'], '', 'json' );
 								} else {
-									kekezu::keke_show_msg ( '', $_lang['order_deal_fail_and_link_kf'], 'error', 'json' );
+									Keke::keke_show_msg ( '', $_lang['order_deal_fail_and_link_kf'], 'error', 'json' );
 								}
 								break;
 							case "confirm" : //变更为完成状态(买家确认服务完成)
 								$res = keke_order_class::set_order_status ( $order_id, $action ); //状态变更
 								if ($res) {
-									$model_info = kekezu::$_model_list [$order_info['model_id']]; //模型信息
+									$model_info = Keke::$_model_list [$order_info['model_id']]; //模型信息
 									$profit = $service_info ['profit_rate'] * $order_info ['order_amount'] / 100; //网站利润
 									///卖家获得款项
 									keke_finance_class::cash_in ( $order_info ['seller_uid'], $order_info ['order_amount'] - $profit, '0', 'sale_service', '', 'service', $order_info ['obj_id'], $profit );
@@ -147,14 +147,14 @@ class service_shop_class {
 									keke_shop_class::plus_mark_num ( $order_info ['obj_id'] );
 									/** 买家上线推广结算*/
 									$kekezu->init_prom ();
-									kekezu::$_prom_obj->dispose_prom_event ( "service", $order_info ['order_uid'], $order_info ['obj_id'] );
+									Keke::$_prom_obj->dispose_prom_event ( "service", $order_info ['order_uid'], $order_info ['obj_id'] );
 									
 									/** 通知卖家*/
 									$v_arr = array ($_lang['user'] => $order_info ['order_username'], $_lang['action'] => $_lang['confirm_service_complete'], $_lang['order_id'] => $order_id, $_lang['order_link'] => $s_order_link );
 									keke_shop_class::notify_user ( $order_info ['seller_uid'], $order_info ['seller_username'], "order_change", $_lang['service_order_confirm_complete'], $v_arr );
-									kekezu::keke_show_msg ( '', $_lang['order_deal_complete_the_order_complete'], '', 'json' );
+									Keke::keke_show_msg ( '', $_lang['order_deal_complete_the_order_complete'], '', 'json' );
 								} else {
-									kekezu::keke_show_msg ( '', $_lang['order_deal_fail_and_link_kf'], 'error', 'json' );
+									Keke::keke_show_msg ( '', $_lang['order_deal_fail_and_link_kf'], 'error', 'json' );
 								}
 								break;
 							case "arbitral" : //订单仲裁
@@ -171,9 +171,9 @@ class service_shop_class {
 										keke_shop_class::notify_user ( $order_info ['order_uid'], $order_info ['order_username'], "order_change", $_lang['sevice_order_arbitrate_submit'], $v_arr );
 									
 									}
-									kekezu::keke_show_msg ( '', $_lang['order_deal_complete_and_order_in_arbitrate'], '', 'json' );
+									Keke::keke_show_msg ( '', $_lang['order_deal_complete_and_order_in_arbitrate'], '', 'json' );
 								} else {
-									kekezu::keke_show_msg ( '', $_lang['order_deal_fail_and_link_kf'], 'error', 'json' );
+									Keke::keke_show_msg ( '', $_lang['order_deal_fail_and_link_kf'], 'error', 'json' );
 								}
 								break;
 						}
@@ -187,13 +187,13 @@ class service_shop_class {
 					/** 通知卖家*/
 					$v_arr = array ($_lang['user'] => $_lang['system'], $_lang['action'] => $_lang['stop_your_order_and_your_cash_return'], $_lang['order_id'] => $order_id, $_lang['order_link'] => $s_order_link );
 					keke_shop_class::notify_user ( $order_info ['seller_uid'], $order_info ['seller_username'], "order_change", $_lang['goods_order_close'], $v_arr );
-					kekezu::keke_show_msg ( '', $_lang['goods_down_shelf_and_trade_close'], 'error', 'json' );
+					Keke::keke_show_msg ( '', $_lang['goods_down_shelf_and_trade_close'], 'error', 'json' );
 				}
 			} else {
-				kekezu::keke_show_msg ( '', $_lang['error_order_num_notice'], 'error', 'json' );
+				Keke::keke_show_msg ( '', $_lang['error_order_num_notice'], 'error', 'json' );
 			}
 		} else {
-			kekezu::keke_show_msg ( '', $_lang['no_exist_goods_order'], 'error', 'json' );
+			Keke::keke_show_msg ( '', $_lang['no_exist_goods_order'], 'error', 'json' );
 		}
 	}
 	/**

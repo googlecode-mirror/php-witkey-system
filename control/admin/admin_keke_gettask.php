@@ -7,7 +7,7 @@
  */
 
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
-kekezu::admin_check_role(135);
+Keke::admin_check_role(135);
 include S_ROOT.'/keke_client/keke/config.php';
 $task_data_dir = S_ROOT.'keke_client/keke/task_list.txt';
 $task_list = file_get_contents( $task_data_dir );
@@ -15,14 +15,14 @@ $task_list = unserialize($task_list);
 
 if ($ajax && $pid) {//ajax选择行业
 	$option_str = get_indus( intval($pid) );
-	$options = kekezu::echojson('',$option_str ? '1' : '0',$option_str);
+	$options = Keke::echojson('',$option_str ? '1' : '0',$option_str);
 	die();
 }
 if ($ajax && $ajax=='modify_title'){
 	if(!isset($t_key) || !isset($t_index) || !isset($t_value)){die();}
 	if ($task_list[$t_index]['keke_task_id']==$t_key){
 		if (strtolower(CHARSET)!='utf-8'){//转码
-			$t_value = kekezu::utftogbk($t_value);
+			$t_value = Keke::utftogbk($t_value);
 		}
 		$task_list[$t_index]['task_title']=$t_value;
 		file_put_contents($task_data_dir, serialize($task_list));
@@ -47,7 +47,7 @@ if (isset($sbt_action) || isset($add,$add_index,$add_id)) {//写库
 	}
 	$sql = rtrim($sql,',');
 	$result = dbfactory::execute( sprintf($sql,TABLEPRE));
-	kekezu::admin_system_log('[批量]添加联盟任务'.$result);
+	Keke::admin_system_log('[批量]添加联盟任务'.$result);
 	if ($result){//操作成功
 		$data = array(
 					'log_details'=>rtrim($log_ids,',')
@@ -57,9 +57,9 @@ if (isset($sbt_action) || isset($add,$add_index,$add_id)) {//写库
 		chmod($task_data_dir, 0777);
 // 		var_dump($task_list_remain);die();
 		!empty($task_list_remain) ? file_put_contents($task_data_dir, serialize($task_list_remain)) : unlink($task_data_dir);//单条添加,那么就重新写入数据(数据已改变),批量添加,那么将对应文件删除
-		kekezu::admin_show_msg('提示','?do=keke&view=gettask',2,'任务批量添加成功','success');
+		Keke::admin_show_msg('提示','?do=keke&view=gettask',2,'任务批量添加成功','success');
 	}
-	kekezu::admin_show_msg('提示','?do=keke&view=gettask',2,'任务添加失败','warning');
+	Keke::admin_show_msg('提示','?do=keke&view=gettask',2,'任务添加失败','warning');
 }
 
 if (isset($ac)) {
@@ -70,9 +70,9 @@ if (isset($ac)) {
 		if ($task_list[intval($index)] && $task_list[intval($index)]['keke_task_id']==intval($del_id)){
 			unset($task_list[intval($index)]);
 			file_put_contents($task_data_dir, serialize($task_list));
-			kekezu::admin_show_msg('提示','?do=keke&view=gettask',2,'任务删除成功','success');
+			Keke::admin_show_msg('提示','?do=keke&view=gettask',2,'任务删除成功','success');
 		}else{
-			kekezu::admin_show_msg('提示','?do=keke&view=gettask',2,'任务删除失败','warning');
+			Keke::admin_show_msg('提示','?do=keke&view=gettask',2,'任务删除失败','warning');
 		}
 	} else if (isset($add,$add_index,$add_id)){//添加单条记录
 		if ($task_list[intval($add_index)] && $task_list[intval($add_index)]['keke_task_id']==intval($add_id)){
@@ -86,7 +86,7 @@ $indus_p_arr = get_indus();//行业信息
 function get_indus($pid='0'){//将数组转换成option选项
 	global $kekezu;
 	!$pid && $pid=strval(0);
-	$indus_arr = kekezu::get_indus_by_index ('1',$pid);//索引行业
+	$indus_arr = Keke::get_indus_by_index ('1',$pid);//索引行业
 	$str = '';
 	while (list($key,$value)=each($indus_arr[$pid])){
 		$str .= '<option value="'.$value['indus_id'].'">'.$value['indus_name'].'</option>';

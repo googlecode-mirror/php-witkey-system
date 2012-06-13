@@ -51,14 +51,14 @@ class keke_auth_mobile_class extends keke_auth_base_class{
 		$fdata=$this->format_auth_apply($data);//格式化提交数据
 		
 		if (!$fdata ['mobile']) {
-			kekezu::show_msg ( $this->auth_lang().$_lang['apply_submit_fail'],$_SERVER['HTTP_REFERER'], 3, $this->auth_lang().$_lang['apply_submit_fail_for_info_little'], 'warning' );
+			Keke::show_msg ( $this->auth_lang().$_lang['apply_submit_fail'],$_SERVER['HTTP_REFERER'], 3, $this->auth_lang().$_lang['apply_submit_fail_for_info_little'], 'warning' );
 		} 
 		//6位数的手机应证码
-		$valid_code = kekezu::randomkeys(6);
+		$valid_code = Keke::randomkeys(6);
 		$fdata['valid_code'] = $valid_code;
 		$fdata[auth_time]=time();//认证时间 
 		$msg_obj = new keke_msg_class(); 
-		$content = $_lang['mobile_auth_code']."{$fdata['valid_code']}-".$_lang['from']."{kekezu::$_sys_config[website_name]}";
+		$content = $_lang['mobile_auth_code']."{$fdata['valid_code']}-".$_lang['from']."{Keke::$_sys_config[website_name]}";
 		//发送手机应证码 
 		$msg_res = $msg_obj->send_phone_sms($fdata['mobile'],$content); 
 		
@@ -91,10 +91,10 @@ class keke_auth_mobile_class extends keke_auth_base_class{
 		$arr[auth_step]="step2";
 		$url = 'index.php?'.http_build_query($arr);
 		
-	  	 kekezu::show_msg ( $this->auth_lang().$_lang['apply_submit_success'],$url, 3, $this->auth_lang().$_lang['apply_submit_fail_and_get_code'],'success' ) ;
+	  	 Keke::show_msg ( $this->auth_lang().$_lang['apply_submit_success'],$url, 3, $this->auth_lang().$_lang['apply_submit_fail_and_get_code'],'success' ) ;
 		
 		} 
-		$msg_res and kekezu::show_msg($this->auth_lang().$_lang['msg'],$url,$this->auth_lang().$_lang['web_not_function'],'warning');
+		$msg_res and Keke::show_msg($this->auth_lang().$_lang['msg'],$url,$this->auth_lang().$_lang['web_not_function'],'warning');
 	}
 	/**
 	 * 验证用户输入的手机验证码，输入正确，auth_status =1 ,并跳转到下一步
@@ -126,12 +126,12 @@ class keke_auth_mobile_class extends keke_auth_base_class{
 			if($res2){
 				/** 注册推广结算*/
 				$kekezu->init_prom();
-				kekezu::$_prom_obj->dispose_prom_event($this->_auth_name,$uid,$uid);
-				kekezu::empty_cache();
-				kekezu::show_msg ( $this->auth_lang().$_lang['success'],$url, 3, $this->auth_lang().$_lang['auth_audit_success'],'success' );
+				Keke::$_prom_obj->dispose_prom_event($this->_auth_name,$uid,$uid);
+				Keke::empty_cache();
+				Keke::show_msg ( $this->auth_lang().$_lang['success'],$url, 3, $this->auth_lang().$_lang['auth_audit_success'],'success' );
 			}
 		}else{
-			kekezu::show_msg ( $this->auth_lang(),$url, 3, $this->auth_lang().$_lang['code_error'],'warning' );
+			Keke::show_msg ( $this->auth_lang(),$url, 3, $this->auth_lang().$_lang['code_error'],'warning' );
 		}
 	}
  

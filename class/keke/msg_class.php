@@ -127,7 +127,7 @@ class keke_msg_class {
 				break;
 			case 1 :
 				if (! $this->_username) {
-					$userinfo = kekezu::get_user_info ( $this->_uid );
+					$userinfo = Keke::get_user_info ( $this->_uid );
 					$this->_username = $userinfo ['username'];
 				}
 				$cont0 = $tpl [0] ['content'];
@@ -165,7 +165,7 @@ class keke_msg_class {
 	public function sendmail() {
 		global $_K;
 		if (! $this->_email || ! $this->_username) {
-			$userinfo = kekezu::get_user_info ( $this->_uid );
+			$userinfo = Keke::get_user_info ( $this->_uid );
 			
 			$this->_username = $userinfo ['username'];
 			$this->_email = $userinfo ['email'];
@@ -173,14 +173,14 @@ class keke_msg_class {
 		if (! $this->_email) {
 			return false;
 		}
-		$this->_basicconfig and $basicconfig = $this->_basicconfig or $basicconfig = kekezu::get_config ( 'basic' );
+		$this->_basicconfig and $basicconfig = $this->_basicconfig or $basicconfig = Keke::get_config ( 'basic' );
 		if ($basicconfig ['mail_server_cat'] == 'mail') {
 			if ($basicconfig ['post_account'] && $basicconfig ['mail_replay'] && $this->_email && $this->_title && $this->_normal_content) {
 				$hearer = "From:{$basicconfig['post_account']}\nReply-To:{$basicconfig['mail_replay']}\nX-Mailer: PHP/" . phpversion () . "\nContent-Type:text/html";
 				mail ( $this->_email, $this->_title, $this->_normal_content, $hearer );
 			}
 		} else if ($basicconfig ['smtp_url'] && $basicconfig ['mail_server_port'] && $basicconfig ['post_account'] && $basicconfig ['account_pwd'] && $basicconfig ['website_name']) {
-			kekezu::send_mail ( $this->_email, $this->_title, $this->_normal_content );
+			Keke::send_mail ( $this->_email, $this->_title, $this->_normal_content );
 		
 		}
 	}
@@ -195,7 +195,7 @@ class keke_msg_class {
 		 
 			include_once S_ROOT . '/keke_client/sms/postmsg.php';
 			global $kekezu;
-			$account_info = kekezu::$_sys_config; //手机账号信息
+			$account_info = Keke::$_sys_config; //手机账号信息
 			$mobile_u = $account_info ['mobile_username'];
 			$mobile_p = $account_info ['mobile_password'];
 			$this->_mobile and $mobile = $this->_mobile or $mobile = $mobile_arr;
@@ -238,16 +238,16 @@ class keke_msg_class {
 	 * @param int $to_uid 消息接受方
 	 * @param string $to_username
 	 * @param string $tar_content 内容
-	 * @param string $url    操作提示链接  具体参见 kekezu::keke_show_msg
-	 * @param string $output 消息输出方式 具体参见 kekezu::keke_show_msg
+	 * @param string $url    操作提示链接  具体参见 Keke::keke_show_msg
+	 * @param string $output 消息输出方式 具体参见 Keke::keke_show_msg
 	 */
 	public static function send_private_message($title, $tar_content, $to_uid, $to_username, $url = '', $output = 'normal') {
 		global $uid, $username;
 		global $_lang;
 		if (CHARSET == 'gbk') {
-			$title = kekezu::utftogbk ( $title );
-			$tar_content = kekezu::utftogbk ( $tar_content );
-			$to_username = kekezu::utftogbk ( $to_username );
+			$title = Keke::utftogbk ( $title );
+			$tar_content = Keke::utftogbk ( $tar_content );
+			$to_username = Keke::utftogbk ( $to_username );
 		}
 		$msg_obj = new Keke_witkey_msg_class ();
 		$msg_obj->_msg_id = null;
@@ -260,7 +260,7 @@ class keke_msg_class {
 		$msg_obj->setOn_time ( time () );
 		$msg_id = $msg_obj->create_keke_witkey_msg ();
 		
-		$msg_id and kekezu::keke_show_msg ( $url, $_lang['sms_send_success'], "", $output ) or kekezu::keke_show_msg ( $_lang['operate_notice'], $url, $_lang['sms_send_fail'], "error", $output );
+		$msg_id and Keke::keke_show_msg ( $url, $_lang['sms_send_success'], "", $output ) or Keke::keke_show_msg ( $_lang['operate_notice'], $url, $_lang['sms_send_fail'], "error", $output );
 	}
 	
  

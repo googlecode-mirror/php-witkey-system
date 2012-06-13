@@ -24,7 +24,7 @@ switch ($opp) {
 				$notice = true;
 			}else{
 				$notice = $_lang['pwd_enter_err'];
-				CHARSET=='gbk' and $notice =  kekezu::gbktoutf($notice);
+				CHARSET=='gbk' and $notice =  Keke::gbktoutf($notice);
 			}
 			echo $notice;
 			die();
@@ -34,11 +34,11 @@ switch ($opp) {
 			$new_pass = $new_password;
 			$new_equal = $new_equal;
 			if ($basic_config ['user_intergration'] != "2" && $old_pass == $new_pass) {
-				kekezu::show_msg ( $_lang['modify_pwd_fail'], $ac_url."&opp=$opp", 3, $_lang['old_new_pwd_like'], 'warning' );
+				Keke::show_msg ( $_lang['modify_pwd_fail'], $ac_url."&opp=$opp", 3, $_lang['old_new_pwd_like'], 'warning' );
 			} elseif ($basic_config ['user_intergration'] != "2" && md5 ( $old_pass ) != $user_info ['password']) {
-				kekezu::show_msg ( $_lang['modify_pwd_fail'], $ac_url."&opp=$opp", 3, $_lang['current_pwd_err'], 'warning' );
+				Keke::show_msg ( $_lang['modify_pwd_fail'], $ac_url."&opp=$opp", 3, $_lang['current_pwd_err'], 'warning' );
 			} elseif ($new_pass != $new_equal) {
-				kekezu::show_msg ( $_lang['modify_pwd_fail'], $ac_url."&opp=$opp", 3, $_lang['pwd_enter_not_consistent'], 'warning' );
+				Keke::show_msg ( $_lang['modify_pwd_fail'], $ac_url."&opp=$opp", 3, $_lang['pwd_enter_not_consistent'], 'warning' );
 			}
 			$message_obj = new keke_msg_class ();
 			$v = array ($_lang['new_pwd'] => $new_pass );
@@ -58,7 +58,7 @@ switch ($opp) {
 			if ($flag && $res == 1){
 				unset ( $_SESSION );
 			}
-			$flag && $res == 1 ? kekezu::show_msg ( $_lang['operate_notice'], $ac_url."&opp=$opp", 3, $_lang['pwd_modify_success'],'success' ) : kekezu::show_msg ( $_lang['modify_pwd_fail'], $ac_url."&opp=$opp", 0, "", 'warning' );
+			$flag && $res == 1 ? Keke::show_msg ( $_lang['operate_notice'], $ac_url."&opp=$opp", 3, $_lang['pwd_modify_success'],'success' ) : Keke::show_msg ( $_lang['modify_pwd_fail'], $ac_url."&opp=$opp", 0, "", 'warning' );
 		}
 		break;
 	case "sec_code" :
@@ -68,18 +68,18 @@ switch ($opp) {
 				$notice = true;
 			}else{
 				$notice = $_lang['safe_code_enter_err'];
-				CHARSET=='gbk' and $notice =  kekezu::gbktoutf($notice);
+				CHARSET=='gbk' and $notice =  Keke::gbktoutf($notice);
 			}echo $notice;
 			die();
 		}
 		if ($new_sec_code) {
 			$pwd = keke_user_class::get_password ( $old_sec_code, $user_info ['rand_code'] );
 			if ($pwd != $user_info ['sec_code']) {
-				kekezu::show_msg ( $_lang['modify_safe_code_fail'], $ac_url."&opp=$opp", 3, $_lang['current_safe_code_err'], 'warning' );
+				Keke::show_msg ( $_lang['modify_safe_code_fail'], $ac_url."&opp=$opp", 3, $_lang['current_safe_code_err'], 'warning' );
 			} elseif ($new_sec_code == $old_sec_code) {
-				kekezu::show_msg ( $_lang['modify_safe_code_fail'], $ac_url."&opp=$opp", 3, $_lang['please_enter_again'], 'warning' );
+				Keke::show_msg ( $_lang['modify_safe_code_fail'], $ac_url."&opp=$opp", 3, $_lang['please_enter_again'], 'warning' );
 			} elseif ($new_sec_code != $new_equal) {
-				kekezu::show_msg ( $_lang['modify_safe_code_fail'], $ac_url."&opp=$opp", 3, $_lang['safe_code_enter_inconsistent'], 'warning' );
+				Keke::show_msg ( $_lang['modify_safe_code_fail'], $ac_url."&opp=$opp", 3, $_lang['safe_code_enter_inconsistent'], 'warning' );
 			}
 			
 			$message_obj = new keke_msg_class ();
@@ -91,7 +91,7 @@ switch ($opp) {
 			$user_obj->setSec_code ( keke_user_class::get_password ( $new_sec_code, $user_info ['rand_code'] ) );
 			$res = $user_obj->edit_keke_witkey_space ();
 			
-			$res and kekezu::show_msg ( $_lang['operate_notice'], $ac_url."&opp=$opp", 3, $_lang['safe_code_modify_success'],'success' ) or kekezu::show_msg ( $_lang['modify_safe_code_fail'], $ac_url."&opp=$opp", 3, "", 'warning' );
+			$res and Keke::show_msg ( $_lang['operate_notice'], $ac_url."&opp=$opp", 3, $_lang['safe_code_modify_success'],'success' ) or Keke::show_msg ( $_lang['modify_safe_code_fail'], $ac_url."&opp=$opp", 3, "", 'warning' );
 		}
 		break;
 }

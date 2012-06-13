@@ -46,7 +46,7 @@ class session_mysql_class extends keke_session {
 	}
 	function open($save_path, $sess_name) {
 		self::$_left_time = get_cfg_var ( "session.gc_maxlifetime" );
-		$this->_db = database::instance();
+		$this->_db = Database::instance();
 		return true;
 	}
 	function close() {
@@ -61,7 +61,7 @@ class session_mysql_class extends keke_session {
 	function write($session_id, $session_data) {
 		$tablename = TABLEPRE . "witkey_session";
 		$_SESSION ['uid'] > 0 and $uid = $_SESSION ['uid'] or $uid = 0;
-		$data_arr = array ('session_id' => $session_id, 'session_data' => $session_data, 'session_expirse' => time () + $this->_left_time, 'session_ip' => kekezu::get_ip (), 'session_uid' => $uid );
+		$data_arr = array ('session_id' => $session_id, 'session_data' => $session_data, 'session_expirse' => time () + $this->_left_time, 'session_ip' => Keke::get_ip (), 'session_uid' => $uid );
 		return $this->_db->insert ( $tablename, $data_arr, 1, 1 );
 	    
 	}

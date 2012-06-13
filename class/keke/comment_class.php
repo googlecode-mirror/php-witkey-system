@@ -45,7 +45,7 @@ class keke_comment_class {
 	 * @param int $obj_id
 	 */
 	function get_reply_info($obj_id){
-		$reply_arr = kekezu::get_table_data("*","witkey_comment","obj_type='".$this->_comment_type."' and obj_id='$obj_id' and p_id>0"," on_time desc");
+		$reply_arr = Keke::get_table_data("*","witkey_comment","obj_type='".$this->_comment_type."' and obj_id='$obj_id' and p_id>0"," on_time desc");
 		return $reply_arr; 
 	}
 	/**
@@ -57,8 +57,8 @@ class keke_comment_class {
 	 */
 	function save_comment($comment_arr,$obj_id,$is_reply=false){
 		global $_lang,$kekezu;
-		strtolower ( CHARSET ) == 'gbk' and $comment_arr ['content'] = kekezu::utftogbk ( kekezu::escape($comment_arr ['content']) );
-		if(kekezu::k_match(array(kekezu::$_sys_config['ban_content']),$comment_arr['content'])){
+		strtolower ( CHARSET ) == 'gbk' and $comment_arr ['content'] = Keke::utftogbk ( Keke::escape($comment_arr ['content']) );
+		if(Keke::k_match(array(Keke::$_sys_config['ban_content']),$comment_arr['content'])){
 			return 3;
 			die();
 		}

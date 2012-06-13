@@ -27,7 +27,7 @@ class keke_payitem_class {
 		$is_open==1 and $where = " and is_open=$is_open";
 		$pk         or $pk = "item_code";
 
-		$payitem_list = kekezu::get_table_data ( "*", "witkey_payitem", "1=1 $where ", "", "", "", $pk,3600 );
+		$payitem_list = Keke::get_table_data ( "*", "witkey_payitem", "1=1 $where ", "", "", "", $pk,3600 );
 	 
 		if ($user_type) {
 			foreach ( $payitem_list as $k => $v ) {
@@ -78,7 +78,7 @@ class keke_payitem_class {
 		$order and $where .= "  order by $order " or $where .= "  order by record_id desc  ";
 	
 		if (! empty ( $p )) { //需要执行分页
-			$page_obj = kekezu::$_page_obj;
+			$page_obj = Keke::$_page_obj;
 			intval ( $p ['page'] ) and $page = intval ( $p ['page'] ) or $page = '1';
 			intval ( $p ['page_size'] ) and $page_size = intval ( $p ['page_size'] ) or $page_size = "10";
 			$p ['url'] and $url = $p ['url'] or $url = $_SERVER ['HTTP_REFERER'];
@@ -155,7 +155,7 @@ class keke_payitem_class {
 		 
 			$fid_cash = keke_finance_class::cash_out ( $uid, $use_cash, 'payitem',$use_cash);
 			 
-			$fid_cash or kekezu::show_msg($_lang['friendly_notice'],'index.php?do=user&view=finance&op=recharge',3,$_lang['your_balance_not_enough']);
+			$fid_cash or Keke::show_msg($_lang['friendly_notice'],'index.php?do=user&view=finance&op=recharge',3,$_lang['your_balance_not_enough']);
 		}
 		$record_obj = new Keke_witkey_payitem_record_class ();
 		$record_obj->_record_id = null;
@@ -236,7 +236,7 @@ class keke_payitem_class {
 	 */ 
 	public static function get_payitem_info($user_type,$model_code){
 		$where = sprintf(" user_type='%s' and is_open = 1 and find_in_set('%s',model_code)",$user_type,$model_code); 
-		$payitem_arr = kekezu::get_table_data("*","witkey_payitem","$where","","","","item_id"); 
+		$payitem_arr = Keke::get_table_data("*","witkey_payitem","$where","","","","item_id"); 
 		return $payitem_arr;
 	}
 	

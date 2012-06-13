@@ -36,7 +36,7 @@ abstract class keke_auth_base_class {
 			$is_open and $where .= " and auth_open=1 ";
 			$w      and $where.=" and ".$w;
 			$cache==true and $c=null or $c=0;
-			$auth_item=kekezu::get_table_data($fds,"witkey_auth_item", $where,'listorder asc','','','auth_code',$c);
+			$auth_item=Keke::get_table_data($fds,"witkey_auth_item", $where,'listorder asc','','','auth_code',$c);
 			if($auth_code&&!is_array($auth_code)){
 				return $auth_item[$auth_code];
 			}else{
@@ -109,8 +109,8 @@ abstract class keke_auth_base_class {
 		global $kekezu;
 	
 		$auth_info           = $this->get_auth_item($this->_auth_code,'auth_expir,auth_cash,auth_code','','',false);
-		$data['uid']         = kekezu::$_userinfo['uid'];
-		$data['username']    = kekezu::$_userinfo['username'];
+		$data['uid']         = Keke::$_userinfo['uid'];
+		$data['username']    = Keke::$_userinfo['username'];
 		$data['start_time']  = time();
 		$data['cash']        = $auth_info['auth_cash'];
 		$data['auth_status'] = '0';
@@ -188,7 +188,7 @@ abstract class keke_auth_base_class {
 		is_array($auth_ids) and $ids=implode(",",$auth_ids) or $ids=$auth_ids;//数组连接
 		$auth_info=$this->get_auth_info($ids);//获取实名认证表记录
 		$size=sizeof($auth_info);
-		$size==0 and kekezu::admin_show_msg($this->auth_lang(). $_lang['apply_not_exist_delete_fail'],$_SERVER['HTTP_REFERER']);
+		$size==0 and Keke::admin_show_msg($this->auth_lang(). $_lang['apply_not_exist_delete_fail'],$_SERVER['HTTP_REFERER']);
 		
 		if($size==1&&$auth_info[0]['auth_status']!='1'){//单条记录。单个删除 通过的记录无法被删除
 			$this->_tab_obj->del($this->_primary_key,$auth_ids);
@@ -203,9 +203,9 @@ abstract class keke_auth_base_class {
 				$this->_auth_code=='enterprise' and $this->set_user_role($v[uid],'not_pass');
 			}
 		}
-		kekezu::empty_cache();
-		$res && kekezu::admin_show_msg($this->auth_lang(). $_lang['apply_delete_success'],$_SERVER['HTTP_REFERER'],3,'','success');
-		kekezu::admin_show_msg($this->auth_lang(). '删除失败',$_SERVER['HTTP_REFERER'],3,'','warning');
+		Keke::empty_cache();
+		$res && Keke::admin_show_msg($this->auth_lang(). $_lang['apply_delete_success'],$_SERVER['HTTP_REFERER'],3,'','success');
+		Keke::admin_show_msg($this->auth_lang(). '删除失败',$_SERVER['HTTP_REFERER'],3,'','warning');
 			
 	}
 	/**
@@ -217,7 +217,7 @@ abstract class keke_auth_base_class {
 		global $_lang;
 		global $kekezu;
 		$kekezu->init_prom();
-		$prom_obj = kekezu::$_prom_obj;
+		$prom_obj = Keke::$_prom_obj;
 		is_array($auth_ids) and $auth_ids=implode(",",$auth_ids);//数组连接
 	
 		$auth_info=$this->get_auth_info($auth_ids);//认证信息获取
@@ -225,7 +225,7 @@ abstract class keke_auth_base_class {
 		$size=sizeof($auth_info);
 		$size>0&&$type=='pass' and $status='1' or $status='2';//待变更状态
 
-		$size==0 and kekezu::admin_show_msg($this->auth_lang(). $_lang['apply_not_exist_audit_fail'],$_SERVER['HTTP_REFERER']);
+		$size==0 and Keke::admin_show_msg($this->auth_lang(). $_lang['apply_not_exist_audit_fail'],$_SERVER['HTTP_REFERER']);
 		if($size==1&&$auth_info[0]['auth_status']!='1'){//已通过的认证无法操作
 			
 			$this->set_auth_status($auth_info[0][$this->_primary_key],$status);
@@ -244,29 +244,29 @@ abstract class keke_auth_base_class {
 		}
 		switch ($type){
 			case "pass":
-				kekezu::admin_system_log($this->auth_lang(). $_lang['apply_pass'] . "$auth_ids");
+				Keke::admin_system_log($this->auth_lang(). $_lang['apply_pass'] . "$auth_ids");
 				foreach ($auth_info as $v){
 					 $feed_arr = array(	
 				 		"feed_username"=>array("content"=>$v[username],"url"=>"index.php?do=space&member_id=$v[uid]"),
 						"action"=>array("content"=>$_lang['has_pass'],"url"=>""),
 						"event"=>array("content"=>$this->auth_lang(),"url"=>"")
 				 	);
-					kekezu::save_feed($feed_arr, $v['uid'],$v['username'],$this->_auth_name ); 
+					Keke::save_feed($feed_arr, $v['uid'],$v['username'],$this->_auth_name ); 
 					/** 注册推广结算*/
 					$prom_obj->dispose_prom_event($this->_auth_name,$v['uid'], $v['uid']);
 
-					kekezu::notify_user ( $this->auth_lang(). $_lang['through'], $_lang['your'].$this->auth_lang().$_lang['has_pass_please_to']."<a href=\'index.php?do=user&view=payitem&op=auth&auth_code=".$this->_auth_code."\'>".$_lang['auth_center']."</a>".$_lang['view_detail'],$v['uid'],$v['username']);
+					Keke::notify_user ( $this->auth_lang(). $_lang['through'], $_lang['your'].$this->auth_lang().$_lang['has_pass_please_to']."<a href=\'index.php?do=user&view=payitem&op=auth&auth_code=".$this->_auth_code."\'>".$_lang['auth_center']."</a>".$_lang['view_detail'],$v['uid'],$v['username']);
 				}
-				kekezu::empty_cache();
-				kekezu::admin_show_msg($this->auth_lang().$_lang['apply_audit_success'],$_SERVER['HTTP_REFERER'],3,'','success');
+				Keke::empty_cache();
+				Keke::admin_show_msg($this->auth_lang().$_lang['apply_audit_success'],$_SERVER['HTTP_REFERER'],3,'','success');
 				break;
 			case "not_pass":
-				kekezu::admin_system_log($this->auth_lang().$_lang['apply_not_pass']."$auth_ids");
+				Keke::admin_system_log($this->auth_lang().$_lang['apply_not_pass']."$auth_ids");
 				foreach ($auth_info as $v){
-					kekezu::notify_user ( $this->auth_lang().$_lang['fail'], $_lang['your'].$this->auth_lang().$_lang['not_pass_please_to']."<a href=\'index.php?do=user&view=payitem&op=auth&auth_code=".$this->_auth_code."\'>".$_lang['auth_center']."</a>".$_lang['view_detail'], $v['uid'] , $v['username']);
+					Keke::notify_user ( $this->auth_lang().$_lang['fail'], $_lang['your'].$this->auth_lang().$_lang['not_pass_please_to']."<a href=\'index.php?do=user&view=payitem&op=auth&auth_code=".$this->_auth_code."\'>".$_lang['auth_center']."</a>".$_lang['view_detail'], $v['uid'] , $v['username']);
 				}
-				kekezu::empty_cache();
-				kekezu::admin_show_msg($this->auth_lang().$_lang['apply_audit_not_pass'],$_SERVER['HTTP_REFERER'],3,'','success');
+				Keke::empty_cache();
+				Keke::admin_show_msg($this->auth_lang().$_lang['apply_audit_not_pass'],$_SERVER['HTTP_REFERER'],3,'','success');
 				break;
 		}
 	}

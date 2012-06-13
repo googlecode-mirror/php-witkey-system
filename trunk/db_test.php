@@ -5,9 +5,9 @@ include 'app_comm.php';
 
 
 
-$res = Model::factory('witkey_ad')->setData(array('ad_name'=>'sdsdsd','ad_content'=>'content'))->create();
+///$res = Model::factory('witkey_ad')->setData(array('ad_name'=>'sdsdsd','ad_content'=>'content'))->create();
 
-var_dump($res);
+//var_dump($res);
 
 
 /* $aas=new keke_witkey_ad();
@@ -26,6 +26,6 @@ $aas->setAd_content($value)->setAd_file($value)->setAd_name($value)->create(); *
 
 
 $end = microtime(true);
-var_dump ( $end-$star,Keke::execute_time() );
-//require keke_tpl_class::template('en');
+// var_dump ( $end-$star,Keke::execute_time() );
+require keke_tpl_class::template('en');
 

@@ -623,7 +623,7 @@ class Keke_base {
 	}
 	/**
 	 *
-	 * @todo 表单检查防止重复提交与跨服务器提交
+	 * 表单检查防止重复提交与跨服务器提交
 	 * @param $var hash值        	
 	 * @param $return_json 指定返回值类型(返回bool值,还是直接show_msg)        	
 	 *

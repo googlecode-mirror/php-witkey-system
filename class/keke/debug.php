@@ -48,8 +48,8 @@ class Keke_debug {
 		} elseif (is_array ( $var )) {
 			$output = array ();
 			$space = str_repeat ( $s = ' ', $level );
-			static $marker;
-			if ($marker === NULL) {
+			static $marker =null;
+			if ($marker === null) {
 				$marker = uniqid ( "\x00" );
 			}
 			if (empty ( $var )) {

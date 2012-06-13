@@ -1,13 +1,12 @@
 <?php
 
-abstract  class model {
+abstract  class Model {
   	public $_db;
 	public $_tablename;
 	public $_pk;
 	public $_lifetime;
 	public $_replace = 0;
 	public $_where;
-	public static $instances = array ();
 	public function __construct($table_name=null){
 		$this->_db = Database::instance();
 		$this->_tablename = '`'.DBNAME.'`.`'.TABLEPRE . $table_name.'`';
@@ -16,18 +15,21 @@ abstract  class model {
 	 * @param string $table_name 表名
 	 * @return Model
 	 */
-/*  	public static function instance($table_name){
-		$this->_tablename = TABLEPRE . $table_name;
-      	if(isset(Model::instance($this->_tablename))){
-      		return Model::instance($this->_tablename);
-      	}
-       	$class = $this->_tablename.'class';
-      	Database::$instances [$this->_tablename] = new $class ( );
-      	return Database::$instances [$this->_tablename];
-	}  */
-	
-	
-
+  	public static function factory($table_name){
+		$class =  TABLEPRE . $table_name;
+		return 	new $class ( );
+      	
+	} 
+    /**
+     * @return Model
+     */
+	abstract public function setWhere($where);
+	/**
+	 * 字段设值
+	 * @param $array  字段健值对数组
+	 * @return Model
+	 */
+	abstract public function setData($array);
 	abstract public function create();
 	abstract public function update();
 	abstract public function query();

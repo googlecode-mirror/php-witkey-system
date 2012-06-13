@@ -18,7 +18,7 @@ class keke_table_class {
 	
 	function __construct($table_name) {
 		global $kekezu;
-		$this->_page_obj = kekezu::$_page_obj;
+		$this->_page_obj = Keke::$_page_obj;
 		$this->_table_name = $table_name;
 		$table_class = ucfirst($this->_pre).$table_name . "_class";
 		$this->_table_obj = new $table_class (); 
@@ -221,7 +221,7 @@ class keke_table_class {
 		}
 		$order and $where.=" order by $order ";
 		if (! empty ( $p )) {
-			$page_obj = kekezu::$_page_obj;
+			$page_obj = Keke::$_page_obj;
 			$count = intval ( dbfactory::execute ($where ));
 			$pages = $page_obj->getPages ( $count, $p ['page_size'], $p ['page'], $p ['url'], $p ['anchor'] );
 			$where .= $pages ['where'];

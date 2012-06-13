@@ -156,10 +156,10 @@ class keke_tool_class {
 		global $_lang;
 		switch($type){
 			case "success":
-				kekezu::show_msg($_lang['operate_notice'],$url,3,$content,'success');
+				Keke::show_msg($_lang['operate_notice'],$url,3,$content,'success');
 				break;
 			case "error":
-				kekezu::show_msg($_lang['operate_notice'],$url,3,$content,'warning');
+				Keke::show_msg($_lang['operate_notice'],$url,3,$content,'warning');
 				break;
 		}
 	}

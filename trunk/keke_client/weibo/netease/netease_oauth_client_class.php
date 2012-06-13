@@ -68,7 +68,7 @@ class netease_oauth_client_class extends base_client_class {
 		
 		global $_K;
 		if (strtolower ($_K['charset']) == 'gbk') {
-			$auth_user_info = kekezu::utftogbk ( $auth_user_info );
+			$auth_user_info = Keke::utftogbk ( $auth_user_info );
 		}
 		
 		if (! $auth_user_info || $auth_user_info ['error']) {
@@ -88,7 +88,7 @@ class netease_oauth_client_class extends base_client_class {
 		global $_K;
 		
 		if (strtolower ( $_K ['charset'] ) == 'gbk') {
-			$msg = kekezu::gbktoutf ( $msg );
+			$msg = Keke::gbktoutf ( $msg );
 		}
 		
 		if (!$img) {
@@ -98,7 +98,7 @@ class netease_oauth_client_class extends base_client_class {
 		}
 		
 		if (strtolower($_K['charset'])=='gbk'){
-			$r = kekezu::utftogbk($r);
+			$r = Keke::utftogbk($r);
 		}
 		
 		if ($r ['error']) {
@@ -123,7 +123,7 @@ class netease_oauth_client_class extends base_client_class {
 		$r = $c->user_timeline_uid($uinfo['id'],$page_size);
 		global $_K;
 		if (strtolower($_K['charset'])=='gbk'){
-			$r = kekezu::utftogbk($r);
+			$r = Keke::utftogbk($r);
 		}
 		return $r;
 	}
@@ -136,7 +136,7 @@ class netease_oauth_client_class extends base_client_class {
 		
 		global $_K;
 		if (strtolower($_K['charset'])=='gbk'){
-			$r = kekezu::utftogbk($r);
+			$r = Keke::utftogbk($r);
 		}
 		
 		if ($r ['error']) {
@@ -158,7 +158,7 @@ class netease_oauth_client_class extends base_client_class {
 		
 		global $_K;
 		if (strtolower($_K['charset'])=='gbk'){
-			$r = kekezu::utftogbk($r);
+			$r = Keke::utftogbk($r);
 		}
 			if ($r ['error']) {
 		 
@@ -175,13 +175,13 @@ class netease_oauth_client_class extends base_client_class {
 		$this->_error_info = null;
 		$this->init_client();
 		if(strtolower($_K['charset'])=='gbk'&&$text){
-			$text = kekezu::gbktoutf($text);
+			$text = Keke::gbktoutf($text);
 		}
 		$c = $this->get_client();
 		$r = $c->retweet($sid);
 		
 		if (strtolower($_K['charset'])=='gbk'){
-			$r = kekezu::utftogbk($r);
+			$r = Keke::utftogbk($r);
 		}
 
 		if ($r ['error']) {
@@ -200,13 +200,13 @@ class netease_oauth_client_class extends base_client_class {
 		$this->init_client();
 		$c = $this->get_client();
 		if (strtolower($_K['charset'])=='gbk'){
-			$text = kekezu::gbktoutf($text);
+			$text = Keke::gbktoutf($text);
 		}
 		$r = $c->reply($sid,$text,$cid==false);
 		
 		
 		if (strtolower($_K['charset'])=='gbk'){
-			$r = kekezu::utftogbk($r);
+			$r = Keke::utftogbk($r);
 		}
 		if ($r ['error']) {
 			unset ( $_SESSION ['auth_sina'] );

@@ -18,7 +18,7 @@ class pay_batch_fac_class {
 	}
 	public function __construct($pay_mode) {
 		$this->_pay_mode = $pay_mode;
-		$this->_pay_config = kekezu::get_payment_config ( $pay_mode );
+		$this->_pay_config = Keke::get_payment_config ( $pay_mode );
 	}
 	/**      ***********************基本业务函数定义**************************     */
 	/**
@@ -95,7 +95,7 @@ class pay_batch_fac_class {
 	public function alipayjs_success_notify($detail_arr, $status = true) {
 		global $_lang;
 		$ids = implode ( ",", array_keys ( $detail_arr ) );
-		$info = kekezu::get_table_data ( "withdraw_id,uid,username,withdraw_status", "witkey_withdraw", " withdraw_id in ($ids)", "", "", "", "withdraw_id" );
+		$info = Keke::get_table_data ( "withdraw_id,uid,username,withdraw_status", "witkey_withdraw", " withdraw_id in ($ids)", "", "", "", "withdraw_id" );
 		foreach ( $detail_arr as $k => $v ) {
 			if ($info [$k] ['withdraw_status'] == 1) {
 				switch ($v ['status']) {
@@ -103,12 +103,12 @@ class pay_batch_fac_class {
 						/** 提现成功*/
 						$res = dbfactory::execute ( sprintf ( " update %switkey_withdraw set withdraw_status='2' where withdraw_id ='%d'", TABLEPRE, $k ) );
 						/** 用户消息提示*/
-						kekezu::notify_user ( $_lang['tx_pay_success_notice'], $_lang['your_alipay_tx_apply_notice'] . $v [fee] . $_lang['yusn_check_your_accout'], $info [$k] ['uid'], $info [$k] ['username'] );
+						Keke::notify_user ( $_lang['tx_pay_success_notice'], $_lang['your_alipay_tx_apply_notice'] . $v [fee] . $_lang['yusn_check_your_accout'], $info [$k] ['uid'], $info [$k] ['username'] );
 						break;
 					case "F" :
 						/** 提现失败*/
 						$res = dbfactory::execute ( sprintf ( " update %switkey_withdraw set withdraw_status='3' where withdraw_id ='%d'", TABLEPRE, $k ) );
-						kekezu::notify_user ( $_lang['tx_pay_fail_notice'], $_lang['tx_pay_fail_case_is'] . $v ['desc'], $info [$k] ['uid'], $info [$k] ['username'] );
+						Keke::notify_user ( $_lang['tx_pay_fail_notice'], $_lang['tx_pay_fail_case_is'] . $v ['desc'], $info [$k] ['uid'], $info [$k] ['username'] );
 						break;
 				}
 			}

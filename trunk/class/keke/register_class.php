@@ -26,10 +26,10 @@ class keke_register_class {
 		global $kekezu;
 		$this->_space_obj = new Keke_witkey_space_class ();
 		$this->_member_obj = new Keke_witkey_member_class ();
-		$this->_sys_config = kekezu::$_sys_config;
+		$this->_sys_config = Keke::$_sys_config;
 		$this->_message_obj = new keke_msg_class ();
 		$this->_oltime_obj = new Keke_witkey_member_oltime_class ();
-		$this->_reg_ip = kekezu::get_ip ();
+		$this->_reg_ip = Keke::get_ip ();
 		$this->_reg_type = intval ( $reg_type );
 	
 		//keke_lang_class::loadlang('keke_register_class','public'); 
@@ -48,7 +48,7 @@ class keke_register_class {
 		//判断登录的规则
 		$this->check_all ( $reg_username, $reg_email, $reg_code );
 		//判断是否整合
-		switch (kekezu::$_sys_config ['user_intergration']) {
+		switch (Keke::$_sys_config ['user_intergration']) {
 			case 2 :
 				$notify = "UCenter";
 				require_once S_ROOT . './keke_client/ucenter/client.php';
@@ -91,7 +91,7 @@ class keke_register_class {
 		 */
 		if (isset ( $_COOKIE ['user_prom_event'] )) {
 			$kekezu->init_prom ();
-			$prom_obj = kekezu::$_prom_obj;
+			$prom_obj = Keke::$_prom_obj;
 			$url_data = $prom_obj->extract_prom_cookie ();
 			$prom_obj->create_prom_relation ( $userinfo ['uid'], $userinfo ['username'], $url_data );
 			$url_data ['p'] == 'reg' and $obj_id = $userinfo ['uid'] or $obj_id = $url_data ['o'];
@@ -99,7 +99,7 @@ class keke_register_class {
 		}
 		$synhtml = keke_user_class::user_synlogin ( $userinfo ['uid'], md5 ( $this->_reg_pwd ) );
 		
-		//kekezu::$_tpl_obj->xml_out ( "<h1>登录成功!</h1> $synhtml <script>window.location.href='$r'</script>" );
+		//Keke::$_tpl_obj->xml_out ( "<h1>登录成功!</h1> $synhtml <script>window.location.href='$r'</script>" );
 		if ($userinfo ['status'] == '3') {
 			$_SESSION ['uid'] = '';
 			$_SESSION ['username'] = '';
@@ -115,7 +115,7 @@ class keke_register_class {
 	function save_userinfo($reg_username, $reg_email, $reg_uid = null) {
 		
 		//获取密码		
-		$slt = kekezu::randomkeys ( 6 );
+		$slt = Keke::randomkeys ( 6 );
 		$pwd = keke_user_class::get_password ( $this->_reg_pwd, $slt );
 		
 		$this->_member_obj->setUid ( $reg_uid );
@@ -185,21 +185,21 @@ class keke_register_class {
 		//判断是否是email
 		if (function_exists ( "filter_var" )) {
 			filter_var ( $reg_username, FILTER_VALIDATE_EMAIL ) and $this->show_msg($_lang ['username_can_not_email'],'index.php?do=register',2);
-			kekezu::is_mobile ( $reg_username ) and $this->show_msg($_lang ['username_can_not_phone_number'],'index.php?do=register',2);
+			Keke::is_mobile ( $reg_username ) and $this->show_msg($_lang ['username_can_not_phone_number'],'index.php?do=register',2);
 		} else {
 			
-			kekezu::is_email ( $reg_username ) and $this->show_msg($_lang ['username_can_not_email'],'index.php?do=register',2);
-			kekezu::is_mobile ( $reg_username ) and $this->show_msg($_lang ['username_can_not_phone_number'],'index.php?do=register',2);
+			Keke::is_email ( $reg_username ) and $this->show_msg($_lang ['username_can_not_email'],'index.php?do=register',2);
+			Keke::is_mobile ( $reg_username ) and $this->show_msg($_lang ['username_can_not_phone_number'],'index.php?do=register',2);
 		}
 		
 		$check_username = trim ( $reg_username );
 		if (empty ( $check_username )) {
 			return $_lang ['username_is_empty'];
 		}
-		if (kekezu::k_strpos ( $check_username )) {
+		if (Keke::k_strpos ( $check_username )) {
 			return $_lang ['username_illegal'];
 		}
-		if (kekezu::check_user_by_name ( $check_username, 1 )) {
+		if (Keke::check_user_by_name ( $check_username, 1 )) {
 			return $_lang ['user_has_exist'];
 		}
 		if ($this->_sys_config ['user_intergration'] == 2) {
@@ -297,11 +297,11 @@ class keke_register_class {
 		global $_lang;
 		switch ($this->_reg_type) {
 			case "2" ://mobile
-				kekezu::echojson($content,$status);
+				Keke::echojson($content,$status);
 				die ();
 				break;
 			default:
-				kekezu::show_msg($_lang['operate_notice'],$url,2,$content,'alert_right');
+				Keke::show_msg($_lang['operate_notice'],$url,2,$content,'alert_right');
 				break;
 		}
 	}

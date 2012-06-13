@@ -23,9 +23,9 @@ $year_arr = get_art_by_year();
  * @return array 文章分类数组
  */
 function get_art_cate() {
-	$array = kekezu::get_table_data ( "*", "witkey_article_category", "cat_type='article'", "", "", "", "", null );
+	$array = Keke::get_table_data ( "*", "witkey_article_category", "cat_type='article'", "", "", "", "", null );
 	$tmp_arr = array ();
-	kekezu::get_tree ( $array, $tmp_arr, "", "", "art_cat_id", "art_cat_pid", "art_cat_name" );
+	Keke::get_tree ( $array, $tmp_arr, "", "", "art_cat_id", "art_cat_pid", "art_cat_name" );
 	return $tmp_arr;
 }
 
@@ -53,8 +53,8 @@ function get_art_list($page, $page_size, $url, $where,$static=0) {
 
 	$count = intval ( dbfactory::get_count ( $csql,0,null, 10*60 ) );
 	
-	kekezu::$_page_obj->setStatic($static);
-	$pages = kekezu::$_page_obj->getPages ( $count, $page_size, $page, $url );
+	Keke::$_page_obj->setStatic($static);
+	$pages = Keke::$_page_obj->getPages ( $count, $page_size, $page, $url );
 	$art_arr = dbfactory::query ( $sql . $pages ['where'], 5*60 );
 	return array("date"=>$art_arr,"pages"=>$pages);//返回分页数据和文章数组组成的多维数组
 }

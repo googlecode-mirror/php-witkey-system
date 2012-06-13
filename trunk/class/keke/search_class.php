@@ -133,7 +133,7 @@ class keke_search_class {
 		$now_time = time ();
 		$desc_time = $end_time - $now_time;
 		
-		$sy_time = kekezu::time2Units ( $desc_time,'hour' );
+		$sy_time = Keke::time2Units ( $desc_time,'hour' );
 		
 		if (! $end_time) {
 		
@@ -171,7 +171,7 @@ class keke_search_class {
 					if ($search_key && ! $hid_save_cookie) {
 						return false;
 					} else {
-						kekezu::echojson ( $_lang ['the_address_has_collection'], 2 );
+						Keke::echojson ( $_lang ['the_address_has_collection'], 2 );
 						die ();
 					}
 				}
@@ -191,7 +191,7 @@ class keke_search_class {
 		setcookie ( "$cookie_name", $save_cookie, time () + 3600 * 24 * 30 ); // ´æcookie
 		
 		if ($hid_save_cookie) {
-			kekezu::echojson ( '', 1, $save_name );
+			Keke::echojson ( '', 1, $save_name );
 			die ();
 		}
 	

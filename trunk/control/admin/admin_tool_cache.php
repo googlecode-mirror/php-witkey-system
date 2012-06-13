@@ -7,7 +7,7 @@
  * 2010-5-19ÏÂÎç09:25:13
  */
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
-//kekezu::admin_check_role(20);
+//Keke::admin_check_role(20);
 $file_obj = new keke_file_class();
 $backup_patch = S_ROOT.'./data/tpl_c/';
 if(isset($sbt_edit)){
@@ -22,10 +22,10 @@ if(isset($sbt_edit)){
 		$msg.= $_lang['template_cache_empty'];
 	}
 	if(CACHE_TYPE!='file' && IS_CACHE ==1){
-		kekezu::$_cache_obj->flush();
+		Keke::$_cache_obj->flush();
 	}
-	//kekezu::admin_system_log($_lang['cache_empty']);
-	kekezu::admin_show_msg($msg,'index.php?do='.$do.'&view='.$view,2,'','success');
+	//Keke::admin_system_log($_lang['cache_empty']);
+	Keke::admin_show_msg($msg,'index.php?do='.$do.'&view='.$view,2,'','success');
 }
 
 require $template_obj->template ( 'control/admin/tpl/admin_' . $do . '_' . $view );

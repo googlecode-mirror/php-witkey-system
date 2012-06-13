@@ -20,7 +20,7 @@ abstract class keke_privission_class {
 	 */
 	public static function get_priv_item($model_id) {
 		global $kekezu;
-		$priv_item = kekezu::$_cache_obj->get ( "priv_rule_item_" . $model_id );
+		$priv_item = Keke::$_cache_obj->get ( "priv_rule_item_" . $model_id );
 		if (! $priv_item) {
 			$sql = " select a.*,b.g_title,b.m_title,c.rule,c.r_id,c.mark_rule_id from " . TABLEPRE . "witkey_priv_rule c left join " . TABLEPRE . "witkey_priv_item 
 		a on c.item_id = a.op_id left join " . TABLEPRE . "witkey_mark_rule b on c.mark_rule_id = b.mark_rule_id where a.model_id = '$model_id'";
@@ -29,7 +29,7 @@ abstract class keke_privission_class {
 			foreach ( $item as $v ) {
 				$priv_item [$v ['op_code']] [$v ['mark_rule_id']] = $v;
 			}
-			kekezu::$_cache_obj->set ( "priv_rule_item_" . $model_id, $priv_item );
+			Keke::$_cache_obj->set ( "priv_rule_item_" . $model_id, $priv_item );
 		}
 		return $priv_item;
 	}
@@ -118,7 +118,7 @@ abstract class keke_privission_class {
 	public static function get_priv($task_id,$model_id, $user_info, $role = '1') {
 		global $kekezu;
 		global $_lang;
-		$model_name = kekezu::$_model_list[$model_id]['model_name'];//模型名称;
+		$model_name = Keke::$_model_list[$model_id]['model_name'];//模型名称;
 		$priv_arr = array (); //权限数组
 		$pass = false; //默认为可操作
 		/**读取对应权限操作项**/
@@ -224,7 +224,7 @@ abstract class keke_privission_class {
 		$condition = " model_id = '$model_id'";
 		$op_code and $condition .= " and op_code = '$op_code' ";
 		$fds and $field = $fds or $field = "*";
-		return kekezu::get_table_data ( $field, "witkey_priv_item", $condition, ' op_id asc ', '', '', $pk );
+		return Keke::get_table_data ( $field, "witkey_priv_item", $condition, ' op_id asc ', '', '', $pk );
 	}
 	
 	/**
@@ -237,7 +237,7 @@ abstract class keke_privission_class {
 	 */
 	public static function get_operate_num($task_id,$uid, $op_code, $priv) {
 		global $kekezu;
-		$model_info = kekezu::$_model_list [$priv ['model_id']];
+		$model_info = Keke::$_model_list [$priv ['model_id']];
 		$model_id   = $priv['model_id'];
 			switch ($op_code) {
 				case "pub" :

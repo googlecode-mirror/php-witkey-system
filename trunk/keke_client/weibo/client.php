@@ -128,7 +128,7 @@ class oauth_api_factory {
 	//根据UID关注某人
 	static function follow_wb_user($u_id, $wb_type = null, $app_key = null, $app_secret = null) {
 		if (strtolower(CHARSET)=='gbk'){
-			$u_id = kekezu::gbktoutf($u_id);
+			$u_id = Keke::gbktoutf($u_id);
 		}
 		$o = oauth_api_factory::get_o ( $wb_type, $app_key, $app_secret );
 		return $o->follow_wb_user ( $u_id );

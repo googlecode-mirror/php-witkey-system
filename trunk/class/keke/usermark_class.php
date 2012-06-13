@@ -89,7 +89,7 @@ class keke_user_mark_class {
 	public static function exec_mark($mark_id, $content, $mark_status = '1', $aid = null, $aid_star = null) {
 		global $_lang;
 		$res = self::exec_mark_process($mark_id, $content, $mark_status, $aid, $aid_star);		
-		$res and kekezu::keke_show_msg('',$_lang['congratulation_you_mark_success'],'','json') or kekezu::keke_show_msg('',$_lang['sorry_mark_fail'],'error','json');
+		$res and Keke::keke_show_msg('',$_lang['congratulation_you_mark_success'],'','json') or Keke::keke_show_msg('',$_lang['sorry_mark_fail'],'error','json');
 	}	
 	public static function exec_mark_process($mark_id, $content, $mark_status = '1', $aid = null, $aid_star = null){		
 		global $_lang;
@@ -100,9 +100,9 @@ class keke_user_mark_class {
 		if (! $mark_info ['mark_status'] || $mark_status <= $mark_info ['mark_status']) {
 			$log_obj->setMark_status ( $mark_status );
 		}else{
-			 kekezu::keke_show_msg('',$_lang['sorry_fail_level_not_down'],'error','json');
+			 Keke::keke_show_msg('',$_lang['sorry_fail_level_not_down'],'error','json');
 		}
-		CHARSET=='gbk' and $content = kekezu::utftogbk($content);
+		CHARSET=='gbk' and $content = Keke::utftogbk($content);
 		$log_obj->setMark_content ( $content );
 		$log_obj->setAid($aid);		
 		$log_obj->setAid_star($aid_star);
@@ -183,7 +183,7 @@ class keke_user_mark_class {
 		$user_type == '1' and $tips = $_lang['ability_value'] or $tips = $_lang['credit_value']; 
 		
 		/*规则数组*/
-		$score_rule = kekezu::get_table_data ( "*", "witkey_mark_rule", "", "$credit_name asc ", '', '', '', null );
+		$score_rule = Keke::get_table_data ( "*", "witkey_mark_rule", "", "$credit_name asc ", '', '', '', null );
 		$size = sizeof ( $score_rule );
 		for($i = 0; $i < $size; $i ++) {
 			if ($credit_value <= $score_rule [0] [$credit_name]) { //比最小的还小
@@ -229,7 +229,7 @@ class keke_user_mark_class {
 	 */
 	public static function get_mark_rule($type = null) {
 		/*规则数组*/
-		$score_rule = kekezu::get_table_data ( "*", "witkey_mark_rule", "", "g_value asc,m_value asc ", '', '', '', "3600" );
+		$score_rule = Keke::get_table_data ( "*", "witkey_mark_rule", "", "g_value asc,m_value asc ", '', '', '', "3600" );
 		$size = sizeof ( $score_rule );
 		$score ['wiki'] = array (); //威客等级数组
 		$score ['ploy'] = array (); //雇主等技数组
@@ -397,7 +397,7 @@ class keke_user_mark_class {
 	 *@param $aid_type 配置类型 1=>威客 2=>雇主
 	 */
 	public static function get_mark_aid($aid_type = null) {
-		$aid_arr = kekezu::get_table_data ( "*", "witkey_mark_aid" );
+		$aid_arr = Keke::get_table_data ( "*", "witkey_mark_aid" );
 		$aid = array ();
 		foreach ( $aid_arr as $v ) {
 			$aid [$v ['aid_type']] [$v ['aid']] = $v;

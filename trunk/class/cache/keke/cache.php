@@ -6,7 +6,7 @@
  * @author michael
  *
  */
-abstract class keke_cache_class {
+abstract class Keke_cache{
 	const DEFAULT_CACHE_LIFE_TIME = 3600;
 	public $_config = array ();
 	public $_enable = false;
@@ -22,14 +22,14 @@ abstract class keke_cache_class {
 	 */
 	public static function instance($cache_driver = null, $config = null) {
 		if ($cache_driver === null) {
-			$cache_driver = keke_cache_class::$_cache_default;
+			$cache_driver = Keke_Cache::$_cache_default;
 		}
-		if (isset ( keke_cache_class::$instances [$cache_driver] )) {
-			return keke_cache_class::$instances [$cache_driver];
+		if (isset ( Keke_Cache::$instances [$cache_driver] )) {
+			return Keke_Cache::$instances [$cache_driver];
 		}
-		$class_name = "keke_cache_$cache_driver";
-		keke_cache_class::$instances [$cache_driver] = new $class_name ( $config );
-		return keke_cache_class::$instances [$cache_driver];
+		$class_name = "Keke_cache_$cache_driver";
+		Keke_Cache::$instances [$cache_driver] = new $class_name ( $config );
+		return Keke_Cache::$instances [$cache_driver];
 	}
 	public function generate_id($id) {
 		self::$_id=TABLEPRE . mb_strcut( md5 ( $id ), 24, 32 ,CHARSET);

@@ -6,12 +6,12 @@
  * 2011-12-13
  */
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
-kekezu::admin_check_role ( 2 );
+Keke::admin_check_role ( 2 );
 
 $pay_obj = new Keke_witkey_pay_config_class ();
 
 $op or $op = 'config';
-kekezu::$_cache_obj->gc();
+Keke::$_cache_obj->gc();
 if (isset ( $sbt_edit )) {
 	if (is_array ( $fds )) {
 		foreach ( $fds as $k => $v ) {
@@ -21,32 +21,32 @@ if (isset ( $sbt_edit )) {
 		}
 	}
 	if ($res) {
-		kekezu::$_cache_obj->del ( "keke_witkey_paypal_config" );
-		kekezu::admin_system_log ( $_lang ['edit_pay_config'] );
-		kekezu::admin_show_msg ( $_lang ['pay_config_set_success'], $url, 3, '', 'success' );
+		Keke::$_cache_obj->del ( "keke_witkey_paypal_config" );
+		Keke::admin_system_log ( $_lang ['edit_pay_config'] );
+		Keke::admin_show_msg ( $_lang ['pay_config_set_success'], $url, 3, '', 'success' );
 	} else {
-		kekezu::admin_show_msg ( $_lang ['pay_config_set_falid'], $url, 3, '', 'warning' );
+		Keke::admin_show_msg ( $_lang ['pay_config_set_falid'], $url, 3, '', 'warning' );
 	}
 }
 switch ($op) {
 	case "config" :
-		$pay_config = kekezu::get_table_data ( "*", "witkey_pay_config", '', '', "", '', 'k' );
+		$pay_config = Keke::get_table_data ( "*", "witkey_pay_config", '', '', "", '', 'k' );
 		break;
 	case "online" :
-		$payment_list = kekezu::get_payment_config ();
+		$payment_list = Keke::get_payment_config ();
 		break;
 	case "trust" :
 		if ($ac == 'edit') {
 			require S_ROOT . "payment/" . $pay_dir . "/control/admin/admin_edit.php";
 		} else {
-			$payment_list = kekezu::get_payment_config ( '', $op );
+			$payment_list = Keke::get_payment_config ( '', $op );
 		}
 		break;
 	case "offline" :
 		
 		$bank_arr = keke_global_class::get_bank ();
 		
-		$payment_list = kekezu::get_payment_config ( '', $op );
+		$payment_list = Keke::get_payment_config ( '', $op );
 		
 		if ($ac) {
 			$pay = $payment_list [$payment]; //银行配置
@@ -57,25 +57,25 @@ switch ($op) {
 			if ($ac == 'del') {
 				$pay_api_obj->setWhere ( " payment='$payment'" );
 				$res = $pay_api_obj->del_keke_witkey_pay_api ();
-				$res and kekezu::admin_show_msg ( $_lang ['delete_success'], "index.php?do=config&view=pay&op=offline", "3", '', 'success' ) or kekezu::admin_show_msg ( $_lang ['delete_fail'], "index.php?do=config&view=pay&op=offline", "3", '', 'warning' );
+				$res and Keke::admin_show_msg ( $_lang ['delete_success'], "index.php?do=config&view=pay&op=offline", "3", '', 'success' ) or Keke::admin_show_msg ( $_lang ['delete_fail'], "index.php?do=config&view=pay&op=offline", "3", '', 'warning' );
 			} elseif ($confirm) {
 				$config = serialize ( $conf );
 				if ($ac == 'edit') {
 					$pay_api_obj->setWhere ( " payment='$payment'" );
-					$pay_api_obj->setConfig ( kekezu::k_input ( $config ) );
+					$pay_api_obj->setConfig ( Keke::k_input ( $config ) );
 					$res = $pay_api_obj->edit_keke_witkey_pay_api ();
-					kekezu::admin_system_log ( $_lang ['edit'] . $payment );
+					Keke::admin_system_log ( $_lang ['edit'] . $payment );
 				} else {
 					if (! dbfactory::get_count ( sprintf ( " select payment from %switkey_pay_api where payment='%s'", TABLEPRE, $payment ) )) {
 						$pay_api_obj->setPayment ( $payment );
 						$pay_api_obj->setType ( 'offline' );
-						$pay_api_obj->setConfig ( kekezu::k_input ( $config ) );
+						$pay_api_obj->setConfig ( Keke::k_input ( $config ) );
 						$res = $pay_api_obj->create_keke_witkey_pay_api ();
-						kekezu::admin_system_log ( $_lang ['create'] . $payment );
+						Keke::admin_system_log ( $_lang ['create'] . $payment );
 					}
 				}
-				kekezu::empty_cache ();
-				$res and kekezu::admin_show_msg ( $_lang ['edit_add_success'], "index.php?do=config&view=pay&op=offline", "3", '', 'success' ) or kekezu::admin_show_msg ( $_lang ['edit_add_fail'], "index.php?do=config&view=pay&op=offline", "3", '', 'warning' );
+				Keke::empty_cache ();
+				$res and Keke::admin_show_msg ( $_lang ['edit_add_success'], "index.php?do=config&view=pay&op=offline", "3", '', 'success' ) or Keke::admin_show_msg ( $_lang ['edit_add_fail'], "index.php?do=config&view=pay&op=offline", "3", '', 'warning' );
 			}
 			
 			require $template_obj->template ( 'control/admin/tpl/admin_config_' . $view . '_offline' );
@@ -84,7 +84,7 @@ switch ($op) {
 		break;
 	case "disable" : //禁用
 		$pay_api_obj = keke_table_class::get_instance ( "witkey_pay_api" );
-		$payment_list = kekezu::get_table_data ( "*", "witkey_pay_api", "", '', '', '', 'payment' );
+		$payment_list = Keke::get_table_data ( "*", "witkey_pay_api", "", '', '', '', 'payment' );
 		$payment_config = $payment_list [$payname];
 		$pay_config = unserialize ( $payment_config ['config'] );
 		$pay_config ['pay_status'] = 0;
@@ -92,20 +92,20 @@ switch ($op) {
 		$res = $pay_api_obj->save ( $pay, array ("payment" => $payname ) );
 		$op = $ac;
 		$url = "index.php?do=$do&view=$view&op=$op";
-		kekezu::empty_cache ();
-		$res and kekezu::admin_show_msg ( $_lang ['close_success'], $url, "3", '', 'success' ) or kekezu::admin_show_msg ( $_lang ['close_faile'], $url, "3", '', 'warning' );
+		Keke::empty_cache ();
+		$res and Keke::admin_show_msg ( $_lang ['close_success'], $url, "3", '', 'success' ) or Keke::admin_show_msg ( $_lang ['close_faile'], $url, "3", '', 'warning' );
 		break;
 	case "allow" : //开启
-		$payment_list = kekezu::get_table_data ( "*", "witkey_pay_api", "", '', '', '', 'payment' );
+		$payment_list = Keke::get_table_data ( "*", "witkey_pay_api", "", '', '', '', 'payment' );
 		$payment_config = $payment_list [$payname];
 		$pay_config = unserialize ( $payment_config ['config'] );
 		$pay_config ['pay_status'] = 1;
 		$res = dbfactory::updatetable ( TABLEPRE . 'witkey_pay_api', array ("config" => serialize ( $pay_config ) ), array ("payment" => $payname ) );
 		$op = $ac;
 		$url = "index.php?do=$do&view=$view&op=$op";
-		kekezu::admin_system_log ( "allow" . $payname );
-		kekezu::empty_cache ();
-		$res and kekezu::admin_show_msg ( $_lang ['open_success'], $url, "3", '', 'success' ) or kekezu::admin_show_msg ( $_lang ['open_fail'], $url, "3", '', 'warning' );
+		Keke::admin_system_log ( "allow" . $payname );
+		Keke::empty_cache ();
+		$res and Keke::admin_show_msg ( $_lang ['open_success'], $url, "3", '', 'success' ) or Keke::admin_show_msg ( $_lang ['open_fail'], $url, "3", '', 'warning' );
 		break;
 	default :
 		;

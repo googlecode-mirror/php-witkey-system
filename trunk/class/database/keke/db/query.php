@@ -1,5 +1,5 @@
 <?php
-class keke_db_query {
+class Keke_db_query {
 	// Query type
 	protected $_type;
 	
@@ -29,7 +29,7 @@ class keke_db_query {
 	 */
 	public function __construct($sql, $type) {
 		if($type===null){
-			$type = database::SELECT;
+			$type = Database::SELECT;
 		}
 		$this->_type = $type;
 		$this->_sql = $sql;
@@ -37,7 +37,7 @@ class keke_db_query {
 	final public function __toString() {
 		try {
 			// 返回sql字符串
-			return $this->compile ( database::instance () );
+			return $this->compile ( Database::instance () );
 		} catch ( Exception $e ) {
 			return keke_exception::text ( $e );
 		}
@@ -59,7 +59,7 @@ class keke_db_query {
 	public function cached($lifetime = NULL, $force = FALSE) {
 		if ($lifetime === NULL) {
 			// 默认缓存时间
-			$lifetime = cache::DEFAULT_CACHE_LIFE_TIME;
+			$lifetime = Cache::DEFAULT_CACHE_LIFE_TIME;
 		}
 		$this->_force_execute = $force;
 		$this->_lifetime = $lifetime;
@@ -164,17 +164,17 @@ class keke_db_query {
 	public function execute($db = NULL) {
 		if (! is_object ( $db )) {
 			// Get the database instance
-			$db = database::instance ( $db );
+			$db = Database::instance ( $db );
 		}
 		
 		// 生成sql语句
 		$sql = $this->compile ( $db );
 		// 使用数据库实例与sql作为缓存的键名
-		$cache_key = cache::instance()->generate_id( $sql);
+		$cache_key = Cache::instance()->generate_id( $sql);
 		
-		if ($this->_lifetime !== NULL and $this->_type === database::SELECT) {
+		if ($this->_lifetime !== NULL and $this->_type === Database::SELECT) {
 			//先读取缓存再去删除lifetime<=0 的缓存
-				return cache::instance()->get($cache_key);
+				return Cache::instance()->get($cache_key);
 		}
 		
 		// Execute the query
@@ -182,7 +182,7 @@ class keke_db_query {
 		
 		if (isset ( $cache_key ) and $this->_lifetime > 0) {
 			// Cache the result array
-			cache::instance()->set($cache_key, $result, $this->_lifetime );
+			Cache::instance()->set($cache_key, $result, $this->_lifetime );
 		}
 		
 		return $result;

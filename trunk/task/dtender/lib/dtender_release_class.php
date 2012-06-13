@@ -67,7 +67,7 @@ class dtender_release_class extends keke_task_release_class {
 					$sql = " select model_id,task_title,task_desc,indus_id,indus_pid,
 						task_cash,task_cash_coverage from %switkey_task where task_id='%d' and model_id='%d'";
 					$task_info = dbfactory::get_one ( sprintf ( $sql, TABLEPRE, $data ['t_id'] ,$this->_model_id));
-					$task_info or kekezu::show_msg($_lang['operate_notice'],$_SERVER['HTTP_REFERER'],3,$_lang['not_exsist_relation_task_and_not_user_onekey'],"warning");
+					$task_info or Keke::show_msg($_lang['operate_notice'],$_SERVER['HTTP_REFERER'],3,$_lang['not_exsist_relation_task_and_not_user_onekey'],"warning");
 					
 					$release_info = $this->onekey_mode_format($task_info);
 					$release_info ['slt_cash_cove'] = intval ( $task_info ['task_cash_coverage'] );
@@ -104,7 +104,7 @@ class dtender_release_class extends keke_task_release_class {
 	
 	public function set_dtask_status($total_cash, $task_cash) {
 		global $kekezu;
-		$basic_config = kekezu::$_sys_config;
+		$basic_config = Keke::$_sys_config;
 		$balance = $this->_user_info ['balance'];
 		$credit = $this->_user_info ['credit'];
 		if ($balance + $credit >= $total_cash) { //用户金额满足总花费的情况下

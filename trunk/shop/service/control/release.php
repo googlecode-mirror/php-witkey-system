@@ -11,7 +11,7 @@ $service_config = $release_obj->_service_config; //服务配置
 $ext = '.jpg,.jpeg,.gif,.png,.bmp';
 switch ($r_step) { //服务发布步骤
 	case "step1" :
-		if(kekezu::submitcheck($formhash)){
+		if(Keke::submitcheck($formhash)){
 			$release_info and $_POST = array_merge ( $release_info, $_POST );
 			$release_obj->save_service_obj ( $_POST, $std_cache_name ); //信息保存
 			header ( "location:index.php?do=shop_release&model_id={$model_id}&r_step=step2" );
@@ -19,17 +19,17 @@ switch ($r_step) { //服务发布步骤
 		}
 		break;
 	case "step2" :
-		if (kekezu::submitcheck($formhash)) {
+		if (Keke::submitcheck($formhash)) {
 			$release_info and $_POST = array_merge ( $release_info, $_POST,$_FILES);
-			$_POST['txt_title']  = kekezu::escape($txt_title);
-			$_POST['tar_content'] = kekezu::escape( $tar_content );
+			$_POST['txt_title']  = Keke::escape($txt_title);
+			$_POST['tar_content'] = Keke::escape( $tar_content );
 			$release_obj->save_service_obj ( $_POST, $std_cache_name ); //信息保存
 			header ( "location:index.php?do=shop_release&model_id={$model_id}&r_step=step3" );
 			die ();
 		} else {
 			$release_obj->check_access ( $r_step, $model_id, $release_info ); //页面进入权限检测
 			$kf_info	 = $release_obj->_kf_info; //随机客服
-			$indus_p_arr = kekezu::$_indus_p_arr; //父级行业
+			$indus_p_arr = Keke::$_indus_p_arr; //父级行业
 			$indus_arr   = $release_obj->get_service_indus($release_info ['indus_pid']); //子集行业
 			$price_unit  = $release_obj->get_price_unit();//价格单位
 			$service_unit= $release_obj->get_service_unit();//工时单位
@@ -47,7 +47,7 @@ switch ($r_step) { //服务发布步骤
 				break;
 		}
 		
-		if (kekezu::submitcheck($formhash)) {
+		if (Keke::submitcheck($formhash)) {
 		//if($formhash){
 			$release_info and $_POST = array_merge ( $release_info, $_POST );
 			$release_obj->save_service_obj ( $_POST, $std_cache_name ); //信息保存

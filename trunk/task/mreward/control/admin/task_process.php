@@ -23,10 +23,10 @@ if($op_result){
 		case 'report':
 			$res = $process_obj->process_report($op_result,$type);
 			if($op_result['action']=='pass'){
-				$res  and kekezu::admin_show_msg($_lang['operate_notice'],$url,3,$action_arr[$type][1].$_lang['operate_complete'],'success') or kekezu::admin_show_msg($_lang['operate_notice'],$url,3,$action_arr[$type][1].$_lang['operate_fail'],'warning');
+				$res  and Keke::admin_show_msg($_lang['operate_notice'],$url,3,$action_arr[$type][1].$_lang['operate_complete'],'success') or Keke::admin_show_msg($_lang['operate_notice'],$url,3,$action_arr[$type][1].$_lang['operate_fail'],'warning');
 			}else{
 				$url = "index.php?do=trans&view=report&type=$type&report_status=3";
-			    $res  and kekezu::admin_show_msg($_lang['operate_notice'],$url,3,$action_arr[$type][1].$_lang['operate_complete'],'success') or kekezu::admin_show_msg($_lang['operate_notice'],$url,3,$action_arr[$type][1].$_lang['operate_fail'],'warning');
+			    $res  and Keke::admin_show_msg($_lang['operate_notice'],$url,3,$action_arr[$type][1].$_lang['operate_complete'],'success') or Keke::admin_show_msg($_lang['operate_notice'],$url,3,$action_arr[$type][1].$_lang['operate_fail'],'warning');
 			}
 		break;
 		case 'rights':

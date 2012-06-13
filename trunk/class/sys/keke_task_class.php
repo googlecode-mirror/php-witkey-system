@@ -123,7 +123,7 @@ abstract class keke_task_class {
 		$task_info = $this->_task_info;
 		$this->_guid = $task_info ['uid'];
 		$this->_gusername = $task_info ['username'];
-		$this->_g_userinfo = kekezu::get_user_info ( $task_info ['uid'] );
+		$this->_g_userinfo = Keke::get_user_info ( $task_info ['uid'] );
 	}
 	/**
 	 * 威客信息初始化
@@ -139,7 +139,7 @@ abstract class keke_task_class {
 	 */
 	public function kf_info_init() {
 		$this->_kf_uid = $this->_task_info ['kf_uid'];
-		$this->_kf_userinfo = kekezu::get_user_info ( $this->_task_info ['kf_uid'] );
+		$this->_kf_userinfo = Keke::get_user_info ( $this->_task_info ['kf_uid'] );
 	}
 	/**
 	 * 获取不同模型下的不同稿件表使用字段。
@@ -165,14 +165,14 @@ abstract class keke_task_class {
 	public function get_search_condit() {
 		$search_condit = array ();
 		$fields_arr = $this->get_work_fields ();
-		$search_condit = kekezu::get_table_data ( " count($fields_arr[pk]) count,$fields_arr[st]", $fields_arr ['tab'], " task_id='" . $this->_task_id . "' ", "", $fields_arr ['st'], "", $fields_arr ['st'], 3600 );
+		$search_condit = Keke::get_table_data ( " count($fields_arr[pk]) count,$fields_arr[st]", $fields_arr ['tab'], " task_id='" . $this->_task_id . "' ", "", $fields_arr ['st'], "", $fields_arr ['st'], 3600 );
 		return $search_condit;
 	}
 	/**
 	 * 获取任务附件
 	 */
 	public function get_task_file() {
-		return kekezu::get_table_data ( "*", "witkey_file", " obj_type = 'task' and work_id='0' and task_id = '" . $this->_task_id . "'", "", "", "", "file_id", 3600 );
+		return Keke::get_table_data ( "*", "witkey_file", " obj_type = 'task' and work_id='0' and task_id = '" . $this->_task_id . "'", "", "", "", "file_id", 3600 );
 	}
 	/**
 	 * 获取相关任务信息
@@ -245,8 +245,8 @@ abstract class keke_task_class {
 	public function set_task_delay($delay_day, $delay_cash, $url = '', $output = 'normal', $trust_response = false) {
 		global $kekezu;
 		global $_lang;
-		$basic_config = kekezu::$_sys_config;
-		kekezu::check_login ( $url, $output ); //检测登录
+		$basic_config = Keke::$_sys_config;
+		Keke::check_login ( $url, $output ); //检测登录
 		if ($this->check_if_over_delay ( $delay_day, $delay_cash, $url, $output )) {
 			$task_info = $this->_task_info;
 				$delay_obj = new Keke_witkey_task_delay_class ();
@@ -257,7 +257,7 @@ abstract class keke_task_class {
 				/*金额不足*/
 				if ($delay_cash > $mycredit + $mycash) {
 					$repay_cash = $delay_cash - $mycredit - $mycash; //需要充值金额
-					kekezu::keke_show_msg ( "index.php?do=user&view=finance&op=recharge&type=delay&cash=" . $repay_cash, $_lang['your_account_balance_not_enough']."<a href=\"index.php?do=user&view=finance&op=recharge&type=delay&cash=" . $repay_cash . "\"".$_lang['recharge_page']."</a>".$_lang['recharge'], "error", $output );
+					Keke::keke_show_msg ( "index.php?do=user&view=finance&op=recharge&type=delay&cash=" . $repay_cash, $_lang['your_account_balance_not_enough']."<a href=\"index.php?do=user&view=finance&op=recharge&type=delay&cash=" . $repay_cash . "\"".$_lang['recharge_page']."</a>".$_lang['recharge'], "error", $output );
 				} else { //创建延期记录
 					$delay_obj->setDelay_cash ( $delay_cash );
 					$delay_obj->setOn_time ( time () );
@@ -291,9 +291,9 @@ abstract class keke_task_class {
 							mreward_task_class::task_delay($this->_task_id,$task_info['task_cash'],$delay_cash);
 						}
 						
-						kekezu::keke_show_msg ( $url, $_lang['task_delay_success'], "", $output );
+						Keke::keke_show_msg ( $url, $_lang['task_delay_success'], "", $output );
 					} else {
-						kekezu::keke_show_msg ( $url, $_lang['task_delay_fail'], "error", $output );
+						Keke::keke_show_msg ( $url, $_lang['task_delay_fail'], "error", $output );
 					}
 				}
 		}
@@ -305,8 +305,8 @@ abstract class keke_task_class {
 	 * @return json
 	 */
 	public static function set_task_comment($comment_arr, $is_reply = false) {
-		strtolower ( CHARSET ) == 'gbk' and $comment_arr ['content'] = kekezu::utftogbk ( $comment_arr ['content'] );
-		$comment_arr ['content'] = kekezu::escape ( kekezu::str_filter ( $comment_arr ['content'] ) );
+		strtolower ( CHARSET ) == 'gbk' and $comment_arr ['content'] = Keke::utftogbk ( $comment_arr ['content'] );
+		$comment_arr ['content'] = Keke::escape ( Keke::str_filter ( $comment_arr ['content'] ) );
 		$lid = dbfactory::inserttable ( TABLEPRE . "witkey_comment", $comment_arr, 1 );
 		//任务留言数加1
 		$is_reply or dbfactory::execute ( sprintf ( "update %switkey_task set leave_num = leave_num+1 where task_id = '%d'", TABLEPRE, $comment_arr ['obj_id'] ) );
@@ -348,7 +348,7 @@ abstract class keke_task_class {
 		} else {
 			$where = " 1 = 1 and task_id = '" . $this->_task_id . "' ";
 			strpos ( $work_status, "," ) == FALSE and $where .= " and $st = '$work_status' " or $where .= " and $st in ($work_status) ";
-			return kekezu::get_table_data ( "*", $tab, $where );
+			return Keke::get_table_data ( "*", $tab, $where );
 		}
 	}
 	/**
@@ -361,14 +361,14 @@ abstract class keke_task_class {
 		return dbfactory::query ( $sql );
 	}
 	public function get_mark_count() {
-		return kekezu::get_table_data ( " count(mark_id) count,mark_status", "witkey_mark", "model_code='" . $this->_model_code . "' and origin_id='$this->_task_id'", "", "mark_status", "", "mark_status", 3600 );
+		return Keke::get_table_data ( " count(mark_id) count,mark_status", "witkey_mark", "model_code='" . $this->_model_code . "' and origin_id='$this->_task_id'", "", "mark_status", "", "mark_status", 3600 );
 	}
 	/**
 	 * 获取来自雇主或者威客的评价信息
 	 * *
 	 */
 	public function get_mark_count_ext() {
-		return kekezu::get_table_data ( " count(mark_id) count,mark_type", "witkey_mark", "model_code='" . $this->_model_code . "' and origin_id='$this->_task_id' and mark_status>0", "", "mark_type", "", "mark_type", 3600 );
+		return Keke::get_table_data ( " count(mark_id) count,mark_type", "witkey_mark", "model_code='" . $this->_model_code . "' and origin_id='$this->_task_id' and mark_status>0", "", "mark_type", "", "mark_type", 3600 );
 	}
 	/**
 	 * 更改任务状态
@@ -382,8 +382,8 @@ abstract class keke_task_class {
 	/**
 	 * 任务补充需求
 	 * @param string $ext_desc 补充内容
-	 * @param string $url    操作提示链接  具体参见 kekezu::keke_show_msg
-	 * @param string $output 消息输出方式 具体参见 kekezu::keke_show_msg
+	 * @param string $url    操作提示链接  具体参见 Keke::keke_show_msg
+	 * @param string $output 消息输出方式 具体参见 Keke::keke_show_msg
 	 * @return show_msg
 	 */
 	public function set_task_reqedit($ext_desc, $url = '', $output = 'normal') {
@@ -391,13 +391,13 @@ abstract class keke_task_class {
 		if ($this->check_if_can_reqedit ( $url, $output )) {
 			$task_obj = $this->_task_obj;
 			$task_obj->setWhere ( "task_id = '$this->_task_id'" );
-			CHARSET == 'gbk' and $ext_desc = kekezu::utftogbk ( $ext_desc );
+			CHARSET == 'gbk' and $ext_desc = Keke::utftogbk ( $ext_desc );
 			$task_obj->setExt_desc ( $ext_desc );
 			$res = $task_obj->edit_keke_witkey_task ();
 			if ($res) {
-				kekezu::keke_show_msg ( $url, $_lang['task_need_add_edit_success'], "", $output );
+				Keke::keke_show_msg ( $url, $_lang['task_need_add_edit_success'], "", $output );
 			} else {
-				kekezu::keke_show_msg ( $url, $_lang['task_need_add_edit_fail'], "error", $output );
+				Keke::keke_show_msg ( $url, $_lang['task_need_add_edit_fail'], "error", $output );
 			}
 		}
 	}
@@ -407,16 +407,16 @@ abstract class keke_task_class {
 	 * @param int $obj_id  对象编号
 	 * @param string $content 回复内容
 	 * @param int $pid     上级回复编号
-	 * @param string $url    操作提示链接  具体参见 kekezu::keke_show_msg
-	 * @param string $output 消息输出方式 具体参见 kekezu::keke_show_msg
+	 * @param string $url    操作提示链接  具体参见 Keke::keke_show_msg
+	 * @param string $output 消息输出方式 具体参见 Keke::keke_show_msg
 	 */
 	public function set_work_comment($obj, $work_id, $content, $pid = '', $url = '', $output = 'normal') {
 		global $_lang,$kekezu;
-		$comment_desc = kekezu::str_filter (kekezu::escape($content) );
-		CHARSET == 'gbk' and $comment_desc = kekezu::utftogbk ( $comment_desc );
+		$comment_desc = Keke::str_filter (Keke::escape($content) );
+		CHARSET == 'gbk' and $comment_desc = Keke::utftogbk ( $comment_desc );
 		$obj == 'task' and $str[op] = $_lang['task'] or $str = $_lang['workl'];
-		$this->_priv ['comment'] ['pass'] or kekezu::keke_show_msg ( $url, $this->_priv ['comment'] ['notice'] . $_lang['no_reply_rights'], "error", $output );
-		kekezu::k_match(array(kekezu::$_sys_config['ban_content']),$comment_desc) and kekezu::keke_show_msg('',$_lang['sensitive_word'],'error','json');
+		$this->_priv ['comment'] ['pass'] or Keke::keke_show_msg ( $url, $this->_priv ['comment'] ['notice'] . $_lang['no_reply_rights'], "error", $output );
+		Keke::k_match(array(Keke::$_sys_config['ban_content']),$comment_desc) and Keke::keke_show_msg('',$_lang['sensitive_word'],'error','json');
 		$comment_obj = new Keke_witkey_comment_class ();
 		$comment_obj->_comment_id = null;
 		$comment_obj->setContent ( $comment_desc );
@@ -432,11 +432,11 @@ abstract class keke_task_class {
 		 
 		if ($comment_id) {
 			$this->plus_work_comment_num ( $work_id );
-			kekezu::echojson($_lang['comment_success'],1,htmlspecialchars($comment_desc));die();
-			//kekezu::keke_show_msg ( $url, $str . $_lang['comment_success'], "", $output );
+			Keke::echojson($_lang['comment_success'],1,htmlspecialchars($comment_desc));die();
+			//Keke::keke_show_msg ( $url, $str . $_lang['comment_success'], "", $output );
 		} else {
-			kekezu::echojson($_lang['comment_fail'],0,htmlspecialchars($comment_desc));die();
-			//kekezu::keke_show_msg ( $url, $str . $_lang['comment_fail'], "error", $output );
+			Keke::echojson($_lang['comment_fail'],0,htmlspecialchars($comment_desc));die();
+			//Keke::keke_show_msg ( $url, $str . $_lang['comment_fail'], "error", $output );
 		}
 	 
 	}
@@ -452,20 +452,20 @@ abstract class keke_task_class {
 	 */
 	public function set_report($obj, $obj_id, $to_uid, $to_username, $report_type, $file_name, $desc) {
 		global $_lang;
-		$this->_priv ['report'] ['pass'] or kekezu::keke_show_msg ( '', $this->_priv ['report'] ['notice'] . $_lang['no_report_rights'], "error", 'json' );
+		$this->_priv ['report'] ['pass'] or Keke::keke_show_msg ( '', $this->_priv ['report'] ['notice'] . $_lang['no_report_rights'], "error", 'json' );
 		$this->_uid != $this->_guid and $user_type = '1' or $user_type = '2';
 		$res = keke_report_class::add_report ( $obj, $obj_id, $to_uid, $to_username, $desc, $report_type, $this->_task_status, $this->_task_id, $user_type, $file_name );
 	}
 	/**
 	 * 任务（稿件）举报
 	 * @param int $work_id 稿件编号
-	 * @param string $url    操作提示链接  具体参见 kekezu::keke_show_msg
-	 * @param string $output 消息输出方式 具体参见 kekezu::keke_show_msg
+	 * @param string $url    操作提示链接  具体参见 Keke::keke_show_msg
+	 * @param string $output 消息输出方式 具体参见 Keke::keke_show_msg
 	 */
 	public function del_work($work_id, $url = '', $output = 'normal') {
 		global $user_info;
 		global $_lang;
-		$user_info ['group_id'] != '7' and kekezu::keke_show_msg ( $url, $_lang['you_no_rights_delete_manuscript'], "error", $output );
+		$user_info ['group_id'] != '7' and Keke::keke_show_msg ( $url, $_lang['you_no_rights_delete_manuscript'], "error", $output );
 		$fields_arr = $this->get_work_fields ();
 		$tab = $fields_arr ['tab'];
 		$pk = $fields_arr ['pk'];
@@ -474,9 +474,9 @@ abstract class keke_task_class {
 		//$num = dbfactory::execute ( sprintf ( "delete from %switkey_comment where origin_id='%d' and obj_id = '%d'", TABLEPRE, $this->_task_id, $work_id ) );
 		if ($res) {
 			dbfactory::execute ( sprintf ( "update %switkey_task set work_num = work_num-1 where task_id = '%d'", TABLEPRE, $this->_task_id ) );
-			kekezu::keke_show_msg ( $url, $_lang['manuscript_delete_success'], "", $output );
+			Keke::keke_show_msg ( $url, $_lang['manuscript_delete_success'], "", $output );
 		} else {
-			kekezu::keke_show_msg ( $url, $_lang['manuscript_delete_fail'], "error", $output );
+			Keke::keke_show_msg ( $url, $_lang['manuscript_delete_fail'], "error", $output );
 		}
 	}
 	/**
@@ -504,9 +504,9 @@ abstract class keke_task_class {
 		$tab = $fields_arr ['tab'];
 		$pk = $fields_arr ['pk'];
 		$pre = ($page - 1) * $limit;
-		$work_ids = kekezu::get_table_data ( $pk, $tab, " task_id ='$this->_task_id'", "", "", " $pre,$limit", $pk );
+		$work_ids = Keke::get_table_data ( $pk, $tab, " task_id ='$this->_task_id'", "", "", " $pre,$limit", $pk );
 		if ($work_ids) {
-			$new_arr = kekezu::get_table_data ( "count(comment_id) count,obj_id", "witkey_comment", " obj_id in (" . implode ( ",", array_keys ( $work_ids ) ) . ") and status=0 and origin_id='$this->_task_id'", "", " obj_id ", "", "obj_id" );
+			$new_arr = Keke::get_table_data ( "count(comment_id) count,obj_id", "witkey_comment", " obj_id in (" . implode ( ",", array_keys ( $work_ids ) ) . ") and status=0 and origin_id='$this->_task_id'", "", " obj_id ", "", "obj_id" );
 		}
 		return $new_arr;
 	}
@@ -521,7 +521,7 @@ abstract class keke_task_class {
 	public function notify_user($action, $title, $v_arr = array(), $notify_type = 2, $uid = null) {
 		switch ($notify_type) {
 			case 1:
-				! $uid and $user_info = $this->_userinfo or $user_info = kekezu::get_user_info ( $uid ); //默认为当前用户信息
+				! $uid and $user_info = $this->_userinfo or $user_info = Keke::get_user_info ( $uid ); //默认为当前用户信息
 				break;
 			case 2:
 				$user_info = $this->_g_userinfo;
@@ -542,7 +542,7 @@ abstract class keke_task_class {
 		$delay_rule = $this->_delay_rule; //延期规则
 		$rule_count = sizeof ( $delay_rule ); //延期规则个数
 		if ($rule_count == '0') { //没有延期规则
-			kekezu::keke_show_msg ( $url, $this->_model_name . $_lang['task_model_no_open_delay'], "error", $output );
+			Keke::keke_show_msg ( $url, $this->_model_name . $_lang['task_model_no_open_delay'], "error", $output );
 			return false;
 		} else {
 			if ($this->_process_can ['delay']) { //可以延期
@@ -553,28 +553,28 @@ abstract class keke_task_class {
 				$min_cash > $this_min_cash and $real_min = $min_cash or $real_min = $this_min_cash; //真正最小金额
 				if ($delay_count < $rule_count) { //还可延期
 					if ($delay_cash < $real_min) { //小于当前延期最小金额
-						kekezu::keke_show_msg ( $url, $_lang['the_delay_money_less_min'] . $real_min . $_lang['yuan_and_delay_fail'], "error", $output );
+						Keke::keke_show_msg ( $url, $_lang['the_delay_money_less_min'] . $real_min . $_lang['yuan_and_delay_fail'], "error", $output );
 						return false;
 					} elseif ($delay_day > $max_day) {
-						kekezu::keke_show_msg ( $url, $_lang['the_delay_days_more_max'] . $max_day . $_lang['tian_and_delay_fail'], "error", $output );
+						Keke::keke_show_msg ( $url, $_lang['the_delay_days_more_max'] . $max_day . $_lang['tian_and_delay_fail'], "error", $output );
 						return false;
 					} else {
 						return true;
 					}
 				} else {
-					kekezu::keke_show_msg ( $url, $_lang['task_delay_times_has_reached'], "error", $output );
+					Keke::keke_show_msg ( $url, $_lang['task_delay_times_has_reached'], "error", $output );
 					return false;
 				}
 			} else {
-				kekezu::keke_show_msg ( $url, $_lang['task_no_ongoing_no_delay'], "error", $output );
+				Keke::keke_show_msg ( $url, $_lang['task_no_ongoing_no_delay'], "error", $output );
 				return false;
 			}
 		}
 	}
 	/**
 	 * 检测是否为雇主
-	 * @param string $url    操作提示链接  具体参见 kekezu::keke_show_msg
-	 * @param string $output 消息输出方式 具体参见 kekezu::keke_show_msg
+	 * @param string $url    操作提示链接  具体参见 Keke::keke_show_msg
+	 * @param string $output 消息输出方式 具体参见 Keke::keke_show_msg
 	 * @return boolean or show_msg
 	 */
 	public function check_if_master($url = '', $output = 'normal') {
@@ -582,7 +582,7 @@ abstract class keke_task_class {
 		if ($this->_uid != $this->_guid)
 			return TRUE;
 		else {
-			kekezu::keke_show_msg ( $url, $_lang['can_not_operate_youself_task'], "error", $output );
+			Keke::keke_show_msg ( $url, $_lang['can_not_operate_youself_task'], "error", $output );
 			return false;
 		}
 	}
@@ -590,22 +590,22 @@ abstract class keke_task_class {
 	 * 检测是否好评
 	 * @param int     $mark_id 互评编号
 	 * @param  int  $to_status 变更状态
-	 * @param string $url    操作提示链接  具体参见 kekezu::keke_show_msg
-	 * @param string $output 消息输出方式 具体参见 kekezu::keke_show_msg
+	 * @param string $url    操作提示链接  具体参见 Keke::keke_show_msg
+	 * @param string $output 消息输出方式 具体参见 Keke::keke_show_msg
 	 * @return boolean or show_msg
 	 */
 	public function check_if_good_mark($mark_id, $to_status, $url = '', $output = 'normal') {
 		global $_lang;
 		$mark_status = dbfactory::get_count ( sprintf ( " select mark_status from %switkey_mark where mark_id='%d'", TABLEPRE, $mark_id ) );
 		if ($mark_status == 1 && $mark_status != $to_status) { //阻止好评变更为其他状态
-			kekezu::keke_show_msg ( $url, $_lang['good_values_can_not_update'], "error", $output );
+			Keke::keke_show_msg ( $url, $_lang['good_values_can_not_update'], "error", $output );
 		} else
 			return true;
 	}
 	/**
 	 * 检测是否可以进行互评
-	 * @param string $url    操作提示链接  具体参见 kekezu::keke_show_msg
-	 * @param string $output 消息输出方式 具体参见 kekezu::keke_show_msg
+	 * @param string $url    操作提示链接  具体参见 Keke::keke_show_msg
+	 * @param string $output 消息输出方式 具体参见 Keke::keke_show_msg
 	 * @return boolean or show_msg
 	 */
 	public function check_if_can_mark($url = '', $output = 'normal') {
@@ -613,13 +613,13 @@ abstract class keke_task_class {
 		if ($this->_process_can ['work_mark'] || $this->_process_can ['task_mark']) {
 			return true;
 		} else {
-			kekezu::keke_show_msg ( $url, $_lang['current_status_can_not_mark'], "error", $output );
+			Keke::keke_show_msg ( $url, $_lang['current_status_can_not_mark'], "error", $output );
 		}
 	}
 	/**
 	 * 检测是否可以补充需求
-	 * @param string $url    操作提示链接  具体参见 kekezu::keke_show_msg
-	 * @param string $output 消息输出方式 具体参见 kekezu::keke_show_msg
+	 * @param string $url    操作提示链接  具体参见 Keke::keke_show_msg
+	 * @param string $output 消息输出方式 具体参见 Keke::keke_show_msg
 	 * @return boolean or show_msg
 	 */
 	public function check_if_can_reqedit($url = '', $output = 'normal') {
@@ -627,29 +627,29 @@ abstract class keke_task_class {
 		if ($this->_process_can ['reqedit']) {
 			return true;
 		} else {
-			kekezu::keke_show_msg ( $url, $_lang['current_status_not_add_need'], "error", $output );
+			Keke::keke_show_msg ( $url, $_lang['current_status_not_add_need'], "error", $output );
 		}
 	}
 	/**
 	 * 检测是否可以交稿
-	 * @param string $url    操作提示链接  具体参见 kekezu::keke_show_msg
-	 * @param string $output 消息输出方式 具体参见 kekezu::keke_show_msg
+	 * @param string $url    操作提示链接  具体参见 Keke::keke_show_msg
+	 * @param string $output 消息输出方式 具体参见 Keke::keke_show_msg
 	 * @return boolean or show_msg
 	 */
 	public function check_if_can_hand($url = '', $output = 'normal') {
 		global $_K;
 		global $_lang;
-		$this->_priv ['work_hand'] ['pass'] or kekezu::keke_show_msg ( $url, $this->_priv ['work_hand'] ['notice'] . $_lang['no_submit_work_rights'], "error", $output );
+		$this->_priv ['work_hand'] ['pass'] or Keke::keke_show_msg ( $url, $this->_priv ['work_hand'] ['notice'] . $_lang['no_submit_work_rights'], "error", $output );
 		if ($this->_process_can ['work_hand']) {
 				return true;
 		} else {
-			kekezu::keke_show_msg ( $url, $_lang['current_status_can_not_submit'], "error", $output );
+			Keke::keke_show_msg ( $url, $_lang['current_status_can_not_submit'], "error", $output );
 		}
 	}
 	/**
 	 * 检测是否可以选稿
-	 * @param string $url    操作提示链接  具体参见 kekezu::keke_show_msg
-	 * @param string $output 消息输出方式 具体参见 kekezu::keke_show_msg
+	 * @param string $url    操作提示链接  具体参见 Keke::keke_show_msg
+	 * @param string $output 消息输出方式 具体参见 Keke::keke_show_msg
 	 * @return boolean or show_msg
 	 */
 	public function check_if_can_choose($url = '', $output = 'normal') {
@@ -657,7 +657,7 @@ abstract class keke_task_class {
 		if ($this->_process_can ['work_choose']) {
 			return true;
 		} else {
-			kekezu::keke_show_msg ( $url, $_lang['current_status_can_not_choose'], "error", $output );
+			Keke::keke_show_msg ( $url, $_lang['current_status_can_not_choose'], "error", $output );
 		}
 	}
 	/**
@@ -786,7 +786,7 @@ abstract class keke_task_class {
 		if(	$_COOKIE ['task_browing_history_' . $this->_uid] ){
 		 
 		if(get_magic_quotes_gpc ()){
-		   $_COOKIE ['task_browing_history_' . $this->_uid] =  kekezu::k_stripslashes(	$_COOKIE ['task_browing_history_' . $this->_uid]);
+		   $_COOKIE ['task_browing_history_' . $this->_uid] =  Keke::k_stripslashes(	$_COOKIE ['task_browing_history_' . $this->_uid]);
 		} 
 	    $temp = unserialize($_COOKIE ['task_browing_history_' . $this->_uid]);
 	  
@@ -816,7 +816,7 @@ abstract class keke_task_class {
 		global $uid;
 		$data = array();
 		if($uid&&$obj_ids){
-			$data=kekezu::get_table_data("mark_id,obj_id","witkey_mark","mark_status>0 and by_uid='$uid' and origin_id='$this->_task_id' and obj_id in ($obj_ids)","","","","obj_id",null);
+			$data=Keke::get_table_data("mark_id,obj_id","witkey_mark","mark_status>0 and by_uid='$uid' and origin_id='$this->_task_id' and obj_id in ($obj_ids)","","","","obj_id",null);
 		}
 		return $data;
 	}

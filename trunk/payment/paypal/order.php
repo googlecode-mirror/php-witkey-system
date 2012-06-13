@@ -23,7 +23,7 @@ defined('IN_KEKE') or exit('Access Denied');
  */
 function get_pay_url($charge_type,$pay_amount,$payment_config,$subject,$order_id,$model_id=null,$obj_id=null, $service ="_xclick", $sign_type = 'MD5'){
 	global $_K,$uid;
-	//CHARSET=='gbk' and $subject=kekezu::gbktoutf($subject);
+	//CHARSET=='gbk' and $subject=Keke::gbktoutf($subject);
 	$subject = 'paypal online pay(UID='.$uid.')';
 	$seller_account = $payment_config['account'];
 	$return_url = $_K ['siteurl'] . '/payment/paypal/return.php';

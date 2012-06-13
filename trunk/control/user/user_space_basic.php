@@ -21,11 +21,11 @@ if ($sbt_edit) {
 	$shop_obj = keke_table_class::get_instance ( "witkey_shop" );
 	 
 	$conf ['uid'] = $uid;
-	$conf ['username'] = kekezu::escape($username);
-	$conf ['shop_name'] = kekezu::escape($shop_name);
-	$conf ['shop_type'] = kekezu::escape($shop_type);
+	$conf ['username'] = Keke::escape($username);
+	$conf ['shop_name'] = Keke::escape($shop_name);
+	$conf ['shop_type'] = Keke::escape($shop_type);
 	intval($shop_info['shop_id']) or $conf['shop_background'] = $file_temp;
-	$shop_slogans and $conf ['shop_slogans'] = kekezu::escape($shop_slogans);
+	$shop_slogans and $conf ['shop_slogans'] = Keke::escape($shop_slogans);
 	$style_name and $conf ['shop_skin'] = $style_name or $conf ['shop_skin'] = 'default';
 	
 	/*begin 空间背景图片的定位*/
@@ -44,22 +44,22 @@ if ($sbt_edit) {
 	$shop_info = dbfactory::query($sql);
 	$pk['shop_id'] = $shop_info['0']['shop_id']; 
 	$res = $shop_obj->save ($conf, $pk );
-	$res and kekezu::show_msg ( $_lang['operate_notice'], "index.php?do=space&member_id=$uid", 3, $_lang['edit_space_success'], 'success') or kekezu::show_msg ( $_lang['operate_notice'], $ac_url, 3, $_lang['edit_space_fail'], 'warning' );
+	$res and Keke::show_msg ( $_lang['operate_notice'], "index.php?do=space&member_id=$uid", 3, $_lang['edit_space_success'], 'success') or Keke::show_msg ( $_lang['operate_notice'], $ac_url, 3, $_lang['edit_space_fail'], 'warning' );
 	
 }
 
 if ($ajax) {
 	$fieldss = array('logo','shop_background','banner');
 	if (!$fields || !in_array($fields, $fieldss)){
-		kekezu::echojson( $_lang['fail_set'], "0" );
+		Keke::echojson( $_lang['fail_set'], "0" );
 	}
 	$fields && isset ( $filePath ) and $res = dbfactory::execute ( sprintf ( " update %switkey_shop set %s='%s' where shop_id='%d'", TABLEPRE, $fields, $filePath, $shop_info ['shop_id'] ) );
-	$res and kekezu::echojson ( $_lang['successfully_set'], "1" ) or kekezu::echojson( $_lang['fail_set'], "0" );
+	$res and Keke::echojson ( $_lang['successfully_set'], "1" ) or Keke::echojson( $_lang['fail_set'], "0" );
 }
 if ($rever && $rever=='change'){
 	$sql = sprintf("update %switkey_shop set shop_background=null where shop_id=%d", TABLEPRE, $shop_info ['shop_id']);
 	$result = dbfactory::execute($sql);
-	$result && kekezu::echojson ( $_lang['successfully_set'], "1" ) or kekezu::echojson ( $_lang['fail_set'], "0" );
+	$result && Keke::echojson ( $_lang['successfully_set'], "1" ) or Keke::echojson ( $_lang['fail_set'], "0" );
 }
 $shop_backstyle = unserialize($shop_info['shop_backstyle']);
 // var_dump($shop_backstyle);

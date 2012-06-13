@@ -21,14 +21,14 @@ if (isset($task_id)) {
 	$task_ext_obj = new Keke_witkey_task_ext_class ();
 	$task_ext_obj->setWhere ( 'a.task_id=' . intval ( $task_id ) );
 	$task_info = $task_ext_obj->query_keke_witkey_task ();
-	$task_info = kekezu::k_stripslashes ( $task_info ['0'] );
+	$task_info = Keke::k_stripslashes ( $task_info ['0'] );
 	$prom_rule = keke_prom_class::get_prom_rule ( "bid_task" );
-	$task_info ['uid'] != $uid && $uid != ADMIN_UID && $task_info ['task_status'] == 1 and kekezu::show_msg ( $_lang ['friendly_notice'], 'index.php?do=task_list', 2, $_lang ['task_auditing'] );
-	$task_info ['uid'] != $uid &&$task_info ['task_status'] == 0 and kekezu::show_msg ( $_lang ['friendly_notice'], 'index.php?do=task_list', 2, '任务未付款' );
+	$task_info ['uid'] != $uid && $uid != ADMIN_UID && $task_info ['task_status'] == 1 and Keke::show_msg ( $_lang ['friendly_notice'], 'index.php?do=task_list', 2, $_lang ['task_auditing'] );
+	$task_info ['uid'] != $uid &&$task_info ['task_status'] == 0 and Keke::show_msg ( $_lang ['friendly_notice'], 'index.php?do=task_list', 2, '任务未付款' );
 	
 	
 	if (! $task_info) {
-		kekezu::show_msg ( $_lang ['operate_notice'], "index.php?do=index", '1', $_lang ['task_not_exsit_has_delete'], 'error' );
+		Keke::show_msg ( $_lang ['operate_notice'], "index.php?do=index", '1', $_lang ['task_not_exsit_has_delete'], 'error' );
 	}
 	if ($task_info ['point']) {
 		$point = explode ( ',', $task_info ['point'] );
@@ -40,11 +40,11 @@ if (isset($task_id)) {
 	keke_lang_class::package_init ( "task" );
 	keke_lang_class::loadlang ( $model_info ['model_dir'] );
 	keke_lang_class::loadlang ( "task_info" );
-	$model_info and (require S_ROOT . "/task/" . $model_info ['model_dir'] . "/control/task_info.php") or kekezu::show_msg ( $_lang ['error'], "index.php?do=index", 3, $_lang ['task_model_not_exist'], 'error' );
+	$model_info and (require S_ROOT . "/task/" . $model_info ['model_dir'] . "/control/task_info.php") or Keke::show_msg ( $_lang ['error'], "index.php?do=index", 3, $_lang ['task_model_not_exist'], 'error' );
 } else {
 	  
 	$clean_industry_arr = array ();
-	kekezu::get_tree(kekezu::$_indus_arr, $clean_industry_arr, '');
+	Keke::get_tree(Keke::$_indus_arr, $clean_industry_arr, '');
 	/**
 	 * 进行中任务统计*
 	 */
@@ -53,10 +53,10 @@ if (isset($task_id)) {
  
 	$advance_task = dbfactory::get_count ( $count_advance_task_sql, 0, null, 180 );
 	
-	$model_list = kekezu::$_model_list; // 获取任务区间
-	$task_cash_cove = kekezu::get_table_data ( '*', 'witkey_task_cash_cove', '', '', '', '', 'cash_rule_id', 3600 );
+	$model_list = Keke::$_model_list; // 获取任务区间
+	$task_cash_cove = Keke::get_table_data ( '*', 'witkey_task_cash_cove', '', '', '', '', 'cash_rule_id', 3600 );
 	$task_obj = new Keke_witkey_task_class ();
-	$page_obj = kekezu::$_page_obj;
+	$page_obj = Keke::$_page_obj;
 	$page_obj->setAjax ( 1 );
 	$page_obj->setAjaxDom ( "task_list" );
 	isset($page ) or $page = 1;

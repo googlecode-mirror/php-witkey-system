@@ -12,7 +12,7 @@ $url = "index.php?do=$do&view=$view&target_id=$target_id";
 
 if (isset ( $stb_add )) {
  
-	eval ("\$arr=".kekezu::k_stripslashes($position).";") ;
+	eval ("\$arr=".Keke::k_stripslashes($position).";") ;
 	$position = serialize( $arr); 
 	$insertsqlarr = array ('name' => $name, 'code' => $code, 'description' => $description, 'targets' => $targets, 'position' => $position, 'ad_size' => $ad_size, 'ad_num' => $ad_num, 'sample_pic' => $sample_pic );
 	if ($target_id) {
@@ -20,7 +20,7 @@ if (isset ( $stb_add )) {
 	} else {
 		$result = dbfactory::inserttable ( 'keke_witkey_ad_target', $insertsqlarr );
 	}
-	$result && kekezu::admin_show_msg ( $_lang['add_submit_success'],$url,3,'','success' );
+	$result && Keke::admin_show_msg ( $_lang['add_submit_success'],$url,3,'','success' );
 }
 //初始化信息
 

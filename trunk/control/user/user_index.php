@@ -9,7 +9,7 @@
 defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 
 //新手指南
-$res = kekezu::get_table_data ( "art_cat_id", 'witkey_article_category', "art_index like '%{294}%'", '', '', '', 'art_cat_id', 3600 );
+$res = Keke::get_table_data ( "art_cat_id", 'witkey_article_category', "art_index like '%{294}%'", '', '', '', 'art_cat_id', 3600 );
 
 if ($res) {
 	$cat_ids = array_keys ( $res );
@@ -22,7 +22,7 @@ $auth_temp = array_keys ( $auth_item );
 $user_info ['user_type'] == 2 and $un_code = 'realname' or $un_code = "enterprise";
 $t = implode ( ",", $auth_temp );
 $auth_info = dbfactory::query ( " select a.auth_code,a.auth_status,b.auth_title,b.auth_small_ico,b.auth_small_n_ico from " . TABLEPRE . "witkey_auth_record a left join " . TABLEPRE . "witkey_auth_item b on a.auth_code=b.auth_code where a.uid ='$uid' and FIND_IN_SET(a.auth_code,'$t')", 1, 3600 );
-$auth_info = kekezu::get_arr_by_key ( $auth_info, "auth_code" );
+$auth_info = Keke::get_arr_by_key ( $auth_info, "auth_code" );
 //待付款任务数，商品数
 $wait_task = intval ( dbfactory::get_count ( sprintf ( "select count(*) from %switkey_task where task_status=0 and uid='%d'", TABLEPRE, $uid ) ) );
 $wait_shop = intval ( dbfactory::get_count ( sprintf ( "select count(*) from %switkey_order where order_status='wait' and model_id in(6,7) and order_uid='%d'", TABLEPRE, $uid ) ) );
@@ -37,7 +37,7 @@ $payitem_list = keke_payitem_class::get_payitem_config ( null, null, null, 'item
 //任务状态数组
 $task_status = keke_global_class::get_taskstatus_desc ();
 //任务区间数组
-$task_cove = kekezu::get_table_data ( '*', "witkey_task_cash_cove", '', "start_cove", '', '', 'cash_rule_id', 3600 );
+$task_cove = Keke::get_table_data ( '*', "witkey_task_cash_cove", '', "start_cove", '', '', 'cash_rule_id', 3600 );
 
 //发布任务
 $pub_task = dbfactory::query ( sprintf ( "select * from %switkey_task where uid = '%d' and task_status in (2,3,4,5,6) order by start_time desc limit 0,6", TABLEPRE, $uid ) );

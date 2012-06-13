@@ -17,13 +17,13 @@ $sub_nav=array(
 				"shop"=>array( $_lang['collection_of_shop'],"shop_cart"))
 			);
 
-$model_name_arr = 	kekezu::get_table_data ( 'model_code,model_name', 'witkey_model', '', 'model_id asc ', '', '', 'model_code');
+$model_name_arr = 	Keke::get_table_data ( 'model_code,model_name', 'witkey_model', '', 'model_id asc ', '', '', 'model_code');
 
 $op or $op='task';//收藏类型
-$title = kekezu::lang("collection_of_".$op);
+$title = Keke::lang("collection_of_".$op);
 
 $favor_obj=new Keke_witkey_favorite_class();//收藏对象
-$page_obj=kekezu::$_page_obj;//分页对象
+$page_obj=Keke::$_page_obj;//分页对象
 
 $ord_arr=array("f_id desc "=> $_lang['collection_num_desc'],
 		   "f_id asc "=> $_lang['collection_num_asc'],

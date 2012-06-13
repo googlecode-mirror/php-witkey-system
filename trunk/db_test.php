@@ -7,6 +7,6 @@ include 'app_comm.php';
  
 //var_dump(md5('keke123456'));
 $end = microtime(true);
-var_dump ( $end-$star,kekezu::execute_time() );
+var_dump ( $end-$star,Keke::execute_time() );
 //require keke_tpl_class::template('en');
 

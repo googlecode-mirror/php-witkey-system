@@ -5,7 +5,7 @@
  * @author Administrator
  *
  */
-abstract class keke_log_write {
+abstract class Keke_log_write {
 	/**
 	 * Numeric log level to string lookup table.
 	 * 

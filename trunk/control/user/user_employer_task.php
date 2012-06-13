@@ -9,8 +9,8 @@
 defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 
 //任务数量统计
-$task_count = kekezu::get_table_data ( "model_id,count(task_id) as count", "witkey_task", " uid = '$uid' ", '', 'model_id', '', 'model_id' );
-$cove_arr = kekezu::get_table_data("*","witkey_task_cash_cove","","","","","cash_rule_id");
+$task_count = Keke::get_table_data ( "model_id,count(task_id) as count", "witkey_task", " uid = '$uid' ", '', 'model_id', '', 'model_id' );
+$cove_arr = Keke::get_table_data("*","witkey_task_cash_cove","","","","","cash_rule_id");
 $model_id and $model_id = intval ( $model_id );
 
 $where = " model_id = '$model_id' and uid='$uid' ";
@@ -32,16 +32,16 @@ if (isset ( $ac )) {
 		switch ($ac) {
 			case "del" :
 				$res = dbfactory::execute ( sprintf ( " delete from %switkey_task where task_id='%d' and task_status=0 ", TABLEPRE, $task_id ) );
-				$res and kekezu::show_msg ( $_lang ['operate_notice'], $url, 3, $_lang ['t_delete_success'], 'success' ) or kekezu::show_msg ( $_lang ['operate_notice'], $url, 3, $_lang ['t_delete_fail'], 'warning' );
+				$res and Keke::show_msg ( $_lang ['operate_notice'], $url, 3, $_lang ['t_delete_success'], 'success' ) or Keke::show_msg ( $_lang ['operate_notice'], $url, 3, $_lang ['t_delete_fail'], 'warning' );
 				break;
 		}
 	} else {
-		kekezu::show_msg ( $_lang ['operate_notice'], $url, 3, $_lang ['please_choose_delete_task'], "warning" );
+		Keke::show_msg ( $_lang ['operate_notice'], $url, 3, $_lang ['please_choose_delete_task'], "warning" );
 	}
 }
 if ($model_id) {
 	$task_obj = new Keke_witkey_task_class ();
-	$page_obj = kekezu::$_page_obj;
+	$page_obj = Keke::$_page_obj;
 	/**获取对应任务的状态值**/
 	$cls = $model_list [$model_id] ['model_code'] . "_task_class";
 	$status_arr = call_user_func ( array ($cls, "get_task_status" ) );
@@ -67,7 +67,7 @@ if ($model_id) {
 	$task_info = dbfactory::query ( $sql . $where . $pages ['where'] );
 }
 if ($ac == 'pay' && $task_id && $model_id) {
-	$model_info = kekezu::$_model_list [$model_id];
+	$model_info = Keke::$_model_list [$model_id];
 	if ($model_info ['model_type'] == "task") {
 		$class_name = $model_info ['model_code'] . "_task_class";
 		$order_id = dbfactory::get_count ( sprintf ( " select order_id from %switkey_order_detail where obj_id='%d'", TABLEPRE, $task_id ) );

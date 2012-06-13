@@ -10,7 +10,7 @@ defined ( 'IN_KEKE' ) or exit('Access Denied');
 $art_id = intval($art_id)+0;
 $art_cat_id and $art_cat_id = intval($art_cat_id);
 $year and $year = intval($year);
-$art_id or kekezu::show_msg(kekezu::lang("operate_notice"),"index.php?do=article",2,kekezu::lang("test"),"warning");
+$art_id or Keke::show_msg(Keke::lang("operate_notice"),"index.php?do=article",2,Keke::lang("test"),"warning");
 
 $static and $pre_url = $_K['siteurl'].'/';
 

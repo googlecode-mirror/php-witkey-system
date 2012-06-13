@@ -97,10 +97,10 @@ class keke_trust_fac_class {
 		unset ( $_SESSION ['trust_' . $task_id]); //Ïú»ÙÒµÎñsession
 		switch($type){
 			case "success":
-				kekezu::show_msg($_lang['operate_notice'],$url,3,$content,'success');
+				Keke::show_msg($_lang['operate_notice'],$url,3,$content,'success');
 				break;
 			case "fail":
-				kekezu::show_msg($_lang['operate_notice'],$url,3,$content,'warning');
+				Keke::show_msg($_lang['operate_notice'],$url,3,$content,'warning');
 				break;
 		}
 	}
@@ -164,7 +164,7 @@ class keke_trust_fac_class {
 			'WITKEY_DATA_NOT_MATCH'=>$_lang['witkey_data_not_match'],
 			'WITKEY_DATA_VALIDATE_FAILURE'=>$_lang['witkey_data_validate_failure'],
 			'BIDDER_EQUALS_TASK_CREATOR_ERROR'=>$_lang['bidder_equals_task_creator_error'],
-			'PLATFORM_CREATE_PLATFORM_SHARE_GREATEE_0'=>kekezu::lang('platform_create_platform_share_greatee_0 '),
+			'PLATFORM_CREATE_PLATFORM_SHARE_GREATEE_0'=>Keke::lang('platform_create_platform_share_greatee_0 '),
 			'PLATFORM_CREATE_ADDITIONAL_AMOUNT_GREATER_0'=>$_lang['platform_create_additional_amount_greater_0'],
 			'PLATFORM_CREATE_COMMISSION_RATE_GREATER_0'=>$_lang['platform_create_commission_rate_greater_0'],
 			'ACCOUNT_QUERY_ERROR'=>$_lang['account_query_error'],

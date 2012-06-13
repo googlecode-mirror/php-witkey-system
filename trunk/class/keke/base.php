@@ -6,7 +6,7 @@
  * 
  */
 
-class keke_base_class {
+class Keke_base {
 	
 	/**
 	 * 方法功能的描述与说明
@@ -37,7 +37,7 @@ class keke_base_class {
 				$string [$key [$i]] = self::k_stripslashes ( $string [$key [$i]] );
 			}
 		} elseif(is_string($string)) {
-			if(kekezu::$_magic_quote===true){
+			if(Keke::$_magic_quote===true){
 				//去掉转义符号
 				$string = stripcslashes ( trim ( $string ) );
 			}
@@ -155,7 +155,7 @@ class keke_base_class {
 		
 		if (strpos ( $temp, '<' ) !== false || strpos ( $temp, '>' ) !== false || strpos ( $temp, '"' ) !== false || strpos ( $temp, 'CONTENT-TRANSFER-ENCODING' ) !== false) {
 			
-			kekezu::show_msg ( $_lang ['operate_notice'], "index.php", 9999, $_lang ['xss_attack_warning_notice'], "error" );
+			Keke::show_msg ( $_lang ['operate_notice'], "index.php", 9999, $_lang ['xss_attack_warning_notice'], "error" );
 			die ();
 		}
 		return true;
@@ -266,7 +266,7 @@ class keke_base_class {
 		if ($obj)
 			foreach ( $obj as $k => $o ) {
 				if (is_object ( $o ) || is_array ( $o )) {
-					$obj [$k] = kekezu::objtoarray ( $o );
+					$obj [$k] = Keke::objtoarray ( $o );
 				}
 			}
 		return $obj;
@@ -356,7 +356,7 @@ class keke_base_class {
 	 * 获取随即客服
 	 */
 	static function get_rand_kf() {
-		$kf_arr = kekezu::get_table_data ( 'uid', 'witkey_space', ' group_id = 7' );
+		$kf_arr = Keke::get_table_data ( 'uid', 'witkey_space', ' group_id = 7' );
 		$kf_arr_count = count ( $kf_arr );
 		$randno = rand ( 0, $kf_arr_count - 1 );
 		return $kf_uid = $kf_arr [$randno] [uid] ? $kf_arr [$randno] [uid] : ADMIN_UID;
@@ -584,7 +584,7 @@ class keke_base_class {
 		$lock_file = S_ROOT . './data/keke_kppw_install.lck';
 		
 		die ();
-		file_exists ( $lock_file ) == false or kekezu::show_msg ( $_lang ['kppw_install_notice'], 'install/index.php', 3, $_lang ['you_not_install_kppw_notice'] );
+		file_exists ( $lock_file ) == false or Keke::show_msg ( $_lang ['kppw_install_notice'], 'install/index.php', 3, $_lang ['you_not_install_kppw_notice'] );
 	}
 	// 时间计算
 	static function get_gmdate($timestamp) {
@@ -637,9 +637,9 @@ class keke_base_class {
 			} elseif ($return_json == true) {
 				return false;
 			} elseif ($_K [inajax]) {
-				kekezu::show_msg ( $_lang ['operate_error'], "", 5, $_lang ['repeat_form_submit'], 'alert_error' );
+				Keke::show_msg ( $_lang ['operate_error'], "", 5, $_lang ['repeat_form_submit'], 'alert_error' );
 			} else {
-				kekezu::show_msg ( $_lang ['operate_error'], "index.php", 30, $_lang ['illegal_or_repeat_submit'], 'alert_error' );
+				Keke::show_msg ( $_lang ['operate_error'], "index.php", 30, $_lang ['illegal_or_repeat_submit'], 'alert_error' );
 			}
 		} else {
 			return false;

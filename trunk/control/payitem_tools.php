@@ -9,7 +9,7 @@
 
 defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 
-$uid!=$task_info['uid'] and kekezu::show_msg($_lang['friendly_notice'],'index.php?do=index',3,$_lang['cannot_access_page']); 
+$uid!=$task_info['uid'] and Keke::show_msg($_lang['friendly_notice'],'index.php?do=index',3,$_lang['cannot_access_page']); 
 
 $payitem_arr = keke_payitem_class::get_payitem_info('employer',$model_list[$task_info['model_id']]['model_code']); //获取该任务所有的增值服务 
 $exist_payitem_arr = keke_payitem_class::payitem_exists($uid,false ,'',$payitem_arr);//获取已购买的增值服务 
@@ -20,15 +20,15 @@ $payitem_standard = keke_payitem_class::payitem_standard (); //收费标准
  foreach ($payitem_arr_desc as $k=>$v) { 
  	if($v>time()){
  		$sy_time_str = $v-time();
- 		$sy_time_desc[$k] = kekezu::time2Units($sy_time_str);
+ 		$sy_time_desc[$k] = Keke::time2Units($sy_time_str);
  	}else{
  		$sy_time_desc[$k] = '0'.$_lang['day'];
  	} 
  }
 
- if(kekezu::submitcheck($formhash)){ 
+ if(Keke::submitcheck($formhash)){ 
  	if(!array_filter($payitem_num)){
- 		kekezu::show_msg($_lang['friendly_notice'],'index.php?do=task&task_id='.$task_id.'&view=tools',3,$_lang['no_choose_any_tools']);
+ 		Keke::show_msg($_lang['friendly_notice'],'index.php?do=task&task_id='.$task_id.'&view=tools',3,$_lang['no_choose_any_tools']);
  	} 	
  	$keys_arr = array_keys($payitem_arr_desc); 
  	$pay_item = $task_info['pay_item'];
@@ -53,7 +53,7 @@ $payitem_standard = keke_payitem_class::payitem_standard (); //收费标准
  	}
 	$res = keke_payitem_class::set_payitem_time($payitem_arr_desc, $task_id, 'task'); 
 	//更新增值服务结束时间
- 	$res||$cost_res and kekezu::show_msg($_lang['operate_notice'],"index.php?do=task&task_id=$task_id&view=tools",'3',$_lang['operate_success'],'success'); 
+ 	$res||$cost_res and Keke::show_msg($_lang['operate_notice'],"index.php?do=task&task_id=$task_id&view=tools",'3',$_lang['operate_success'],'success'); 
  }
  
  

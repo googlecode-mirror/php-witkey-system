@@ -8,7 +8,7 @@
  */
 defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 
-$uid or kekezu::show_msg($_lang['friendly_notice'],'index.php',3,$_lang['access_message'],'warning');
+$uid or Keke::show_msg($_lang['friendly_notice'],'index.php',3,$_lang['access_message'],'warning');
 $step_arr = array(1,'p2','e2',3);
 
 //in_array($step, $step_arr) or $step = 1;
@@ -37,7 +37,7 @@ switch ($step) {
 		$enter_info = dbfactory::get_one(sprintf("select * from %switkey_auth_enterprise where uid='%d'",TABLEPRE,$uid));
 		$real_pass=keke_auth_fac_class::auth_check("enterprise", $uid);
 		$refer = isset($refer)?$refer:"index.php";
-		if (isset($formhash)&&kekezu::submitcheck($formhash)) {
+		if (isset($formhash)&&Keke::submitcheck($formhash)) {
 			//公司信息，auth_enterprise
 			$enter_obj = new keke_table_class('witkey_auth_enterprise');
 			$fds['uid']=$uid;
@@ -55,11 +55,11 @@ switch ($step) {
 		$page_title=$_lang['perfect_data'].$_lang['two_step'].'-'.$_lang['fill_data'].'-'.$_K['html_title'];	
 		$real_pass=keke_auth_fac_class::auth_check("realname", $uid);
 		$user_skill = isset($user_skill)?$user_skill:"";
-		if(isset($formhash)&&kekezu::submitcheck($formhash)){	
+		if(isset($formhash)&&Keke::submitcheck($formhash)){	
 			//写入用户信息
 			$conf['birthday']=strtotime($conf['birthday']);
 			$province&&$city and $conf['residency']=$province.','.$city.','.$area;
-			$conf['skill_ids'] = kekezu::unescape($skills);					
+			$conf['skill_ids'] = Keke::unescape($skills);					
 			$res=$space_obj->save($conf,$pk);
 			header ( "location:index.php?do=register_wizard&step=3&type=p" );
 		 }

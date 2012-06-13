@@ -11,9 +11,9 @@ $shows = array("list","add");
 in_array($show,$shows) or $show="list";
 switch ($show){
 	case "add":
-		$indus_arr = kekezu::get_indus_by_index ( 1 ); //行业索引分类列表
-		$indus_p_arr=kekezu::$_indus_p_arr;//顶级行业
-		$indus_c_arr=kekezu::$_indus_c_arr;//子集行业
+		$indus_arr = Keke::get_indus_by_index ( 1 ); //行业索引分类列表
+		$indus_p_arr=Keke::$_indus_p_arr;//顶级行业
+		$indus_c_arr=Keke::$_indus_c_arr;//子集行业
 		
 		if($sbt_action){
 			$case_obj=keke_table_class::get_instance("witkey_shop_case");//案例实例
@@ -22,7 +22,7 @@ switch ($show){
 			$conf['shop_id']  =$shop_info['shop_id'];
 			$conf['case_pic']= $hdn_case_pic ? $hdn_case_pic : null;//keke_file_class::upload_file('case_pic');
 			$res=$case_obj->save($conf,$pk);
-			$res and kekezu::show_msg($_lang['case_operate_success'],$ac_url."&show=list#userCenter",3,'','success') or kekezu::show_msg($_lang['case_operate_fail'],$ac_url."&show=add&case_id=$case_id#userCenter",3,'','warning');
+			$res and Keke::show_msg($_lang['case_operate_success'],$ac_url."&show=list#userCenter",3,'','success') or Keke::show_msg($_lang['case_operate_fail'],$ac_url."&show=add&case_id=$case_id#userCenter",3,'','warning');
 		}else{
 			$case_id and $case_info=dbfactory::get_one(sprintf(" select * from %switkey_shop_case where case_id='%d'",TABLEPRE,$case_id));
 			//自定义分类列表
@@ -56,12 +56,12 @@ switch ($show){
 	case "list":
 		if($ac=='del'){//删除
 			$res=dbfactory::execute(sprintf(" delete from %switkey_shop_case where case_id='%d'",TABLEPRE,$case_id));
-			$res and kekezu::echojson($_lang['delete_success'],"1") or kekezu::echojson($_lang['delete_fail'],"0");
+			$res and Keke::echojson($_lang['delete_success'],"1") or Keke::echojson($_lang['delete_fail'],"0");
 			die();
 		}else{
-			$indus_c_arr=kekezu::$_indus_c_arr;//子集行业列表
+			$indus_c_arr=Keke::$_indus_c_arr;//子集行业列表
 			$case_obj=new Keke_witkey_shop_case_class();
-			$page_obj=kekezu::$_page_obj;
+			$page_obj=Keke::$_page_obj;
 			$where=" shop_id='{$shop_info['shop_id']}' order by on_time desc ";
 			intval($page) or $page='1';
 			intval($page_size) or $page_size='4';

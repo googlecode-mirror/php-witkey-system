@@ -73,7 +73,7 @@ function get_pay_url($charge_type,$pay_amount, $payment_config, $subject, $order
 	$reqHandler->setParameter("attach", $remarkexplain);
 	
 	//用户ip,测试环境时不要加这个ip参数，正式环境再加此参数
-	$reqHandler->setParameter("spbill_create_ip", kekezu::get_ip());
+	$reqHandler->setParameter("spbill_create_ip", Keke::get_ip());
 	
 	//请求的URL
 	$reqUrl = $reqHandler->getRequestURL();

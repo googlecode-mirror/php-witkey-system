@@ -18,10 +18,10 @@ switch ($op){
 		$transname = keke_report_class::get_transrights_name($type);
 		$title=$transname.$_lang['submit'];
 		if($sbt_edit){
-			$tar_content = kekezu::escape($tar_content);
+			$tar_content = Keke::escape($tar_content);
 			keke_shop_class::set_report ( $obj_id, $to_uid,$to_username, $type, $file_url, $tar_content);
 		}else{
-			CHARSET=='gbk' and $to_username = kekezu::utftogbk($to_username);
+			CHARSET=='gbk' and $to_username = Keke::utftogbk($to_username);
 			require keke_tpl_class::template("report");
 		}
 		die();
@@ -92,9 +92,9 @@ $comment_obj = keke_comment_class::get_instance('service');
 	    		if($uid ==ADMIN_UID||$user_info['group_id']==7){
 	    			$res = $comment_obj->del_comment($comment_id,$sid,$comment_info[p_id]);//更新个人信息 
 	    		}else{
-	    			kekezu::keke_show_msg("", $_lang['do_not_have_access'],"error","json");
+	    			Keke::keke_show_msg("", $_lang['do_not_have_access'],"error","json");
 	    		}
-	    		$res and kekezu::keke_show_msg("", $_lang['delete_success'],"","json") or kekezu::keke_show_msg("",$_lang['system_is_busy'],"error","json");
+	    		$res and Keke::keke_show_msg("", $_lang['delete_success'],"","json") or Keke::keke_show_msg("",$_lang['system_is_busy'],"error","json");
 	    		break;	
 	    } 
 		break;

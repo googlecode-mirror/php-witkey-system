@@ -1,6 +1,6 @@
 <?php
  
-final class keke_cache_memcache extends keke_cache_class {
+final class Keke_cache_memcache extends Keke_cache_class {
 	public $useMemcached = false;
 	private $_cache = null;
 	private $_servers = array ();

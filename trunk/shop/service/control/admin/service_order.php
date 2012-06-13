@@ -38,17 +38,17 @@ $pages = $table_arr['pages'];
 //删除操作
 if($ac=="del"){
 	$ac_name = dbfactory::get_count(sprintf("select order_name from %switkey_order where order_id='%d' ",TABLEPRE,$order_id));
-	kekezu::admin_system_log($_lang['has_delete_order_name_is'].$ac_name.$_lang['of_witkey_service_order']);
+	Keke::admin_system_log($_lang['has_delete_order_name_is'].$ac_name.$_lang['of_witkey_service_order']);
 	
 	$res = $table_obj->del('order_id', $order_id,$url_str);
-	$res and kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['delete_success'],'success') or kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['delete_fail'],"warning");
+	$res and Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['delete_success'],'success') or Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['delete_fail'],"warning");
 }
 //批量删除操作
 if(isset ( $sbt_action )){
 	$keyids = $ckb;
 	if(is_array($keyids)){
-		kekezu::admin_system_log($_lang['has_mulit_delete_service_order']);
-		$service_obj->order_del($keyids) and kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['mulit_delete_success'],'success') or kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['mulit_delete_success'],"warning");
+		Keke::admin_system_log($_lang['has_mulit_delete_service_order']);
+		$service_obj->order_del($keyids) and Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['mulit_delete_success'],'success') or Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['mulit_delete_success'],"warning");
 	}
 }
 

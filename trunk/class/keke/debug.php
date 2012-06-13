@@ -1,6 +1,6 @@
 <?php
 
-class keke_debug {
+class Keke_debug {
 	public static $charset = 'utf-8';
 	public static function vars() {
 		if (func_num_args () === 0)
@@ -8,12 +8,12 @@ class keke_debug {
 		$variables = func_get_args ();
 		$output = array ();
 		foreach ( $variables as $var ) {
-			$output [] = keke_debug::_dump ( $var, 1024 );
+			$output [] = Keke_debug::_dump ( $var, 1024 );
 		}
 		echo  '<pre class="debug">' . implode ( "\n", $output ) . '</pre>';
 	}
 	public static function dump($value, $length = 128) {
-		return keke_debug::_dump ( $value, $length );
+		return Keke_debug::_dump ( $value, $length );
 	}
 	protected static function _dump(& $var, $length = 128, $level = 0) {
 		ob_get_length () > 0 and ob_clean();
@@ -30,19 +30,19 @@ class keke_debug {
 					$file = $meta ['uri'];
 					if (function_exists ( 'stream_is_local' )) {
 						if (stream_is_local ( $file )) {
-							$file = keke_debug::path ( $file );
+							$file = Keke_debug::path ( $file );
 						}
 					}
-					return '<small>resource</small><span>(' . $type . ')</span> ' . htmlspecialchars ( $file, ENT_NOQUOTES, keke_debug::$charset );
+					return '<small>resource</small><span>(' . $type . ')</span> ' . htmlspecialchars ( $file, ENT_NOQUOTES, Keke_debug::$charset );
 				}
 			} else {
 				return '<small>resource</small><span>(' . $type . ')</span>';
 			}
 		} elseif (is_string ( $var )) {
 			if (strlen ( $var ) > $length) {
-				$str = htmlspecialchars ( substr ( $var, 0, $length ), ENT_NOQUOTES, keke_debug::$charset ) . '&nbsp;&hellip;';
+				$str = htmlspecialchars ( substr ( $var, 0, $length ), ENT_NOQUOTES, Keke_debug::$charset ) . '&nbsp;&hellip;';
 			} else {
-				$str = htmlspecialchars ( $var, ENT_NOQUOTES, keke_debug::$charset );
+				$str = htmlspecialchars ( $var, ENT_NOQUOTES, Keke_debug::$charset );
 			}
 			return '<small>string</small><span>(' . strlen ( $var ) . ')</span> "' . $str . '"';
 		} elseif (is_array ( $var )) {
@@ -62,9 +62,9 @@ class keke_debug {
 					if ($key === $marker)
 						continue;
 					if (! is_int ( $key )) {
-						$key = '"' . htmlspecialchars ( $key, ENT_NOQUOTES, keke_debug::$charset ) . '"';
+						$key = '"' . htmlspecialchars ( $key, ENT_NOQUOTES, Keke_debug::$charset ) . '"';
 					}
-					$output [] = "$space$s$key => " . keke_debug::_dump ( $val, $length, $level + 1 );
+					$output [] = "$space$s$key => " . Keke_debug::_dump ( $val, $length, $level + 1 );
 				}
 				unset ( $var [$marker] );
 				$output [] = "$space)</span>";
@@ -91,7 +91,7 @@ class keke_debug {
 					} else {
 						$access = '<small>public</small>';
 					}
-					$output [] = "$space$s$access $key => " . keke_debug::_dump ( $val, $length, $level + 1 );
+					$output [] = "$space$s$access $key => " . Keke_debug::_dump ( $val, $length, $level + 1 );
 				}
 				unset ( $objects [$hash] );
 				$output [] = "$space}</code>";
@@ -101,7 +101,7 @@ class keke_debug {
 			return '<small>object</small> <span>' . get_class ( $var ) . '(' . count ( $array ) . ')</span> ' . implode ( "\n", $output );
 		} else {
 				
-			return '<small>' . gettype ( $var ) . '</small> ' . htmlspecialchars ( print_r ( $var, TRUE ), ENT_NOQUOTES, keke_debug::$charset );
+			return '<small>' . gettype ( $var ) . '</small> ' . htmlspecialchars ( print_r ( $var, TRUE ), ENT_NOQUOTES, Keke_debug::$charset );
 		}
 	}
 	public static function path($file) {
@@ -144,7 +144,7 @@ class keke_debug {
 				continue;
 			}
 			if (isset ( $step ['file'] ) and isset ( $step ['line'] )) {
-				$source = keke_debug::source ( $step ['file'], $step ['line'] );
+				$source = Keke_debug::source ( $step ['file'], $step ['line'] );
 			}
 			if (isset ( $step ['file'] )) {
 				$file = $step ['file'];

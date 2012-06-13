@@ -16,15 +16,15 @@ $page_title=$_lang['shop_map'].'- '.$_K['html_title'];
 keke_lang_class::package_init ( "shop_map" );
 keke_lang_class::loadlang ( $do );
 $feed_time = time()-3600*24; 
-$dynamic_arr = kekezu::get_feed(" feedtype='pub_task' or feedtype='work_accept' and $feed_time>feed_time ", "feed_time desc", 10); //动态信息
+$dynamic_arr = Keke::get_feed(" feedtype='pub_task' or feedtype='work_accept' and $feed_time>feed_time ", "feed_time desc", 10); //动态信息
 $website_url = "index.php?" . $_SERVER ['QUERY_STRING'];
 //当前连接
- $task_indus_type = kekezu::get_industry (0);
+ $task_indus_type = Keke::get_industry (0);
  //获取行业分类 
  
 $task_cash_arr =   keke_search_class::get_cash_cove();
 //任务赏金数组 
-$indus_all_arr = kekezu::$_indus_arr;
+$indus_all_arr = Keke::$_indus_arr;
 //所有行业的数组
 $where_arr = get_where_arr();
 if($area){
@@ -43,7 +43,7 @@ $url = "index.php?do=shop_list&page_size=$page_size&min=$min&max=$max&path=$path
 $page_size = intval ( $page_size ) ? intval ( $page_size ) : 10;
 $count = dbfactory::execute ( $sql . $where );
 $page = $page ? $page : 1;
-$pages = kekezu::$_page_obj->getPages ( $count, $page_size, $page, $url ); 
+$pages = Keke::$_page_obj->getPages ( $count, $page_size, $page, $url ); 
 $where .= $pages ['where'];  
 //数组
  
@@ -62,7 +62,7 @@ $cookie_arr = str_replace("&hid_save_cookie=1", "", $cookie_arr);
 //清空历史记录
 if ($hid_del_cookie) {
 	$res = setcookie ( 'shop_map', '' );
-	$res and kekezu::echojson ( '', 1 );
+	$res and Keke::echojson ( '', 1 );
 	die();
 }
  
@@ -82,7 +82,7 @@ global $_lang;
 	//任务所属行业 
 	$url_info ['C'] and $where .= sprintf ( " and a.model_id = %d", $url_info ['C'] ); 
 	//任务类型
-	!$_COOKIE['search_cash']&&$url_info ['B'] and $where .= kekezu::get_between_where('a.price', $task_cash_arr [$url_info ['B']] ['min'], $task_cash_arr [$url_info ['B']] ['max'] ); //获取赏金  
+	!$_COOKIE['search_cash']&&$url_info ['B'] and $where .= Keke::get_between_where('a.price', $task_cash_arr [$url_info ['B']] ['min'], $task_cash_arr [$url_info ['B']] ['max'] ); //获取赏金  
  
 	//发布时间
 	switch ($url_info ['D']) {
@@ -164,7 +164,7 @@ function get_where_arr(){
 if($_K['map_api']=='baidu'){
 	foreach ($service_arr as $k=>$v) {
 		$v['user_pic'] = keke_user_class::get_user_pic($v['uid']);
-		$v['start_time'] = kekezu::time2Units(time()-$v['on_time']) ; 
+		$v['start_time'] = Keke::time2Units(time()-$v['on_time']) ; 
 		$point = explode(',',$v ['point']);
 		$v['point'] = $point['1'].','.$point['0'];
 		$arr_point .= 'new BMap.Point(' . $v ['point'] . '),';
@@ -200,7 +200,7 @@ END;
 	}else{
 	foreach ($service_arr as $k=>$v) {
 	$v['user_pic'] = keke_user_class::get_user_pic($v['uid']);
-	$v['start_time'] = kekezu::time2Units(time()-$v['start_time']) ;
+	$v['start_time'] = Keke::time2Units(time()-$v['start_time']) ;
 	$arr_point .= 'new google.maps.LatLng(' . $v ['point'] . '),';
 	$arr_marker .= '  new google.maps.Marker({ position: point[' . $k . '], map: map}),';
 	$arr_infoWindow .= 'new google.maps.InfoWindow({content:"<div class=basic_style map_info><div class=fl_l mr_10><a target=_blank  href=index.php?do=space&member_id='.$v['uid'].'>'.$v['user_pic'].'</a></div><strong><a  target=_blank href=index.php?do=task&task_id='.$v['task_id'].'   target=_blank>'.$v['task_title'].'</a></strong><div class=font12><a href=index.php?do=space&member_id='.$v['uid'].' target=_blank  class=font12>'.$v['username'].'</a></b>&nbsp;&nbsp;'.$v['start_time']. $_lang['front_release'] .'</div></div>"}),';

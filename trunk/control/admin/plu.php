@@ -24,7 +24,7 @@ if ($do == 'previewtag')
 	if (!$tagid){
 		die();
 	}
-	$taglist = kekezu::get_tag(1);
+	$taglist = Keke::get_tag(1);
 	$tag_info = $taglist[$tagid];
 	//var_dump($taglist);die();
 	//Ô¤ÀÀfeed

@@ -6,15 +6,15 @@
  * 2010-08-26 09:40:34
  */
 defined ( "ADMIN_KEKE" ) or exit ( "Access Denied" ); //控制权限
-kekezu::admin_check_role(71);
+Keke::admin_check_role(71);
 $url = "index.php?do=" . $do . "&view=" . $view . "&auth_code=" . $auth_code . "&w[page_size]=" . $w [page_size] . "&w[realname_a_id]=" . $w [realname_a_id] . "&w[username]=" . $w [username] . "&w[auth_status]=" . $w [auth_status]; //跳转地址
 $email_obj = new Keke_witkey_auth_email_class (); //实例化邮箱认证表对象
 if (isset ( $ac ) && $ac == 'del') {
-	kekezu::admin_system_log($obj.$_lang['email_auth_delete']);
+	Keke::admin_system_log($obj.$_lang['email_auth_delete']);
 	$auth_obj->del_auth ( $email_a_id ); //单条删除认证申请
 } elseif (isset ( $sbt_action ) && $sbt_action == $_lang['mulit_delete']) {
 	$keyids = $ckb;
-	kekezu::admin_system_log($_lang['mulit_del_email_auth']);
+	Keke::admin_system_log($_lang['mulit_del_email_auth']);
 	$auth_obj->del_auth ( $keyids ); //批量删除
 } else {
 	
@@ -27,9 +27,9 @@ if (isset ( $ac ) && $ac == 'del') {
 	$email_obj->setWhere ( $where ); //查询统计
 	$count = $email_obj->count_keke_witkey_auth_email ();
 	intval ( $page ) or $page = 1 and $page = intval ( $page );
-	kekezu::$_page_obj->setAjax(1);
-	kekezu::$_page_obj->setAjaxDom("ajax_dom");
-	$pages = kekezu::$_page_obj->getPages ( $count, $page_size, $page, $url );
+	Keke::$_page_obj->setAjax(1);
+	Keke::$_page_obj->setAjaxDom("ajax_dom");
+	$pages = Keke::$_page_obj->getPages ( $count, $page_size, $page, $url );
 	
 	$email_obj->setWhere ( $where . $pages ['where'] );
 	$email_arr = $email_obj->query_keke_witkey_auth_email (); //认证信息列表
@@ -43,7 +43,7 @@ if($action){
 		$email_obj->setAuth_status(2); 
 	}
 	$res =  $email_obj->edit_keke_witkey_auth_email();
-	kekezu::admin_show_msg($_lang['operate_success'],'index.php?do=auth&view=list&auth_code=email',3,'','warning');
+	Keke::admin_show_msg($_lang['operate_success'],'index.php?do=auth&view=list&auth_code=email',3,'','warning');
 }
 
 require $template_obj->template ( 'auth/' . $auth_dir . '/control/admin/tpl/auth_list' );

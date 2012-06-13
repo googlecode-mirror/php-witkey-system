@@ -11,7 +11,7 @@ defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
  $p_url =$_K['siteurl']."/index.php?do=space&member_id=$member_id";
 /**信誉**/
 $credit_level = unserialize($member_info['seller_level']);
-$indus_arr = kekezu::$_indus_arr;
+$indus_arr = Keke::$_indus_arr;
 //商品展示
  $service_obj = new Keke_witkey_service_class();
  $service_obj->setWhere("uid = ".intval($member_id)." order by on_time desc limit 0,9 ");
@@ -30,7 +30,7 @@ $range = range(1,8);
 
 
  $mark_obj  = new Keke_witkey_mark_class();
- $page_obj  = kekezu::$_page_obj;
+ $page_obj  = Keke::$_page_obj;
  $page_obj->setAjax('1');
  $page_obj->setAjaxDom('mark_content');
  $page_size = intval ( $page_size ) ? intval ( $page_size ) : 5; 

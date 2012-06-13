@@ -21,18 +21,18 @@ if ($sid) {
 	} 
 	if ($uid != $service_info ['uid']&&$service_info ['service_status']!=2) {
 		
-		$uid == ADMIN_UID or kekezu::show_msg ( $_lang['operate_notice'], "index.php?do=shop", '1', $_lang['goods_not_exist'], 'error' );
+		$uid == ADMIN_UID or Keke::show_msg ( $_lang['operate_notice'], "index.php?do=shop", '1', $_lang['goods_not_exist'], 'error' );
 	}
 	
-	$indus_p_arr = kekezu::get_table_data ( '*', "witkey_industry", "indus_type=1 and indus_pid = 0 ", "listorder asc ", '', '', 'indus_id', NULL );
-	$indus_arr   = kekezu::get_table_data ( '*', 'witkey_industry', '', 'listorder', '', '', 'indus_id', NULL );
+	$indus_p_arr = Keke::get_table_data ( '*', "witkey_industry", "indus_type=1 and indus_pid = 0 ", "listorder asc ", '', '', 'indus_id', NULL );
+	$indus_arr   = Keke::get_table_data ( '*', 'witkey_industry', '', 'listorder', '', '', 'indus_id', NULL );
 	$model_id    = $service_info ['model_id'];
 	$model_info  = $model_list [$model_id];
 	$model_code  = $model_info['model_code'];
 	/**
 	 *店主部分信息获取
 	 */
-	$owner_info  = kekezu::get_user_info($service_info['uid']);
+	$owner_info  = Keke::get_user_info($service_info['uid']);
 	//店主信息
 	$user_level  = unserialize($owner_info['seller_level']);
 	/** 认证记录**/
@@ -52,6 +52,6 @@ if ($sid) {
 	keke_lang_class::loadlang("service_info");
 } else {
 	
-	kekezu::show_msg ( $_lang['operate_notice'], "index.php?do=index", '1', $_lang['param_error'], 'error' );
+	Keke::show_msg ( $_lang['operate_notice'], "index.php?do=index", '1', $_lang['param_error'], 'error' );
 }
-$model_info and ( require S_ROOT . "/shop/" . $model_info ['model_dir'] . "/control/service_info.php") or kekezu::show_msg ( $_lang['error'], "index.php?do=index", 3, $_lang['goods_not_exist'], 'error' );
+$model_info and ( require S_ROOT . "/shop/" . $model_info ['model_dir'] . "/control/service_info.php") or Keke::show_msg ( $_lang['error'], "index.php?do=index", 3, $_lang['goods_not_exist'], 'error' );

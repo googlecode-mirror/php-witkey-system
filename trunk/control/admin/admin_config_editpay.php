@@ -3,17 +3,17 @@
  * Ö§¸¶½Ó¿ÚÅäÖÃ
  */
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
-kekezu::admin_check_role ( 2 );
+Keke::admin_check_role ( 2 );
 
 $pay_api_obj = keke_table_class::get_instance ( "witkey_pay_api" );
 
-$payment_config = kekezu::get_payment_config ( $payname, $type );
+$payment_config = Keke::get_payment_config ( $payname, $type );
 
 //var_dump($payment_config);die();
 
 $pay_config = unserialize ( $payment_config ['config'] );
 $payment_exist =dbfactory::get_count(" select payment from ".TABLEPRE."witkey_pay_api where payment='$payname' and type='$type'");
-$payment_config or kekezu::admin_show_msg ( $_lang['wrong_model_directory'], "index.php?do=config&view=pay",3,'','warning' );
+$payment_config or Keke::admin_show_msg ( $_lang['wrong_model_directory'], "index.php?do=config&view=pay",3,'','warning' );
 
 $temp = array ();
 foreach ( explode ( ";", $payment_config ['initparam'] ) as $item ) {
@@ -54,15 +54,15 @@ if (isset ( $sbt_edit )) {
 	$pay_config ['descript'] = $fds['descript'];
 	$pay['config']=serialize ( $pay_config );
 	$res=$pay_api_obj->save($pay,$pk);
-	kekezu::admin_system_log($_lang['config'].$payname);
+	Keke::admin_system_log($_lang['config'].$payname);
 	if($res){
 		//Çå³ýÅäÖÃ»º´æ
 		$file_obj = new keke_file_class();
 		$file_obj->delete_files(S_ROOT."./data/data_cache/");
 		unset($items);
-		kekezu::admin_show_msg ( $_lang['submit'], 'index.php?do=config&view=pay&op=' . $type,3,'','success' );
+		Keke::admin_show_msg ( $_lang['submit'], 'index.php?do=config&view=pay&op=' . $type,3,'','success' );
 	}else{
-		kekezu::admin_show_msg ( $_lang['edit_fail'], 'index.php?do=config&view=pay&op=' . $type ,3,'','warning');
+		Keke::admin_show_msg ( $_lang['edit_fail'], 'index.php?do=config&view=pay&op=' . $type ,3,'','warning');
 	}
 
 }

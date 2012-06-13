@@ -3,7 +3,7 @@
  * 网银在线回调测试页面
  */ 
 require_once (dirname ( dirname ( dirname ( __FILE__ ) ) ) . DIRECTORY_SEPARATOR . 'app_comm.php');
-$pay_arr = kekezu::get_payment_config ( 'chinabank' );
+$pay_arr = Keke::get_payment_config ( 'chinabank' );
 @extract ( $pay_arr );
 $key = $safekey;
 $v_oid = trim ( $_POST ['v_oid'] ); // 商户发送的v_oid定单编号   

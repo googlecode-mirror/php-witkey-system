@@ -12,7 +12,7 @@ class keke_admin_class {
 	}
 	static function get_admin_menu() {
 		global $kekezu,$_lang;
-		$menuset_arr = kekezu::$_cache_obj->get ( 'menu_resource_cache' );
+		$menuset_arr = Keke::$_cache_obj->get ( 'menu_resource_cache' );
 		if (! $menuset_arr) {
 			$resource_obj = new Keke_witkey_resource_class ();
 			$resource_obj->setWhere ( "1=1 order by listorder asc" );
@@ -38,7 +38,7 @@ class keke_admin_class {
 			$resource_arr = $temp_arr2;
 			$menuset_arr = array ('navgat' => $navgation_arr, 'menu' => $resource_arr, 'submenu' => $submenu_set_arr, 'resource' => $resource_set_arr );
 			
-			$model_list = kekezu::$_model_list;
+			$model_list = Keke::$_model_list;
 			$i = 0;
 			foreach ( $model_list as $model ) {
 				$init_menu = array ();
@@ -54,14 +54,14 @@ class keke_admin_class {
 				$menuset_arr ['menu'] [$model ['model_type']] [] = array ('name' => $model ['model_name'], 'items' => $mulist_arr );
 			}
 			
-			kekezu::$_cache_obj->set ( 'menu_resource_cache', $menuset_arr, null );
+			Keke::$_cache_obj->set ( 'menu_resource_cache', $menuset_arr, null );
 		}
 		return $menuset_arr;
 	}
 	
 	static function get_user_group() {
 		global $kekezu;
-		$group_arr = kekezu::$_cache_obj->get ( "member_group_cache" );
+		$group_arr = Keke::$_cache_obj->get ( "member_group_cache" );
 		if (! $group_arr) {
 			$membergroup_obj = new Keke_witkey_member_group_class ();
 			$group_arr = $membergroup_obj->query_keke_witkey_member_group ();
@@ -71,7 +71,7 @@ class keke_admin_class {
 				$temp_arr [$v ['group_id']] ['group_roles'] = explode ( ',', $v ['group_roles'] );
 			}
 			$group_arr = $temp_arr;
-			kekezu::$_cache_obj->set ( 'member_group_cache', $group_arr, null );
+			Keke::$_cache_obj->set ( 'member_group_cache', $group_arr, null );
 		}
 		
 		return $group_arr;
@@ -171,14 +171,14 @@ class keke_admin_class {
 			$shortcuts_obj->setResource_id ( $r_id );
 			$success = $shortcuts_obj->create_keke_witkey_shortcuts ();
 			if ($success) {
-				kekezu::echojson ( $_lang['shortcuts_add_success'], '4' );
+				Keke::echojson ( $_lang['shortcuts_add_success'], '4' );
 				die ();
 			} else {
-				kekezu::echojson ( $_lang['shortcuts_add_fail'], '1' );
+				Keke::echojson ( $_lang['shortcuts_add_fail'], '1' );
 				die ();
 			}
 		} else {
-			kekezu::echojson ( $_lang['the_shortcuts_has_exist'], '0' );
+			Keke::echojson ( $_lang['the_shortcuts_has_exist'], '0' );
 			die ();
 		}
 	}
@@ -192,19 +192,19 @@ class keke_admin_class {
 		$shortcuts_list = dbfactory::get_one ( " select uid,resource_id from " . TABLEPRE . "witkey_shortcuts where resource_id = '$r_id' and uid = '$this->_uid'" );
 		if ($shortcuts_list) {
 			if ($shortcuts_list ['uid'] != $this->_uid) {
-				kekezu::echojson ( $_lang['not_delete_others_shortcuts'], '2' );
+				Keke::echojson ( $_lang['not_delete_others_shortcuts'], '2' );
 			} else {
 				$success = dbfactory::execute ( " delete from " . TABLEPRE . "witkey_shortcuts where resource_id = '$r_id' and uid = '$this->_uid'" );
 				if ($success) {
-					kekezu::echojson ( $_lang['shortcuts_delete_success'], '4' );
+					Keke::echojson ( $_lang['shortcuts_delete_success'], '4' );
 					die ();
 				} else {
-					kekezu::echojson ( $_lang['shortcuts_delete_fail'], '3' );
+					Keke::echojson ( $_lang['shortcuts_delete_fail'], '3' );
 					die ();
 				}
 			}
 		} else {
-			kekezu::echojson ( $_lang['please_choose_shortcut_menu'], '0' );
+			Keke::echojson ( $_lang['please_choose_shortcut_menu'], '0' );
 			die ();
 		}
 	}
@@ -212,7 +212,7 @@ class keke_admin_class {
 	 * 获取文件分类
 	 */
 	static function get_article_cate() {
-		return kekezu::get_table_data ( "*", "witkey_article_category", "", "listorder asc ", "", "", "art_cat_id", null );
+		return Keke::get_table_data ( "*", "witkey_article_category", "", "listorder asc ", "", "", "art_cat_id", null );
 	
 	}
 	/**
@@ -231,16 +231,16 @@ class keke_admin_class {
 			$kekezu->echojson ( "login limit!", "8" );
 			die ();
 		} else {
-			if (!kekezu::submitcheck($formhash, true)) {//检测hash值
+			if (!Keke::submitcheck($formhash, true)) {//检测hash值
 				$_SESSION ['allow_times'] -= 1;
 				-- $allow_times == 0 and $this->set_login_limit_time ( '1' );
-				$hash = kekezu::formhash();
+				$hash = Keke::formhash();
 				$kekezu->echojson($_lang['repeat_form_submit'], 6, array('times'=>$allow_times, 'formhash'=>$hash));
 				die();
 			}
 		
 			$user_info = keke_user_class::user_login ( $username, $password ); //用户信息
-			$hash = kekezu::formhash();
+			$hash = Keke::formhash();
 			if ($user_info == - 1) {
 				$_SESSION ['allow_times'] -= 1;
 				-- $allow_times == 0 and $this->set_login_limit_time ( '1' );
@@ -258,7 +258,7 @@ class keke_admin_class {
 				$kekezu->echojson ( $_lang['login_fail'], "4", array('times'=>$allow_times, 'formhash'=>$hash) );
 				die ();
 			} else {  
-				$user_info = kekezu::get_user_info ( $user_info['uid'] ); //获取用户信息
+				$user_info = Keke::get_user_info ( $user_info['uid'] ); //获取用户信息
 			}
 			if (! $user_info) {
 				$_SESSION ['allow_times'] -= 1;
@@ -273,7 +273,7 @@ class keke_admin_class {
 			} else {
 				$_SESSION ['auid'] = $_SESSION ['uid'] = $user_info ['uid'];
 				$_SESSION ['username'] = $user_info ['username'];
-				kekezu::admin_system_log ( $user_info ['username'] . date ( 'Y-m-d H:i:s', time () ) . $_lang['login_system'] );
+				Keke::admin_system_log ( $user_info ['username'] . date ( 'Y-m-d H:i:s', time () ) . $_lang['login_system'] );
 				$this->set_login_limit_time ();
 				$kekezu->echojson ( $_lang['login_success'], "1" );
 				die ();
@@ -308,7 +308,7 @@ class keke_admin_class {
 	public static function get_withdraw_cash($cash){
 		$fee = floatval ( $cash );
 		/** 站类付款收费标准*/
-		$pay_config = kekezu::get_table_data ( "*", "witkey_pay_config", '', '', "", '', 'k' );
+		$pay_config = Keke::get_table_data ( "*", "witkey_pay_config", '', '', "", '', 'k' );
 		 
 		$site_per_charge = $pay_config[per_charge][v];
 		$site_per_low = $pay_config[per_low][v];

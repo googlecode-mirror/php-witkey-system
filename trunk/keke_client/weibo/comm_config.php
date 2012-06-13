@@ -9,5 +9,5 @@
 
 require_once '../../../lib/inc/keke_base_class.php';
 require_once '../../../lib/inc/keke_core_class.php';
-$basic_config  = kekezu::$_sys_config;
+$basic_config  = Keke::$_sys_config;
 

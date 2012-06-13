@@ -3,7 +3,7 @@
  * mysql 数据库连接类 kekezu
  */
 
-final class keke_driver_mysql extends keke_database {
+final class Keke_driver_mysql extends keke_database {
 	
 	private $_dbhost;
 	private $_dbname;
@@ -58,14 +58,14 @@ final class keke_driver_mysql extends keke_database {
 	 * @example type=insert 返回array(insert_id,affected_rows)
 	 * @example type=update or delete 返回 int affected_rows;
 	 */
-	public function query($sql, $type = database::SELECT, $is_unbuffer = 0) {
+	public function query($sql, $type = Database::SELECT, $is_unbuffer = 0) {
 		$this->execute ( $sql, $is_unbuffer );
-		if ($type === database::SELECT) {
+		if ($type === Database::SELECT) {
 			$result = array ();
 			while ( ($rs = $this->fetch_array ()) != false ) {
 				$result [] = $rs;
 			}
-		} elseif ($type === database::INSERT) {
+		} elseif ($type === Database::INSERT) {
 			$result = array (mysql_insert_id ( $this->_link ), mysql_affected_rows ( $this->_link ) );
 		} else {
 			$result = mysql_affected_rows ( $this->_link );
@@ -139,7 +139,7 @@ final class keke_driver_mysql extends keke_database {
 
 		$method = $replace ? 'replace' : 'insert';
 		$sql = $method . ' into ' . $tablename . ' (' . $field . ') values (' . $value . ')';
-		$res = $this->query ( $sql, database::INSERT );
+		$res = $this->query ( $sql, Database::INSERT );
 		if ($returnid && ! $replace) {
 			// insert_id
 			return $res [0];
@@ -170,12 +170,12 @@ final class keke_driver_mysql extends keke_database {
 			$where = $wheresqlarr;
 		}
 		$sql = 'UPDATE ' . $tablename . ' SET ' . $setsql . ' WHERE ' . $where;
-		return $this->query ( $sql, database::UPDATE );
+		return $this->query ( $sql, Database::UPDATE );
 	}
 	public function cached($lifetime = NULL) {
 		if ($lifetime === NULL) {
 			// 默认缓存时间
-			$lifetime = cache::DEFAULT_CACHE_LIFE_TIME;
+			$lifetime = Cache::DEFAULT_CACHE_LIFE_TIME;
 		}
 		$this->_lifetime = $lifetime;
 		return $this;
@@ -184,7 +184,7 @@ final class keke_driver_mysql extends keke_database {
 	 * 高级查询
 	 * (non-PHPdoc)
 	 *
-	 * @see keke_database::select()
+	 * @see keke_Database::select()
 	 */
 	public function select($fileds = '*', $table = null, $where = '', $order = '', $group = '', $limit = '', $pk = '', $cachetime = 0) {
 		$datalist = array ();
@@ -216,7 +216,7 @@ final class keke_driver_mysql extends keke_database {
 	 * 执行sql
 	 *
 	 * @return resource by mysql_link
-	 * @see keke_database::execute()
+	 * @see keke_Database::execute()
 	 */
 	public function execute($sql, $is_nubuffer = 0) {
 		! is_resource ( $this->_link ) and $this->dbconnection ();
@@ -244,16 +244,16 @@ final class keke_driver_mysql extends keke_database {
 		}
 	}
 	public function cache_data($sql, $default = 'null') {
-		$key = cache::instance ()->generate_id ( $sql )->get_id();
-		if ($this->_lifetime > 0 and $datalist = cache::instance ()->get ( $key )) {
+		$key = Cache::instance ()->generate_id ( $sql )->get_id();
+		if ($this->_lifetime > 0 and $datalist = Cache::instance ()->get ( $key )) {
 			return $datalist;
 		} elseif ($this->_lifetime <= 0) {
-			cache::instance ()->del ( $key );
+			Cache::instance ()->del ( $key );
 		}
 		$datalist = $data = $this->query ( $sql );
 		if (isset ( $key ) and $this->_lifetime > 0) {
 			empty ( $data ) and $data = $default;
-			cache::instance ()->set ( $key, $data,$this->_lifetime);
+			Cache::instance ()->set ( $key, $data,$this->_lifetime);
 		}
 		return $datalist;
 	}

@@ -33,7 +33,7 @@ $reqHandler->setParameter ( "transaction_id", $transaction_id );
 $reqHandler->setParameter ( "total_fee", $v_amount );
 $reqHandler->setParameter ( "return_url", $v_url );
 $reqHandler->setParameter ( "desc", $desc );
-$reqHandler->setParameter ( "spbill_create_ip", kekezu::get_ip () );
+$reqHandler->setParameter ( "spbill_create_ip", Keke::get_ip () );
 $reqUrl = $reqHandler->getRequestURL ();
 
 

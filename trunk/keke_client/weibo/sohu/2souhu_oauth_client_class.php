@@ -95,7 +95,7 @@ class souhu_oauth_client_class extends base_client_class{
 		
 		
 		if (strtolower($_K['charset'])=='gbk'){
-			$auth_user_info = kekezu::utftogbk($auth_user_info);
+			$auth_user_info = Keke::utftogbk($auth_user_info);
 		}
 		
 		if ($auth_user_info['error']){
@@ -116,13 +116,13 @@ class souhu_oauth_client_class extends base_client_class{
 		global $_K;
 		
 		if (strtolower($_K['charset'])=='gbk'){
-			$msg = kekezu::gbktoutf($msg);
+			$msg = Keke::gbktoutf($msg);
 		}
 		$c->postOne($msg, $img);
 		
 		
 		if (strtolower($_K['charset'])=='gbk'){
-			$r = kekezu::utftogbk($r);
+			$r = Keke::utftogbk($r);
 		}
 		
 		if ($r['error']){
@@ -147,7 +147,7 @@ class souhu_oauth_client_class extends base_client_class{
 		
 		global $_K;
 		if (strtolower($_K['charset'])=='gbk'){
-			$r = kekezu::utftogbk($r);
+			$r = Keke::utftogbk($r);
 		}
 		
 		return $r;
@@ -161,7 +161,7 @@ class souhu_oauth_client_class extends base_client_class{
 		
 		global $_K;
 		if (strtolower($_K['charset'])=='gbk'){
-			$r = kekezu::utftogbk($r);
+			$r = Keke::utftogbk($r);
 		}
 		
 		if ($r ['error']) {
@@ -183,7 +183,7 @@ class souhu_oauth_client_class extends base_client_class{
 		
 		global $_K;
 		if (strtolower($_K['charset'])=='gbk'){
-			$r = kekezu::utftogbk($r);
+			$r = Keke::utftogbk($r);
 		}
 			if ($r ['error']) {
 			//unset ( $_SESSION ['auth_souhu'] );
@@ -199,14 +199,14 @@ class souhu_oauth_client_class extends base_client_class{
 		$this->_error_info = null;
 		$this->init_client();
 		if(strtolower($_K['charset'])=='gbk'&&$text){
-			$text = kekezu::gbktoutf($text);
+			$text = Keke::gbktoutf($text);
 		}
 		$c = $this->get_client();
 		$r = $c->repost($sid,$text);
 		
 		
 		if (strtolower($_K['charset'])=='gbk'){
-			$r = kekezu::utftogbk($r);
+			$r = Keke::utftogbk($r);
 		}
 		
 		
@@ -227,13 +227,13 @@ class souhu_oauth_client_class extends base_client_class{
 		$c = $this->get_client();
 		
 		if(strtolower($_K['charset'])=='gbk'){
-			$text = kekezu::gbktoutf($text);
+			$text = Keke::gbktoutf($text);
 		}
 		
 		$r = $c->send_comment($sid,$text);
 		
 		if (strtolower($_K['charset'])=='gbk'){
-			$r = kekezu::utftogbk($r);
+			$r = Keke::utftogbk($r);
 		}
 		if ($r ['error']) {
 			unset ( $_SESSION ['auth_souhu'] );

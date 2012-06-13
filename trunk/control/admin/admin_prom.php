@@ -14,8 +14,8 @@ $views = array ('config','item','event','prom_rule','item_edit','edit_event','re
 $view = (! empty ( $view ) && in_array ( $view, $views )) ? $view : 'config';
 
 if ( file_exists ( ADMIN_ROOT . 'admin_'.$do.'_' . $view . '.php' ) ) {
-	//$prom_arr = kekezu::$_prom_obj->_prom_rule_config_info; //定义事件数组
+	//$prom_arr = Keke::$_prom_obj->_prom_rule_config_info; //定义事件数组
 	require ADMIN_ROOT . 'admin_'.$do.'_' . $view . '.php';
 } else {
-	kekezu::admin_show_msg ($_lang['404_page'],'',3,'','warning' );
+	Keke::admin_show_msg ($_lang['404_page'],'',3,'','warning' );
 }

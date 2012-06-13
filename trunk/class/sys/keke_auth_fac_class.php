@@ -9,7 +9,7 @@ class keke_auth_fac_class {
 	 * @param $uid
 	 */
 	public static function user_auth_info($uid) {
-		$auth_list = kekezu::get_table_data ( "*", "witkey_auth_record", "uid='$uid'", '', '', '', 'auth_code' );
+		$auth_list = Keke::get_table_data ( "*", "witkey_auth_record", "uid='$uid'", '', '', '', 'auth_code' );
 		return $auth_list;
 	}
 	/**
@@ -63,21 +63,21 @@ class keke_auth_fac_class {
 			if(file_exists ( $file_path )){
 				require $file_path;
 			$exists    = dbfactory::get_count(" select auth_code from ".TABLEPRE."witkey_auth_item where auth_dir = '$auth_dir'");
-			$exists and kekezu::admin_show_msg($_lang['auth_item_exist_add_fail'],$_SERVER['HTTP_REFERER'],'3','','error');
+			$exists and Keke::admin_show_msg($_lang['auth_item_exist_add_fail'],$_SERVER['HTTP_REFERER'],'3','','error');
 			
 			$res=$tab_obj->save($auth_config);//安装
 			
 			if (file_exists ( S_ROOT . "./auth/" .$auth_dir. "/control/admin/install_sql.php" )) {
 				require S_ROOT . "./auth/" . $auth_dir. "/control/admin/install_sql.php";
 			}
-			$res and kekezu::admin_system_log ( $_lang['add_auth_item'] . "$res" );
-			$res and kekezu::admin_show_msg($_lang['auth_item_add_success'],$_SERVER['HTTP_REFERER'],'3');
+			$res and Keke::admin_system_log ( $_lang['add_auth_item'] . "$res" );
+			$res and Keke::admin_show_msg($_lang['auth_item_add_success'],$_SERVER['HTTP_REFERER'],'3');
 			}else{
 				
-				kekezu::admin_show_msg($_lang['unknow_error_add_fail'],$_SERVER['HTTP_REFERER'],'3','','error');
+				Keke::admin_show_msg($_lang['unknow_error_add_fail'],$_SERVER['HTTP_REFERER'],'3','','error');
 			}
 		} else {
-			kekezu::admin_show_msg($_lang['unknow_error_add_fail'],$_SERVER['HTTP_REFERER'],'3','','error');
+			Keke::admin_show_msg($_lang['unknow_error_add_fail'],$_SERVER['HTTP_REFERER'],'3','','error');
 		}
 	}
 	/**
@@ -98,21 +98,21 @@ class keke_auth_fac_class {
 					$auth_item['auth_big_ico']     and keke_file_class::del_file($auth_item['auth_big_ico']); 
 					$auth_item_obj->setWhere ("auth_code='$auth_code'" );
 					$res = $auth_item_obj->del_keke_witkey_auth_item ();
-					$res and kekezu::$_cache_obj->del ( $cash_name );
-					$res and kekezu::admin_system_log ( $_lang['delete_auth_item'] . $auth_item['auth_title'] );
+					$res and Keke::$_cache_obj->del ( $cash_name );
+					$res and Keke::admin_system_log ( $_lang['delete_auth_item'] . $auth_item['auth_title'] );
 					
 					if (file_exists ( S_ROOT . "./auth/" . $auth_item['auth_dir'] . "/control/admin/uninstall_sql.php" )) {
 						require S_ROOT . "./auth/" . $auth_item['auth_dir'] . "/control/admin/uninstall_sql.php";
 					}
-					$res and kekezu::admin_show_msg($_lang['auth_item_delete_success_notice'],$_SERVER['HTTP_REFERER'],'3')	or kekezu::admin_show_msg($_lang['auth_item_delete_fail'],$_SERVER['HTTP_REFERER'],'3','','error');
+					$res and Keke::admin_show_msg($_lang['auth_item_delete_success_notice'],$_SERVER['HTTP_REFERER'],'3')	or Keke::admin_show_msg($_lang['auth_item_delete_fail'],$_SERVER['HTTP_REFERER'],'3','','error');
 					break;
 				case "1" :
 					$auth_code_str=implode(",",$auth_code);
 					if (sizeof ( $auth_code_str )) {
 						$auth_item_obj->setWhere ( " FIND_IN_SET(auth_code,'$auth_code_str')>0" );
 						$res = $auth_item_obj->del_keke_witkey_auth_item ();
-						$res and kekezu::admin_system_log ( $_lang['delete_auth_item']."$auth_code_str" );
-						$res and kekezu::admin_show_msg($_lang['auth_item_mulit_delete_success'],$_SERVER['HTTP_REFERER'],'3') or $res and kekezu::admin_show_msg($_lang['auth_item_mulit_delete_fail'],$_SERVER['HTTP_REFERER'],'3','','error');
+						$res and Keke::admin_system_log ( $_lang['delete_auth_item']."$auth_code_str" );
+						$res and Keke::admin_show_msg($_lang['auth_item_mulit_delete_success'],$_SERVER['HTTP_REFERER'],'3') or $res and Keke::admin_show_msg($_lang['auth_item_mulit_delete_fail'],$_SERVER['HTTP_REFERER'],'3','','error');
 					}
 					break;
 			}
@@ -132,7 +132,7 @@ class keke_auth_fac_class {
 		global $kekezu;
 		global $_lang;
 		$auth_item     = keke_auth_base_class::get_auth_item($auth_code);
-		$auth_item or kekezu::admin_show_msg($_lang['auth_item_edit_fail_notice'],"index.php?do=auth&view=item_list",'3','','error');
+		$auth_item or Keke::admin_show_msg($_lang['auth_item_edit_fail_notice'],"index.php?do=auth&view=item_list",'3','','error');
 		$tab_obj       = keke_table_class::get_instance("witkey_auth_item");
 		//echo $big_ico_name;
 		$big_ico_name and $data['auth_big_ico'] = $big_ico_name=='delete' ? '' : $big_ico_name;//keke_file_class::upload_file($big_ico_name);//认证大图片上传
@@ -143,11 +143,11 @@ class keke_auth_fac_class {
 // 		var_dump($data);
 		$res=$tab_obj->save($data,$pk);//保存.编辑
 		if($res){
-			kekezu::$_cache_obj->del('auth_item_cache_list');
-			kekezu::admin_system_log($_lang['edit_auth_item'].$auth_item['auth_title']);
-			kekezu::admin_show_msg($_lang['auth_item_edit_success'],$_SERVER['HTTP_REFERER'],3,'','success');
+			Keke::$_cache_obj->del('auth_item_cache_list');
+			Keke::admin_system_log($_lang['edit_auth_item'].$auth_item['auth_title']);
+			Keke::admin_show_msg($_lang['auth_item_edit_success'],$_SERVER['HTTP_REFERER'],3,'','success');
 		}else{
-			kekezu::admin_show_msg($_lang['auth_item_edit_fail'],$_SERVER['HTTP_REFERER'],3,'','warning');
+			Keke::admin_show_msg($_lang['auth_item_edit_fail'],$_SERVER['HTTP_REFERER'],3,'','warning');
 		}
 	}
 	/**

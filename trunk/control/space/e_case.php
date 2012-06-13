@@ -6,7 +6,7 @@
  * @version V2.0
  */
 defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
-$d_url = kekezu::$_sys_config ['website_url'];
+$d_url = Keke::$_sys_config ['website_url'];
 
 $member_id and $member_id = intval ( $member_id );
 
@@ -17,7 +17,7 @@ $url = "index.php?do=space&member_id=$member_id&view=case&page_size=$page_size";
 $page_size = 10;
 $count = dbfactory::execute ( $sql );
 $page = $page ? $page : 1;
-$pages = kekezu::$_page_obj->getPages ( $count, $page_size, $page, $url );
+$pages = Keke::$_page_obj->getPages ( $count, $page_size, $page, $url );
 $where = $pages ['where'];
 $shop_arr = dbfactory::query ( $sql . $where );
 require keke_tpl_class::template ( SKIN_PATH . "/space/{$type}_{$view}" );

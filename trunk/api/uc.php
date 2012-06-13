@@ -174,7 +174,7 @@ class uc_note {
 		require_once  $this->appdir.'./app_comm.php';
 		$_SESSION['uid'] = $syn_uid;
 		$_SESSION['username'] = $syn_username;
-		//kekezu::prom_check();
+		//Keke::prom_check();
 		//最新登录时间
 		$space_obj = new Keke_witkey_space_class();
 		$space_obj->setUid($syn_uid);

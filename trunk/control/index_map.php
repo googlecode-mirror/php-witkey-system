@@ -15,7 +15,7 @@ $new_task_arr  = dbfactory::query("select a.task_id,a.task_title,a.task_status,a
 if($_K['map_api']=='baidu'){
 	foreach ($new_task_arr as $k=>$v) {
 		$v['user_pic'] = keke_user_class::get_user_pic($v['uid']);
-		$v['start_time'] = kekezu::time2Units(time()-$v['start_time']) ;
+		$v['start_time'] = Keke::time2Units(time()-$v['start_time']) ;
 		$point = explode(',',$v ['point']);
 		$v['point'] = $point['1'].','.$point['0'];
 		$arr_point .= 'new BMap.Point(' . $v ['point'] . '),';
@@ -70,7 +70,7 @@ END;
 	}else{
 	foreach ($new_task_arr as $k=>$v) {
 	$v['user_pic'] = keke_user_class::get_user_pic($v['uid']);
-	$v['start_time'] = kekezu::time2Units(time()-$v['start_time']) ;
+	$v['start_time'] = Keke::time2Units(time()-$v['start_time']) ;
 	$arr_point .= 'new google.maps.LatLng(' . $v ['point'] . '),';
 	$arr_marker .= '  new google.maps.Marker({ position: point[' . $k . '], map: map}),';
 	$arr_infoWindow .= ' new google.maps.InfoWindow({content:"<div class=basic_style map_info><div class=fl_l mr_10><a target=_blank  href=index.php?do=space&member_id='.$v['uid'].'>'.$v['user_pic'].'</a></div><strong><a  target=_blank href=index.php?do=task&task_id='.$v['task_id'].'   target=_blank>'.$v['task_title'].'</a></strong><div class=font12><a href=index.php?do=space&member_id='.$v['uid'].' target=_blank  class=font12>'.$v['username'].'</a></b>&nbsp;&nbsp;'.$v['start_time']. 'Ç°·¢²¼</div></div>"}),';

@@ -23,7 +23,7 @@ require_once (dirname ( dirname ( dirname ( __FILE__ ) ) ) . DIRECTORY_SEPARATOR
 require_once ("alipay_notify.php");
 
 $_input_charset = strtoupper ( CHARSET );
-$payment_config = kekezu::get_payment_config ( 'alipayjs' );
+$payment_config = Keke::get_payment_config ( 'alipayjs' );
 $payment_config or die ( "支付配置错误，支付无法完成，请联系管理员。" );
 
 $seller_id = $payment_config ['seller_id'];

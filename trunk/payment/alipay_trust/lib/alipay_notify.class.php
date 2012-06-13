@@ -155,9 +155,9 @@ class AlipayNotify {
 $arr[0]
 XML;
 		$xml_o = simplexml_load_string ( $string );
-		$xml_arr = kekezu::objtoarray ( $xml_o );
+		$xml_arr = Keke::objtoarray ( $xml_o );
 		if ($charset== "GBK") {
-			$xml_arr = kekezu::utftogbk ( $xml_arr );
+			$xml_arr = Keke::utftogbk ( $xml_arr );
 		}
 		return $xml_arr;
 	}

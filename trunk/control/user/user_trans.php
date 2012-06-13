@@ -40,9 +40,9 @@ if ($ac) {
 			if ($report_id) {
 				$res = dbfactory::execute (sprintf(" delete from %switkey_report where report_id='%d'",TABLEPRE,$report_id));
 				$filepath and keke_file_class::del_file($filepath);//删除相应文件
-				$res and kekezu::show_msg ( $_lang['operate_notice'], $url."#userCenter", "3", $_lang['delete'] . $action_arr [$op] . $_lang['record_success'],'success' ) or kekezu::show_msg ( $_lang['operate_notice'], $url."#userCenter", "3", $_lang['delete'] . $action_arr [$op] . $_lang['record_fail'],"warning" );
+				$res and Keke::show_msg ( $_lang['operate_notice'], $url."#userCenter", "3", $_lang['delete'] . $action_arr [$op] . $_lang['record_success'],'success' ) or Keke::show_msg ( $_lang['operate_notice'], $url."#userCenter", "3", $_lang['delete'] . $action_arr [$op] . $_lang['record_fail'],"warning" );
 			} else
-				kekezu::show_msg ( $_lang['operate_notice'], $url."#userCenter", "3", $_lang['please_select_delete'] . $action_arr [$op] . $_lang['record'], "warning" );
+				Keke::show_msg ( $_lang['operate_notice'], $url."#userCenter", "3", $_lang['please_select_delete'] . $action_arr [$op] . $_lang['record'], "warning" );
 			break;
 	}
 } else {
@@ -52,7 +52,7 @@ if ($ac) {
 	/**
 	 *三级菜单 
 	 */
-	$third_title = kekezu::lang($op.'_manage');
+	$third_title = Keke::lang($op.'_manage');
 	$third_nav = array (
 	  "launched" => array ($_lang['launch'].$_lang['de'].$transrights_type[$op]['1'],"",1),
 	  "received" => array ($_lang['receive'].$_lang['de'].$transrights_type[$op]['1'],"",2)
@@ -61,7 +61,7 @@ if ($ac) {
 	 * @todo 排序
 	 */
 	$ord_arr = array (" report_id desc " => $action_arr[$op] . $_lang['num_desc'], " report_id asc " => $action_arr[$op] . $_lang['num_asc'], " on_time desc " => $_lang['submit_time_desc'], " on_time asc " => $_lang['submit_time_asc'] );
-	$page_obj = kekezu::$_page_obj; //分页对象
+	$page_obj = Keke::$_page_obj; //分页对象
 	$role == 1 and $where .= " and uid='$uid' " or $where .= " and to_uid='$uid' ";
 	$status and $where .= " and report_status='$status'";
 	$obj and $where .= " and obj='$obj'";

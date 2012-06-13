@@ -34,7 +34,7 @@ class preward_release_class extends keke_task_release_class {
 	public function get_defalut_max_day(){
 		$std_obj = $this->_std_obj;	
 		$task_cash = intval($std_obj->_release_info['txt_task_cash']);
-		return kekezu::get_show_day($task_cash,$this->_model_id);
+		return Keke::get_show_day($task_cash,$this->_model_id);
 	}
 	public function get_task_config() {
 		global $model_list;
@@ -59,7 +59,7 @@ class preward_release_class extends keke_task_release_class {
 					$sql = " select model_id,task_title,task_desc,indus_id,indus_pid,
 						task_cash,work_count,single_cash from %switkey_task where task_id='%d' and model_id='%d'";
 					$task_info = dbfactory::get_one ( sprintf ( $sql, TABLEPRE, $data ['t_id'] ,$this->_model_id));
-					$task_info or kekezu::show_msg($_lang['operate_notice'],$_SERVER['HTTP_REFERER'],3,$_lang['not_exsist_relation_task_and_not_user_onekey'],"warning");
+					$task_info or Keke::show_msg($_lang['operate_notice'],$_SERVER['HTTP_REFERER'],3,$_lang['not_exsist_relation_task_and_not_user_onekey'],"warning");
 					
 					$release_info = $this->onekey_mode_format($task_info);
 					$allow_time = $kekezu->get_show_day ( $task_info['task_cash'], $this->_model_id );
@@ -85,9 +85,9 @@ class preward_release_class extends keke_task_release_class {
 		if ($task_cash >= $this->_task_config ['min_cash']) {//任务金额满足最小要求
 			$time = keke_task_release_class::get_default_max_day($task_cash, $this->_model_id,$this->_task_config['min_day']);
 			
-			kekezu::echojson ( $time, 1 ,$time);
+			Keke::echojson ( $time, 1 ,$time);
 		} else {//不满足
-			kekezu::echojson ( $_lang['task_min_cash_limit_notice'] . $this->_task_config ['min_cash'], 0 );
+			Keke::echojson ( $_lang['task_min_cash_limit_notice'] . $this->_task_config ['min_cash'], 0 );
 			die ();
 		}
 	}

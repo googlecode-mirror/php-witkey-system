@@ -11,8 +11,8 @@ $nav_active_index = "index";
 /**
  * 首页行业
  */
-$indus_list = kekezu::$_indus_p_arr;
-$indus_c_arr = kekezu::$_indus_c_arr;
+$indus_list = Keke::$_indus_p_arr;
+$indus_c_arr = Keke::$_indus_c_arr;
 
 /**
  * 首页最近二周任务中标额统计
@@ -61,8 +61,8 @@ $two_week_auth ['0'] ['count'] >= $two_week_auth ['1'] ['count'] and $auth_count
  */
 
 $feed_list = dbfactory::query ( "select uid,username,title,feed_time from " . TABLEPRE . "witkey_feed order by feed_time desc limit 0,4", 1, 3600 );
-$mode_list = kekezu::$_model_list;
-$cash_coverage = kekezu::get_table_data ( "cash_rule_id,start_cove,end_cove", "witkey_task_cash_cove", "", "", "", "", "cash_rule_id", 3600 );
+$mode_list = Keke::$_model_list;
+$cash_coverage = Keke::get_table_data ( "cash_rule_id,start_cove,end_cove", "witkey_task_cash_cove", "", "", "", "", "cash_rule_id", 3600 );
 
 /**
  * 推荐任务
@@ -83,18 +83,18 @@ $recomm_service = dbfactory::query ( sprintf ( "select service_id,pic,ad_pic,tit
 /**
  * 新闻
  */
-$news_list = kekezu::get_table_data ( "art_id,art_title,art_pic,content,pub_time", "witkey_article", "(art_cat_id='5' or art_cat_id='6' or art_cat_id='17' or art_cat_id='365')", " pub_time desc", "", "10", "", 3600 );
+$news_list = Keke::get_table_data ( "art_id,art_title,art_pic,content,pub_time", "witkey_article", "(art_cat_id='5' or art_cat_id='6' or art_cat_id='17' or art_cat_id='365')", " pub_time desc", "", "10", "", 3600 );
 /**
  * 媒体报道
  */
 /*
  * $media_list =
- * kekezu::get_table_data("art_id,art_title,art_pic,content,pub_time","witkey_article","art_cat_id='7'","","","10","",3600);
+ * Keke::get_table_data("art_id,art_title,art_pic,content,pub_time","witkey_article","art_cat_id='7'","","","10","",3600);
  */
 /**
  * 首页案例
  */
-$case_list = kekezu::get_table_data ( "case_id,obj_id,obj_type,case_img,case_title,case_price", "witkey_case", "", "", "", "7", "", 3600 );
+$case_list = Keke::get_table_data ( "case_id,obj_id,obj_type,case_img,case_title,case_price", "witkey_case", "", "", "", "7", "", 3600 );
 
 /**
  * 首页人才

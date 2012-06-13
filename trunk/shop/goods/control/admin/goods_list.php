@@ -7,7 +7,7 @@
  */
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 $table_obj = keke_table_class::get_instance('witkey_service');
-$indus_p_arr = kekezu::$_indus_p_arr;
+$indus_p_arr = Keke::$_indus_p_arr;
 $goods_status_arr = goods_shop_class::get_goods_status();
 $status_arr = array("1"=>$_lang['wait_audit'],"4"=>$_lang['disable'],"5"=>$_lang['open']);
 //检索条件
@@ -35,23 +35,23 @@ if($ac){
 
 	$log_ac_arr = array("del"=>$_lang['delete'],"use"=>$_lang['open'],"disable"=>$_lang['disable'],"pass"=>$_lang['pass_audit']);
 	$log_msg = $_lang['to_witkey_goods_name_is'].$service_arr['title'].$_lang['conduct'].$log_ac_arr[$ac].$_lang['operate'];
-	kekezu::admin_system_log($log_msg);
+	Keke::admin_system_log($log_msg);
 	switch ($ac) {
 		case 'del':
 			$res = $table_obj->del('service_id', $service_id);
-			$res and kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['delete_success'],'success') or kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['delete_fail'],"warning");
+			$res and Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['delete_success'],'success') or Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['delete_fail'],"warning");
 			break;
 		case 'use'://启用
-			goods_shop_class::set_service_status($service_id, 5) and kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['goods_open_success'],'success') or kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['goods_open_fail'],"warning");
+			goods_shop_class::set_service_status($service_id, 5) and Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['goods_open_success'],'success') or Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['goods_open_fail'],"warning");
 			break;
 		case 'pass'://通过审核  
 			$time = time()-$service_arr['on_time']; 
 		 	keke_payitem_class::update_service_payitem_time($service_arr['payitem_time'], $time, $service_id);
-			goods_shop_class::set_service_status($service_id, 2) and kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['goods_open_success'],'success') or kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['goods_open_fail'],"warning");
+			goods_shop_class::set_service_status($service_id, 2) and Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['goods_open_success'],'success') or Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['goods_open_fail'],"warning");
 			
 			break;
 		case 'disable'://禁用
-			goods_shop_class::set_service_status($service_id, 4) and kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['goods_disable_success'],'success') or kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['goods_disable_fail'],"warning");
+			goods_shop_class::set_service_status($service_id, 4) and Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['goods_disable_success'],'success') or Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['goods_disable_fail'],"warning");
 			break;
 	}
 }
@@ -62,7 +62,7 @@ if(isset($sbt_action)){
 		$action="aa";
 		$log_mac_arr = array("del"=>$_lang['delete'],"user"=>$_lang['open'],"pass"=>$_lang['pass'],"disable"=>$_lang['disable']);
 		$log_msg = $_lang['to_witkey_goods_conduct_mulit'].$log_mac_arr[$sbt_action].$_lang['operate'];
-		kekezu::admin_system_log($log_msg);
+		Keke::admin_system_log($log_msg);
 		switch ($sbt_action){
 			case $_lang['mulit_delete']:
 				$res = $table_obj->del('service_id',$key_ids);
@@ -74,7 +74,7 @@ if(isset($sbt_action)){
 				break;
 			case $_lang['mulit_pass']: 
 				foreach ($key_ids as $v) {
-					$service_info = kekezu::get_table_data("*","witkey_service","service_id = $v");
+					$service_info = Keke::get_table_data("*","witkey_service","service_id = $v");
 					$service_info = $service_info['0'];
 					$add_time = time()-$service_info['on_time'];
 					keke_payitem_class::update_service_payitem_time($service_info['payitem_time'], $add_time, $v); 
@@ -87,7 +87,7 @@ if(isset($sbt_action)){
 				$action = $_lang['disable'];
 				break;
 		}
-		$res and kekezu::admin_show_msg($_lang['mulit'].$action.$_lang['success'],$url_str,2,$_lang['mulit'].$action.$_lang['success']) or kekezu::admin_show_msg($_lang['mulit'].$action.$_lang['fail'],$url_str,2,$_lang['mulit'].$action.$_lang['fail'],"error");
+		$res and Keke::admin_show_msg($_lang['mulit'].$action.$_lang['success'],$url_str,2,$_lang['mulit'].$action.$_lang['success']) or Keke::admin_show_msg($_lang['mulit'].$action.$_lang['fail'],$url_str,2,$_lang['mulit'].$action.$_lang['fail'],"error");
 	}
 }
 

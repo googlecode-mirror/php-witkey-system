@@ -43,11 +43,11 @@ class keke_shop_class {
 	public static function access_check($sid, $s_uid, $model_id) {
 		global $uid, $kekezu;
 		global $_lang;
-		$uid == $s_uid and kekezu::keke_show_msg ( "index.php?do=shop", $_lang['seller_not_to_order_page'], 'error' );
+		$uid == $s_uid and Keke::keke_show_msg ( "index.php?do=shop", $_lang['seller_not_to_order_page'], 'error' );
 		$order_info = self::check_has_buy ( $sid, $uid );
 		$order_status = $order_info ['order_status'];
 		$order_id = intval ( $order_info ['order_id'] );
-		$model_code = kekezu::$_model_list [$model_id] ['model_code'];
+		$model_code = Keke::$_model_list [$model_id] ['model_code'];
 		if (! $order_status) {
 			return true;
 		} else {
@@ -55,12 +55,12 @@ class keke_shop_class {
 				return true;
 			} elseif ($order_status == 'confirm') {
 				if ($model_code == 'goods') {
-					kekezu::keke_show_msg ( "index.php?do=user&view=finance&op=order&obj_type=service&role=2&order_id=" . $order_id, $_lang['you_has_buy_work'], 'error' );
+					Keke::keke_show_msg ( "index.php?do=user&view=finance&op=order&obj_type=service&role=2&order_id=" . $order_id, $_lang['you_has_buy_work'], 'error' );
 				} else {
 					return true;
 				}
 			} else {
-				kekezu::keke_show_msg ( "index.php?do=user&view=finance&op=order&obj_type=service&role=2&order_id=" . $order_id, $_lang['your_order_not_process_complete'], 'error' );
+				Keke::keke_show_msg ( "index.php?do=user&view=finance&op=order&obj_type=service&role=2&order_id=" . $order_id, $_lang['your_order_not_process_complete'], 'error' );
 			}
 		}
 	}
@@ -74,7 +74,7 @@ class keke_shop_class {
 	public static function create_service_order($service_info) {
 		global $uid, $username, $_K;
 		global $_lang;
-		$uid == $service_info ['uid'] and kekezu::keke_show_msg ( "index.php?do=shop", $_lang['seller_can_not_order_self'], 'error' );
+		$uid == $service_info ['uid'] and Keke::keke_show_msg ( "index.php?do=shop", $_lang['seller_can_not_order_self'], 'error' );
 		
 		$oder_obj = new Keke_witkey_order_class (); //订单记录表对象
 		$order_detail = new Keke_witkey_order_detail_class (); //订单详细对下岗
@@ -109,15 +109,15 @@ class keke_shop_class {
 			
 			$msg_obj->send_message ( $service_info ['uid'], $service_info ['username'], "service_order", $_lang['you_has_new'] . $type . $_lang['order'], $s_notice, $contact ['email'], $contact ['mobile'] ); ////通知雇主
 			$feed_arr = array ("feed_username" => array ("content" => $username, "url" =>"index.php?do=space&member_id=".$uid), "action" => array ("content" => $_lang['buy'], "url" => '' ), "event" => array ("content" => $order_name, "url" =>"index.php?do=service&sid=$service_info[service_id]" ) );
-			kekezu::save_feed ( $feed_arr, $uid, $username, 'service', $service_info ['service_id'], $service_url );
+			Keke::save_feed ( $feed_arr, $uid, $username, 'service', $service_info ['service_id'], $service_url );
 			if ($fina_id) {
-				kekezu::keke_show_msg ( 'index.php?do=user&view=finance&op=order&obj_type=service&role=2&order_id=' . $order_id, $_lang['order_produce_success'] );
+				Keke::keke_show_msg ( 'index.php?do=user&view=finance&op=order&obj_type=service&role=2&order_id=' . $order_id, $_lang['order_produce_success'] );
 			} else {
 				header ( "location:index.php?do=pay&order_id=$order_id" );
 				die ();
 			}
 		} else {
-			kekezu::keke_show_msg ( 'index.php?do=shop_order&sid=' . $service_info [service_id], $_lang['order_produce_fail'], "error" );
+			Keke::keke_show_msg ( 'index.php?do=shop_order&sid=' . $service_info [service_id], $_lang['order_produce_fail'], "error" );
 		}
 	}
 	/**
@@ -167,7 +167,7 @@ class keke_shop_class {
 		global $_lang;
 		$service_info = self::get_service_info ( $obj_id );
 		$transname = keke_report_class::get_transrights_name ( $report_type ); //举报投诉中文
-		$service_info ['uid'] == $uid and kekezu::keke_show_msg ( '', $_lang['can_not_to_self'] . $transname, 'error', 'json' );
+		$service_info ['uid'] == $uid and Keke::keke_show_msg ( '', $_lang['can_not_to_self'] . $transname, 'error', 'json' );
 		$user_type = '2'; //只能雇主对他发起
 		$res = keke_report_class::add_report ( 'product', $obj_id, $to_uid, $to_username, $desc, $report_type, $service_info ['service_status'], $obj_id, $user_type, $file_name );
 	}
@@ -178,7 +178,7 @@ class keke_shop_class {
 	 * @return array();
 	 */
 	public static function get_mark_count($model_code, $sid) {
-		return  kekezu::get_table_data ( " count(mark_id) count,mark_status", "witkey_mark", "model_code='" . $model_code . "' and origin_id='$sid'", "", "mark_status", "", "mark_status", 3600 );
+		return  Keke::get_table_data ( " count(mark_id) count,mark_status", "witkey_mark", "model_code='" . $model_code . "' and origin_id='$sid'", "", "mark_status", "", "mark_status", 3600 );
 	}
 	
 	/**
@@ -186,31 +186,31 @@ class keke_shop_class {
 	 * *
 	 */
    public static function get_mark_count_ext($model_code, $sid){
-		return kekezu::get_table_data ( " count(mark_id) count,mark_type", "witkey_mark", "model_code='" . $model_code . "' and origin_id='$sid'", "", "mark_type", "", "mark_type", 3600 );
+		return Keke::get_table_data ( " count(mark_id) count,mark_type", "witkey_mark", "model_code='" . $model_code . "' and origin_id='$sid'", "", "mark_type", "", "mark_type", 3600 );
 	}
 	/**
 	 * 同类热销3条
 	 */
 	public static function get_hot_service($model_id, $sid, $indus_pid) {
-		return kekezu::get_table_data ( " sale_num,service_id,price,title,pic ", "witkey_service", " model_id = '$model_id' and service_id !='$sid' and indus_pid = '$indus_pid' and service_status='2' and sale_num>0", "sale_num desc", "", "3", "", 3600 );
+		return Keke::get_table_data ( " sale_num,service_id,price,title,pic ", "witkey_service", " model_id = '$model_id' and service_id !='$sid' and indus_pid = '$indus_pid' and service_status='2' and sale_num>0", "sale_num desc", "", "3", "", 3600 );
 	}
 	/**
 	 * 同类商品6条
 	 */
 	public static function get_related_service($model_id, $sid, $indus_id) {
-		return kekezu::get_table_data ( "pic,service_id,title", "witkey_service", " model_id = '$model_id' and service_id !='$sid' and indus_id = '$indus_id' and service_status='2'", "", "", "6", "", 3600 );
+		return Keke::get_table_data ( "pic,service_id,title", "witkey_service", " model_id = '$model_id' and service_id !='$sid' and indus_id = '$indus_id' and service_status='2'", "", "", "6", "", 3600 );
 	}
 	/**
 	 * 店主更多商品5条
 	 */
 	public static function get_more_service($uid, $sid) {
-		return kekezu::get_table_data ( "service_id,title,pic", "witkey_service", " uid='$uid' and service_status='2' and service_id!='$sid'", "sale_num desc ", "", "5", "", 3600 );
+		return Keke::get_table_data ( "service_id,title,pic", "witkey_service", " uid='$uid' and service_status='2' and service_id!='$sid'", "sale_num desc ", "", "5", "", 3600 );
 	}
 	/**
 	 * 相关任务列表14条
 	 */
 	public static function get_task_info($indus_id) {
-		return kekezu::get_table_data ( "task_id,task_title,task_cash", "witkey_task", " indus_id = '$indus_id' and task_status='2'", "", "", "14", "", 3600 );
+		return Keke::get_table_data ( "task_id,task_title,task_cash", "witkey_task", " indus_id = '$indus_id' and task_status='2'", "", "", "14", "", 3600 );
 	}
 	/**
 	 * 更新浏览次数

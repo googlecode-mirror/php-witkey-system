@@ -1,3 +1,3 @@
 <?php 
 
-abstract class cache extends keke_cache_class {}
+abstract class Cache extends Keke_cache_class {}

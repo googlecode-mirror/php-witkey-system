@@ -13,7 +13,7 @@ $dos = array ('static','preview','database_manage','permission','prom', 'main', 
 
 (! empty ( $do ) && in_array ( $do, $dos )) or $do = 'index';
 
-$admin_info = kekezu::get_user_info ( $_SESSION ['uid'] );
+$admin_info = Keke::get_user_info ( $_SESSION ['uid'] );
 if($do != 'login' && $do != 'logout'){
 	if(! $_SESSION ['auid'] || ! $_SESSION ['uid'] || $admin_info ['group_id'] == 0){
 		echo "<script>window.parent.location.href='index.php?do=login';</script>";

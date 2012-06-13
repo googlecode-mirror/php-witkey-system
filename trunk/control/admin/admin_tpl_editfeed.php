@@ -7,7 +7,7 @@
  */
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 
-kekezu::admin_check_role ( 57 );
+Keke::admin_check_role ( 57 );
 
 $feed_type = keke_global_class::get_feed_type ();
 
@@ -36,7 +36,7 @@ if ($type === 'manage') {
 if ($sbt_edit) {
 	//编辑feed信息
 	if ($type === 'manage') {
-		$slt_feed_type == 1 and 	kekezu::admin_show_msg ( $_lang['add_fail_select_type'], $url,3,'','warning' );
+		$slt_feed_type == 1 and 	Keke::admin_show_msg ( $_lang['add_fail_select_type'], $url,3,'','warning' );
 		$cbk_group and $tpl_type = implode ( ",", $cbk_group ) or $tpl_type = $_K ['template'];
 		//编辑标签
 		$tag_obj->setTagname ( $txt_tag_name );
@@ -58,11 +58,11 @@ if ($sbt_edit) {
 			$res = $tag_obj->edit_keke_witkey_tag ();
 		} else { //创建标签
 			$check_exixts = dbfactory::execute ( "select tagname from " . TABLEPRE . "witkey_tag where tagname='$txt_tag_name'" );
-			$check_exixts and kekezu::admin_show_msg ( $_lang['add_fail_alerady_exists'], $url,3,'','warning' );
+			$check_exixts and Keke::admin_show_msg ( $_lang['add_fail_alerady_exists'], $url,3,'','warning' );
 			$res = $tag_obj->create_keke_witkey_tag ();
 		}
 	}
-			$res and kekezu::admin_show_msg ( $_lang['edit_success'], $url,3,'','success' ) or kekezu::admin_show_msg ( $_lang['edit_fail'], $url,3,'','warning' );
+			$res and Keke::admin_show_msg ( $_lang['edit_success'], $url,3,'','success' ) or Keke::admin_show_msg ( $_lang['edit_fail'], $url,3,'','warning' );
 
 }
 

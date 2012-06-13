@@ -18,14 +18,14 @@ keke_lang_class::loadlang ( $do );
 /*初始化信息*/
 $item_config = keke_payitem_class::get_payitem_config ( null, null, null, 'item_id' );
 $feed_time = time()-3600*24;  
-$dynamic_arr = kekezu::get_feed(" feedtype='pub_service'  and $feed_time>feed_time ", "feed_time desc", 10); //动态信息
+$dynamic_arr = Keke::get_feed(" feedtype='pub_service'  and $feed_time>feed_time ", "feed_time desc", 10); //动态信息
 $website_url = "index.php?" . $_SERVER ['QUERY_STRING'];
 //当前连接 
 $task_cash_arr = keke_search_class::get_cash_cove();
 //任务赏金数组 
-$task_indus_type = kekezu::get_industry (0);
+$task_indus_type = Keke::get_industry (0);
 //获取行业分类 
-$indus_all_arr = kekezu::$_indus_arr;
+$indus_all_arr = Keke::$_indus_arr;
 //所有行业的数组 
 $where_arr = get_where_arr();
 //条件大数组 
@@ -41,7 +41,7 @@ $url = "index.php?do=shop_list&page_size=$page_size&min=$min&max=$max&path=$path
 $page_size = intval ( $page_size ) ? intval ( $page_size ) : 20;
 $count = dbfactory::execute ( $sql . $where );
 $page = $page ? $page : 1;
-$pages = kekezu::$_page_obj->getPages ( $count, $page_size, $page, $url );
+$pages = Keke::$_page_obj->getPages ( $count, $page_size, $page, $url );
 $where .= $pages ['where'];  
 
 /*结果数组赋值*/ 
@@ -66,7 +66,7 @@ $cookie_arr = str_replace("&hid_save_cookie=1", "", $cookie_arr);
 //清空历史记录
 if ($hid_del_cookie) {
 	$res = setcookie ( 'shop_save_cookie', '' );
-	$res and kekezu::echojson ( '', 1 );
+	$res and Keke::echojson ( '', 1 );
 	die();
 } 
 //获取查询条件
@@ -81,7 +81,7 @@ function get_where($path) {
 	$url_info ['C'] and $where .= sprintf ( " and a.model_id = %d", $url_info ['C'] ); 
 
 	//任务类型
-	!$_COOKIE['search_cash']&&$url_info ['B'] and $where .= kekezu::get_between_where('a.price', $task_cash_arr [$url_info ['B']] ['min'], $task_cash_arr [$url_info ['B']] ['max'] ); //获取赏金  
+	!$_COOKIE['search_cash']&&$url_info ['B'] and $where .= Keke::get_between_where('a.price', $task_cash_arr [$url_info ['B']] ['min'], $task_cash_arr [$url_info ['B']] ['max'] ); //获取赏金  
  
 	//发布时间
 	switch ($url_info ['D']) {
@@ -159,4 +159,4 @@ function get_where_arr(){
 
  
 
-require kekezu::$_tpl_obj->template ( $do );
+require Keke::$_tpl_obj->template ( $do );

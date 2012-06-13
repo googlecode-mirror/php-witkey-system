@@ -1,7 +1,7 @@
 <?php
 require_once (dirname ( dirname ( dirname ( __FILE__ ) ) ) . DIRECTORY_SEPARATOR . 'app_comm.php');
 
-$pay_arr = kekezu::get_payment_config ( 'chinabank' );
+$pay_arr = Keke::get_payment_config ( 'chinabank' );
 @extract ( $pay_arr );
 $key = $chinabank_seller_id;
 $v_oid = trim ( $_POST ['v_oid'] ); // 商户发送的v_oid定单编号   

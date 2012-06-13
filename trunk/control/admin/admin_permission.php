@@ -8,9 +8,9 @@
  */
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 
-$model_id or kekezu::admin_show_msg($_lang['error_model_param'],"index.php?do=info",3,'','warning');
-$op_code or kekezu::admin_show_msg($_lang['error_rights_project'],"index.php?do=info",3,'','warning');
-$model_info=kekezu::$_model_list[$model_id];
+$model_id or Keke::admin_show_msg($_lang['error_model_param'],"index.php?do=info",3,'','warning');
+$op_code or Keke::admin_show_msg($_lang['error_rights_project'],"index.php?do=info",3,'','warning');
+$model_info=Keke::$_model_list[$model_id];
 !$model_info['model_status'] and header("location:index.php?do=config&view=model&model_id=$model_id");//无法编辑已关闭模型的权限
 
 $permission_class_name=$model_info['model_dir']."_permission_class";
@@ -38,10 +38,10 @@ switch (isset($sbt_action)){
 					$v==1 and $perm_rule_obj->setRule(intval($fds['times'][$k]));
 					$perm_rule_obj->edit_keke_witkey_priv_rule();
 			}
-			//kekezu::$_cache_obj->del ( "priv_rule_item_" . $model_id);
+			//Keke::$_cache_obj->del ( "priv_rule_item_" . $model_id);
 			$file_obj = new keke_file_class();
 			$file_obj->delete_files(S_ROOT."./data/data_cache/");
-			kekezu::admin_show_msg($_lang['rights_edit_successfully'],$_SERVER['HTTP_REFERER'],3,'','success');
+			Keke::admin_show_msg($_lang['rights_edit_successfully'],$_SERVER['HTTP_REFERER'],3,'','success');
 		}
 		break;
 }

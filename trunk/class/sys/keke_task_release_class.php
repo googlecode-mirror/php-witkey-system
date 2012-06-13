@@ -34,7 +34,7 @@ abstract class keke_task_release_class {
 		$this->_model_id = $model_id;
 		$this->_pub_mode = $pub_mode;
 		
-		$this->_model_info = kekezu::$_model_list [$model_id];
+		$this->_model_info = Keke::$_model_list [$model_id];
 		
 		$this->_std_obj = new stdClass ();
 		$this->_std_obj->_release_info = array (); //任务发布信息
@@ -77,7 +77,7 @@ abstract class keke_task_release_class {
 	 * @return   void
 	 */
 	public function get_rand_kf() {
-		$this->_kf_info = kekezu::get_rand_kf ();
+		$this->_kf_info = Keke::get_rand_kf ();
 	}
 	
 	/**
@@ -88,9 +88,9 @@ abstract class keke_task_release_class {
 		global $kekezu;
 		if ($this->_model_info ['indus_bid']) {
 			$bind_indus = implode ( ',', array_filter ( explode ( ',', $this->_model_info ['indus_bid'] ) ) );
-			return kekezu::get_table_data ( '*', "witkey_industry", "indus_id in (select indus_pid from " . TABLEPRE . "witkey_industry where indus_id in({$bind_indus}))", 'listorder desc', '', '', 'indus_id', null );
+			return Keke::get_table_data ( '*', "witkey_industry", "indus_id in (select indus_pid from " . TABLEPRE . "witkey_industry where indus_id in({$bind_indus}))", 'listorder desc', '', '', 'indus_id', null );
 		} else {
-			return $this->_indus_arr = kekezu::$_indus_p_arr;
+			return $this->_indus_arr = Keke::$_indus_p_arr;
 		
 		}
 	}
@@ -104,9 +104,9 @@ abstract class keke_task_release_class {
 		global $_lang;
 		if ($indus_pid > 0) {
 			if ($this->_model_info ['indus_bid']) {
-				$indus_ids = kekezu::get_table_data ( '*', "witkey_industry", "indus_id in ({$this->_model_info['indus_bid']}) and indus_pid = $indus_pid", 'listorder desc', '', '', 'indus_id', null );
+				$indus_ids = Keke::get_table_data ( '*', "witkey_industry", "indus_id in ({$this->_model_info['indus_bid']}) and indus_pid = $indus_pid", 'listorder desc', '', '', 'indus_id', null );
 			} else {
-				$indus_ids = kekezu::get_table_data ( '*', "witkey_industry", " indus_pid = $indus_pid", 'listorder desc', '', '', 'indus_id', null );
+				$indus_ids = Keke::get_table_data ( '*', "witkey_industry", " indus_pid = $indus_pid", 'listorder desc', '', '', 'indus_id', null );
 			}
 			switch ($ajax == 'show_indus') {
 				case "0" :
@@ -117,7 +117,7 @@ abstract class keke_task_release_class {
 					foreach ( $indus_ids as $v ) {
 						$option .= '<option value=' . $v [indus_id] . '>' . $v [indus_name] . '</option>';
 					}
-					CHARSET == 'gbk' and $option = kekezu::gbktoutf ( $option );
+					CHARSET == 'gbk' and $option = Keke::gbktoutf ( $option );
 					echo $option;
 					die ();
 					break;
@@ -184,7 +184,7 @@ abstract class keke_task_release_class {
 	 */
 	public function set_task_status($total_cash, $task_cash) {
 		global $kekezu;
-		$basic_config = kekezu::$_sys_config;
+		$basic_config = Keke::$_sys_config;
 		$balance = $this->_user_info ['balance'];
 		$credit = $this->_user_info ['credit'];
 		if ($balance + $credit >= $total_cash) { //用户金额满足总花费的情况下
@@ -244,7 +244,7 @@ abstract class keke_task_release_class {
 				$pass = false;
 			}
 		}
-		$pass===false&&kekezu::show_msg($_lang['operate_notice'],$_SERVER['HTTP_REFERER'],3,$_lang['key_information_missed'],'warning');
+		$pass===false&&Keke::show_msg($_lang['operate_notice'],$_SERVER['HTTP_REFERER'],3,$_lang['key_information_missed'],'warning');
 	}
 	/**
 	 * 任务发布通用块设置
@@ -257,7 +257,7 @@ abstract class keke_task_release_class {
 		$task_obj = $this->_task_obj; //任务对象
 		$user_info = $this->_user_info;
 		
-		$txt_task_title = kekezu::str_filter ( $release_info ['txt_title'] ); //任务标题
+		$txt_task_title = Keke::str_filter ( $release_info ['txt_title'] ); //任务标题
 		$task_obj->setTask_title ( $txt_task_title );
 		$task_obj->setModel_id ( $this->_model_id ); //设定任务类型
 		$task_obj->setProfit_rate ( $this->_task_config ['task_rate'] ); //当前比例
@@ -274,7 +274,7 @@ abstract class keke_task_release_class {
 		$task_obj->setIndus_id ( $release_info ['indus_id'] ); //任务行业
 		$task_obj->setIndus_pid ( $release_info ['indus_pid'] );
 		
-		$tar_content = kekezu::str_filter ( $release_info ['tar_content'] );
+		$tar_content = Keke::str_filter ( $release_info ['tar_content'] );
 		$task_obj->setTask_desc ( $tar_content ); //任务需求
 		$task_obj->setUid ( $this->_uid );
 		$task_obj->setUsername ( $this->_username );
@@ -339,7 +339,7 @@ abstract class keke_task_release_class {
 					$this->create_prom_event ( $task_id ); /*任务发布成功。产生推广事件*/
 					
 					$feed_arr = array ("feed_username" => array ("content" => $this->_username, "url" => "index.php?do=space&member_id={$this->_uid}" ), "action" => array ("content" => $_lang['pub_task'], "url" => "" ), "event" => array ("content" => " $task_title", "url" => "index.php?do=task&task_id=$task_id" ) );
-					kekezu::save_feed ( $feed_arr, $this->_uid, $this->_username, 'pub_task', $task_id );
+					Keke::save_feed ( $feed_arr, $this->_uid, $this->_username, 'pub_task', $task_id );
 					//发送消息
 					$this->notify_user ( $task_id, '2' );
 					$j_step = 'step4';
@@ -350,7 +350,7 @@ abstract class keke_task_release_class {
 					$this->create_task_order ( $task_id, $this->_model_id, $release_info, $att_info );
 					$this->create_prom_event ( $task_id ); /*任务发布成功。产生推广事件*/
 					/*$feed_arr = array ("feed_username" => array ("content" => $this->_username, "url" => "index.php?do=space&member_id= $this->_uid  " ), "action" => array ("content" => "发布了任务 ", "url" => "" ), "event" => array ("content" => " $task_title", "url" => "index.php?do=task&task_id=$task_id" ) );
-					kekezu::save_feed ( $feed_arr, $this->_uid, $this->_username, 'pub_task', $task_id );*/
+					Keke::save_feed ( $feed_arr, $this->_uid, $this->_username, 'pub_task', $task_id );*/
 					//发送消息
 					$this->notify_user ( $task_id, '1' );
 					$j_step = 'step4';
@@ -389,7 +389,7 @@ abstract class keke_task_release_class {
 		if ($this->_model_info ['model_code'] != 'tender') {
 			$this->_model_info ['model_code'] == 'dtender' and $task_cash = $task_obj->getReal_cash () or $task_cash = $task_obj->getTask_cash ();
 			$kekezu->init_prom ();
-			$prom_obj = kekezu::$_prom_obj;
+			$prom_obj = Keke::$_prom_obj;
 			if ($prom_obj->is_meet_requirement ( "pub_task", $task_id )) {
 				$prom_obj->create_prom_event ( "pub_task", $this->_uid, $task_id, $task_cash );
 			}
@@ -494,7 +494,7 @@ abstract class keke_task_release_class {
 		
 
 		if ($att_info [$item_id] ['item_cash'] != $item_cash) { //不存在某项或其值改变时保存
-			CHARSET == 'gbk' and $item_name = kekezu::utftogbk ( $item_name );
+			CHARSET == 'gbk' and $item_name = Keke::utftogbk ( $item_name );
 			$att_info [$item_id] ['item_code'] = $item_code;
 			$att_info [$item_id] ['item_name'] = $item_name;
 			$att_info [$item_id] ['item_cash'] = $item_cash;
@@ -505,7 +505,7 @@ abstract class keke_task_release_class {
 		
 
 		$total_cash = $this->get_total_cash ( $this->_std_obj->_release_info ['txt_task_cash'] );
-		kekezu::echojson ( number_format ( $total_cash, 2 ), 1 );
+		Keke::echojson ( number_format ( $total_cash, 2 ), 1 );
 		
 		die ();
 	}
@@ -529,7 +529,7 @@ abstract class keke_task_release_class {
 		$this->_std_obj->_att_info = array_filter ( $att_info ); //重新保存增值服务信息
 		$this->save_task_obj ( array (), $obj_name ); //重新保存任务session
 		$total_cash = $this->get_total_cash ( $this->_std_obj->_release_info ['txt_task_cash'] );
-		kekezu::echojson ( number_format ( $total_cash, 2 ), 1 );
+		Keke::echojson ( number_format ( $total_cash, 2 ), 1 );
 		die ();
 	}
 	/**
@@ -591,19 +591,19 @@ abstract class keke_task_release_class {
 			case "step1" :
 				break;
 			case "step2" : //没有进过第一步
-				$release_info ['step1'] or kekezu::keke_show_msg ( "index.php?do=release&pub_mode=$this->_pub_mode&model_id=$model_id", $_lang ['you_not_choose_task_model'], "error", $output );
+				$release_info ['step1'] or Keke::keke_show_msg ( "index.php?do=release&pub_mode=$this->_pub_mode&model_id=$model_id", $_lang ['you_not_choose_task_model'], "error", $output );
 				break;
 			case "step3" : //没有进过第二步
 				if (! $release_info ['step2'] && ! $release_info ['step1']) { //没进过前2步
-					kekezu::keke_show_msg ( "index.php?do=release&pub_mode=$this->_pub_mode&model_id=$model_id", $_lang ['you_not_choose_task_model_and_not_in'], "error", $output );
+					Keke::keke_show_msg ( "index.php?do=release&pub_mode=$this->_pub_mode&model_id=$model_id", $_lang ['you_not_choose_task_model_and_not_in'], "error", $output );
 				} elseif (! $release_info ['step2']) {
-					kekezu::keke_show_msg ( "index.php?do=release&pub_mode=$this->_pub_mode&model_id=$model_id&r_step=step2", $_lang ['you_not_fill_requirement_and_not_in'], "error", $output );
+					Keke::keke_show_msg ( "index.php?do=release&pub_mode=$this->_pub_mode&model_id=$model_id&r_step=step2", $_lang ['you_not_fill_requirement_and_not_in'], "error", $output );
 				}
 				break;
 			case "step4" : //无法查到刚才的任务记录。此页面10分钟类有效
 				$sql = sprintf ( " select task_id from %switkey_task where task_id = '%d' and start_time>%d", TABLEPRE, $task_id, time () - 600 );
 				$task_info = dbfactory::get_one ( $sql );
-				$task_info or kekezu::keke_show_msg ( "index.php?do=release&pub_mode=$this->_pub_mode", $_lang ['the_page_timeout_notice'], "error", $output );
+				$task_info or Keke::keke_show_msg ( "index.php?do=release&pub_mode=$this->_pub_mode", $_lang ['the_page_timeout_notice'], "error", $output );
 				return $task_info;
 				break;
 		}
@@ -634,13 +634,13 @@ abstract class keke_task_release_class {
 	 */
 	public function check_pub_priv($url = '', $output = "normal") {
 		global $_lang;
-		$this->_priv ['pass'] and kekezu::keke_show_msg ( $url, $_lang ['can_pub'], '', $output ) or kekezu::keke_show_msg ( $url, $this->_priv ['notice'] . $_lang ['not_rights_pub_task'], "error", $output );
+		$this->_priv ['pass'] and Keke::keke_show_msg ( $url, $_lang ['can_pub'], '', $output ) or Keke::keke_show_msg ( $url, $this->_priv ['notice'] . $_lang ['not_rights_pub_task'], "error", $output );
 	}
 	/**
 	 * 根据金额获取最大天数
 	 */
 	public static function get_default_max_day($task_cash, $model_id, $min_day) {
-		$max = kekezu::get_show_day ( floatval ( $task_cash ), $model_id );
+		$max = Keke::get_show_day ( floatval ( $task_cash ), $model_id );
 		$max >= $min_day or $max += $min_day;
 		return date ( 'Y-m-d', time () + $max * 24 * 3600 );
 	}

@@ -14,7 +14,7 @@ $step_arr=array("step1"=>array( $_lang['step_one'], $_lang['enter_cellphone_num'
 
 $auth_step= keke_auth_email_class::get_auth_step($auth_step,$auth_info);
 
-$verify = kekezu::reset_secode_session($ver?0:1);//安全码输入
+$verify = Keke::reset_secode_session($ver?0:1);//安全码输入
 $ac_url = $origin_url . "&op=$op&auth_code=$auth_code&ver=".intval($ver);
 
 switch ($auth_step){

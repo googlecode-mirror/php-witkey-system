@@ -4,8 +4,8 @@ $s_root = dirname(dirname(dirname(dirname (__FILE__))));
 include ($s_root."./app_comm.php");
 include_once '../client.php';
 
-$_app_id  = kekezu::$_sys_config["alipay_app_id"];
-$_app_secret = kekezu::$_sys_config["alipay_app_secret"];
+$_app_id  = Keke::$_sys_config["alipay_app_id"];
+$_app_secret = Keke::$_sys_config["alipay_app_secret"];
 
 $alipay_obj= oauth_api_factory::get_o("alipay", $_app_id, $_app_secret);
 $alipay_config = $alipay_obj->_config;

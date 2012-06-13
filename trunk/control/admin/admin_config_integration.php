@@ -10,18 +10,18 @@
 
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 
-kekezu::admin_check_role(35);
+Keke::admin_check_role(35);
 
 if ($setting == 'del'){
 	$config_obj = new Keke_witkey_basic_config_class();
 	$config_obj->setWhere("k='user_intergration'");
 	$config_obj->setV(1);
 	$config_obj->edit_keke_witkey_basic_config();
-	kekezu::$_cache_obj->gc();
+	Keke::$_cache_obj->gc();
 
-	kekezu::admin_system_log($_lang['uninstall_log_msg']);//日志记录
+	Keke::admin_system_log($_lang['uninstall_log_msg']);//日志记录
 
-	kekezu::admin_show_msg($_lang['success_uninstall'],"index.php?do=config&view=integration",3,'','success');
+	Keke::admin_show_msg($_lang['success_uninstall'],"index.php?do=config&view=integration",3,'','success');
 }
 $config_obj = new Keke_witkey_basic_config_class();
 if ($type == 'uc'){
@@ -49,28 +49,28 @@ if ($type == 'uc'){
 		list($status, $ucversion, $ucrelease, $uccharset, $ucdbcharset, $apptypes) = explode('|', $ucinfo);
 		if($status != 'UC_STATUS_OK') {
 			//uc通讯失败
-			kekezu::admin_show_msg($_lang['uc_communication_fail'],'index.php?do=config&view=integration&type=uc',3,'','warning');
+			Keke::admin_show_msg($_lang['uc_communication_fail'],'index.php?do=config&view=integration&type=uc',3,'','warning');
 		} else {
 			$dbcharset = strtolower(DBCHARSET ? str_replace('-', '', DBCHARSET) : 'utf8');
 			$ucdbcharset = strtolower($settingnew['UC_DBCHARSET'] ? str_replace('-', '', $settingnew['UC_DBCHARSET']) : $settingnew['UC_DBCHARSET']);
 			if(UC_CLIENT_VERSION > $ucversion) {
-				kekezu::admin_show_msg($_lang['uc_different_version'],'index.php?do=config&view=integration&type=uc',3,'','warning');
+				Keke::admin_show_msg($_lang['uc_different_version'],'index.php?do=config&view=integration&type=uc',3,'','warning');
 			} elseif($dbcharset && $ucdbcharset != $dbcharset) {
-				kekezu::admin_show_msg($_lang['uc_different_coding'],'index.php?do=config&view=integration&type=uc',3,'','warning');
+				Keke::admin_show_msg($_lang['uc_different_coding'],'index.php?do=config&view=integration&type=uc',3,'','warning');
 			}
 
 			$postdata = "m=app&a=add&ucfounder=&ucfounderpw=".urlencode($ucfounderpw)."&apptype=".urlencode($app_type)."&appname=".urlencode($app_name)."&appurl=".urlencode($app_url)."&appip=&appcharset=".CHARSET.'&appdbcharset='.DBCHARSET.'&'.$app_tagtemplates.'&release='.UC_CLIENT_RELEASE;
 			$ucconfig = uc_fopen($ucapi.'/index.php', 500, $postdata, '', 1, $ucip);
 
 			if(empty($ucconfig)) {
-				kekezu::admin_show_msg($_lang['uc_app_fail_to_add'],'index.php?do=config&view=integration&type=uc','',3,'warning');
+				Keke::admin_show_msg($_lang['uc_app_fail_to_add'],'index.php?do=config&view=integration&type=uc','',3,'warning');
 			} elseif($ucconfig == '-1') {
-				kekezu::admin_show_msg($_lang['uc_error_author_password'],'index.php?do=config&view=integration&type=uc',3,'','warning');
+				Keke::admin_show_msg($_lang['uc_error_author_password'],'index.php?do=config&view=integration&type=uc',3,'','warning');
 			} else {
 				list($appauthkey, $appid) = explode('|', $ucconfig);
 				if(empty($appauthkey) || empty($appid)) {
-					kekezu::admin_system_log($_lang['add_log_msg']);//日志记录
-					kekezu::admin_show_msg(keke::lang('uc_app_invalid_to_add'),'index.php?do=config&view=integration&type=uc',3,'','success');
+					Keke::admin_system_log($_lang['add_log_msg']);//日志记录
+					Keke::admin_show_msg(keke::lang('uc_app_invalid_to_add'),'index.php?do=config&view=integration&type=uc',3,'','success');
 				}
 			}
 		}
@@ -85,11 +85,11 @@ if ($type == 'uc'){
 	 	$config_obj->setV(2);
 		$config_obj->edit_keke_witkey_basic_config();
 
-		kekezu::$_cache_obj->gc();
+		Keke::$_cache_obj->gc();
 
-		kekezu::admin_system_log($_lang['uc_integrate_log']);
+		Keke::admin_system_log($_lang['uc_integrate_log']);
 
-		kekezu::admin_show_msg($_lang['uc_integrate_success'],"index.php?do=config&view=integration",2,'','success');
+		Keke::admin_show_msg($_lang['uc_integrate_success'],"index.php?do=config&view=integration",2,'','success');
 	}
 	require  $template_obj->template ( 'control/admin/tpl/admin_config_'.$view.'_uc' );
 	die();
@@ -108,9 +108,9 @@ if ($type == 'uc'){
 		$keke_cache_obj = new keke_cache_class();
 		$keke_cache_obj->del('keke_witkey_basic_config');
 
-		kekezu::admin_system_log($_lang['pw_integrate_log']);
+		Keke::admin_system_log($_lang['pw_integrate_log']);
 
-		kekezu::admin_show_msg($_lang['phpwind_integrate_success'],"index.php?do=config&view=integration",2,'','success');
+		Keke::admin_show_msg($_lang['phpwind_integrate_success'],"index.php?do=config&view=integration",2,'','success');
 		
 	}
 	require  $template_obj->template ( 'control/admin/tpl/admin_config_'.$view.'_pw' );

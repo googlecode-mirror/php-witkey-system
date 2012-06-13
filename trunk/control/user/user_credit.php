@@ -21,7 +21,7 @@ switch ($opp) {
 		/**能力**/
 		$able_level =  unserialize($user_info['seller_level']);
 		/*发布、中标、购买服务、销售服务款项统计*/
-		$found_count = kekezu::get_table_data ( " sum(fina_cash) cash,sum(fina_credit) credit,count(fina_id) count,fina_action ", "witkey_finance", " uid='$uid' and fina_action in ('pub_task','task_bid','buy_service','sale_service') ", "", " fina_action ", "", "fina_action" );
+		$found_count = Keke::get_table_data ( " sum(fina_cash) cash,sum(fina_credit) credit,count(fina_id) count,fina_action ", "witkey_finance", " uid='$uid' and fina_action in ('pub_task','task_bid','buy_service','sale_service') ", "", " fina_action ", "", "fina_action" );
 		
 		/**卖家辅助评价**/
 		$saler_aid=keke_user_mark_class::get_user_aid($uid,'1',null,'1');
@@ -43,7 +43,7 @@ switch ($opp) {
 		//$mark_type      and $where.=" and mark_type  ='$mark_type' ";//默认评价时类型为威客
 	
 		/**统计**/
-		$mark_count=kekezu::get_table_data(" count(mark_id) count,mark_status","witkey_mark",$where,"","mark_status ","","mark_status");
+		$mark_count=Keke::get_table_data(" count(mark_id) count,mark_status","witkey_mark",$where,"","mark_status ","","mark_status");
 
 		$mark_status!='n'&&isset($mark_status) and $where.=" and mark_status='$mark_status' ";
 	
@@ -51,7 +51,7 @@ switch ($opp) {
 		$mark_obj->setWhere($where);
 		$count=intval($mark_obj->count_keke_witkey_mark());//总计
 		
-		$pages=kekezu::$_page_obj->getPages($count, $page_size, $page, $url,"#userCenter");
+		$pages=Keke::$_page_obj->getPages($count, $page_size, $page, $url,"#userCenter");
 		
 		/**互评信息**/
 		$mark_obj->setWhere($where.$pages['where']);

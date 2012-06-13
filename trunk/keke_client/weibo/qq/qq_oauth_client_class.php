@@ -90,7 +90,7 @@ class qq_oauth_client_class extends base_client_class{
 		require_once 'get_user_info.php';
 		$data = get_user_info($this->_app_key, $this->_app_secret, $p[oauth_token], $p[oauth_token_secret], $p[openid]);
 		if(strtolower($_K['charset'])=='gbk'){
-		  $data = kekezu::utftogbk($data);
+		  $data = Keke::utftogbk($data);
 		}
 		//$data = $this->user_data_format($data);
 		//var_dump($data);die();

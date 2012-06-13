@@ -15,12 +15,12 @@ $status_arr = $service_obj->get_service_status();
 
 //±£´æ±à¼­
 if($sbt_edit){
-	kekezu::admin_system_log($_lang['to_witkey_service_name_is'].$service_info[title].$_lang['in_edit_operate']);
+	Keke::admin_system_log($_lang['to_witkey_service_name_is'].$service_info[title].$_lang['in_edit_operate']);
 
 	$service_obj = keke_table_class::get_instance('witkey_service');	
-    $service=kekezu::escape($service); 
+    $service=Keke::escape($service); 
 	$res = $service_obj->save($service,array("service_id"=>$service_id));
-	$res and kekezu::admin_show_msg($_lang['service_edit_success'],'index.php?do=model&model_id=7&view=list',2,$_lang['service_edit_success'],'success') or kekezu::admin_show_msg($_lang['service_edit_fail'],'index.php?do=model&model_id=7&view=edit&service_id='.$service_id,2,$_lang['service_edit_fail'],'warning');
+	$res and Keke::admin_show_msg($_lang['service_edit_success'],'index.php?do=model&model_id=7&view=list',2,$_lang['service_edit_success'],'success') or Keke::admin_show_msg($_lang['service_edit_fail'],'index.php?do=model&model_id=7&view=edit&service_id='.$service_id,2,$_lang['service_edit_fail'],'warning');
 }
 
 

@@ -12,9 +12,9 @@ $price_unit = keke_shop_release_class::get_price_unit ();
 $service_unit = keke_shop_release_class::get_service_unit ();
 if ($sbt_edit) {
 	if(CHARSET=='gbk'){
-		$title = kekezu::utftogbk($title);
-		$content = kekezu::utftogbk($content);
-		$unite_price = kekezu::utftogbk($unite_price);
+		$title = Keke::utftogbk($title);
+		$content = Keke::utftogbk($content);
+		$unite_price = Keke::utftogbk($unite_price);
 	}
 	$s_obj = new Keke_witkey_service_class();
 	$s_obj->setWhere(" service_id='$ser_id' ");
@@ -26,7 +26,7 @@ if ($sbt_edit) {
 	$s_obj->setIndus_id($indus_id);
 	$s_obj->setIndus_pid($indus_pid);
 	$res = $s_obj->edit_keke_witkey_service();
-	$res and kekezu::echojson('',1) or kekezu::echojson('',0);
+	$res and Keke::echojson('',1) or Keke::echojson('',0);
 } else {
 	$title = $_lang ['edit_service'];
 	$ext = '.jpg,.jpeg,.gif,.png,.bmp';

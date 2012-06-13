@@ -29,7 +29,7 @@ abstract class keke_shop_release_class {
 		global $kekezu;
 		$this->_service_obj = new Keke_witkey_service_class ();
 		$this->_model_id = $model_id;
-		$this->_model_info = kekezu::$_model_list [$model_id];
+		$this->_model_info = Keke::$_model_list [$model_id];
 		$this->_std_obj = new stdClass ();
 		$this->_std_obj->_release_info = array (); //商品发布信息
 		$this->init ();
@@ -57,7 +57,7 @@ abstract class keke_shop_release_class {
 	 * @return   void
 	 */
 	public function get_rand_kf() {
-		$this->_kf_info = kekezu::get_rand_kf ();
+		$this->_kf_info = Keke::get_rand_kf ();
 	}
 	/**
 	 * 初始化当前用户信息
@@ -77,7 +77,7 @@ abstract class keke_shop_release_class {
 		global $kekezu;
 		global $_lang;
 		if ($indus_pid > 0) {
-			$indus_ids = kekezu::get_table_data ( '*', "witkey_industry", " indus_pid = $indus_pid", 'listorder desc', '', '', 'indus_id', null );
+			$indus_ids = Keke::get_table_data ( '*', "witkey_industry", " indus_pid = $indus_pid", 'listorder desc', '', '', 'indus_id', null );
 			switch ($ajax == 'show_indus') {
 				case "0" :
 					return $indus_ids;
@@ -87,7 +87,7 @@ abstract class keke_shop_release_class {
 					foreach ( $indus_ids as $v ) {
 						$option .= '<option value=' . $v [indus_id] . '>' . $v [indus_name] . '</option>';
 					}
-					CHARSET == 'gbk' and $option = kekezu::gbktoutf ( $option );
+					CHARSET == 'gbk' and $option = Keke::gbktoutf ( $option );
 					echo $option;
 					die ();
 					break;
@@ -180,7 +180,7 @@ abstract class keke_shop_release_class {
 		$service_obj = $this->_service_obj; //商品对象
 		
 		
-		$txt_service_title = kekezu::str_filter ( $release_info ['txt_title'] ); //商品标题
+		$txt_service_title = Keke::str_filter ( $release_info ['txt_title'] ); //商品标题
 		$service_obj->setTitle ( $txt_service_title );
 		$service_obj->setModel_id ( $this->_model_id ); //设定商品类型
 		
@@ -188,7 +188,7 @@ abstract class keke_shop_release_class {
  			
  			$service_obj->setFile_path($release_info[file_path_2]);
  		}  
-		$tar_content = kekezu::str_filter ( $release_info ['tar_content'] );
+		$tar_content = Keke::str_filter ( $release_info ['tar_content'] );
 		$service_obj->setContent ( $tar_content );
 		$service_obj->setIndus_id ( $release_info [indus_id] );
 		$service_obj->setIndus_pid ( $release_info ['indus_pid'] );
@@ -250,9 +250,9 @@ abstract class keke_shop_release_class {
 					$att_info = $this->create_payitem_reocrd ( $service_id, $att_info, $release_info ); 
 					$service_title = $service_obj->getTitle (); 
 					$feed_arr = array ("feed_username" => array ("content" => $this->_username, "url" => "index.php?do=space&member_id=$this->_uid" ), "action" => array ("content" => $_lang['has_pub_goods'], "url" => "" ), "event" => array ("content" => "$service_title", "url" => "index.php?do=service&sid=$service_id" ) );
-					kekezu::save_feed ( $feed_arr, $this->_uid, $this->_username, 'pub_service', $service_id );
+					Keke::save_feed ( $feed_arr, $this->_uid, $this->_username, 'pub_service', $service_id );
 					
-					//	kekezu::feed_add ( '<a href="index.php?do=space&member_id=' . $this->_uid . '" target="_blank">' . $this->_username . '</a>发布了商品 <a target="_blank" href="index.php?do=service_info&sid=' . $service_id . '">' . $service_obj->getTitle(). '</a>', $this->_uid, $this->_username, 'pub_service', $service_id );
+					//	Keke::feed_add ( '<a href="index.php?do=space&member_id=' . $this->_uid . '" target="_blank">' . $this->_username . '</a>发布了商品 <a target="_blank" href="index.php?do=service_info&sid=' . $service_id . '">' . $service_obj->getTitle(). '</a>', $this->_uid, $this->_username, 'pub_service', $service_id );
 					//发送消息
 					$this->notify_user ( $service_id, '2' );
 					$status = '2';
@@ -311,7 +311,7 @@ abstract class keke_shop_release_class {
 	public function save_pay_item($item_id, $item_code, $item_name, $item_cash, $obj_name,$item_num) {
 		$att_info = $this->_std_obj->_att_info; //增值服务数组
 		if ($att_info [$item_id] ['item_cash'] != $item_cash) { //不存在某项或其值改变时保存
-			CHARSET == 'gbk' and $item_name = kekezu::utftogbk ( $item_name );
+			CHARSET == 'gbk' and $item_name = Keke::utftogbk ( $item_name );
 			$att_info [$item_id] ['item_code'] = $item_code;
 			$att_info [$item_id] ['item_name'] = $item_name;
 			$att_info [$item_id] ['item_cash'] = $item_cash;
@@ -323,7 +323,7 @@ abstract class keke_shop_release_class {
 		foreach ($att_info as $k=>$v) {
 			$total_cash +=$v[item_cash] ;
 		} 
-		kekezu::echojson ( number_format($total_cash,2), 1 );
+		Keke::echojson ( number_format($total_cash,2), 1 );
 	
 		die ();
 	}
@@ -351,7 +351,7 @@ abstract class keke_shop_release_class {
 			$total_cash +=$v[item_cash] ;
 		} 
 	
-		kekezu::echojson ( number_format($total_cash,2), 1 );
+		Keke::echojson ( number_format($total_cash,2), 1 );
 	
 		die ();
 		
@@ -389,7 +389,7 @@ abstract class keke_shop_release_class {
 			/** 广告图片记录**/
 
 			if ($_POST['file_ids']){
-				$pic = kekezu::escape($_POST['file_ids']);
+				$pic = Keke::escape($_POST['file_ids']);
 
 				$release_info['pic_patch'] = $pic;//大图
 
@@ -434,20 +434,20 @@ abstract class keke_shop_release_class {
 			case "step1" :
 				break;
 			case "step2" : //没有进过第一步
-				$release_info ['step1'] or kekezu::keke_show_msg ( "index.php?do=shelves&model_id=$model_id", $_lang['no_choose_goods_model_notice'], "error", $output );
+				$release_info ['step1'] or Keke::keke_show_msg ( "index.php?do=shelves&model_id=$model_id", $_lang['no_choose_goods_model_notice'], "error", $output );
 				break;
 			
 			case "step3" : //没有进过第二步
 				if (! $release_info ['step2'] && ! $release_info ['step1']) { //没进过前2步
-					kekezu::keke_show_msg ( "index.php?do=shelves&model_id=$model_id", $_lang['no_choose_goods_model_notice'], "error", $output );
+					Keke::keke_show_msg ( "index.php?do=shelves&model_id=$model_id", $_lang['no_choose_goods_model_notice'], "error", $output );
 				} elseif (! $release_info ['step2']) {
-					kekezu::keke_show_msg ( "index.php?do=shelves&model_id=$model_id&r_step=step2", $_lang['no_input_goods_need_notice'], "error", $output );
+					Keke::keke_show_msg ( "index.php?do=shelves&model_id=$model_id&r_step=step2", $_lang['no_input_goods_need_notice'], "error", $output );
 				}
 				break;
 			case "step4" : //无法查到刚才的商品记录。此页面10分钟有效
 				$sql = sprintf ( " select service_status,service_id from %switkey_service where service_id = '%d' and on_time>%d", TABLEPRE, $service_id, time () - 600 );
 				$service_info = dbfactory::get_one ( $sql );
-				$service_info or kekezu::keke_show_msg ( "index.php?do=shelves", $_lang['page_expired_notice'], "error", $output );
+				$service_info or Keke::keke_show_msg ( "index.php?do=shelves", $_lang['page_expired_notice'], "error", $output );
 				return $service_info;
 				break;
 		}

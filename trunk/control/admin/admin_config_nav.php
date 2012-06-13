@@ -7,9 +7,9 @@
  */
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 
-kekezu::admin_check_role ( 41 );
+Keke::admin_check_role ( 41 );
 
-$nav_list = kekezu::get_table_data ( '*', 'witkey_nav', '', 'listorder', '', '', "nav_id");
+$nav_list = Keke::get_table_data ( '*', 'witkey_nav', '', 'listorder', '', '', "nav_id");
 
 $nav_obj = new Keke_witkey_nav_class ();
 
@@ -35,7 +35,7 @@ if ($submit) {
 				$res += $nav_obj->create_keke_witkey_nav ();
 			
 			}
-			kekezu::admin_system_log ( $_lang['create_nav'] );
+			Keke::admin_system_log ( $_lang['create_nav'] );
 		}
 	//±à¼­µ¼º½
 	if ($ruleitem ['old']) {
@@ -51,18 +51,18 @@ if ($submit) {
 			$res += $nav_obj->edit_keke_witkey_nav ();
 		}
 	}
-	kekezu::admin_system_log ( $_lang['edit_nav'] );
-	$nav_list = kekezu::get_table_data ( "*", "witkey_nav", "", "listorder", "nav_id" );
+	Keke::admin_system_log ( $_lang['edit_nav'] );
+	$nav_list = Keke::get_table_data ( "*", "witkey_nav", "", "listorder", "nav_id" );
 	if ($res) {
-		kekezu::admin_show_msg ( $_lang['custom_nav_set_success'], "index.php?do=config&view=nav",3,'','success' );
+		Keke::admin_show_msg ( $_lang['custom_nav_set_success'], "index.php?do=config&view=nav",3,'','success' );
 	} else {
-		kekezu::admin_show_msg ( $_lang['no_change'], "index.php?do=config&view=nav",3,'','warning' );
+		Keke::admin_show_msg ( $_lang['no_change'], "index.php?do=config&view=nav",3,'','warning' );
 	}
 }
 //É¾³ýµ¼º½
 if ($ac == 'del') {
 	$table_obj->del ( 'nav_id', $nav_id, $url );
-	kekezu::admin_show_msg ($_lang['delete_nav_success'], "index.php?do=config&view=nav",3,'','success' );
+	Keke::admin_show_msg ($_lang['delete_nav_success'], "index.php?do=config&view=nav",3,'','success' );
 }
 
 require $template_obj->template ( 'control/admin/tpl/admin_config_' . $view );

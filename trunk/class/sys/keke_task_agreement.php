@@ -90,7 +90,7 @@ abstract class keke_task_agreement {
 		$this->_task_id = $agree_info ['task_id'];
 		$this->_trust_info = dbfactory::get_one ( sprintf ( " select is_trust,trust_type,is_auto_bid,task_status from %switkey_task where task_id='%d'", TABLEPRE, $this->_task_id ) ); //是否担保
 		
-		$this->_model_code = kekezu::$_model_list [$agree_info ['model_id']] ['model_code']; //模型code
+		$this->_model_code = Keke::$_model_list [$agree_info ['model_id']] ['model_code']; //模型code
 		$this->_buyer_uid = $agree_info ['buyer_uid'];
 		$this->_buyer_status = $agree_info ['buyer_status'];
 		$this->_seller_uid = $agree_info ['seller_uid'];
@@ -119,8 +119,8 @@ abstract class keke_task_agreement {
 	 * 交付协议第一阶段
 	 * 同意协议。公有
 	 * @param string $user_type 用户角色
-	 * @param string $url    操作提示链接  具体参见 kekezu::keke_show_msg
-	 * @param string $output 消息输出方式 具体参见 kekezu::keke_show_msg
+	 * @param string $url    操作提示链接  具体参见 Keke::keke_show_msg
+	 * @param string $output 消息输出方式 具体参见 Keke::keke_show_msg
 	 */
 	public function agreement_stage_one($user_type, $url = '', $output = 'normal') {
 		global $_lang;
@@ -189,7 +189,7 @@ abstract class keke_task_agreement {
 			$notice = $_lang['agreement_complete_no_confirm_again'];
 			$type = 'error';
 		}
-		kekezu::keke_show_msg ( $url, $notice, $type, $output ); //消息返回
+		Keke::keke_show_msg ( $url, $notice, $type, $output ); //消息返回
 	}
 	/**
 	 * 源文件上传提交
@@ -198,7 +198,7 @@ abstract class keke_task_agreement {
 	public function upfile_confirm($file_ids, $url = '', $output = 'normal') {
 		global $uid;
 		global $_lang;
-		$uid != $this->_seller_uid and kekezu::keke_show_msg ( $url, $_lang['warning_you_no_rights_submit'], "error", $output );
+		$uid != $this->_seller_uid and Keke::keke_show_msg ( $url, $_lang['warning_you_no_rights_submit'], "error", $output );
 		$file_ids = implode ( ",", array_filter ( explode ( ",", $file_ids ) ) );
 		$res = dbfactory::execute ( sprintf ( " update %switkey_agreement set seller_confirmtime = UNIX_TIMESTAMP(),file_ids = '%s' where agree_id='%d'", TABLEPRE, $file_ids, $this->_agree_id ) );
 		$res *= $this->set_agreement_status ( 'seller_status', '3' ); //变更卖家为等待接收状态
@@ -209,7 +209,7 @@ abstract class keke_task_agreement {
 		$msg_obj = new keke_msg_class (); //消息类
 		$v_arr = array ($_lang['the_initiator'] => $this->_seller_username, $_lang['agreement_link'] => $this->_agree_url, $_lang['action'] => $_lang['has_submit_source_files'], $_lang['agreement_status'] => $notice );
 		$msg_obj->send_message ( $this->_buyer_uid, $this->_buyer_username, "agreement_file", $_lang['agreement_files_submit'], $v_arr, $this->_buyer_contact ['email'], $this->_buyer_contact ['mobile'] ); //通知威客
-		$res and kekezu::keke_show_msg ( $url, $_lang['source_file_success'], "success", $output ) or kekezu::keke_show_msg ( $url, $_lang['source_file_fail'], 'error', $output );
+		$res and Keke::keke_show_msg ( $url, $_lang['source_file_success'], "success", $output ) or Keke::keke_show_msg ( $url, $_lang['source_file_fail'], 'error', $output );
 	}
 	/**
 	 * 源文件确认提交
@@ -221,7 +221,7 @@ abstract class keke_task_agreement {
 		global $uid;
 		global $_lang;
 		$agree_info = $this->_agree_info; //协议信息
-		$uid != $this->_buyer_uid and kekezu::keke_show_msg ( $url, $_lang['warning_you_no_rights_confirm'], "error", $output );
+		$uid != $this->_buyer_uid and Keke::keke_show_msg ( $url, $_lang['warning_you_no_rights_confirm'], "error", $output );
 		$trust_info = $this->_trust_info;
 		if ($this->_agree_status == 2 && $this->_seller_status == 3 && $this->_buyer_status == 3) {
 				$res = dbfactory::execute ( sprintf ( " update %switkey_agreement set buyer_confirmtime = UNIX_TIMESTAMP() where agree_id ='%d'", TABLEPRE, $this->_agree_id ) );
@@ -234,9 +234,9 @@ abstract class keke_task_agreement {
 				$msg_obj = new keke_msg_class (); //消息类
 				$v_arr = array ($_lang['the_initiator'] => $this->_buyer_username, $_lang['agreement_link'] => $this->_agree_url, $_lang['action'] => $_lang['confirm_has_received_file'], $_lang['agreement_status'] => $notice );
 				$msg_obj->send_message ( $this->_seller_uid, $this->_seller_username, "agreement_file", $_lang['agreement_file_recevie'], $v_arr, $this->_seller_contact ['email'], $this->_seller_contact ['mobile'] ); //通知威客
-				$res and kekezu::keke_show_msg ( $url,$_lang['source_file_confirm_deliver_success'], "success", $output ) or kekezu::keke_show_msg ( '', $_lang['file_confirm_fail_deliver_fail'], 'error', $output );
+				$res and Keke::keke_show_msg ( $url,$_lang['source_file_confirm_deliver_success'], "success", $output ) or Keke::keke_show_msg ( '', $_lang['file_confirm_fail_deliver_fail'], 'error', $output );
 		} else {
-			kekezu::keke_show_msg ( $url, $_lang['current_status_can_not_confirm'], "error", $output );
+			Keke::keke_show_msg ( $url, $_lang['current_status_can_not_confirm'], "error", $output );
 		}
 	}
 	/**
@@ -300,7 +300,7 @@ abstract class keke_task_agreement {
 	 */
 	public function del_file($file_id) {
 		$res = keke_file_class::del_att_file ( $file_id );
-		$res and kekezu::echojson ( '', '1' ) or kekezu::echojson ( '', '0' );
+		$res and Keke::echojson ( '', '1' ) or Keke::echojson ( '', '0' );
 		die ();
 	}
 	/**

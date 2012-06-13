@@ -30,4 +30,4 @@ unset($_COOKIE);
  
 session_destroy();
 in_array($refer_do['do'],array('user','release','shop_release','logout','register_wizard')) and  $jump = 'index.php' or $jump =$_SERVER['HTTP_REFERER']; 
-kekezu::show_msg ( $_lang['info_notice'], $jump,1,$_lang['logout_success'].$synhtml,'alert_right');
+Keke::show_msg ( $_lang['info_notice'], $jump,1,$_lang['logout_success'].$synhtml,'alert_right');

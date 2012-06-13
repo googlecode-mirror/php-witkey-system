@@ -10,7 +10,7 @@ defined ( 'IN_KEKE' ) or exit('Access Denied');
 
 $nav_active_index = "case";
 $page_title=$_lang['success_case'].'- '.$_K['html_title'];
-$indus_arr = kekezu::$_indus_arr;
+$indus_arr = Keke::$_indus_arr;
 $model_type_arr  = keke_global_class::get_task_type();
 $sql =sprintf( "SELECT a.*, c.service_id,c.views,b.view_num,b.indus_id as b_indus_id,b.model_id as b_model_id,c.model_id as c_model_id,b.indus_pid as b_indus_pid ,c.indus_id as c_indus_id ,c.indus_pid as c_indus_pid,c.sale_num,b.work_num FROM %switkey_case a  left join %switkey_service c on  
 		a.obj_id= c.service_id and a.obj_type='service'
@@ -23,7 +23,7 @@ $page_size = 6;
 $count_sql = sprintf("select count(case_id) as c from `%switkey_case`",TABLEPRE);
 $count = dbfactory::get_count($count_sql,0,null,3600);
 intval($page) and $page= intval($page) or $page=1 ;
-$pages = kekezu::$_page_obj->getPages ( $count, $page_size, $page, $url );
+$pages = Keke::$_page_obj->getPages ( $count, $page_size, $page, $url );
 $sql .=$pages['where'];
 $case_arr = dbfactory::query($sql);
 

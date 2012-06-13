@@ -103,9 +103,9 @@ class Keke_base {
 					break;
 				case 1:
 					if (stristr ( $url, '/register.html' )) {
-						$url = preg_replace ( "/\/register.html(\??)/", "/login.html?", $url );
+						$url = preg_replace ( '/\/register.html(\??)/', "/login.html?", $url );
 					} elseif (stristr ( $url, '/login.html' )) {
-						$url = preg_replace ( "/\/login.html(\??)/", "/register.html?", $url );
+						$url = preg_replace ( '/\/login.html(\??)/', "/register.html?", $url );
 					}
 					break;
 			}
@@ -455,7 +455,7 @@ class Keke_base {
 		}
 		if ($html < 0) {
 			// 去掉html标签
-			$string = preg_replace ( "/(\<[^\<]*\>|\r|\n|\s|\[.+?\])/is", ' ', $string );
+			$string = preg_replace ( '/(\<[^\<]*\>|\r|\n|\s|\[.+?\])/is', ' ', $string );
 			$string = htmlspecialchars ( $string );
 		} elseif ($html == 0) {
 			// 转换html标签
@@ -632,7 +632,7 @@ class Keke_base {
 		global $_lang;
 		global $_K, $kekezu;
 		if (! empty ( $var ) && $_SERVER ['REQUEST_METHOD'] == 'POST') {
-			if ((empty ( $_SERVER ['HTTP_REFERER'] ) || preg_replace ( "/https?:\/\/([^\:\/]+).*/i", "\\1", $_SERVER ['HTTP_REFERER'] ) == preg_replace ( "/([^\:]+).*/", "\\1", $_SERVER ['HTTP_HOST'] )) && $var == FORMHASH) {
+			if ((empty ( $_SERVER ['HTTP_REFERER'] ) || preg_replace ( '/https?:\/\/([^\:\/]+).*/i', "\\1", $_SERVER ['HTTP_REFERER'] ) == preg_replace ( '/([^\:]+).*/', "\\1", $_SERVER ['HTTP_HOST'] )) && $var == FORMHASH) {
 				return true;
 			} elseif ($return_json == true) {
 				return false;
@@ -712,7 +712,7 @@ class Keke_base {
 	}
 	
 	static function is_email($email) {
-		return strlen ( $email ) > 6 && preg_match ( "/^[\w\-\.]+@[\w\-\.]+(\.\w+)+$/", $email );
+		return strlen ( $email ) > 6 && preg_match ( '/^[\w\-\.]+@[\w\-\.]+(\.\w+)+$/', $email );
 	}
 	static function is_mobile($mobile) {
 		return preg_match ( "/^13[0-9]{1}[0-9]{8}$|15[0189]{1}[0-9]{8}$|18[0-9]{9}$/", $mobile );

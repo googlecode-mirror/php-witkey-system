@@ -269,17 +269,20 @@ class keke_user_class {
 			
 			$title = Keke::$_sys_config ['website_name'] . '--' . $_lang['activate_the_account'];
 			
+			$title = Keke::$_sys_config ['website_name'] . '--' . $_lang['activate_the_account'];
+			
 			$body = <<<EOT
-			<font color="red">{Keke::$_sys_config['website_name']}--{$kekezu->lang('activate_the_account')}</font><br><br>
-			&nbsp;&nbsp;&nbsp;{$kekezu->lang('welcome_you_register')}{Keke::$_sys_config['website_name']},{$kekezu->lang('please_onclick_this_address_activate')}
-			<a href="{Keke::$_sys_config[website_url]}/index.php?do=excite_email&excite_code=$excite_code&excite_uid=$info[uid]" traget="_blank">
+			<font color="red">{$kekezu->_sys_config['website_name']}--{$kekezu->lang('activate_the_account')}</font><br><br>
+			&nbsp;&nbsp;&nbsp;{$kekezu->lang('welcome_you_register')}{$kekezu->_sys_config['website_name']},{$kekezu->lang('please_onclick_this_address_activate')}
+			<a href="{$kekezu->_sys_config[website_url]}/index.php?do=excite_email&excite_code=$excite_code&excite_uid=$info[uid]" traget="_blank">
 			{$kekezu->lang('onclick_activate_account')}
 			</a>
 EOT;
-			Keke::send_mail ( $info [email], $title, $body );
+			kekezu::send_mail ( $info [email], $title, $body );
 		
 		//keke_auth_class::user_auth_add ( $info [uid], $info [username], $auth_code, '', array ('code' => $md5_code ) );
 		}
+			
 	
 	}
 	/**

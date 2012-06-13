@@ -1,7 +1,7 @@
 <?php
 // keke_lang_class::load_lang_class('file_cache_class');
 // require_once 'acache_class.php';
-class Keke_cache_file extends Keke_cache_class {
+class Keke_cache_file extends Keke_cache {
 
 	private $path;
 	private $contents;
@@ -15,7 +15,7 @@ class Keke_cache_file extends Keke_cache_class {
 	function __construct() {
 		$this->reset ();
 		$this->path = S_ROOT . "data" . DIRECTORY_SEPARATOR . "cache" . DIRECTORY_SEPARATOR;
-		$default_expires = keke_cache_class::DEFAULT_CACHE_LIFE_TIME;
+		$default_expires = Keke_cache::DEFAULT_CACHE_LIFE_TIME;
 		if ($default_expires !== FALSE and $default_expires > 0) {
 			$this->default_expires = time () + $default_expires;
 		} else {

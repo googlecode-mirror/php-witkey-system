@@ -1,6 +1,6 @@
 <?php
 // require_once 'acache_class.php';
-final class Keke_cache_eacc extends Keke_cache_class {
+final class Keke_cache_eacc extends Keke_cache {
 	
 	function __construct(){
 		if(!function_exists('eaccelerator_get')){ 
@@ -17,7 +17,7 @@ final class Keke_cache_eacc extends Keke_cache_class {
 	public function set($id, $value, $expire = null) {
 //		var_dump($id, $value, $expire); 
         if($expire === null){
-        	$expire = keke_cache_class::DEFAULT_CACHE_LIFE_TIME;
+        	$expire = keke_cache::DEFAULT_CACHE_LIFE_TIME;
         }
 		return eaccelerator_put($id,$value,$expire);
 	}

@@ -7,7 +7,7 @@
  *
  */
 
-class Keke_db_select {
+class Keke_db_select extends Keke_db_query {
 	
 	protected $_query_list = array ();
 	protected $_lifetime;
@@ -136,7 +136,8 @@ class Keke_db_select {
 	
 	public function reset() {
 		$this->_query_list = array();
-		$this->_lifetime = null; 
+		$this->_lifetime = null;
+		$this->_parameters= null; 
 		return $this;
 	}
 	

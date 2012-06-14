@@ -83,7 +83,8 @@ class Keke_db_update extends Keke_db_query {
 	protected  function reset(){
 		$this->_sql = null;
 		$this->_where = null;
-		$this->_value = null;
+		$this->_set = array();
+		$this->_value = array();
 		$this->_table = null;
 		$this->_parameters = null;
 		return $this;				

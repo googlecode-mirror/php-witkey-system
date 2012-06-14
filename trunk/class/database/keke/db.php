@@ -16,6 +16,11 @@ class Keke_db {
 	public static function select($columns = NULL) {
 		return new Keke_db_select ( $columns );
 	}
+	public static function update(){
+		return new Keke_db_update();
+	}
+	
+	public static function delete(){
+		return new Keke_db_delete();
+	}
 }
-
-?>

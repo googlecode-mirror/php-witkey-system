@@ -41,7 +41,15 @@ class Keke_db_delete extends Keke_db_query {
 	    }
 	    $this->_sql = $query;
 	    $query = $this->compile($db);
+	    $this->reset();
 	    return $db->query($query,$this->_type);
 	} 
+	protected  function reset(){
+		$this->_sql = null;
+		$this->_table = null;
+		$this->_parameters = null;
+		$this->_where = null;
+		return $this;
+	}
 	
 }

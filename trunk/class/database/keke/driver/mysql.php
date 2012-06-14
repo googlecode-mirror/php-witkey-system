@@ -3,7 +3,7 @@
  * mysql 数据库连接类 kekezu
  */
 
-final class Keke_driver_mysql extends keke_database {
+final class Keke_driver_mysql extends Keke_database {
 	
 	private $_dbhost;
 	private $_dbname;

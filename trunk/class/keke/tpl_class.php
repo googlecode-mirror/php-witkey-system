@@ -318,11 +318,13 @@ class keke_tpl_class {
 	}
 	static function obclean() {
 		global $_K;
-		ob_get_length()>0 and ob_end_clean();
+		ob_end_clean();
 		if($_K['inajax']==1){
 			ob_start();
 		}else{
-			ob_start('ob_gzhandler');
+			
+			//ob_end_flush();
+			//ob_start('ob_gzhandler');
 		}
 		
 

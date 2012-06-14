@@ -1,6 +1,6 @@
 <?php 
 define ( "IN_KEKE", TRUE );
-include "app_comm.php";
+include "app_boot.php";
 $img = new Secode_class (); 
 $img->use_gd_font = false;
 $img->text_color = "#3399ff";

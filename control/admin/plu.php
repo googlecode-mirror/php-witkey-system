@@ -11,7 +11,7 @@
 $tpl_mode = 1;
  
 define('ADMIN_KEKE',TRUE);
-require '../../app_comm.php';
+require '../../app_boot.php';
 
 define('ADMIN_ROOT',S_ROOT.'./control/admin/');//后台根目录
  

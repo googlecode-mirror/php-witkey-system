@@ -1,7 +1,7 @@
 <?php
 
 define("IN_KEKE",TRUE);
-require 'app_comm.php';
+require 'app_boot.php';
 
 $ops = array('time','tag');
 in_array($op,$ops) or $op="time";

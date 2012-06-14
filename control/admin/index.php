@@ -1,7 +1,7 @@
 <?php
 define ( "ADMIN_KEKE", TRUE );
 define ( "IN_KEKE", TRUE );
-require '../../app_comm.php';
+require '../../app_boot.php';
 /*ºóÌ¨½ûÖ¹¾²Ì¬»¯*/
 $_K ['is_rewrite'] = 0;
 

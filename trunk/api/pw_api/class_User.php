@@ -71,7 +71,7 @@ class User {
  
 		header('P3P: CP="CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR"');
 		
-		include_once ('../../app_comm.php');
+		include_once ('../../app_boot.php');
 		//Keke::prom_check();
 		//最新登录时间
 		$space_obj = new Keke_witkey_space_class();
@@ -88,7 +88,7 @@ class User {
 
 	function synlogout() {
 		header('P3P: CP="CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR"');
-		include_once ('../../app_comm.php');
+		include_once ('../../app_boot.php');
 		$_SESSION['uid'] = '';
 		$_SESSION['username'] = '';
 		setcookie ( 'user_login', '' );

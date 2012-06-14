@@ -1,7 +1,7 @@
 <?php
 define ( "IN_KEKE", TRUE );
  
-include 'app_comm.php';
+include 'app_boot.php';
 
 //keke_lang_class::load_lang_class('keke_base_class');
 

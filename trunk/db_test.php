@@ -1,7 +1,7 @@
 <?php
 $star = microtime(true);
 define ( 'IN_KEKE', TRUE );
-include 'app_comm.php';
+include 'app_boot.php';
 
 
 /*  $b = array('ad_type','ad_name');
@@ -20,8 +20,13 @@ die();
 		->set(array('ad_type','ad_name'))
 	  	->value(array('19','name'))
 		->where('ad_id = 264')->execute(); */
+
+
 //对象化插入
-$res = DB::insert()->into('witkey_ad')->set(array('ad_name','ad_content'))->value(array('10','ad_insert'))->execute();
+//$res = DB::insert()->into('witkey_ad')->set(array('ad_name','ad_content'))->value(array('10','ad_insert'))->execute();
+
+
+//$res = DB::delete('witkey_ad')->where('ad_id=266')->execute();
 
 
 
@@ -40,7 +45,7 @@ $aas->setAd_content($value)->setAd_file($value)->setAd_name($value)->create(); *
 /* Keke::$_log->add(Log::STRACE, 'debug_test')->write(); */
 
 
-var_dump($res);
+//var_dump($res);
 
 
 $end = microtime(true);

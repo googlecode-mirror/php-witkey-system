@@ -1,6 +1,6 @@
 <?php
 define('IN_KEKE', TRUE);
-include 'app_comm.php';
+include 'app_boot.php';
 
 
 $sqlite = cache::instance('file');

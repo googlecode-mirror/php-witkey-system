@@ -78,7 +78,7 @@
              <div class="sc_right pad20 po_re clearfix" id="{$v[work_id]}">
              <div  id="show_status_$v[bid_id]" class="work_status_big work_{$v[bid_status]}_big qualified_big1 po_ab" alt="{$work_status[$v[work_status]]}" title="{$work_status[$v[work_status]]}"></div>
        		
-			 	 <div><!--{eval echo kekezu::escape($v['work_desc'])}--></div>
+			 	 <div><!--{eval echo Keke::escape($v['work_desc'])}--></div>
                		 <div class="pl_20"> 
 					{if $v[hidden_status]==1&&$uid!=$task_info[uid]&&$uid!=$v[uid]&&$v[bid_status]!=4}<!--Òş²Ø£¬·Ç¹ÍÖ÷-->
 						<div>
@@ -106,7 +106,7 @@
 				  
 				  <tr>
 				  	<td>{$_lang['tender_des']}:</td>
-					<td colspan=3><!--{eval echo kekezu::escape($v[message])}--></td>
+					<td colspan=3><!--{eval echo Keke::escape($v[message])}--></td>
 				  </tr>
 				  </tbody>
 				  

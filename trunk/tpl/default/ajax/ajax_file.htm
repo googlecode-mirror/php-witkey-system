@@ -2,7 +2,7 @@
 <ul>
 	{loop $file_list $v2}
 		<li>
-			<a class="file_down" href="{$_K['siteurl']}/index.php?do=ajax&view=file&ajax=download&file_name={$v2['file_name']}&file_path={$v2['save_name']}#file" temp="$v2['save_name']">{$v2['file_name']}<span class="c999">£¨<!--{eval echo kekezu::get_format_size(filesize($v2['save_name']))}-->£©</span><span class="icon16 download"></span></a>
+			<a class="file_down" href="{$_K['siteurl']}/index.php?do=ajax&view=file&ajax=download&file_name={$v2['file_name']}&file_path={$v2['save_name']}#file" temp="$v2['save_name']">{$v2['file_name']}<span class="c999">£¨<!--{eval echo Keke::get_format_size(filesize($v2['save_name']))}-->£©</span><span class="icon16 download"></span></a>
 		</li>
 	{/loop}
  </ul>
@@ -60,7 +60,7 @@
 	  	   {loop $file_list $v2}
 			<li>
 			  <!--{eval $name = substr($v2,strrpos($v2,'/')+1)}-->
-			  <a href="{$_K['siteurl']}/index.php?do=ajax&view=file&ajax=download&file_name={$name}&file_path={$v2}#file" temp="$v2">{$name}<span class="c999">£¨<!--{eval echo kekezu::get_format_size(filesize($v2))}-->£©</span><span class="icon16 download"></span></a>
+			  <a href="{$_K['siteurl']}/index.php?do=ajax&view=file&ajax=download&file_name={$name}&file_path={$v2}#file" temp="$v2">{$name}<span class="c999">£¨<!--{eval echo Keke::get_format_size(filesize($v2))}-->£©</span><span class="icon16 download"></span></a>
 		   </li>
 	      {/loop}
    		 </ul>
@@ -92,7 +92,7 @@
 		  <div class="question mt_10">
 		     <div class="left_bk fl_l"></div>
 		      <h3 class="q_title pl_20">
-		      	<!--{eval $art_title = kekezu::cutstr(strip_tags($v['art_title']),84)}-->
+		      	<!--{eval $art_title = Keke::cutstr(strip_tags($v['art_title']),84)}-->
 			 	<!--{eval echo str_ireplace($keyword,"<font color='red'>".$keyword."</font>",$art_title);}-->
 			</h3>
 		  </div>

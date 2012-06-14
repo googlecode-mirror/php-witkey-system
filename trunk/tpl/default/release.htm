@@ -52,7 +52,7 @@
                     <ul>
                         {loop $model_list $k $v}
                         <li>
-                            <a href="index.php?do=release&pub_mode={$pub_mode}&model_id={$k}" {if $k==$model_id}class="selected"{/if}><span class="icon32 task_model"><!--{eval echo kekezu::cutstr($v['model_name'],0,2)}--></span><em>{$v['model_name']}</em></a>
+                            <a href="index.php?do=release&pub_mode={$pub_mode}&model_id={$k}" {if $k==$model_id}class="selected"{/if}><span class="icon32 task_model"><!--{eval echo Keke::cutstr($v['model_name'],0,2)}--></span><em>{$v['model_name']}</em></a>
                         </li>
                         {/loop}
                     

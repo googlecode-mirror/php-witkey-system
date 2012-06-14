@@ -35,7 +35,7 @@
                            {$value['task_id']}
                         </td>
                         <td class="td28"><!--{eval echo $kekezu->_model_list[$value['model_id']]['model_name']}--></td>
-                        <td class="td28"><a target="_blank" href="../../index.php?do=task&task_id={$value['task_id']}"><!--{eval echo(kekezu::cutstr($value['task_title'],60));}--></a></td>
+                        <td class="td28"><a target="_blank" href="../../index.php?do=task&task_id={$value['task_id']}"><!--{eval echo(Keke::cutstr($value['task_title'],60));}--></a></td>
                         <td>{$indus_arr[$value['indus_id']]['indus_name']}</td>
                        <td><!--{eval $a = $value['model_id'];$b = $value['task_status'];$end_time = $end_time_arr[$a][$b]['time']}-->
                        <!--{eval echo task_time_desc($value['model_id'],$value['task_status'],$value['end_time'])}-->{$task_status[$value['model_id']][$value['task_status']]['desc']}</td>

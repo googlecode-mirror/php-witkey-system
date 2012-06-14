@@ -84,7 +84,7 @@
 			 	 	  	<div>{$_lang['tender_quotation']}{$_lang['zh_mh']}$v['quote']</div>
 								<div>{$_lang['work_time']}{$_lang['zh_mh']}$v['cycle']</div>
 								<div>{$_lang['in_place']}{$_lang['zh_mh']}$v['area']</div>
-								<div>{$_lang['tender_des']}{$_lang['zh_mh']}<!--{eval echo kekezu::escape($v['message'])}--></div>
+								<div>{$_lang['tender_des']}{$_lang['zh_mh']}<!--{eval echo Keke::escape($v['message'])}--></div>
 								<div  class="data_list">								
 									<table width="80%" class="data_table">
 										<thead>
@@ -139,7 +139,7 @@
 			       		<ul>
 					       	{loop $file_list $v2}
 					          <li>
-					             <a href="index.php?do=task&task_id={$task_id}&op=download&filename={$v2[file_name]}&filepath={$v2[save_name]}#file" target="_blank">{$v2[file_name]}<span class="c999">£¨<!--{eval echo kekezu::get_format_size(filesize($v2[save_name]))}-->£©</span><span class="icon16 download"></span></a>
+					             <a href="index.php?do=task&task_id={$task_id}&op=download&filename={$v2[file_name]}&filepath={$v2[save_name]}#file" target="_blank">{$v2[file_name]}<span class="c999">£¨<!--{eval echo Keke::get_format_size(filesize($v2[save_name]))}-->£©</span><span class="icon16 download"></span></a>
 					          </li>
 							{/loop}
 					   </ul>

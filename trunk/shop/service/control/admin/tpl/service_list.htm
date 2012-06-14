@@ -87,7 +87,7 @@
             {loop $service_arr $k $v}
             <tr class="item">
             	<td><input type="checkbox" name="ckb[]" value="{$v[service_id]}">{$v[service_id]}</td>
-                <td><a target="_blank" href="{$_K[siteurl]}/index.php?do=service&sid={$v[service_id]}"><!--{eval echo kekezu::cutstr($v[title],44)}--></a></td>
+                <td><a target="_blank" href="{$_K[siteurl]}/index.php?do=service&sid={$v[service_id]}"><!--{eval echo Keke::cutstr($v[title],44)}--></a></td>
                 <td>{if $v[price]}{$v[price]}{else}{$_lang['no_quotation']}{/if}</td>
 				<td>{$v[username]}</td> 
                 <td>{if $indus_arr[$v[indus_id]][indus_name]}{$indus_arr[$v[indus_id]][indus_name]}{else}{$_lang['no_has']}{/if}</td>

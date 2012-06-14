@@ -132,7 +132,7 @@
               <div class="grd_14 prefix_1">
 				  <div class=" messages m_infor">
 				  	<input type="hidden" name="file_str" id="file_str"> 
-					<!--{eval $flie_types = kekezu::get_ext_type();}-->
+					<!--{eval $flie_types = Keke::get_ext_type();}-->
 	                     <span class="icon16">info</span>{$_lang['most_upload_attachment']}({$flie_types} .{$_lang['toplimit']}{$basic_config['max_size']}M)
 	             		<input type="file" class="file_input" name="upload_input" id="upload_input" size="1" ext="{$flie_types}" onchange="uploadBlur2();">
 		  	 		    <button type="button" class="button" id="upload_button">{$_lang['source_upload']}</button>

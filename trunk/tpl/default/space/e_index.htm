@@ -31,7 +31,7 @@
                     <div class="container pt_20 pl_40 pr_40">
                         <h1 class="font16b c000">{$_lang['about_us']}</h1>
                         <p class="mt_15"> 
-						<!--{eval echo kekezu::cutstr($e_shop_info['shop_desc'], 200);}-->。。。。。。
+						<!--{eval echo Keke::cutstr($e_shop_info['shop_desc'], 200);}-->。。。。。。
 					   </p>
                     </div>	
                 </div>
@@ -65,7 +65,7 @@
                                 <dd>
                                     <ul>
                                         <li class="w4" title="{$_lang['currency']}$v['task_cash']{$_lang['yuan']}"><b>{$_lang['currency']}$v['task_cash']{$_lang['yuan']}</b></li>
-                                        <li class="w1"><a href="index.php?do=task&task_id=$v['task_id']" title="<!--{eval echo kekezu::cutstr($v['task_title'],38)}-->"><!--{eval echo kekezu::cutstr($v['task_title'],38)}--></a></li>
+                                        <li class="w1"><a href="index.php?do=task&task_id=$v['task_id']" title="<!--{eval echo Keke::cutstr($v['task_title'],38)}-->"><!--{eval echo Keke::cutstr($v['task_title'],38)}--></a></li>
                                         <li class="w5">$model_list[$v['model_id']]['model_name']</li> 
                                         <li class="w3">{$_lang['manuscript']}/<a href="#">{if $v['work_num']}$v['work_num']{else}0{/if}{$_lang['people']}</a></li>
                                         <li class="w2"> 
@@ -97,7 +97,7 @@
                                       <dd>
                                     <ul>
                                         <li class="w4"><b>{$_lang['currency']}$v['task_cash']{$_lang['yuan']}</b></li>
-                                        <li class="w1"><a href="index.php?do=task&task_id=$v['task_id']"><!--{eval echo kekezu::cutstr($v['task_title'],38)}-->dsafagfdsfgsdg</a></li>
+                                        <li class="w1"><a href="index.php?do=task&task_id=$v['task_id']"><!--{eval echo Keke::cutstr($v['task_title'],38)}-->dsafagfdsfgsdg</a></li>
                                         <li class="w5">$model_list[$v['model_id']]['model_name']</li> 
                                         <li class="w3">{$_lang['manuscript']}/<a href="#">{if $v['work_num']}$v['work_num']{else}0{/if}{$_lang['people']}</a></li>
                                         <li class="w2"> 
@@ -146,7 +146,7 @@
           					 <li>
           					 	<a href="index.php?do=service&sid=$v['service_id']"><img src="$v['pic']" alt="" />
 								<div><h2><span class="pro_name">
-										<!--{eval echo kekezu::cutstr($v['title'], 15);}-->
+										<!--{eval echo Keke::cutstr($v['title'], 15);}-->
 										</span>
 										<span>
 											<b>{$_lang['currency']}</b>$v['price']/$v['unite_price']

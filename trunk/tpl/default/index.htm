@@ -290,7 +290,7 @@
                                          <p><a href="{$info['feed_username']['url']}"><strong>{$v['username']}</strong></a>
 											{$info['action']['content']}
 											 <a href="{$info['event']['url']}">{$info['event']['content']}</a></p>
-                                         <p><!--{eval echo kekezu::feed_time ($v['feed_time'] );}--> </p>
+                                         <p><!--{eval echo Keke::feed_time ($v['feed_time'] );}--> </p>
                                        </div>
                                      </li>
 								{/loop}
@@ -624,7 +624,7 @@
 		                 </div>
 		                  <!--头条描述 start-->
 		                     <div class="sort_info">
-		                         <!--{eval echo kekezu::cutstr(htmlspecialchars_decode($v['content']),80)}-->.....
+		                         <!--{eval echo Keke::cutstr(htmlspecialchars_decode($v['content']),80)}-->.....
 		                     </div>
 		                 <!--头条描述 end-->
 		                 <div class="clear"></div>

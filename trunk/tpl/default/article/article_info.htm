@@ -70,14 +70,14 @@
 											<a href="{$pre_url}html/article/info/{$art_info['art_cat_id']}_{$art_down_info['art_id']}.htm" class="fl_r mr_20">
 					                   {else}
 					                      <a href="{$pre_url}index.php?do={$do}&view={$view}&art_cat_id={$art_info['art_cat_id']}&art_id={$art_down_info['art_id']}" class="fl_r mr_20">
-					                   {/if}<strong class="font_simsun mr_5 c555">下一篇：</strong><span class="c6d6"><!--{eval echo kekezu::cutstr($art_down_info['art_title'],30)}--></span></a>
+					                   {/if}<strong class="font_simsun mr_5 c555">下一篇：</strong><span class="c6d6"><!--{eval echo Keke::cutstr($art_down_info['art_title'],30)}--></span></a>
 	                                {/if}
 									{if $art_up_info}
 										{if $static}
 											<a href="{$pre_url}html/article/info/{$art_info['art_cat_id']}_{$art_up_info['art_id']}.htm" class="fl_r mr_10">
 					                   {else}
 					                      <a href="{$pre_url}index.php?do={$do}&view={$view}&art_cat_id={$art_info['art_cat_id']}&art_id={$art_up_info['art_id']}" class="fl_r mr_20">
-					                   {/if}<strong class="font_simsun mr_5 c555">上一篇：</strong><span class="c6d6"><!--{eval echo kekezu::cutstr($art_up_info['art_title'],40)}--></span></a>
+					                   {/if}<strong class="font_simsun mr_5 c555">上一篇：</strong><span class="c6d6"><!--{eval echo Keke::cutstr($art_up_info['art_title'],40)}--></span></a>
 	                                {/if}
                             </div>
                             <!--end 左内容头-->

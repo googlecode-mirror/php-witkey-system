@@ -163,7 +163,7 @@
                                 </div>
                                 <div class="describe mt_20 ws_prewrap ws_break">
                                     <h2 class="border_b_c mb_10"><span class="font16">{$_lang['recommend']}</span></h2>
-                                    <!--{eval echo kekezu::escape($service_info['content'])}-->
+                                    <!--{eval echo Keke::escape($service_info['content'])}-->
                                 </div>
 								<!--ÈÎÎñµØÍ¼-->
 	{if $service_info['point']}
@@ -380,7 +380,7 @@
                                         <p>
                                             <span class="c900 font14">{$_lang['currency']}{$v['price']}{$_lang['yuan']}</span>
                                         </p>
-                                        <a href="index.php?do=service&sid={$v['service_id']}" target="_blank" title="{$v['title']}"><!--{eval echo kekezu::cutstr($v['title'],24)}--></a>
+                                        <a href="index.php?do=service&sid={$v['service_id']}" target="_blank" title="{$v['title']}"><!--{eval echo Keke::cutstr($v['title'],24)}--></a>
   						          </div>
                                 </div>
                                 {/loop}
@@ -403,7 +403,7 @@
                                         {loop $task_list $k $v}
                                         {if $k<7}<!--{eval $i++;}-->
                                         <li>
-                                            <a href="index.php?do=task&task_id={$v['task_id']}" title="<!--{eval echo kekezu::cutstr($v['task_title'],28)}-->"><span class="c900">{$_lang['currency']}{$v['task_cash']}</span><span class="bk_color"> <!--{eval echo kekezu::cutstr($v['task_title'],28)}--></span></a>
+                                            <a href="index.php?do=task&task_id={$v['task_id']}" title="<!--{eval echo Keke::cutstr($v['task_title'],28)}-->"><span class="c900">{$_lang['currency']}{$v['task_cash']}</span><span class="bk_color"> <!--{eval echo Keke::cutstr($v['task_title'],28)}--></span></a>
 										</li>
                                         {/if}
                                         {/loop}
@@ -415,7 +415,7 @@
                                         {loop $task_list $j $v}
                                         {if $j>6}
                                         <li>
-                                            <a href="index.php?do=task&task_id={$v['task_id']}" title="<!--{eval echo kekezu::cutstr($v['task_title'],28)}-->"><span class="c900">{$_lang['currency']}{$v['task_cash']}</span><span class="bk_color"> <!--{eval echo kekezu::cutstr($v['task_title'],28)}--></span></a>
+                                            <a href="index.php?do=task&task_id={$v['task_id']}" title="<!--{eval echo Keke::cutstr($v['task_title'],28)}-->"><span class="c900">{$_lang['currency']}{$v['task_cash']}</span><span class="bk_color"> <!--{eval echo Keke::cutstr($v['task_title'],28)}--></span></a>
                                         </li>
                                         {/if}
                                         {/loop}

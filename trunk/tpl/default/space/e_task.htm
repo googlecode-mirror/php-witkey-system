@@ -20,7 +20,7 @@
                 <div class="task_list_con clearfix">
                 	<div class=" pt_15 clearfix">
                 		{loop $task_arr $k $v}
-                    	<p class="clearfix"><span><b class="font16">&yen;</b>$v['task_cash']</span><a href="index.php?do=task&task_id=$v['task_id']"><!--{eval echo kekezu::cutstr($v['task_title'], 50);}--></a></p>
+                    	<p class="clearfix"><span><b class="font16">&yen;</b>$v['task_cash']</span><a href="index.php?do=task&task_id=$v['task_id']"><!--{eval echo Keke::cutstr($v['task_title'], 50);}--></a></p>
 						{/loop}
                        </div>
                 </div>

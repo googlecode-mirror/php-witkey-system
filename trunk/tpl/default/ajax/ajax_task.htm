@@ -3,7 +3,7 @@
     {loop $comment_info $v2}
     <div class="comment_item">
         <a href="index.php?do=space&member_id=$v2['uid']">{$v2['username']}</a>{$_lang['yu']}<!--{date('Y-m-d H:i:s',$v2['on_time'])}-->{$_lang['comment']}
-        {if $v2['status']=='0'}{$_lang['new']}{/if}:<span class="db"><!--{eval echo kekezu::escape($v2['content'])}--></span>
+        {if $v2['status']=='0'}{$_lang['new']}{/if}:<span class="db"><!--{eval echo Keke::escape($v2['content'])}--></span>
     </div>
     {/loop}
 </div>
@@ -46,7 +46,7 @@
 											
 											<strong class="block">
 												<a href="{$v['detail_url']}" target="_blank" class='p_title' title="{$v['title']}">
-												<!--{eval echo kekezu::cutstr($v['title'],24)}-->
+												<!--{eval echo Keke::cutstr($v['title'],24)}-->
 											</a>
 											</strong>
 											

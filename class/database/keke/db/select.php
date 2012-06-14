@@ -1,4 +1,4 @@
-<?php
+<?php defined('IN_KEKE') OR die('access on priv!');
 
 /**
  * @example 基于OO的数据库查询方法
@@ -6,7 +6,7 @@
  * @author Administrator
  *
  */
-defined('IN_KEKE') OR die('access on priv!');
+
 class Keke_db_select {
 	
 	protected $_query_list = array ();

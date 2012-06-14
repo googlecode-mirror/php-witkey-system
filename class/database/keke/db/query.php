@@ -1,8 +1,8 @@
-<?php
+<?php  defined('IN_KEKE') OR die('access on priv!');
 class Keke_db_query {
 	// Query type
 	protected $_type;
-	
+	protected $_where;
 	// Execute the query during a cache hit
 	protected $_force_execute = FALSE;
 	
@@ -75,7 +75,17 @@ class Keke_db_query {
 		$this->_object_params = array ();
 		return $this;
 	}
-	
+	/**
+	 * 设置条件
+	 * @param string $where
+	 * @return Keke_db_query
+	 */
+	public function where($where){
+		if($where){
+			$this->_where = $where;
+		}
+		return $this;
+	}
 	/**
 	 * 将结果作为对象返回
 	 * @param string $class 类名 TRUE for 基类

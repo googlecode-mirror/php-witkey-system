@@ -2,8 +2,8 @@
 keke_lang_class::load_lang_class('keke_loaddata_class');
 class keke_loaddata_class {
 	public static function get_tag($mode = '') {
-		$tag_obj = new Keke_witkey_tag_class ();
-		$taginfo = $tag_obj->query_keke_witkey_tag ( 1, null );
+		$tag_obj = new Keke_witkey_tag();
+		$taginfo = $tag_obj->query(6000);
 	
 		$temp_arr = array ();
 		if (! $mode) {
@@ -30,7 +30,7 @@ class keke_loaddata_class {
 		$tag_info = $tag_arr [$templatename];
 		$feed_arr = $cachename ? Keke::$_cache_obj->get ( "feed_" . $cachename . "_cache" ) : null;
 		if (! $feed_arr) {
-			$feed_obj = new keke_witkey_feed();
+			$feed_obj = new Keke_witkey_feed();
 			$limit = $loadcount ? "limit 0,$loadcount" : "";
 			$where = "1=1 ";
 			$where .= $type ? "and feedtype='$type' " : "";
@@ -38,7 +38,7 @@ class keke_loaddata_class {
 			$where .= $objid ? "and obj_id='$objid' " : "";
 			$where .= " order by feed_time desc ";
 			$feed_obj->setWhere ( $where . $limit );
-			$feed_arr = $feed_obj->query_keke_witkey_feed ();
+			$feed_arr = $feed_obj->query();
 			$temp_arr = array ();
 			if (is_array ( $feed_arr )) {
 				foreach ( $feed_arr as $v ) {
@@ -56,11 +56,17 @@ class keke_loaddata_class {
 	
 	//读数据
 	
-
+    static function init_tag(){
+    	$tag = new Keke_witkey_tag();
+    	$tag_arr = $tag->query(6000);
+    	return Keke::get_arr_by_key($tag_arr,'tagname');
+    }
 	static function readtag($name) { 
 		global $kekezu,$_lang;
-        Keke::$_tag or $kekezu->init_tag(); 
-		$tag_arr = Keke::$_tag; 
+        //Keke::$_tag or $kekezu->init_tag();
+         
+       	$tag_arr = self::init_tag();
+		//$tag_arr = Keke::$_tag; 
  		$tag_info = $tag_arr [$name];
 	    if ($tag_info ['tag_type'] == 5) {
 			echo htmlspecialchars_decode ( $tag_info ['code'] );
@@ -496,19 +502,28 @@ class keke_loaddata_class {
 	   }
 		
 	}
+	
+	static function init_ad(){
+		$obj = new Keke_witkey_ad();
+		return  Keke::get_arr_by_key($obj->query(6000),'ad_id');
+	}
 	/**
 	 * 单广告
 	 * @param int $adid
 	 */
 	static function ad($adid) {
-		$ad_arr = Keke::get_ad ();
-		$size = sizeof ( $ad_arr );
+		
+		$ad_arr = self::init_ad();
+		
+		//$ad_arr = Keke::get_ad ();
+		/* $size = sizeof ( $ad_arr );
 		$temp = array ();
 		for($i = 0; $i < $size; $i ++) {
 			$temp [$ad_arr [$i] ['ad_id']] = $ad_arr [$i];
 		}
 		$ad_arr = $temp;
-		unset ( $temp );
+		unset ( $temp ); */
+		
 		$ad_info = $ad_arr [$adid];
 		if ($ad_info ['ad_type'] == 1) {
 			$adstr = '<embed src="' . $ad_info ['ad_file'] . '" quality="high" width="' . $ad_info ['width'] . '" height="' . $ad_info ['height'] . '" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash"></embed>';
@@ -531,9 +546,8 @@ class keke_loaddata_class {
 	 */
 	static function adgroup($adname,$ad_limit_num) {
 		global $kekezu,$_K;
-		Keke::$_tag or $kekezu->init_tag();
-		$datalist = Keke::get_ad ( $adname,$ad_limit_num );
-		$tag_arr = Keke::$_tag;
+		//$datalist = Keke::get_ad ( $adname,$ad_limit_num );
+		$tag_arr = $tag_arr = self::init_tag();
 		$tag_info = $tag_arr [$adname];
 		require keke_tpl_class::parse_code ( htmlspecialchars_decode ( $tag_info ['tag_code'] ), $tag_info ['tag_id'] );
 	}

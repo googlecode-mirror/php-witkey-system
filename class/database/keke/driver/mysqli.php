@@ -4,7 +4,7 @@
  */
 // require ('database.php');
 
-final class Keke_driver_mysqli extends database {
+final class Keke_driver_mysqli extends Keke_database {
 	
 	private $_dbhost;
 	private $_dbname;

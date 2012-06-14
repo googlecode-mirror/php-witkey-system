@@ -368,6 +368,9 @@ class Keke extends Keke_core {
 		if(ini_get('register_globals')){
 			self::globals();
 		}
+		if(function_exists('mb_internal_encoding')){
+			mb_internal_encoding(CHARSET);
+		}
 		//安全模式
 		Keke::$_safe_mode  = (bool)ini_get('safe_mode');
 		Keke::$_magic_quote = (bool)get_magic_quotes_gpc();

@@ -36,4 +36,7 @@ class Dbfactory {
 	public static function get_table_data($fileds = '*', $table, $where = '', $order = '', $group = '', $limit = '', $pk = '', $cachetime = 0) {
 		return Database::instance ()->select ( $fileds, $table, $where, $order, $group, $limit, $pk,$cachetime );
 	}
+	public static function get_count($sql, $row = 0, $field = null){
+		return Database::instance()->get_count($sql,$row,$field);
+	}
 }

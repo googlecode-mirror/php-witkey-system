@@ -113,7 +113,7 @@
                                                         </td>
                                                         <td>
                                                             <!--{eval $time=time();}-->{if $v['top_time']>$time} <img src="resource/img/ico/zd.png" alt="{$_lang['task_top']}" title="{$_lang['task_top']}">{/if} 
-                                                            {if $v['urgent_time']>$time}<img src="resource/img/ico/jj.png" alt="{$_lang['task_urgent']}" title="{$_lang['task_urgent']}">{/if}<a href="index.php?do=task&task_id={$v['task_id']}" title="$v['task_title']"><!--{eval echo kekezu::cutstr($v['task_title'],20)}--></a>
+                                                            {if $v['urgent_time']>$time}<img src="resource/img/ico/jj.png" alt="{$_lang['task_urgent']}" title="{$_lang['task_urgent']}">{/if}<a href="index.php?do=task&task_id={$v['task_id']}" title="$v['task_title']"><!--{eval echo Keke::cutstr($v['task_title'],20)}--></a>
                                                         </td>
                                                         <td>
                                                           {if $v[model_id]==4||$v[model_id]==5}

@@ -104,7 +104,7 @@
                     <td class="td28 wraphide">{$art_cat_arr[$value['art_cat_id']]['cat_name']}</td>
                     <td>
                     	<a href="index.php?do={$do}&view=edit&art_id={$value['art_id']}&type={$type}&page={$page}" >
-							<!--{eval echo(kekezu::cutstr($value['art_title'],50));}-->
+							<!--{eval echo(Keke::cutstr($value['art_title'],50));}-->
 							{if $value['is_recommend']==1} [{$_lang['recommend']}]{/if}
 							{if $value['art_pic']} [{$_lang['img']}]{/if}
 						</a>

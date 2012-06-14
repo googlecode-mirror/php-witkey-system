@@ -134,7 +134,7 @@
                                                         </td>
                                                         {if $op=='complaint'}
                                                         <td scope="col">
-                                                            {if $v['report_desc']}<!--{eval echo kekezu::cutstr(strip_tags($v['report_desc']),60)."..."}-->{else}
+                                                            {if $v['report_desc']}<!--{eval echo Keke::cutstr(strip_tags($v['report_desc']),60)."..."}-->{else}
                                                             {$_lang['no_contents']}
                                                             {/if}
                                                         </td>

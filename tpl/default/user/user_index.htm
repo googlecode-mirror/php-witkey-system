@@ -352,7 +352,7 @@
 		                        		<!--{eval $time = time();}-->
 		                        		{if $v['top']>$time} <img src="{$_K['siteurl']}/{$payitem_list['2']['small_pic']}" alt="{$_lang['top']}" title="{$_lang['top']}">{/if}  
                                         {if $v['urgent']>$time}<img src="{$_K['siteurl']}/{$payitem_list['3']['small_pic']}" alt="{$_lang['hurry_up']}" title="{$_lang['hurry_up']}">{/if}				                        		
-										<!--{eval echo(kekezu::cutstr($v['task_title'],30));}-->
+										<!--{eval echo(Keke::cutstr($v['task_title'],30));}-->
 									</a>
 								</li>
 		                        <li class="w2 t_l">{if $v['task_cash_coverage']}$task_cove[$v['task_cash_coverage']]['cove_desc']{else}{$v['task_cash']}{$_lang['yuan']}{/if}</li>

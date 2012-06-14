@@ -121,7 +121,7 @@
                                                <!--产品描述-->
                                                 <div class=" description hidden">
                                                     <p class="ws_break">
-                                                    	<!--{eval echo kekezu::cutstr($service_arr['0']['content'], 100);}-->......
+                                                    	<!--{eval echo Keke::cutstr($service_arr['0']['content'], 100);}-->......
                                                     </p>
                                                 </div>
                                                 <!--end 产品描述-->
@@ -142,9 +142,9 @@
 												 			{if file_exists($service_arr[$v]['pic'])}
 																<!--{eval $tmp = explode('/',$service_arr[$v]['pic']);$size = sizeof($tmp);}-->
 																<!--{eval $tmp[$size-1] = '100_'.$tmp[$size-1];$pic = implode('/',$tmp);}-->
-												 				<img src="$pic" alt="$service_arr[$v]['title']"  title="<!--{eval echo kekezu::cutstr($service_arr[$v]['title'],20)}-->"/>
+												 				<img src="$pic" alt="$service_arr[$v]['title']"  title="<!--{eval echo Keke::cutstr($service_arr[$v]['title'],20)}-->"/>
 															{else}
-												 				<img src="{$style_path}/img/shop/shop_default.gif" alt="$service_arr[$v]['title']"  title="<!--{eval echo kekezu::cutstr($service_arr[$v]['title'],20)}-->"/>
+												 				<img src="{$style_path}/img/shop/shop_default.gif" alt="$service_arr[$v]['title']"  title="<!--{eval echo Keke::cutstr($service_arr[$v]['title'],20)}-->"/>
 															{/if}
 														</a>
 													{else}

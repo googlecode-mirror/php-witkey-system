@@ -150,15 +150,15 @@
                                             <label class="grid_5 t_r">
                                                 {$_lang['sex']}{$_lang['zh_mh']}
                                             </label>
-                                            <input type="radio" name="conf[sex]" value="{$_lang['secret']}" {if !$user_info['sex']||$user_info['sex']==kekezu::lang('secret')}checked{/if} />
+                                            <input type="radio" name="conf[sex]" value="{$_lang['secret']}" {if !$user_info['sex']||$user_info['sex']==Keke::lang('secret')}checked{/if} />
                                             <label>
                                                 {$_lang['secret']}
                                             </label>
-                                            <input type="radio" name="conf[sex]" value="{$_lang['man']}" {if $user_info['sex']==kekezu::lang('man')}checked{/if} />
+                                            <input type="radio" name="conf[sex]" value="{$_lang['man']}" {if $user_info['sex']==Keke::lang('man')}checked{/if} />
                                             <label>
                                                 {$_lang['man']}
                                             </label>
-                                            <input type="radio" name="conf[sex]" value="{$_lang['woman']}" {if $user_info['sex']==kekezu::lang('woman')}checked{/if} />
+                                            <input type="radio" name="conf[sex]" value="{$_lang['woman']}" {if $user_info['sex']==Keke::lang('woman')}checked{/if} />
                                             <label>
                                                 {$_lang['woman']}
                                             </label>

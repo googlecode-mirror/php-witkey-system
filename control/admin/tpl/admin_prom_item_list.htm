@@ -94,9 +94,9 @@
                   	  {if $v['item_type']=='img'}{$_lang['img']}{/if}
                    	 {if $v['item_type']=='text'}{$_lang['text']}{/if}
                     </td>
-                    <td><!--{eval echo kekezu::cutstr($v['item_name'],20)}--></td>
+                    <td><!--{eval echo Keke::cutstr($v['item_name'],20)}--></td>
 					
-                    <td><!--{eval echo kekezu::cutstr($v['item_content'],70)}-->&nbsp;</td>
+                    <td><!--{eval echo Keke::cutstr($v['item_content'],70)}-->&nbsp;</td>
 					<td><!--{date('Y-m-d H:i:s',$v['on_time'])}--></td>
                     <td>
                        <a  href='index.php?do={$do}&view=item_edit&item_id={$v['item_id']}&op={$op}'><span class="trash icon"></span>{$_lang['edit']}</a>

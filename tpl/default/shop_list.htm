@@ -323,7 +323,7 @@
                                                     </li>
                                                     <li class="w3 t_l ws_normal m_h">
                                                     	<a href="index.php?do=space&member_id=$v['uid']">$v['username']</a>
-                                                        <p>&nbsp;<!--{eval echo kekezu::cutstr($v['content'], 100);}--></p>
+                                                        <p>&nbsp;<!--{eval echo Keke::cutstr($v['content'], 100);}--></p>
                                                     </li>
                                                     <li class="w2 col2">
                                                     	<p class="cc00 font14b">&nbsp; {$_lang['currency']}$v['price'] </p>
@@ -405,7 +405,7 @@
                                                     <li class="border_b_c ws_break">
                                                     	<p><a href="$v['feed_username']['url']">$v['feed_username']['content']</a> $v['action']['content']</p>  
 														<p><a href="$v['event']['url']">$v['event']['content']</a></p>
-														<p><!--{eval echo kekezu::feed_time ($v['feed_time'] );}--></p>
+														<p><!--{eval echo Keke::feed_time ($v['feed_time'] );}--></p>
 													</li>
                                                    {/loop}
                                                 </ul>

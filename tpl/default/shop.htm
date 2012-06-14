@@ -115,8 +115,8 @@
                 	<div class="left">
                     	<div class="pic"><a href="index.php?do=service&sid={$top2['0']['service_id']}"><img name="lazyImg" lazy_src="<!--{eval echo keke_img_class::get_filepath_by_size($top2['0']['pic'],210);}-->"></a></div>
                         <div class="item_title">
-                        	<div class="title"><a href="index.php?do=service&sid={$top2['0']['service_id']}" original-title="{$top2['0']['title']}"><h5><!--{eval echo kekezu::cutstr($top2['0']['title'],30)}-->...</h5></a></div>
-                            <p class="text ws_break"><!--{eval echo kekezu::cutstr($top2['0']['content'],60)}-->...</p>
+                        	<div class="title"><a href="index.php?do=service&sid={$top2['0']['service_id']}" original-title="{$top2['0']['title']}"><h5><!--{eval echo Keke::cutstr($top2['0']['title'],30)}-->...</h5></a></div>
+                            <p class="text ws_break"><!--{eval echo Keke::cutstr($top2['0']['content'],60)}-->...</p>
                             <p class="review">{$_lang['comment']}({$top2['0']['leave_num']}) |{$_lang['buy_times']}({$top2['0']['sale_num']})</p>
                             <div class="btn"><a class="button right" href="index.php?do=service&sid={$top2['0']['service_id']}">{$_lang['view_goods_detail']}</a></div>
 							<div class="btn"><a class="button right" href="index.php?do=shop_order&sid={$top2['0']['service_id']}">{$_lang['pay_money_download_goods']}</a></div>
@@ -127,8 +127,8 @@
                     	<div class="pic"><a href="index.php?do=service&sid={$top2['1']['service_id']}"><img name="lazyImg" lazy_src="<!--{eval echo keke_img_class::get_filepath_by_size($top2['1']['pic'],210)}-->"></a></div>
                         <div class="item_title">
                         	<div class="title">
-                        	<a href="index.php?do=service&sid={$top2['1']['service_id']}" original-title="{$top2['1']['title']}"><h5><!--{eval echo kekezu::cutstr($top2['1']['title'],30)}-->...</h5></a></div>
-                            <p class="text ws_break"><!--{eval echo kekezu::cutstr($top2['1']['content'],60)}-->...</p>
+                        	<a href="index.php?do=service&sid={$top2['1']['service_id']}" original-title="{$top2['1']['title']}"><h5><!--{eval echo Keke::cutstr($top2['1']['title'],30)}-->...</h5></a></div>
+                            <p class="text ws_break"><!--{eval echo Keke::cutstr($top2['1']['content'],60)}-->...</p>
                             <p class="review">{$_lang['comment']}({$top2['1']['leave_num']}) |{$_lang['buy_times']}({$top2['1']['sale_num']})</p>
                             <div class="btn"><a class="button right" href="index.php?do=service&sid={$top2['1']['service_id']}">{$_lang['view_goods_detail']}</a></div>
 							<div class="btn"><a class="button right" href="index.php?do=shop_order&sid={$top2['1']['service_id']}">{$_lang['pay_money_download_goods']}</a></div>
@@ -149,8 +149,8 @@
 						</a>
 						<p class="clearfix">
 							<span class="rmb block">{$_lang['currency']}{$value['price']}</span>
-							<a class="shop_word fl_l" href="index.php?do=service&sid={$value['service_id']}" title="<!--{eval echo kekezu::cutstr($value['title'],20)}-->">
-								<!--{eval echo kekezu::cutstr($value['title'],20)}-->
+							<a class="shop_word fl_l" href="index.php?do=service&sid={$value['service_id']}" title="<!--{eval echo Keke::cutstr($value['title'],20)}-->">
+								<!--{eval echo Keke::cutstr($value['title'],20)}-->
 							</a>
 						</p>
 					</div>

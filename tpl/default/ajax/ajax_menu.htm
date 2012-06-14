@@ -72,7 +72,7 @@
  </div>
  <div class="pl_10">
  	<div class="pad10">
-		<div class="font14 ws_prewrap ws_break"><!--{eval echo kekezu::escape($comm_info['content'])}--></div>
+		<div class="font14 ws_prewrap ws_break"><!--{eval echo Keke::escape($comm_info['content'])}--></div>
 	</div>
  </div>
 </div>
@@ -90,7 +90,7 @@
 		{/if}
  <div class="pl_10">
  	<div class="pad10">
-		<div class="font14 ws_prewrap ws_break"><!--{eval echo kekezu::escape($comm_info['content'])}--></div>
+		<div class="font14 ws_prewrap ws_break"><!--{eval echo Keke::escape($comm_info['content'])}--></div>
 	</div>
  </div>
 </div>
@@ -165,14 +165,14 @@
 		  {if $model_list[$v['model_id']]['model_code']!='tender'}
 		  	<!--{eval $v['task_cash_coverage'] and $cash=$v['real_cash'] or $cash=$v['task_cash'];}-->
 			<td>{$model_list[$v['model_id']]['model_name']}</td>
-            <td><a href="index.php?do=task&task_id={$v['task_id']}" target="_blank" title="{$v['task_title']}"><!--{eval echo kekezu::cutstr($v['task_title'],68)}--></a></td>
+            <td><a href="index.php?do=task&task_id={$v['task_id']}" target="_blank" title="{$v['task_title']}"><!--{eval echo Keke::cutstr($v['task_title'],68)}--></a></td>
 			<td class="t_c">{$_lang['currency']}{$cash}</td>
 			<td class="t_c">{$cash}&times;{$v['profit_rate']}%&times;{$prom_rule['rate']}%=<font color="red"><!--{eval echo $cash*$v['profit_rate']*$prom_rule['rate']/10000;}--></font></td>
 		  	<td><a href="javascript:void(0);" onclick="promLink('bid_task','task','{$v[task_id]}','{$v[task_title]}');">{$_lang['get_pro_link']}</a></td>
 		{/if}
 		{elseif $prom_code=='service'}
 			<td>{$model_list[$v['model_id']]['model_name']}</td>
-			<td><a href="index.php?do=service&sid={$v['service_id']}" target="_blank" title="{$v['title']}"><!--{eval echo kekezu::cutstr($v['title'],68)}--></a></td>
+			<td><a href="index.php?do=service&sid={$v['service_id']}" target="_blank" title="{$v['title']}"><!--{eval echo Keke::cutstr($v['title'],68)}--></a></td>
 			<td class="t_c">{$v['price']}</td>
 			<td class="t_c">{$v['price']}&times;{$v['profit_rate']}%&times;{$prom_rule['rate']}%=<font color="red"><!--{eval echo $v['price']*$v['profit_rate']*$prom_rule['rate']/10000;}--></font></td>
 			<td><a href="javascript:void(0);" onclick="promLink('service','service','{$v[service_id]}','{$v[title]}');">{$_lang['get_pro_link']}</a></td>

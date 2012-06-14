@@ -143,7 +143,7 @@
              </div>
             <div class="describe mt_20 ws_prewrap ws_break">
                <h2 class="border_b_c mb_10"><span class="font16">{$_lang['recommend']}</span></h2>
-              	<!--{eval echo kekezu::escape($service_info[content])}-->
+              	<!--{eval echo Keke::escape($service_info[content])}-->
 					{if $service_info[point]}
 				<details open  class="mb_20">       
 			        <summary class="pad5 fontb">{$_lang['shop_map']}<em class="c999 font_normal"></em></summary> 
@@ -350,7 +350,7 @@
 						{/if}
 					</a>
                         <p>{$_lang['currency']}<span class="red font14b">{$v[price]}{$_lang['yuan']}</span></p>
-                       <a href="index.php?do=service&sid={$v[service_id]}" target="_blank" title="{$v[title]}"><!--{eval echo kekezu::cutstr($v[title],24)}--></a>
+                       <a href="index.php?do=service&sid={$v[service_id]}" target="_blank" title="{$v[title]}"><!--{eval echo Keke::cutstr($v[title],24)}--></a>
                   </div>
                 </div>
 			{/loop}
@@ -375,7 +375,7 @@
 						<!--{eval $i++;}-->
                           <li>
                                <b>{$_lang['currency']}<span class="red">{$v[task_cash]}</span></b>
-                               <a href="index.php?do=task&task_id={$v[task_id]}"> <!--{eval echo kekezu::cutstr($v[task_title],28)}--></a>
+                               <a href="index.php?do=task&task_id={$v[task_id]}"> <!--{eval echo Keke::cutstr($v[task_title],28)}--></a>
                            </li>
 						{/if}
 					{/loop}
@@ -388,7 +388,7 @@
 					 {if $j>6}
                           <li>
                                <b>{$_lang['currency']}<span class="red">{$v[task_cash]}</span></b>
-                               <a href="index.php?do=task&task_id={$v[task_id]}"> <!--{eval echo kekezu::cutstr($v[task_title],28)}--></a>
+                               <a href="index.php?do=task&task_id={$v[task_id]}"> <!--{eval echo Keke::cutstr($v[task_title],28)}--></a>
                            </li>
 					{/if}
 					{/loop}

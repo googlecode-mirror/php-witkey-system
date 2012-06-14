@@ -24,7 +24,7 @@
        	 	 	
       		 <label class="fl_l t_r">{$_lang['add_attachment']}{$_lang['zh_mh']} </label>
 			 <div class="fl_l">
-			 	<!--{eval $flie_types = kekezu::get_ext_type();}-->
+			 	<!--{eval $flie_types = Keke::get_ext_type();}-->
 			 	<input type="file" class="file" name="upload" id="upload" size="1" ext="{$flie_types}" onchange="isExtName(this,1);uploadBlur();">
 		  	 	<a href="javascript:void(0);" id="file_upload" class="button" style="padding:5px;"><span class="icon uparrow"></span>{$_lang['click_upload']}</a>
              	{$_lang['a_maximum_of_5']}{$basic_config['max_size']}M

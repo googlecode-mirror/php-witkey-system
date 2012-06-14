@@ -42,7 +42,7 @@
                         <strong>{$_lang['title']}{$_lang['zh_mh']}</strong>
                     </label>
                     <div class="grid_12 alpha">
-                        <input name="txt_title" id="txt_title" type="text" value="<!--{eval echo kekezu::escape($release_info['txt_title'])}-->" title="{$_lang['txt_title']}" size="34" msgArea="span_title"
+                        <input name="txt_title" id="txt_title" type="text" value="<!--{eval echo Keke::escape($release_info['txt_title'])}-->" title="{$_lang['txt_title']}" size="34" msgArea="span_title"
 						limit="required:true;len:5-50" msg="{$_lang['txt_title']}" maxlength="50" style="width:315px"/>
                         <div class="clear">
                         </div>
@@ -54,7 +54,7 @@
                         <strong>{$_lang['need']}{$_lang['zh_mh']}</strong>
                     </label>
                     <div class="grid_10 alpha">
-                        <textarea cols="59" rows="12" name="tar_content" title="{$_lang['textarea_title']}" id="tar_content" msgArea="msg_content" onkeydown="checkInner(this,1000,event)"><!--{eval echo kekezu::escape($release_info[tar_content])}--></textarea>
+                        <textarea cols="59" rows="12" name="tar_content" title="{$_lang['textarea_title']}" id="tar_content" msgArea="msg_content" onkeydown="checkInner(this,1000,event)"><!--{eval echo Keke::escape($release_info[tar_content])}--></textarea>
                         <div class="clear"></div>
                         <div class="c999" id="length_show">{$_lang['textarea_len']}</div>
 						<div class="" id="msg_content"></div>
@@ -180,7 +180,7 @@
             </div>
         </div>
         <h3 class="font14b">{$_lang['what']}{$model_info[model_name]}£¿ </h3>
-         <p><!--{eval echo kekezu::escape($model_info[model_desc])}--></p>
+         <p><!--{eval echo Keke::escape($model_info[model_desc])}--></p>
     </div>
 </div>
 <!--end ÓÒ±ß²¿·Ö-->

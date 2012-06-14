@@ -15,7 +15,7 @@
 					<li>
                     	<a href="index.php?do=service&sid=$v['service_id']" title="$v['title']">
                     		<img src='' alt=""  onerror="this.src='{$_K['siteurl']}/{SKIN_PATH}/img/shop_default.gif'" name="lazyImg" lazy_src="{if $v['pic']}$v['pic']{else}resource/img/system/shop_default_big.jpg{/if}"/>
-						<p><!--{eval echo kekezu::cutstr($v['title'], 10);}--></p>
+						<p><!--{eval echo Keke::cutstr($v['title'], 10);}--></p>
 						<span><b class="font_normal">{$_lang['currency']}</b>$v['price']/$v['unite_price'] {$_lang['yuan']}</span></a>
                     </li> 
 					{/loop}

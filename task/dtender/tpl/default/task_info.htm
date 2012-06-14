@@ -221,7 +221,7 @@
       <details open  class="mb_20">
        <!--标题-->
          <summary class="pad5 fontb">{$_lang['supply_description']}<em class="c999 font_normal">{$_lang['des_zc']}</em></summary>
-            <pre class="pl_10 ws_prewrap ws_break"  id="reqedit"><!--{eval echo kekezu::escape($task_info[ext_desc])}--></pre>
+            <pre class="pl_10 ws_prewrap ws_break"  id="reqedit"><!--{eval echo Keke::escape($task_info[ext_desc])}--></pre>
       </details>
 	  {/if}
      <!--end 任务补充需求-->
@@ -234,7 +234,7 @@
        <ul>
        	{loop $task_file $v}
           <li>
-             <a href="index.php?do=ajax&view=file&ajax=download&file_name={$v[file_name]}&file_path={$v[save_name]}#file" target="_blank">{$v[file_name]}<span class="c999">（<!--{eval echo kekezu::get_format_size(filesize($v[save_name]))}-->）</span><span class="icon16 download"></span></a>
+             <a href="index.php?do=ajax&view=file&ajax=download&file_name={$v[file_name]}&file_path={$v[save_name]}#file" target="_blank">{$v[file_name]}<span class="c999">（<!--{eval echo Keke::get_format_size(filesize($v[save_name]))}-->）</span><span class="icon16 download"></span></a>
           </li>
 		{/loop}
       </ul>

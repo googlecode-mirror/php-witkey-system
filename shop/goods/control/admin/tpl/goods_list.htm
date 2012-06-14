@@ -88,7 +88,7 @@
             <tr class="item">
             	<td><input type="checkbox" name="ckb[]" value="{$v['service_id']}">{$v['service_id']}</td>
                 <td><a target="_blank" href="{$_K['siteurl']}/index.php?do=service&sid={$v['service_id']}">
-                	<!--{eval echo kekezu::cutstr($v['title'],44)}--></a></td>
+                	<!--{eval echo Keke::cutstr($v['title'],44)}--></a></td>
                 <td>{if $v['price']}{$v['price']} / $v['unite_price']{else}{$_lang['no_quotation']}{/if}</td>
 				<td>{$v['username']}</td>                 
                 <td>{$v['area_range']}</td>

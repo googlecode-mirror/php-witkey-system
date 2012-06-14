@@ -88,7 +88,7 @@
                  	<td class="td25"><input type="checkbox" name="ckb[]" class="checkbox" value="{$v[task_id]}" class="checkbox">{$v[task_id]}</td>
                     <td class="td28">
                     	<a href="../../index.php?do=task&task_id={$v['task_id']}" target="_blank">
-                    		<!--{eval echo(kekezu::cutstr($v[task_title],40));}--></a>
+                    		<!--{eval echo(Keke::cutstr($v[task_title],40));}--></a>
 							{if $v[is_top]==1}<font color="red">[{$_lang['recommended']}]</font>{/if}
 					</td>
                     <td>$task_status[$v[task_status]]</td>

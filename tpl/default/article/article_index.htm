@@ -53,7 +53,7 @@
                                         	{else}
                                         		<a href="{$pre_url}index.php?do=$do&view=article_info&art_cat_id=$v['art_cat_id']&art_id=$v['art_id']">
                                         	{/if}
-                                        	<!--{eval echo kekezu::cutstr($v['art_title'],30)}-->
+                                        	<!--{eval echo Keke::cutstr($v['art_title'],30)}-->
 											{if $v[is_recommend]==1}<font color="red">{$_lang['recommend']}</font>{/if}
 											{if $v['art_pic']}<font color="red">{$_lang['picture']}</font>{/if}
 											</a>
@@ -71,7 +71,7 @@
                                         </p>
                                         <div class="news_content">
                                             <p>
-                                            	<!--{eval echo kekezu::cutstr($v['seo_desc'],500)}-->
+                                            	<!--{eval echo Keke::cutstr($v['seo_desc'],500)}-->
                                             </p>
                                         </div>
 										

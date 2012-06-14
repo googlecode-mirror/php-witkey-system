@@ -31,7 +31,7 @@
                         <td class="td25">
                             <input type="checkbox" name="ckb[]" id="cbk_selected" value="{$value['task_id']}" class="checkbox">{$value['task_id']}
                         </td>
-                        <td class="td28"><!--{eval echo(kekezu::cutstr($value['task_title'],80));}--></td>
+                        <td class="td28"><!--{eval echo(Keke::cutstr($value['task_title'],80));}--></td>
                         <td>{if $value['task_status']==2}进行中{else}已结束{/if}</td>
                         <td>{if $value['task_cash_coverage']}$cove_arr[$value['task_cash_coverage']]['cove_desc']{else}$value['task_cash']{/if}</td>
                         <td><!--{date('Y-m-d',$value['end_time'])}--></td>

@@ -147,7 +147,9 @@ abstract class Keke_database {
 			return "'1'";
 		} elseif ($value === FALSE) {
 			return "'0'";
-		} elseif (is_array ( $value )) {
+		}elseif (is_string($value)) {
+			return sprintf("'%s'",$value);
+		}  elseif (is_array ( $value )) {
 			return  implode ( ', ', array_map (array($this,__FUNCTION__), $value ) ) ;
 		} elseif (is_int ( $value )) {
 			return ( int ) $value;

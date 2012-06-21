@@ -1,4 +1,4 @@
-<?php
+<?php defined ( "IN_KEKE" ) or die ( "Access Denied" );
 /**
  * this not free,powered by keke-tech
  * @version 2.0
@@ -6,7 +6,7 @@
  * 
  */
 
-defined ( "IN_KEKE" ) or die ( "Access Denied" );
+
 include 'base.php';
 class Keke_core extends Keke_base {
 	protected  static $_core_class = array ();

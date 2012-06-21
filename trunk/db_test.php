@@ -1,9 +1,18 @@
 <?php
-$star = microtime(true);
+//$star = microtime(true);
 define ( 'IN_KEKE', TRUE );
 include 'app_boot.php';
 
+//$_SESSION['443'] = 'bbbbbbb';
 
+$img =  Keke_captcha::instance()->render();
+
+ 
+ 
+if($_POST){
+	Keke_captcha::valid($code);
+}
+ 
 /*  $b = array('ad_type','ad_name');
  $a  = array('9','update_name');
  $c = array_combine($b, $a);
@@ -48,8 +57,8 @@ $aas->setAd_content($value)->setAd_file($value)->setAd_name($value)->create(); *
 //var_dump($res);
 
 
-$end = microtime(true);
- var_dump ( $end-$star,Keke::execute_time() );
-//require keke_tpl_class::template('en');
+// $end = microtime(true);
+ //var_dump ( $end-$star,Keke::execute_time() );
+require keke_tpl_class::template('en');
 
  

@@ -5,7 +5,7 @@ include 'app_boot.php';
 
 //keke_lang_class::load_lang_class('keke_base_class');
 
-$dos = array ('shop_payitem_tools','payitem_tools','wb','oauth_register','register_wizard','case','oauth_login','login','ajax','show_menu', 'index', 'register', 'seccode', 'login', 'logout', 'get_password', 'news_list', 'help', 'help_list', 'help_info', 'talent', 'talent_list','case_list', 'search', 'search_list', 'task_preview', 'task_op', 'message', 'secode_demo', 'release', 'xs_release', 'zb_release', 'user', 'space', 'mark', 'task', 'task_list', 'level_rule', 'shop', 'shop_list', 'footer', 'task_indus_list', 'indus', 'agreement', 'report', 'seccode','bid','work','prom','reset_email','avatar','pay','browser','shop_release','service','shop_order','article','task_map','verify_secode','index_map','shop_map','protocol','excite_email','link','mobile','link','single');
+$dos = array ('captcha','shop_payitem_tools','payitem_tools','wb','oauth_register','register_wizard','case','oauth_login','login','ajax','show_menu', 'index', 'register', 'seccode', 'login', 'logout', 'get_password', 'news_list', 'help', 'help_list', 'help_info', 'talent', 'talent_list','case_list', 'search', 'search_list', 'task_preview', 'task_op', 'message', 'secode_demo', 'release', 'xs_release', 'zb_release', 'user', 'space', 'mark', 'task', 'task_list', 'level_rule', 'shop', 'shop_list', 'footer', 'task_indus_list', 'indus', 'agreement', 'report', 'seccode','bid','work','prom','reset_email','avatar','pay','browser','shop_release','service','shop_order','article','task_map','verify_secode','index_map','shop_map','protocol','excite_email','link','mobile','link','single');
 (!empty($do)&& in_array($do, $dos)) and $do or $do='index';
 isset($m)&&$m=="user" and  $do ="avatar";
 

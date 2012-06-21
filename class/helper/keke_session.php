@@ -76,9 +76,9 @@ class session_mysql_class extends keke_session {
 }
 class session_file_class extends keke_session {
 	function __construct() {
-		//$path = S_ROOT . 'data' . DIRECTORY_SEPARATOR . 'session';
-		//ini_set ( 'session.save_handler', 'files' );
-		//session_save_path ( $path );
+		$path = S_ROOT . 'data' . DIRECTORY_SEPARATOR . 'session';
+		ini_set ( 'session.save_handler', 'files' );
+		session_save_path ( $path );
 		session_set_cookie_params(self::$_left_time, cookie::$path, cookie::$domain, cookie::$secure, cookie::$httponly);
 		session_cache_limiter(false);
 	 

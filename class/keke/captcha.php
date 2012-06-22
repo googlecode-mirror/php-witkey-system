@@ -69,7 +69,7 @@ abstract class Keke_captcha {
 		$class = 'Keke_captcha_' . $style;
 		
 		// 创建实例
-		Keke_captcha::$instance = $Keke_captcha = new $class ( $style );
+		Keke_captcha::$instance = $Keke_captcha = new $class ( 'default' );
 		
 		// 关闭实例时更新session
 		register_shutdown_function ( array (

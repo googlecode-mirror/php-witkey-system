@@ -1,4 +1,4 @@
-<?php defined ( "IN_KEKE" ) or die ( "Access Denied" );
+<?php defined ( 'IN_KEKE' ) or die ( 'Access Denied' );
 /**
  * Word captcha class.
  *

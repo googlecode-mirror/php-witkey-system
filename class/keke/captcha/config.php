@@ -5,7 +5,7 @@ class Keke_captcha_config {
    	
    	$a =  array(
    			'default' => array(
-   					'style'      	=> 'word',
+   					'style'      	=> 'riddle',
    					'width'      	=> 150,
    					'height'     	=> 50,
    					'complexity' 	=> 4,

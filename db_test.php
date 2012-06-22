@@ -3,7 +3,6 @@
 define ( 'IN_KEKE', TRUE );
 include 'app_boot.php';
 
-//$_SESSION['443'] = 'bbbbbbb';
 
 $img =  Keke_captcha::instance()->render();
 
@@ -57,8 +56,15 @@ $aas->setAd_content($value)->setAd_file($value)->setAd_name($value)->create(); *
 //var_dump($res);
 
 
+
+/* $end = microtime(true);
+echo $end-$star; */
+//var_dump ( $end-$star,Keke::execute_time() );
+//require keke_tpl_class::template('en');
+
 // $end = microtime(true);
  //var_dump ( $end-$star,Keke::execute_time() );
 require keke_tpl_class::template('en');
+
 
  

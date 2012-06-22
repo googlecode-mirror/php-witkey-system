@@ -1,19 +1,17 @@
 <?php
 
 defined ( "IN_KEKE" ) or die ( "Access Denied" );
+
 /**
- * Keke_captcha abstract class.
- *
- * @package Keke_captcha
- * @author Michael Lavers
- * @author Kohana Team
- * @copyright (c) 2008-2010 Kohana Team
- * @license http://kohanaphp.com/license.html
+ * 验证码基类
+ * 
+ * @author Administrator
+ *        
  */
 abstract class Keke_captcha {
 	/**
 	 *
-	 * @var object Keke_captcha singleton
+	 * @var object 单例
 	 */
 	public static $instance;
 	
@@ -21,52 +19,66 @@ abstract class Keke_captcha {
 	 *
 	 * @var string Style-dependent Keke_captcha driver
 	 */
-	protected $driver;
+	// protected $driver;
 	
 	/**
 	 *
-	 * @var array Default config values
+	 * @var array 默认配置
 	 */
-	public static $config = array ('style' => 'basic', 'width' => 150, 'height' => 50, 'complexity' => 4, 'background' => '', 'fontpath' => '', 'fonts' => array (), 'promote' => FALSE );
+	public static $config = array (
+			'style' => 'basic',
+			'width' => 150,
+			'height' => 50,
+			'complexity' => 4,
+			'background' => '',
+			'fontpath' => '',
+			'fonts' => array (),
+			'promote' => FALSE 
+	);
 	
 	/**
 	 *
-	 * @var string The correct Keke_captcha challenge answer
+	 * @var string 验证码字符串
 	 */
 	protected $response;
 	
 	/**
 	 *
-	 * @var string Image resource identifier
+	 * @var string Image 图象资源
 	 */
 	protected $image;
 	
 	/**
 	 *
-	 * @var string Image type ("png", "gif" or "jpeg")
+	 * @var string Image 图象类型 ("png", "gif" or "jpeg")
 	 */
 	protected $image_type = 'png';
 	
 	/**
-	 * Singleton instance of Keke_captcha.
+	 * 获取验证码对象的单例
 	 *
-	 * @param $group string
-	 *       	 Config group name
+	 * @param $style string
+	 *        	对象类型(alpha,basic,black,math,riddle,word);
 	 * @return Keke_captcha_basic
 	 */
-	public static function instance($style = 'default') {
-		if (! isset ( Keke_captcha::$instance )) {
-			// Load the configuration for this group
-			$config = Keke_captcha_config::get ( $style );
-			// Set the Keke_captcha driver class name
-			$class = 'Keke_captcha_' . $config ['style'];
-			
-			// Create a new Keke_captcha instance
-			Keke_captcha::$instance=$Keke_captcha= new $class ( $style );
-			
-			// Save Keke_captcha response at shutdown
-			register_shutdown_function(array($Keke_captcha,'update_response_session'));
+	public static function instance($style = 'basic') {
+		if (isset ( Keke_captcha::$instance )) {
+			return Keke_captcha::$instance;
 		}
+		// 获取配置
+		$config = Keke_captcha_config::get ();
+		// 设置验证码的类名
+		$class = 'Keke_captcha_' . $style;
+		
+		// 创建实例
+		Keke_captcha::$instance = $Keke_captcha = new $class ( $style );
+		
+		// 关闭实例时更新session
+		register_shutdown_function ( array (
+				$Keke_captcha,
+				'update_response_session' 
+		) );
+		
 		return Keke_captcha::$instance;
 	}
 	
@@ -74,8 +86,7 @@ abstract class Keke_captcha {
 	 * Constructs a new Keke_captcha object.
 	 *
 	 * @throws Kohana_Exception
-	 * @param
-	 *       	 string Config group name
+	 * @param 	string Config group name
 	 * @return void
 	 */
 	public function __construct($group = NULL) {
@@ -89,13 +100,17 @@ abstract class Keke_captcha {
 		
 		// Load and validate config group
 		if (! is_array ( $config = Keke_captcha_config::get ( $group ) ))
-			throw new keke_exception ( 'Keke_captcha group not defined in :group configuration', array (':group' => $group ) );
+			throw new keke_exception ( 'Keke_captcha group not defined in :group configuration', array (
+					':group' => $group 
+			) );
 			
 			// All Keke_captcha config groups inherit default config group
 		if ($group !== 'default') {
 			// Load and validate default config group
 			if (! is_array ( $default = Keke_captcha_config::get ( 'default' ) ))
-				throw new keke_exception ( 'Keke_captcha group not defined in :group configuration', array (':group' => 'default' ) );
+				throw new keke_exception ( 'Keke_captcha group not defined in :group configuration', array (
+						':group' => 'default' 
+				) );
 				
 				// Merge config group with default config group
 			$config += $default;
@@ -116,7 +131,9 @@ abstract class Keke_captcha {
 			Keke_captcha::$config ['background'] = str_replace ( '\\', '/', realpath ( $config ['background'] ) );
 			
 			if (! is_file ( Keke_captcha::$config ['background'] ))
-				throw new keke_exception ( 'The specified file, :file, was not found.', array (':file' => Keke_captcha::$config ['background'] ) );
+				throw new keke_exception ( 'The specified file, :file, was not found.', array (
+						':file' => Keke_captcha::$config ['background'] 
+				) );
 		}
 		
 		// If using any fonts, check if they exist
@@ -125,53 +142,56 @@ abstract class Keke_captcha {
 			
 			foreach ( $config ['fonts'] as $font ) {
 				if (! is_file ( Keke_captcha::$config ['fontpath'] . $font ))
-					throw new keke_exception ( 'The specified file, :file, was not found.', array (':file' => Keke_captcha::$config ['fontpath'] . $font ) );
+					throw new keke_exception ( 'The specified file, :file, was not found.', array (
+							':file' => Keke_captcha::$config ['fontpath'] . $font 
+					) );
 			}
 		}
 		
-		// Generate a new challenge
+		// 生成新的字符串
 		$this->response = $this->generate_challenge ();
 	}
 	
 	/**
-	 * Update Keke_captcha response session variable.
+	 * 更新输出的Session变更
 	 *
 	 * @return void
 	 */
 	public function update_response_session() {
-		// Store the correct Keke_captcha response in a session
+		// 存取Session 的值
 		$_SESSION ['Keke_captcha_response'] = sha1 ( strtoupper ( $this->response ) );
 	}
 	
 	/**
-	 * Validates user's Keke_captcha response and updates response counter.
+	 * 验证用户输入的验证码，并且更新输入错误的次数
 	 *
-	 * @staticvar integer $counted Keke_captcha attempts counter
-	 * @param $response string
-	 *       	 User's Keke_captcha response
+	 * @staticvar integer $counted Keke_captcha 统计标记
+	 * @param $response string     用户输入的值
 	 * @return boolean
 	 */
 	public static function valid($response) {
-		// Maximum one count per page load
+		// 每页最大的统计次数
 		
 		static $counted = null;
 		
-		// User has been promoted, always TRUE and don't count anymore
-		if (Keke_captcha::instance ()->promoted ())
+		// 如果开启次数取限制，则不在做任何统计
+		if (Keke_captcha::instance ()->promoted ()){
 			return TRUE;
+		}
 			
-			// Challenge result
+		// 结果判断
 		$result = ( bool ) (sha1 ( strtoupper ( $response ) ) === $_SESSION ['Keke_captcha_response']);
-		 
-		// Increment response counter
+		
+		// 计数器+1
 		if ($counted !== TRUE) {
 			$counted = TRUE;
 			
-			// Valid response
+			// 验证请求
 			if ($result === TRUE) {
+				//有效次数+1
 				Keke_captcha::instance ()->valid_count ( $_SESSION ['Keke_captcha_valid_count'] + 1 );
-			} 			// Invalid response
-			else {
+			}else {
+				//无效次数+1
 				Keke_captcha::instance ()->invalid_count ( $_SESSION ['Keke_captcha_invalid_count'] + 1 );
 			}
 		}
@@ -180,53 +200,49 @@ abstract class Keke_captcha {
 	}
 	
 	/**
-	 * Gets or sets the number of valid Keke_captcha responses for this session.
+	 * 通过Session 获取验证的次数
 	 *
-	 * @param $new_count integer
-	 *       	 New counter value
-	 * @param $invalid boolean
-	 *       	 Trigger invalid counter (for internal use only)
-	 * @return integer Counter value
+	 * @param $new_count integer   最新的统计次数
+	 * @param $invalid boolean    是否获取无效的计数
+	 * @return integer 统计值
 	 */
 	public function valid_count($new_count = NULL, $invalid = FALSE) {
-		// Pick the right session to use
+		// 对的Session 名称
 		$session = ($invalid === TRUE) ? 'Keke_captcha_invalid_count' : 'Keke_captcha_valid_count';
 		
-		// Update counter
+		// 更新统计次数
 		if ($new_count !== NULL) {
 			$new_count = ( int ) $new_count;
 			
-			// Reset counter = delete session
+			// 重置计数器 = 删除 session
 			if ($new_count < 1) {
 				unset ( $_SESSION [$session] );
-			} 			// Set counter to new value
+			} 			// 设置计数器的新值
 			else {
 				$_SESSION [$session] = ( int ) $new_count;
 			
 			}
 			
-			// Return new count
+			// 返回新的统计
 			return ( int ) $new_count;
 		}
 		
-		// Return current count
+		// 返回当前统计
 		return ( int ) $_SESSION [$session];
 	}
 	
 	/**
-	 * Gets or sets the number of invalid Keke_captcha responses for this
-	 * session.
+	 * get or set 无效的统计值
 	 *
-	 * @param $new_count integer
-	 *       	 New counter value
-	 * @return integer Counter value
+	 * @param $new_count integer  新的次数
+	 * @return integer 
 	 */
 	public function invalid_count($new_count = NULL) {
 		return $this->valid_count ( $new_count, TRUE );
 	}
 	
 	/**
-	 * Resets the Keke_captcha response counters and removes the count sessions.
+	 * 重置响应请求，并删除对应的Session
 	 *
 	 * @return void
 	 */
@@ -240,7 +256,7 @@ abstract class Keke_captcha {
 	 * responses.
 	 *
 	 * @param $threshold integer
-	 *       	 Valid response count threshold
+	 *        	Valid response count threshold
 	 * @return boolean
 	 */
 	public function promoted($threshold = NULL) {
@@ -267,10 +283,9 @@ abstract class Keke_captcha {
 	}
 	
 	/**
-	 * Returns the image type.
+	 * 返回图象类型
 	 *
-	 * @param $filename string
-	 *       	 Filename
+	 * @param $filename string  文件名
 	 * @return string boolean type ("png", "gif" or "jpeg")
 	 */
 	public function image_type($filename) {
@@ -297,7 +312,7 @@ abstract class Keke_captcha {
 	 *
 	 * @throws Kohana_Exception If no GD2 support
 	 * @param $background string
-	 *       	 Path to the background image file
+	 *        	Path to the background image file
 	 * @return void
 	 */
 	public function image_create($background = NULL) {
@@ -328,15 +343,18 @@ abstract class Keke_captcha {
 	 * Fills the background with a gradient.
 	 *
 	 * @param $color1 resource
-	 *       	 GD image color identifier for start color
+	 *        	GD image color identifier for start color
 	 * @param $color2 resource
-	 *       	 GD image color identifier for end color
+	 *        	GD image color identifier for end color
 	 * @param $direction string
-	 *       	 Direction: 'horizontal' or 'vertical', 'random' by default
+	 *        	Direction: 'horizontal' or 'vertical', 'random' by default
 	 * @return void
 	 */
 	public function image_gradient($color1, $color2, $direction = NULL) {
-		$directions = array ('horizontal', 'vertical' );
+		$directions = array (
+				'horizontal',
+				'vertical' 
+		);
 		
 		// Pick a random direction if needed
 		if (! in_array ( $direction, $directions )) {
@@ -385,48 +403,41 @@ abstract class Keke_captcha {
 	}
 	
 	/**
-	 * Returns the img html element or outputs the image to the browser.
-	 *
-	 * @param $html boolean
-	 *       	 Output as HTML
-	 * @return mixed HTML, string or void
+	 * 输出验证码
+	 *  html 的调用是index.php?do=captcha
+	 * @param $html boolean  输出html,否则输出图片
+	 * @return mixed Image, void
 	 */
 	public function image_render($html) {
 		if ($html === TRUE) {
 			return '<img src="index.php?do=captcha" width="' . Keke_captcha::$config ['width'] . '" height="' . Keke_captcha::$config ['height'] . '" alt="Keke_captcha" class="Keke_captcha" />';
 		}
-		 
+		
 		header ( "Expires: Sun, 1 Jan 2000 12:00:00 GMT" );
 		header ( "Last-Modified: " . gmdate ( "D, d M Y H:i:s" ) . "GMT" );
 		header ( "Cache-Control: no-store, no-cache, must-revalidate" );
 		header ( "Cache-Control: post-check=0, pre-check=0", false );
 		header ( "Pragma: no-cache" );
-		header('Content-Type: image'.$this->image_type);
-		$f = 'image'.$this->image_type;
-		$f($this->image);
-
+		header ( 'Content-Type: image' . $this->image_type );
+		$f = 'image' . $this->image_type;
+		$f ( $this->image );
 		
 		imagedestroy ( $this->image );
 	}
 	
-	/*
-	 * DRIVER METHODS
-	 */
-	
 	/**
-	 * Generate a new Keke_captcha challenge.
+	 * 生成字符串
 	 *
-	 * @return string The challenge answer
+	 * @return string 随机码，或是对应的字符串
 	 */
 	abstract public function generate_challenge();
 	
 	/**
-	 * Output the Keke_captcha challenge.
+	 * 生成图片
 	 *
-	 * @param $html boolean
-	 *       	 Render output as HTML
+	 * @param $html boolean 渲染成图象标签
 	 * @return mixed
 	 */
 	abstract public function render($html = TRUE);
 
-} // End Keke_captcha Class
+} 

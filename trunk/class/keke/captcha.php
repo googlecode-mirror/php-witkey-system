@@ -1,6 +1,4 @@
-<?php
-
-defined ( "IN_KEKE" ) or die ( "Access Denied" );
+<?php	defined ( 'IN_KEKE' ) or die ( 'Access Denied' );
 
 /**
  * 验证码基类

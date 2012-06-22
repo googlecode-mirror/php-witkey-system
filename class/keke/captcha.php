@@ -80,51 +80,44 @@ abstract class Keke_captcha {
 		return Keke_captcha::$instance;
 	}
 	
-	/**
-	 * Constructs a new Keke_captcha object.
-	 *
-	 * @throws Kohana_Exception
-	 * @param 	string Config group name
-	 * @return void
-	 */
 	public function __construct($group = NULL) {
-		// Create a singleton instance once
+		
 		empty ( Keke_captcha::$instance ) and Keke_captcha::$instance = $this;
 		
-		// No config group name given
+		// 设置默认的配置
 		if (! is_string ( $group )) {
 			$group = 'default';
 		}
 		
-		// Load and validate config group
+		// 加载配置，否则抛出异常
 		if (! is_array ( $config = Keke_captcha_config::get ( $group ) ))
 			throw new keke_exception ( 'Keke_captcha group not defined in :group configuration', array (
 					':group' => $group 
 			) );
 			
-			// All Keke_captcha config groups inherit default config group
+			 
 		if ($group !== 'default') {
-			// Load and validate default config group
+			 
 			if (! is_array ( $default = Keke_captcha_config::get ( 'default' ) ))
 				throw new keke_exception ( 'Keke_captcha group not defined in :group configuration', array (
 						':group' => 'default' 
 				) );
 				
-				// Merge config group with default config group
+				// 合并配置信息
 			$config += $default;
 		}
 		
-		// Assign config values to the object
+		// 重构配置的健值对
 		foreach ( $config as $key => $value ) {
 			if (array_key_exists ( $key, Keke_captcha::$config )) {
 				Keke_captcha::$config [$key] = $value;
 			}
 		}
 		
-		// Store the config group name as well, so the drivers can access it
+		
 		Keke_captcha::$config ['group'] = $group;
 		
-		// If using a background image, check if it exists
+		// 判断背景图片是否存在
 		if (! empty ( $config ['background'] )) {
 			Keke_captcha::$config ['background'] = str_replace ( '\\', '/', realpath ( $config ['background'] ) );
 			
@@ -134,7 +127,7 @@ abstract class Keke_captcha {
 				) );
 		}
 		
-		// If using any fonts, check if they exist
+		// 判断指定的字体文件是否存在
 		if (! empty ( $config ['fonts'] )) {
 			Keke_captcha::$config ['fontpath'] = str_replace ( '\\', '/', realpath ( $config ['fontpath'] ) ) . '/';
 			
@@ -250,7 +243,7 @@ abstract class Keke_captcha {
 	}
 	
 	/**
-	 * Checks whether user has been promoted after having given enough valid
+	 * 是否判断验证次数
 	 * responses.
 	 *
 	 * @param $threshold integer
@@ -272,7 +265,7 @@ abstract class Keke_captcha {
 	}
 	
 	/**
-	 * Magically outputs the Keke_captcha challenge.
+	 * 输出图片
 	 *
 	 * @return mixed
 	 */
@@ -296,7 +289,7 @@ abstract class Keke_captcha {
 			
 			case 'jpg' :
 			case 'jpeg' :
-				// Return "jpeg" and not "jpg" because of the GD2 function names
+				//返回jpeg，因为GD2的方法名是jpeg
 				return 'jpeg';
 			
 			default :
@@ -305,47 +298,43 @@ abstract class Keke_captcha {
 	}
 	
 	/**
-	 * Creates an image resource with the dimensions specified in config.
-	 * If a background image is supplied, the image dimensions are used.
+	 * 创建一个图象资源
+	 * 如果有背景图的话，也支持
 	 *
 	 * @throws Kohana_Exception If no GD2 support
-	 * @param $background string
-	 *        	Path to the background image file
+	 * @param $background string     背景图版片的路径
 	 * @return void
 	 */
 	public function image_create($background = NULL) {
-		// Check for GD2 support
+		// 判断是否支持GD2
 		if (! function_exists ( 'imagegd2' ))
 			throw new keke_exception ( 'Keke_captcha.requires_GD2' );
 			
-			// Create a new image (black)
+		// 创建一个背景图 (black)
 		$this->image = imagecreatetruecolor ( Keke_captcha::$config ['width'], Keke_captcha::$config ['height'] );
 		
-		// Use a background image
+		// 使用背景图片
 		if (! empty ( $background )) {
-			// Create the image using the right function for the filetype
+			// 创建图片，使用对就在的方法
 			$function = 'imagecreatefrom' . $this->image_type ( $background );
 			$this->background_image = $function ( $background );
 			
-			// Resize the image if needed
+			// 重置图片大小，如果需要
 			if (imagesx ( $this->background_image ) !== Keke_captcha::$config ['width'] or imagesy ( $this->background_image ) !== Keke_captcha::$config ['height']) {
 				imagecopyresampled ( $this->image, $this->background_image, 0, 0, 0, 0, Keke_captcha::$config ['width'], Keke_captcha::$config ['height'], imagesx ( $this->background_image ), imagesy ( $this->background_image ) );
 			}
 			
-			// Free up resources
+			// 释放资源
 			imagedestroy ( $this->background_image );
 		}
 	}
 	
 	/**
-	 * Fills the background with a gradient.
+	 * 填充背景图
 	 *
-	 * @param $color1 resource
-	 *        	GD image color identifier for start color
-	 * @param $color2 resource
-	 *        	GD image color identifier for end color
-	 * @param $direction string
-	 *        	Direction: 'horizontal' or 'vertical', 'random' by default
+	 * @param $color1 resource       开始颜色
+	 * @param $color2 resource       结束颜色
+	 * @param $direction string      水平，垂址，随机，三种方式
 	 * @return void
 	 */
 	public function image_gradient($color1, $color2, $direction = NULL) {
@@ -354,11 +343,11 @@ abstract class Keke_captcha {
 				'vertical' 
 		);
 		
-		// Pick a random direction if needed
+		// 随机选择一个方向
 		if (! in_array ( $direction, $directions )) {
 			$direction = $directions [array_rand ( $directions )];
 			
-			// Switch colors
+			// 颜色开关
 			if (mt_rand ( 0, 1 ) === 1) {
 				$temp = $color1;
 				$color1 = $color2;
@@ -389,7 +378,7 @@ abstract class Keke_captcha {
 			$y2 = & $i;
 		}
 		
-		// Execute the gradient loop
+		// 随机渲染
 		for($i = 0; $i <= $steps; $i ++) {
 			$r2 = $color1 ['red'] - floor ( $i * $r1 );
 			$g2 = $color1 ['green'] - floor ( $i * $g1 );

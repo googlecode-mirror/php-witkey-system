@@ -1,4 +1,4 @@
-<?php
+<?php	defined ( "IN_KEKE" ) or die ( "Access Denied" );
 
 class Keke_captcha_config {
    public static function get($style='default'){

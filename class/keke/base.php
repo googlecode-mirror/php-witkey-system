@@ -1,4 +1,4 @@
-<?php
+<?php defined ( "IN_KEKE" ) or die ( "Access Denied" );
 
 /**
  * this not free,powered by keke-tech
@@ -611,15 +611,13 @@ class Keke_base {
 	 * @return hashֵ
 	 */
 	static function formhash() {
-		$uid = null;
-		$username = null;
-		if (isset ( $_SESSION ['uid'] )) {
-			$uid = $_SESSION ['uid'];
-		}
-		if (isset ( $_SESSION ['username'] )) {
-			$username = $_SESSION ['username'];
-		}
-		return substr ( md5 ( substr ( time (), 0, - 7 ) . $uid . $username . ENCODE_KEY ), - 6 );
+		 $token = $_SESSION['security_token'];
+		 if(!$token){
+		 	$token = sha1(uniqid(null,true));
+		 	$_SESSION['security_token'] = $token;
+		 }
+		  
+		 return $token;
 	}
 	/**
 	 *
@@ -630,13 +628,13 @@ class Keke_base {
 	 */
 	static function submitcheck($var, $return_json = false) {
 		global $_lang;
-		global $_K, $kekezu;
+		global $_K;
 		if (! empty ( $var ) && $_SERVER ['REQUEST_METHOD'] == 'POST') {
-			if ((empty ( $_SERVER ['HTTP_REFERER'] ) || preg_replace ( '/https?:\/\/([^\:\/]+).*/i', "\\1", $_SERVER ['HTTP_REFERER'] ) == preg_replace ( '/([^\:]+).*/', "\\1", $_SERVER ['HTTP_HOST'] )) && $var == FORMHASH) {
+			if ((empty ( $_SERVER ['HTTP_REFERER'] ) || preg_replace ( '/https?:\/\/([^\:\/]+).*/i', "\\1", $_SERVER ['HTTP_REFERER'] ) == preg_replace ( '/([^\:]+).*/', "\\1", $_SERVER ['HTTP_HOST'] )) and $var == FORMHASH) {
 				return true;
 			} elseif ($return_json == true) {
 				return false;
-			} elseif ($_K [inajax]) {
+			} elseif ($_K ['inajax']) {
 				Keke::show_msg ( $_lang ['operate_error'], "", 5, $_lang ['repeat_form_submit'], 'alert_error' );
 			} else {
 				Keke::show_msg ( $_lang ['operate_error'], "index.php", 30, $_lang ['illegal_or_repeat_submit'], 'alert_error' );

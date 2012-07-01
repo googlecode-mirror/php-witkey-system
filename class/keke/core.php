@@ -294,6 +294,8 @@ class Keke_core extends Keke_base {
 
 }
 class Keke extends Keke_core {
+	//检查文件头部的案例标记，没有就添加
+	const FILE_SECURITY = '<?php defined (\'IN_KEKE\' ) or die ( \'Access Denied\' );';
 	public static $_inited = false;
 	public static $_safe_mode ;
 	public static $_magic_quote;
@@ -379,10 +381,10 @@ class Keke extends Keke_core {
 		$_POST = Keke::k_stripslashes($_POST);
 		$_COOKIE = Keke::k_stripslashes($_COOKIE);
 			// self::$_db = Database::instance ();
-		
+		$this->init_session ();
 		$this->init_config ();
 		
-		$this->init_session ();
+		
 		
 		$this->init_user ();
 		

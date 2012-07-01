@@ -6,10 +6,11 @@ include 'app_boot.php';
 
 $img =  Keke_captcha::instance()->render();
 
- 
+
  
 if($_POST){
-	Keke_captcha::valid($code);
+	 $a = Keke::submitcheck($formhash);
+	//Keke_captcha::valid($code);
 }
  
 /*  $b = array('ad_type','ad_name');

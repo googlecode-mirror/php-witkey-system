@@ -26,7 +26,7 @@ class Keke_log_file extends Keke_log_write {
 		}
 		$filename = $directory . DIRECTORY_SEPARATOR . date ( 'd' ) . EXT;
 		if (! file_exists ( $filename )) {
-			file_put_contents ( $filename,   '<?php defined(\'IN_KEKE\') or die(\'No direct script access.\'); ?>' . PHP_EOL );
+			file_put_contents ( $filename,   '<?php defined(\'IN_KEKE\') or die(\'Access Denied\'); ?>' . PHP_EOL );
 			chmod ( $filename, 0666 );
 		}
 		foreach ( $messages as $message ) {

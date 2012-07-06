@@ -430,7 +430,6 @@ class Keke extends Keke_core {
 		$template = Keke::get_tpl ();
 		Keke::$_template = $template ['tpl_title'];
 		$map_config = unserialize ( $config_arr ['map_api_open'] );
-		// $map_config ['google_api'] == 1 and $map_api = 'google' or;
 		$map_api = "baidu";
 		$_K ['timestamp'] = $_SERVER['REQUEST_TIME'];
 		$_K ['charset'] = CHARSET;
@@ -530,7 +529,6 @@ class Keke extends Keke_core {
 	function init_out_put() {
 		global  $_K;
 		ob_start ();
-
 	}
 	/**
 	 * 查指定目录中的文件

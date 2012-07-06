@@ -1,4 +1,4 @@
-<?php
+<?php  defined ( 'IN_KEKE' ) or die ( 'Access Denied' );
 /*
 	模板文件夹在 tpl 目录下， 默认是default文件夹。
 	模板缓存在 data/tpl_c目录下。
@@ -20,6 +20,8 @@ class keke_tpl_class {
 	static function parse_template($tpl) {
 		global $_K;
 		//包含模板
+		// 		$sub_tpls = array ($tpl );
+		
 
 		$tplfile = S_ROOT . './' . $tpl . '.htm';
 		$objfile = S_ROOT . './data/tpl_c/' . str_replace ( '/', '_', $tpl ) . '.php';
@@ -36,7 +38,6 @@ class keke_tpl_class {
 		empty ( $template ) and exit ( "Template file : $tplfile Not found or have no access!" );
 		
 		$template = keke_tpl_class::parse_rule ( $template, $tpl );
-		
 		//write
 		keke_tpl_class::swritefile ( $objfile, $template ) or exit ( "File: $objfile can not be write!" );
 	
@@ -70,6 +71,9 @@ class keke_tpl_class {
 		$template = preg_replace ( "/\<\!\-\-\{loadfeed\((.+?)\)\}\-\-\>/ie", "keke_tpl_class::loadfeed('\\1')", $template );
 		//时间处理
 		$template = preg_replace ( "/\<\!\-\-\{date\((.+?),(.+?)\)\}\-\-\>/ie", "keke_tpl_class::datetags('\\1','\\2')", $template );
+		//货币显示
+		$template = preg_replace ( "/{c\:(.+?)(,?)(\d?)\}/ie", "keke_curren_class::currtags('\\1','\\3')", $template );
+		
 		//头像处理
 		$template = preg_replace ( "/\<\!\-\-\{userpic\((.+?),(.+?)\)\}\-\-\>/ie", "keke_tpl_class::userpic('\\1','\\2')", $template );
 		//PHP代码
@@ -194,7 +198,7 @@ class keke_tpl_class {
 	
 	static function readtag($name) {
 		global $kekezu; 	
-		$tag_arr = Keke::$_tag;
+		$tag_arr = $kekezu->_tag;
 		$tag_info = $tag_arr [$name];
 		if ($tag_info ['tag_type'] == 5) {
 			$content = htmlspecialchars_decode ( $tag_info ['code'] );
@@ -252,9 +256,12 @@ class keke_tpl_class {
 		global $_K;
 		
 		$tpl = keke_tpl_class::tpl_exists ( $name );
-		
 		$objfile = S_ROOT . 'data/tpl_c/' . str_replace ( '/', '_', $tpl ) . '.php';
-		(! file_exists ( $objfile ) || ! TPL_CACHE) and keke_tpl_class::parse_template ( $tpl );
+		if(! file_exists ( $objfile ) or ! TPL_CACHE){
+			keke_tpl_class::parse_template ( $tpl );
+		}
+		
+		//(! file_exists ( $objfile ) || ! TPL_CACHE) and keke_tpl_class::parse_template ( $tpl );
 		return $objfile;
 	}
 	
@@ -313,21 +320,17 @@ class keke_tpl_class {
 		}
 		keke_tpl_class::obclean ();
 		($_K ['inajax']) and self::xml_out ( $content );
-		header ( 'Content-Type: text/html; charset='.CHARSET);
 		echo $content;
 	}
 	static function obclean() {
 		global $_K;
-		ob_end_clean();
-		if($_K['inajax']==1){
-			ob_start();
-		}else{
-			
-			//ob_end_flush();
-			//ob_start('ob_gzhandler');
-		}
-		
-
+		 ob_end_clean();
+		 if($_K['inajax']==1 or GZIP===false){
+		 	ob_start();
+		 }else{
+		  
+			ob_start('ob_gzhandler');
+		 }
 		 
 	}
 	static function rewrite_url($pre, $para, $hot = '') {
@@ -338,7 +341,7 @@ class keke_tpl_class {
 		$url = http_build_query ( $s );
 		
 		$url = str_replace ( array ("do=", '&', '=' ), array ("", '-', '-' ), $url );
- 
+		 
 		$hot = $hot ? "#" . $hot : '';
 		return '<a href="'.$url . '.html' . $hot . '"';
 	}
@@ -350,6 +353,7 @@ class keke_tpl_class {
 		header ( "Content-type: application/xml; charset=".CHARSET );
 		echo '<' . "?xml version=\"1.0\" encoding=\"".CHARSET."\"?>\n";
 		echo "<root><![CDATA[" . trim ( $content ) . "]]></root>";
+		extension_loaded('zlib')&&ob_end_flush();//**//
 		exit ();
 	}
 

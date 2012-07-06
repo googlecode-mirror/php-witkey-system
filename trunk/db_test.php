@@ -66,6 +66,7 @@ echo $end-$star; */
 // $end = microtime(true);
  //var_dump ( $end-$star,Keke::execute_time() );
 require keke_tpl_class::template('en');
+var_dump ( $end-$star,Keke::execute_time() );
 
 
  

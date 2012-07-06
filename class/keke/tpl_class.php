@@ -198,14 +198,7 @@ class keke_tpl_class {
 	
 	static function readtag($name) {
 		global $kekezu; 	
-		$tag_arr = $kekezu->_tag;
-		$tag_info = $tag_arr [$name];
-		if ($tag_info ['tag_type'] == 5) {
-			$content = htmlspecialchars_decode ( $tag_info ['code'] );
-		} else {
-			$content = '<!--{eval keke_loaddata_class::readtag(' . $name . ')}-->';
-		}
-		
+		$content = '<!--{eval keke_loaddata_class::readtag(' . $name . ')}-->';
 		return $content;
 	
 	}
@@ -328,8 +321,8 @@ class keke_tpl_class {
 		 if($_K['inajax']==1 or GZIP===false){
 		 	ob_start();
 		 }else{
-		  
-			ob_start('ob_gzhandler');
+		 	ob_start();
+			//ob_start('ob_gzhandler');
 		 }
 		 
 	}

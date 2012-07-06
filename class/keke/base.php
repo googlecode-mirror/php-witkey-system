@@ -611,8 +611,10 @@ class Keke_base {
 	 * @return hash值
 	 */
 	static function formhash() {
+		
 		 $token = $_SESSION['security_token'];
-		 if(!$token){
+		 var_dump($_SESSION);
+		 if(!isset($token)){
 		 	$token = sha1(uniqid(null,true));
 		 	$_SESSION['security_token'] = $token;
 		 }
@@ -626,7 +628,7 @@ class Keke_base {
 	 * @param $return_json 指定返回值类型(返回bool值,还是直接show_msg)        	
 	 *
 	 */
-	static function submitcheck($var, $return_json = false) {
+	static function formcheck($var, $return_json = false) {
 		global $_lang;
 		global $_K;
 		if (! empty ( $var ) && $_SERVER ['REQUEST_METHOD'] == 'POST') {

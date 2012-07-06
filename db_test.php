@@ -4,13 +4,16 @@ define ( 'IN_KEKE', TRUE );
 include 'app_boot.php';
 
 
-$img =  Keke_captcha::instance()->render();
+//$img =  Keke_captcha::instance()->render();
 
 
- 
+var_dump(FORMHASH,$_SESSION);
 if($_POST){
-	 $a = Keke::submitcheck($formhash);
-	//Keke_captcha::valid($code);
+	var_dump($formhash);die();
+	 $a = Keke::formcheck($formhash);
+	 var_dump($a);
+	 die();
+	 //Keke_captcha::valid($code);
 }
  
 /*  $b = array('ad_type','ad_name');

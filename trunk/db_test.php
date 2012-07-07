@@ -4,13 +4,13 @@ define ( 'IN_KEKE', TRUE );
 include 'app_boot.php';
 
 
-Keke_cache::instance()->del_all();
-
- $img =  Keke_captcha::instance()->render();
-
 
  
 
+
+$img =  Keke_captcha::instance()->render();
+
+ 
 if($_POST){
  
 	 
@@ -76,8 +76,9 @@ echo $end-$star; */
 
 // $end = microtime(true);
  //var_dump ( $end-$star,Keke::execute_time() );
+
 require keke_tpl_class::template('en');
-//var_dump ( $end-$star,Keke::execute_time() );
+var_dump ( $end-$star,Keke::execute_time() );
 
 
  

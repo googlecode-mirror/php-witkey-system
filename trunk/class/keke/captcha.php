@@ -396,10 +396,10 @@ abstract class Keke_captcha {
 	 * @return mixed Image, void
 	 */
 	public function image_render($html) {
-		if ($html === TRUE) {
-			return '<img src="index.php?do=captcha" width="' . Keke_captcha::$config ['width'] . '" height="' . Keke_captcha::$config ['height'] . '" alt="Keke_captcha" class="Keke_captcha" />';
-		}
 		
+		if ($html === TRUE) {
+			return '<img src="index.php?do=captcha" width="' . Keke_captcha::$config ['width'] . '" height="' . Keke_captcha::$config ['height'] . '" id="Keke_captcha" class="Keke_captcha" />';
+		}
 		header ( "Expires: Sun, 1 Jan 2000 12:00:00 GMT" );
 		header ( "Last-Modified: " . gmdate ( "D, d M Y H:i:s" ) . "GMT" );
 		header ( "Cache-Control: no-store, no-cache, must-revalidate" );

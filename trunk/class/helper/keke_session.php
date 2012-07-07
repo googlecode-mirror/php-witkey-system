@@ -42,6 +42,8 @@ class session_mysql_class extends keke_session {
 		ini_set ( "session.save_handler", "user" );
 		session_module_name ( "user" );
 		session_set_save_handler ( array (&$this, "open" ), array (&$this, "close" ), array (&$this, "read" ), array (&$this, "write" ), array (&$this, "destroy" ), array (&$this, "gc" ) );
+		session_set_cookie_params(get_cfg_var ( "session.gc_maxlifetime" ), cookie::$path, cookie::$domain, cookie::$secure, cookie::$httponly);
+		session_cache_limiter(false);
 		session_start ();
 	}
 	function open($save_path, $sess_name) {
@@ -61,7 +63,7 @@ class session_mysql_class extends keke_session {
 	function write($session_id, $session_data) {
 		$tablename = TABLEPRE . "witkey_session";
 		$_SESSION ['uid'] > 0 and $uid = $_SESSION ['uid'] or $uid = 0;
-		$data_arr = array ('session_id' => $session_id, 'session_data' => $session_data, 'session_expirse' => time () + $this->_left_time, 'session_ip' => Keke::get_ip (), 'session_uid' => $uid );
+		$data_arr = array ('session_id' => $session_id, 'session_data' => $session_data, 'session_expirse' => time () + self::$_left_time, 'session_ip' => Keke::get_ip (), 'session_uid' => $uid );
 		return $this->_db->insert ( $tablename, $data_arr, 1, 1 );
 	    
 	}

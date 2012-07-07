@@ -1,6 +1,6 @@
-<?php
+<?php defined ( "IN_KEKE" ) or die ( "Access Denied" );
 
-defined ( "IN_KEKE" ) or die ( "Access Denied" );
+
 /**
  * 基本的验证码类
  */

@@ -20,6 +20,6 @@ define ( 'COOKIE_DOMAIN', '' );
 define ( 'COOKIE_PATH', '/kppw_google/');
 define ( 'COOKIE_PRE', 'kekeWitkey' );
 define ( 'COOKIE_TTL', 0 );
-define ( 'SESSION_MODULE', 'files' );
+define ( 'SESSION_MODULE', 'mysql' );
 define ( 'SYS_START_TIME', microtime(1) );
 

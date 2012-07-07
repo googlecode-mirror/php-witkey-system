@@ -81,7 +81,7 @@ class session_file_class extends keke_session {
 		session_save_path ( $path );
 		session_set_cookie_params(self::$_left_time, cookie::$path, cookie::$domain, cookie::$secure, cookie::$httponly);
 		session_cache_limiter(false);
-	 
+	    
 		session_start ();
 	}
 }

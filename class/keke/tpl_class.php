@@ -20,9 +20,6 @@ class keke_tpl_class {
 	static function parse_template($tpl) {
 		global $_K;
 		//°üº¬Ä£°å
-		// 		$sub_tpls = array ($tpl );
-		
-
 		$tplfile = S_ROOT . './' . $tpl . '.htm';
 		$objfile = S_ROOT . './data/tpl_c/' . str_replace ( '/', '_', $tpl ) . '.php';
 		//read
@@ -313,6 +310,7 @@ class keke_tpl_class {
 		}
 		keke_tpl_class::obclean ();
 		($_K ['inajax']) and self::xml_out ( $content );
+		//header ( 'Content-Type: text/html; charset='.CHARSET);
 		echo $content;
 	}
 	static function obclean() {
@@ -346,7 +344,7 @@ class keke_tpl_class {
 		header ( "Content-type: application/xml; charset=".CHARSET );
 		echo '<' . "?xml version=\"1.0\" encoding=\"".CHARSET."\"?>\n";
 		echo "<root><![CDATA[" . trim ( $content ) . "]]></root>";
-		extension_loaded('zlib')&&ob_end_flush();//**//
+		extension_loaded('zlib') and ob_end_flush();//**//
 		exit ();
 	}
 

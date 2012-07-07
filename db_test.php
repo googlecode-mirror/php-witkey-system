@@ -4,16 +4,22 @@ define ( 'IN_KEKE', TRUE );
 include 'app_boot.php';
 
 
-//$img =  Keke_captcha::instance()->render();
+$img =  Keke_captcha::instance()->render();
 
-
-var_dump(FORMHASH,$_SESSION);
+/* phpinfo();
+die();
+*/
 if($_POST){
-	var_dump($formhash);die();
-	 $a = Keke::formcheck($formhash);
-	 var_dump($a);
+ 
+	 
+	 if(Keke::formcheck($formhash)){
+	 	$a = Keke_captcha::valid($code);
+	 	var_dump($a);
+	 }
+	 
 	 die();
 	 //Keke_captcha::valid($code);
+ 
 }
  
 /*  $b = array('ad_type','ad_name');
@@ -69,7 +75,7 @@ echo $end-$star; */
 // $end = microtime(true);
  //var_dump ( $end-$star,Keke::execute_time() );
 require keke_tpl_class::template('en');
-var_dump ( $end-$star,Keke::execute_time() );
+//var_dump ( $end-$star,Keke::execute_time() );
 
 
  

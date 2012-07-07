@@ -104,6 +104,7 @@ final class Keke_cache_sqlite extends Keke_cache {
 	   }catch (PDOException $e){
 	   	     throw new keke_exception('there was sqlite query :error',array(':error'=>$e->getMessage()));
 	   }
+	   var_dump($statement->rowCount());die();
 	   return (bool) $statement->rowCount();
 	}
 	/**

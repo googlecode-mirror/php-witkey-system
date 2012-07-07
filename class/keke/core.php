@@ -311,10 +311,9 @@ class Keke extends Keke_core {
 	public static $_tpl_obj;
 	public static $_cache_obj;
 	public static $_page_obj;
-	public static $_session_obj;
+	 
 	public static $_mark;
-	public static $_finance;
-	public static $_tag;
+ 
 	public static $_messagecount;
 	public static $_indus_p_arr;
 	public static $_indus_c_arr;
@@ -346,7 +345,7 @@ class Keke extends Keke_core {
 	}
 	
 	function init() {
-		global $close_allow_fxx, $_K, $_lang;
+		global  $_K, $_lang;
 		if(self::$_inited){
 			return;
 		}
@@ -384,8 +383,6 @@ class Keke extends Keke_core {
 		$this->init_session ();
 		$this->init_config ();
 		
-		
-		
 		$this->init_user ();
 		
 		Keke::$_cache_obj = Cache::instance ();
@@ -409,9 +406,9 @@ class Keke extends Keke_core {
 		global $i_model, $_lang, $_K;
 		$sql = sprintf("select k,v from %switkey_basic_config",TABLEPRE);
 		
-		if(($basic_arr = Cache::instance('sqlite')->generate_id($sql)->get(null))==null){
+		if(($basic_arr = Cache::instance()->generate_id($sql)->get(null))==null){
 			$basic_arr = db::query($sql)->execute();
-			Cache::instance('sqlite')->generate_id($sql)->set(null,$basic_arr);
+			Cache::instance()->generate_id($sql)->set(null,$basic_arr);
 		}
 		Keke::$_sys_config = $basic_arr ;
 		
@@ -421,9 +418,9 @@ class Keke extends Keke_core {
 			$config_arr [$basic_arr [$i] ['k']] = $basic_arr [$i] ['v'];
 		}
 		$sql = sprintf('select * from %switkey_nav where ishide!=1 order by listorder',TABLEPRE);
-		if(($nav_list=Cache::instance('sqlite')->generate_id($sql)->get(null))==null){
+		if(($nav_list=Cache::instance()->generate_id($sql)->get(null))==null){
 			$nav_list = db::query($sql)->execute();
-			Cache::instance('sqlite')->generate_id($sql)->set(null, $nav_list);
+			Cache::instance()->generate_id($sql)->set(null, $nav_list);
 		}
 		$nav_list = Keke::get_arr_by_key($nav_list,'nav_id');
 		Keke::$_nav_list = $nav_list;
@@ -516,12 +513,7 @@ class Keke extends Keke_core {
 		$model_arr = db::select ( '*' )->from ( 'witkey_model' )->cached ()->execute ();
 		Keke::$_model_list = Keke::get_arr_by_key ( $model_arr, 'model_id' );
 	}
-	/**
-	 * ≥ı ºªØ±Í«©
-	 */
-	function init_tag() {
-		// Keke::$_tag = Keke::get_tag ();
-	}
+	 
 	function init_session() {
 		keke_session::get_instance ();
 		

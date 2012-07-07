@@ -34,12 +34,13 @@ $attent_list = Keke::$_weibo_attent;
 $style_path = Keke::$_style_path;
 $style_path=SKIN_PATH;//自定义样式引用路径。对tpl下使用的js、css文件有效
 /** 首页底部链接*/
-$link_task = Keke::$_model_list;
+/* $link_task = Keke::$_model_list;
 $link_help = Keke::get_table_data("art_cat_id,cat_name","witkey_article_category","art_cat_pid='100'"," listorder asc","","","",3600);
 $link_news =Keke::get_table_data ( "art_cat_id,cat_name", "witkey_article_category", "cat_type='article' and art_cat_pid='1'"," listorder asc", "",  "6", "", 3600 );
+
 $log_account=null;
 if(isset($_COOKIE['log_account'])){
 	$log_account = $_COOKIE['log_account'];
-}
+} */
 //$_K[siteurl] = "http://192.168.1.69/kppw20"; 
 include S_ROOT . './control/' . $do . '.php';

@@ -613,7 +613,7 @@ class Keke_base {
 	static function formhash() {
 		
 		 $token = $_SESSION['security_token'];
-		 var_dump($_SESSION);
+		// var_dump($_SESSION);
 		 if(!isset($token)){
 		 	$token = sha1(uniqid(null,true));
 		 	$_SESSION['security_token'] = $token;

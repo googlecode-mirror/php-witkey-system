@@ -8,7 +8,7 @@ final class Keke_cache_sqlite extends Keke_cache {
 	protected function __construct($config = null) {
 		if ($config === null) {
 			$this->_config = array (
-					'database' => S_ROOT . 'data' . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR . 'caches.php', 
+					'database' => S_ROOT . 'data' . DIRECTORY_SEPARATOR . 'caches.php', 
 					'schema' => 'CREATE TABLE caches(id VARCHAR(127) PRIMARY KEY, tags VARCHAR(255), expiration INTEGER, cache TEXT)' );
 		} else {
 			$this->_config = $config;

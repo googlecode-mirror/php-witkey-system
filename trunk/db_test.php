@@ -4,20 +4,22 @@ define ( 'IN_KEKE', TRUE );
 include 'app_boot.php';
 
 
-$img =  Keke_captcha::instance()->render();
+Keke_cache::instance()->del_all();
 
-/* phpinfo();
-die();
-*/
+ $img =  Keke_captcha::instance()->render();
+
+
+ 
+
 if($_POST){
  
 	 
-	 if(Keke::formcheck($formhash)){
-	 	$a = Keke_captcha::valid($code);
+	  if(  Keke::formcheck($formhash)){
+	  $a = Keke_captcha::valid($code);
 	 	var_dump($a);
-	 }
+	 }  
 	 
-	 die();
+	  die();
 	 //Keke_captcha::valid($code);
  
 }

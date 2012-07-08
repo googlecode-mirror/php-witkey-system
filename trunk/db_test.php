@@ -3,11 +3,11 @@
 define ( 'IN_KEKE', TRUE );
 include 'app_boot.php';
 
-
-
- 
-
-
+$str = '32323.232';
+list($decimal) = array_values(localeconv());
+$a = preg_match('/^-?+(?=.*[\d])[\d]*+'.preg_quote($decimal).'?+[\d]*+$/D', (string) $str,$out);
+var_dump($out);
+die();
 $img =  Keke_captcha::instance()->render();
 
  

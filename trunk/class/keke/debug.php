@@ -1,4 +1,4 @@
-<?php
+<?php defined ( "IN_KEKE" ) or die ( "Access Denied" );
 
 class Keke_debug {
 	public static $charset = 'utf-8';

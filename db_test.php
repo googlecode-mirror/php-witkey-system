@@ -3,99 +3,42 @@
 define ( 'IN_KEKE', TRUE );
 include 'app_boot.php';
 
-$john = array('name' => 'john', 'children' => array('fred', 'paul', 'sally', 'jane'));
-  $mary = array('name' => 'mary', 'children' => array('jane'));
-  
-$m = array_merge($john,$mary);
-$d = $john+$mary;
-$c = merge($john, $mary);
-var_dump($m,$d,$c);
-
-  function merge(array $a1, array $a2)
-{
-	$result = array();
-	for ($i = 0, $total = func_num_args(); $i < $total; $i++)
-	{
-	// Get the next array
-	$arr = func_get_arg($i);
-
-	// Is the array associative?
-	$assoc = is_assoc($arr);
-
-	foreach ($arr as $key => $val)
-	{
-	if (isset($result[$key]))
-	{
-	if (is_array($val) AND is_array($result[$key]))
-	{
-	if (is_assoc($val))
-		{
-		// Associative arrays are merged recursively
-			$result[$key] = merge($result[$key], $val);
-		}
-		else
-		{
-		// Find the values that are not already present
-		$diff = array_diff($val, $result[$key]);
-
-		// Indexed arrays are merged to prevent duplicates
-		$result[$key] = array_merge($result[$key], $diff);
-		}
-		}
-		else
-		{
-		if ($assoc)
-		{
-		// Associative values are replaced
-		$result[$key] = $val;
-		}
-			elseif ( ! in_array($val, $result, TRUE))
-				{
-				// Indexed values are added only if they do not yet exist
-				$result[] = $val;
-		}
-		}
-		}
-		else
-		{
-		// New values are added
-		$result[$key] = $val;
-	}
-	}
-	}
-
-		return $result;
-	}
-	function is_assoc(array $array)
-	{
-		// Keys of the array
-		$keys = array_keys($array);
-	
-		// If the array keys of the keys match the keys, then the array must
-		// not be associative (e.g. the keys array looked like {0:0, 1:1...}).
-		return array_keys($keys) !== $keys;
-	}
-die();  
-
-list($decimal) = array_values(localeconv());
-$a = preg_match('/^-?+(?=.*[\d])[\d]*+'.preg_quote($decimal).'?+[\d]*+$/D', (string) $str,$out);
+ 
+ 
  
 
-$img =  Keke_captcha::instance()->render();
 
  
 if($_POST){
- 
 	 
-	  if(  Keke::formcheck($formhash)){
-	  $a = Keke_captcha::valid($code);
-	 	var_dump($a);
-	 }  
-	 
-	  die();
+/* 	if(  Keke::formcheck($formhash) ){
+	  
+	// 	表单验证的用法
+		//$c = Keke_valid::email($code);
+	    $p = Keke_validation::factory($_POST)->rule('code', 'Keke_valid::email',array(':value',$code))
+	    //验证规则‘字段’,验证表达式,字段的值
+	    ->rule('ip', 'Keke_valid::ip',array(':value',$ip))
+	    ->rule('url', 'Keke_valid::url',array(':value',$url))
+	    ->rule('phone', 'Keke_valid::phone',array(':value',$phone));
+	    if($p->check()){
+	    	Keke::show_msg('title','db_test.php','success','right');
+	    }
+	    	
+	    $e = $p->errors();
+	    
+	   var_dump($e);
+	   die();
+		
+		
+	}  */ 
+}	 
+	//  die();
 	 //Keke_captcha::valid($code);
  
-}
+/* }else{
+	//验证码的用法
+	$img =  Keke_captcha::instance()->render();
+} */
  
 /*  $b = array('ad_type','ad_name');
  $a  = array('9','update_name');

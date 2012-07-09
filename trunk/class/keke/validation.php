@@ -11,11 +11,17 @@ class Keke_validation implements ArrayAccess {
 	protected  $_errors;
 	protected  $_rules;
 	protected  $_labels;
+	protected $_empty_rules = array('not_empty', 'matches');
+	/**
+	 * 
+	 * @param array $arr
+	 * @return  Keke_validation
+	 */
 	public static function factory(array $arr){
-		new Keke_validation($arr);
+		return new Keke_validation($arr);
 	}
 	public function __construct(array $array){
-		$this->_data = $array();
+		$this->_data = $array;
 	}
 	//验证数组禁止写入
 	public function offsetSet($index, $newval){
@@ -84,14 +90,19 @@ class Keke_validation implements ArrayAccess {
 	 * @param  $v
 	 * @return Keke_validation
 	 */
-	public function bind($k,$v=null){
-		if(is_array($k)){
-			foreach ($k as $i=>$val){
-				$this->_bind[$i] = $val;
+	public function bind($k,$value=null){
+		if (is_array($k))
+		{
+			foreach ($k as $name => $value)
+			{
+				$this->_bound[$name] = $value;
 			}
-		}else{
-			$this->_bind[$k] = $v;
 		}
+		else
+		{
+			$this->_bound[$k] = $value;
+		}
+
 		return $this;
 	}
 	
@@ -112,7 +123,7 @@ class Keke_validation implements ArrayAccess {
 		foreach ($expected as $field)
 		{
 			// 提交数据为空，或者为空
-			$data[$field] = $this[$field]; //Arr::get($this, $field);
+			$data[$field] = $this[$field];  
 		
 			if (isset($rules[TRUE]))
 			{
@@ -151,7 +162,7 @@ class Keke_validation implements ArrayAccess {
 			{
 				// 规则的参数
 				list($rule, $params) = $array;
-		
+		      
 				foreach ($params as $key => $param)
 				{
 					if (is_string($param) AND array_key_exists($param, $this->_bound))
@@ -163,8 +174,7 @@ class Keke_validation implements ArrayAccess {
 		
 				// 默认的错误名称
 				$error_name = $rule;
-		
-				if (is_array($rule))
+		        if (is_array($rule))
 				{
 					// 开启规则
 					if (is_string($rule[0]) AND array_key_exists($rule[0], $this->_bound))
@@ -183,13 +193,14 @@ class Keke_validation implements ArrayAccess {
 					$error_name = FALSE;
 					$passed = call_user_func_array($rule, $params);
 				}
-				elseif (method_exists('Valid', $rule))
+				elseif (method_exists('Keke_valid', $rule))
 				{
 					// 使用对象的方法
-					$method = new ReflectionMethod('Valid', $rule);
-		
+					$method = new ReflectionMethod('Keke_valid', $rule);
+					
 					// 调用静态方法
 					$passed = $method->invokeArgs(NULL, $params);
+					
 				}
 				elseif (strpos($rule, '::') === FALSE)
 				{
@@ -209,10 +220,11 @@ class Keke_validation implements ArrayAccess {
 		
 					// 通过映射调用方法
 					$passed = $method->invokeArgs(NULL, $params);
+					
 				}
 		
 				// 当字段为空时，跳出循环
-				if ( ! in_array($rule, $this->_empty_rules) AND ! Valid::not_empty($value))
+				if ( ! in_array($rule, $this->_empty_rules) AND ! Keke_valid::not_empty($value))
 					continue;
 		
 				if ($passed === FALSE AND $error_name !== FALSE)
@@ -235,7 +247,23 @@ class Keke_validation implements ArrayAccess {
 		$this->_errors[$field] = array($error, $params);
 		return $this;
 	}
-	
+	/**
+	 * 返回错误信息
+	 * @param $file  错误输出的文件
+	 * @return $errors array
+	 */
+	public function errors($out_html=TRUE,$file = NULL)
+	{
+		if ($file === NULL and $out_hmtl===FALSE){
+			return $this->_errors;
+		}
+		if($out_html === TRUE){
+			foreach ($this->_errors as $k=>$v){
+				$h .= '使用：'.$v[0].'验证字段:'.$k.'值'.$v[1][0].'输入错误!'.PHP_EOL;
+			}
+			return $h;
+		}
+	}
 }
  
 ?>

@@ -149,94 +149,90 @@ class Keke_validation implements ArrayAccess {
 		
 			foreach ($set as $array)
 			{
-				// Rules are defined as array($rule, $params)
+				// 规则的参数
 				list($rule, $params) = $array;
 		
 				foreach ($params as $key => $param)
 				{
 					if (is_string($param) AND array_key_exists($param, $this->_bound))
 					{
-						// Replace with bound value
+						// 替换绑定的值
 						$params[$key] = $this->_bound[$param];
 					}
 				}
 		
-				// Default the error name to be the rule (except array and lambda rules)
+				// 默认的错误名称
 				$error_name = $rule;
 		
 				if (is_array($rule))
 				{
-					// Allows rule('field', array(':model', 'some_rule'));
+					// 开启规则
 					if (is_string($rule[0]) AND array_key_exists($rule[0], $this->_bound))
 					{
-						// Replace with bound value
+						// 替换绑定的值
 						$rule[0] = $this->_bound[$rule[0]];
 					}
 		
-					// This is an array callback, the method name is the error name
+					// 回调判断规则是否通过
 					$error_name = $rule[1];
 					$passed = call_user_func_array($rule, $params);
 				}
 				elseif ( ! is_string($rule))
 				{
-					// This is a lambda function, there is no error name (errors must be added manually)
+					// lamde 方法
 					$error_name = FALSE;
 					$passed = call_user_func_array($rule, $params);
 				}
 				elseif (method_exists('Valid', $rule))
 				{
-					// Use a method in this object
+					// 使用对象的方法
 					$method = new ReflectionMethod('Valid', $rule);
 		
-					// Call static::$rule($this[$field], $param, ...) with Reflection
+					// 调用静态方法
 					$passed = $method->invokeArgs(NULL, $params);
 				}
 				elseif (strpos($rule, '::') === FALSE)
 				{
-					// Use a function call
+					
 					$function = new ReflectionFunction($rule);
 		
-					// Call $function($this[$field], $param, ...) with Reflection
+					// 调用非静态方法
 					$passed = $function->invokeArgs($params);
 				}
 				else
 				{
-					// Split the class and method of the rule
+					//分隔类与方法
 					list($class, $method) = explode('::', $rule, 2);
 		
-					// Use a static method call
+					//调用静态方法
 					$method = new ReflectionMethod($class, $method);
 		
-					// Call $Class::$method($this[$field], $param, ...) with Reflection
+					// 通过映射调用方法
 					$passed = $method->invokeArgs(NULL, $params);
 				}
 		
-				// Ignore return values from rules when the field is empty
+				// 当字段为空时，跳出循环
 				if ( ! in_array($rule, $this->_empty_rules) AND ! Valid::not_empty($value))
 					continue;
 		
 				if ($passed === FALSE AND $error_name !== FALSE)
 				{
-					// Add the rule to the errors
+					// 保存验证错误的规则
 					$this->error($field, $error_name, $params);
 		
-					// This field has an error, stop executing rules
+					// 字段验证失败，退出循环
 					break;
 				}
 			}
 		}
 		
-		// Restore the data to its original form
+		// 重置data
 		$this->_data = $original;
-		
-		 
-		
 		return empty($this->_errors);
 	}
 	
 	public function error($field, $error, array $params = NULL){
 		$this->_errors[$field] = array($error, $params);
-		
 		return $this;
 	}
 	

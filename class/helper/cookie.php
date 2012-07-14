@@ -15,7 +15,7 @@ class Cookie {
 			return $default;
 		}
 		//cookie 的值
-		$value = $_COOKIE[$key];
+		$cookie = $_COOKIE[$key];
 		//找出加密友与内容的分隔符
 		$split = strlen(Cookie::salt($key, NULL));
 		if (isset($cookie[$split]) AND $cookie[$split] === '~'){
@@ -34,12 +34,13 @@ class Cookie {
 	}
 	public static function set($name, $value, $expiration = NULL) {
 		if ($expiration === NULL) {
-			$expiration = cookie::$expiration;
+			$expiration = Cookie::$_expiration;
 		}
 		if ($expiration !== 0) {
 			$expiration += time ();
 		}
 		// 添加salt到cookie 的值中
+		$name = self::$_pre.$name;
 		$value = Cookie::salt($name, $value).'~'.$value;
 		return setcookie ( $name, $value, $expiration, self::$_path, self::$_domain, self::$_secure, self::$_httponly );
 	}

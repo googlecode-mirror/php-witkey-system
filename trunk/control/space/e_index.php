@@ -47,4 +47,4 @@ function task_time_desc($model_id,$status, $end_time) {
 		return $sy_time."ºó".$end_time_arr[$model_id][$status]['desc'];
 	} 
 }
-require keke_tpl_class::template(SKIN_PATH."/space/{$type}_{$view}");
+require Keke_tpl::template(SKIN_PATH."/space/{$type}_{$view}");

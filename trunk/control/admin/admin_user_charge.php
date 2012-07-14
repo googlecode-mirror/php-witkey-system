@@ -29,4 +29,4 @@ if($is_submit){
 	$res and Keke::admin_show_msg($_lang['charge_success'],$url,3,'','success') or Keke::admin_show_msg($_lang['charge_fail'],"index.php?do=$do&view=$view",3,'','warning');
 }
 
-require keke_tpl_class::template ( 'control/admin/tpl/admin_user_charge' );
+require Keke_tpl::template ( 'control/admin/tpl/admin_user_charge' );

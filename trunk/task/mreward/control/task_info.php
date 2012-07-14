@@ -41,7 +41,7 @@ switch ($op) {
 			$task_obj->set_task_reqedit ( $tar_content, '', 'json' );
 		} else {
 			$ext_desc = $task_info ['ext_desc'];
-			require keke_tpl_class::template ( 'task/task_reqedit' );
+			require Keke_tpl::template ( 'task/task_reqedit' );
 		}
 		die ();
 		break;
@@ -55,7 +55,7 @@ switch ($op) {
 			$this_min_cash = intval($delay_rule[$delay_count]['defer_rate']*$task_info['task_cash']/100);//本次最小延期金额
 			$min_cash>$this_min_cash and $real_min = $min_cash or $real_min = $this_min_cash;//真正最小金额
 			$credit_allow =  intval(Keke::$_sys_config ['credit_is_allow']);//金币开启
-			require keke_tpl_class::template("task/task_delay");
+			require Keke_tpl::template("task/task_delay");
 		}
 		die();
 		break;
@@ -66,7 +66,7 @@ switch ($op) {
 			
 		}else {
 			$workhide_exists = keke_payitem_class::payitem_exists($uid,'workhide','work');//可以隐藏交稿
-			require keke_tpl_class::template ( 'task/reward_work' );
+			require Keke_tpl::template ( 'task/reward_work' );
 		}
 
 		die();
@@ -87,7 +87,7 @@ switch ($op) {
 		if($sbt_edit){
 			$task_obj->set_report ( $obj, $obj_id, $to_uid,$to_username, $type, $file_url, $tar_content);
 		}else{
-			require keke_tpl_class::template("report");
+			require Keke_tpl::template("report");
 		}
 			die();
 		break;
@@ -116,7 +116,7 @@ switch ($op) {
 		if ($sbt_edit) {
 			$task_obj->send_message($title,$tar_content,$to_uid, $to_username,'','json');
 		} else {
-			require keke_tpl_class::template ( 'message' );
+			require Keke_tpl::template ( 'message' );
 		}
 			die ();
 		break;
@@ -158,7 +158,7 @@ switch ($view) {
 	    		if($res!=3&&$res!=2){
 	    			$v1 =  $comment_obj->get_comment_info($res);
 	    			$tmp ='replay_comment';
-	    			require keke_tpl_class::template ( "task/task_comment_reply" );
+	    			require Keke_tpl::template ( "task/task_comment_reply" );
 	    		}else{
 	    			echo $res;
 	    		}
@@ -171,7 +171,7 @@ switch ($view) {
 	    		if($res!=3&&$res!=2){
 	    			$v = $comment_obj->get_comment_info($res);
 	    			$tmp ='pub_comment';
-	    			require keke_tpl_class::template ( "task/task_comment_reply" );
+	    			require Keke_tpl::template ( "task/task_comment_reply" );
 	    		}else{
 	    			echo $res;
 	    		}
@@ -211,4 +211,4 @@ switch ($view) {
 		$kekezu->init_prom();
 		$can_prom = Keke::$_prom_obj->is_meet_requirement ( "bid_task", $task_id );
 }
-require keke_tpl_class::template ( "task/" . $model_info ['model_code'] . "/tpl/" . $_K ['template'] . "/task_info" );
+require Keke_tpl::template ( "task/" . $model_info ['model_code'] . "/tpl/" . $_K ['template'] . "/task_info" );

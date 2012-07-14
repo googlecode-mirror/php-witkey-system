@@ -33,7 +33,7 @@ if ($op == "getscore") {
 	</div>";
 
 		setcookie ( "score_log", "" );
-		echo $msg = keke_tpl_class::xml_out($msg);
+		echo $msg = Keke_tpl::xml_out($msg);
  		
 	}
 	

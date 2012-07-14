@@ -79,6 +79,6 @@ if ($ac == 'pay' && $task_id && $model_id) {
 }
 $payitem_list = keke_payitem_class::get_payitem_config ();
 
-require keke_tpl_class::template ( "user/" . $do . "_" . $view . "_" . $op );
+require Keke_tpl::template ( "user/" . $do . "_" . $view . "_" . $op );
 
 

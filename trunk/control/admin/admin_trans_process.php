@@ -26,7 +26,7 @@ if ($type == 'complaint') { //投诉
 	} else {
 		$report_info = keke_report_class::get_report_info ( $report_id );
 	}
-	require keke_tpl_class::template ( 'control/admin/tpl/admin_trans_process' );
+	require Keke_tpl::template ( 'control/admin/tpl/admin_trans_process' );
 } else {
 	/**
 	 * 跳转到对应模型的admin_route，由模型下面的控制层处理具体业务

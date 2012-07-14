@@ -13,4 +13,4 @@ if($sbt_buy){
 }
 //Òş²Ø½»¸åÊ£ÓàÊıÁ¿
 $remain= keke_payitem_class::payitem_exists($uid,$item_code);
-require keke_tpl_class::template("control/payitem/$item_code/tpl/user_buy");
+require Keke_tpl::template("control/payitem/$item_code/tpl/user_buy");

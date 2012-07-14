@@ -28,12 +28,12 @@ if ($type == 'uc'){
 	require_once '../../config/config_ucenter.php';
 
 	if(isset($ac)&& $ac = 'setting'){
-		$config_ucenter = keke_tpl_class::sreadfile(S_ROOT."/config/config_ucenter.php");
+		$config_ucenter = Keke_tpl::sreadfile(S_ROOT."/config/config_ucenter.php");
 		foreach ($settingnew as $k=>$v){
 		
 			$config_ucenter = preg_replace("/define\('$k',\s*'.*?'\);/i", "define('$k', '$v');", $config_ucenter);
 		}
-		keke_tpl_class::swritefile(S_ROOT."./config/config_ucenter.php",$config_ucenter);
+		Keke_tpl::swritefile(S_ROOT."./config/config_ucenter.php",$config_ucenter);
 		//ucÕûºÏ¼ì²é
 		$bbserver = 'http://'.preg_replace("/\:\d+/", '', $_SERVER['HTTP_HOST']).($_SERVER['SERVER_PORT'] && $_SERVER['SERVER_PORT'] != 80 ? ':'.$_SERVER['SERVER_PORT'] : '');
 		$default_ucapi = $bbserver.'/ucenter';
@@ -76,10 +76,10 @@ if ($type == 'uc'){
 		}
 
 		$ucconfig_info = explode('|', $ucconfig);
-		$config_ucenter = keke_tpl_class::sreadfile(S_ROOT."/config/config_ucenter.php");
+		$config_ucenter = Keke_tpl::sreadfile(S_ROOT."/config/config_ucenter.php");
 		$config_ucenter = preg_replace("/define\('UC_KEY',\s*'.*?'\);/i", "define('UC_KEY', ".$ucconfig_info['0'].");", $config_ucenter);
 		$config_ucenter = preg_replace("/define\('UC_APPID',\s*'.*?'\);/i", "define('UC_APPID', ".$ucconfig_info['1'].");", $config_ucenter);
-	 	keke_tpl_class::swritefile(S_ROOT."./config/config_ucenter.php",$config_ucenter);
+	 	Keke_tpl::swritefile(S_ROOT."./config/config_ucenter.php",$config_ucenter);
 
 	 	$config_obj->setWhere(" k = 'user_intergration'");
 	 	$config_obj->setV(2);
@@ -96,11 +96,11 @@ if ($type == 'uc'){
 }else if ($type=='pw'){
 	require_once S_ROOT.'/config/config_pw.php';
 	if(isset($ac)&& $ac = 'setting'){
-		$config_ucenter = keke_tpl_class::sreadfile(S_ROOT."/config/config_pw.php");
+		$config_ucenter = Keke_tpl::sreadfile(S_ROOT."/config/config_pw.php");
 		foreach ($settingnew as $k=>$v){
 			$config_ucenter = preg_replace("/define\('$k',\s*'.*?'\);/i", "define('$k', '$v');", $config_ucenter);
 		}
-		keke_tpl_class::swritefile(S_ROOT."./config/config_pw.php",$config_ucenter);
+		Keke_tpl::swritefile(S_ROOT."./config/config_pw.php",$config_ucenter);
 		
 		$config_obj->setWhere(" k = 'user_intergration'");
 		$config_obj->setV(3);

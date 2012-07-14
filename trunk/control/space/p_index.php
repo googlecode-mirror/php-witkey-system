@@ -43,5 +43,5 @@ $range = range(1,8);
  $mark_obj->setWhere($where.$pages['where']);
  $mark_list = $mark_obj->query_keke_witkey_mark();
  
-require keke_tpl_class::template(SKIN_PATH."/space/{$type}_{$view}");
+require Keke_tpl::template(SKIN_PATH."/space/{$type}_{$view}");
 

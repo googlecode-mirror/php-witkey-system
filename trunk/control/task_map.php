@@ -335,4 +335,4 @@ function get_model(){
 	return $res; 
 }
 
-require  keke_tpl_class::template ($do);  
+require  Keke_tpl::template ($do);  

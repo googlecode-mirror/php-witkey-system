@@ -22,7 +22,7 @@ switch ($op){
 			keke_shop_class::set_report ($obj_id, $to_uid,$to_username, $type, $file_url, $tar_content);
 		}else{
 			CHARSET=='gbk' and $to_username = Keke::utftogbk($to_username);
-			require keke_tpl_class::template("report");
+			require Keke_tpl::template("report");
 		}
 		die();
 		break;
@@ -64,7 +64,7 @@ switch ($view) {
 	    		if($res!=3&&$res!=2){
 	    			$v1 =  $comment_obj->get_comment_info($res);
 	    			$tmp ='replay_comment';
-	    			require keke_tpl_class::template ( "task/task_comment_reply" );
+	    			require Keke_tpl::template ( "task/task_comment_reply" );
 	    		}else{
 	    			echo $res;
 	    		}
@@ -77,7 +77,7 @@ switch ($view) {
 	    		if($res!=3&&$res!=2){
 	    			$v = $comment_obj->get_comment_info($res);
 	    			$tmp ='pub_comment';
-	    			require keke_tpl_class::template ( "task/task_comment_reply" );
+	    			require Keke_tpl::template ( "task/task_comment_reply" );
 	    		}else{
 	    			echo $res;
 	    		}
@@ -111,4 +111,4 @@ switch ($view) {
 		$pages     = $mark_arr['pages'];
 		break;
 }
-require keke_tpl_class::template ( "shop/" . $model_info ['model_code'] . "/tpl/" . $_K ['template'] . "/service_info" );
+require Keke_tpl::template ( "shop/" . $model_info ['model_code'] . "/tpl/" . $_K ['template'] . "/service_info" );

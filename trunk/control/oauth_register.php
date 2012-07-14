@@ -44,4 +44,4 @@ if ($oauth_user_info && $formhash) {
 	}
 }
 
-require keke_tpl_class::template ( $do );
+require Keke_tpl::template ( $do );

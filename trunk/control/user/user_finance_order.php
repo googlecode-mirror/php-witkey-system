@@ -91,5 +91,5 @@ if($action =='delete'){
 	
 }
 
-require keke_tpl_class::template ( "user/" . $do . "_" . $view . "_" . $op . "_" . $obj_type );
+require Keke_tpl::template ( "user/" . $do . "_" . $view . "_" . $op . "_" . $obj_type );
 

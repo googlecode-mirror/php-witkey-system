@@ -78,4 +78,4 @@ if ($model_id) {
 	
 	$s_info = $s_obj->query_keke_witkey_service ();
 }
-require keke_tpl_class::template ( "user/" . $do . "_" . $op );
+require Keke_tpl::template ( "user/" . $do . "_" . $op );

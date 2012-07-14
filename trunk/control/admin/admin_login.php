@@ -12,4 +12,4 @@ if ($is_submit) {
 	$admin_obj->admin_login ( $user_name, $pass_word, $allow_num, $token );
 	die();
 }
-require keke_tpl_class::template ( 'control/admin/tpl/admin_' . $do );
+require Keke_tpl::template ( 'control/admin/tpl/admin_' . $do );

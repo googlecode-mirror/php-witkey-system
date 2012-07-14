@@ -59,4 +59,4 @@ Keke::get_tree ( $indus_option_arr, $temp_arr, "option", $task_info ['indus_id']
 $indus_option_arr = $temp_arr;
 
 
-require keke_tpl_class::template ( 'task/' . $model_info ['model_dir'] . '/control/admin/tpl/task_' . $view );
+require Keke_tpl::template ( 'task/' . $model_info ['model_dir'] . '/control/admin/tpl/task_' . $view );

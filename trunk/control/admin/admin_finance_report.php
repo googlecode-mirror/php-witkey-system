@@ -122,4 +122,4 @@ function analysis_data($path, $every_year = false) {
 	$str .= '</series>';
 	return update_xml ( sprintf ( $path, 'total' ), '<data>' . $str . '</data>', 'analysis' );
 }
-require_once keke_tpl_class::template ( 'control/admin/tpl/admin_finance_report' );
+require_once Keke_tpl::template ( 'control/admin/tpl/admin_finance_report' );

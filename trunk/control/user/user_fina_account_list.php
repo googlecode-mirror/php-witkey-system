@@ -27,4 +27,4 @@ if($rebind){
 
 
 }
-require keke_tpl_class::template ( "user/" . $do . "_" . $op."_".$opp );
+require Keke_tpl::template ( "user/" . $do . "_" . $op."_".$opp );

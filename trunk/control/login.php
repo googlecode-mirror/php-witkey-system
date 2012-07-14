@@ -35,4 +35,4 @@ if (Keke::submitcheck(isset($formhash))|| isset($login_type) ==3) {
  	
 	$login_obj->save_user_info($user_info, $ckb_cookie,$login_type); 
 }
-require  keke_tpl_class::template ( $do );
+require  Keke_tpl::template ( $do );

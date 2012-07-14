@@ -86,5 +86,5 @@ switch ($r_step) { //任务发布步骤
 		$release_obj->check_access ( $r_step, $model_id, $release_info,$task_id ); //页面进入权限检测
 		break;
 }
-require keke_tpl_class::template ( 'release' );
+require Keke_tpl::template ( 'release' );
 		

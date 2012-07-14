@@ -35,4 +35,4 @@ if($op_result){
 	}
 }
 
-require keke_tpl_class::template ( 'task/' . $model_info ['model_dir'] . "/control/admin/tpl/task_$view");
+require Keke_tpl::template ( 'task/' . $model_info ['model_dir'] . "/control/admin/tpl/task_$view");

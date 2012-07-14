@@ -31,5 +31,5 @@ $sale_list = dbfactory::query($sql.$pages['where']);
 /**»¥ÆÀÁÐ±í*/
 $mark_list = Keke::get_table_data("mark_content,mark_value,by_uid","witkey_mark"," uid='$member_id' and model_code in ('goods','service') and mark_status>0","","","","by_uid",3600);
 
-require keke_tpl_class::template ( SKIN_PATH . "/space/{$type}_{$view}" );
+require Keke_tpl::template ( SKIN_PATH . "/space/{$type}_{$view}" );
 

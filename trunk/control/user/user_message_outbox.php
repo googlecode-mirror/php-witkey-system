@@ -36,6 +36,6 @@ if($ac=='del'&&$msg_id){
 	$data = $res['data'];
 	$pages = $res['pages'];
 }
-require keke_tpl_class::template ( "user/" . $do . "_".$view."_$op");
+require Keke_tpl::template ( "user/" . $do . "_".$view."_$op");
  
 

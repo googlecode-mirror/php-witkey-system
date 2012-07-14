@@ -70,4 +70,4 @@ switch ($step) {
 }
  
 
-require keke_tpl_class::template ( "register_wizard_$step" );
+require Keke_tpl::template ( "register_wizard_$step" );

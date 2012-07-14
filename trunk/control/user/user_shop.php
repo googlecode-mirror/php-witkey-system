@@ -60,4 +60,4 @@ if ($model_id) {
 	$order_info = $order_obj->query_keke_witkey_order();
 }
  
-require keke_tpl_class::template ( "user/" . $do . "_" . $op );
+require Keke_tpl::template ( "user/" . $do . "_" . $op );

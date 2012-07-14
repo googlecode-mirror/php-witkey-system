@@ -48,4 +48,4 @@ if ($formhash) {
 	$res || $cost_res and Keke::show_msg ( $_lang['friendly_notice'], "index.php?do=service&sid=$sid&view=tools", '3', '²Ù×÷³É¹¦', 'success' );
 }
 
-require keke_tpl_class::template ( "shop_payitem_tools" );
+require Keke_tpl::template ( "shop_payitem_tools" );

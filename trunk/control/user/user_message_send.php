@@ -41,6 +41,6 @@ if (isset ( $is_sbt )){
 	}
 }
 
-require keke_tpl_class::template ( "user/" . $do . "_" . $view . "_" . $op );
+require Keke_tpl::template ( "user/" . $do . "_" . $view . "_" . $op );
 
 

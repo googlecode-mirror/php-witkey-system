@@ -81,5 +81,5 @@ switch ($r_step) { //任务发布步骤
 		break;
 }
 
-require keke_tpl_class::template ( 'release' );
+require Keke_tpl::template ( 'release' );
 		

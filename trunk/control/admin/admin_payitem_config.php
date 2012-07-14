@@ -31,7 +31,7 @@ if($sbt_edit){
 	
 }
 Keke::$_cache_obj->gc();
-require keke_tpl_class::template("/control/payitem/$item_code/tpl/admin_config");
+require Keke_tpl::template("/control/payitem/$item_code/tpl/admin_config");
 function get_fid($path){//删除图片时获取图片对应的fid,图片的存放形式是e.g ...img.jpg?fid=1000
 	if(!path){ return false;}
 	$querystring = substr(strstr($path, '?'), 1);

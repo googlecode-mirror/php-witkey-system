@@ -34,4 +34,4 @@ $article_arr = $article_page_arr['date'];
 //var_dump($article_arr);
 $page_title= $_lang['news_center']."-" .$_K['html_title'];
 
-require keke_tpl_class::template ( "tpl/" . $_K ['template'] . "/" . $do . "/" . $view );
+require Keke_tpl::template ( "tpl/" . $_K ['template'] . "/" . $do . "/" . $view );

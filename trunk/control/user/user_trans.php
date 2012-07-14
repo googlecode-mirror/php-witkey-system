@@ -76,4 +76,4 @@ if ($ac) {
 	$report_list = $report_obj->query_keke_witkey_report ();
 }
 
-require keke_tpl_class::template ( "user/" . $do . "_" . $view);
+require Keke_tpl::template ( "user/" . $do . "_" . $view);

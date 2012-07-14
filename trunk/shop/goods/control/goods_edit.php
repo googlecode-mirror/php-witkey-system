@@ -37,4 +37,4 @@ if ($sbt_edit) {
 	$fid	   = intval($f_info['file_id']);
 	$file_name = $f_info['file_name'];
 }
-require keke_tpl_class::template ( "shop/goods/tpl/default/goods_edit" );
+require Keke_tpl::template ( "shop/goods/tpl/default/goods_edit" );

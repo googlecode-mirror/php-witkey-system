@@ -75,4 +75,4 @@ if($sbt_edit){
 	$log_msg = $_lang['has_update_more_reward'].$log_op_arr[$op];
 	Keke::admin_system_log($log_msg);
 }
-require keke_tpl_class::template ( 'task/' . $model_info ['model_dir'] . '/control/admin/tpl/task_' . $op );
+require Keke_tpl::template ( 'task/' . $model_info ['model_dir'] . '/control/admin/tpl/task_' . $op );

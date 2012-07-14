@@ -39,7 +39,7 @@ if($ac=='del'&&$msg_id&&$op=='inbox'){
 	}elseif($msg['view_status']==0){
 		$msg_obj->save(array("view_status"=>"1"),array("msg_id"=>$msg_id));
 	}
-   require keke_tpl_class::template ( "user/" . $do . "_".$view."_" . $ac);
+   require Keke_tpl::template ( "user/" . $do . "_".$view."_" . $ac);
    exit();
 }else{
 	$where = "1=1 ";
@@ -78,6 +78,6 @@ if (isset ( $check_username ) && ! empty ( $check_username )) {
 if($op=='send' || $op=='outbox'){
 	require 'user_'.$view.'_'.$op.'.php';
 }elseif($op=='inbox'){
-	require keke_tpl_class::template ( "user/" . $do . "_".$view."_system");
+	require Keke_tpl::template ( "user/" . $do . "_".$view."_system");
 }
 

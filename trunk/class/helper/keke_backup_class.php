@@ -85,7 +85,7 @@ class keke_backup_class {
 		}
 		$sqlmsg .= "\n "; //½áÊø
 		$path = S_ROOT . './data/backup/backup_' . time () . '_' . DBNAME . ".sql";
-		keke_tpl_class::swritefile ( $path, $sqlmsg );
+		Keke_tpl::swritefile ( $path, $sqlmsg );
 		Keke::admin_system_log ( $_lang['backup_database'] . '' . "backup_" . time () . '_' . DBNAME . ".sql" );
 		file_exists ( $path ) and Keke::echojson('',1,$output) or Keke::echojson('',0,$output);
 		die();

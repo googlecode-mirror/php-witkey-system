@@ -42,4 +42,4 @@ setcookie("article_".$art_id,"exist_".$art_id,time()+3600*24);
 $page_title=$art_info['art_title'].$art_info['seo_title'].'- '.$_K['html_title'];
 $page_keyword = $art_info['seo_keyword'];
 $page_description = $art_info['seo_desc'];
-require keke_tpl_class::template("tpl/".$_K ['template']."/".$do."/".$view);
+require Keke_tpl::template("tpl/".$_K ['template']."/".$do."/".$view);

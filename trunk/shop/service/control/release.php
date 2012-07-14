@@ -67,5 +67,5 @@ switch ($r_step) { //服务发布步骤
 		$service_info = $release_obj->check_access ( $r_step, $model_id, $release_info,$service_id ); //页面进入权限检测
 		break;
 }
-require keke_tpl_class::template ( 'shelves' );
+require Keke_tpl::template ( 'shelves' );
 		

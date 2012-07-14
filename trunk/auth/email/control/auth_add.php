@@ -46,4 +46,4 @@ switch ($auth_step){
 			$email_a_id&&$ac=='check_email' and $auth_obj->audit_auth($active_code,$email_a_id);//ÓÊÏäÈÏÖ¤×ÔÉó
 		break;
 }
-require keke_tpl_class::template ( 'auth/' . $auth_dir . '/tpl/' . $_K ['template'] . '/auth_add' );
+require Keke_tpl::template ( 'auth/' . $auth_dir . '/tpl/' . $_K ['template'] . '/auth_add' );

@@ -42,7 +42,7 @@ class session_mysql_class extends keke_session {
 		ini_set ( "session.save_handler", "user" );
 		session_module_name ( "user" );
 		session_set_save_handler ( array (&$this, "open" ), array (&$this, "close" ), array (&$this, "read" ), array (&$this, "write" ), array (&$this, "destroy" ), array (&$this, "gc" ) );
-		session_set_cookie_params(get_cfg_var ( "session.gc_maxlifetime" ), cookie::$path, cookie::$domain, cookie::$secure, cookie::$httponly);
+		session_set_Cookie_params(get_cfg_var ( "session.gc_maxlifetime" ), Cookie::$_path, Cookie::$_domain, Cookie::$_secure, Cookie::$_httponly);
 		session_cache_limiter(false);
 		session_start ();
 	}
@@ -81,7 +81,7 @@ class session_file_class extends keke_session {////
 		$path = S_ROOT . 'data' . DIRECTORY_SEPARATOR . 'session';
 		ini_set ( 'session.save_handler', 'files' );
 		session_save_path ( $path );
-		session_set_cookie_params(get_cfg_var ( "session.gc_maxlifetime" ), cookie::$path, cookie::$domain, cookie::$secure, cookie::$httponly);
+		session_set_Cookie_params(get_cfg_var ( "session.gc_maxlifetime" ), Cookie::$_path, Cookie::$_domain, Cookie::$_secure, Cookie::$_httponly);
 		session_cache_limiter(false);
 	    
 		session_start ();

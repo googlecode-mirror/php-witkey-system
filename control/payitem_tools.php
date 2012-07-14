@@ -58,4 +58,4 @@ $payitem_standard = keke_payitem_class::payitem_standard (); //收费标准
  
  
 
-require keke_tpl_class::template ( "payitem_tools" );
+require Keke_tpl::template ( "payitem_tools" );

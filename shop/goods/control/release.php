@@ -77,5 +77,5 @@ switch ($r_step) { //服务发布步骤
 		break;
 }
 
-require keke_tpl_class::template ( 'shelves' );
+require Keke_tpl::template ( 'shelves' );
 		

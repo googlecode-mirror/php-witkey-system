@@ -29,4 +29,4 @@ switch ($show){
 		$indus_list = Keke::$_indus_arr;
 		break;
 }
-require keke_tpl_class::template("user/user_".$op);
+require Keke_tpl::template("user/user_".$op);

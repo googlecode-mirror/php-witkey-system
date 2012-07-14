@@ -53,4 +53,4 @@ switch($show){
 
 
 
-require keke_tpl_class::template ( SKIN_PATH."/user/" . $do . "_" . $view . "_" . $op);
+require Keke_tpl::template ( SKIN_PATH."/user/" . $do . "_" . $view . "_" . $op);

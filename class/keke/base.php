@@ -665,7 +665,7 @@ class Keke_base {
 		return $r;
 	}
 	static function show_error($data = '') {
-		require keke_tpl_class::template ( 'tpl/default/show_error' );
+		require Keke_tpl::template ( 'tpl/default/show_error' );
 	}
 	static function get_ip() {
 		global $_lang;

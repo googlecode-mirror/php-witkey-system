@@ -19,7 +19,7 @@ switch ($ajax) {
 		break;
 	case 'show_secode':
 		 
-		require keke_tpl_class::template('ajax/ajax_menu');
+		require Keke_tpl::template('ajax/ajax_menu');
 		exit();
 	break;
 	case "set_comment" :
@@ -81,7 +81,7 @@ switch ($ajax) {
 		}
 		break;
 }
-require keke_tpl_class::template ( "ajax/ajax_" . $view );
+require Keke_tpl::template ( "ajax/ajax_" . $view );
 
 
 

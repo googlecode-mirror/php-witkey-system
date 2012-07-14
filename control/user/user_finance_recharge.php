@@ -45,7 +45,7 @@ switch ($step) {
 					$from = get_pay_url('user_charge',$total_money, $payment_config, $paytitle, $order_id,'0','0');
 				   $title=$_lang['confirm_pay'];
 				   
-					require keke_tpl_class::template ( "pay_cash");die();
+					require Keke_tpl::template ( "pay_cash");die();
 					//Keke::show_msg($_lang['operate_notice'],'',3,$from,"confirm_info",'success');
 				}
 				break;
@@ -70,6 +70,6 @@ switch ($step) {
 }
 
  
-require keke_tpl_class::template ( "user/" . $do . "_" . $view . "_" . $op );
+require Keke_tpl::template ( "user/" . $do . "_" . $view . "_" . $op );
 
 

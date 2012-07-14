@@ -38,4 +38,4 @@ if ($sbt_edit) {
 	$fid	   = intval($f_info['file_id']);
 	$file_name = $f_info['file_name'];
 }
-require keke_tpl_class::template ( "shop/service/tpl/default/service_edit" );
+require Keke_tpl::template ( "shop/service/tpl/default/service_edit" );

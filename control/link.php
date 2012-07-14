@@ -19,4 +19,4 @@ $word_link_arr = $link_obj->query_keke_witkey_link();
 
 
 
-require keke_tpl_class::template ( $do );
+require Keke_tpl::template ( $do );

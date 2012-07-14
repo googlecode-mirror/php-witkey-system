@@ -14,4 +14,4 @@ if ($sbt_edit) {
 }if(isset($t)){
 	$t == 1 and Keke::admin_show_msg ( $_lang['backup_success'], "index.php?do=tool&view=dbrestore", 3,'','success' ) or Keke::admin_show_msg ( $_lang['backup_fail'], "index.php?do=tool&view=backup", 3,'','warning' );
 }
-require keke_tpl_class::template('control/admin/tpl/admin_'. $do .'_'. $view);
+require Keke_tpl::template('control/admin/tpl/admin_'. $do .'_'. $view);

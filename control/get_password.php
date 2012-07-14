@@ -76,4 +76,4 @@ function reset_set_password($user_info){
 	return $pass_info; 
 }
 
-require keke_tpl_class::template ( $do );
+require Keke_tpl::template ( $do );

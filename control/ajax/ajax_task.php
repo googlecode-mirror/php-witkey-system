@@ -20,7 +20,7 @@ switch ($ajax) {
 		$data = keke_taobaoke_class::get_items_info ( $nick, $page_no );
 		break;
 }
-require keke_tpl_class::template ( "ajax/ajax_" . $view );
+require Keke_tpl::template ( "ajax/ajax_" . $view );
 
 
 

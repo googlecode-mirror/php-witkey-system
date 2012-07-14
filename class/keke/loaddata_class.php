@@ -50,7 +50,7 @@ class keke_loaddata_class {
 			$cachename ? Keke::$_cache_obj->set ( "feed_" . $cachename . "_cache", $feed_arr, $cachetime ) : null;
 		}
 		$datalist = $feed_arr;
-		require keke_tpl_class::parse_code ( htmlspecialchars_decode ( $tag_info [tag_code] ), $tag_info [tag_id] );
+		require Keke_tpl::parse_code ( htmlspecialchars_decode ( $tag_info [tag_code] ), $tag_info [tag_id] );
 	
 	}
 	
@@ -79,7 +79,7 @@ class keke_loaddata_class {
 					Keke::$_cache_obj->set ( $cid, $datalist, $tag_info ['cache_time'] );
 				}
 			 
-				require keke_tpl_class::parse_code ( htmlspecialchars_decode ( $tag_info [tag_code] ), $tag_info [tag_id] );
+				require Keke_tpl::parse_code ( htmlspecialchars_decode ( $tag_info [tag_code] ), $tag_info [tag_id] );
 			} else if ($tag_info) { //不带缓存的  用传统调用
 				keke_loaddata_class::previewtag ( $tag_info );
 			} else {
@@ -106,7 +106,7 @@ class keke_loaddata_class {
 		if ($tag_info ['tag_type'] == 5) {
 			echo htmlspecialchars_decode ( $tag_info ['code'] );
 		} else {
-			require keke_tpl_class::parse_code ( htmlspecialchars_decode ( $tag_info [tag_code] ), $tag_info [tag_id] );
+			require Keke_tpl::parse_code ( htmlspecialchars_decode ( $tag_info [tag_code] ), $tag_info [tag_id] );
 		}
 	
 	}
@@ -549,7 +549,7 @@ class keke_loaddata_class {
 		//$datalist = Keke::get_ad ( $adname,$ad_limit_num );
 		$tag_arr = $tag_arr = self::init_tag();
 		$tag_info = $tag_arr [$adname];
-		require keke_tpl_class::parse_code ( htmlspecialchars_decode ( $tag_info ['tag_code'] ), $tag_info ['tag_id'] );
+		require Keke_tpl::parse_code ( htmlspecialchars_decode ( $tag_info ['tag_code'] ), $tag_info ['tag_id'] );
 	}
 
 }

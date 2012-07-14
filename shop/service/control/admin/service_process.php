@@ -24,4 +24,4 @@ if($op_result){
 	$credit_info=$process_obj->_credit_info;//扣除信誉、能力信息
 	$process_can=$process_obj->_process_can;//可以进行的处理动作
 }
-require keke_tpl_class::template ( 'shop/' . $model_info ['model_dir'] . '/control/admin/tpl/service_' . $view );
+require Keke_tpl::template ( 'shop/' . $model_info ['model_dir'] . '/control/admin/tpl/service_' . $view );

@@ -188,4 +188,4 @@ switch ($opp) {
 
 // echo ( "user/" . $do . "_" . $op . "_" . $opp );die();
 
-require keke_tpl_class::template ( "user/" . $do . "_" . $op . "_" . $opp );
+require Keke_tpl::template ( "user/" . $do . "_" . $op . "_" . $opp );

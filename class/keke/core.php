@@ -21,7 +21,7 @@ class Keke_core extends Keke_base {
 	static function admin_show_msg($title = "", $url = "", $time = 3, $content = "", $type = "info") {
 		global $_K, $_lang;
 		$url ? $url : $_K ['refer'];
-		require keke_tpl_class::template ( 'control/admin/tpl/show_msg' );
+		require Keke_tpl::template ( 'control/admin/tpl/show_msg' );
 		die ();
 	}
 	/**
@@ -37,7 +37,7 @@ class Keke_core extends Keke_base {
 		
 		$r = $_REQUEST;
 		$msgtype = $type;
-		require keke_tpl_class::template ( 'show_msg' );
+		require Keke_tpl::template ( 'show_msg' );
 		die ();
 	}
 	
@@ -386,7 +386,7 @@ class Keke extends Keke_core {
 		$this->init_user ();
 		
 		Keke::$_cache_obj = Cache::instance ();
-		Keke::$_tpl_obj = new keke_tpl_class ();
+		Keke::$_tpl_obj = new Keke_tpl();
 		Keke::$_page_obj = new keke_page_class ();
 
 		$this->init_out_put ();

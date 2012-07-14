@@ -36,4 +36,4 @@ if (isset ( $submit )) {
 	//¹Ø×¢ÁÐ±í
 	$attent_list = Keke::get_table_data ( "k,v,desc", "witkey_basic_config", "type='attention'", 'listorder asc ', "", "", "k" );
 }
-require keke_tpl_class::template ( 'control/admin/tpl/admin_' . $do . '_' . $view );
+require Keke_tpl::template ( 'control/admin/tpl/admin_' . $do . '_' . $view );

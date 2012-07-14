@@ -27,4 +27,4 @@ $pages = Keke::$_page_obj->getPages ( $count, $page_size, $page, $url );
 $sql .=$pages['where'];
 $case_arr = dbfactory::query($sql);
 
-require keke_tpl_class::template ( $do );
+require Keke_tpl::template ( $do );

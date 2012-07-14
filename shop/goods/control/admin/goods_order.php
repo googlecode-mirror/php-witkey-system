@@ -51,4 +51,4 @@ if(isset ( $sbt_action )){
 	}
 }
 
-require keke_tpl_class::template ( 'shop/' . $model_info ['model_dir'] . '/control/admin/tpl/goods_' . $view );
+require Keke_tpl::template ( 'shop/' . $model_info ['model_dir'] . '/control/admin/tpl/goods_' . $view );

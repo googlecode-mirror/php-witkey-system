@@ -26,7 +26,7 @@ if ($op == 'report') {
 			$to_username = $order_info ['seller_username'];
 		}
 		$type = "1"; //άȨ
-		require keke_tpl_class::template ( "report" );
+		require Keke_tpl::template ( "report" );
 	}
 	die ();
 }

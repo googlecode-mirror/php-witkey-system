@@ -47,7 +47,7 @@ defined ( 'IN_KEKE' ) or exit('Access Denied');
 		break;
 	}
 	
-require keke_tpl_class::template("ajax/ajax_".$view);
+require Keke_tpl::template("ajax/ajax_".$view);
 
 
 

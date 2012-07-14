@@ -41,15 +41,15 @@ if($ac=='show_map'){
 	$title=$_lang['task_map_set'];
 	$user_info ['residency']&&$local = explode(',', $user_info['residency']);
 	if ($_K['map_api']=='baidu'){
-		require keke_tpl_class::template('task/task_map_baidu');
+		require Keke_tpl::template('task/task_map_baidu');
 	}else{
-		require keke_tpl_class::template('task/task_map_google');
+		require Keke_tpl::template('task/task_map_google');
 	}
 	die();
 }
 
 if($act=='agreement'){
 	$title=Keke::lang("agreement");
-	require keke_tpl_class::template("task/release_agree");
+	require Keke_tpl::template("task/release_agree");
 }
 require "task/".$model_info['model_dir']."/control/release.php";

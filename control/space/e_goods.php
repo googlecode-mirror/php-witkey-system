@@ -19,5 +19,5 @@ $pages = Keke::$_page_obj->getPages ( $count, $page_size, $page, $url );
 $where .= $pages ['where'];
 $shop_arr = dbfactory::query ( $sql . $where );
 
-require keke_tpl_class::template ( SKIN_PATH . "/space/{$type}_{$view}" );
+require Keke_tpl::template ( SKIN_PATH . "/space/{$type}_{$view}" );
 

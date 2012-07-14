@@ -28,4 +28,4 @@ switch ($auth_step){
 	case "step3":
 		break;
 }
-require keke_tpl_class::template ( 'auth/' . $auth_dir . '/tpl/' . $_K ['template'] . '/auth_add' );
+require Keke_tpl::template ( 'auth/' . $auth_dir . '/tpl/' . $_K ['template'] . '/auth_add' );

@@ -115,7 +115,7 @@ if (isset ( $ajax )) {
 		 from %switkey_task  where  (task_status='2' or task_status ='3' or task_status ='4' or task_status ='5' or task_status ='6') 
 		  order by start_time desc limit 0,42";
 			$task_lastest = dbfactory::query ( sprintf ( $sql2, TABLEPRE ), true, 3600 );
-			require keke_tpl_class::template ( "ajax/index" );
+			require Keke_tpl::template ( "ajax/index" );
 			die ();
 			break;
 		case "shop" :
@@ -123,7 +123,7 @@ if (isset ( $ajax )) {
 			 * 最新商品
 			 */
 			$service_lastes = dbfactory::query ( sprintf ( "select service_id,pic,ad_pic,title from %switkey_service where   service_status='2' order by on_time desc limit 0,26", TABLEPRE ), 1, 600 );
-			require keke_tpl_class::template ( "ajax/index" );
+			require Keke_tpl::template ( "ajax/index" );
 			die ();
 			break;
 	}
@@ -139,7 +139,7 @@ if (isset ( $ajax )) {
 				'safe' => 203 
 		);
 		$art_arr = get_art ( $cat_arr [$ajax] );
-		require keke_tpl_class::template ( "ajax/index" );
+		require Keke_tpl::template ( "ajax/index" );
 		die ();
 	}
 }
@@ -157,4 +157,4 @@ function get_art($cat_id) {
 	return dbfactory::query ( $sql, 0, 600 );
 }
  
-require keke_tpl_class::template ( $do );
+require Keke_tpl::template ( $do );

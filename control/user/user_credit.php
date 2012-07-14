@@ -73,4 +73,4 @@ function gen_star($num,$name){
     return $str;
 }
 
-require keke_tpl_class::template ( "user/" . $do . "_" . $op.'_'.$opp );
+require Keke_tpl::template ( "user/" . $do . "_" . $op.'_'.$opp );

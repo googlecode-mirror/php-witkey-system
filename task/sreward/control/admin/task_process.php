@@ -26,4 +26,4 @@ if($op_result){
 	$process_can=$process_obj->_process_can;//可以进行的处理动作
 	$is_trust   = intval($obj_info['is_trust']);//担保模式
 }
-require keke_tpl_class::template ( 'task/' . $model_info ['model_dir'] . '/control/admin/tpl/task_' . $view );
+require Keke_tpl::template ( 'task/' . $model_info ['model_dir'] . '/control/admin/tpl/task_' . $view );

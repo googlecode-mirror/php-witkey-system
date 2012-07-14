@@ -16,7 +16,7 @@ switch ($op){
 		} else{
 			$title = $_lang['send_msg'];
 			CHARSET=='gbk' and $to_username = Keke::utftogbk($to_username);
-			require keke_tpl_class::template ( 'message' );
+			require Keke_tpl::template ( 'message' );
 		}
 		die ();
 		break;

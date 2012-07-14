@@ -24,4 +24,4 @@ $sy_time_arr = array ("top" => "", "urgent" => "" ); //  £”‡ ±º‰
 $sql = sprintf ( "select * from %switkey_payitem where item_type ='task' and find_in_set('%s',model_code)", TABLEPRE, $model_list ['1'] ['model_code'] );
 $payitem_list = dbfactory::query ( $sql );
 
-require keke_tpl_class::template ( "user/user_" . $op . $show );
+require Keke_tpl::template ( "user/user_" . $op . $show );

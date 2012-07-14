@@ -64,4 +64,4 @@ switch ($show){
 		break;
 }
  
-require keke_tpl_class::template ( "user/user_" . $op . "_" . $show );
+require Keke_tpl::template ( "user/user_" . $op . "_" . $show );

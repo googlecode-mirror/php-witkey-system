@@ -48,4 +48,4 @@ switch (isset($sbt_action)){
 
 
 
-require keke_tpl_class::template ( 'control/admin/tpl/admin_' . $do );
+require Keke_tpl::template ( 'control/admin/tpl/admin_' . $do );

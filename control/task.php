@@ -108,5 +108,5 @@ if (isset($task_id)) {
 		}
 	}
 	
-	require keke_tpl_class::template ( "task" );
+	require Keke_tpl::template ( "task" );
 }

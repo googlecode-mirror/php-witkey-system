@@ -23,4 +23,4 @@ if ($sbt_mark) {
 	$aid_list = keke_user_mark_class::get_mark_aid ( $role_type );
 	//相应角色的辅助配置
 }
-require keke_tpl_class::template ( "mark" );
+require Keke_tpl::template ( "mark" );

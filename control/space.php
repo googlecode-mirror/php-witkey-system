@@ -70,7 +70,7 @@ if ($ac=='up_pic'){
 		die();
 	}else{
 		$title=$_lang['change_the_slide'];
-		require keke_tpl_class::template(SKIN_PATH."/space/e_uppic");
+		require Keke_tpl::template(SKIN_PATH."/space/e_uppic");
 		die();
 	}
 }

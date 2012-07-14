@@ -64,4 +64,4 @@ if ($rever && $rever=='change'){
 $shop_backstyle = unserialize($shop_info['shop_backstyle']);
 // var_dump($shop_backstyle);
 
-require keke_tpl_class::template ( "user/" . $do . "_" . $op . "_" . $opp );
+require Keke_tpl::template ( "user/" . $do . "_" . $op . "_" . $opp );

@@ -77,6 +77,6 @@ $ord_arr=array(" a.$id_fds desc "=>$_lang['manuscript_id_desc'],
 
 	$task_info = dbfactory::query($sql.$where.$pages['where']);
 }
-require keke_tpl_class::template ( "user/" . $do . "_".$view."_" . $op );
+require Keke_tpl::template ( "user/" . $do . "_".$view."_" . $op );
 
 

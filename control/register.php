@@ -41,4 +41,4 @@ if (isset ( $check_username ) && ! empty ( $check_username )) {
 	 echo  $res;
 	 die ();
 }
-require keke_tpl_class::template ( $do );
+require Keke_tpl::template ( $do );

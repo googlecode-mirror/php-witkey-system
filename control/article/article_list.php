@@ -32,4 +32,4 @@ $page_description = $cat_info['cat_name'];
 
 
 
-require keke_tpl_class::template ( "tpl/" . $_K ['template'] . "/" . $do . "/" . $view );
+require Keke_tpl::template ( "tpl/" . $_K ['template'] . "/" . $do . "/" . $view );

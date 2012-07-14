@@ -40,7 +40,7 @@ switch ($op) {
 			$task_obj->set_task_reqedit ( $tar_content, '', 'json' );
 		} else{
 			$ext_desc = $task_info ['ext_desc'];
-			require keke_tpl_class::template ( 'task/task_reqedit' );
+			require Keke_tpl::template ( 'task/task_reqedit' );
 			die ();
 		}
 		break;
@@ -54,7 +54,7 @@ switch ($op) {
 		}else{
 			
 			$workhide_exists = keke_payitem_class::payitem_exists($uid,'workhide','work');//¿ÉÒÔÒþ²Ø½»¸å
-			require keke_tpl_class::template ( "task/" . $model_info ['model_code'] . "/tpl/" . $_K ['template'] . "/dtender_work" );
+			require Keke_tpl::template ( "task/" . $model_info ['model_code'] . "/tpl/" . $_K ['template'] . "/dtender_work" );
 			die();
 		}
 		break;
@@ -70,7 +70,7 @@ switch ($op) {
 			$base_info = $bid_info['bid_info'];			
 			$plan_info = $bid_info['plan_info'];
 			$loca = explode(",",$base_info['area']);
-			require keke_tpl_class::template ( "task/" . $model_info ['model_code'] . "/tpl/" . $_K ['template'] . "/dtender_work" );
+			require Keke_tpl::template ( "task/" . $model_info ['model_code'] . "/tpl/" . $_K ['template'] . "/dtender_work" );
 			die();
 		}		
 		break;
@@ -85,7 +85,7 @@ switch ($op) {
 			$quote = $task_obj->_bid_info['quote'];
 			$service_cash = $task_info['real_cash'];
 			$sy_cash = floatval($quote) - floatval($service_cash);
-			require keke_tpl_class::template("task/".$model_info['model_code']."/tpl/".$_K['template']."/task_hosted");
+			require Keke_tpl::template("task/".$model_info['model_code']."/tpl/".$_K['template']."/task_hosted");
 		}
 		break;
 	case "plan_complete":
@@ -100,7 +100,7 @@ switch ($op) {
 		if($sbt_edit){
 			$task_obj->set_report ( $obj, $obj_id, $to_uid,$to_username, $type, $file_url, $tar_content);
 		}else{
-			require keke_tpl_class::template("report");
+			require Keke_tpl::template("report");
 			die();
 		}
 		break;
@@ -127,7 +127,7 @@ switch ($op) {
 		if ($sbt_edit) {
 			$task_obj->send_message($title,$tar_content,$to_uid, $to_username,'','json');
 		} else{
-			require keke_tpl_class::template ( 'message' );
+			require Keke_tpl::template ( 'message' );
 			die ();
 		}
 		break;
@@ -170,7 +170,7 @@ switch ($view) {
 	    		if($res!=3&&$res!=2){
 	    			$v1 =  $comment_obj->get_comment_info($res);
 	    			$tmp ='replay_comment';
-	    			require keke_tpl_class::template ( "task/task_comment_reply" );
+	    			require Keke_tpl::template ( "task/task_comment_reply" );
 	    		}else{
 	    			echo $res;
 	    		}
@@ -183,7 +183,7 @@ switch ($view) {
 	    		if($res!=3&&$res!=2){
 	    			$v = $comment_obj->get_comment_info($res);
 	    			$tmp ='pub_comment';
-	    			require keke_tpl_class::template ( "task/task_comment_reply" );
+	    			require Keke_tpl::template ( "task/task_comment_reply" );
 	    		}else{
 	    			echo $res;
 	    		}
@@ -232,4 +232,4 @@ switch ($view) {
 }
 
 
-require keke_tpl_class::template ( "task/" . $model_info ['model_code'] . "/tpl/" . $_K ['template'] . "/task_info" );
+require Keke_tpl::template ( "task/" . $model_info ['model_code'] . "/tpl/" . $_K ['template'] . "/task_info" );

@@ -71,7 +71,7 @@ switch ($op) {
 				}else{
 					$cash_cove = Keke::get_cash_cove();
 					$cove_info = $cash_cove[$rule_id];
-					require keke_tpl_class::template('task/'.$model_info['model_dir'].'/control/admin/tpl/task_cove');
+					require Keke_tpl::template('task/'.$model_info['model_dir'].'/control/admin/tpl/task_cove');
 					die();
 				}
 				break;
@@ -83,4 +83,4 @@ if($sbt_edit){
 	$log_msg = $_lang['has_update_tender_task'].$log_op_arr[$op];
 	Keke::admin_system_log($log_msg);
 }
-require keke_tpl_class::template ( 'task/' . $model_info ['model_dir'] . '/control/admin/tpl/task_' . $op );
+require Keke_tpl::template ( 'task/' . $model_info ['model_dir'] . '/control/admin/tpl/task_' . $op );

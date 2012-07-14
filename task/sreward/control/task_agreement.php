@@ -39,7 +39,7 @@ switch ($step){
 				if($sbt_edit){
 					$agree_obj->set_report ( $obj, $obj_id, $to_uid,$to_username, $type, $file_url, $tar_content);
 				}else{
-					require keke_tpl_class::template("report");
+					require Keke_tpl::template("report");
 				}die();
 				break;
 			case "confirm":
@@ -66,4 +66,4 @@ switch ($step){
 $page_title=$agree_info['agree_title'].'--'.$_K['html_title'];
  
 
-require keke_tpl_class::template("task/".$model_info['model_dir']."/tpl/".$_K['template']."/agreement/agreement_".$step);
+require Keke_tpl::template("task/".$model_info['model_dir']."/tpl/".$_K['template']."/agreement/agreement_".$step);

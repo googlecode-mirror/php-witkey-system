@@ -51,5 +51,5 @@ $favor_arr=$favor_obj->query_keke_witkey_favorite();
 
 
 
-require keke_tpl_class::template('user/user_'.$view);
+require Keke_tpl::template('user/user_'.$view);
 

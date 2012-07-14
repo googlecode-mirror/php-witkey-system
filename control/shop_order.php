@@ -38,7 +38,7 @@ if ($sid) {
 			break;
 	}
  
-	require keke_tpl_class::template ( "shop/order_sub" );
+	require Keke_tpl::template ( "shop/order_sub" );
 } else {
 	Keke::show_msg ( $_lang['operate_notice'], "index.php?do=shop", '1', $_lang['param_error'], 'error' );
 }

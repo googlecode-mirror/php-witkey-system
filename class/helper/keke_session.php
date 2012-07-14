@@ -62,7 +62,12 @@ class session_mysql_class extends keke_session {
 	}
 	function write($session_id, $session_data) {
 		$tablename = TABLEPRE . "witkey_session";
-		$_SESSION ['uid'] > 0 and $uid = $_SESSION ['uid'] or $uid = 0;
+		if(isset($_SESSION['uid'])){
+			$uid = $_SESSION['uid'];
+		}else{
+			$uid = NULL;
+		}
+		//$_SESSION ['uid'] > 0 and $uid = $_SESSION ['uid'] or $uid = 0;
 		$data_arr = array ('session_id' => $session_id, 'session_data' => $session_data, 'session_expirse' => time () + self::$_left_time, 'session_ip' => Keke::get_ip (), 'session_uid' => $uid );
 		return $this->_db->insert ( $tablename, $data_arr, 1, 1 );
 	    

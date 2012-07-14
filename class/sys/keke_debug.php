@@ -281,7 +281,7 @@ class keke_exception extends Exception {
 			$data ['trace'] = array_reverse ( keke_debug::trace ( $trace ) );
 			// ob_end_clean();
 			// var_dump($data['trace']);
-			// require keke_tpl_class::template('tpl/default/show_error');
+			// require Keke_tpl::template('tpl/default/show_error');
 			require S_ROOT . './control/show_error.php';
 			die ();
 		} catch ( Exception $e ) {

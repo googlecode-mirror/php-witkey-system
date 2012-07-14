@@ -50,4 +50,4 @@ $page_title or $page_title = $_K ['html_title'];
 $page_keyword or $page_keyword = Keke::$_sys_config ['seo_keyword'];
 $page_description or $page_description = Keke::$_sys_config ['seo_desc'];
 
-require keke_tpl_class::template ( $do );
+require Keke_tpl::template ( $do );

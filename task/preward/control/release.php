@@ -80,5 +80,5 @@ switch ($r_step) { //任务发布步骤
 // 		$standard = keke_payitem_class::payitem_standard ();
 		break;
 }
-require keke_tpl_class::template ( 'release' );
+require Keke_tpl::template ( 'release' );
 		

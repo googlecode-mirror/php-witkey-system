@@ -39,6 +39,6 @@ if (isset($pay_mode)) {
 	require S_ROOT . "/payment/" . $pay_mode . "/order.php";
 	$from = get_pay_url('order_charge',$pay_amount, $payment_config, $order_info['order_name'], $order_id,$model_id,$order_info['obj_id']);
 	$title=$_lang['confirm_pay'];
-	require keke_tpl_class::template ( "pay_cash");die();
+	require Keke_tpl::template ( "pay_cash");die();
 }
 require Keke::$_tpl_obj->template ( $do );

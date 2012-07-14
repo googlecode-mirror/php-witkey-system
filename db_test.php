@@ -88,12 +88,12 @@ $aas->setAd_content($value)->setAd_file($value)->setAd_name($value)->create(); *
 /* $end = microtime(true);
 echo $end-$star; */
 //var_dump ( $end-$star,Keke::execute_time() );
-//require keke_tpl_class::template('en');
+//require Keke_tpl::template('en');
 
 // $end = microtime(true);
  //var_dump ( $end-$star,Keke::execute_time() );
 
-require keke_tpl_class::template('en');
+require Keke_tpl::template('en');
 var_dump ( $end-$star,Keke::execute_time() );
 
 

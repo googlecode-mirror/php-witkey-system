@@ -95,5 +95,5 @@ switch ($opp) {
 		}
 		break;
 }
-require keke_tpl_class::template('user/user_'.$op.'_' . $opp);
+require Keke_tpl::template('user/user_'.$op.'_' . $opp);
 

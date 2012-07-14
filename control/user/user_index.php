@@ -74,7 +74,7 @@ function get_pub_list($list) {
 if (in_array ( $ajax, array ('rules', 'withdraw', 'safe' ) )) {
 	$cat_arr = array ('rules' => 100, 'withdraw' => 297, 'safe' => 203 );
 	$art_arr = get_art ( $cat_arr [$ajax] );
-	require keke_tpl_class::template ( "ajax/index" );
+	require Keke_tpl::template ( "ajax/index" );
 	die ();
 }
 $art_notice_arr = get_art ( 17 );
@@ -83,4 +83,4 @@ function get_art($cat_id) {
  					where a.art_cat_id = $cat_id  or b.art_cat_pid like '%{ $cat_id }%' order by a.pub_time desc limit 4";
 	return dbfactory::query ( $sql, 0, 600 );
 }
-require keke_tpl_class::template ( "user/user_" . $view );
+require Keke_tpl::template ( "user/user_" . $view );

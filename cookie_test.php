@@ -6,12 +6,13 @@
  */
 define('IN_KEKE', TRUE);
 include 'app_boot.php';
+$response = Keke_response::getinstance()->send_headers();
+$request = Keke_request::heades();
+var_dump($response,$request);
 
 
-// $s = Cookie::set('test_cookie', 'test_cookie_value,asdfasdfasd',3600);
-$value = Cookie::get('test_cookie');
 
-var_dump($value);
+
 die();
 
 

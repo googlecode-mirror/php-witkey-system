@@ -326,7 +326,8 @@ class Keke extends Keke_core {
 	public static $_style_path;
 	public static $_weibo_attent;
 	public static $_attent_api_open;
-	 
+	//Êä³öÍ·
+	public static $_expose= false; 
 	public static $_db;
  	
 	protected static $_files = array ();

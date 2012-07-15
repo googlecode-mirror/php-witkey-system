@@ -5,7 +5,7 @@ define('IN_KEKE', TRUE);
 include 'app_boot.php';
 
 
-$str = '<!--{include header}-->';
+ 
 
 //$m = strtr($str, array($str=>"Keke_tpl::readtemplate('\\1')"));
 // mbereg_replace($pattern, $replacement, $string, $option);//
@@ -16,4 +16,4 @@ $str = '<!--{include header}-->';
 // preg_match($par, $str,$matches);
 
 
-var_dump($m);
+ 

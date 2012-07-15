@@ -1,4 +1,4 @@
-<!--{template header}-->
+<!--{include header}-->
 <!--首页样式-->  
  <!--内容区 satrt-->
   <div class="wrapper clearfix">
@@ -280,20 +280,7 @@
                           <!--文字链接动态 start-->
                             <div class="txt_list clearfix" id="div_map_1">
                              <ul>
-                                {loop $feed_list $v}
-									<!--{eval $info = unserialize($v['title']);}-->
-                                    <li class="item clearfix">
-                                      <div class="avatar fl_l">
-                                         <a href="{$info['feed_username']['url']}" ><!--{userpic($v['uid'],'small')}--></a>
-									  </div>
-                                      <div class="item_info">
-                                         <p><a href="{$info['feed_username']['url']}"><strong>{$v['username']}</strong></a>
-											{$info['action']['content']}
-											 <a href="{$info['event']['url']}">{$info['event']['content']}</a></p>
-                                         <p><!--{eval echo Keke::feed_time ($v['feed_time'] );}--> </p>
-                                       </div>
-                                     </li>
-								{/loop}
+                                
                               </ul>
                              </div>
                             <!--文字链接动态 end-->
@@ -809,4 +796,4 @@
 
 </script>
 
-<!--{template footer}-->
+<!--{include footer}-->

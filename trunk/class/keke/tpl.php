@@ -4,7 +4,7 @@
 	模板缓存在 data/tpl_c目录下。
 */
 
-class Keke_tpl{
+class Keke_tpl {
 	static function parse_code($tag_code, $tag_id, $tag_type = 'tag') {
 		global $_K;
 		$tplfile = 'db/' . $tag_type . '_' . $tag_id;
@@ -50,7 +50,7 @@ class Keke_tpl{
 	public static function parse_rule($template, $tpl = null) {
 		global $_K;
 		($_K['inajax'])&&ob_start();
-		$template = preg_replace ( '/\<\!\-\-\{include\s+([\w_\/]+)\}\-\-\>/ie', "Keke_tpl::readtemplate('\\1')", $template );
+		$template = preg_replace ( '/\<\!\-\-\{include\s+([a-z0-9_\/]+)\}\-\-\>/ie', "Keke_tpl::readtemplate('\\1')", $template );
 		//处理子页面中的代码
 		$template = preg_replace ( '/\<\!\-\-\{include\s+([a-z0-9_\/]+)\}\-\-\>/ie', "Keke_tpl::readtemplate('\\1')", $template );
 		//挂件调用
@@ -69,7 +69,7 @@ class Keke_tpl{
 		//时间处理
 		$template = preg_replace ( '/\<\!\-\-\{date\((.+?),(.+?)\)\}\-\-\>/ie', "Keke_tpl::datetags('\\1','\\2')", $template );
 		//货币显示
-		$template = preg_replace ( '/\{c\:(.+?)(,?)(\d?)\}/ie', "keke_curren_class::currtags('\\1','\\3')", $template );
+		$template = preg_replace ( '/{c\:(.+?)(,?)(\d?)\}/ie', "keke_curren_class::currtags('\\1','\\3')", $template );
 		
 		//头像处理
 		$template = preg_replace ( '/\<\!\-\-\{userpic\((.+?),(.+?)\)\}\-\-\>/ie', "Keke_tpl::userpic('\\1','\\2')", $template );
@@ -80,10 +80,10 @@ class Keke_tpl{
 		$var_regexp = '((\\\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)(\[[a-zA-Z0-9_\-\.\"\'\[\]\$\x7f-\xff]+\])*)';
 		$template = preg_replace ( '/\<\!\-\-\{(.+?)\}\-\-\>/s', "{\\1}", $template );
 		$template = preg_replace ( '/([\n\r]+)\t+/s', "\\1", $template );
-		$template = preg_replace ( '/(\\\$[a-zA-Z0-9_\[\]\'\"\$\x7f-\xff]+)\.([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)/s', "\\1['\\2']", $template );
-		$template = preg_replace ( '/\{(\\\$[a-zA-Z0-9_\[\]\'\"\$\.\x7f-\xff]+)\}/s', "<?=\\1?>", $template );
-		$template = preg_replace ( '/$var_regexp/es', "Keke_tpl::addquote('<?=\\1?>')", $template );
-		$template = preg_replace ( '/\<\?\=\<\?\=$var_regexp\?\>\?\>/es', "Keke_tpl::addquote('<?php echo \\1;?>')", $template );
+		$template = preg_replace ( '/(\\\$[a-zA-Z0-9_\[\]\'\"\$\x7f-\xff]+)\.([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)/ies', "\\1['\\2']", $template );
+		$template = preg_replace ( "/\{(\\\$[a-zA-Z0-9_\[\]\'\"\$\.\x7f-\xff]+)\}/is", "<?=\\1?>", $template );
+		$template = preg_replace ( "/$var_regexp/es", "Keke_tpl::addquote('<?=\\1?>')", $template );
+		$template = preg_replace ( "/\<\?\=\<\?\=$var_regexp\?\>\?\>/es", "Keke_tpl::addquote('<?php echo \\1;?>')", $template );
 		//逻辑
 		$template = preg_replace ( '/\{elseif\s+(.+?)\}/ies', "Keke_tpl::stripvtags('<?php } elseif(\\1) { ?>','')", $template );
 		$template = preg_replace ( '/\{else\}/is', "<?php } else { ?>", $template );
@@ -172,7 +172,7 @@ class Keke_tpl{
 	}
 	
 	static function stripvtags($expr, $statement = '') {
-		$res = preg_replace ( '/\<\?\=(\\\$.+?)\?\>/s', "\\1", $expr );
+		$res = preg_replace ( '/\<\?\=(\\\$.+?)\?\>/ies', "\\1", $expr );
 		$expr = str_replace ( "\\\"", "\"", $res );
 		$statement = str_replace ( "\\\"", "\"", $statement );
 		return $expr . $statement;
@@ -278,6 +278,8 @@ class Keke_tpl{
 		$content = ob_get_contents ();
 		$preg_searchs = $preg_replaces = $str_searchs = $str_replaces = array();
 		if ($_K ['is_rewrite'] == 1) {
+			/*$preg_searchs[]  = '/\<a(\s*{if\s*)?href\=\"/iU';
+			$preg_replaces [] = '<a \\1';*/
 			
 			$preg_searchs [] = '/\<a\s*href\=\"index\.php\?(.+?)\#(\w+)\"/ie';
 			$preg_replaces [] = 'Keke_tpl::rewrite_url(\'index-\',\'\\1\',\'\\2\')';
@@ -308,7 +310,7 @@ class Keke_tpl{
 		}
 		Keke_tpl::obclean ();
 		($_K ['inajax']) and self::xml_out ( $content );
-		//header ( 'Content-Type: text/html; charset='.CHARSET);
+		header ( 'Content-Type: text/html; charset='.CHARSET);
 		echo $content;
 	}
 	static function obclean() {
@@ -347,3 +349,4 @@ class Keke_tpl{
 	}
 
 }
+?>

@@ -158,3 +158,5 @@ function get_art($cat_id) {
 }
  
 require Keke_tpl::template ( $do );
+
+var_dump(Keke::execute_time());

@@ -25,7 +25,7 @@ class Keke_validation implements ArrayAccess {
 	}
 	//验证数组禁止写入
 	public function offsetSet($index, $newval){
-		throw new keke_exception('valid array is read only!');
+		throw new Keke_exception('valid array is read only!');
 	}
 	//按键取值
 	public function offsetGet($index){
@@ -37,7 +37,7 @@ class Keke_validation implements ArrayAccess {
 	}
 	//删除指定元素
 	public function offsetUnset($index){
-		throw new keke_exception('valid array can not delete');
+		throw new Keke_exception('valid array can not delete');
 	}
 	/**
 	 * 复制当前对象，并重新赋值

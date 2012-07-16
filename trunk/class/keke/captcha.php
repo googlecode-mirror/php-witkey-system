@@ -91,7 +91,7 @@ abstract class Keke_captcha {
 		
 		// 加载配置，否则抛出异常
 		if (! is_array ( $config = Keke_captcha_config::get ( $group ) ))
-			throw new keke_exception ( 'Keke_captcha group not defined in :group configuration', array (
+			throw new Keke_exception ( 'Keke_captcha group not defined in :group configuration', array (
 					':group' => $group 
 			) );
 			
@@ -99,7 +99,7 @@ abstract class Keke_captcha {
 		if ($group !== 'default') {
 			 
 			if (! is_array ( $default = Keke_captcha_config::get ( 'default' ) ))
-				throw new keke_exception ( 'Keke_captcha group not defined in :group configuration', array (
+				throw new Keke_exception ( 'Keke_captcha group not defined in :group configuration', array (
 						':group' => 'default' 
 				) );
 				
@@ -122,7 +122,7 @@ abstract class Keke_captcha {
 			Keke_captcha::$config ['background'] = str_replace ( '\\', '/', realpath ( $config ['background'] ) );
 			
 			if (! is_file ( Keke_captcha::$config ['background'] ))
-				throw new keke_exception ( 'The specified file, :file, was not found.', array (
+				throw new Keke_exception ( 'The specified file, :file, was not found.', array (
 						':file' => Keke_captcha::$config ['background'] 
 				) );
 		}
@@ -133,7 +133,7 @@ abstract class Keke_captcha {
 			
 			foreach ( $config ['fonts'] as $font ) {
 				if (! is_file ( Keke_captcha::$config ['fontpath'] . $font ))
-					throw new keke_exception ( 'The specified file, :file, was not found.', array (
+					throw new Keke_exception ( 'The specified file, :file, was not found.', array (
 							':file' => Keke_captcha::$config ['fontpath'] . $font 
 					) );
 			}
@@ -308,7 +308,7 @@ abstract class Keke_captcha {
 	public function image_create($background = NULL) {
 		// 判断是否支持GD2
 		if (! function_exists ( 'imagegd2' ))
-			throw new keke_exception ( 'Keke_captcha.requires_GD2' );
+			throw new Keke_exception ( 'Keke_captcha.requires_GD2' );
 			
 		// 创建一个背景图 (black)
 		$this->image = imagecreatetruecolor ( Keke_captcha::$config ['width'], Keke_captcha::$config ['height'] );

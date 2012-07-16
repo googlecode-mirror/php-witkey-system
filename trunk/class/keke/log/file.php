@@ -6,11 +6,11 @@ class Keke_log_file extends Keke_log_write {
 	/**
 	 * 设置日志的存放目录
 	 * @param string $directory
-	 * @throws keke_exception
+	 * @throws Keke_exception
 	 */
 	public function __construct($directory = 'data/log') {
 		if (! is_dir ( $directory ) or ! is_writable ( $directory )) {
-			throw new keke_exception ( 'Directory ?dir must be writable', array ('?dir' => keke_debug::path ( $directory ) ) );
+			throw new Keke_exception ( 'Directory ?dir must be writable', array ('?dir' => keke_debug::path ( $directory ) ) );
 		}
  		$this->_directory = realpath ( $directory ) . DIRECTORY_SEPARATOR;
 	}

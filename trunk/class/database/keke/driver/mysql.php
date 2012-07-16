@@ -264,7 +264,7 @@ final class Keke_driver_mysql extends Keke_database {
 	public function escape($value) {
 		$this->_link or $this->dbconnection ();
 		if (($value = mysql_real_escape_string ( ( string ) $value, $this->_link )) === FALSE) {
-			throw new keke_exception ( ':error', array (':error' => mysql_error ( $this->_link ) ), mysql_errno ( $this->_link ) );
+			throw new Keke_exception ( ':error', array (':error' => mysql_error ( $this->_link ) ), mysql_errno ( $this->_link ) );
 		}
 		return "'$value'";
 	}
@@ -280,7 +280,7 @@ final class Keke_driver_mysql extends Keke_database {
 		return ($this->_link) ? mysql_errno ( $this->_link ) : mysql_errno ();
 	}
 	public function halt($message = '', $sql = '') {
-		throw new keke_exception ( ':error [ :query ]', array ('msg' => $message, ':error' => mysql_error ( $this->_link ), ':query' => $sql ), mysql_errno ( $this->_link ) );
+		throw new Keke_exception ( ':error [ :query ]', array ('msg' => $message, ':error' => mysql_error ( $this->_link ), ':query' => $sql ), mysql_errno ( $this->_link ) );
 		exit ();
 	}
 }

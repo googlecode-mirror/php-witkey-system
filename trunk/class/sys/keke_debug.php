@@ -218,7 +218,7 @@ class keke_debug {
 		return $output;
 	}
 }
-class keke_exception extends Exception {
+class Keke_exception extends Exception {
 	public static $php_errors = array (
 			E_ERROR => 'Fatal Error',
 			E_USER_ERROR => 'User Error',
@@ -232,14 +232,14 @@ class keke_exception extends Exception {
 	public static $error_view = '';
 	public function __construct($message, array $variables = NULL, $code = 0) {
 		if (defined ( 'E_DEPRECATED' )) {
-			keke_exception::$php_errors [E_DEPRECATED] = 'Deprecated';
+			Keke_exception::$php_errors [E_DEPRECATED] = 'Deprecated';
 		}
 		$this->code = $code;
 		$message = strtr ( $message, $variables );
 		parent::__construct ( $message, ( int ) $code );
 	}
 	public function __toString() {
-		return keke_exception::text ( $this );
+		return Keke_exception::text ( $this );
 	}
 	public static function handler(Exception $e) {
 		try {
@@ -250,8 +250,8 @@ class keke_exception extends Exception {
 			$line = $e->getLine ();
 			$trace = $e->getTrace ();
 			if ($e instanceof ErrorException) {
-				if (isset ( keke_exception::$php_errors [$code] )) {
-					$code = keke_exception::$php_errors [$code];
+				if (isset ( Keke_exception::$php_errors [$code] )) {
+					$code = Keke_exception::$php_errors [$code];
 				}
 				if (version_compare ( PHP_VERSION, '5.3', '<' )) {
 					for($i = count ( $trace ) - 1; $i > 0; -- $i) {
@@ -262,7 +262,7 @@ class keke_exception extends Exception {
 					}
 				}
 			}
-			$error = keke_exception::text ( $e );
+			$error = Keke_exception::text ( $e );
 			$data ['type'] = $type;
 			$data ['code'] = $code;
 			$data ['message'] = $message;
@@ -286,7 +286,7 @@ class keke_exception extends Exception {
 			die ();
 		} catch ( Exception $e ) {
 			ob_get_level () and ob_clean ();
-			echo keke_exception::text ( $e ), "\n";
+			echo Keke_exception::text ( $e ), "\n";
 			exit ( 1 );
 		}
 	}

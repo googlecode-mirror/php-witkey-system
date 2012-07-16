@@ -32,7 +32,7 @@ class keke_finance_class {
 			try{
 				self::$_userinfo = Keke::get_user_info ( $uid );
 			}catch (Exception $e){
-				keke_exception::handler($e);
+				Keke_exception::handler($e);
 			}
 		} else {
 			die ( $_lang['uid_parameter_no_value'] );
@@ -121,7 +121,7 @@ class keke_finance_class {
 			$fo->setFina_time ( time () );
 			$res = $fo->create_keke_witkey_finance ();
 			}catch (Exception $e){
-				keke_exception::handler($e);
+				Keke_exception::handler($e);
 			}
 			//unique_num 这个字段现在已经不用了
 			/* $sql = "update " . TABLEPRE . "witkey_finance set unique_num = CONCAT('88',LPAD(LAST_INSERT_ID(),8,'0')) where fina_id = last_insert_id() ";

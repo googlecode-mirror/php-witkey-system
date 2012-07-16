@@ -1,18 +1,18 @@
 <?php defined ( "IN_KEKE" ) or die ( "Access Denied" );
 
-class keke_exception extends Exception {
+class Keke_exception extends Exception {
 	public static $php_errors = array (E_ERROR => 'Fatal Error', E_USER_ERROR => 'User Error', E_PARSE => 'Parse Error', E_WARNING => 'Warning', E_USER_WARNING => 'User Warning', E_STRICT => 'Strict', E_NOTICE => 'Notice', E_RECOVERABLE_ERROR => 'Recoverable Error' );
 	public static $error_view = '';
 	public function __construct($message, array $variables = NULL, $code = 0) {
 		if (defined ( 'E_DEPRECATED' )) {
-			keke_exception::$php_errors [E_DEPRECATED] = 'Deprecated';
+			Keke_exception::$php_errors [E_DEPRECATED] = 'Deprecated';
 		}
 		$this->code = $code;
 		$message =empty($variables)? $message:strtr ( $message, $variables );
 		parent::__construct ( $message, ( int ) $code );
 	}
 	public function __toString() {
-		return keke_exception::text ( $this );
+		return Keke_exception::text ( $this );
 	}
 	public static function handler(Exception $e) {
 		try {
@@ -23,8 +23,8 @@ class keke_exception extends Exception {
 			$line = $e->getLine ();
 			$trace = $e->getTrace ();
 			if ($e instanceof ErrorException) {
-				if (isset ( keke_exception::$php_errors [$code] )) {
-					$code = keke_exception::$php_errors [$code];
+				if (isset ( Keke_exception::$php_errors [$code] )) {
+					$code = Keke_exception::$php_errors [$code];
 				}
 				if (version_compare ( PHP_VERSION, '5.3', '<' )) {
 					for($i = count ( $trace ) - 1; $i > 0; -- $i) {
@@ -35,10 +35,10 @@ class keke_exception extends Exception {
 					}
 				}
 			}
-			$error = keke_exception::text ( $e );
+			$error = Keke_exception::text ( $e );
 			if(is_object(Keke::$_log)){
 				Keke::$_log->add(log::ERROR, $error);
-				$strace = keke_exception::text($e)."\n--\n" . $e->getTraceAsString();
+				$strace = Keke_exception::text($e)."\n--\n" . $e->getTraceAsString();
 				Keke::$_log->add(log::STRACE, $strace);
                 //生成日志文件
 				Keke::$_log->write();
@@ -57,7 +57,7 @@ class keke_exception extends Exception {
 			die ();
 		} catch ( Exception $e ) {
 			ob_get_level () and ob_clean ();
-			echo keke_exception::text ( $e ), "\n";
+			echo Keke_exception::text ( $e ), "\n";
 			exit ( 1 );
 		}
 	}

@@ -23,14 +23,14 @@ final class Keke_cache_sqlite extends Keke_cache {
 			$database_schema = $this->_config ['schema'];
 			
 			if ($database_schema === NULL) {
-				throw new keke_exception ( 'Database schema not found in sqlite3 Cache configuration' );
+				throw new Keke_exception ( 'Database schema not found in sqlite3 Cache configuration' );
 			}
 			
 			try {
 				// 创建设表结构
 				self::$_db->query ( $this->_config['schema']);
 			} catch ( PDOException $e ) {
-				throw new keke_exception( 'Failed to create new SQLite caches table with the following error : :error', array (':error' => $e->getMessage () ) );
+				throw new Keke_exception( 'Failed to create new SQLite caches table with the following error : :error', array (':error' => $e->getMessage () ) );
 			}
 		}
 	
@@ -43,7 +43,7 @@ final class Keke_cache_sqlite extends Keke_cache {
 	   try{
 	   	    $statement->execute(array(':id'=>self::sanitize_id($id)));
 	   }catch (PDOException $e){
-	   		throw new keke_exception('there was error by local sqlite3 cache query :error',array(':error'=>$e->getMessage()));
+	   		throw new Keke_exception('there was error by local sqlite3 cache query :error',array(':error'=>$e->getMessage()));
 	   }
 	   //结果为空时
 	   if(!$result = $statement->fetch(PDO::FETCH_OBJ)){
@@ -84,7 +84,7 @@ final class Keke_cache_sqlite extends Keke_cache {
 		try{
 			$statement->execute(array(':id'=>$this->sanitize_id($id),':cache'=>$data,':expiration'=>$expire));
 		}catch(PDOException $e){
-			throw new keke_exception('there was sqlite query :error',array(':error'=>$e->getMessage()));
+			throw new Keke_exception('there was sqlite query :error',array(':error'=>$e->getMessage()));
 		}
 		return (bool)$statement->rowCount();
 	}
@@ -93,7 +93,7 @@ final class Keke_cache_sqlite extends Keke_cache {
 	   try{
 	   	 	$statement->execute(array(':id'=>$this->sanitize_id($id)));
 	   }catch (PDOException $e){
-	   	     throw new keke_exception('there was sqlite query :error',array(':error'=>$e->getMessage()));
+	   	     throw new Keke_exception('there was sqlite query :error',array(':error'=>$e->getMessage()));
 	   }
 	   return (bool) $statement->rowCount();
 	}
@@ -102,27 +102,27 @@ final class Keke_cache_sqlite extends Keke_cache {
 	  try{
 	   	 	$statement->execute();
 	   }catch (PDOException $e){
-	   	     throw new keke_exception('there was sqlite query :error',array(':error'=>$e->getMessage()));
+	   	     throw new Keke_exception('there was sqlite query :error',array(':error'=>$e->getMessage()));
 	   }
 	   var_dump($statement->rowCount());die();
 	   return (bool) $statement->rowCount();
 	}
 	/**
 	 * 垃圾回收
-	 * @throws keke_exception
+	 * @throws Keke_exception
 	 */
 	public function gc(){
 		$statement = self::$_db->prepare('delete from caches where expiration<:expiration');
 		try{
 			$statement->execute(array(':expiration'=>time()));
 		}catch(PDOException $e){
-			throw new keke_exception('there was sqlite query :error',array(':error'=>$e->getMessage()));
+			throw new Keke_exception('there was sqlite query :error',array(':error'=>$e->getMessage()));
 		}
 	}
 	/**
 	 * 判断缓存是否存在
 	 * @param string $id
-	 * @throws keke_exception
+	 * @throws Keke_exception
 	 * @return boolean
 	 */
 	protected function exists($id){
@@ -130,7 +130,7 @@ final class Keke_cache_sqlite extends Keke_cache {
 		try{
 			$statement->execute(array(':id'=>$this->sanitize_id($id)));
 		}catch (PDOException $e){
-			throw new keke_exception('there was sqlite query :error',array(':error'=>$e->getMessage()));
+			throw new Keke_exception('there was sqlite query :error',array(':error'=>$e->getMessage()));
 		}
 		return (bool)$statement->fetchAll();
 	}

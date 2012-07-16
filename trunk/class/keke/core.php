@@ -147,7 +147,7 @@ class Keke_core extends Keke_base {
 				return true;
 			}
 		 }catch (Exception $e){
-			throw new keke_exception($e);
+			throw new Keke_exception($e);
 		} 
 		return false;
  	}
@@ -266,7 +266,7 @@ class Keke_core extends Keke_base {
 	static function error_handler($code, $error, $file = NULL, $line = NULL) {
 		if (error_reporting () && $code !== 8) {
 			ob_get_level () and ob_clean ();
-			keke_exception::handler ( new ErrorException ( $error, $code, 0, $file, $line ) );
+			Keke_exception::handler ( new ErrorException ( $error, $code, 0, $file, $line ) );
 		}
 		return TRUE;
 	}
@@ -287,7 +287,7 @@ class Keke_core extends Keke_base {
 				E_USER_ERROR 
 		) )) {
 			ob_get_level () and ob_clean ();
-			keke_exception::handler ( new ErrorException ( $error ['message'], $error ['type'], 0, $error ['file'], $error ['line'] ) );
+			Keke_exception::handler ( new ErrorException ( $error ['message'], $error ['type'], 0, $error ['file'], $error ['line'] ) );
 			exit ( 1 );
 		}
 	}
@@ -363,7 +363,7 @@ class Keke extends Keke_core {
 		
 		self::register_autoloader ();
 		if (( int ) KEKE_DEBUG == 1) {
-			set_exception_handler ( array (	'keke_exception','handler' ) );
+			set_exception_handler ( array (	'Keke_exception','handler' ) );
 			set_error_handler ( array ('Keke_core','error_handler' ) );
 		}
 		register_shutdown_function ( array ('Keke_core','shutdown_handler') );

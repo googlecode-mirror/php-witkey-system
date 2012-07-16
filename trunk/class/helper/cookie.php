@@ -53,7 +53,7 @@ class Cookie {
 	public static function salt($name, $value){
 		// 验证salt值
 		if ( ! Cookie::$_salt){
-			throw new keke_exception('salt not empty,plase set salt');
+			throw new Keke_exception('salt not empty,plase set salt');
 		}
 		// 确定用户代码
 		$agent = isset($_SERVER['HTTP_USER_AGENT']) ? strtolower($_SERVER['HTTP_USER_AGENT']) : 'unknown';

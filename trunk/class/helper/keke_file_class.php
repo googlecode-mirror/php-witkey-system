@@ -50,7 +50,7 @@ class keke_file_class {
 			$data_obj->fwrite ( $data, strlen ( $data ) );
 			$data_obj->fflush ();
 		} catch ( Exception $e ) {
-			throw new keke_exception ( $e->getMessage () );
+			throw new Keke_exception ( $e->getMessage () );
 		}
 		
 		unset ( $file, $data_obj,$data);

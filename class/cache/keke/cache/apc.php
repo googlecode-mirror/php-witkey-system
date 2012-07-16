@@ -3,7 +3,7 @@
 final class Keke_cache_apc extends Keke_cache {
 	function __construct() {
 		if(!extension_loaded('apc')) { 
-			throw new keke_exception( "apc_cache dosn't load ,please loaded!");
+			throw new Keke_exception( "apc_cache dosn't load ,please loaded!");
 		}
 	}
 	public function get($id) {

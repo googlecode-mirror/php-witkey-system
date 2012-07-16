@@ -4,7 +4,7 @@ final class Keke_cache_eacc extends Keke_cache {
 	
 	function __construct(){
 		if(!function_exists('eaccelerator_get')){ 
-			throw new keke_exception("eaccelerator dosn't load ,please loaded!");
+			throw new Keke_exception("eaccelerator dosn't load ,please loaded!");
 		}
 	}
 	public function get($id) {

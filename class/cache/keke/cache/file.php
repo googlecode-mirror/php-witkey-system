@@ -58,7 +58,7 @@ class Keke_cache_file extends Keke_cache {
 				$data = $file_obj->openFile ();
 				$php_tag = $data->fgets();
 				if ($data->eof ()) {
-					throw new keke_exception ( __METHOD__ . 'file was error or empty!' );
+					throw new Keke_exception ( __METHOD__ . 'file was error or empty!' );
 				}
 				// 读取缓存文件的内容
 				$cache = '';
@@ -108,7 +108,7 @@ class Keke_cache_file extends Keke_cache {
 		if (! $dir->isDir ()) {
 			// 创建目录
 			if (! mkdir ( $this->path, 07777, TRUE )) {
-				throw new keke_exception ( __METHOD__ . ' unable to create directory : :directory', array (
+				throw new Keke_exception ( __METHOD__ . ' unable to create directory : :directory', array (
 						':directory' => $this->path 
 				) );
 			}

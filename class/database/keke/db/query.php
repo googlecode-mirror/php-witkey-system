@@ -39,7 +39,7 @@ class Keke_db_query {
 			// ·µ»Øsql×Ö·û´®
 			return $this->compile ( Database::instance () );
 		} catch ( Exception $e ) {
-			return keke_exception::text ( $e );
+			return Keke_exception::text ( $e );
 		}
 	}
 	/**

@@ -41,7 +41,7 @@ abstract class Keke_cache{
 	abstract public function del($id);
 	abstract public function del_all();
 	final public function __clone() {
-		throw new keke_exception( 'Cloning of Cache objects is forbidden' );
+		throw new Keke_exception( 'Cloning of Cache objects is forbidden' );
 	}
 	public function get_id(){
 		return self::$_id;

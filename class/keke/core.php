@@ -137,6 +137,7 @@ class Keke_core extends Keke_base {
 	public static function autoload($class_name) {
 		try{
 		    $class_name = strtolower($class_name);
+		    
 			$path = str_replace ( '_', '/', $class_name);
 			if (strpos ( $class_name, '_class' )) {
 				$path = str_replace ( '/class', '_class', $path );
@@ -540,6 +541,7 @@ class Keke extends Keke_core {
 		$helper =S_ROOT.$dir.DIRECTORY_SEPARATOR.'helper'.DIRECTORY_SEPARATOR.$class_name;
 		$sys =  S_ROOT.$dir.DIRECTORY_SEPARATOR.'sys'.DIRECTORY_SEPARATOR.$class_name;
 		$model = S_ROOT.$dir.DIRECTORY_SEPARATOR.'model'.DIRECTORY_SEPARATOR.$class_name;
+		$control = S_ROOT.$file;
 		$models = array ('cache','database');
 		$found = false;
 		if (is_file ( $class )) {
@@ -550,6 +552,8 @@ class Keke extends Keke_core {
 			$found = $sys;
 		}elseif(is_file($helper)){
 			$found = $helper;
+		}elseif(is_file($control)){
+			$found = $control;
 		} elseif(isset($models)) {
 			foreach ( $models as $d ) {
 				$class = S_ROOT . $dir . DIRECTORY_SEPARATOR . $d.DIRECTORY_SEPARATOR.$file ;

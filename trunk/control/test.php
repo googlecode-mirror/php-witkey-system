@@ -2,7 +2,10 @@
 class Control_test {
 	 
 	function __construct() {
-		echo __CLASS__.'_test';
+		//echo __CLASS__.'_test';
+	}
+	function index(){
+		echo 'index';
 	}
 	
 }

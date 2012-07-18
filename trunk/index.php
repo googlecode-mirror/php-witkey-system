@@ -43,4 +43,7 @@ if(isset($_COOKIE['log_account'])){
 	$log_account = $_COOKIE['log_account'];
 } */
 //$_K[siteurl] = "http://192.168.1.69/kppw20"; 
-include S_ROOT . './control/' . $do . '.php';
+$kekezu->init_control($m,$a);
+var_dump(keke::execute_time());
+
+// include S_ROOT . './control/' . $do . '.php';

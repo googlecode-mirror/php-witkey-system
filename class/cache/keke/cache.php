@@ -39,6 +39,13 @@ abstract class Keke_cache{
 	abstract public function get($id);
 	abstract public function set($id, $val, $expire = null);
 	abstract public function del($id);
+	/**
+	 * »º´æ×·¼Ó
+	 * @param maxid $id
+	 * @param maxid $val
+	 */
+	
+	abstract public function add($id,$val);
 	abstract public function del_all();
 	final public function __clone() {
 		throw new Keke_exception( 'Cloning of Cache objects is forbidden' );

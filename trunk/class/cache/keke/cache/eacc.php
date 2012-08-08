@@ -21,9 +21,9 @@ final class Keke_cache_eacc extends Keke_cache {
         }
 		return eaccelerator_put($id,$value,$expire);
 	}
-	/*public function add($id, $value, $expire = 0, $dependency = null) {
-	    return (NULL === eaccelerator_get($id)) ? $this->set($id,$value,$expire) : false;
-	}*/
+	public function add($id, $value, $expire = 0, $dependency = null) {
+	    return  false;
+	}
 	public function del($id) {
 		return eaccelerator_rm($id);
 	}

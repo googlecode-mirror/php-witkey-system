@@ -134,6 +134,9 @@ final class Keke_cache_sqlite extends Keke_cache {
 		}
 		return (bool)$statement->fetchAll();
 	}
+	public  function add(){
+		
+	}
 
 }
 

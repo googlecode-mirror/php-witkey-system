@@ -182,6 +182,9 @@ class Keke_cache_file extends Keke_cache {
 	function gc(){
 		$this->deldir ( $this->path,true);
 	}
+	function add($id,$val){
+		
+	}
 
 }
 

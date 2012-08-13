@@ -1,4 +1,4 @@
-<?php
+<?php  defined ( 'IN_KEKE' ) or exit('Access Denied');
 /**
  * this not free,powered by keke-tech
  * @version kppw 2.0

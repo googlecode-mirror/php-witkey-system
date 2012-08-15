@@ -606,10 +606,7 @@ class Keke extends Keke_core {
 			unset($GLOBALS[$name]);
 		}
 	}
-	public static function init_control($m,$a){
-		new Keke_route($m, $a);
-		
-	}
+
 }
 
 $ipath = dirname ( dirname ( dirname ( __FILE__ ) ) ) . DIRECTORY_SEPARATOR . "data" . DIRECTORY_SEPARATOR . "keke_kppw_install.lck";

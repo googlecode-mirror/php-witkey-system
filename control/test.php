@@ -1,10 +1,10 @@
 <?php
 class Control_test {
 	 
-	function __construct() {
-		//echo __CLASS__.'_test';
-	}
+
 	function index(){
+		$a = Database::instance()->get_query_num();
+		var_dump(Keke::execute_time());
 		echo 'index';
 	}
 	

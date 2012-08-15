@@ -1,17 +1,17 @@
 <?php defined ( "IN_KEKE" ) or die ( "Access Denied" );
 class Keke_route {
-	public function __construct($m,$a) {
+	/* public function __construct($m,$a) {
 		empty($m) and $m='index';
 		empty($a) and $a='index';
 		define('ROUTE_M', $m);
 		define('ROUTE_A', $a);
-		$this->init();
-	}
+		$this->init($m);
+	} */
 	
 	/**
 	 * 调用件事
 	 */
-	private function init() {
+	/* private function init() {
 		$controller = $this->load_controller();
 		if (method_exists($controller, ROUTE_A)) {
 		   if(mb_substr(ROUTE_A,0,1,CHARSET) === '_'){
@@ -22,16 +22,32 @@ class Keke_route {
 		} else {
 			exit('Action does not exist.');
 		}
-	}
+	} */
 	
+	public static function run($m,$a){
+		empty($m) and $m='index';
+		empty($a) and $a='index';
+		$classname = 'Control_'.$m;
+		$controller = new $classname;
+		
+		if (method_exists($controller, $a)) {
+			if(mb_substr($a,0,1,CHARSET) === '_'){
+				exit('You are visiting the action is to protect the private action');
+			} else {
+				call_user_func(array($controller, $a));
+			}
+		} else {
+			exit('Action does not exist.');
+		}
+	}
 	/**
 	 * 加载控制器
 	 * @param string $filename
 	 * @param string $m
 	 * @return obj
 	 */
-	private function load_controller() {
+	/* private static  function load_controller() {
 			$classname = 'Control_'.ROUTE_M;
 			return new $classname;
-	}
+	} */
 } 

@@ -44,7 +44,9 @@ if(isset($_COOKIE['log_account'])){
 //$_K[siteurl] = "http://192.168.1.69/kppw20"; 
 //$kekezu->init_control($m,$a);
 
-Keke_route::run($m, $a);
+
+die('ssss');
+//Keke_route::run($m, $a);
 
 //var_dump(keke::execute_time());
 

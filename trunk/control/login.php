@@ -23,7 +23,7 @@ if(isset($log_remember)){
 	} 
 }
 
-if (Keke::submitcheck(isset($formhash))|| isset($login_type) ==3) {
+if (Keke::formcheck(isset($formhash))|| isset($login_type) ==3) {
 	//登录之前的地址
 	 isset($hdn_refer) and $_K['refer'] = $hdn_refer;  
 	 $txt_code = isset($txt_code)?$txt_code:"";

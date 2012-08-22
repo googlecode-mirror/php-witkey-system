@@ -11,7 +11,7 @@
  * @license    http://kohanaphp.com/license
  * @since      3.1.0
  */
-class Keke_Response implements HTTP_Response {
+class Keke_Response implements Keke_HTTP_Response {
 
 	/**
 	 * Factory method to create a new [Response]. Pass properties
@@ -119,7 +119,7 @@ class Keke_Response implements HTTP_Response {
 	 */
 	public function __construct(array $config = array())
 	{
-		$this->_header = new HTTP_Header;
+		$this->_header = new Keke_HTTP_Header;
 
 		foreach ($config as $key => $value)
 		{
@@ -210,7 +210,7 @@ class Keke_Response implements HTTP_Response {
 		}
 		else
 		{
-			throw new Kohana_Exception(__METHOD__.' unknown status value : :value', array(':value' => $status));
+			throw new Keke_exception(__METHOD__.' unknown status value : :value', array(':value' => $status));
 		}
 	}
 
@@ -248,7 +248,7 @@ class Keke_Response implements HTTP_Response {
 		}
 		elseif ($value === NULL)
 		{
-			return Arr::get($this->_header, $key);
+			return $this->_header[$key];
 		}
 		else
 		{
@@ -292,7 +292,7 @@ class Keke_Response implements HTTP_Response {
 		if ($key === NULL)
 			return $this->_cookies;
 		elseif ( ! is_array($key) AND ! $value)
-			return Arr::get($this->_cookies, $key);
+			return $this->_cookies[$key];
 
 		// Handle the set cookie calls
 		if (is_array($key))
@@ -309,12 +309,12 @@ class Keke_Response implements HTTP_Response {
 			{
 				$value = array(
 					'value' => $value,
-					'expiration' => Cookie::$expiration
+					'expiration' => Cookie::$_expiration
 				);
 			}
 			elseif ( ! isset($value['expiration']))
 			{
-				$value['expiration'] = Cookie::$expiration;
+				$value['expiration'] = Cookie::$_expiration;
 			}
 
 			$this->_cookies[$key] = $value;
@@ -402,7 +402,7 @@ class Keke_Response implements HTTP_Response {
 		{
 			if (empty($download))
 			{
-				throw new Kohana_Exception('Download name must be provided for streaming files');
+				throw new Keke_exception('Download name must be provided for streaming files');
 			}
 
 			// Temporary files will automatically be deleted
@@ -411,7 +411,8 @@ class Keke_Response implements HTTP_Response {
 			if ( ! isset($mime))
 			{
 				// Guess the mime using the file extension
-				$mime = File::mime_by_ext(strtolower(pathinfo($download, PATHINFO_EXTENSION)));
+				$mime = keke_file_class::get_mime_by_extension($download);
+				 
 			}
 
 			// Force the data to be rendered if
@@ -446,7 +447,7 @@ class Keke_Response implements HTTP_Response {
 			if ( ! isset($mime))
 			{
 				// Get the mime type
-				$mime = File::mime($filename);
+				$mime = keke_file_class::get_mime_by_extension($filename);
 			}
 
 			// Open the file for reading
@@ -455,7 +456,7 @@ class Keke_Response implements HTTP_Response {
 
 		if ( ! is_resource($file))
 		{
-			throw new Kohana_Exception('Could not read file to send: :file', array(
+			throw new Keke_exception('Could not read file to send: :file', array(
 				':file' => $download,
 			));
 		}
@@ -512,7 +513,7 @@ class Keke_Response implements HTTP_Response {
 		// Manually stop execution
 		ignore_user_abort(TRUE);
 
-		if ( ! Kohana::$safe_mode)
+		if ( ! Keke::$_safe_mode)
 		{
 			// Keep the script running forever
 			set_time_limit(0);
@@ -554,15 +555,15 @@ class Keke_Response implements HTTP_Response {
 			catch (Exception $e)
 			{
 				// Create a text version of the exception
-				$error = Kohana_Exception::text($e);
+				$error = Keke_exception::text($e);
 
-				if (is_object(Kohana::$log))
+				if (is_object(Keke::$_log))
 				{
 					// Add this exception to the log
-					Kohana::$log->add(Log::ERROR, $error);
+					Keke::$_log->add(Log::ERROR, $error);
 
 					// Make sure the logs are written
-					Kohana::$log->write();
+					Keke::$_log->write();
 				}
 
 				// Do NOT display the exception, it will corrupt the output!
@@ -593,11 +594,7 @@ class Keke_Response implements HTTP_Response {
 		// Set the content length
 		$this->headers('content-length', (string) $this->content_length());
 
-		// If Kohana expose, set the user-agent
-		if (Kohana::$expose)
-		{
-			$this->headers('user-agent', 'Kohana Framework '.Kohana::VERSION.' ('.Kohana::CODENAME.')');
-		}
+		  
 
 		// Prepare cookies
 		if ($this->_cookies)

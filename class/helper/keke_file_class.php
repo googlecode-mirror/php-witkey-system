@@ -328,13 +328,13 @@ class keke_file_class {
 	 * @return mixed
 	 */
 	
-	function get_mime_by_extension($file) {
-		$extension = substr ( strrchr ( $file, '.' ), 1 );
-		
-		global $mimes;
+	public static function get_mime_by_extension($file) {
+		$extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+		require_once (S_ROOT . 'config/mimes.php');
+	 
 		
 		if (! is_array ( $mimes )) {
-			if (! require_once (APPPATH . 'config/mimes.php')) {
+			if (! require_once (S_ROOT . 'config/mimes.php')) {
 				return FALSE;
 			}
 		}

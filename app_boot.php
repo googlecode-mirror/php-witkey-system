@@ -21,6 +21,7 @@ isset($_POST) and extract($_POST);
 
 isset($inajax) and $_K['inajax']= $_GET['inajax']; 
 unset ( $uid, $username);
+
 Route::set('default', '(<controller>(/<action>(/<id>)))')
 ->defaults(array(
 		'controller' => 'test',

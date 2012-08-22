@@ -40,7 +40,7 @@ abstract class Keke_Controller {
 	 * @param   Response  $response The request's response
 	 * @return  void
 	 */
-	public function __construct(Request $request, Response $response)
+	public function __construct(Keke_Request $request, Keke_Response $response)
 	{
 		// Assign the request to the controller
 		$this->request = $request;
@@ -57,6 +57,8 @@ abstract class Keke_Controller {
 	 */
 	public function before()
 	{
+		$head = new Control_header($this->request,$this->response);
+		$head->action_index();
 		// Nothing by default
 	}
 

@@ -48,7 +48,7 @@ class Keke_Request  {
 	 * @param   string  $uri URI of the request
 	 * @param   Cache   $cache
 	 * @param   array   $injected_routes an array of routes to use, for testing
-	 * @return  void
+	 * @return  Keke_Request
 	 * @throws  Request_Exception
 	 * @uses    Route::all
 	 * @uses    Route::matches
@@ -84,7 +84,7 @@ class Keke_Request  {
 				else
 				{
 					// Default to GET requests
-					$method = HTTP_Request::GET;
+					$method = Keke_HTTP_Request::GET;
 				}
 
 				if (isset($options['get']))
@@ -181,7 +181,7 @@ class Keke_Request  {
 					Request::$client_ip = $_SERVER['REMOTE_ADDR'];
 				}
 
-				if ($method !== HTTP_Request::GET)
+				if ($method !== Keke_HTTP_Request::GET)
 				{
 					// Ensure the raw body is saved for future use
 					$body = file_get_contents('php://input');
@@ -195,7 +195,7 @@ class Keke_Request  {
 			}
 
 			// Create the instance singleton
-			Request::$initial = $request = new Request($uri, $cache);
+			Request::$initial = $request = new Keke_Request($uri, $cache);
 
 			// Store global GET and POST data in the initial request only
 			$request->protocol($protocol)
@@ -252,6 +252,7 @@ class Keke_Request  {
 	 */
 	public static function detect_uri()
 	{
+		global $_K;
 		if ( ! empty($_SERVER['PATH_INFO']))
 		{
 			// PATH_INFO does not contain the docroot or index
@@ -295,11 +296,11 @@ class Keke_Request  {
 			{
 				// If you ever see this error, please report an issue at http://dev.kohanaphp.com/projects/kohana3/issues
 				// along with any relevant information about your web server setup. Thanks!
-				throw new Kohana_Exception('Unable to detect the URI using PATH_INFO, REQUEST_URI, PHP_SELF or REDIRECT_URL');
+				throw new Keke_exception('Unable to detect the URI using PATH_INFO, REQUEST_URI, PHP_SELF or REDIRECT_URL');
 			}
 
 			// Get the path from the base URL, including the index file
-			$base_url = parse_url(Kohana::$base_url, PHP_URL_PATH);
+			$base_url = parse_url($_K['base_url'], PHP_URL_PATH);
 
 			if (strpos($uri, $base_url) === 0)
 			{
@@ -307,10 +308,10 @@ class Keke_Request  {
 				$uri = (string) substr($uri, strlen($base_url));
 			}
 
-			if (Kohana::$index_file AND strpos($uri, Kohana::$index_file) === 0)
+			if (strpos($uri, 'index.php') === 0)
 			{
 				// Remove the index file from the URI
-				$uri = (string) substr($uri, strlen(Kohana::$index_file));
+				$uri = (string) substr($uri, strlen('index.php'));
 			}
 		}
 
@@ -752,10 +753,10 @@ class Keke_Request  {
 	 * @uses    Route::all
 	 * @uses    Route::matches
 	 */
-	public function __construct($uri, HTTP_Cache $cache = NULL, $injected_routes = array())
+	public function __construct($uri, Keke_HTTP_Cache $cache = NULL, $injected_routes = array())
 	{
 		// Initialise the header
-		$this->_header = new HTTP_Header(array());
+		$this->_header = new Keke_HTTP_Header(array());
 
 		// Assign injected routes
 		$this->_injected_routes = $injected_routes;
@@ -829,7 +830,7 @@ class Keke_Request  {
 			$this->_params = $params;
 
 			// Apply the client
-			$this->_client = new Request_Client_Internal(array('cache' => $cache));
+			$this->_client = new Keke_Request_Client_Internal(array('cache' => $cache));
 		}
 		else
 		{
@@ -849,7 +850,7 @@ class Keke_Request  {
 			$this->_external = TRUE;
 
 			// Setup the client
-			$this->_client = Request_Client_External::factory(array('cache' => $cache));
+			$this->_client = Keke_Request_Client_External::factory(array('cache' => $cache));
 		}
 	}
 
@@ -893,7 +894,7 @@ class Keke_Request  {
 	public function url($protocol = NULL)
 	{
 		// Create a URI with the current route and convert it to a URL
-		return URL::site($this->uri(), $protocol);
+		return Route::site($this->uri(), $protocol);
 	}
 
 	/**
@@ -936,13 +937,13 @@ class Keke_Request  {
 
 		if (strpos($referrer, '://') === FALSE)
 		{
-			$referrer = URL::site($referrer, TRUE, Kohana::$index_file);
+			$referrer = Route::site($referrer, TRUE, 'index.php');
 		}
 
 		if (strpos($url, '://') === FALSE)
 		{
 			// Make the URI into a URL
-			$url = URL::site($url, TRUE, Kohana::$index_file);
+			$url = Route::site($url, TRUE, 'index.php');
 		}
 
 		if (($response = $this->response()) === NULL)
@@ -1121,16 +1122,16 @@ class Keke_Request  {
 	 */
 	public function execute()
 	{
-		if ( ! $this->_route instanceof Route)
+		if ( ! $this->_route instanceof Keke_Route)
 		{
-			throw new HTTP_Exception_404('Unable to find a route to match the URI: :uri', array(
+			throw new Keke_exception('Unable to find a route to match the URI: :uri', array(
 				':uri' => $this->_uri,
 			));
 		}
 
-		if ( ! $this->_client instanceof Request_Client)
+		if ( ! $this->_client instanceof Keke_Request_Client)
 		{
-			throw new Request_Exception('Unable to execute :uri without a Kohana_Request_Client', array(
+			throw new Keke_exception('Unable to execute :uri without a Kohana_Request_Client', array(
 				':uri' => $this->_uri,
 			));
 		}
@@ -1233,7 +1234,7 @@ class Keke_Request  {
 	 */
 	public function create_response($bind = TRUE)
 	{
-		$response = new Response(array('_protocol' => $this->protocol()));
+		$response = new Keke_Response(array('_protocol' => $this->protocol()));
 
 		if ($bind)
 		{
@@ -1448,11 +1449,7 @@ class Keke_Request  {
 		// Set the content length
 		$this->headers('content-length', (string) $this->content_length());
 
-		// If Kohana expose, set the user-agent
-		if (Kohana::$expose)
-		{
-			$this->headers('user-agent', 'Kohana Framework '.Kohana::VERSION.' ('.Kohana::CODENAME.')');
-		}
+ 
 
 		// Prepare cookies
 		if ($this->_cookies)
@@ -1501,7 +1498,7 @@ class Keke_Request  {
 		elseif ($value === NULL)
 		{
 			// Act as a getter, single query string
-			return Arr::get($this->_get, $key);
+			return $this->_get[$key];
 		}
 
 		// Act as a setter, single query string
@@ -1535,7 +1532,7 @@ class Keke_Request  {
 		elseif ($value === NULL)
 		{
 			// Act as a getter, single field
-			return Arr::get($this->_post, $key);
+			return  $this->_post[$key];
 		}
 
 		// Act as a setter, single field

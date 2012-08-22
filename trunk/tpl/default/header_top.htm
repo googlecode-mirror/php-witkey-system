@@ -2,9 +2,9 @@
 <html>
 <head>
 <meta charset="{$_K['charset']}">
-<title>{$page_title}</title>
-<meta name="keywords" content="{$page_keyword}">
-<meta name="description" content="{$page_description}">
+<title>{$_L['page_title']}</title>
+<meta name="keywords" content="{$_K['page_keyword']}">
+<meta name="description" content="{$_K['page_description']}">
 <meta name="generator" content="{$_lang['keke_pub']} {KEKE_VERSION}" />
 <!-- 手版专用代码 -->
 <meta name="viewport" content="width=320,initial-scale=1, user-scalable=no">
@@ -12,14 +12,14 @@
 <meta name="apple-mobile-web-app-status-bar-style” content=black" /> 
 <!-- 手版专用代码  end 授权用户专用   -->
 <meta name="author" content="kekezu" />
-<meta name="copyright" content="{$basic_config['copyright']}" />
+<meta name="copyright" content="{$_K['copyright']}" />
 <link rel="shortcut icon" href="resource/img/system/logo.ico" />
 <link rel="apple-touch-icon" href="resource/img/system/logo.ico"/>
 <script type="text/javascript">
 	var SITEURL= "{$_K['siteurl']}";
 	var SKIN_PATH = '{SKIN_PATH}';
-	var LANG       = '{$language}';
-	var INDEX      = '{$do}';
+	var LANG       = "{$_K['language']}";
+	var INDEX      = "{$_K['control']}";
 </script>
 <link href="{$_K['siteurl']}/resource/css/reset.css" rel="stylesheet">
 <!--公用样式-->
@@ -54,23 +54,23 @@
 	In.add('rating',{path:"resource/js/jqplugins/starrating/jquery.rating.js",type:'js'}); 
 	In.add('metaData',{path:"resource/js/jqplugins/starrating/jquery.MetaData.js",type:'js'}); 
 	In.add('lavalamp',{path:"resource/js/jqplugins/lavalamp/jquery.lavalamp-1.3.5.min.js",type:'js'});
-	In.add('tipsy',{path:"resource/js/jqplugins/tipsy/jquery.tipsy.js",type:'js'});
+	In.add('tipsy',{path:"{$_K['siteurl']}/resource/js/jqplugins/tipsy/jquery.tipsy.js",type:'js'});
 	In.add('autoIMG',{path:"resource/js/jqplugins/autoimg/jQuery.autoIMG.min.js",type:'js'});
  	In.add('slides',{path:"resource/js/jqplugins/slides.min.jquery.js",type:'js'});
 	In.add('ajaxfileupload',{path:"resource/js/system/ajaxfileupload.js",type:'js'});
 	In.add('header_top',{path:"resource/js/system/header_top.js",type:'js',rely:['mouseDelay']}); 
 	In.add('lazy',{path:"resource/js/system/lazy.js",type:'js'});
 	//css异步加载预定义
-	In.add('css_tipsy',{path:"resource/js/jqplugins/tipsy/tipsy.css",type:'css'});
-	In.add('css3buttons',{path:"{SKIN_PATH}/theme/{$_K['theme']}/css/button/stylesheets/css3buttons.css",type:'css'}); 
-	In.add('css_task',{path:"{SKIN_PATH}/theme/{$_K['theme']}/css/task.css",type:'css'});
+	In.add('css_tipsy',{path:"{$_K['siteurl']}/resource/js/jqplugins/tipsy/tipsy.css",type:'css'});
+	In.add('css3buttons',{path:"{$_K['siteurl']}/{SKIN_PATH}/theme/{$_K['theme']}/css/button/stylesheets/css3buttons.css",type:'css'}); 
+	In.add('css_task',{path:"{$_K['siteurl']}/{SKIN_PATH}/theme/{$_K['theme']}/css/task.css",type:'css'});
 	 
     In.add('css_rating',{path:"resource/js/jqplugins/starrating/jquery.rating.css",type:'css'});
 	In.add('pcas',{path:"resource/js/system/PCASClass.js",type:'js'});
   		
 	//css异步加载
  
-	In('css_tipsy','css3buttons');
+	In('css3buttons');
 	
 	
 </script>
@@ -86,7 +86,7 @@
         </div>
         <div id="ajaxwaitid">
         	<div>
-        	<img src="{SKIN_PATH}/theme/{$_K['theme']}/img/system/loading.gif" alt="loading"/>
+        	<img src="{$_K['siteurl']}/{SKIN_PATH}/theme/{$_K['theme']}/img/system/loading.gif" alt="loading"/>
 			{$_lang['request_processing']}
 			</div>
 		</div>
@@ -102,7 +102,7 @@
         <div class="container_24 clearfix">
         	<!--logo start-->
             <hgroup class="grid_5 logo">
-             	 <h1><a href="index.php"><img src="{SKIN_PATH}/theme/{$_K['theme']}/img/style/{$basic_config['web_logo']}" title="{$_K['html_title']}" alt="{$_K['html_title']}"></a></h1>
+             	 <h1><a href="index.php"><img src="{$_K['siteurl']}/{SKIN_PATH}/theme/{$_K['theme']}/img/style/{$_K['web_logo']}" title="{$_K['html_title']}" alt="{$_K['html_title']}"></a></h1>
             </hgroup>
             <!--logo end-->
             

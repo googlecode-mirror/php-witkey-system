@@ -394,6 +394,7 @@ class Keke extends Keke_core {
 
 		$this->init_out_put ();
 		$this->init_lang ();
+		$this->init_model();
 
 		self::$_log = log::instance()->attach(new keke_log_file());
 		if (!isset($_SESSION['auid']) and Keke::$_sys_config ['is_close'] == 1 && substr ( $_SERVER ['PHP_SELF'], - 24 ) != '/control/admin/index.php') {

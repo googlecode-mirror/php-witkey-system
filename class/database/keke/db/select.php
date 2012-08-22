@@ -73,7 +73,7 @@ class Keke_db_select extends Keke_db_query {
 		$this->_query_list ['having'] = $having;
 		return $this;
 	}
-	public function cached($lifetime = NULL) {
+	public function cached($lifetime = NULL, $force = FALSE) {
 		if ($lifetime === NULL) {
 			// Ä¬ÈÏ»º´æÊ±¼ä
 			$lifetime = Cache::DEFAULT_CACHE_LIFE_TIME;

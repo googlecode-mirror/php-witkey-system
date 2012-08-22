@@ -16,10 +16,12 @@ $_K['base_url'] = '/kppw_google';
 $exec_time_traver = Keke::exec_js('get');
 (!isset($exec_time_traver)||$exec_time_traver<time()) and $exec_time_traver = true or $exec_time_traver = false;
 
-isset($_GET) and extract($_GET);
-isset($_POST) and extract($_POST);
+//isset($_GET) and extract($_GET);
+//isset($_POST) and extract($_POST);
 
-isset($inajax) and $_K['inajax']= $_GET['inajax']; 
+isset($inajax) and $_K['inajax']= $_GET['inajax'];
+isset($ajaxmenu) and $_K['ajaxmenu'] = $_GET['ajaxmenu'];
+ 
 unset ( $uid, $username);
 
 Route::set('default', '(<controller>(/<action>(/<id>)))')

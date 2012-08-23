@@ -57,8 +57,7 @@ abstract class Keke_Controller {
 	 */
 	public function before()
 	{
-		$head = new Control_header($this->request,$this->response);
-		$head->action_index();
+		 
 		// Nothing by default
 	}
 

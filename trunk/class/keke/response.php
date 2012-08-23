@@ -588,7 +588,7 @@ class Keke_Response implements Keke_HTTP_Response {
 		if ( ! $this->_header->offsetExists('content-type'))
 		{
 			// Add the default Content-Type header if required
-			$this->_header['content-type'] = Kohana::$content_type.'; charset='.Kohana::$charset;
+			$this->_header['content-type'] = Keke::$_content_type.'; charset='.CHARSET;
 		}
 
 		// Set the content length

@@ -1,11 +1,22 @@
 <?php defined ( 'IN_KEKE' ) or exit('Access Denied');
 
-class Control_en extends Controller{
+class Control_test_link extends Controller{
 	
+	/**
+	 * 系统初始化
+	 */
 	function action_index(){
 		global $_K,$_lang;
-		require Keke_tpl::template('en');
+		//$link_arr = Model::factory('witkey_link')->query('`link_id`,`link_name`,`link_url`',300);
+		//var_dump($link_arr);
+		//$sql = sprintf("select link_id,link_name,link_url from %switkey_link" ,TABLEPRE);
+		//Database::instance()->query($sql,Database::SELECT,1);
+		//$img =  Keke_captcha::instance('black')->render(false);
+		require Keke_tpl::template('test/link');
 	}
+	/**
+	 * 添加友连接
+	 */
 	function action_add(){
 		global $_K;
 		$p = Keke_validation::factory($_POST)->rule('email', 'Keke_valid::email',array(':value',$_POST['email']));

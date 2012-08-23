@@ -391,14 +391,14 @@ abstract class Keke_captcha {
 	
 	/**
 	 * 输出验证码
-	 *  html 的调用是index.php?do=captcha
+	 *  html 的调用是index.php/do=captcha
 	 * @param $html boolean  输出html,否则输出图片
 	 * @return mixed Image, void
 	 */
 	public function image_render($html) {
 		
 		if ($html === TRUE) {
-			return '<img src="index.php?do=captcha" width="' . Keke_captcha::$config ['width'] . '" height="' . Keke_captcha::$config ['height'] . '" id="Keke_captcha" class="Keke_captcha" />';
+			return '<img src="'.BASE_URL.'/index.php/captcha" width="' . Keke_captcha::$config ['width'] . '" height="' . Keke_captcha::$config ['height'] . '" id="Keke_captcha" class="Keke_captcha" />';
 		}
 		header ( "Expires: Sun, 1 Jan 2000 12:00:00 GMT" );
 		header ( "Last-Modified: " . gmdate ( "D, d M Y H:i:s" ) . "GMT" );

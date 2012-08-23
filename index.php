@@ -28,17 +28,20 @@ $_K['style_path'] = Keke::$_style_path;
 $_K['style_path']=SKIN_PATH;
 
  
-if(strpos($_SERVER['REQUEST_URI'],'?')){
-	include S_ROOT . 'control/' . $do . '.php';
-	die;
-}else{
+//if(strpos($_SERVER['REQUEST_URI'],'?')){
+	//include S_ROOT . 'control/' . $do . '.php';
+	//die;
+//}else{
 // 	$_K['control'] = Request::initial()->controller();
+	//var_dump($request);die;
     $request = Request::factory();
     $_K['control'] = $request->initial()->controller();
     $_K['action'] = $request->initial()->action();
     $_K['directory'] = $request->initial()->directory();
     keke_lang_class::package_init("index");
     keke_lang_class::loadlang($_K['control']);
-	$request->execute()->send_headers()->body();
-	die();
-}
+    
+	$request->execute();
+	 
+	die;
+//}

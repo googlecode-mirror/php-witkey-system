@@ -3,11 +3,6 @@
  * Request and response wrapper. Uses the [Route] class to determine what
  * [Controller] to send the request to.
  *
- * @package    Kohana
- * @category   Base
- * @author     Kohana Team
- * @copyright  (c) 2008-2011 Kohana Team
- * @license    http://kohanaframework.org/license
  */
 class Keke_Request  {
 
@@ -252,7 +247,7 @@ class Keke_Request  {
 	 */
 	public static function detect_uri()
 	{
-		global $_K;
+		 
 		if ( ! empty($_SERVER['PATH_INFO']))
 		{
 			// PATH_INFO does not contain the docroot or index
@@ -300,7 +295,7 @@ class Keke_Request  {
 			}
 
 			// Get the path from the base URL, including the index file
-			$base_url = parse_url($_K['base_url'], PHP_URL_PATH);
+			$base_url = parse_url(BASE_URL, PHP_URL_PATH);
 
 			if (strpos($uri, $base_url) === 0)
 			{
@@ -560,6 +555,7 @@ class Keke_Request  {
 	{
 		// Load routes
 		$routes = (empty($routes)) ? Route::all() : $routes;
+		
 		$params = NULL;
 
 		foreach ($routes as $name => $route)
@@ -780,10 +776,15 @@ class Keke_Request  {
 		// external pages.
 		if (Request::$initial === NULL OR strpos($uri, '://') === FALSE)
 		{
+			global  $_K;
 			// Remove trailing slashes from the URI
 			$uri = trim($uri, '/');
-
+			if($uri==='index.php'){
+				$uri = '';
+			}
+			 
 			$processed_uri = Request::process_uri($uri, $this->_injected_routes);
+			 
 
 			// Return here rather than throw exception. This will allow
 			// use of Request object even with unmatched route
@@ -1135,7 +1136,7 @@ class Keke_Request  {
 				':uri' => $this->_uri,
 			));
 		}
-
+       
 		return $this->_client->execute($this);
 	}
 
@@ -1192,7 +1193,7 @@ class Keke_Request  {
 	{
 	    if ($this->_response === NULL)
 		{
-			throw new Request_Exception('No response yet associated with request - cannot auto generate resource ETag');
+			throw new Keke_exception('No response yet associated with request - cannot auto generate resource ETag');
 		}
 
 		// Generate a unique hash for the response
@@ -1206,7 +1207,7 @@ class Keke_Request  {
 	 * @return  Response
 	 * @return  void
 	 */
-	public function response(Response $response = NULL)
+	public function response(Keke_Response $response = NULL)
 	{
 		if ($response === NULL)
 		{

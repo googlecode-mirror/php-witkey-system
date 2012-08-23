@@ -278,8 +278,7 @@ class Keke_tpl {
 		$content = ob_get_contents ();
 		$preg_searchs = $preg_replaces = $str_searchs = $str_replaces = array();
 		if ($_K ['is_rewrite'] == 1) {
-			/*$preg_searchs[]  = '/\<a(\s*{if\s*)?href\=\"/iU';
-			$preg_replaces [] = '<a \\1';*/
+
 			
 			$preg_searchs [] = '/\<a\s*href\=\"index\.php\?(.+?)\#(\w+)\"/ie';
 			$preg_replaces [] = 'Keke_tpl::rewrite_url(\'index-\',\'\\1\',\'\\2\')';
@@ -310,8 +309,8 @@ class Keke_tpl {
 		}
 		Keke_tpl::obclean ();
 		($_K ['inajax']) and self::xml_out ( $content );
-		header ( 'Content-Type: text/html; charset='.CHARSET);
-		echo $content;
+		//header ( 'Content-Type: text/html; charset='.CHARSET);
+		 echo  $content;
 	}
 	static function obclean() {
 		global $_K;

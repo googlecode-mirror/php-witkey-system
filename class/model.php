@@ -12,7 +12,8 @@ abstract  class Model {
 		$this->_tablename = '`'.DBNAME.'`.`'.TABLEPRE . $table_name.'`';
 	}
 	/**
-	 * @param string $table_name 表名
+	 * @param string $table_name 表名 ,不需要加表前缀
+	 * ,表名为keke_witkey_link 可以写为wiktye_link
 	 * @return Model
 	 */
   	public static function factory($table_name){
@@ -21,7 +22,7 @@ abstract  class Model {
       	
 	} 
     /**
-     * @return Model
+     * @return Model  
      */
 	abstract public function setWhere($where);
 	/**
@@ -32,7 +33,13 @@ abstract  class Model {
 	abstract public function setData($array);
 	abstract public function create();
 	abstract public function update();
-	abstract public function query();
+	/**
+	 * 
+	 * @param string $fields  查询字段，默认值为*
+	 * @param int  $cache_time  null 表示默认缓存,0 表示不缓存，1，表示缓存1秒钟
+	 * @param array
+	 */
+	abstract public function query($fields,$cache_time);
 	abstract public function del();
 	abstract public function count();
 	

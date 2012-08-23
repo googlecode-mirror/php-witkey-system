@@ -32,9 +32,8 @@ class Keke_core extends Keke_base {
 	 *        	{'alert_info'=>'提示','alert_right'=>'成功','confirm_info'=>'确认','alert_error'=>'错误'}
 	 *        	非ajax {'info'=>默认,'success'=>'成功','warning'=>'警告'}
 	 */
-	static function show_msg($title = "", $url = "", $time = 3, $content = "", $type = 'info') {
+	static function show_msg($title = "", $url = "",  $content = "", $type = 'info',$time = 3) {
 		global $_K, $basic_config, $username, $uid, $nav_list, $_lang;
-		
 		$r = $_REQUEST;
 		$msgtype = $type;
 		require Keke_tpl::template ( 'show_msg' );

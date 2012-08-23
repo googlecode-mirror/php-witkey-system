@@ -953,46 +953,7 @@ function ele_valid(id){
 		return false;
 	})
 }
-//二次验证，替换validElement
-function keke_valid(obj){
-	var msgArea = obj.getAttribute("msgArea");
-	var msg = obj.getAttribute('msg');
-	var tips = obj.getAttribute('tips');
-	var value="",url="";
-	url = obj.getAttribute('ajax');
-	var id = obj.getAttribute("id"); 
-	var aa = validElement(obj);
-	if (!aa) {
-			$("#" + msgArea).removeClass('valid_info').removeClass('valid_success').addClass('valid_error');
-			$("#" + msgArea).html("<font>"+msg+"</font>");
-			return false;
-	} else {
-		//ajax验证t
-		if(url){
-			    value = $(obj).val();
-				url +=  value;
-				$.post(url,function(data){
-					if($.trim(data)==true){
-						$("#" + msgArea).removeClass('valid_info').removeClass('valid_error').addClass('valid_success');
-						$("#" + msgArea).html('<font>&nbsp;</font>');
-						return true; 
-					}else{
-						$("#" + msgArea).removeClass('valid_info').removeClass('valid_success').addClass('valid_error');
-						$("#" + msgArea).html('<font>'+data+'</font>'); 
-						return false;  
-					}
-				})
-				//return false;
-			}else{
-					$("#" + msgArea).removeClass('valid_info').removeClass('valid_error').addClass('valid_success');
-					$("#" + msgArea).html("<font>&nbsp;</font>");
-					return true;
-				}
-				
-			}
-       
  
-} 
 
  
  

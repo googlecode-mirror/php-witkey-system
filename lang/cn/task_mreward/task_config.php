@@ -1,6 +1,6 @@
 <?php
 /**
- * 多人悬赏任务管理
+ * 多人悬赏
  * @version kppw2.0
  * @author deng
  * 2011-12-22

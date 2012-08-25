@@ -76,7 +76,7 @@
 		'congratulations' => ' 恭喜，您的',
 		'account_setting_complete' => '帐户设置完成',
 		'continue_bind' => '继续绑定',
-		'as_opening_a_bank_card' => '身份开通的银行账户',
+		'bank_account' => '银行账户',
 		'no_auth_company_click_here' => '你暂未进行企业认证、无法关联企业账号。点击',
 		'company_auth' => '进行企业认证',
 		'info_tips' => '消息提示',

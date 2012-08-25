@@ -16,10 +16,13 @@ $lang = array(
 
 /*get_password.htm*/
       'find_back_password'=>'找回密码',
+		'username_input_error'=>'用户名输入错误',
+		'please_input_register_account'=>'请输入用户名',
       'no_account_now_register'=>'无账号？现在去注册',
       'has_account_now_login'=>'有账号？现在去登录',
       'account_not_null'=>'手机号/email/用户名不为空!',
-      'method'=>' 方式：',
+		'account'=>'账&nbsp;&nbsp;&nbsp;&nbsp;户',
+      'method'=>'找回方式：',
       'your_input_email_format_error'=>'您输入的邮箱格式不正确',
       'please_input_email_address'=>'请输入邮箱地址',
       'you_input_phone_format_error'=>'您输入的手机号码格式不正确',
@@ -34,7 +37,8 @@ $lang = array(
       'tenxun_wb'=>'腾讯微博',
       'sina_wb'=>'新浪微博',
       'sohu_wb'=>'搜狐微博',
-      'wangyi_wb'=>'网易微博'
+      'wangyi_wb'=>'网易微博',
+	  'change_another_group'=>'换一组',
 
 
 

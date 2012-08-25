@@ -16,10 +16,12 @@ $lang = array(
 		'ac' => '认证中心',
 		'bank_account' => '银行账户',
 		'trade_rights' => '交易维权',
-		'toolbox' => '工具箱',
+		
 		'safe_set'=>'安全设置',
 		'accoutn_bind'=>'账号绑定',
 		'space_set'=>'空间设置',
+		'select_file'=>'选择文件',
+		'save_setting'=>'保存设置',
 	/* user_basic.php */
 		'realname_ect_setting' => '用户名,真实姓名,个人简介等设置',
 		'contact_type' => '联系方式',
@@ -29,6 +31,7 @@ $lang = array(
 		'personal_exp' => '个人经历',
 		'exp_ect_description' => '学业经历,从业经历等描述',
 		'skill_cert' => '技能证书',
+		'Qualifications_cert'=>'资质证书',
 		'skill_cert_setting' => '技能证书设置',
 		'basics_edit_success' => '基本信息修改成功',
 		'basics_edit_fail' => '基本信息修改失败',
@@ -93,7 +96,7 @@ $lang = array(
 		'upload_cert' => '上传证书,支持格式:.gif、.jpg、.jpeg、.png',
 		'cert_name'=>'证书名称',
 		'cert_pic'=>'证书图片：',
-		'cert_name_can_not_be_none'=>'证书名称不得为空,2-20字!',
+		'cert_name_can_not_be_none'=>'证书名不得为空!',
 		'skill_name_example'=>'如:英语四级证书',
 	/* user_basic_contact.htm */	
 		'fill_in_your_own_email' => '填写自己的常用邮箱',

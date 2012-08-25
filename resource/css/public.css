@@ -19,10 +19,10 @@
  --------------------------------------*/
 .content_d{ border:1px solid #e0e0e0}
 	.box .step_progress{ background-color:#f5f5f5; border:1px solid #fff; border-width:1px 0; margin:0; }
-		.box .step_progress .step{ width:215px; margin:10px 0 10px 19px; color:#999}
+		.box .step_progress .step{ width:215px; padding:10px 0 10px 19px !important; margin:0; color:#999}
 		
 			.box .step_progress .step.selected .icon32.pub{ background-position:0px 0; color:#fff}
-			#ie6 .box .step_progress .step .icon32{width:32px;background-color:#fff;}
+			#ie6 .box .step_progress .step .icon32{width:32px;}
 
 			#ie6 .box .step_progress .step.selected .icon32{ background-color:#2F549F; }
 			
@@ -41,12 +41,13 @@
 				 .primary_nav ul li{ margin-right:10px}
 					 .primary_nav1 .icon16{ float:none;}
 					 .primary_nav ul li a:active .icon32.task_model, .primary_nav ul li a.selected .icon32.task_model{ background-position:0 0; color:#2f549f;}
-					 .icon32.task_model{ background-position:32px 0; color:#fff;}
+					 .icon32.task_model{ background-position:32px 0; color:#fff; text-indent:0 !important}
 					#ie6  .task_model{ width:32px; height:32px; overflow:hidden; background:#000;}
 					#ie6  a:active .task_model,
 					,#ie6  .selected .task_model{background:#fff;}
-					
-	
+					.red_style .step_progress .selected{color:#999 !important;}
+					.red_style .step_progress .step .icon32{ float:left; margin-right:10px; color:#000; margin-top:5px; vertical-align:top; background:#EC9292; border-radius:20px;}
+					#ie6 .red_style .step_progress .step.selected .icon32{background:#951A1A;}
 /* 1.0 任务流程图 */
 .pic_model.single{ background-position:0 0; width:640px; height:50px;}
 .pic_model{ background-image:url(../img/style/puc_model.png); margin:auto}
@@ -65,7 +66,7 @@
 .file{position:absolute;font-size:20px;filter:alpha(opacity=0);-moz-opacity:0;opacity:0;z-index:1}
 
 /* 2.0 客服 */
-.online_service{}
+.deep_style .online_service{color:#999;}
 	.online_service p{ margin:0; }
 	
 /* 2.1稿件交付 */
@@ -196,3 +197,13 @@
 .p_img img{ width:120px; height:120px;cursor:pointer;}
 .goods_title{ text-align:center; line-height:20px; height:40px; overflow:hidden;}
 .button_box{ background:#f4f4f4; text-align:center;}
+
+#ie6 select{ float:left; margin-right:5px;}
+#ie6 button{display:block;}
+#ie6 input{ background:#FBFBFB; color:#333; border:1px solid #D8D8D8; border-left-color:#A8A8A8; border-top-color:#A8A8A8; border-radius:2px; padding:6px 4px 6px 10px; font:12px Arial, Helvetica, sans-serif;}
+#ie6 .search_input{border:none;}
+#ie6 #agreement{border:none;}
+/* 问号图片  */
+.ask_img{ margin-top:7px;}
+/* 元文字对齐 */
+.word_yuan{ margin-top:1px; margin-left:5px;}

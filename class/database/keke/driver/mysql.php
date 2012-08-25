@@ -13,6 +13,7 @@ final class Keke_driver_mysql extends Keke_database {
 	private $_link;
 	private $_lifetime;
 	private $_last_query_id = null;
+	private $_return_insert_id = FALSE;
 	private $_query_num = 0;
 	private $_query_sql = array ();
 	private static  $_query_list = array ();
@@ -65,7 +66,7 @@ final class Keke_driver_mysql extends Keke_database {
 			while ( ($rs = $this->fetch_array ()) != false ) {
 				$result [] = $rs;
 			}
-		} elseif ($type === Database::INSERT) {
+		} elseif ($type === Database::INSERT and (bool)$this->_return_insert_id===TRUE) {
 			$result = mysql_insert_id ( $this->_link );
 		} else {
 			$result = mysql_affected_rows ( $this->_link );
@@ -131,6 +132,7 @@ final class Keke_driver_mysql extends Keke_database {
 		if (empty ( $insertsqlarr )) {
 			return false;
 		}
+		$this->_return_insert_id = $returnid;
 		$fs = array_keys ( $insertsqlarr );
 		$vs = array_values ( $insertsqlarr );
 		array_walk ( $fs, array ($this, 'quote_field' ) );
@@ -139,14 +141,15 @@ final class Keke_driver_mysql extends Keke_database {
 
 		$method = $replace ? 'replace' : 'insert';
 		$sql = $method . ' into ' . $tablename . ' (' . $field . ') values (' . $value . ')';
-		$res = $this->query ( $sql, Database::INSERT );
+		return $res = $this->query ( $sql, Database::INSERT );
+		/* var_dump($res);die;
 		if ($returnid && ! $replace) {
 			// insert_id
 			return $res [0];
 		} else {
 			// affected_rows
 			return $res [1];
-		}
+		} */
 	
 	}
 	public function update($tablename, $setsqlarr, $wheresqlarr) {

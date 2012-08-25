@@ -22,6 +22,10 @@ $lang = array (
        'comment_original_content'=>'评论原文内容',
        'switch_user_login'=>'切换用户登录',
        'not_repeat_the_same_people'=>'不能重复@同一个人',
+	   'modify_mark_info'=>'修改稿件评分',
+	   'has_viewed'=>'雇主已查看',
+	   'not_vies'=>'雇主未查看',
+		'good_rate'=>'好评率：',
 )
 
 ?>

@@ -28,6 +28,11 @@ $(function() {
 			leaveDetail(this);
 		}
 	)
+	$('.sum_content').hover(function(){
+		$(this).css("z-index",2);
+	},function(){
+		$(this).css("z-index",1);
+	});
 	$(".user_info").live("hover",function(){
 		hoverDetail(this);
 	});
@@ -95,7 +100,7 @@ function checkCommentInner(obj,e){
 		num<0?num=0:'';
 	var Remain = Math.abs(100-num);
 		if(num<=100){
-			$(obj).next().find(".answer_word").text("你还能输入"+Remain+"个字!");
+			$(obj).next().find(".answer_word").text(L.can_input+Remain+L.word);
 		}else{
 			var nt = $(obj).val().toString().substr(0,100);
 			$(obj).val(nt);	
@@ -111,7 +116,7 @@ function taskReqedit() {
 function taskDelay(){
 	if(check_user_login()){
 		if(delay_count>=delay_total){
-			showDialog("延期次数超过"+delay_count+"次,无法继续延期","alert","操作提示");return false;
+			showDialog(L.t_delay_time_over+delay_count+L.t_delay_forbidden,"alert",L.operate_notice);return false;
 		}
 		var url = basic_url+'&op=taskdelay';
 		showWindow('taskdelay',url,'get',0);return false;
@@ -122,28 +127,34 @@ function taskDelay(){
  * @param string obj 当前对象
  * @param int obj_id  对象编号
  */
+var COMM = 0;
 function work_comment(obj,obj_id) {
 	if (check_user_login()) {
 		if(guid!=uid){
-			showDialog("只有雇主才能评论稿件","alert","操作提示");return false;
+			showDialog(L.t_only_master_can_comment_work,"alert",L.operate_notice);return false;
+		}else if(COMM==1){
+			showDialog(L.t_do_not_duplicate_submissions,"alert",L.operate_notice);return false;
+		}else{
+			var url = basic_url+'&op=comment&obj_type=work&obj_id=' + obj_id;
+		
+			var tar_content = $(obj).parent().prev().val();
+				if(tar_content.length>100){
+					showDialog(L.t_reply_over_word_limit,'alert',L.operate_notice);return false;
+				}else if(tar_content.length>0){
+					COMM=1;
+					$.post(url,{tar_content:tar_content},function(json){
+						COMM=0;
+						if(json.status==1){ 
+	             			 var str=$('<div class="comment_item"><a href="index.php?do=space&member_id='+uid+'">'+username+'</a>'+L.at+datePrv+' '+(new Date().toLocaleTimeString())+L.t_comments
+							 +'<span class="db">'+json.data+'</span></div>');
+	             			  str.appendTo($("#work_"+obj_id+"_comment"));
+	             			 $(obj).next().text(L.t_100_word_allow).end().parent().hide().prev().css({height:"23px"}).val(L.t_say_something);
+						}else{
+							showDialog(json.data,'alert',json.msg);return false;
+						}
+					},'json')
+				}
 		}
-		var url = basic_url+'&op=comment&obj_type=work&obj_id=' + obj_id;
-	
-		var tar_content = $(obj).parent().prev().val();
-			if(tar_content.length>100){
-				showDialog("您的回复超过字数限制",'alert','操作提示');return false;
-			}else if(tar_content.length>0){
-				$.post(url,{tar_content:tar_content},function(json){
-					if(json.status==1){ 
-             			 var str=$('<div class="comment_item"><a href="index.php?do=space&member_id='+uid+'">'+username+'</a>于'+datePrv+' '+(new Date().toLocaleTimeString())+'评论:'
-						 +'<span class="db">'+json.data+'</span></div>');
-             			  str.appendTo($("#work_"+obj_id+"_comment"));
-             			 $(obj).next().text("你还能输入100个字!").end().parent().hide().prev().css({height:"23px"}).val("我要说几句...");
-					}else{
-						showDialog(json.data,'alert',json.msg);return false;
-					}
-				},'json')
-			}
 	}
 }
 /**
@@ -152,7 +163,7 @@ function work_comment(obj,obj_id) {
  */
 function workDel(work_id){
 	if (check_user_login()) {
-		showDialog("确认删除此稿件吗?","confirm","操作提示","delConfirm('"+work_id+"')");
+		showDialog(L.t_confirm_delete_this_work,"confirm",L.operate_notice,"delConfirm('"+work_id+"')");
 	}
 }
 /**
@@ -178,8 +189,8 @@ function c_time() {
 				
 				if (ed) {
 					var djs = d_time(ed);
-					var str = "还剩：" + djs[0] + "天" + djs[1] + "小时" + djs[2]
-							+ "分" + djs[3] + "秒";
+					var str = djs[0] + L.day + djs[1] + L.hour + djs[2]
+							+ L.minutes + djs[3] +L.seconds;
 				} else {
 					var str = $(this).attr("title");
 				}
@@ -210,4 +221,16 @@ function comment_tips(obj_id,content){
 function loadMarkAid(obj){
 	ajaxmenu(obj, 250,'1','2','43');
 	return false;
+}
+/**
+ * 操作
+ */
+function misc(t){
+	if(!uid){
+		return false;
+	}
+	showDialog(L.operate_confirm,'confirm',L.operate_notice,function(){
+		var url = SITEURL+'/index.php?do=task&task_id='+task_id+'&view=misc&t='+t;
+		showWindow('misc',url,'get',0);return false;
+	});
 }

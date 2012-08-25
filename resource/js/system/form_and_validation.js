@@ -118,31 +118,40 @@ function checkForm(form,checkAll){
 	if (error_msg_span != undefined && error_msg_span != null) {
 		error_msg_span.innerHTML = "";
 	}
-
+    
 	var eles = form.elements;
- 	
-	var hasError = false;
+ 	var hasError = false;
 	//keke_valid(eles[3]);
 	//return false;
     //遍历所有表元素
  	for(var i=0;i<eles.length;i++){
-        //取出元素declare
- 		var ignore= eles[i].getAttribute("ignore");
- 		if(ignore==null&&ignore!='true'){
-			var limit = eles[i].getAttribute("limit");
-			if(limit != null && limit != ""){
-				if(checkAll){
-					validElement(eles[i]);
-					if(!global_formjs_valid_flag){
-						hasError = true;
+ 		if(typeof(eles[i]).type != 'undefined'){
+	 		var eleType = eles[i].type.toLowerCase();
+	 		if(eleType!='button'&&eleType!='sbumit' &&eleType!='application/x-shockwave-flash' && typeof eleType != 'undefined'){
+	        //取出元素declare
+	 		var ignore= eles[i].getAttribute("ignore");
+		 		if(ignore==null||ignore!='true'){
+					var limit = eles[i].getAttribute("limit");
+					if(limit != null && limit != ""){
+					var ajax  = eles[i].getAttribute("ajax");
+					var valid = 0;
+			 			valid = parseInt(eles[i].getAttribute("valid"));
+			 			valid==1?valid=1:(valid==2?valid=2:'');
+			 			ajax==null?valid=2:'';
+						if(checkAll){
+							validElement(eles[i]);
+							if(!global_formjs_valid_flag){
+								hasError = true;
+							}
+						}else{
+							if(!validElement(eles[i])||valid==1){
+								eles[i].type!='checkbox'?eles[i].focus():'';
+								return false;
+							}
+						}
 					}
-				}else{
-					if(!validElement(eles[i])){
-						eles[i].type!='checkbox'?eles[i].focus():'';
-						return false;
-					}
-				}
-			}
+		 		}
+	 		}
  		}
 	}
 	
@@ -166,7 +175,7 @@ function test_hidden(ele){
 function validElement(ele){
 	
 	
-
+    //隐藏标签不验收，直接返回通过
 	var a = test_hidden(ele);
 
 	if(a==1){
@@ -206,11 +215,13 @@ function validElement(ele){
 		errMsg = (errMsg == null || errMsg == "") ? ele.name+" input error:" + error_msg : errMsg;
 		if(msgSpan !=undefined  && msgSpan != null){
 			msgSpan.innerHTML = "";
-			msgSpan.setAttribute('class','valid_error');
+			msgSpan.setAttribute('class','msg msg_error');
 			msgSpan.innerHTML = '<span>'+errMsg+'</span>';
 		}else{
+			//showDialog(errMsg,'alert','tips');
 			alert(errMsg);
 		}
+		 
 		return false;
 	};
 	// prepared....
@@ -240,6 +251,7 @@ function validElement(ele){
 	if(required&&ele.type=='checkbox'&&ele.checked==false){
 		return setErrMessage(ele," must be choose.");
 	}
+	
 	//值
 	var valu = $.trim(ele.value);
 			ele.value = valu;
@@ -333,7 +345,7 @@ function validElement(ele){
 			case "string":
 				break;
 			default:
-				alert("元素" + ele.name + "值类型配置有误:" + vtype);
+				alert(L.ele + ele.name + L.error_config_val + vtype);
 				return false;
 		}
 		//=============================类型检验结束========================//
@@ -434,6 +446,10 @@ function validElement(ele){
 				
 				return setErrMessage(ele," can't allow contains special character.");
 			}
+		}
+		//ajax判断验证错误
+		if(ele.getAttribute("valid")=='0'){
+			return setErrMessage(ele,"ajax valid failed");
 		}
 	}
 	//============================限制检验完毕=======================//
@@ -556,8 +572,9 @@ function isTel(s){
 * 校验普通电话，除数字外，可用"-"或空格分开
 **/
 function isMobileCN(s){
-	var patrn = /^1[3|5|8]{1}[0-9]{1}[-| ]?\d{8}$/;
+	var patrn = /^1[0-9]{1}[0-9]{1}[-| ]?\d{8}$/;
 	var patrn2 = /^(00852)?[-| ]?[6|9]{1}\d{7}$/;
+
 	return patrn.test(s)||patrn2.test(s);
 }
 
@@ -756,8 +773,10 @@ function isTime(s){
 	return patrn.test(s);
 }
 function toDate(s){
-	var sd=s.split("-");
+	return s.replace("-","");
+	/*var sd=s.split("-");
     return new Date(sd[0],sd[1],sd[2]);
+    */
 }
 /**
 *	是否包含非特殊字符(正常字符包括字母数字，下划线，和点号，空格，@#$% 和双字节)
@@ -868,9 +887,9 @@ function isExtName(obj,isalert,msgType,showTarget){
 	    if(ext_arr.in_array(lastname))
 	    	{return true;}else{
 	    		if(msgType){
-					tipsAppend(showTarget,lastname+'的文件格式不正确!','error','red');
+					tipsAppend(showTarget,lastname+L.file_format_error,'error','red');
 	    		}else{
-	    			showDialog(lastname+'的文件格式不正确!', 'alert', '文件格式错误','',0);
+	    			showDialog(lastname+L.file_format_error, 'alert', L.file_format_error,'',0);
 	    		}return false;
 	    	}
 	}else{
@@ -914,8 +933,8 @@ function ele_valid(id){
 		var value="";
 		var aa = validElement(obj);
 		if (!aa) {
-			$("#" + msgArea).removeClass('valid_info').removeClass('valid_success').addClass('valid_error');
-			$("#" + msgArea).html("<span>"+msg+"</span>");
+			$("#" + msgArea).addClass('msg').removeClass('msg_tips').removeClass('msg_ok');
+			$("#" + msgArea).html("<i></i><span>"+msg+"</span>");
 			return false;
 		} else {
 			//ajax验证
@@ -927,33 +946,31 @@ function ele_valid(id){
 				url +=  value;
 				$.post(url,function(data){
 					if($.trim(data)==true){
-//						$("#" + msgArea).removeClass('valid_info').removeClass('valid_error').addClass('valid_success');
-						$("#" + msgArea).removeClass('valid_info').removeClass('valid_error');
-						$("#" + msgArea).html(' ');
-						$("#hdn_"+id).val(1);
+						$("#" + msgArea).addClass('msg').addClass('msg_ok').removeClass('msg_tips').removeClass('msg_error');
+						$("#" + msgArea).html('<i></i>');
+						$("#"+id).attr("valid",2);
 						return true;
 					}else{
-						$("#" + msgArea).removeClass('valid_info').removeClass('valid_success').addClass('valid_error');
-						$("#" + msgArea).html('<span>'+data+'</span>');
-						$("#hdn_"+id).val(0);
+						$("#" + msgArea).addClass('msg').addClass('msg_error').removeClass('msg_tips').removeClass('msg_ok');
+						$("#" + msgArea).html('<i></i><span>'+data+'</span>');
+						$("#"+id).attr("valid",1);
 						return false;
 					}
 				})
 			}else{
-//				$("#" + msgArea).removeClass('valid_info').removeClass('valid_error').addClass('valid_success');
-				$("#" + msgArea).removeClass('valid_info').removeClass('valid_error');
-				$("#" + msgArea).html(" ");
+				$("#" + msgArea).addClass('msg_ok').removeClass('msg_tips').removeClass('msg_error');
+				$("#" + msgArea).html("<i></i>");
 				return true;	
 			}
 			
 		}
 	}).focus(function(){
-		//$("#" + msgArea).removeClass('valid_success').removeClass('valid_error').addClass('valid_info');
-		//$("#" + msgArea).html("<span>"+tips+"</span>");
+		$("#" + msgArea).addClass('msg').removeClass('msg_ok').removeClass('msg_tips').removeClass('msg_error');
+		$("#" + msgArea).html('');
 		return false;
 	})
 }
- 
+
 
  
  

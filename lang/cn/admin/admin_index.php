@@ -19,4 +19,7 @@ $lang = array(
     'add_faster_operate'=>'添加快捷操作',
     'please_choose_add_faster_operate'=>'请选择待添加快捷方式',
     'delete_faster_operate'=>'移除快捷操作',
+	'refresh'=>'刷新',
+	'clear_cache'=>'清除缓存',
+
 );

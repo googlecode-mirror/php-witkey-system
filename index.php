@@ -41,7 +41,7 @@ $_K['style_path']=SKIN_PATH;
     keke_lang_class::package_init("index");
     keke_lang_class::loadlang($_K['control']);
     
-	$request->execute();
+	$request->execute()->send_headers();
 	 
 	die;
 //}

@@ -31,7 +31,7 @@ abstract class Keke_captcha {
 			'background' => '',
 			'fontpath' => '',
 			'fonts' => array (),
-			'promote' => FALSE 
+			'promote' => false 
 	);
 	
 	/**
@@ -59,7 +59,7 @@ abstract class Keke_captcha {
 	 *        	对象类型(alpha,basic,black,math,riddle,word);
 	 * @return Keke_captcha_basic
 	 */
-	public static function instance($style = 'basic') {
+	public static function instance($w=150,$h=50,$style = 'basic') {
 		if (isset ( Keke_captcha::$instance )) {
 			return Keke_captcha::$instance;
 		}
@@ -69,23 +69,23 @@ abstract class Keke_captcha {
 		$class = 'Keke_captcha_' . $style;
 		
 		// 创建实例
-		Keke_captcha::$instance = $Keke_captcha = new $class ( 'default' );
+		Keke_captcha::$instance = $Keke_captcha = new $class ( 'default',$w,$h );
 		
 		// 关闭实例时更新session
-		register_shutdown_function ( array (
+		 register_shutdown_function ( array (
 				$Keke_captcha,
 				'update_response_session' 
-		) );
+		) ); 
 		
 		return Keke_captcha::$instance;
 	}
 	
-	public function __construct($group = NULL) {
+	public function __construct($group = NULL,$w,$h) {
 		
 		empty ( Keke_captcha::$instance ) and Keke_captcha::$instance = $this;
 		
 		// 设置默认的配置
-		if (! is_string ( $group )) {
+		if ($group=== NULL) {
 			$group = 'default';
 		}
 		
@@ -114,7 +114,13 @@ abstract class Keke_captcha {
 			}
 		}
 		
-		
+	    if($w){
+	    	Keke_captcha::$config['width'] = $w;
+	    }
+	    if($h){
+	    	Keke_captcha::$config['height'] = $h;
+	    }
+	    
 		Keke_captcha::$config ['group'] = $group;
 		
 		// 判断背景图片是否存在
@@ -149,6 +155,7 @@ abstract class Keke_captcha {
 	 * @return void
 	 */
 	public function update_response_session() {
+		
 		// 存取Session 的值
 		$_SESSION ['Keke_captcha_response'] = sha1 ( strtoupper ( $this->response ) );
 	}
@@ -169,7 +176,7 @@ abstract class Keke_captcha {
 		if (Keke_captcha::instance ()->promoted ()){
 			return TRUE;
 		}
-			
+		var_dump($_SESSION);die;	
 		// 结果判断
 		$result = ( bool ) (sha1 ( strtoupper ( $response ) ) === $_SESSION ['Keke_captcha_response']);
 		
@@ -180,10 +187,10 @@ abstract class Keke_captcha {
 			// 验证请求
 			if ($result === TRUE) {
 				//有效次数+1
-				Keke_captcha::instance ()->valid_count ( $_SESSION ['Keke_captcha_valid_count'] + 1 );
+				self::$instance->valid_count ( $_SESSION ['Keke_captcha_valid_count'] + 1 );
 			}else {
 				//无效次数+1
-				Keke_captcha::instance ()->invalid_count ( $_SESSION ['Keke_captcha_invalid_count'] + 1 );
+				self::$instance->invalid_count ( $_SESSION ['Keke_captcha_invalid_count'] + 1 );
 			}
 		}
 		

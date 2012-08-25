@@ -37,6 +37,7 @@ $lang=array(
        'current_status_can_not_submit'=>'当前任务状态无法进行交稿！',
        'current_status_can_not_choose'=>'当前任务状态无法进行选稿！',
        'add_need'=>'补充需求',
+       'edit_add_need'=>'修改补充需求',
        'task_delay'=>'任务延期',
        'task_choose_work'=>'任务选稿', 
        'task_mark'=>'任务评价',

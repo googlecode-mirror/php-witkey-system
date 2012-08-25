@@ -29,7 +29,7 @@ $lang = array(
 	'mulit_unfreeze_success'=>'批量解冻成功！',
 	'mulit_unfreeze_fail'=>'批量解冻失败！',
 /*task_list.htm*/
-	'wbzf_task_manage'=>'微博转发任务管理',
+	'wbzf_task_manage'=>'微博转发',
 	'wbzf_task_list'=>'微博转发任务列表',
 	'haved_pay'=>'已支付赏金',
 	'you_do_certainly'=>'你确定要',

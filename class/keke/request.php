@@ -1318,7 +1318,7 @@ class Keke_Request  {
 	 */
 	public function headers($key = NULL, $value = NULL)
 	{
-		if ($key instanceof HTTP_Header)
+		if ($key instanceof Keke_HTTP_Header)
 		{
 			// Act a setter, replace all headers
 			$this->_header = $key;
@@ -1333,11 +1333,12 @@ class Keke_Request  {
 
 			return $this;
 		}
-
+     
+		
 		if ($this->_header->count() === 0 AND $this->is_initial())
 		{
 			// Lazy load the request headers
-			$this->_header = HTTP::request_headers();
+			$this->_header = Keke_HTTP::request_headers();
 		}
 
 		if ($key === NULL)

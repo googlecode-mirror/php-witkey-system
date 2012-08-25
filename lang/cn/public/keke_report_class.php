@@ -32,4 +32,5 @@ $lang=array(
        'processing'=>'处理中',
        'no_set_up'=>'未成立',
        'has_process'=>'已处理',
+	   'accepted_notice'=>'受理通知',
 );

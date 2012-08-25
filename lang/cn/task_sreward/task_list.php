@@ -29,7 +29,7 @@ $lang = array(
 	'mulit_unfreeze_success'=>'批量解冻成功！',
 	'mulit_unfreeze_fail'=>'批量解冻失败！',
 /*task_list.htm*/
-	'reward_task_manage'=>'单人悬赏任务管理',
+	'reward_task_manage'=>'单人悬赏',
 	'reward_task_list'=>'单人悬赏任务列表',
 	'you_do_certainly'=>'你确定要',
 

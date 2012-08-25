@@ -256,5 +256,10 @@ $(function(){
     $(".box_nav a").tipsy({
         gravity: 'sw'
     });
+    $(".mre_task_kind").tipsy({
+    	gravity:$.fn.tipsy.autoNS,
+    	html:true,
+    	opacity: 1
+    })
 })
 //}

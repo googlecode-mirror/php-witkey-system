@@ -29,7 +29,7 @@
 	    'application_time'=>'申请时间',
 	    'accepts_state'=>'受理状态',
 	    'payment_method'=>'收款方式',
-	    'payment'=>'打款',
+	    'payment'=>'确认打款',
 	    'confirmation'=>'确认要',
 	    'me'=>'么',
 	);

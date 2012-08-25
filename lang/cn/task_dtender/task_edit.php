@@ -10,7 +10,7 @@
 $lang = array(
 //task_edit_htm
 
-	'task_bidding_manage'=>'招标任务管理',
+	'task_bidding_manage'=>'招标',
 	'task_name'=>'任务名',
 	'title_err'=>'错误的标题名',
 	'username_3_12_characters'=>'用户名为3到12个字符',

@@ -20,11 +20,11 @@
 			'fail_and_check_you_account' => '提现申请审核失败', '您的提现申请审核未通过,提现金额已经返还到你的现金帐户请查收！',
 			'audit_withdraw_apply_fail' => '提现申请审核失败',
 			'not_pass_and_check_you_account' => '您的提现申请审核未通过,提现金额已经返还到你的现金帐户请查收！',
-			'delete_audit_withdraw' => '删除提现申请',
-			'delete_audit_withdraw_success' => '提现申请删除成功！',
-			'fail_item_not_exist' => '提现申请不存在，删除失败！',
+			'delete_audit_withdraw' => '提现申请不通过',
+			'delete_audit_withdraw_success' => '提现申请不通过！',
+			'fail_item_not_exist' => '提现申请不存在，不通过失败！',
 			'mulit_review' => '批量审核',
-		
+		'confirm_cash'=>'确认打款',
 		
 		    /* admin_finance_withdraw.htm */
 	       'system_info'=>'系统目前支持支付宝的批量打款功能，您可以针对支付宝的提现申请进行批量打款',
@@ -35,7 +35,8 @@
 	       'processing_time'=>'处理时间',
 	       'withdraw_type'=>'提现类型',
 	       'withdraw_people'=>'提现人',
-	       'withdraw_amount'=>'提现金额',
+	       'real_withdraw_amount'=>'提现金额',
+	       'withdraw_amount'=>'需要打给用户的钱',
 	       'payment_accoun'=>'收款账号',
 	       'collection_name'=>'收款户名',
 	       'withdraw_state'=>'提现状态',

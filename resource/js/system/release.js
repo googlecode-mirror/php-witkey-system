@@ -9,26 +9,26 @@ $(function(){
 	$("#msn").click(function(){
 		$("#ct_msn").toggle();
 	})
-	contact();
-	$(":radio[name='contact_type']").click(function(){$(this).attr("checked","checked");contact()});
+//	contact();
+//	$(":radio[name='contact_type']").click(function(){$(this).attr("checked","checked");contact()});
 	
 	$("#tar_content").blur(function(){
-		contentCheck('tar_content',"任务需求",50,1000);
+		contentCheck('tar_content',L.t_require,50,1000);
 	})
 })
 /**
  * 联系方式清空
  */
-function contact(){
-	var contact_type = parseInt($(":radio[name='contact_type']:checked").val())+0;
-		if(contact_type=='1'){
-			$(".lit_form input:[type='text']").removeAttr("ignore").removeAttr("disabled").val('');
-		}else{
-			$(".lit_form input:[type='text']").each(function(){
-				$(this).attr("disabled","disabled").attr("ignore","true").val($(this).attr("ext"));
-			})
-		}
-}
+//function contact(){
+//	var contact_type = parseInt($(":radio[name='contact_type']:checked").val())+0;
+//		if(contact_type=='1'){
+//			$(".lit_form input:[type='text']").removeAttr("ignore").removeAttr("disabled").val('');
+//		}else{
+//			$(".lit_form input:[type='text']").each(function(){
+//				$(this).attr("disabled","disabled").attr("ignore","true").val($(this).attr("ext"));
+//			})
+//		}
+//}
 /**
  * 获取相应预算范围内的最大天数
  * @param task_cash
@@ -41,8 +41,8 @@ function getMaxDday(task_cash){
 				 $("#txt_task_day").attr("limit","required:true;type:date;than:min;less:"+json.msg).val(json.msg);
 				 $("#max").val(json.msg); 
 				 var min_day = $("#txt_task_day").attr("min_day");
-				 title=" 预计的任务持续天数,当前预算允许最小天数为:"+min_day+"天,最大截止时间："+json.data;
-				 $("#txt_task_day").attr("original-title",title); 
+				 title=L.t_allow_min_day+min_day+L.t_allow_max_day+json.data;
+				 $("#txt_task_day").attr("title",title); 
 				 $("#txt_task_day").attr("max",json.msg); 
 				 $("#txt_task_day").attr("msg",title);
 			}else
@@ -105,7 +105,7 @@ function checkDay(){
 	var day     = parseInt($("#txt_task_day").val())      +0;
 	
 	if(day>max_day){
-		$("#span_task_day").html("<span>当前任务金额允许最大周期为:"+max_day+"天</span>");
+		$("#span_task_day").html("<span>"+L.t_amount_allowable_period+max_day+L.day+"</span>");
 		return false;
 	}else
 		return true;
@@ -115,7 +115,7 @@ function checkDay(){
  */
 function checkAgreement(){
 	if($("#agreement").attr("checked")==false){
-		showDialog("请先同意任务发布协议","alert","操作提示");return false;
+		showDialog(L.t_publishing_agreement,"alert",L.operate_notice);return false;
 	}else return true;
 }
 function stepCheck(model_id){
@@ -131,7 +131,7 @@ function stepCheck(model_id){
 			break;
 		case "step2": 
 			if(i){ 
-				if(contentCheck('tar_content',"任务需求",50,1000)&&checkAgreement()){
+				if(contentCheck('tar_content',L.t_require,50,1000,0,'',editor)&&checkAgreement()){
 					pass = true;
 				}
 				if(model_id==8&&checkAgreement()){
@@ -145,6 +145,7 @@ function stepCheck(model_id){
 			}else{
 				if(i){
 					$("#frm_"+r_step).submit();
+					$("button[name='is_submit']").unbind("click").addClass('disabled');
 				}				
 			}
 			break;
@@ -173,17 +174,6 @@ function check_pub_priv(){
 	})
 }
 /**
- * 上传离焦
- * @returns {Boolean}
- */
-uploadBlur=function(){
-	if(ifOut('upfile','5')&&$("#upload").val()){
-		upload("upload",'att','front','','','task');
-	}else{
-		return false;
-	}
-}
-/**
  * 增值项添加
  * @param obj 当前对象
  * @param action当前动作  add增加/del删除
@@ -199,12 +189,12 @@ function add_payitem(obj,action,item_num){
 	switch(action){
 		case "add":
 			$.post(basic_url,{ajax:"save_payitem",item_id:item_id,item_name:item_name,item_cash:item_cash,item_code:item_code,item_num:item_num},function(json){
-				$("#total").text(json.msg);
+				$("#total").html(json.msg);
 			},'json')
 			break;
 		case "del":
 			$.post(basic_url,{ajax:"rm_payitem",item_id:item_id},function(json){
-					$("#total").text(json.msg);
+					$("#total").html(json.msg);
 			},'json')
 			break;
 	}
@@ -215,33 +205,12 @@ function add_payitem(obj,action,item_num){
  */
 function uploadResponse(json){
 	if($("#"+json.fid).length<1){//判断是否已有同样的li、
-		var file=$('<li class="items" id="'+json.fid+'" style="display:none">'
-                 +'<span>'+json.msg.localname+'</span>'
-                 +'<a href="javascript:;" class="close" onclick="del_file('+json.fid+',\''+json.msg.url+'\')">&times;</a></li>');
-			file.appendTo("#upfile").fadeIn(1000);
-			loadingControl("#upfile li","#loading_"+json.fid,2000);
-			var file_ids = $("#file_ids").val();
-			 if(file_ids){
-				$("#file_ids").val(file_ids+','+json.fid)
-			 }else{	
-				$("#file_ids").val(json.fid);
-				$("#upload").val('');
-			 }
+		var file_ids = $("#file_ids").val();
+		if(file_ids){
+			$("#file_ids").val(file_ids+','+json.fid)
+		}else{	
+			$("#file_ids").val(json.fid);
+		}
 	}
    
-}
-/**
- * 上传附件删除
-	* @param file_id 附件编号
-	* @param filepath 附件路径
-	*/
-function del_file(file_id,filepath){
-	$.getJSON("index.php?do=ajax&view=file&ajax=delete&file_id="+file_id+"&filepath="+filepath,function(json){
-		if(json.status=='1'){
-			var file_ids=$("#file_ids").val().toString();
-				file_ids = file_ids.replace(file_id,'');
-				$("#file_ids").val(file_ids);
-			$("#"+file_id).remove();
-		}
-	})	
 }

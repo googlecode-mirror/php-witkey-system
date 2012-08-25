@@ -12,7 +12,7 @@ $lang=array(
       'spend'=>'使用',
 
 /*admin_payitem_buy.htm*/
-      'buy_spend_payitem_record'=>'购买(使用)记录',
+      'buy_spend_payitem_record'=>'增值服务购买(使用)记录',
       'buy_or_spend_type'=>'购买/使用类型',
       'pay_item_type'=>'付费项类型',
       'spend_time'=>'使用时间',

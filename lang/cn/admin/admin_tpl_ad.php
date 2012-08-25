@@ -10,6 +10,7 @@
  
  	'ads_manage'=>'广告管理',
  	'advertising'=>'广告位',
+ 	'add'=>'添加',
  	'add_advertising'=>'广告位添加',
  	'ads_list'=>'广告列表',
   	'ads_group'=>'广告组',

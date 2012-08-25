@@ -19,5 +19,5 @@ $lang=array(
 		'not_submit_attachment'=>'未提交附件',
 		'view_scheme'=>'查看方案',
 		'you_comfirm_to'=>'你确定要',
-		'only_delete_overdue'=>'只能删除已过期的'
+		'only_delete_overdue'=>'只能删除已过期的',
 );

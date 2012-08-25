@@ -10,7 +10,7 @@
 $lang = array(
 //task_list_htm
 
-	'reward_task_manage'=>'悬赏任务管理',
+	'reward_task_manage'=>'悬赏',
 	'please_choose_task_status'=>'请选择任务状态',
 	'reward_task_list'=>'悬赏任务列表',
 	'recommended'=>'[荐]',

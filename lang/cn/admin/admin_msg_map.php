@@ -12,5 +12,5 @@ $lang = array(
 	'click_apply'=>'点击申请',
 	'baidu_map'=>'百度地图',
 	'enter_baidu_map_api_key'=>'输入百度地图API密钥',
-
+	'baidu_map_description'=>'百度地图v1.3API地址,此地址无须修改,http://api.map.baidu.com/api?v=1.3',
 );

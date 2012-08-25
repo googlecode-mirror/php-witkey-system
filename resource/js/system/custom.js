@@ -2,11 +2,14 @@
 //jQuery
 
     $(function(){
-    	
+		$(".top,.scrollTop").click(function(){
+			$("html,body").animate({scrollTop: $("#pageTop").offset().top});
+		})	
+    		
     	//搜索栏聚焦
     	$(".togg").focus(function(){
     		$(this).removeClass("c999");
-    		if(this.value=='输入任务/商品'){
+    		if(this.value==L.input_task_service){
     			this.value='';
 			}
     		;
@@ -15,9 +18,9 @@
     			this.value==''?this.value=$(this).attr(this.title?'title':'original-title'):'';
     	})
 			$('.operate a,a.prev,a.next,a.small_nav,.border_n a ').not('.nav .operate a').hover(function(){
-				$(this).children('.icon16').addClass("reverse");
+				$(this).children('.icon16').not('.deep_style .icon16,.deep_style .icon32').addClass("reverse");
 				}, function(){
-				$(this).children('.icon16').removeClass("reverse");
+				$(this).children('.icon16').not('.deep_style .icon16,.deep_style .icon32').removeClass("reverse");
 			});
 			//评论鼠标移动事件显示工具栏
 			$(".top1,.comment_item").hover(function(){
@@ -55,7 +58,7 @@
     		tarBlur($(this),event);event.stopPropagation();
     	})
         var tarClick = function(obj,event){
-        	if($(obj).val()=='我要说几句...'){
+        	if($(obj).val()== L.i_want_say){
         		$(obj).val('').css({height:"50px"}).next().show();
         	}
         	event.stopPropagation();
@@ -63,7 +66,7 @@
         var tarBlur = function(obj,event){
         	$("html,body").click(function(event){
         		if(!$(event.target).hasClass("answer-zone")){
-        			$(obj).val('我要说几句...').css({height:"23px"}).next().hide().find(".answer_word").text("你还能输入100个字!");
+        			$(obj).val(L.i_want_say).css({height:"23px"}).next().hide().find(".answer_word").text(L.input_100_words);
         		}
         	})
         }
@@ -78,13 +81,6 @@
         	msghide(s);
         });
 
-        // 显示消息
-        /*function msgshow(ele) {
-        	var t = setTimeout(function() {
-        		ele.slideDown(200);
-        		clearTimeout(t);
-        	}, 400);
-        };*/
         // 关闭消息
         function msghide(ele) {
         	ele.animate({
@@ -96,23 +92,28 @@
         	});
         };
 	
-  
+        // input框
+        $(function(){
+        	
+        	$("input[type=text],input[type=password").addClass("txt_input"),
+        	$("this").removeClass("search_input");
+        });
+     // icon图标
+        $('.deep_style .icon16,.deep_style .icon32').addClass('reverse');
    //返回顶部
-        $('.top').addClass('hidden');
+        
         $.waypoints.settings.scrollThrottle = 30;
         $('#wrapper').waypoint(function(event, direction){
-            $('.top').toggleClass('hidden', direction === "up");
-        }, {
+            $('.top').toggleClass('fadeIn').toggleClass('hidden', direction === "up");
+        },{
             offset: '-1%'
         });
         
       
-        $(".box.model .shop .box_detail .small_list li.item,.case_con").mouseover(function(){
-    		$(this).css('z-index','2');
-    	});
-    	$(".box.model .shop .box_detail .small_list li.item,.case_con").mouseout(function(){
-    		$(this).css('z-index','1');
-    	});
+        $(".box.model .shop .box_detail .small_list li.item,.case_con,.example .text_ov,.goods_words,.goods").hover(
+        		function(){$(this).css('z-index','2');},
+        		function(){$(this).css('z-index','1');}
+    	);
 
     });
     
@@ -141,12 +142,12 @@ var checkall = function(){
 
 }
      //解决select 宣染
-	function jq_select(){
+/*	function jq_select(){
 	$("#reload_indus div.jqTransformSelectWrapper ul li a").click(function(){
 			 $("#indus_id").removeClass("jqTransformHidden").css('display:none');
 			 $("select").jqTransSelect().addClass("jqTransformHidden");
 		});
-	}
+	}*/
 	
 	/**
 	 * 获取任务行业
@@ -157,7 +158,7 @@ var checkall = function(){
 			$.post("index.php?do=ajax&view=indus",{indus_pid: indus_pid}, function(html){
 				var str_data = html;
 				if (trim(str_data) == '') {
-					$("#indus_id").html('<option value="-1"> 请选择子行业 </option>');
+					$("#indus_id").html('<option value="-1"> '+L.select_a_subsector+' </option>');
 				}
 				else {
 					$("#indus_id").html(str_data);
@@ -181,14 +182,43 @@ function checkInner(obj,maxLength,e){
 		len<0?len=0:'';
 	
 	var Remain = Math.abs(maxLength-len);
-//	obj.value = obj.value.substring(0,maxLength);
-	$(obj).blur(function() {
-		obj.value = obj.value.substring(0,maxLength);
-	});
+ 
 	if(maxLength>=len){
        
-        $("#length_show").text("已输入长度:"+len+",还可以输入:"+Remain+"字");
+        $("#length_show").text(L.has_input_length+len+','+L.can_also_input+Remain+L.word);
 	}else{
-		$("#length_show").text("可输入:"+maxLength+"字,已超出长度:"+Remain+"字");
+		$("#length_show").text(L.can_input+maxLength+L.word+','+L.has_exceeded_length+Remain+L.word);
+	}
+}
+
+
+
+/**
+ * 
+ * @param string  form 表单ID或者操作链接
+ * @param int     type 操作类型，为链接时默认为1；为表单时为2；
+ * @param boolean check 是否验证表单。默认为false，需验证请设置为true 
+ */
+function formSub(form,type,check){
+
+	var t      = type=='form'?'form':'url';//操作类型 1为链接型，二为表单型
+	var c      = check==true?true:false;//是否需验证表单 true为验证,默认为false
+	var pass   = true;//默认为通过 ,当表单验证不过时为false;
+	switch(t){
+		case 'url'://链接
+			var url = form;
+			break;
+		case 'form'://表单
+			if(c==true){
+				pass = checkForm(document.getElementById(form));
+			}
+			break;
+	}
+	if(pass==true){
+		if(t=='url'){
+			showWindow('sitesub',url,'get','0');return false;
+		}else{
+			showWindow('sitesub',form,'post','0');return false;
+		}
 	}
 }

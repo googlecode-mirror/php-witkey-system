@@ -11,6 +11,10 @@ define ( "S_ROOT", dirname ( __FILE__ ).DIRECTORY_SEPARATOR);
 ini_set('unserialize_callback_func', 'spl_autoload_call');
 require (dirname ( __FILE__ ) . DIRECTORY_SEPARATOR . 'class/keke/core.php');
 
+/*
+ * 如果网站在子目录下，就写目录名称 ，后面不要加斜杠，
+ * 如果网站在目录就设为空
+*/
 define('BASE_URL', '/kppw_google');
 
 $exec_time_traver = Keke::exec_js('get');
@@ -24,9 +28,24 @@ isset($_GET['ajaxmenu']) and $_K['ajaxmenu'] = $_GET['ajaxmenu'];
  
 unset ( $uid, $username);
 
-Route::set('default', '(<controller>(/<action>(/<id>)))')
+/**
+ * 支持子目录的路由
+ */
+/* Route::set('subdir', '(<directory>(/<controller>(/<action>(/<id>(/<ids>)))))',array
+('ids'=>'.*'))
 ->defaults(array(
-		'controller' => 'test',
-		'action'     => 'index',
-));
+'directory'  => 'test',
+'controller' => 'link',
+'action'     => 'index',
+)); */
+//支持非子目录的路由
+Route::set('default', '(<controller>(/<action>(/<id>(/<ids>))))',array
+('ids'=>'.*'))
+->defaults(array(
+'controller' => 'index',
+'action'     => 'index',
+)); 
+
+
+
 

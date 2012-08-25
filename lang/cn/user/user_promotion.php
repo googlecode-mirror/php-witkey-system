@@ -6,7 +6,6 @@
  * @encoding GBK
  * 2011-12-21 ионГ10:19:30
  */
-  die();
 	$lang = array(
 	/* user_promotion.php */
 		'reg' => 'яШгКв╒╡А',

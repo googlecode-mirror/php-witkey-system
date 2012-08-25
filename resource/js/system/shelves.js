@@ -25,7 +25,7 @@ function showIndus(indus_pid){
 		$.post("index.php?do=ajax&view=indus",{indus_pid: indus_pid}, function(html){
 			var str_data = html;
 			if (trim(str_data) == '') {
-				$("#indus_id").html('<option value="-1"> 请选择子行业 </option>');
+				$("#indus_id").html('<option value="-1"> '+L.select_sub_industry+' </option>');
 			}
 			else {
 				$("#indus_id").html(str_data);
@@ -35,7 +35,7 @@ function showIndus(indus_pid){
 }
 function checkAgreement(){
 	if($("#agreement").attr("checked")==false){
-		showDialog("请先同意商品发布协议","alert","操作提示");return false;
+		showDialog(L.s_publishing_agreement,"alert",L.operate_notice);return false;
 	}else return true;
 }
 function stepCheck(){
@@ -47,7 +47,7 @@ function stepCheck(){
 			break;
 		case "step2":
 			if(i){
-				if(contentCheck('tar_content',"服务描述",5,1000)&&checkAgreement()){
+				if(contentCheck('tar_content',L.s_description,5,1000,0,'',editor)&&checkAgreement()){
 					pass=true;
 				}else{
 					pass=false;
@@ -72,15 +72,6 @@ function stepCheck(){
 	}
 }
 
-uploadBlur1=function(){	
-	if(ifOut('upfile','1')&&$("#upload").val()){	
-	 
-		upload("upload",'service','front','','','service');
-	}else
-		return false;
-}
-
-
 
 /**
  * 增值项添加
@@ -100,14 +91,12 @@ function add_payitem(obj,action,item_num){
 	switch(action){
 		case "add":
 			$.post(basic_url,{ajax:"save_payitem",item_id:item_id,item_name:item_name,item_cash:item_cash,item_code:item_code,item_num:item_num},function(json){
-			 
-				$("#total").text(json.msg);
+				$("#total").html(json.msg);
 			},'json')
 			break;
 		case "del":
 			$.post(basic_url,{ajax:"rm_payitem",item_id:item_id},function(json){
-				
-					$("#total").text(json.msg);
+				$("#total").html(json.msg);
 			},'json')
 			break;
 	}
@@ -117,41 +106,17 @@ function add_payitem(obj,action,item_num){
  * @param json json数据
  */
 function uploadResponse(json){
-	//alert($("#"+json.filename).val().length);
-	//if($("#"+json.filename).length<1){//判断是否已有同样的
 		if(json.msg){
 			att_uploadResponse(json);
 			return false;
 		}
-		var file_path = json.path;	 
-		var file=$('<li class="items" id="'+json.fid+'" style="display:none">'
-                 +'<span>'+json.localname+'</span>'
-                 +'<a href="javascript:;" class="close" onclick="del_file(\''+file_path+'\','+json.fid+');">&times;</a></li>');
-	  
-			file.appendTo("#upfile").fadeIn(1000);
-			loadingControl("#upfile li","#loading_"+json.fid,2000);
-			var file_ids = $("#file_ids").val();
-			if(file_ids){
-				$("#file_ids").val(file_ids+','+file_path);
-			}else{
-				$("#file_ids").val(file_path);
-				$("#more_pic").val(json.size);
-				$("#upload").val('');
-			}	
-			 
+		$("#file_ids").val(json.path); 
 }
 //附件json相应
 function att_uploadResponse(json){
-	var file_path = json.msg.url;	 
-	var file=$('<li class="items" id="'+json.fid+'" style="display:none">'
-             +'<span>'+json.msg.localname+'</span>'
-             +'<a href="javascript:;" class="close" onclick="del_file(\''+file_path+'\','+json.fid+');">&times;</a></li>');
-  
-	file.appendTo("#file_upfile").fadeIn(1000);
-	loadingControl("#file_upfile li","#loading_"+json.fid,2000);
-	var file_ids = $("#file_ids_2").val(); 
-	$("#file_path_2").val(file_path);
-  
+	var val = $.trim($("#file_path_2").val(),',');
+		val+=val?',':'',
+	$("#file_path_2").val(val+json.msg.url);
 }
 
 
@@ -181,6 +146,7 @@ function show_payitem_num(obj,item_code){
 }
 
 
+
 //编辑增值服务
 function edit_payitem(item_code){
 
@@ -197,33 +163,4 @@ function del_payitem(item_code){
 	var item_code = item_code;
 	var payitem_num = parseInt($("#payitem_"+item_code).val());
 	add_payitem($("#checkbox_"+item_code),'del',payitem_num);  
-}
-
-/**
- * 上传附件删除
-	* @param file_id 附件编号
-	*/
-function del_file(file_path,fid){
-
-	var file_ids = $("#file_ids").val().toString();
-	var more_size = $("#more_pic").val().toString();
-	$.post("index.php?do=ajax&view=file&ajax=del",
-			{"fid":fid,"filepath":file_path,"size":more_size},
-			function(json){
-	//$.getJSON("index.php?do=ajax&view=file&ajax=del&filepath="+file_path,function(json){
-		if(json.status=='1'){	
-			file_ids = file_ids.replace(file_path,'');
-			var len = file_ids.length;
-			var firstchar = file_ids.substring(0,1);			
-			if(firstchar==','){
-				file_ids = file_ids.substring(1);
-			}
-			var lastchar = file_ids.substring(len-1);
-			if(lastchar==','){
-				file_ids = file_ids.substring(0,len-1);				
-			}			
-			$("#file_ids").val(file_ids);
-			$("#"+fid).remove();
-		}
-	},'json');	
 }

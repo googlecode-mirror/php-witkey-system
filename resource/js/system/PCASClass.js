@@ -54,23 +54,25 @@ function PCAS() {
 	var is_map = arguments[6] ;
 
 	this.SelP.PCA = this;
-	this.SelC.PCA = this;
-	
-	this.SelP.onchange = function() {
-		if(is_map){
-			province_search(); 
-		} 
-		PCAS.SetC(this.PCA);
-	};
-	if (this.SelA)
-		this.SelC.onchange = function() {
-		if(is_map){
-			city_search();
-		} 
+	if(this.SelC){
+		this.SelC.PCA = this;
 		
-			PCAS.SetA(this.PCA);
+		this.SelP.onchange = function() {
+			if(is_map){
+				province_search(); 
+			} 
+			PCAS.SetC(this.PCA);
 		};
-	PCAS.SetP(this)
+	}
+		if (this.SelA)
+			this.SelC.onchange = function() {
+			if(is_map){
+				city_search();
+			} 
+			
+				PCAS.SetA(this.PCA);
+			};
+		PCAS.SetP(this)
 };
 PCAS.SetP = function(PCA) {
 	for (i = 0; i < PCAP.length; i++) {
@@ -81,7 +83,7 @@ PCAS.SetP = function(PCA) {
 		if (PCA.DefP == PCAPV)
 			PCA.SelP[i].selected = true
 	}
-	PCAS.SetC(PCA);
+	PCA.SelC&&PCAS.SetC(PCA);
 };
 PCAS.SetC = function(PCA) {
 	PI = PCA.SelP.selectedIndex;

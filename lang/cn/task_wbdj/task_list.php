@@ -29,7 +29,7 @@ $lang = array(
 	'mulit_unfreeze_success'=>'批量解冻成功！',
 	'mulit_unfreeze_fail'=>'批量解冻失败！',
 /*task_list.htm*/
-	'wbdj_task_manage'=>'微博点击任务管理',
+	'wbdj_task_manage'=>'微博点击',
 	'choose_task_status'=>'请选择任务状态',
 	'wbdj_task_list'=>'微博点击任务列表',
 	'click_count'=>'点击次数',

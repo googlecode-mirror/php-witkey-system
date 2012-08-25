@@ -16,6 +16,7 @@ $lang = array (
 		'username_error' => '用户名错误', 
 		'contact_address' => '联系地址', 
 		'not_permissions' => '您没有管理权限', 
+		'location'=>'位置',
 		/**系统**/
 		'public_menu_config' => '系统配置',
 		/**长度**/
@@ -29,7 +30,8 @@ $lang = array (
 		/*(批量)操作*/
 		'release'=>'发布',
 		'click' => '点击',
-		'view'=>'查看',
+		'null'=>'无',
+		
 		'recycle' => '回收站',   
 		'confirm_mulit_delete'=>'你确定要批量删除?',
 		'confirm_recycle' => '你确定要放入回收站?', 
@@ -61,7 +63,7 @@ $lang = array (
 
 		/**index.php**/
 		'global_config'=>'全局配置',
-		'article_manage'=>'文章管理',
+		'article_manage'=>'资讯管理',
 		'finance_manage'=>'财务管理',
 		'user_manage'=>'用户管理',
 		'charge'=>'手动充值',
@@ -76,11 +78,19 @@ $lang = array (
 		'recommend' => '荐',
 		/*商城的菜单*/
 		'goods_order' => '作品订单',	
-		'goods_list' => '作品列表',	
+        'order_manage'=>'订单管理',
+        'goods_manage'=>'作品管理',
+		'goods_list' => '作品列表',
+        'order_list'=>'订单列表',	
 		'goods_config' => '作品配置',	
        'witkey_goods'=>'威客作品',
+       'goods_order_manage'=>'作品订单管理',
+       'service_order_manage'=>'服务订单管理',
+       'witkey_goods_manage'=>'威客作品管理',
+       'witkey_service_manage'=>'威客服务管理',
 	   'service_order'=>'服务订单',
        'service_list'=>'服务列表',
+       'service_manage'=>'服务管理',
        'service_config'=>'服务配置',
        'witkey_service'=>'威客服务',
 
@@ -158,6 +168,7 @@ $lang = array (
 		'graphic_report'=>'财务分析',
 		'withdraw_audit'=>'提现审核',
 		'recharge_audit'=>'充值审核',
+		'revenue'=>'营收明细',
 		/**增值项里的初始化配置信息 init_config.php*/
 		'map_loction'=>'地图定位', 
 		'map_item_func'=>'地图定位，任务发布后，可以在地图上指定位置显示',
@@ -182,7 +193,7 @@ $lang = array (
 		'keke_official_website'=>'kekezu官方网站',  
 		/**其它**/
 		'bind' => '绑定',
-		'article'=>'文章',
+		'article'=>'资讯',
 		'anonymous' => '匿名',
 		'single_page' => '单页面',
 		'last_modify' => '上次修改时间',

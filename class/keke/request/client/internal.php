@@ -69,7 +69,7 @@ class Keke_Request_Client_Internal extends Keke_Request_Client {
 
 		try
 		{
-			
+			//echo $prefix.$controller;die;
 			if ( ! class_exists($prefix.$controller))
 			{
 				throw new Keke_exception('The requested URL :uri was not found on this server.',

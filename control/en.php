@@ -15,7 +15,7 @@ class Control_en extends Controller{
 		}
 		$this->action_index();
 	}
-	
+	 
 	function action_ajax(){
 		global $_K,$_lang;
 		$title = "µÇÂ¼²âÊÔ";

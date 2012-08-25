@@ -23,6 +23,7 @@ $lang=array(
        'view_detail'=>'查看详细',
        'apply_audit_success'=>'申请审核成功！',
        'apply_not_pass'=>'申请不通过',
+		'prom_auth_success'=>'推广认证成功',
        'not_pass_please_to'=>'不通过，请到',
        'apply_audit_not_pass'=>'申请审核不通过！',
 );

@@ -28,6 +28,7 @@ $lang = array(
  	'confirm_pwd'=>'确认密码',
 	'confirm_new_pwd'=>'确认新密码',
 	'confirm_pwd_enter_err'=>'确认密码输入有误',
+	'safe_code_usage'=>'安全码将用于涉及到资金流确认时使用。如：提现、付款等.',
 
 /*user_safe_sec_code_php*/
 

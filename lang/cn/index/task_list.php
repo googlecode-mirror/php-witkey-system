@@ -31,7 +31,7 @@ $lang = array(
 	'search'=>'搜  索',   
 	'work_hide'=>'稿件隐藏',
 	'task_reward_money'=>'任务赏金',
-	'reward_trust'=>'赏金托管',
+	
 	'other'=>'其他选项',
 	'save_suc'=>'保存成功',
 	'task_reward'=>'悬赏任务',

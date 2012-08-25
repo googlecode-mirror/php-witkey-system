@@ -56,6 +56,7 @@ $lang=array(
       'your_withdraw_apply_success'=>'恭喜，您的提现申请提交成功',
       'withdraw_money'=>'提现金额',
       'remain_money'=>'剩余金额',
+      'real_money'=>'实际可获得',
       'recharge_record_save'=>'新生成 &nbsp;1条&nbsp;账户提现记录,记录已保存',
       'view_withdraw_record'=>'查看提现记录',
 
@@ -76,4 +77,6 @@ $lang=array(
       'accept_account_name'=>'收款户名',
       'account_name'=>'户名',
       'china_bbc_bank'=>'中国农业银行',
+	  'have_no_enough_money'=>'用户余额不足,无法提现',
+	  'real_get'=>'扣去网站手续费，您实际可获得',
 );

@@ -10,6 +10,7 @@ $lang=array(
       'username_is_empty'=>'用户名为空',
       'username_illegal'=>'用户名非法',
       'user_has_exist'=>'用户已经存在',
+		'user_has_no_exist'=>'用户不存在',
       'contain_allow_register_words'=>'包含要允许注册的词语',
       'username_invalid'=>'用户名无效',
       'register_fail_limit_register'=>'注册失败，用户名限制注册！',

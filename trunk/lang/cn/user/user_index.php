@@ -10,6 +10,7 @@ $lang=array(
        'account_balance'=>'账户余额',
        'recharge'=>'充值',
        'withdraw'=>'提现',
+		'back'=>'后',
        'account_safe_info'=>'账号安全信息',
        'update_password'=>'修改密码',
        'update_safe_code'=>'修改安全码',
@@ -36,7 +37,7 @@ $lang=array(
        'wait_choose'=>'待选稿',
        'wait_confirm_pay'=>'待确认打款',
        'last_login_time'=>'上次登录时间',
-       'toolbox'=>'工具箱',
+        
        'employer_trans_panel'=>'雇主交易面板',
        'goods_trans'=>'商品交易',
        'more_employer_trans'=>'更多雇主交易',

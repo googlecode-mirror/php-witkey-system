@@ -33,4 +33,12 @@ $lang = array(
 	'tpl_upload_success_install'=>'该模板已上传成功,正在安装',
 	'tpl_config_unloading_success'=>'模板配置卸载成功！',
 	'tpl_path_do_not_match'=>'输入的模板名称与模板配置不匹配，请确认配置文件信息：',
+	'default'=>'蓝色模板',
+	'orange'=>'橙色模板',
+	'red'=>'红色模板',
+	'green'=>'绿色模板',
+	'blue_skin'=>'蓝色',
+	'orange_skin'=>'橙色',
+	'red_skin'=>'红色',
+	'deep_skin'=>'深邃',
 );

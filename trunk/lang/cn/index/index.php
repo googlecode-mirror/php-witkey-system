@@ -17,22 +17,22 @@ $lang = array(
 	'website_statistics'=>'网站统计',
 	'register_user_number'=>'注册用户数[个]',
 	'auth_statistics_number'=>'认证统计数[个]',
-	'register_number_last_week_up'=>'注册用户数较之上周有所上升',
+	/* 'register_number_last_week_up'=>'注册用户数较之上周有所上升',
 	'register_number_last_week_down'=>'注册用户数较之上周有所下降',
 	'auth_number_last_week_up'=>'认证统计数较之上周有所上升',
-	'auth_number_last_week_down'=>'认证统计数较之上周有所下降',
+	'auth_number_last_week_down'=>'认证统计数较之上周有所下降', */
 	'task_order_money'=>'任务交易额[元]',
 	'task_number'=>'任务数量[个]',
-	'task_money_last_week_up'=>'任务交易额较之上周有所上升',
+	/* 'task_money_last_week_up'=>'任务交易额较之上周有所上升',
 	'task_money_last_week_down'=>'任务交易额较之上周有所下降',
 	'task_number_last_week_up'=>'任务数量较之上周有所上升',
-	'task_number_last_week_down'=>'任务数量较之上周有所下降',
+	'task_number_last_week_down'=>'任务数量较之上周有所下降', */
 	'shop_order_money'=>'商城交易额[元] ',
 	'goods_number'=>'商品数量[个]',
-	'shop_money_last_week_up'=>'商城交易额较之上周有所上升',
+	/* 'shop_money_last_week_up'=>'商城交易额较之上周有所上升',
 	'shop_money_last_week_down'=>'商城交易额较之上周有所下降',
 	'goods_number_last_week_up'=>'商品数量较之上周有所上升',
-	'goods_number_last_week_down'=>'商品数量较之上周有所下降',
+	'goods_number_last_week_down'=>'商品数量较之上周有所下降', */
 
 	'i_want_to_make_money'=>'我要赚钱',
 	'join_task_now_make_money'=>'参加海量任务 现在就开始赚钱',
@@ -66,11 +66,16 @@ $lang = array(
     'talents'=>'人才',
     'income_ranking'=>'收入排行',
     'enter_shop'=>'进入商城',
+    'all_industry'=>'全部行业',
 
 /*header_top.htm*/
-    
-
+   
+/*ajax_menu.php*/
+	'get_promote_links'=>'获取推广链接',
+/*ajax_share.php*/
+	'task_share'=>'任务分享',
 /*index_map_baidu.htm*/
 /*index_map_google.htm*/
     'kppw_task_map'=>'KPPW2.0 任务地图',
+	'before_release'=>'前发布',
 );

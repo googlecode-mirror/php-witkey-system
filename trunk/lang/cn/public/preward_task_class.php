@@ -1,5 +1,7 @@
 <?php
 $lang = array(
+	'hand_work'=>'投稿期',
+	'choose_work'=>'选稿期',
 	'task_working_and_can_hand_work'=>'任务进行中、欢迎投稿',
 	'present_state_employer_can_choose'=>'当前阶段雇主可以选稿',
 	'task_choosing_and_wait_employer_choose'=>'任务选稿中，等待雇主选稿',
@@ -13,7 +15,6 @@ $lang = array(
 	'task_work_no_recept_to_employer'=>'任务的稿件未被雇主采纳',
 	'work_bid'=>'稿件中标',
 	'task_work_bid_and_get_cash'=>'任务的稿件中标，获得了￥',
-	'success_bid_haved'=>'成功中标了',
 	'present_task_status_not_cancel_bid'=>'当前任务状态不可对稿件取消中标状态',
 	'present_work_not_bid_and_not_cancel_bid'=>'当前稿件未中标，不能取消中标状态',
 	'you_not_rights_operate_to_the_work'=>'您没有权限对此搞件进行取消中标操作',

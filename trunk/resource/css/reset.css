@@ -137,8 +137,6 @@ img {
   font-size: 0;
   vertical-align: middle;
   *vertical-align:baseline;
-  width:auto;
-  height:auto;
 /*
   For IE.
   http://css-tricks.com/ie-fix-bicubic-scaling-for-images

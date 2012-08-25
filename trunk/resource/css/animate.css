@@ -15,7 +15,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 	-webkit-animation: 1s ease;
 	   -moz-animation: 1s ease;
 	    -ms-animation: 1s ease;
-	     -o-animation: 1s ease;
+	     -o-animation:1s ease;
 	        animation: 1s ease;
 	-webkit-animation-fill-mode: both;
 	   -moz-animation-fill-mode: both;

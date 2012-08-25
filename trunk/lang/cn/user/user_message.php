@@ -17,6 +17,8 @@
 		'delete_selected_success' => '成功删除所选',
 		'select_null_for_delete' => '没有选择删除的项',
 		'message_does_not_exist' => '该消息不存在',
+		'operate_tips'=>'操作提示',
+		'username_not_exist'=>'用户名不存在',
 	/* user_message_system.htm */
 		'system_message' => '系统短信',
 		'private_message' => '私人短信',
@@ -26,6 +28,7 @@
 		'unread' => '未读',
 		'already_read' => '已读',
 		'confirm_delete' => '确认要删除？',
+		'del_success'=>'删除成功!',
 
 	/* user_message_view.htm */
 		'view_message'=>'查看短信',

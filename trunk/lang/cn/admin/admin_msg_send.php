@@ -27,5 +27,7 @@
 		'sms_content' => '短信内容',
 		'tips_about_send_sms' => '非指定用户发送短消息时,将给该类下所有满足条件用户发送短信',
 		'first_enter_username_or_ids' => '请先填写待查询用户名或ID！',
-		'at_least_two_words' => '短信信息不得少于2个字'
+		'at_least_two_words' => '短信信息不得少于2个字',
+		'sms_send_success'=>'短信发送成功',
+		'sms_send_fail'=>'短信发送失败'
 	);

@@ -8,7 +8,7 @@
 */
 $lang=array(
 /*admin_tpl_edit_tag.php*/
-      'enter_tag_name'=>'请输入标签名',
+	  'enter_tag_name'=>'请输入标签名',
       'tag_name_inuse_please_replace'=>'该标签名已被使用,请更换',
       'edit_tag'=>'编辑标签',
       'create_tag'=>'创建标签',
@@ -59,7 +59,7 @@ $lang=array(
       'article_sort_tag'=>'文章分类标签',
 	   'eg_code_patten'=>'标签代码格式:&#123;loop &#36;datalist &#36;k &#36;v&#125;</br>
 									 　　　　　　　　　　　自定义代码
-								</br>　　　　　　　　&#123;loop&#125;',
+								</br>　　　　　　　　&#123;/loop&#125;',
 		'param_detail'=>'参数详解',
 		'article_tag_code'=>'&#36;v&#91;id&#93;:文章编号;　&#36;&#91;catid&#93;:文章分类编号;
 								&#36;v&#91;catname&#93;:文章分类名称;　&#36;v&#91;uid&#93;:文章添加用户;　

@@ -17,6 +17,7 @@ $lang = array(
     'stage_nav_step2_b'=>'填写完成事项的具体需求',
     'stage_nav_step3_a'=>'确认清单并支付',
     'stage_nav_step3_b'=>'列表清单并支付任务赏金',
+    'stage_nav_step3_b_4'=>'列表清单并支付信息发布服务费用',
     'stage_nav_step4_a'=>'发布成功',
     'stage_nav_step4_b'=>'完成发布，开始任务',
     'industry'=>'行业分类',

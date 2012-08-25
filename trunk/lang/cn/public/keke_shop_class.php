@@ -10,6 +10,7 @@ $lang=array(
        'you_has_buy_work'=>'您购买过此作品、无需重复购买',
        'your_order_not_process_complete'=>'您关于此商品的订单还未处理完成',
        'seller_can_not_order_self'=>'卖家无法对自己的商品下单',
+       'order_pay_fail_for_cash_little'=>'您的余额不足以支付此订单',
        'work'=>'作品',
        'service'=>'服务',
        'buy_goods'=>'购买商品',

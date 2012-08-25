@@ -11,7 +11,6 @@
 	
 	/* user_credit.php */
 	/* user_credit_grow.htm */
-		'credit_grade' => '信誉等级',
 		'credit_growup' => '信誉成长',
 		'review_each_record' => '互评记录',
 		'next_level_need' => '升到下一级还需',
@@ -47,6 +46,15 @@
 		'view_the_goods_details' => '查看商品详细',
 		'view_the_hire_details' => '查看雇佣详细',
 		'no_comments' => '暂无评论',
-		'check_evalue'=>'查看辅助评价'
+		'shop'=>'商品',
+		'task'=>'任务',
+		'hp'=>'互评内容： ',
+		'check_evalue'=>'查看辅助评价',
+	/* user_credit.htm */
+		'project_name'=>'项目名称',
+		'task_goods'=>'(任务|商品)',
+		'evaluate'=>'评价',
+		'come_from'=>'来自',
+		'assisted_evaluation'=>'辅助评价',
 	);
   

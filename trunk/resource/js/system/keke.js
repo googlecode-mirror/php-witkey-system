@@ -1,10 +1,3 @@
-$(function(){
-	
-	$(".scrollTop").click(function(){
-		$("html,body").animate({scrollTop: $("#pageTop").offset().top});
-	})
-})
- 
 /**
  * * 清除输入框的字符,只限制数据输入
  * 
@@ -81,24 +74,16 @@ function clearspecial(inputobj){
 }
 var share=function(obj,title){
 	var id = obj.id;
-	if(id&&obj.tagName=='A'){
-		if($(obj).find('div').length){
-			var div = $(obj).find("div:first");
-				div.attr("href",obj.href);
-				div.attr("id","div_"+id);
-		}else{
-			var div = "<div id='div_"+id+"' href='"+obj.href+"' class='icon16 share'>分享</div>";
-			$(obj).html(div);
-		}
-	}
-	obj = $(obj).find("div:first").get(0);
+	//alert(obj.href);
+	CHARSET.toLowerCase()=='utf-8'?obj.href = encodeURI(obj.href):'';
+	
 	ajaxmenu(obj,250,'1','2','43');
 	return false;
 }
 /** 检查用户是否登陆 */
 function check_user_login(url) {
 	if (isNaN(uid) || uid == 0) {
-		showDialog('你还没有登陆，是否现在登陆？', 'confirm', '登陆消息提示', 'redirect_url()', 0);
+		showDialog(L.you_not_login_now_login, 'confirm', L.login_tips, 'redirect_url()', 0);
 		return false;
 	} else {
 		return true;
@@ -173,33 +158,40 @@ function favor(pk,type,model_code,obj_uid,obj_id,obj_name,origin_id) {
 	 *            最大字数
 	 * @param winTitle
 	 *            窗口标题
-	 * @param {Object}
-	 * 			  msgType 消息提示类型  0或1 0shoDialog提示。1表示tips提示
-	 * @param {Object}
-	 * 			showTarget 消息插入容器ID  。当ac_type=1时有效
+	 * @param msgType
+	 * 			  msgType 消息提示类型  0 shoDialog提示。1表示tips提示
+	 * @param showTarget
+	 * 			showTarget 消息插入容器ID  。当msgType=1,2时有效
+	 * @param Object
+	 * 			editor 编辑器对象
 	 */
 
-function contentCheck(contentObj,winTitle,minLength,maxLength,msgType,showTarget){
-	var shtml = $("#"+contentObj).val();
-		if(shtml.length>maxLength){
-			if(msgType==1){
-				tipsAppend(showTarget,winTitle+"内容不得多于"+maxLength+"个字",'warning','orange');
+function contentCheck(contentObj,winTitle,minLength,maxLength,msgType,showTarget,editor){
+		var shtml = '';
+		var len	  = 0;
+		if(typeof editor=='object'){
+			shtml =	editor.stripHtml();
+		}else{
+			shtml =	$("#"+contentObj).val();
+		}
+		len	  = shtml.length;
+		if(len>maxLength){
+			if(msgType!=0){
+				tipsAppend(showTarget,winTitle+L.content_not_more_than+maxLength+L.words,'warning','m_warn',msgType==2?s=1:s=0);
 			}else{
 				var des_msg = $("#"+contentObj).attr("msgArea");
-				$("#"+des_msg).addClass("valid_error").html("<span>"+winTitle+"内容不得多于"+maxLength+"个字</span>");
-				//showDialog(winTitle+"内容不得多于"+maxLength+"个字","alert","操作提示");
+				$("#"+des_msg).addClass('msg').addClass('msg_error').html("<i></i><span>"+winTitle+L.content_not_more_than+maxLength+L.words+"</span>");
 			}return false;
-		}else if(shtml.length<minLength){
-			if(msgType==1){
-				tipsAppend(showTarget,winTitle+"内容不得少于"+minLength+"个字",'warning','orange');
+		}else if(len<minLength){
+			if(msgType!=0){
+				tipsAppend(showTarget,winTitle+L.content_not_less_than+minLength+L.words,'warning','m_warn',msgType==2?s=1:s=0);
 			}else{
 				var des_msg = $("#"+contentObj).attr("msgArea");	
-				$("#"+des_msg).addClass("valid_error").html("<span>"+winTitle+"内容不得少于"+minLength+"个字</span>");
-				//showDialog(winTitle+"内容不得少于"+minLength+"个字","alert","操作提示");
+				$("#"+des_msg).addClass('msg').addClass('msg_error').html("<i></i><span>"+winTitle+L.content_not_less_than+minLength+L.words+"</span>");
 			}return false;
 		}else{
 			var des_msg = $("#"+contentObj).attr("msgArea");
-			$("#"+des_msg).removeClass("valid_error").html(" ");
+			$("#"+des_msg).removeClass('msg').removeClass("msg_error").html(" ");
 			return shtml;
 		}
 }
@@ -220,9 +212,9 @@ function ifOut(obj,max,msgType,showTarget){
 	var num = parseInt($("#"+obj+" li").length)+0;
 	if(num>=max){
 		if(msgType==1){
-			tipsAppend(showTarget,"文件上传数量超过限制,最大"+max+"个",'warning','orange');
+			tipsAppend(showTarget,L.file_upload_exceeds_limit_the_maximum+max+L.a,'warning','orange');
 		}else{
-			showDialog("文件上传数量超过限制,最大"+max+"个","alert","操作提示");
+			showDialog(L.file_upload_exceeds_limit_the_maximum+max+L.a,"alert",L.operate_notice);
 		}return false;
 	}else{
 		return true;
@@ -233,7 +225,7 @@ function ifOut(obj,max,msgType,showTarget){
  */
 function mark(require_url,Do,obj,obj_id){
 	var jump='';
-	Do&&obj&&obj_id?jump+='do-'+Do+'*'+obj+'-'+obj_id:'';
+	Do&&obj&&obj_id?jump+='do-'+Do+'*'+obj+'-'+obj_id+'*view'+'-'+'mark':'';
 	showWindow('mark',require_url+'&jump_url='+jump,'get',0);return false;
 }
 
@@ -244,10 +236,15 @@ function mark(require_url,Do,obj,obj_id){
  * @param type	提示类型  successful error waring
  * @param color 提示框颜色
  */
-function tipsAppend(target, msg, type, color){
-    $("#" + target).before("<div id='tips'></div>");
-    var tips = $("<div class='messages " + color + "'><span class='icon16'>" + type + "</span>" + msg+"</div>" );
+function tipsAppend(target, msg, type, color,s){
+	if(s==1){
+	    $("#" + target).after("<div id='tips' class='fl_l ml_5'></div>");
+	}else{
+		$("#" + target).before("<div id='tips'></div>");
+	}
+    var tips = $("<div class='messages " + color + "' style='margin:0'><span class='icon16'>" + type + "</span>" + msg+"</div>" );
     $("#tips").empty().append(tips);
+    $('html,body').animate({scrollTop:$("#"+target).offset().top-100});
     msgshow(tips);
 	var hide = setTimeout(function() {
 		msghide($("#tips"));
@@ -272,6 +269,72 @@ function msghide(ele) {
 		});
 	});
 };
+/**
+ * flash 文件上传
+ * @param (Object)
+ * 		  paramReg 上传基本参数注册
+ * @param (Object)
+ * 		  contrReg 站内业务参数注册
+ */
+function uploadify(paramReg,contrReg){
+	var paramReg  = paramReg?paramReg:{};
+	var contrReg  = contrReg?contrReg:{};
+	var uploadify = {};
+	var auto 	  = paramReg.auto==true?true:false;//是否自动提交
+	var debug     = paramReg.debug==true?true:false;//是否开启debug调试
+	var hide      = paramReg.hide==true?true:false;//上传完成后是否隐藏文件域
+	var swf  	  = paramReg.swf?paramReg.swf:'resource/js/uploadify/uploadify.swf';//flash路径
+	var uploader  = paramReg.uploader?paramReg.uploader:'index.php?do=ajax&view=upload&flash=1';////上传基本路径
+	var deleter   = paramReg.deleter?paramReg.deleter:'index.php?do=ajax&view=file&ajax=delete';//文件删除路径
+	var file=fname= paramReg.file?paramReg.file:'upload';//file 表单名name=id=upload
+	var resText   = paramReg.text?paramReg.text:'file_ids';//上传完成后结果保存表单名.name=id=file_ids;
+	var size      = paramReg.size;//文件大小限制
+	var exts      = paramReg.exts;//文件类型限制
+	var method    = paramReg.m?paramReg.m:'post';//上传方式
+	var limit     = paramReg.limit?paramReg.limit:1;//上传个数限制
+	var qlimit    = paramReg.qlimit?paramReg.qlimit:999;
+	var text      = paramReg.text?paramReg.text:L.upload_file;//按钮文字
+	
+	var task_id   =	parseInt(contrReg.task_id)+0;
+	var work_id   = parseInt(contrReg.work_id)+0;
+	var obj_id    = parseInt(contrReg.obj_id)+0;
+	var pre       = contrReg.mode=='back'?'../../':'';
+	var fileType  = contrReg.fileType?contrReg.fileType:'att';
+	var objType   = contrReg.objType?contrReg.objType:'task';
+		swf		  = pre+swf;
+		deleter   = pre+deleter;
+		uploader  = pre+uploader+'&file_name='+file+'&file_type='+fileType+'&obj_type='+objType+'&task_id='+task_id+'&work_id='+work_id+'&obj_id='+obj_id+'&PHPSESSID='+xyq;
+		
+		uploadify.auto			  =	auto;
+		uploadify.debug			  =	debug;
+		uploadify.hide			  =	hide;
+		uploadify.swf			  =	swf;
+		uploadify.uploader		  = uploader;
+		uploadify.deleter 		  = deleter;
+		uploadify.fileObjName	  =	file;
+		uploadify.resText    	  =	resText;
+		uploadify.fileSizeLimit	  =	size;
+		uploadify.fileTypeExts	  =	exts;
+		uploadify.uploadLimit     = limit;
+		uploadify.queueSizeLimit  = qlimit;
+		uploadify.method		  = method;
+		uploadify.buttonText	  = text;
+		uploadify.onUploadSuccess =	function(file,json,response){
+			json = eval('('+json+')');
+			if(json.err){
+				if(msgType==1){
+					tipsAppend(showTarget,json.err,'error','red');
+				}else{
+					showDialog(decodeURI(json.err), 'alert', L.error_tips,'',0);
+				}
+				return false;
+			}else{
+				json.filename  = fname;
+				typeof(uploadResponse)=='function'&&uploadResponse(json);
+			}
+		};
+	$("#"+file).uploadify(uploadify);
+}
 /**
  * 文件上传 uploadResponse这个方法需要具体使用的时候自行定义。因为不同的地方响应插入页面的内容不同
  * 
@@ -310,7 +373,7 @@ function upload(fileName,fileType,mode,task_id,obj_id,obj_type,width,height,msgT
 						if(msgType==1){
 							tipsAppend(showTarget,json.err,'error','red');
 						}else{
-							showDialog(decodeURI(json.err), 'alert', '错误提示','',0);
+							showDialog(decodeURI(json.err), 'alert', L.error_tips,'',0);
 						}
 						return false;
 					}else{
@@ -322,7 +385,7 @@ function upload(fileName,fileType,mode,task_id,obj_id,obj_type,width,height,msgT
 					if(msgType==1){
 						tipsAppend(showTarget,e,'error','red');
 					}else{
-						showDialog(e, 'alert', '错误提示','',0);
+						showDialog(e, 'alert', L.error_tips,'',0);
 					}
 					return false;
 				}
@@ -339,10 +402,11 @@ function upload(fileName,fileType,mode,task_id,obj_id,obj_type,width,height,msgT
 function sendMessage(to_uid,to_username) {
 if(check_user_login()){
 	if (uid == to_uid) {
-		showDialog('无法给自己发送站内短信', 'alert', '操作提示');
+		showDialog(L.can_not_give_yourself_send_message, 'alert', L.operate_notice);
 				return false;
 		}
-		showWindow('message','index.php?do=ajax&view=message&op=send&to_uid='+ to_uid+'&to_username='+to_username);return false;
+	var url = 'index.php?do=ajax&view=message&op=send&to_uid='+ to_uid+'&to_username='+to_username;
+		showWindow('message',encodeURI(url));return false;
 }
 }
 /**
@@ -363,9 +427,9 @@ function report( obj, type,obj_id,to_uid,to_username) {
 	
 	if (check_user_login()) {
 		var s='';
-		if(type=='1') s='维权';else if(type=='2') s="举报";else s='投诉'; 
+		if(type=='1') s=L.rights;else if(type=='2') s=L.report;else s=L.complaints;
 		if(uid==to_uid){
-			showDialog("无法对自己发起"+s,"alert","操作提示");return false;
+			showDialog(L.can_not_be_initiated+s,"alert",L.operate_notice);return false;
 		}else{
 			showWindow("report",basic_url+'&op=report&type='+type+'&obj='+obj+'&obj_id='+obj_id+'&to_uid='+to_uid+'&to_username='+to_username,'get','0');
 		}
@@ -406,9 +470,7 @@ var STYLEID = '1', STATICURL = '', IMGDIR = 'resource/img/keke', VERHASH = 'cC0'
 var BROWSER = {};
 var USERAGENT = navigator.userAgent.toLowerCase();
 browserVersion({'ie':'msie','firefox':'','chrome':'','opera':'','safari':'','maxthon':'','mozilla':'','webkit':''});
-if(BROWSER.safari) {
-	BROWSER.firefox = true;
-}
+
 BROWSER.opera = BROWSER.opera ? opera.version() : 0;
 
 var CSSLOADED = [];
@@ -663,12 +725,6 @@ function zoom(obj, zimg) {
 			menu.innerHTML = '<div class="zoominner"><p id="' + menuid + '_ctrl"><span class="y"><a href="' + zimg + '" class="imglink" target="_blank" title="在新窗口打开">在新窗口打开</a><a href="javascipt:;" id="' + menuid + '_adjust" class="imgadjust" title="实际大小">实际大小</a><a href="javascript:;" onclick="hideMenu()" class="imgclose" title="关闭">关闭</a></span>鼠标滚轮缩放图片</p><div align="center" onmousedown="zoomclick=1" onmousemove="zoomclick=2" onmouseup="if(zoomclick==1) hideMenu()"><img id="' + zoomid + '" src="' + zimg + '" width="' + w + '" height="' + h + '" w="' + imgw + '" h="' + imgh + '"></div></div>';
 			document.getElementById('append_parent').appendChild(menu);
 			document.getElementById(menuid + '_adjust').onclick = function(e) {adjust(e, 1)};
-			/*
-			if(BROWSER.ie){
-				menu.onmousewheel = adjust;
-			} else {
-				menu.addEventListener('DOMMouseScroll', adjust, false);
-			}*/
 			
 			if(menu.addEventListener){/*firefox*/
 				menu.addEventListener('DOMMouseScroll',adjust,false);
@@ -1123,7 +1179,7 @@ function hideMenu(attr, mtype) {
 
 function showDialog(msg, mode, t, func, cover, funccancel) {
 	cover = isUndefined(cover) ? (mode == 'info' ? 0 : 1) : cover;
-	mode = in_array(mode, ['confirm', 'notice', 'info','right']) ? mode : 'alert';
+	mode = in_array(mode, ['confirm', 'notice', 'info','right','sigh']) ? mode : 'alert';
 	var menuid = 'fwin_dialog';
 	var menuObj = document.getElementById(menuid);
 
@@ -1133,17 +1189,26 @@ function showDialog(msg, mode, t, func, cover, funccancel) {
 	menuObj.className = 'fwinmask';
 	menuObj.id = menuid;
 	document.getElementById('append_parent').appendChild(menuObj);
-	var s = '<table cellpadding="0" cellspacing="0" class="fwin"><tr><td class="tt_l"></td><td class="tt_c"></td><td class="tt_r"></td></tr><tr><td class="m_l"></td><td class="m_c"><h3 class="flb"><em>';
-	s += t ? t : '提示信息';
-	s += '</em><span><a href="javascript:;" id="fwin_dialog_close" class="flbc" onclick="hideMenu(\'' + menuid + '\', \'dialog\')" title="关闭">关闭</a></span></h3>';
+	var s = '<table cellpadding="0" cellspacing="0" class="fwin"><tr><td class="tt_l"></td><td class="tt_c"></td><td class="tt_r"></td></tr><tr><td class="m_l"></td><td class="m_c">';
+    //标题开始
+	s +='<h3 class="flb"><em>';
+	//标题的内容
+	s += t ? t : L.operate_notice;
+	//标题中的X关闭标题
+	s += '</em><span><a href="javascript:;" id="fwin_dialog_close" class="flbc" onclick="hideMenu(\'' + menuid + '\', \'dialog\')" title="'+L.close+'">'+L.close+'</a></span></h3>';
+	//内容部分开始
 	if(mode == 'info') {
 		s += msg ? msg : '';
 	} else {
+		//提示信息的样式,+ 提示的内容
 		s += '<div class="c' + (mode == 'info' ? '' : ' altw') + '"><div class="' + (mode == 'alert' ? 'alert_error' :mode=='confirm'?'confirm_info':mode=='right'?'alert_right':'alert_info') + '"><p>' + msg + '</p></div></div>';
-		s += '<p class="o pns"><button id="fwin_dialog_submit" value="true" class="pn pnc"><strong>确定</strong></button>';
-		s += mode == 'confirm' ? '<button id="fwin_dialog_cancel" value="true" class="pn" onclick="hideMenu(\'' + menuid + '\', \'dialog\')"><strong>取消</strong></button>' : '';
+		//提交按钮
+		s += '<p class="o pns"><button id="fwin_dialog_submit" value="true" class="pn pnc"><strong>'+L.submit+'</strong></button>';
+		//如果是确认，加一个取消按钮 
+		s += mode == 'confirm' ? '<button id="fwin_dialog_cancel" value="true" class="pn" onclick="hideMenu(\'' + menuid + '\', \'dialog\')"><strong>'+L.cancel+'</strong></button>' : '';
 		s += '</p>';
 	}
+	//td结束
 	s += '</td><td class="m_r"></td></tr><tr><td class="b_l"></td><td class="b_c"></td><td class="b_r"></td></tr></table>';
 	menuObj.innerHTML = s;
 	if(document.getElementById('fwin_dialog_submit')) document.getElementById('fwin_dialog_submit').onclick = function() {
@@ -1196,13 +1261,13 @@ function showWindow(k, url, mode, cache, menuv,recall) {
 			menuObj.url = url;
 			url += (url.search(/\?/) > 0 ? '&' : '?') + 'infloat=yes&handlekey=' + k;
 			url += cache == -1 ? '&t='+(+ new Date()) : '';
-			ajaxget(url, 'fwin_content_' + k, 'ajaxwaitid', '请稍候...', '', function() {initMenu();show();func();});
+			ajaxget(url, 'fwin_content_' + k, 'ajaxwaitid', L.loading, '', function() {initMenu();show();func();});
 		} else if(mode == 'post') {
 			
 			menuObj.act = document.getElementById(url).action;
 			ajaxpost(url, 'fwin_content_' + k, '', '', '', function() {initMenu();show();func();});
 		}
-		loadingst = setTimeout(function() {showDialog('', 'info', '<img src="' + IMGDIR + '/loading.gif"> 请稍候...')}, 500);
+		loadingst = setTimeout(function() {showDialog('', 'info', '<img src="' + IMGDIR + '/loading.gif"> '+ L.loading)}, 500);
 	};
 	
 	var initMenu = function() {
@@ -1344,7 +1409,7 @@ function Ajax(recvType, waitId) {
 				aj.resultHandle(aj.XMLHttpRequest.responseText, aj);
 			} else if(aj.recvType == 'XML') {
 				if(!aj.XMLHttpRequest.responseXML || !aj.XMLHttpRequest.responseXML.lastChild || aj.XMLHttpRequest.responseXML.lastChild.localName == 'parsererror') {
-					aj.resultHandle('<a href="' + aj.targetUrl + '" target="_blank" style="color:red">XML解析错误</a>' , aj);
+					aj.resultHandle('<a href="' + aj.targetUrl + '" target="_blank" style="color:red">'+L.xml_parsing_error+'</a>' , aj);
 				} else {
 					aj.resultHandle(aj.XMLHttpRequest.responseXML.lastChild.firstChild.nodeValue, aj);
 				}
@@ -1609,7 +1674,7 @@ function ajaxpost(formid, showid, waitid, showidclass, submitbtn, recall) {
 				try {
 					s = document.getElementById(ajaxframeid).contentWindow.document.documentElement.firstChild.nodeValue;
 				} catch(e) {
-					s = 'XML解析错误';
+					s = L.xml_parsing_error;
 				}
 			}
 		}
@@ -1643,18 +1708,6 @@ function ajaxpost(formid, showid, waitid, showidclass, submitbtn, recall) {
 		document.getElementById('append_parent').removeChild(ajaxframe.parentNode);
 	};
 	if(!ajaxframe) {
-		/*
-		 * if (BROWSER.ie) { if(BROWSER.ie=='9.0'){ ajaxframe =
-		 * document.createElement("iframe"); ajaxframe.setAttribute("id",
-		 * ajaxframeid); ajaxframe.setAttribute("name", ajaxframeid); }else{
-		 * ajaxframe = document.createElement('<iframe name="' + ajaxframeid + '"
-		 * id="' + ajaxframeid + '"></iframe>'); }
-		 *  } else { ajaxframe = document.createElement('iframe');
-		 * ajaxframe.name = ajaxframeid; ajaxframe.id = ajaxframeid; }
-		 * ajaxframe.style.display = 'none'; ajaxframe.loading = 1;
-		 * document.getElementById('append_parent').appendChild(ajaxframe);
-		 */
-
    	var div = document.createElement('div');
 		div.style.display = 'none';
 		div.innerHTML = '<iframe name="' + ajaxframeid + '" id="' + ajaxframeid + '" loading="1"></iframe>';
@@ -1744,10 +1797,6 @@ function stringxor(s1, s2) {
 }
 
 function showloading(display, waiting) {
-	//var display = display ? display : '';
-	//var waiting = waiting ? waiting : 'loading...';
-	//document.getElementById('ajaxwaitid').innerHTML = waiting;
-	//document.getElementById('ajaxwaitid').style.display = display;
 	$("#ajaxwaitid").fadeIn();
 }
 
@@ -1908,27 +1957,27 @@ function showselect(obj, inpid, t, rettype) {
 		document.getElementById('append_parent').appendChild(div);
 		s = '';
 		if(!t) {
-			s += showselect_row(inpid, '一天', 1, 0, rettype);
-			s += showselect_row(inpid, '一周', 7, 0, rettype);
-			s += showselect_row(inpid, '一个月', 30, 0, rettype);
-			s += showselect_row(inpid, '三个月', 90, 0, rettype);
-			s += showselect_row(inpid, '自定义', -2);
+			s += showselect_row(inpid, L.oneday, 1, 0, rettype);
+			s += showselect_row(inpid, L.sevendays, 7, 0, rettype);
+			s += showselect_row(inpid, L.fourteendays, 30, 0, rettype);
+			s += showselect_row(inpid, L.three_month, 90, 0, rettype);
+			s += showselect_row(inpid, L.custom, -2);
 		} else {
 			if(document.getElementById(t)) {
 				var lis = document.getElementById(t).getElementsByTagName('LI');
 				for(i = 0;i < lis.length;i++) {
 					s += '<a href="javascript:;" onclick="document.getElementById(\'' + inpid + '\').value = this.innerHTML">' + lis[i].innerHTML + '</a>';
 				}
-				s += showselect_row(inpid, '自定义', -1);
+				s += showselect_row(inpid, L.custom, -1);
 			} else {
-				s += '<a href="javascript:;" onclick="document.getElementById(\'' + inpid + '\').value = \'0\'">永久</a>';
-				s += showselect_row(inpid, '7 天', 7, 1, rettype);
-				s += showselect_row(inpid, '14 天', 14, 1, rettype);
-				s += showselect_row(inpid, '一个月', 30, 1, rettype);
-				s += showselect_row(inpid, '三个月', 90, 1, rettype);
-				s += showselect_row(inpid, '半年', 182, 1, rettype);
-				s += showselect_row(inpid, '一年', 365, 1, rettype);
-				s += showselect_row(inpid, '自定义', -1);
+				s += '<a href="javascript:;" onclick="document.getElementById(\'' + inpid + '\').value = \'0\'">'+L.lasting+'</a>';
+				s += showselect_row(inpid, L.sevendays, 7, 1, rettype);
+				s += showselect_row(inpid, L.fourteendays, 14, 1, rettype);
+				s += showselect_row(inpid, L.month, 30, 1, rettype);
+				s += showselect_row(inpid, L.three_month, 90, 1, rettype);
+				s += showselect_row(inpid, L.six_month, 182, 1, rettype);
+				s += showselect_row(inpid, L.year, 365, 1, rettype);
+				s += showselect_row(inpid, L.custom, -1);
 			}
 		}
 		document.getElementById(div.id).innerHTML = s;
@@ -1937,29 +1986,6 @@ function showselect(obj, inpid, t, rettype) {
 	if(BROWSER.ie && BROWSER.ie < 7) {
 		doane(event);
 	}
-}
-
-
-
-function showColorBox(ctrlid, layer, k) {
-	if(!document.getElementById(ctrlid + '_menu')) {
-		var menu = document.createElement('div');
-		menu.id = ctrlid + '_menu';
-		menu.className = 'p_pop colorbox';
-		menu.unselectable = true;
-		menu.style.display = 'none';
-		var coloroptions = ['Black', 'Sienna', 'DarkOliveGreen', 'DarkGreen', 'DarkSlateBlue', 'Navy', 'Indigo', 'DarkSlateGray', 'DarkRed', 'DarkOrange', 'Olive', 'Green', 'Teal', 'Blue', 'SlateGray', 'DimGray', 'Red', 'SandyBrown', 'YellowGreen', 'SeaGreen', 'MediumTurquoise', 'RoyalBlue', 'Purple', 'Gray', 'Magenta', 'Orange', 'Yellow', 'Lime', 'Cyan', 'DeepSkyBlue', 'DarkOrchid', 'Silver', 'Pink', 'Wheat', 'LemonChiffon', 'PaleGreen', 'PaleTurquoise', 'LightBlue', 'Plum', 'White'];
-		var colortexts = ['黑色', '赭色', '暗橄榄绿色', '暗绿色', '暗灰蓝色', '海军色', '靛青色', '墨绿色', '暗红色', '暗桔黄色', '橄榄色', '绿色', '水鸭色', '蓝色', '灰石色', '暗灰色', '红色', '沙褐色', '黄绿色', '海绿色', '间绿宝石', '皇家蓝', '紫色', '灰色', '红紫色', '橙色', '黄色', '酸橙色', '青色', '深天蓝色', '暗紫色', '银色', '粉色', '浅黄色', '柠檬绸色', '苍绿色', '苍宝石绿', '亮蓝色', '洋李色', '白色'];
-		var str = '';
-		for(var i = 0; i < 40; i++) {
-			str += '<input type="button" style="background-color: ' + coloroptions[i] + '"' + (typeof setEditorTip == 'function' ? ' onmouseover="setEditorTip(\'' + colortexts[i] + '\')" onmouseout="setEditorTip(\'\')"' : '') + ' onclick="'
-			+ (typeof wysiwyg == 'undefined' ? 'seditor_insertunit(\'' + k + '\', \'[color=' + coloroptions[i] + ']\', \'[/color]\')' : (ctrlid == editorid + '_tbl_param_4' ? 'document.getElementById(\'' + ctrlid + '\').value=\'' + coloroptions[i] + '\';hideMenu(2)' : 'KEKECODE(\'forecolor\', \'' + coloroptions[i] + '\')'))
-			+ '" title="' + colortexts[i] + '" />' + (i < 39 && (i + 1) % 8 == 0 ? '<br />' : '');
-		}
-		menu.innerHTML = str;
-		document.getElementById('append_parent').appendChild(menu);
-	}
-	showMenu({'ctrlid':ctrlid,'evt':'click','layer':layer});
 }
 
 
@@ -2127,7 +2153,7 @@ function AC_FL_RunContent() {
 			str += '></embed>';
 		}
 	} else {
-		str = '此内容需要 Adobe Flash Player 9.0.124 或更高版本<br /><a href="http://www.adobe.com/go/getflashplayer/" target="_blank"><img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="下载 Flash Player" /></a>';
+		str = L.this_content_requires_the_adobe_flash_player_9_or_later+'<br /><a href="http://www.adobe.com/go/getflashplayer/" target="_blank"><img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="下载 Flash Player" /></a>';
 	}
 	return str;
 }
@@ -2140,7 +2166,7 @@ function setCopy(text, msg,type){
 	} else {
 		var flash  = 'resource/img/keke/clipboard.swf';
 			type=='admin'?flash='../../'+flash:'';
-		var msg = '<div class="c"><div style="width: 200px; text-align: center; text-decoration:underline;">点此复制到剪贴板</div>' +
+		var msg = '<div class="c"><div style="width: 200px; text-align: center; text-decoration:underline;">'+L.click_copy+'</div>' +
 		AC_FL_RunContent('id', 'clipboardswf', 'name', 'clipboardswf', 'devicefont', 'false', 'width', '200', 'height', '40', 'src',  flash, 'menu', 'false',  'allowScriptAccess', 'sameDomain', 'swLiveConnect', 'true', 'wmode', 'transparent', 'style' , 'margin-top:-20px') + '</div>';
 		showDialog(msg, 'info');
 		text = text.replace(/[\xA0]/g, ' ');
@@ -2275,19 +2301,22 @@ function setCopy(text, msg,type){
  * @return
  */
 function swaptab(name, cls_show, cls_hide, cnt, cur,exp) {
-	var mpre='tab_',spre='div_',mzone={},szone={};
+	var mpre='tab_',spre='div_',mzone={},szone={},hide=0;
 	typeof(exp)=='object'?'':exp={};
 	exp.mpre?mpre=exp.mpre:'';
 	exp.spre?spre=exp.spre:'';
+	exp.hide?hide=1:'';
 	for (i = 1; i <= cnt; i++) {
 		szone = $('#'+spre + name + '_' + i);
 		mzone = $('#'+mpre + name + '_' + i);
 		if (i == cur) {
 			szone.removeClass('hidden').addClass('block');
+			hide==1&&szone.next().removeClass('hidden');
 			mzone.attr('class', cls_show);
 			(exp.ajax==1&&exp.url)&&ajaxTab(spre + name + '_' + i,exp.data,exp.url);
 		} else {
 			szone.removeClass('block').addClass('hidden');
+			hide==1&&szone.next().addClass('hidden');
 			mzone.attr('class', cls_hide);
 		}
 	}
@@ -2367,7 +2396,7 @@ function page_load_form(formid,delay_time){
 	return false;
 }
 function page_ajax_load_start(){
-	document.body.scrollHeight
+	document.body.scrollHeight;
 
 	noflushwarper.style.width = document.body.scrollWidth;
 	noflushwarper.style.height = document.body.scrollHeight;
@@ -2383,59 +2412,76 @@ function page_ajax_load_end(){
  * @param ajaxDom 需要加载内容的容器ID
  * @param loadUrl 数据请求链接
  * @param loadPage 加载页面
+ * @param cove 是否覆盖
  */
-function ajaxpage(ajaxDom,loadUrl,loadPage){
+function ajaxpage(ajaxDom,loadUrl,loadPage,cove){
+	var cove = cove==1?1:0;
 	var showDom = $("#"+ajaxDom);
-	var pageDom = $("#page"+loadPage);
-	if(pageDom.length==0&&loadPage>1){
-		showDom.load(loadUrl+' #'+ajaxDom).show();
-		showDom.siblings().hide();
-		showDom.before(showDom.clone(true).hide());
-		showDom.get(0).setAttribute("id","page"+loadPage);
-	}else{
-		if(loadPage==1){
-			showDom.show().siblings().hide();
-		}else{
-			pageDom.show().siblings().hide();
+		switch(cove){
+		case 0:
+			var pageDom = $("#page"+loadPage);
+			if(pageDom.length==0&&loadPage>1){
+				showDom.load(loadUrl+' #'+ajaxDom).show();
+				showDom.siblings().hide();
+				showDom.before(showDom.clone(true).hide());
+				showDom.get(0).setAttribute("id","page"+loadPage);
+			}else{
+				if(loadPage==1){
+					showDom.show().siblings().hide();
+				}else{
+					pageDom.show().siblings().hide();
+				}
+			}
+			break;
+		case 1:
+			showDom.parent().load(loadUrl+'&m_ajax=1'+' #'+ajaxDom).show();
+			break;
 		}
-	}
 	if($("#taskScroll").length>0){
 		$("html,body").animate({scrollTop: $("#taskScroll").offset().top});
 	}
 }
+function getJson(url,jump){
+	$.getJSON(url,function(json){
+		var tp = json.status==1?'right':'alert';
+		showDialog(json.data,tp,json.msg,function(){
+			jump?location.href=jump:'';
+		});return false;
+	});
+}
 function d_time(end_time){
-    var DifferenceHour = -1
-    var DifferenceMinute = -1
-    var DifferenceSecond = -1
-    var Tday = new Date(end_time * 1000) //**倒计时时间点-注意格式
-    var daysms = 24 * 60 * 60 * 1000
-    var hoursms = 60 * 60 * 1000
-    var Secondms = 60 * 1000
-    var microsecond = 1000
+    var DifferenceHour = -1;
+    var DifferenceMinute = -1;
+    var DifferenceSecond = -1;
+    var Tday = new Date(end_time * 1000); //**倒计时时间点-注意格式
+    var daysms = 24 * 60 * 60 * 1000;
+    var hoursms = 60 * 60 * 1000;
+    var Secondms = 60 * 1000;
+    var microsecond = 1000;
     var d_arr = new Array();
     
-    var time = new Date()
-    var hour = time.getHours()
-    var minute = time.getMinutes()
-    var second = time.getSeconds()
+    var time = new Date();
+    var hour = time.getHours();
+    var minute = time.getMinutes();
+    var second = time.getSeconds();
 	
-    var timevalue = "" + ((hour > 12) ? hour - 12 : hour)
-    timevalue += ((minute < 10) ? ":0" : ":") + minute
-    timevalue += ((second < 10) ? ":0" : ":") + second
+    var timevalue = "" + ((hour > 12) ? hour - 12 : hour);
+    timevalue += ((minute < 10) ? ":0" : ":") + minute;
+    timevalue += ((second < 10) ? ":0" : ":") + second;
 		
-    timevalue += ((hour > 12) ? " PM" : " AM")
-    var convertHour = DifferenceHour
-    var convertMinute = DifferenceMinute
-    var convertSecond = DifferenceSecond
-    var Diffms = Tday.getTime() - time.getTime()
-    DifferenceHour = Math.floor(Diffms / daysms)
-    Diffms -= DifferenceHour * daysms
-    DifferenceMinute = Math.floor(Diffms / hoursms)
-    Diffms -= DifferenceMinute * hoursms
-    DifferenceSecond = Math.floor(Diffms / Secondms)
+    timevalue += ((hour > 12) ? " PM" : " AM");
+    var convertHour = DifferenceHour;
+    var convertMinute = DifferenceMinute;
+    var convertSecond = DifferenceSecond;
+    var Diffms = Tday.getTime() - time.getTime();
+    DifferenceHour = Math.floor(Diffms / daysms);
+    Diffms -= DifferenceHour * daysms;
+    DifferenceMinute = Math.floor(Diffms / hoursms);
+    Diffms -= DifferenceMinute * hoursms;
+    DifferenceSecond = Math.floor(Diffms / Secondms);
 
-    Diffms -= DifferenceSecond * Secondms
-    var dSecs = Math.floor(Diffms / microsecond)
+    Diffms -= DifferenceSecond * Secondms;
+    var dSecs = Math.floor(Diffms / microsecond);
 	if (convertHour != DifferenceHour) {
 	    d_arr.push(DifferenceHour);
 	}else{
@@ -2461,9 +2507,7 @@ window.onload = function(){
 	   $("#ajaxwaitid").fadeIn();
    }).ajaxComplete(function(){
 	   $("#ajaxwaitid").fadeOut();
-   })	
- 
-	 
+   });	
  
 }
 

@@ -76,7 +76,7 @@ $lang = array (
 	'search_task'=>'查找任务',
 	'user_config'=>'个人设置',
 	'user_space'=>'用户空间',
-	'my_space'=>'我的空间',	
+	'my_space'=>'我的店铺',	
 	'manage_center'=>'管理中心',
 	'website_msg'=>'站内信',
 	'money'=>'金钱',
@@ -111,4 +111,17 @@ $lang = array (
 	'website_notice3'=>'2.与他人无实际交易产生，但发现其在[',
 	'website_notice4'=>']上有违规情况，可以通过举报、投诉途径告知网站，举报、投诉为匿名。',
 	'sensitive_word'=>'输入内容包含敏感词汇，请重新输入',
+	'get_task_reward'=>'获得赏金',
+	'error'=>'访问出错了o(╯□╰)o',
+	'home_page'=>'首页',
+	'none_exists_user'=>'不存在的用户',
+
+
+	//pay_cash.htm
+	'open_new_window_payments'=>'请到打开的新窗口进行银行卡支付',
+	'not_close_this_page'=>'付款未完成前请不要关闭本页面。',
+	'return_and_reselect'=>'返回，重新选择银行',
+	'payment_common_question'=>'支付常见问题',
+	'set_your_browser_to_allow_popup'=>'如果银行页面没有打开，请设置您的浏览器为允许弹出。',
+	'payment_in_a_window_complete'=>'如果您多次点击产生多个银行支付窗口，请在一个窗口完成支付，其他银行窗口请直接关闭。',
 );

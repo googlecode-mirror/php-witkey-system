@@ -31,7 +31,11 @@ abstract class Keke_Controller {
 	 * @var  Response The response that will be returned from controller
 	 */
 	public $response;
-
+    
+	public $_url;
+	
+	public $_K;
+	
 	/**
 	 * Creates a new controller instance. Each controller must be constructed
 	 * with the request object that created it.
@@ -57,7 +61,9 @@ abstract class Keke_Controller {
 	 */
 	public function before()
 	{
-		 
+		 global $_K;
+		 $this->_K = $_K;
+		 $this->_url = BASE_URL.'/'.$this->request->url();
 		// Nothing by default
 	}
 
@@ -70,6 +76,7 @@ abstract class Keke_Controller {
 	 */
 	public function after()
 	{
+		
 		// Nothing by default
 	}
 

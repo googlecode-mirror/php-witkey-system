@@ -23,6 +23,7 @@ $lang=array(
      'goods_sell_agreement'=>'作品出售协议',
      'agree_next_step'=>'同意，下一步',
     /*step2*/
+	 'upload_pic'=>'上传图片',	
      'goods_class'=>'作品分类',
      'industry_class_has_not_choose'=>'行业分类未选择',
      'please_choose_class'=>'请选择分类',

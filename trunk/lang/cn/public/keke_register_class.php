@@ -20,4 +20,5 @@ $lang = array(
        'this_IP_has_registered_notice'=>'此IP地址刚才注册过,暂时不能注册',
        'bind_fail'=>'绑定失败',
        'this_user_has_bind'=>'此用户已被绑定',
+		'reg_code_is_error'=>'验证码输入错误',
 );  

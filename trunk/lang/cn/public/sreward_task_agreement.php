@@ -10,5 +10,6 @@ $lang = array(
 	'confirm_jf_resource_file'=>'确认交付了源文件',
 	'confirm_recept_resource_file'=>'确认收到了源文件。',
 	'waiting_each_confirm_jf_resource_file'=>'正在等待对方确认交付源文件。',
+	'delivery_time_out'=>'雇佣双方超时未完成交付,交付阶段已被冻结。请双方提交仲裁申请,以方便客服介入。',
 	
 );

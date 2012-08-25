@@ -1,0 +1,21 @@
+<?php
+$lang = array(
+	'service_provider_intro'=>'服务商信息',
+	'description'=>'描述',
+	'composite_index'=>'综合指数',
+	'positive_feedback'=>'好评率',
+	'service_provider'=>'服务商',
+	'industrial_classification'=>'行业分类',
+	'store_category'=>'店铺分类',
+	'person'=>'个人',
+	'enterprise'=>'企业',
+	'industry'=>'所属行业',
+	'certification_status'=>'认证状态',
+	'no_description'=>'暂无描述',
+	'praise'=>'好评',
+	'work_pace'=>'工作速度',
+	'work_quality'=>'工作质量',
+	'work_attitude'=>'工作态度',
+    'person_store'=>'个人店铺',
+    'enterprise_store'=>'企业店铺',
+);

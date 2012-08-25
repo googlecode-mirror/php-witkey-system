@@ -17,8 +17,10 @@ $lang = array(
 	'input_task_id'=>'请输入任务编号',
 	'input_task_name'=>'请输入任务名称',
 	'use_tools'=>'使用工具',
-	'one_key_pub'=>'一键发布',
+	
 	'task_top'=>'任务置顶',
+	'credit_grade'=>'评价管理',
+    'my_task'=>'我的任务',
 /**user_employer_task.htm**/
       'this_week_release'=>'本周发布',
       'task_number'=>'任务数',

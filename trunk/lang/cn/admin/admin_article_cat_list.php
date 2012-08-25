@@ -13,6 +13,7 @@ $lang = array(
 	'cat_add' => '分类添加',
 	'add_son_cat' => '添加子类',
 	'are_you_comfirm' => '你确定要',
+	'increase_parent_node'=>'增加父节点',
 /* admin_article_cat_list.php */
 	'mulit_edit_cate'=>'批量编辑分类',
 	'delete_cate'=>'删除分类',

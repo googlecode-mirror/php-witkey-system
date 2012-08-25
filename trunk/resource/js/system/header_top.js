@@ -52,20 +52,21 @@ $(function(){
 	})
 	
 	
-	//语言选项
-	$("#lan_menu").mouseDelay().hover(function(){
-		$(this).addClass("hover").children("a").removeClass("hidden");
-	},
-	function(){
-		$(this).removeClass("hover").children("a").not("a.selected").addClass("hidden");
-	}).click(function(){
-		$(this).toggleClass("hover").children("a").not("a.selected").toggleClass("hidden");
-	}); 
+	//语言选项 
 	$("#lan_menu a").click(function(){
 		setLang($(this).attr("rel"));
 	})
 
 });
+
+$(function (){ 
+	$("#lan_menu").mouseDelay().hover(function(){
+		$(this).addClass("hover").children().removeClass("hidden");
+	},function (){ 
+		$(this).removeClass("hover").children().not("a.selected").addClass("hidden");
+	}); 
+}); 
+
 
 function search_keydown(event){
     if ($.browser.msie) {
@@ -97,18 +98,31 @@ function login_keydown(event){
 $("#search_btn").click(function(){topSearch();})
 function topSearch(){
 	var searchKey = $.trim($("#search_key").val());
-	if(searchKey&&searchKey!='输入任务/商品'){
+ 
+	if(searchKey&&searchKey!=L.input_task_service){
 		var type      = $("#search_select .selected").attr("rel");
 		var link    = "index.php?do="+type+"&path=H2&search_key="+searchKey;
 			$("#frm_search").attr("action",link);
 		location.href=link;
 	}
 }
-function setLang(lang){
-	if(lang==LANG){
-		return false;
-	}else{
-		setcookie("_lang",lang,24*3600);
-		document.location.reload();
-	}
+function setLang(o){
+	var lang = o.value;
+	var c    = $(o).children('option:selected').attr('c');
+		setCurr(c);
+		setTimeout(function(){
+			if(lang==LANG){
+				return false;
+			}else{
+				setcookie("_lang",lang,24*3600);
+				document.location.replace(location.href);
+			}
+		},500);
+}
+function setCurr(c,t){
+	var url  = SITEURL+'/index.php?do=ajax&ajax=ajax&ac=currency&curr='+c;
+	$.get(url);
+	t==1&&setTimeout(function(){
+		document.location.replace(location.href);
+	},500);
 }

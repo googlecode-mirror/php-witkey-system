@@ -37,7 +37,7 @@ $lang = array(
 	'case_alerady_exists'=>'案例已经存在，不可重复添加',
 	'add_case_success'=>'添加案例成功',
 	'add_cese_fail'=>'添加案例失败',
-	
+	'upload_picture'=>'请上传图片',
 	/* admin_case_add_htm */
 	'case'=>'案例',
 	'task'=>'任  务',

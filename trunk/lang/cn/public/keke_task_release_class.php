@@ -11,5 +11,7 @@ $lang = array(
 	'the_page_timeout_notice'=>'此页面已过期,无法进入此页面,现在跳往发布页面',
 	'can_pub'=>'可以发布',
 	'not_rights_pub_task'=>'没有发布权限。',
+	'key_information_missed'=>'任务关键信息缺失，发布失败，请重新发布或联系客服',
+	'task_cash_negatvie'=>'任务金额为负数',
 
 );

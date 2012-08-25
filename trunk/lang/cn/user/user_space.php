@@ -23,15 +23,6 @@ $lang = array(
 		'case_manage'=>'案例管理',
 		'member_manage'=>'成员管理',
 		'search_space'=>'查看空间',
-   /*user_space_basic.php*/
-        'not_repeat'=>'不让重复',
-        'x_repeat'=>'水平方向重复',
-        'y_repeat'=>'垂直方向重复',
-        'scroll'=>'随页面滚动',
-        'fixed'=>'固定位置',
-        'upper_left_corner'=>'左上角',
-        'center'=>'居中',
-        'upper_right_corner'=>'右上角',
 	
 	/* user_space.php */
 		'basics' => '基本资料',
@@ -43,25 +34,16 @@ $lang = array(
 		'shop_friendlinks' => '空间友情链接',
 		'edit_space_success' => '编辑空间成功!',
 		'edit_space_fail' => '编辑空间失败！',
-		'successfully_set' => '设置成功',
-		'fail_set' => '设置失败',
-		'space_style_setting_success' => '空间风格设置成功！',
-		'space_style_setting_fail' => '空间风格设置失败！',
-		'not_set_space_style_use_default' => '你未设置空间风格，你空间风格为系统默认风格！',
 		'enterprise_space_desc'=>'您的企业空间简介',
 		'have_not_complete_basics'=>'您还没有完善资料，请完善资料',
-	/* bg_setting.htm*/
-'resotre_default'=>'还原为默认',
-'bg_fixed'=>'背景定位',
-'repeat'=>'重复',
  
  
  
  
 	/* user_space.htm */
 		'shop_name' => '空间名称',
-		'tips_about_shop_name' => '空间名称,2-100字',
-		'input_shop_name_correct_format' => '请正确填写空间名称,2-100字符',
+		'tips_about_shop_name' => '空间名称,2-30字',
+		'input_shop_name_correct_format' => '请正确填写空间名称,2-30字符',
 		'shop_type' => '空间类型',
 		'type_personal_shop' => '个人空间',
 		'certification_for_enterprise' => '进行企业认证',
@@ -105,6 +87,8 @@ $lang = array(
 	'year'=>'年',
 	'month'=>'月',
 	'day'=>'日',
+	'edit'=>'编辑',
+	'delete'=>'删除',
     'case_manage'=>'案例管理',
     'add_case'=>'添加案例',
 	'view_case'=>'查看案例',
@@ -197,7 +181,8 @@ $lang = array(
 		/*user_space_notice*/
 		'had_not_open_shop'=>'您还没有开通空间店铺！',
 		'had'=>'已有',
-		'open_shop'=>'人开通空间店铺',
+        'ge_member'=>'个会员',
+		'open_shop'=>'开通店铺',
 		'shop_desc'=>'空间店铺作为展示个人与企业用户商品及资料的平台，扩展各界威客用户之间的互动与了解，提升商品的交易和任务的协调工作。',
 		'welcome_open_shop'=>'欢迎开通空间店铺，成为威客商城卖家！',
 		'hurry_open'=>'立即开通'

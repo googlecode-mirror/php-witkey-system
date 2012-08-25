@@ -16,5 +16,8 @@ $lang=array(
       'you_input_username_not_exist'=>'您输入的用户名不存在',
       'notice_message'=>'提示信息',
       'login_success'=>'登录成功!',
-	  'account_has_not_excited'=>'用户账户暂未激活,请尽快登陆邮箱激活账户'
+	  'account_has_not_excited'=>'用户账户暂未激活,请尽快登陆邮箱激活账户',
+		'freezed'=>'您的密码已输错5次，为了保护您的账号安全，此账户已被冻结。',
+		'before'=>'你还有',
+		'willfreezed'	=>'次机会，密码输入超过5次，账户将被冻结。'
 );

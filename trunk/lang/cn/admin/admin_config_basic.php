@@ -19,6 +19,7 @@ $lang = array (
 	'website_config_fail' => '站点信息配置失败', 
 	'copyright' =>'网站版权', 
 	'copyright_number_length'=>'网站版权长度',
+	'site_name_description'=>'网站名称并非网站标题,仅在页底显示及发送邮件等处使用',
 	'copyright_info'=>'网站版权信息',
 	'please_input_the_website_name' => '请输入网站名称', 
 	'site_name_cannot_be_empty' => '网站名称不能为空', 
@@ -40,6 +41,7 @@ $lang = array (
 	'record_number_length' => '备案号长度', 
 	'icp_info' => '如果网站已备案，输入您的备案信息，页面底部将显示 ICP备案信息', 
 	'third_party_code_statistics' => '第三方统计代码', 
+	'default_lang'=>'网站默认语言',
 	'js_code' => '填写第三方流量统计JS代码', 
 	'is_close' => '网站是否关闭', 
 	'website_close_reason' => '网站关闭的原因', 
@@ -88,6 +90,8 @@ $lang = array (
 	'taobao_website_appid_notice' => '(淘宝开发者平台提供的api编号)', 
 	'taobao_website_appsecret' => '淘宝appsecret', 
 	'taobao_website_appsecret_msg' => '淘宝appsecret', 
-	'taobao_website_appsecret_notice' => '(淘宝开发者平台提供的app_secret编号)'
-
+	'taobao_website_appsecret_notice' => '(淘宝开发者平台提供的app_secret编号)',
+	'second_domain'=>'启用二级域名',
+	'top_domain_desc'=>'顶级域名不需要添加“http://”，也不要以“/”结尾，请与[站点配置]中保持一致，例如：t.com,不支持localhost',
+	'pan_analytic'=>'若需要支持二级域名，请先配置DNS，开启泛解析，将各域名指向同一IP'
 	);

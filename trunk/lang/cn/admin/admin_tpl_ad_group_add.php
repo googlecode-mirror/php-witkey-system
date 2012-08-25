@@ -39,5 +39,7 @@ $lang = array(
 	'edit_parameter_error'=>'编辑参数错误',
 	'jump_to_advertisement_page'=>'跳转至广告添加页面',
 	'before_jump_to_page'=>'跳转至之前页面',
+	'loadcount'=>'调用数量',
+	'count_you_wish'=>'您希望调用的广告数量',
 
 );

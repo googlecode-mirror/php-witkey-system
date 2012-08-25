@@ -790,6 +790,7 @@
 					+ '"></body></html>';
 			d.win = la = e("#" + sb)[0].contentWindow;
 			ba = e(la);
+			if(la)
 			try {
 				this.doc = v = la.document;
 				ma = e(v);
@@ -802,6 +803,26 @@
 					v.designMode = "On"
 			} catch (i) {
 			}
+			/***author chenTao****/
+			var fb = this.doc.body;
+			if(this.settings.innerCheck){
+				if(fb.addEventListener){
+					fb.addEventListener('keyup',function(){
+						editor.checkInner();
+					},false);
+					fb.addEventListener('keydown',function(){
+						editor.checkInner();
+					},false);
+				}else{
+					fb.attachEvent('onkeydown',function(){
+						editor.checkInner();
+					},false);
+					fb.attachEvent('onkeyup',function(){
+						editor.checkInner();
+					});
+				}
+			}
+			/******/
 			setTimeout(Ya, 300);
 			d.setSource();
 			la.setInterval = null;
@@ -1718,6 +1739,7 @@
 					.replace(
 							/<\/(strong|b|u|strike|em|i)>((?:\s|<br\/?>|&nbsp;)*?)<\1(\s+[^>]*?)?>/ig,
 							"$2")
+					.replace(/<(input|select|textarea|button|marquee|iframe|frame|form|script)/ig,"<\\$1")
 		};
 		this.formatXHTML = function(a, b) {
 			function c(u) {
@@ -1966,8 +1988,7 @@
 			if (a)
 				b = a(b);
 			a = "<html><head>" + za + "<title>\u9884\u89c8</title>"
-					+ (P ? '<base href="' + P + '"/>' : "") + "</head><body>"
-					+ b + "</body></html>";
+					+ (P ? '<base href="' + P + '"/>' : "") + "</head><body>"+ b + "</body></html>";
 			b = window.screen;
 			b = window
 					.open(
@@ -2472,6 +2493,24 @@
 			setTimeout(function() {
 				a.focus()
 			}, 100)
+		};
+		this.checkInner = function(){
+			var i   = e.trim(this.stripHtml());
+			var len = i.length;
+			var remain = Math.abs(p.wordLimit-len);
+			if(p.wordLimit>=len){
+		        e("#"+p.showArea).text("已输入长度:"+len+",还可以输入:"+remain+"字");
+			}else{
+				e("#"+p.showArea).text("可输入:"+p.wordLimit+"字,已超出长度:"+remain+"字");
+			}
+		};
+		this.stripHtml = function(){//去除统计内容中的html代码
+			var i   = this.getSource();
+			return i.replace(new RegExp("<(.+?)>([^<>]*)","igm"),'$2')
+					.replace(new RegExp("&nbsp;","gm"),'')
+					.replace(new RegExp("&lt;","gm"),"<")
+					.replace(new RegExp("&gt","gm"),">")
+					.replace(new RegExp("&quot;","gm"),"\"");
 		};
 		this.addShortcuts = function(a, b) {
 			a = a.toLowerCase();
@@ -3073,7 +3112,10 @@
 		cleanPaste : 2,
 		hoverExecDelay : 100,
 		html5Upload : true,
-		upMultiple : 99
+		upMultiple : 99,
+		innerCheck:false,
+		wordLimit  :1000,
+		showArea   :'length_show'
 	};
 	window.xheditor = Ea;
 	e(function() {

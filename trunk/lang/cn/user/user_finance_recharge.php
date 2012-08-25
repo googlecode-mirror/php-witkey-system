@@ -21,7 +21,10 @@ $lang=array(
       'order_submit_fail'=>'订单提交失败。',
 		'recharge_notice'=>'如有问题，请及时联系管理员',
 /*user_finance_recharge.htm*/
-      'account_recharge'=>'账号充值',
+	  'online_pay'=>'在线充值',
+	  'offline_pay'=>'线下充值',
+	  'provide_payment_service'=>'为您提供以下网上支付服务',
+	  'account_recharge'=>'账号充值',
       'i_want_to_recharge'=>'我要充值',
       'i_want_to_withdraw'=>'我要提现',
       'account_balance'=>'账户余额',
@@ -31,10 +34,8 @@ $lang=array(
       'problem_contact_notice'=>'如有问题请电话联系',
       'recharge_money_notice'=>'充值金额可支持2位小数!最小金额',
       'you_input_money_is'=>'您填写的充值金额为',
-      'online_pay'=>'线上支付',
       'no_bank_auth_no_recharge'=>'还没有进行银行认证,无法使用线下充值方式',
       'bank_auth'=>'银行认证',
-      'offline_pay'=>'线下支付',
       'optional_account'=>'可选账户',
       'remit_notice'=>'提醒您，为识别汇款人，汇款时请多汇或者少汇几分钱，
                                 比如发布500元任务，可以汇500.01、500.02 。 汇款后请在第一时间内联系我们。',

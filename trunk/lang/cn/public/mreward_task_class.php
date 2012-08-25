@@ -31,5 +31,9 @@ $lang = array(
 	'now_task'=>'当前任务',
 	'prize_have_full'=>'等奖项已满,无法选此稿件为',
 	'prize_th'=>'等奖！',
+	'tg'=>'投稿',
+	'xg'=>'选稿',
+	'gs'=>'公示',
+	
 
 );

@@ -25,6 +25,7 @@ $lang = array (
 		'user_center'=>'用户中心',
 		'manage_tpl'=>'管理面板',
 		'person_config'=>'个人设置',
+        'company_config'=>'企业设置',
 		'finance_manage'=>'财务管理',
 		'employer_buyer'=>'雇主|买家',
 		'witkey_seller'=>'威客|卖家',
@@ -48,7 +49,7 @@ $lang = array (
 	'welcome'=>'欢迎您，',
 	'tiao_news'=>'条消息',
 	'cash'=>' 现金',
-	'goods_trans'=>'商品交易',
+	'goods_trans'=>'买入的商品',
 	
 	
 /**verify_seconde.htm**/
@@ -93,6 +94,7 @@ $lang = array (
 	
 /**new add**/
 		'step_one' => '第一步',
+		
 		'step_two' => '第二步',
 		'step_three' => '第三步',
 		'step_four' => '第四步',
@@ -103,5 +105,9 @@ $lang = array (
         'error_tips'=>'错误提示',
 		'submit_time_desc' => '提交时间降序',
 		'submit_time_asc' => '提交时间升序',
+		
+		'user_type'=>'用户类型',
+		'single'=>'个人',
+		'enterprise'=>'企业',
 );
 

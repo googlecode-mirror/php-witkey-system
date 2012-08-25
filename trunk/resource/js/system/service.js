@@ -41,11 +41,37 @@ function checkCommentInner(obj,e){
 		num<0?num=0:'';
 	var Remain = Math.abs(100-num);
 		if(num<=100){
-			$(obj).next().find(".answer_word").text("你还能输入"+Remain+"个字!");
+			$(obj).next().find(".answer_word").text(L.can_input+Remain+L.word);
 		}else{
 			var nt = $(obj).val().toString().substr(0,100);
 			$(obj).val(nt);	
 		}
+}
+/**
+ * 编辑
+ */
+function seEdit(sid){
+   // var sid = parseInt(sid);
+    if (typeof(sid) == 'undefined' || isNaN(sid)) {
+        showDialog("$_lang['none_exists_service']", "alert", "{$_lang['operate_notice']}");
+        return false;
+    }
+    else {
+        var url = "index.php?do=user&view=witkey&op=g_pub&model_id=6&ac=edit&ser_id=" + sid;
+		showWindow('service_edit',url,'get',0);return false;
+    }
+}
+/**
+ * 操作
+ */
+function service_op(t){
+	if(!uid){
+		return false;
+	}
+	showDialog(L.operate_confirm,'confirm',L.operate_notice,function(){
+		var url = SITEURL+'/index.php?do=service&sid='+sid+'&view=service_op&t='+t;
+		showWindow('service_op',url,'get',0);return false;
+	});
 }
 /**
  * 商品下单
@@ -59,9 +85,64 @@ function checkCommentInner(obj,e){
 function sub_order(type,sid,s_uid){
 	if(check_user_login()){
 		if(uid==s_uid){
-			showDialog("您无法购买自己的"+type,"alert","操作提示");return false;
+			showDialog(L.s_can_not_buy_your_own+type,"alert",L.operate_notice);return false;
 		}else{
-			showDialog("您确认下单购买吗","confirm","操作提示","location.href='index.php?do=shop_order&op=confirm&sid="+sid+"'");return false;
+			//showDialog(L.s_confirm_to_buy,"confirm",L.operate_notice,"location.href='index.php?do=shop_order&op=confirm&sid="+sid+"'");return false;
+			showDialog(L.s_confirm_to_buy,"confirm",L.operate_notice,function(){formSub('index.php?do=shop_order&op=confirm&sid='+sid,'url',false)});return false;
 		}
 	}
+}
+/* 商品缩略图 */
+window.onload=function(){
+$('.pro_decs_img').each(function(){
+	var obj = $(this).children('img');
+	var pw = $(this).width();
+	var ph = $(this).height();
+	var mw = obj.width();
+	var mh = obj.height();
+
+	var objcz = mw -mh;
+	var wcz = mw-pw;
+	var hcz = mh-ph;
+
+	if(wcz > 0 && hcz>0){
+		if(objcz<=0){
+			obj.width(pw+'px');
+			obj.height('auto');
+		}else{
+			obj.width('auto');
+			obj.height(pw+'px');
+		}
+	}else if(wcz > 0 && hcz<0 || wcz < 0 && hcz<0){
+		obj.css({'margin-top': -hcz/2 +'px' })
+	}		
+	
+	var last_wcz = obj.width()-pw;
+	var last_hcz = obj.height()-ph;
+
+	var w_speed = last_wcz/pw;
+	var h_speed = last_hcz/ph;
+
+	if (h_speed<1){
+			h_speed=1;
+	}
+	if (w_speed<1){
+			w_speed=1;
+	}
+
+	$(this).mousemove(function(e){
+		var x_y = $(this).offset();
+		var set_X= e.pageX - x_y.left;
+		var set_Y= e.pageY - x_y.top;
+		//$('#xy').html(' X '+e.pageX+' Y '+e.pageY+' sX '+x_y.left+' sY '+x_y.top+' set_X ' + set_X + ' set_Y ' + set_Y +' h_speed ' +h_speed +' w_speed ' +w_speed + ' 宽差值 '+ wcz +' 高差值 ' + hcz + ' objcz ' + objcz+ ' 最终高差值' + last_hcz + ' 最终宽差值' + last_wcz );
+
+		if(last_wcz>0 && set_X<=last_wcz){
+			obj.css({'margin-left': -set_X * w_speed +'px' });
+		}else if(last_hcz>0 && set_Y<=last_hcz){
+			obj.css({'margin-top': -set_Y * h_speed  +'px' });
+		}	
+	})
+
+});
+
 }

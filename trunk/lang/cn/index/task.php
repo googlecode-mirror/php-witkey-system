@@ -25,7 +25,7 @@
 		'choose_bid'=>'选标',
 		'choose_works'=>'选稿',
 		'i_want'=>'我要',
-
+		'task_not_pay'=>'任务未付款',
 	    'operate_disable_notice'=>'操作无效，用户向自己发布的任务投稿!',
 	    'operate_fail_notice'=>'操作失败提示',
 	);

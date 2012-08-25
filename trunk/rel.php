@@ -2,7 +2,9 @@
 define ( 'IN_KEKE', TRUE );
 include 'app_boot.php';
 
-
+var_dump(function_exists('apache_request_headers')); 
+ 
+die;
 $apc  = Keke_cache::instance('apc');
 /* if($value =$apc->get('test_apc') == null){
 	$apc->set('test_apc', 'apc_vale');

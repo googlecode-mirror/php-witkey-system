@@ -5,9 +5,9 @@ class Keke_captcha_config {
    	
    	$a =  array(
    			'default' => array(
-   					'style'      	=> 'riddle',
-   					'width'      	=> 100,
-   					'height'     	=> 30,
+   					'style'      	=> 'basic',
+   					'width'      	=> 120,
+   					'height'     	=> 40,
    					'complexity' 	=> 4,
    					'background' 	=> '',
    					'fontpath'   	=> S_ROOT.'resource/img/gdfonts/',

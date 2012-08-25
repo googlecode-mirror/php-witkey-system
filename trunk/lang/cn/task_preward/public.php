@@ -1,7 +1,8 @@
 <?php
 $lang = array(
 	'confirm'=>'确定要',
-
+	'prom_bid'=>'推广中标',
+	'work_unbid'=>'稿件淘汰',
     'freeze_task_success'=>'冻结任务成功',
     'freeze_task_fail'=>'冻结任务失败',
     'unfreeze_task_success'=>'任务解冻成功',

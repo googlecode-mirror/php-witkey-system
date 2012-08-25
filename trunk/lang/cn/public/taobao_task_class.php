@@ -13,7 +13,6 @@ $lang = array(
 	'task_over_notice'=>'任务结束通知',
 	'you_pub_task'=>'您发布的任务',
 	'haved_over_pefect'=>'已圆满结束',
-	'success_bid_haved'=>'成功中标了',
 	'set_fail_and_present_not_change_status'=>'设置失败,当前状态下不可更改稿件状态',
 	'error_notice'=>'错误提示',
 	'present_status_and_not_operate_work'=>'当前状态下不可操作稿件',

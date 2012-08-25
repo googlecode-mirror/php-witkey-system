@@ -12,5 +12,17 @@ $lang = array(
 	'sale_goods'=>'出售商品',
 	'evaluation'=>'的评价',
 	'view_details'=>'查看详情',
-
+		'nickname'=>'昵　称:',
+		'rz'=>'认证：',
+		'good_rate'=>'好评率：',
+		'pj_name'=>'名称',
+		'gz'=>'雇主',
+		'witkey'=>'威客',
+		'pj'=>'评价',
+		'come_form_gz'=>'来自他人的评价',
+		'come_form_witkey'=>'他给别人的评价',
+		'all'=>'全部',
+		'good'=>'好评',
+		'middle'=>'中评',
+		'bad'=>'差评',
 );

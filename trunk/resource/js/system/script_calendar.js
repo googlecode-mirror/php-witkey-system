@@ -32,6 +32,7 @@ var today = new Date();
 var lastcheckedyear = false;
 var lastcheckedmonth = false;
 
+
 function getposition(obj) {
 	var r = new Array();
 	r['x'] = obj.offsetLeft;
@@ -42,20 +43,37 @@ function getposition(obj) {
 	}
 	return r;
 }
+function winScroll(){
+	var s = new Array();
+	var y=x=0;
+	if(document.documentElement&&document.documentElement.scrollTop)
+	{
+		x=document.documentElement.scrollLeft;
+		y=document.documentElement.scrollTop;
+	}
+	else if(document.body)
+	{
+		x=document.body.scrollLeft;
+		y=document.body.scrollTop;
+	}
+	s['x']=x;
+	s['y']=y;
+	return s;
+}
 
 function loadcalendar() {
 	var s = '';
 	s += '<div id="calendar" style="display:none; position:absolute; z-index:100000;" onclick="doane(event)">';
 	s += '<div style="width: 210px;"><table cellspacing="0" cellpadding="0" width="100%" style="text-align: center;">';
-	s += '<tr align="center" id="calendar_week" ><td><a href="###" onclick="refreshcalendar(yy, mm-1)" title="上一月"><<</a></td><td colspan="5" style="text-align: center"><a href="###" onclick="showdiv(\'year\');doane(event)" class="dropmenu" title="点击选择年份" id="year"></a>&nbsp; - &nbsp;<a id="month" class="dropmenu" title="点击选择月份" href="###" onclick="showdiv(\'month\');doane(event)"></a></td><td><A href="###" onclick="refreshcalendar(yy, mm+1)" title="下一月">>></A></td></tr>';
-	s += '<tr id="calendar_header"><td>日</td><td>一</td><td>二</td><td>三</td><td>四</td><td>五</td><td>六</td></tr>';
+	s += '<tr align="center" id="calendar_week" ><td><a href="###" onclick="refreshcalendar(yy, mm-1)" title="'+L.pre_month+'"><<</a></td><td colspan="5" style="text-align: center"><a href="###" onclick="showdiv(\'year\');doane(event)" class="dropmenu" title="'+L.c_choice_year+'" id="year"></a>&nbsp; - &nbsp;<a id="month" class="dropmenu" title="'+L.c_choice_month+'" href="###" onclick="showdiv(\'month\');doane(event)"></a></td><td><A href="###" onclick="refreshcalendar(yy, mm+1)" title="'+L.next_month+'">>></A></td></tr>';
+	s += '<tr id="calendar_header"><td>'+L.d+'</td><td>一</td><td>二</td><td>三</td><td>四</td><td>五</td><td>六</td></tr>';
 	for(var i = 0; i < 6; i++) {
 		s += '<tr>';
 		for(var j = 1; j <= 7; j++)
 			s += "<td id=d" + (i * 7 + j) + " height=\"19\">0</td>";
 		s += "</tr>";
 	}
-	s += '<tr id="hourminute"><td colspan="7" align="center"><input type="text" size="2" value="" id="hour" class="txt" onKeyUp=\'this.value=this.value > 23 ? 23 : zerofill(this.value);controlid.value=controlid.value.replace(/\\d+(\:\\d+)/ig, this.value+"$1")\'> 点 <input type="text" size="2" value="" id="minute" class="txt" onKeyUp=\'this.value=this.value > 59 ? 59 : zerofill(this.value);controlid.value=controlid.value.replace(/(\\d+\:)\\d+/ig, "$1"+this.value)\'> 分</td></tr>';
+	s += '<tr id="hourminute"><td colspan="7" align="center"><input type="text" size="2" value="" id="hour" class="txt" onKeyUp=\'this.value=this.value > 23 ? 23 : zerofill(this.value);controlid.value=controlid.value.replace(/\\d+(\:\\d+)/ig, this.value+"$1")\'> '+L.point+' <input type="text" size="2" value="" id="minute" class="txt" onKeyUp=\'this.value=this.value > 59 ? 59 : zerofill(this.value);controlid.value=controlid.value.replace(/(\\d+\:)\\d+/ig, "$1"+this.value)\'> '+L.minutes+'</td></tr>';
 	s += '</table></div></div>';
 	s += '<div id="calendar_year" onclick="doane(event)" style="display: none;z-index:100001;"><div class="col">';
 	for(var k = 2020; k >= 1931; k--) {
@@ -121,7 +139,14 @@ function settime(d) {
 	controlid.focus();
 	controlid.blur();
 }
-
+function changePos(id){
+	var p = getposition(id);
+	var s = new Array();
+	s['x']=s['y']=0;
+	$("#[id*='fwin_']").get(0)?s=winScroll():'';
+	document.getElementById('calendar').style.left = p['x']+s['x']+'px';
+	document.getElementById('calendar').style.top	= (p['y']+s['y'] + 20)+'px';
+}
 function showcalendar(event, controlid1, addtime1, startdate1, enddate1) {
 	controlid = controlid1;
 	addtime = addtime1;
@@ -130,10 +155,8 @@ function showcalendar(event, controlid1, addtime1, startdate1, enddate1) {
 	currday = controlid.value ? parsedate(controlid.value) : today;
 	hh = currday.getHours();
 	ii = currday.getMinutes();
-	var p = getposition(controlid);
+	changePos(controlid);
 	document.getElementById('calendar').style.display = 'block';
-	document.getElementById('calendar').style.left = p['x']+'px';
-	document.getElementById('calendar').style.top	= (p['y'] + 20)+'px';
 	doane(event);
 	refreshcalendar(currday.getFullYear(), currday.getMonth());
 	if(lastcheckedyear != false) {
@@ -184,7 +207,7 @@ function refreshcalendar(y, m) {
 		}
 		if(x.getFullYear() == today.getFullYear() && x.getMonth() == today.getMonth() && x.getDate() == today.getDate()) {
 			dd.className = 'calendar_today';
-			dd.firstChild.title = '今天';
+			dd.firstChild.title = L.today;
 		}
 		if(x.getFullYear() == currday.getFullYear() && x.getMonth() == currday.getMonth() && x.getDate() == currday.getDate()) {
 			dd.className = 'calendar_checked';
@@ -224,35 +247,12 @@ function zerofill(s) {
 	return (s < 10 ? '0' : '') + s.toString();
 }
 
-
-//var calendarstyle = "#calendar{padding:5px;text-align:left;border:1px solid #7FCAE2;background:#FFF;margin-bottom:0.8em;}#calendar td{padding:2px;font-weight:bold;}#calendar_week td{height:2em;line-height:2em;border-bottom:1px solid #E3EDF5;}#hourminute td{padding:4px 2px;border-top:1px solid #E3EDF5;}.calendar_expire,.calendar_expire a:link,.calendar_expire a:visited{color:#666;font-weight:normal;}.calendar_default,.calendar_default a:link,.calendar_default a:visited{color:#09C;}.calendar_checked,.calendar_checked a:link,.calendar_checked a:visited{color:#F60;font-weight:bold;}td.calendar_checked,span.calendar_checked{background:#E3EDF5;}.calendar_today,.calendar_today a:link,.calendar_today a:visited{color:#444;font-weight:bold;}#calendar_header td{width:30px;height:20px;border-bottom:1px solid #E3EDF5;font-weight:normal;}#calendar_year{display:none;line-height:130%;background:#FFF;position:absolute;z-index:10;}#calendar_year .col{float:left;background:#FFF;margin-left:1px;border:1px solid #E3EDF5;padding:4px;}#calendar_month{display:none;background:#FFF;line-height:130%;border:1px solid #DDD;padding:4px;position:absolute;z-index:11;}";
-/*var calendarstyle = 
-		"#calendar{padding:5px;text-align:left;border:1px solid #ccc;background:#FFF;margin-bottom:0.8em; font-size:12px;}" +
-		"#calendar a{text-decoration:none;}"+
-		"#calendar #calendar_week a{color:#2F549F;}"+
-		"#calendar td{padding:2px;font-weight:bold;}" +
-		"#calendar_week td{height:2em;line-height:2em;border-bottom:1px solid #ccc; font-size:14px; }" +
-		"#hourminute td{padding:4px 2px;border-top:1px solid #ccc;}" +
-		".calendar_expire,.calendar_expire a:link,.calendar_expire a:visited{color:#666; font-weight:normal;}" +
-		".calendar_default,.calendar_default a:link,.calendar_default a:visited{color:#2F549F;}" +
-		".calendar_checked,.calendar_checked a:link,.calendar_checked a:visited{color:#fff; font-weight:bold; }" +
-		"td.calendar_checked,span.calendar_checked{background:#2f55a0; color:#fff;}" +
-		".calendar_today,.calendar_today a:link,.calendar_today a:visited{color:#7CAF22;font-weight:bold;}" +
-		"#calendar_header td{width:30px;height:20px;border-bottom:1px solid #ccc;font-weight:normal; color:#000; }" +
-		"#calendar_year{display:none;line-height:130%;background:#FFF;position:absolute;z-index:10;}" +
-		"#calendar_year .col{float:left;background:#FFF;margin-left:1px;border:1px solid #ccc;padding:4px;}" +
-		"#calendar_year .col a{color:#2F549F;}"+
-		"#calendar_month{display:none;background:#FFF;line-height:130%;border:1px solid #DDD;padding:4px;position:absolute;z-index:11;}"+
-		"#calendar_month  a{color:#2F549F;}";
-if(is_ie){// IE
-	var el = document.createStyleSheet();
-	el.cssText = calendarstyle;
-} else {
-	var el = document.createElement("style");
-	el.type = "text/css";
-	el.appendChild(document.createTextNode(calendarstyle));
-	document.getElementsByTagName("head")[0].appendChild(el);
-}
-*/
-loadcalendar();
+$(function(){
+	loadcalendar();
+	if($("#calendar").get(0)){
+		$(window).scroll(function(){
+			controlid!=null&&changePos(controlid);
+		})
+	}
+})
 

@@ -9,8 +9,6 @@
 $lang = array(
 /*task_edit.php*/
 
-	'task_operate_successfully'=>'任务操作成功!',
-	'task_operate_fail'=>'任务操作失败!',
 	'edit_task'=>'编辑任务',
 	'edit_your_task'=>'编辑了您的任务',
 /*task_edit.htm*/
@@ -26,7 +24,12 @@ $lang = array(
 	'task_attachment'=>'任务附件',
 	'now_no_attachment'=>'暂无附件',
 	'txt_task_cash_msg'=>'修改金额不得小于任务原金额',
+/****新增****/
 	'task_description'=>'任务描述',
+	//---- agree----***/
+	'operate_report'=>'处理仲裁',
+	'agree_time'=>'协议签署时间',
+	'agree_over_time'=>'确认完成时间'
 
 
 );

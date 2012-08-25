@@ -17,8 +17,13 @@ $lang = array(
 	'work_num_limit_notice'=>'入围稿件不足2个,无法发起投票！',
 	'task_vote'=>'投票中',
 	'task_in'=>'入围',
+    'aito_choose_work_notice'=>'系统自动选稿通知',
+    'gs'=>'公示',
+    'timeout_sys_default_in_and_bid'=>'选稿时间到，系统自动选择入围稿件中标通知',
 	'work_vote_bid'=>'稿件投票中标',
 	'task_timeout'=>'任务过期',
+    'xg_timeout'=>'选稿到期',
+    'timeout_sys_default_vote_status'=>'选稿期已到,多人入围，系统默认将其转为投票状态通知',
 	'de_jh'=>'的#',
 	'your_jh'=>'您的#',
 	'task_jh'=>'任务#',
@@ -33,6 +38,18 @@ $lang = array(
 	'confirm_resource_file_upload'=>'确认源文件上传',
 	'confirm_recept_source_file'=>'确认接收源文件',
 	'wait_resource_file_recept'=>'等待源文件接收',
-
+	'agree_action'=>'动作',
+	'agree_g_ac'=>'您发布的任务',
+	'agree_w_ac'=>'您参加的任务',
+	'agree_reason'=>'原因',
+	'agree_freeze_reason'=>'由于超时未完成交付已被系统冻结,请尽快发起仲裁提交理由后由客服介入处理',
+	'agree_title_1'=>'协议交付超时冻结通知',
+	'agree_task_title'=>'任务标题',
+	'agree_title_2'=>'协议系统默认签署通知',
+	'agree_status'=>'协议状态',
+	'agree_url'=>'协议链接',
+	'over_time_system_auto_sign'=>'您超时未签署协议,系统已默认签署,请尽快完成交付',
+	'agree_has_signed_please_confirm'=>'交付协议系统已签署完成,请尽快完成交付',
+	'view_delive'=>'查看交付'
 
 );

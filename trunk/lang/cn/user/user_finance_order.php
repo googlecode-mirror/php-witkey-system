@@ -35,7 +35,7 @@ $lang=array(
       'single_price_yuan'=>'单价(元)',
       'trans_status'=>'交易状态',
       'trans_operate'=>'交易操作',
-   
+   	  'confirm'=>'确认',
 
       'pub_time'=>'提交时间',
       'send_message'=>'发短信',
@@ -45,5 +45,12 @@ $lang=array(
       'go_pay'=>'去付款',
       'confirm_delete_order'=>'确认删除此订单',
       'order_delete_fail'=>'订单删除失败',
+   //扩展的
+   	'buy_in'=>'买入的商品',
+   	'sell_out'=>'卖出的商品',
+   	'buy_goods'=>'购买商品',
+   	'sell_goods'=>'卖出商品',
+   	'contant'=>'请联系卖家索要作品,然后再确认作品,卖家联系方式:',
+   	'get_pay'=>'请尽快联系买家确认作品,以便能快速收款!'
 
 );

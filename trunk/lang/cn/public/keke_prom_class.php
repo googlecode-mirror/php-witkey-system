@@ -7,6 +7,7 @@
 */
 $lang=array(
       'prom_fail'=>'推广失败',
+	  'prom_success'=>'推广成功',
       'you_can_not_prom_self'=>'您无法推广自己！',
       'your_prom_user_has_promer'=>'由于您推广的用户已经存在上线、无法再被您推广！',
       'prom_system_closed'=>'由于推广系统已经关闭、您此次推广失败！',

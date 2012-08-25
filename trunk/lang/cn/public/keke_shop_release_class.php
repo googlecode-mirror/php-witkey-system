@@ -18,5 +18,6 @@ $lang=array(
        'copy'=>'份',
        'hour'=>'小时',
        'week'=>'周',
-       'month'=>'月'
+       'month'=>'月',
+       'release_tips'=>'发布提示'
 );

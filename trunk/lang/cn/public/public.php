@@ -33,10 +33,13 @@ $lang = array(
 	'uninstall'=>'卸载',
 	'upload'=>'上传',
 	'pass'=>'通过审核',
+	'ci'=>'次',
+	'no'=>'暂无',
 	'nopass'=>'不通过审核',
 	'return'=>'返回上一页',
     'cancel_freeze'=>'取消冻结',
     'cancel_recommend'=>'取消推荐',
+	'view'=>'查看',
 	//批量
 	'mulit_delete'=>'批量删除',
 	'mulit_use'=>'批量启用',
@@ -47,8 +50,21 @@ $lang = array(
 	'mulit_pass'=>'批量审核',
 	'mulit_nopass'=>'批量审核不通过',
 	'mulit_disable'=>'批量禁用',
+	'one_key_pub'=>'一键发布',
+	'payment'=>'付款',
+	
+	'rmb'=>'人民币',
+	'hkd'=>'港币',
+	'krw'=>'韩元',
+	'usd'=>'美元',
+	'cn'=>'简体中文',
+	'tw'=>'繁体中文',
+
 
 //提示
+	'system prompt'=>'系统提示',
+'submit success'=>'提交成功',
+'submit failure'=>'提交失败',
 	'param_error'=>'参数错误',
     'operate_notice'=>'操作提示!',
     'operate_success'=>'操作成功',
@@ -61,6 +77,8 @@ $lang = array(
 	'edit_fail' => '编辑失败',
 	'friendly_notice'=>'友情提示',
 	'choose_operate_item' => '请选择要操作的项！',
+	'no_data'=>'暂无数据',
+    'contact_can_no_null'=>'联系方式不能为空',
 	//批量
 	'mulit_delete_success'=>'批量删除成功',
 	'mulit_delete_fail'=>'批量删除失败',
@@ -84,6 +102,7 @@ $lang = array(
 	'show'=>'显示',
 	'income'=>'收入',
 	'outcome'=>'支出',
+	'user_center'=>'用户中心',
 //收索
 	'desc'=>'递减',
 	'asc'=>'递增',
@@ -128,6 +147,8 @@ $lang = array(
 	'good_value'=>'好评',
 	'middle_value'=>'中评',
 	'bad_value'=>'差评',
+	'join_work'=>'参与任务',
+	'toolbox' => '工具箱',
 //任务
 	'task'=>'任务',
 	'employer'=>'雇主',
@@ -150,6 +171,9 @@ $lang = array(
 	'task_tag'=>'任务标签',
 	'task_hall'=>'任务大厅',
 	'task_delay'=>'任务延期',
+	'view_work'=>'查看稿件',
+	'delay_makeup'=>'延期加价',
+	'confirm_work'=>'确认工作',
 	/*任务模型名字*/
    	'more_reward'=>'多人悬赏',   
 	'single_reward'=>'单人悬赏',
@@ -159,6 +183,8 @@ $lang = array(
 	'wbzf'=>'微博转发',
 	'wbdj'=>'微博点击',
 	'taobao'=>'淘宝',
+	'match'=>'速配任务',
+	'bid_cash'=>'中标金额',
 //商城
 	'config'=>'配置',
 	'buyer'=>'买家',
@@ -204,6 +230,7 @@ $lang = array(
 	'is_open'=>'是否开启',
 	'list'=>'列表',
 	'industry'=>'行业',
+	'industry_info'=>'行&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;业',
 	'type'=>'类型',
 	'data'=>'数据',
 	'index'=>'索引',
@@ -243,6 +270,7 @@ $lang = array(
 	'register'=>'注册',
 	'admin'=>'管理员',
 	'return_home'=>'返回首页',
+	'return_art_home'=>'返回资讯首页',
 	'return_top'=>'返回顶部',
 	'system_msg'=>'系统消息',
 	'system'=>'系统',
@@ -258,7 +286,7 @@ $lang = array(
 	'en_th'=>'!',
 	'zh_mh'=>'：',
 	'en_mh'=>':',
-	'currency'=>'￥',
+	//'currency'=>'￥',
 //类文件的公共
 	//auth
 	'apply_submit_fail'=>'申请提交失败！',
@@ -289,6 +317,7 @@ $lang = array(
 	'able_value'=>'能力值',
 	'task_link'=>'任务链接',
 	'from_hand_work_deadline'=>'距交稿截止',
+    'from_hand_bid_deadline'=>'距投标截止',
 	'task_working_can_hand_work'=>'任务进行中、欢迎交稿',
 	'now_employer_can_choose_work'=>'当前阶段雇主可以选稿',
 	'from_choose_deadline'=>'距选稿截止',
@@ -310,6 +339,7 @@ $lang = array(
 	'set_success'=>'设置成功',
 	'set_fail'=>'设置失败',
 	'vote_success'=>'投票成功!',
+	'vote'=>'投票',
 	'vote_fail'=>'投票失败!',
 	'task_fail_notice'=>'任务失败通知',
 	'choose_no_body_hand_work'=>'投稿期无人投稿、任务已失败、由于是担保任务，请等待管理员解冻任务款项。',//s
@@ -325,12 +355,15 @@ $lang = array(
 	'task_wait_audit'=>'待审核',
 	'task_vote_choose'=>'投稿中',
 	'task_choose_work'=>'选稿中',
+	'choose_work'=>'选稿',
+	'task_vote'=>'投票中',
 	'task_gs'=>'公示中',
 	'task_over'=>'结束',
 	'task_audit_fail'=>'审核失败',
 	'arbitrate'=>'仲裁',
 	'task_arbitrating'=>'任务仲裁中',
 	'assure_return_cash'=>'担保退款',
+	'agreement_frozen'=>'交付冻结',
 	'now_status_can_not_choose'=>'当前任务不处于选稿期,无法选稿！',
 	'the_work_is_out_and_not_choose_the_work'=>'当前稿件是淘汰稿件, 无法选择此稿件中标！',
 	'task_have_bid_work_and_not_choose_the_work'=>'当前任务已有中标稿件,无法选择此稿件中标！',
@@ -342,6 +375,7 @@ $lang = array(
 	'timeout_sys_default_in_and_bid'=>'已到期,系统默认入围者中标',
 	'timeout_sys_default_vote_status'=>'已到期,系统默认将其转为投票状态',
 	'task_diffrent_opnion_and_web_in_zc'=>'任务存在异议，网站已介入，此任务仲裁中',
+	'reward_trust'=>'赏金托管',
 /**end 全局**/
 
 
@@ -362,6 +396,7 @@ $lang = array(
 	'pro_cash'=>'推广总金(元)',
 	'goods_title'=>'商品标题',
 	'goods_cash'=>'商品售价(元)',
+	'all_industry'=>'全部行业',
 /*ajax_message.php**/
 	'send_msg'=>'发送消息',
 /*ajax_score.php**/
@@ -391,6 +426,8 @@ $lang = array(
 	'service_comment'=>'服务互评',
 	'create_shop'=>'开通商铺',
 	'user_comment'=>'用户建议',
+/***ajax_share.htm**/
+	'not_exist_task_data'=>'不存在的任务数据',
 /***ajax_file.htm**/
 	'this_work_no_update'=>'此作品没有可下载文件',
 	'this_work_no_out'=>'该作品是站外交付。请联系卖家获取文件',
@@ -415,6 +452,7 @@ $lang = array(
 	'share_ten_weibo'=>'分享到腾讯微博',
 	'share_wy_weibo'=>'分享到网易微博',
 	'share_sohu_weibo'=>'分享到搜狐微博',
+	'share_to_fb'=>'分享到facebook',
 /**ajax.task.htm**/
 	'new'=>'(新)',
 /**ajax.htm*/
@@ -429,6 +467,7 @@ $lang = array(
       'months'=>'个月',
       'day'=>'天',
       'hour'=>'小时',
+      'minute'=>'分',
        
       'going_to_expired'=>'即将过期',
       'kppw_install_notice'=>'KPPW 专业威客程序，安装提示！',
@@ -443,6 +482,9 @@ $lang = array(
       'illegal_or_repeat_submit'=>'非法或者重复的表单提交',
       'can_not_get'=>'无法获取！',
 	'page_jumping'=>'，页面跳转中...',
+/**article_info.htm**/
+	'previous_article'=>'上一篇',
+	'next_article'=>'下一篇',
 /**show_msg.htm**/
 	'jumping'=>'跳转中',
 	'jump_notice'=>'跳转提示',
@@ -462,4 +504,66 @@ $lang = array(
     'view_i_release_the_task'=>'查看我发布的任务',
     'firend_link'=>'友情连接',
     'verification_code_input_error'=>'验证码输入有误',
+/*match task**/
+	'give_up'=>'放弃',
+	'wait_pay'=>'待付款',
+	'bidding'=>'抢标中',
+	'consult'=>'协商中',
+	'confirming'=>'确认中',
+	'working'=>'工作中',
+	'accepting'=>'验收中',
+	'deposit_cash_all_refund'=>'诚意金已全部退还;',
+	'deposit_cash_part_defund'=>'诚意金已部分退还;',
+	'deposit_cash_all_deduct'=>'诚意金已全部扣除;',
+	'host_cash_has_all_been_refund'=>'托管佣金已全部退还;',
+	'host_cash_has_part_been_refund'=>'托管佣金已部分退还;',
+	'get_part_host_cash'=>'获得了部分任务佣金;',
+    'description'=>'描述',
+	'success_bid_haved'=>'成功中标了',
+	'match_task_trans_result'=>'速配任务客服处理结果如下:',
+	'match_website_deal_notice'=>'速配任务客服处理通知',
+	'currency'=>'币种',
+	'wait_choose'=>'待选稿',
+/*后台树型分类**/
+  	'add_first_level'=>'增加父节点',
+	'del_success'=>'删除成功',
+	'modify_success'=>'修改成功',
+	'add_success'=>'添加成功',
+	'set_top_success'=>'推荐成功',
+	'set_no_top_success'=>'取消推荐成功',
+/**order_sub.htm**/
+    'top'=>'置顶',
+	'map'=>'地图',
+	'get_promote_links'=>'获取推广链接',
+	/***短信模板汉化**/
+	'admin_name'=>'管理员名称',
+	'auth_code'=>'认证代码',
+	'auth_url'=>'认证链接',
+	'tx_way'=>'提现方式',
+	'account'=>'帐户',
+	'txmc'=>'提现名称',
+	'tgyhm'=>'推广用户名',
+	'tg_sj'=>'推广事件',
+	'tg_je'=>'推广金额',
+	'model_name'=>'模型名称',
+	'task_id'=>'任务编号',
+	'task_title'=>'任务标题',
+	'cash'=>'金额',
+	'num'=>'几',
+	'time'=>'时间',
+	'tb'=>'投标',
+	'reason'=>'理由',
+	'gu_name'=>'雇主名称',
+	'jx'=>'奖项',
+	'work_title'=>'稿件标题',
+	'work_bid'=>'稿件中标',
+	'howmuch'=>'数量',
+	'account_msg'=>'帐户',
+	'cash_msg'=>'金额',
+	'admin_unfrize'=>'管理员解冻',
+	'task_auth_success'=>'任务通过审核',
+	'task_auth_fail'=>'任务审核失败',
+	'user_unfreeze'=>'用户解冻',
+	'user_msg'=>'用户',
+	'work_status'=>'稿件状态'
 );

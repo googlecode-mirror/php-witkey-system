@@ -38,12 +38,16 @@ class Control_test_link extends Controller{
 			Keke::show_msg('系统提示!',$this->_uri,$e,'warning',999999);
 		}
 		//插入数据库
+		
+	 
+			
 		$link_obj=new Keke_witkey_link();
-		$link_obj->setLink_name($_POST['link_name']);
-		$link_obj->setLink_url($_POST['link_url']);
+		$link_obj->setLink_name($_POST['link_name'].$i);
+		$link_obj->setLink_url($_POST['link_url'].$i);
 		$link_obj->setLink_pic($_POST['link_pic']);
 		//返回影响行数
 		$res = $link_obj->create(0);
+	
 		if($res){
 			keke::show_msg('系统提示',$this->_uri,'添加成功!','success');
 		}else{

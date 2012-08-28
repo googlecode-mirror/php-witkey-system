@@ -66,7 +66,7 @@ switch ($ac) {
 		break;
 	case "nopass" : //²»Í¨¹ýÉóºË
 		$res =keke_task_config::task_audit_nopass ( $task_id );
-			$v_arr = array($_lang['username']=>"{$task_audit_arr['username']}",$_lang['task_title']=>$url,$_lang['web_name']=>Keke::$_sys_config['website_name']);
+		$v_arr = array($_lang['username']=>"{$task_audit_arr['username']}",$_lang['task_title']=>$url,$_lang['web_name']=>Keke::$_sys_config['website_name']);
 			keke_shop_class::notify_user($task_audit_arr['uid'], $task_audit_arr['username'], 'task_auth_fail', $task_audit_arr['task_title'],$v_arr);
 		$res and Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['operate_success'],'success') or Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['operate_fail'],"warning");
 		break;

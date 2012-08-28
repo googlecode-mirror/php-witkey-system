@@ -60,16 +60,16 @@ class Keke_Request_Client_Internal extends Keke_Request_Client {
 
 		// Store the currently active request
 		$previous = Request::$current;
-
+        
 		// Change the current request to this request
 		Request::$current = $request;
-
+		
 		// Is this the initial request
 		$initial_request = ($request === Request::$initial);
-
+		
 		try
 		{
-			//echo $prefix.$controller;die;
+// 			var_dump(class_exists($prefix.$controller));die;
 			if ( ! class_exists($prefix.$controller))
 			{
 				throw new Keke_exception('The requested URL :uri was not found on this server.',

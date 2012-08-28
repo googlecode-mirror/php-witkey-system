@@ -1,11 +1,12 @@
 <?php defined ( "IN_KEKE" ) or die ( "Access Denied" );
+
+
 /**
  * this not free,powered by keke-tech
  * @version 2.0
  * @auther xujie
  * 
  */
-
 
 include 'base.php';
 class Keke_core extends Keke_base {
@@ -610,13 +611,10 @@ class Keke extends Keke_core {
 
 }
 
-$ipath = dirname ( dirname ( dirname ( __FILE__ ) ) ) . DIRECTORY_SEPARATOR . "data" . DIRECTORY_SEPARATOR . "keke_kppw_install.lck";
+$ipath = dirname ( dirname ( dirname ( __FILE__ ) ) ) . DIRECTORY_SEPARATOR . "data" . DIRECTORY_SEPARATOR . "install.lck";
 file_exists ( $ipath ) == true or header ( "Location: install/index.php" ); 
 
 $kekezu = Keke::get_instance ();
 
 keke_lang_class::load_lang_class ( 'keke_core_class' );
-$_cache_obj = Keke::$_cache_obj;
-$page_obj = Keke::$_page_obj;
-$template_obj = Keke::$_tpl_obj; 
-
+// end 

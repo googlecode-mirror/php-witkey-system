@@ -9,12 +9,7 @@ class Control_test_link extends Controller{
 	 */
 	function action_index(){
 		global $_K,$_lang;
-		//$link_arr = Model::factory('witkey_link')->query('`link_id`,`link_name`,`link_url`',300);
-		//var_dump($link_arr);
-		//$sql = sprintf("select link_id,link_name,link_url from %switkey_link" ,TABLEPRE);
-		//Database::instance()->query($sql,Database::SELECT,1);
-		//$img =  Keke_captcha::instance('black')->render(false);
-		 
+ 
 		require Keke_tpl::template('test/link');
 	}
 	/**
@@ -29,7 +24,8 @@ class Control_test_link extends Controller{
 		//字段验证
 		$p = Keke_validation::factory($_POST)
 				//多条件验证
-				->rules('link_name', array(array('not_empty',array(':value',$_POST['link_name'])),array('email',array(':value',$_POST['link_name']))))
+				->rules('link_name', array(array('not_empty',array(':value',$_POST['link_name'])),
+						                   array('email',array(':value',$_POST['link_name']))))
 				//单条件验证
 				->rule('link_url','Keke_valid::not_empty',array(':value',$_POST['link_url']))
 				->rule('link_pic','Keke_valid::not_empty',array(':value',$_POST['link_pic']));

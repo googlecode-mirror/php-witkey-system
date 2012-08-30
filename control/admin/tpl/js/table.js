@@ -26,7 +26,7 @@ $(function(){
 function trClick(trObj,event){
 	var title = $(trObj).find(".dbl_target").text();
 	$(trObj).addClass("selected");
-	$.trim(title)?$(trObj).attr("title","双击"+title):'';
+	$.trim(title)?$(trObj).attr("title",L.double_click+title):'';
 	var ckbObj = $(trObj).find(":checkbox").get(0);
 	if(ckbObj){
 		if(ckbObj.checked==true){
@@ -58,7 +58,17 @@ function trDBclick(trObj,event){
 		location.href=document.referrer;
 	}
  }
-
+$("div[id*='page'] :checkbox#checkbox").live("click",function(event){
+ 	var cbkObj = $(this);
+ 	var par    = cbkObj.parents('table');
+ 	var t      = cbkObj.get(0).checked;
+     if (t) {
+    	 par.find("input[type='checkbox']").attr('checked', "true");
+     }
+     else {
+    	 par.find("input[type='checkbox']").removeAttr('checked');
+     }
+})
  function checkall(event){
  	var cbkObj = $("#checkbox");
  	var par    = cbkObj.parents('table');
@@ -70,15 +80,15 @@ function trDBclick(trObj,event){
     	 par.find("input[type='checkbox']").removeAttr('checked');
      }
  }
+// $(function(){
+//	 $("div.search .title").toggle(function(){
+//		 $("#detail").slideDown();	
+//	 },function(){
+// 		$("#detail").slideUp();
+//	 })
+// })
  $(function(){
-	 $("div.search .title").toggle(function(){
-		 $("#detail").slideDown();	
-	 },function(){
- 		$("#detail").slideUp();
-	 })
- })
- $(function(){
-	  if(BROWSER.ie && BROWSER.ie=='6.0'){
+	  if($.browser.msie && $.browser.version =='6.0'){
 	  	//获取所有类型为submit的button对象，并进行替换
 		$("button[type='submit']").each(function(i,n){
 			v =$(this).attr('value');

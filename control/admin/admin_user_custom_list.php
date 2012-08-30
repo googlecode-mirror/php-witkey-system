@@ -1,10 +1,10 @@
-<?php
+<?php	defined ( 'ADMIN_KEKE' ) or 	exit ( 'Access Denied' );
 /**
 *客服管理
 */
-defined ( 'ADMIN_KEKE' ) or 	exit ( 'Access Denied' );
 
-Keke::admin_check_role ( 33 );
+
+kekezu::admin_check_role ( 33 );
  
 $kf_obj = keke_table_class::get_instance ( "witkey_space" );
 $member_obj = new Keke_witkey_member_class ();
@@ -13,20 +13,22 @@ $url = 'index.php?do=user&view=custom_list&uid=' . $w [uid] . '&username=' . $w 
 switch ($op) {
 	case "add" :
 		if ($is_submit) {
-			$m_info = dbfactory::get_one ( " select uid,username,group_id from " . TABLEPRE . "witkey_space where uid = '$fds[uid]'" );
-			!$m_info and Keke::admin_show_msg ( $_lang['user_no_exit'], $url,3,'','warning' );
+			die('1');
+			$m_info = db_factory::get_one ( " select uid,username,group_id from " . TABLEPRE . "witkey_space where uid = '$fds[uid]'" );
+			!$m_info and kekezu::admin_show_msg ( $_lang['user_no_exit'], $url,3,'','warning' );
 			if ($m_info) {
 				if ($m_info [group_id] == 7) {
-					Keke::admin_show_msg ( $_lang['no_operate_again_for_user_is_kf_'], $url,3,'','warning' );
+					kekezu::admin_show_msg ( $_lang['no_operate_again_for_user_is_kf_'], $url,3,'','warning' );
 				} else {
 					$space_obj->setUid ( $fds [uid] );
 					$space_obj->setGroup_id ( 7 );
 					$res = $space_obj->edit_keke_witkey_space ();
 					if ($res) {
 					
-						Keke::admin_system_log ( $_lang['add_new_kf'].$m_info[username] );
-						Keke::notify_user ( $_lang['system_message'], $_lang['admin']." <b>{$admin_info['username']}</b> ".$_lang['set_you_for_kf']."，", $fds [uid], $m_info ['username'] );
-						Keke::admin_show_msg ( $_lang['add_kf_successfully'], $url,3,'','success' );
+						kekezu::admin_system_log ( $_lang['add_new_kf'].$m_info[username] );
+						$v_arr = array($_lang['admin_name']=>$admin_info['username'],$_lang['account']=>$spaceinfo ['username']);
+	                    keke_msg_class::notify_user($fds ['uid'],$m_info ['username'],'kf_set',$_lang['user_group_set'],$v_arr);
+						kekezu::admin_show_msg ( $_lang['add_kf_successfully'], $url,3,'','success' );
 					}
 				}
 			}
@@ -35,11 +37,11 @@ switch ($op) {
 		die();
 		break;
 	case "del" :
-		$del_info = Keke::get_user_info($delid);
-		$delid or Keke::admin_show_msg ( $_lang['param_error'], $url,3,'','warning' );
-		$res = dbfactory::execute (sprintf( "update %switkey_space set group_id = 0 where uid = '%d' ",TABLEPRE,$delid ));
-		Keke::admin_system_log( $_lang['delete_kf']. $del_info[username] );//记录日志
-		$res and Keke::admin_show_msg ( $_lang['operate_notice'], $url ,2,$_lang['delete_success'],'success') or Keke::admin_show_msg ( $_lang['operate_notice'], $url ,2,$_lang['delete_fail'],'warning');
+		$del_info = kekezu::get_user_info($delid);
+		$delid or kekezu::admin_show_msg ( $_lang['param_error'], $url,3,'','warning' );
+		$res = db_factory::execute (sprintf( "update %switkey_space set group_id = 0 where uid = '%d' ",TABLEPRE,$delid ));
+		kekezu::admin_system_log( $_lang['delete_kf']. $del_info[username] );//记录日志
+		$res and kekezu::admin_show_msg ( $_lang['operate_notice'], $url ,2,$_lang['delete_success'],'success') or kekezu::admin_show_msg ( $_lang['operate_notice'], $url ,2,$_lang['delete_fail'],'warning');
 		break;
 }
 		//批量删除操作
@@ -47,9 +49,9 @@ switch ($op) {
 			$keyids = $ckb;
 			if(is_array($keyids)){
 				$ids = implode ( ',', $keyids );
-				$res = dbfactory::execute ( sprintf("update %switkey_space set group_id = 0 where uid in (%s) ",TABLEPRE,$ids) );
-				Keke::admin_system_log( $_lang['more_delete_kfs'] . $ids);//记录日志
-				$res and Keke::admin_show_msg($_lang['operate_notice'],$url,2,$_lang['mulit_operate_success']) or Keke::admin_show_msg($_lang['operate_notice'],$url,2,$_lang['mulit_operate_fail'],"error");
+				$res = db_factory::execute ( sprintf("update %switkey_space set group_id = 0 where uid in (%s) ",TABLEPRE,$ids) );
+				kekezu::admin_system_log( $_lang['more_delete_kfs'] . $ids);//记录日志
+				$res and kekezu::admin_show_msg($_lang['operate_notice'],$url,2,$_lang['mulit_operate_success']) or kekezu::admin_show_msg($_lang['operate_notice'],$url,2,$_lang['mulit_operate_fail'],"error");
 			}
 		}
 		$sql = " 1 = 1 and group_id != 0 ";
@@ -66,9 +68,9 @@ switch ($op) {
 		$space_obj->setWhere ( $sql );
 		$count = $space_obj->count_keke_witkey_space ();
 		$limit = $p_size;
-		Keke::$_page_obj -> setAjax(1);
-		Keke::$_page_obj -> setAjaxDom('ajax_dom');
-		$pages = Keke::$_page_obj->getPages ( $count, $limit, $page, $url );
+		$kekezu->_page_obj -> setAjax(1);
+		$kekezu->_page_obj -> setAjaxDom('ajax_dom');
+		$pages = $kekezu->_page_obj->getPages ( $count, $limit, $page, $url );
 		$space_obj->setWhere ( $sql . $pages ['where'] );
 		
 		$userlist_arr = $space_obj->query_keke_witkey_space ();

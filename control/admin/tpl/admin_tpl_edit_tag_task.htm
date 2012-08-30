@@ -2,7 +2,7 @@
 <div class="page_title">
     	<h1>{$_lang['tag_manage']}</h1>
         <div class="tool">         
-            <a href="index.php?do={$do}&view=taglist">{$_lang['tag_call']}</a>
+            <a href="index.php?do={$do}&view=taglist&tag_type={$tag_type}&t={$t}">{$_lang['tag_call']}</a>
 		
 			<a href="#" class="here">{if $tagid}{$_lang['tag_edit']}{else}{$_lang['tag_add']}{/if}</a>
         </div>
@@ -83,22 +83,6 @@
 			{$_lang['default_read_number']}
             </td>
           </tr>
-       	{if sizeof($template_arr)>1}
-		  <tr>
-            <th scope="row" width="130">
-            	 {$_lang['template_choose']}{$_lang['zh_mh']}
-			</th>
-            <td>
-				<!--{eval $tmp=explode(",",$taginfo[tpl_type]);}-->
-				<!--{eval $tpl_type=array("$tmp[0]"=>"$tmp[0]","$tmp[1]"=>"$tmp[1]","$tmp[2]"=>"$tmp[2]","$tmp[3]"=>"$tmp[3]");}-->
-                {loop $template_arr $k $v}
-				<input type="checkbox" name="cbk[]" value="$v['tpl_title']" 
-				{if $tpl_type[$v['tpl_title']]==$v['tpl_title']}checked='checled'{/if}>
-				$v['tpl_title']
-                {/loop}{$_lang['choose_tag_template']}
-            </td>
-          </tr>
-		{/if}
 		   <tr>
             <th scope="row" width="130">
             	 {$_lang['tag_code']}{$_lang['zh_mh']}

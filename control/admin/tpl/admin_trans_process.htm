@@ -14,33 +14,36 @@
       <table width="100%" border="0" cellspacing="0" cellpadding="0">
        <tr>
          <th scope="row" width="130">{$trans_object[$report_info['obj']]}{$_lang['id']}</th>
-       	 <td>#{$report_info['obj_id']}</td>
+       	 <!--<td>#{$report_info['obj_id']}</td>-->
+		 <td>#{$report_id}</td>
        </tr>
 	   {if $report_info['obj']=='task'||$report_info['obj']=='work'}
 	   <tr>
          <th scope="row" width="130">{$_lang['belong_to_task']}</th>
-         <td><a href="{$_K['site_url']}/index.php?do=task&task_id={$obj_info['task_id']}" target="_blank">{$obj_info['task_title']}</a></td>
+         <td><a href="{$_K['siteurl']}/index.php?do=task&task_id={$obj_info['origin_id']}" target="_blank">{$obj_info['origin_title']}</a></td>
        </tr>
 	   {elseif $report_info['obj']=='task'||$report_info['obj']=='work'}
 	   <tr>
          <th scope="row" width="130">{$_lang['belong_to_goods']}</th>
-         <td><a href="{$_K['site_url']}/shop.php?do=service_info&service_id={$obj_info['service_id']}">{$obj_info['title']}</a></td>
+         <td><a href="{$_K['siteurl']}/shop.php?do=service_info&service_id={$obj_info['origin_id']}">{$obj_info['origin_title']}</a></td>
        </tr>
 	   {/if}
 	  <tr>
        <th scope="row" width="130">{$action_arr[$type]['1']}{$_lang['sponsor']}</th>
        <td>
-       		<a href="{$_K['site_url']}/index.php?do=space&member_id={$report_info['uid']}" target="_blank">$report_info['username']</a>
+       		<a href="{$_K['siteurl']}/index.php?do=space&member_id={$report_info['uid']}" target="_blank">$report_info['username']</a>
 			<font color="red">E-mail</font>:{$user_info['email']}&nbsp;||&nbsp;<font color="red">{$_lang['contact_tel']}</font>:{$user_info['phone']}&nbsp;||&nbsp;<font color="red">QQ</font>:{$user_info['qq']}&nbsp;||&nbsp;<font color="red">{$_lang['tel']}</font>:{$user_info['mobile']}
 	   </td>
       </tr>
+	  {if $report_info['obj']!='kppw21'}
 	  <tr>
        <th scope="row" width="130">{$action_arr[$type]['1']}{$_lang['object']}</th>
        <td>
-       		<a href="{$_K['site_url']}/index.php?do=space&member_id={$report_info['to_uid']}" target="_blank">$report_info['to_username']</a>
+       		<a href="{$_K['siteurl']}/index.php?do=space&member_id={$report_info['to_uid']}" target="_blank">$report_info['to_username']</a>
 			<font color="red">E-mail</font>:{$to_userinfo['email']}&nbsp;||&nbsp;<font color="red">{$_lang['contact_tel']}</font>:{$to_userinfo['phone']}&nbsp;||&nbsp;<font color="red">QQ</font>:{$to_userinfo['qq']}&nbsp;||&nbsp;<font color="red">{$_lang['tel']}</font>:{$to_userinfo['mobile']}
 	   </td>
       </tr>
+	  {/if}
 	  <tr>
          <th scope="row" width="130">{$_lang['apply']}{$action_arr[$type]['1']}{$_lang['time']}</th>
          <td><!--{date('Y-m-d H:i:s',$report_info['on_time'])}--></td>
@@ -57,7 +60,7 @@
         <th scope="row" width="130">{$action_arr[$type]['1']}{$_lang['attachment']}</th>
         <td>
 			<!--{eval $filename=substr($report_info['report_file'],strrpos($report_info['report_file'],'/')+1);}-->
-			{if $v['report_file']}<a href="index.php?do={$do}&view={$type}&ac=download&filename=$filename&filepath={$v['report_file']}">{$filename}</a>{else}{$_lang['no_submit_attachment']}{/if}
+			{if $report_info['report_file']}<a href="index.php?do={$do}&view={$type}&ac=download&filename=$filename&filepath={$v['report_file']}">{$filename}</a>{else}{$_lang['no_submit_attachment']}{/if}
 		</td>
     </tr>
 	<tr id="pass">
@@ -107,7 +110,7 @@
 		}else{
 			art.dialog({
    				title: "{$_lang['comfirm_to_tips']}",
-  				content: "{$_lang['comfirm_to_not']}{$action_arr[$type]['1']}{$_lang['record']},{$_lang['reason_for']}:<br>"+shtml,
+  				content: "{$_lang['confirm_to']}{$action_arr[$type]['1']}{$_lang['record']},{$_lang['reason_for']}:<br>"+shtml,
 				icon: 'succeed',
    				yesFn: function(){$("#process_result").val(shtml);$("#action").val('pass');$("#frm").submit()},
 				noFn :function(){this.close();return false;}

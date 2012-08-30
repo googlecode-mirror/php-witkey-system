@@ -46,7 +46,7 @@
               </p>
               <p class="loginbtn">
               	
-                <button  type="submit" id="logsubmit" name="login" onclick="return check_login();"><span class="icon key">&nbsp;</span>{$_lang['submit']}</button>
+                <button  type="submit" id="logsubmit" name="login" onclick=" return check_login();"><span class="icon key">&nbsp;</span>{$_lang['submit']}</button>
                 <button id="re" type="reset" name="reset"><span class="icon reload">&nbsp;</span>{$_lang['reset']}</button>	
               </p>
             </form>
@@ -68,7 +68,10 @@
 	})
 	function check_login(){
 		var allow_num=$("#allow_num").val();
-			if(checkForm(document.getElementById("admin_login"))){
+		
+		var i = checkForm(document.getElementById("admin_login"));
+		
+			if(i){
 				if(allow_num>0){
 					var username=$("#txt_username").val();
 					var password=$("#pwd_pwd").val();

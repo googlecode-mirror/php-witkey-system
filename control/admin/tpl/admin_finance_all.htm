@@ -4,6 +4,7 @@
     <div class="tool">
 		<a href="index.php?do={$do}&view=all" class="here">{$_lang['flow_record']}</a>
 	    <a href="index.php?do={$do}&view=report">{$_lang['graphic_report']}</a>
+	    <a href="index.php?do={$do}&view=revenue">{$_lang['revenue']}</a>
 	    <a href="index.php?do={$do}&view=recharge">{$_lang['recharge_audit']}</a>
 	   <a href="index.php?do={$do}&view=withdraw">{$_lang['withdraw_audit']}</a>
     </div>
@@ -119,10 +120,10 @@
                           {$_lang['user']}
                         </th>
                         <th>
-                            {$_lang['money']}
+                            {$_lang['money']}({$_lang['currency']})
                         </th>
                         <th>
-                           {$_lang['user_balance']}
+                           {$_lang['user_balance']}({$_lang['currency']})
                         </th>
                         <th>
                            {$_lang['cash_coupon']}
@@ -156,22 +157,22 @@
                         </td>
                         <td>
                             <font color="red">
-                                {if $v['fina_cash']>0}{$_lang['currency']}{$v['fina_cash']}{$_lang['yuan']}{else}--{/if}
+                                {c:$v['fina_cash']}
                             </font>
                         </td>
                         <td>
                             <font color="red">
-                                {if $v['fina_cash']>0}{$_lang['currency']}{$v['user_balance']}{$_lang['yuan']}{else}--{/if}
+                                {c:$v['user_balance']}
                             </font>
                         </td>
                         <td>
                             <font color="red">
-                             {if $v['fina_credit']} {$_lang['currency']}{$v['fina_credit']}{$_lang['yuan']}{else} --{/if}
+                             {$v['fina_credit']}
 							 </font>
                         </td>
                         <td>
                             <font color="red">
-                               {if $v['user_credit']} {$_lang['currency']}{$v['user_credit']}{$_lang['yuan']}{else} --{/if}
+                              {$v['user_credit']}
 							 </font>
                         </td>
                         <td>

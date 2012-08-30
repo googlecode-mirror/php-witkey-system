@@ -40,11 +40,9 @@
                    <tr>
                         <th scope="row" width="140">Baidu Maps API{$_lang['zh_mh']}</th>
                         <td>
-                        	<input type="text" name="conf[baidu_api]" id="baidu_api" value="{$map_apis['baidu_api']['v']}" class="txt" style="width:260px;" msgArea="span_baidu"
+                        	<input type="text" name="conf[baidu_api]" id="baidu_api" value="{$map_apis['baidu_api']['v']}" class="txt" style="width:300px;" msgArea="span_baidu"
 							limit="required:true;len:2-200" title="&nbsp;&nbsp;&nbsp;&nbsp;{$_lang['enter_baidu_map_api_key']}" msg="&nbsp;&nbsp;&nbsp;&nbsp;{$_lang['enter_baidu_map_api_key']}"/> 
-						<button id="reg" onclick="window.open('http://openapi.baidu.com/map/getKey.html')" type="button" class="pill">
-						<span class="icon plus">&nbsp;</span>{$_lang['click_apply']}</button>
-						<span id="span_baidu"></span>
+						<span id="span_baidu"></span>&nbsp;&nbsp;{$_lang['baidu_map_description']}
 						</td>
                     </tr>
 			 

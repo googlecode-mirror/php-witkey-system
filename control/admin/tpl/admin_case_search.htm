@@ -42,14 +42,14 @@
                   {if $search_type=='task'}
 				     <tr class="item" style="cursor:pointer;" onclick="add_caseinfo('$v['task_id']','')" >
 				    <td class="td25" id="id_$v['task_id']">$v['task_id']</td> 
-                    <td class="td28" id="title_$v['task_id']"  ext="$v['task_title']"><!--{eval echo	Keke::cutstr($v['task_title'], 20);}--></td>
+                    <td class="td28" id="title_$v['task_id']"  ext="$v['task_title']"><!--{eval echo	kekezu::cutstr($v['task_title'], 20);}--></td>
                     <td >$model_type_arr[$v['model_id']]</td>
                     <td>{$_lang['currency']} <font color=red id="cash_$v['task_id']">$v['task_cash']</font> {$_lang['yuan']}</td>
                     <td>$v['username']</td> 
 				  {else}
 					 <tr class="item" style="cursor:pointer;" onclick="add_caseinfo('$v['service_id']','$v['pic']')" >
 					<td class="td25" id="id_$v['service_id']">$v['service_id']</td> 
-                    <td class="td28" id="title_$v['service_id']"   ext="$v['title']"><!--{eval 	echo Keke::cutstr($v['title'], 20);}--></td>
+                    <td class="td28" id="title_$v['service_id']"   ext="$v['title']"><!--{eval 	echo kekezu::cutstr($v['title'], 20);}--></td>
                     <td>$model_type_arr[$v['model_id']]</td>
                     <td>{$_lang['currency']} <font color=red id="cash_$v['service_id']"> $v['price']</font> {$_lang['yuan']}</td>
                     <td>$v['username']</td>

@@ -11,7 +11,7 @@
 $tpl_mode = 1;
  
 define('ADMIN_KEKE',TRUE);
-require '../../app_boot.php';
+require '../../app_comm.php';
 
 define('ADMIN_ROOT',S_ROOT.'./control/admin/');//后台根目录
  
@@ -24,17 +24,13 @@ if ($do == 'previewtag')
 	if (!$tagid){
 		die();
 	}
-	$taglist = Keke::get_tag(1);
+	$taglist = kekezu::get_tag(1);
 	$tag_info = $taglist[$tagid];
-	//var_dump($taglist);die();
 	//预览feed
-	if($tag_info['tag_type']==8){
-		keke_loaddata_class::preview_feed($tag_info);
-	}else if($tag_info['tag_type']==9){
-		keke_loaddata_class::preview_addgroup($tag_info['tagname']);
+	if($tag_info['tag_type']==9){
+		keke_loaddata_class::preview_addgroup($tag_info['tagname'],$tag_info['loadcount']);
 	}//预览广告
     else{
-	keke_loaddata_class::previewtag($tag_info);
+		keke_loaddata_class::previewtag($tag_info);
 	}//预览其他
 }
-

@@ -99,8 +99,8 @@
 						{$v['tag_id']}
 					</td>
 					<td class="td28">{$v['tagname']}</td>
-                    <td><input type="text" value="<!--{eval echo '<!--{showads( '.$v['tagname'].')}-';}-->->" class="txt" size="28"></td>
-                    <td><input type="text" value="<script src='{$_K['siteurl']}/js.php?op=tag&tag_id=$v['tag_id']'></script>" class="txt" size="76"></td>
+                    <td><input type="text" value="<!--{eval echo '<!--{showads( '.$v['tagname'].')}-';}-->->" class="txt" size="28" onclick="this.select();"></td>
+                    <td><input type="text" value="<script src='{$_K['siteurl']}/js.php?op=tag&tag_id=$v['tag_id']'></script>" class="txt" size="76" onclick="this.select();"></td>
 					 <td>
                        <a href="plu.php?do=previewtag&tagid={$v['tag_id']}" target="_blank" class="button"><span class="book icon"></span>{$_lang['view']}</a>
                     </td>
@@ -118,7 +118,7 @@
 							<label for="checkbox">{$_lang['select_all']}</label>¡¡
 							<input type="hidden" name="sbt_action" class="sbt_action" />
 							<button type="submit" name="sbt_action" value={$_lang['mulit_delete']} class="pill negative button" onclick="return batch_act(this,'frm_art_search')"><span class="trash icon"></span>{$_lang['mulit_delete']}</button>&nbsp;&nbsp;&nbsp;
-							<button type="button" name="sbt_add" value={$_lang['create_tag']} onclick="location.href='index.php?do={$do}&view=ad_group_add'" class="primary pill button"><span class="icon check"></span>{$_lang['create_tags']}</button>
+							<button type="button" name="sbt_add" value="{$_lang['create_tag']}" onclick="location.href='index.php?do={$do}&view=ad_group_add&ac=add';" class="primary pill button"><span class="icon check"></span>{$_lang['create_tags']}</button>
 				   </div>
 				   </td>
                </tr>

@@ -1,11 +1,11 @@
-<?php
+<?php	defined ( 'ADMIN_KEKE' ) or 	exit ( 'Access Denied' );
 /**
  * @copyright keke-tech
  * @author shang
  * @version v 2.0
  * 2010-5-19下午09:25:13
  */
-defined ( 'ADMIN_KEKE' ) or 	exit ( 'Access Denied' );
+
 
 /**后台全局菜单信息**/
 $menu_conf = $admin_obj->get_admin_menu();
@@ -23,7 +23,7 @@ $check_screen_lock=$admin_obj->check_screen_lock();
 switch ($ac){
 	case "nav_search"://导航搜索
 			$nav_search=$admin_obj->search_nav($keyword);
-			require Keke::$_tpl_obj->template("control/admin/tpl/admin_" .$ac);
+			require $kekezu->_tpl_obj->template("control/admin/tpl/admin_" .$ac);
 			die();
 		break;
 	case "lock":
@@ -32,7 +32,7 @@ switch ($ac){
 	case "unlock":
 		$unlock_times=$admin_obj->times_limit($unlock_num);//允许登录尝试次数
 		$admin_obj->screen_unlock($unlock_num,$unlock_pwd);//解屏
-		require Keke::$_tpl_obj->template("control/admin/tpl/admin_screen_lock");
+		require $kekezu->_tpl_obj->template("control/admin/tpl/admin_screen_lock");
 		die();
 		break;
 	case "add_shortcuts":

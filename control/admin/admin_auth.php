@@ -1,4 +1,4 @@
-<?php
+<?php defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * @copyright keke-tech
  * @author Chen
@@ -6,7 +6,7 @@
  * @todo 后台认证顶级路由
  * 2011-9-01 11:35:13
  */
-defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+
 keke_lang_class::package_init("auth");
 keke_lang_class::loadlang("{$do}_{$view}");
 
@@ -33,10 +33,10 @@ if (file_exists ( ADMIN_ROOT . 'admin_' . $do . '_' . $view . '.php' )) {
 			$auth_dir = $auth_item ['auth_dir']; //认证文件夹路径
 			keke_lang_class::loadlang ( $auth_dir );
 		}else{
-			Keke::show_msg($_lang['illegal_parameter_or_authmadel_delete'],"index.php?do=auth&view=item_list",3,'','warning');
+			kekezu::show_msg($_lang['illegal_parameter_or_authmadel_delete'],"index.php?do=auth&view=item_list",3,'','warning');
 		}
 	}
 	require ADMIN_ROOT . 'admin_' . $do . '_' . $view . '.php';
 } else {
-	Keke::admin_show_msg ( $_lang['404_page'],'',3,'','warning' );
+	kekezu::admin_show_msg ( $_lang['404_page'],'',3,'','warning' );
 }

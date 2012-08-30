@@ -102,7 +102,7 @@
                     <td>{$buy_use_type[$v['use_type']]}</td>
                     <td>{$v['username']}</td>
                     <td>{$v['obj_type']}</td>
-                    <td>{$_lang['currency']}{$v['use_cash']}{$_lang['yuan']}</td>
+                    <td>{c:$v['use_cash']}</td>
                     <td>{$v['use_num']}</td>
                     <td><!--{date('Y-m-d H:i:s',$v['on_time'])}--></td>
                    </tr>

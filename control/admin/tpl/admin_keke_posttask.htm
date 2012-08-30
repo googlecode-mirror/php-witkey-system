@@ -3,18 +3,30 @@
 	<div class="page_title">	
     	<h1>提交任务</h1>
          <div class="tool"> 
-         			<a href="index.php?do={$do}&view=posttask" class="here">提交任务</a>
+         			<a href="index.php?do={$do}&view=posttask" class="here">任务提交</a>
 					<a href="index.php?do={$do}&view=postlist">任务列表</a>
 		 </div>
 	</div>
     <!--页头结束-->
-
+<div id="man_tips" class="box tip clearfix p_relative">
+    <div class="control">
+        <a title="关闭" onclick="$('#man_tips').fadeOut();" href="javascript:void(0);"><b>×</b></a>
+    </div>
+    <div class="title">
+        <h2>小提示</h2>
+    </div>
+    <div class="detail pad10">
+        <ul>
+            <li>仅交稿中的任务才可被推广。</li>
+        </ul>
+    </div>
+</div>
     <!--提示结束-->
      
 {if trim($config['keke_app_id'])}
         <div class="box search p_relative">
     	<div class="title"><h2>搜索</h2></div>
-        <div class="detail" id="detail">
+        <div>
            
 		    <form action="#" method="post" name="s" id="sl">
             	<input type="hidden" name="do" value="$do">
@@ -28,28 +40,31 @@
 							<td width="80">
 								 <input type="text" class="txt" name="task_id" size="8"> 
 							</td> 
-						
-						
-						
-                            <th width="50">任务状态</th>
-                            <td width="50">
-                            	<select class="ps vm" name="task_status" id="task_status" >
-	                            	<option value="">---请选择---</option>
-									<option value="3" {if $task_status==3} selected="selected" {/if}>---交稿中---</option>
-									<option value="2" {if $task_status==2} selected="selected" {/if} >---进行中---</option> 
-								</select>
-								</td>
 							<th width="50">任务模型</th>
 							<td width="50">
 								<select class="ps vm" name="model_id" id="model_id">
 	                            	<option value="">---请选择---</option>
-									{loop $task_type_arr $k $v}
-										{if $k!=6&&$k!=7}
-										<option value="$k" {if $k==$model_id} selected="selected" {/if}>---$v---</option>
+									{loop $model_list $v}
+										{if $v['model_type']=='task'}
+											<option value="$v['model_id']" {if $v['model_id']==$model_id} selected="selected" {/if}>--{$v['model_name']}--</option>
 										{/if}
 									{/loop}
-								 
 								</select> 
+							</td> 
+							<th width="50">任务分类</th>
+							<td>
+                        <select name="indus_pid" id="indus_pid"  onchange="showIndus(this.value)">
+                            <option value="">--请选择父分类--</option>
+                      		{loop $indus_p_arr $v}
+								 <option value="{$v['indus_id']}" {if $indus_pid==$v[indus_id]}selected="selected"{/if}>{$v['indus_name']}</option>
+							{/loop} 
+						 </select>
+                        <select name="indus_id" id="indus_id">
+                            <option value="">--请选择子分类--</option>
+							{loop $indus_arr $k $v}
+                           		 <option value="{$v['indus_id']}">{$v['indus_name']}</option>
+							{/loop}
+                        </select>
 							</td> 
 							 
                             <th width="50"></th>
@@ -71,17 +86,16 @@
     <div class="box list">
     	<div class="title"><h2>任务列表</h2></div>
         <div class="detail">
-        	<form action="" id='frm_list' method="post">
               <table cellpadding="0" cellspacing="0">
                 <tbody>
                   <tr>
                  
-                    <th width="13%">任务编号</th>
-                    <th width="10%">任务类型</th>
-                    <th width="10%">任务状态</th>
-                    <th width="27%">任务标题</th>
-					<th width="10%">发布时间</th>
-					<th width="10%">结束时间</th>
+                    <th width="6%">任务编号</th>
+                    <th width="6%">任务类型</th>
+                    <th width="20%">任务标题</th>
+                    <th width="10%">本站分类</th>
+                    <th width="10%">任务金额</th>
+					<th width="10%">推广剩余时间</th>
 					<th width="10%">发布者</th> 
                     <th width="10%">操作</th>
                   </tr>
@@ -89,16 +103,13 @@
                   <tr class="item">
                  	<td class="td25"># $v['task_id']</td>
                     <td class="td28">$task_type_arr[$v['model_id']]</td>
-					<td class="td28">$task_status_arr[$v['task_status']]</td>
-                    <td><!--{eval echo Keke::cutstr($v['task_title'],50)}--></td>
-                    <td><!--{date('Y-m-d',$v['start_time'])}--></td>
-                    <td><!--{date('Y-m-d',$v['end_time'])}--></td>
+                    <td><a href="{$_K[siteurl]}/index.php?do=task&task_id={$v[task_id]}" target="_blank"><!--{eval echo kekezu::cutstr($v['task_title'],70)}--></a></td>
+					<td class="td28">{$indus_p_arr[$v[indus_pid]][indus_name]}-{$indus_c_arr[$v[indus_id]][indus_name]}</td>
+                    <td>{c:$v[task_cash]}</td>
+                    <td><!--{eval echo kekezu::time2Units($v[sub_time]-time())}--></td>
                     <td>$v['username']</td>
-                    <td>
-                    	<a class="button" href="<!--{eval echo keke_union_class::create_task($v['task_id'])}-->" target="_blank">
-                    		<span class="check icon"></span>提交
-                    	</a>
-						</td> 
+                    <td><!--{eval echo keke_union_class::create_task($v)}-->
+					</td> 
                   </tr>
 				   {/loop} 
 				     <tr>
@@ -110,9 +121,29 @@
                     </tr>
                 </tbody>
               </table>
-        	</form>
         </div>       
     </div>
+<script type="text/javascript">
+	/**
+	 * 获取任务行业
+	 * @param indus_pid
+	 */
+	function showIndus(indus_pid){
+		if(indus_pid){
+			$.post("../../index.php?do=ajax&view=indus",{indus_pid: indus_pid}, function(html){
+				var str_data = html;
+				if (trim(str_data) == '') {
+					$("#indus_id").html('<option value="-1"> '+L.select_a_subsector+' </option>');
+				}
+				else {
+					$("#indus_id").html(str_data);
+				}
+			},'text');
+		}
+	}
+	
+</script>	
+	
 {else}
 <div class="box list">
      <div class="detail t_c"><b>您的联盟API没有申请或暂未通过审核，暂时无法使用此功能。</b></div>

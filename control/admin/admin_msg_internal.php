@@ -1,4 +1,4 @@
-<?php
+<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * 站内--短信发送配置管理
  * @copyright keke-tech
@@ -6,12 +6,12 @@
  * @version v 2.0
  * 2010-5-21下午02:31:40
  */
-defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
-Keke::admin_check_role (73);
+
+kekezu::admin_check_role (73);
 $msg_obj = new Keke_witkey_msg_config_class();
 
-$message_send_type = keke_global_class::get_message_send_type ();
-$message_send_obj  = keke_global_class::get_message_send_obj();
+$message_send_type = keke_glob_class::get_message_send_type ();
+$message_send_obj  = keke_glob_class::get_message_send_obj();
 if (isset ( $sbt_edit )) {
 	if (is_array ( $fds )) {
 		foreach ( $fds as $k => $v ) {
@@ -45,12 +45,12 @@ if (isset ( $sbt_edit )) {
 		}
 	}
 	if ($res) {
-		Keke::admin_system_log($_lang['msg_config_log']);
-		Keke::$_cache_obj->set ( "keke_witkey_msg_config", $msg_config );
-		Keke::admin_show_msg ( $_lang['sms_internal_config_success'], "index.php?do=msg&view=internal",3,'','success' );
+		kekezu::admin_system_log($_lang['msg_config_log']);
+		$kekezu->_cache_obj->set ( "keke_witkey_msg_config", $msg_config );
+		kekezu::admin_show_msg ( $_lang['sms_internal_config_success'], "index.php?do=msg&view=internal",3,'','success' );
 	}
 }else{
-	$page_obj=Keke::$_page_obj;
+	$page_obj=$kekezu->_page_obj;
 	$where=" 1 = 1 ";
 	intval($page) 	   or $page='1';
 	intval($page_size) or $page_size='10';
@@ -65,6 +65,7 @@ if (isset ( $sbt_edit )) {
 	
 	$msg_obj->setWhere($where.$pages['where']);
 	$msg_config =$msg_obj->query_keke_witkey_msg_config();
+	
 	
 }
 

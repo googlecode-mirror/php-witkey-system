@@ -6,32 +6,51 @@
             <table cellspacing="0" cellpadding="0">
             
 			<tr>
-                <th>{$_lang['title']}</th>
+                <th width="150">{$_lang['title']}</th>
                 <th width="200" >{$_lang['link']}</th>
                <th width="12%">{$_lang['style']}</th>
                 <th width="100">{$_lang['order']}</th>
                 <th width="120">{$_lang['open_new_window']}</th>
                 <th width="100">{$_lang['display_mode']}</th>
-                <th width="100">{$_lang['operate']}</th>
+                <th width="200">{$_lang['operate']}</th>
             </tr>
 			
             {loop $nav_list $k $v}
             <tr id="olditem_$k" class="item">
-                <td><input type="text" class="txt" value="$v['nav_title']" name="ruleitem[old][{$k}][nav_title]" style="width:90px;"/></td>
-                <td><input type="text" class="txt" value="$v['nav_url']"   name="ruleitem[old][{$k}][nav_url]" style="width:200px;"></td>
-                <td><input type="text" class="txt" value="$v['nav_style']" name="ruleitem[old][{$k}][nav_style]" style="width:80px;"></td>
-               	<td><input type="text" class="txt" value="$v['listorder']" name="ruleitem[old][{$k}][listorder]" size="6" style="width:30px;"></td>
+            	{if $v['nav_style']==$kekezu->_sys_config['set_index']}
+               	 	<td style='font-weight:bold'>
+              			<input type="text" value="{$v['nav_title']}" name="nav[$k][nav_title]" class='txt' size='12'>
+						({$_lang['default_index']})
+				 	</td>
+                {else}
+                	<td>
+              			<input type="text" value="{$v['nav_title']}" name="nav[$k][nav_title]" class='txt' size='12'>
+					</td>
+                {/if}
+                <td><!--{eval $readonly = nav_analysis($v['nav_url']);}-->
+                	{if $readonly}
+						$v['nav_url']
+					{else}
+						<input type="text" value="{$v['nav_url']}" name="nav[$k][nav_url]" class='txt' size="30">
+					{/if}
+				</td>
+                <td style="width:80px;">
+					<input type="text" value="{$v['nav_style']}" name="nav[$k][nav_style]" class='txt' size='10'>
+				</td>
+               	<td style="width:30px;">
+					<input type="text" value="{$v['listorder']}" name="nav[$k][listorder]" class='txt' size='3'>
+				</td>
                 <td class="wraphide">
-                	<label for="yes_{$k}"><input type="radio" {if $v['newwindow']}checked="checked"{/if} id="yes_{$k}" name="ruleitem[old][{$k}][newwindow]" value="1">{$_lang['yes']}&nbsp;</label>
-                	<label for="no_{$k}"><input type="radio" {if !$v['newwindow']}checked="checked"{/if}  name="ruleitem[old][{$k}][newwindow]" value="0">{$_lang['no']}</label>
+                	<label>{if $v['newwindow']}{$_lang['yes']}&nbsp;{else}{$_lang['no']}{/if}</label>
 					</td>
                 <td class="wraphide">
-                	<label for="show_{$k}"><input type="radio" id="show_{$k}" {if !$v['ishide']}checked="checked"{/if}   name="ruleitem[old][{$k}][ishide]" value="0">{$_lang['show']}</label>
-                	<label for="hide_{$k}"><input type="radio" id="hide_{$k}" {if $v['ishide']==1}checked="checked"{/if}  name="ruleitem[old][{$k}][ishide]" value="1">{$_lang['hide']}</label>
-                	<!--  <input type="radio" {if $v['ishide']==2}checked="checked"{/if}  name="ruleitem[old][{$k}][ishide]" value="2">{$_lang['hide_home']}
-                	<input type="radio" {if $v['ishide']==3}checked="checked"{/if}  name="ruleitem[old][{$k}][ishide]" value="3">{$_lang['hide_mall']} -->
+                	<label>{if !$v['ishide']}{$_lang['show']}{else}{$_lang['hide']}{/if}</label>
                 </td>
-                <td><a href="$url&nav_id=$v['nav_id']&ac=del"  onclick="return cdel(this);" class="button"><span class="trash icon"></span>{$_lang['delete']}</a></td>
+                <td>
+	                <a href="$url&nav_id=$v['nav_id']&ac=edit" class="button dbl_target"><span class="pen icon"></span>{$_lang['edit']}</a>
+	                <a href="$url&nav_id=$v['nav_id']&ac=del"  onclick="return cdel(this);" class="button"><span class="trash icon"></span>{$_lang['delete']}</a>
+	            	<a href="$url&nav_style=$v['nav_style']&ac=set_index" class="button"><span class="check icon"></span>{$_lang['set_index']}</a>
+	            </td>
             </tr>
 			{/loop}
             <tbody id='newitemlist'></tbody>
@@ -39,8 +58,9 @@
             <tr>
             	<td colspan="6">
 				<div class="clearfix">
-                  <button onclick="addrule()" class="positive pill negative" type="button"><span class="plus icon"></span>{$_lang['add']}</button>
-                  <button type="submit" name="submit" class="positive pill negative" value={$_lang['submit']}><span class="check icon"></span>{$_lang['submit']}</button>
+                  <button onclick="location.href='index.php?do=config&view=nav&ac=edit'" class="positive pill negative" type="button"><span class="plus icon"></span>{$_lang['add']}</button>
+           		  <input type="hidden" name="sbt_edit" value="1">
+				  <button onclick="modify();" class="positive pill negative" type="button"><span class="check icon"></span>提交更改</button>
            		</div>
 				</td>
 		   </tr>
@@ -52,25 +72,11 @@
 
     
 <script type="text/javascript">
-var newitemcount = 0;
-function addrule(){
-    newitemcount++;
-    var mod = '';
-    mod += '<tr id="newitem_' + newitemcount + '" class="item">';
-    mod += '<td><input class="txt" type="text" name="ruleitem[new][' + newitemcount + '][nav_title]"  style="width:90px;"/></td>';
-    mod += '<td><input class="txt" type="text" name="ruleitem[new][' + newitemcount + '][nav_url]"    style="width:200px;"></td>';
-    mod += '<td><input class="txt" type="text" name="ruleitem[new][' + newitemcount + '][nav_style]"    style="width:80px;"></td>';
-    mod += '<td><input class="txt" type="text" name="ruleitem[new][' + newitemcount + '][listorder]"  style="width:30px;" value="0" size="6"></td>';
-    mod += '<td>';
-    mod += '<input type="radio" name="ruleitem[new][' + newitemcount + '][newwindow]" value="1">{$_lang['yes']}';
-    mod += '<input type="radio" name="ruleitem[new][' + newitemcount + '][newwindow]" value="0"checked="checked">{$_lang['no']}';
-    mod += '</td>';
-    mod += '<td>';
-    mod += '<input type="radio" name="ruleitem[new][' + newitemcount + '][ishide]"    value="0" checked="checked">{$_lang['show']}';
-	mod += '<input type="radio" name="ruleitem[new][' + newitemcount + '][ishide]"    value="1">{$_lang['hide']}';
-	mod += '</td><td></td>';
-    $('#newitemlist').append(mod);
-}
+	function modify(){
+		art.dialog.confirm('确定提交更改吗?',function(){
+			$('#frm_config_basic').submit();
+		});
+	}
 </script>
 					
 

@@ -4,6 +4,7 @@
     <div class="tool">
 		<a href="index.php?do={$do}&view=all">{$_lang['flow_record']}</a>
 	    <a href="index.php?do={$do}&view=report">{$_lang['graphic_report']}</a>
+	    <a href="index.php?do={$do}&view=revenue">{$_lang['revenue']}</a>
 	    <a href="index.php?do={$do}&view=recharge" class="here">{$_lang['recharge_audit']}</a>
 	   <a href="index.php?do={$do}&view=withdraw">{$_lang['withdraw_audit']}</a>
     </div>
@@ -146,7 +147,7 @@
                         <a href="index.php?do=user&view=space&member_id=$v['uid']" target="_blank">{$v['username']}</a>
                     </td>
 					<td>
-                        <font color=red>{$_lang['currency']}{$v['pay_money']}</font>{$_lang['yuan']}
+                        <font color=red>{c:$v['pay_money']}</font>
                     </td>
 					 <td>
                         <!--{date('Y-m-d H:i:s',$v['pay_time'])}-->
@@ -156,7 +157,7 @@
                     </td>
                     <td>
                     	{if $v['order_status']=='wait'&&$offline_pay[$v['pay_type']]}
-                    		<a href="index.php?do={$do}&view={$view}&ac=pass&order_id={$v['order_id']}" onclick="return cdel(this,'<div style=width:300px;word-wrap:break-word;word-break:normal>{if $v['pay_info']}{$_lang['user_recharge_att_info']}£º$v['pay_info']{else}{$_lang['user_does_not_charge_info']}{/if}</div>{$_lang['confirm_cashin']}£¿');" class="button"><span class="cog icon"></span>{$_lang['confirm_of_payment']}£¿</a>
+                    		<a href="index.php?do={$do}&view={$view}&ac=pass&order_id={$v['order_id']}" onclick="return cdel(this,'<div style=width:300px;word-wrap:break-word;word-break:normal>{if $v[pay_info]}{$_lang[user_recharge_att_info]}£º$v[pay_info]{else}{$_lang[user_does_not_charge_info]}{/if}</div>{$_lang[confirm_cashin]}£¿');" class="button"><span class="cog icon"></span>{$_lang['confirm_of_payment']}£¿</a>
                        		<a href="index.php?do={$do}&view={$view}&ac=del&order_id={$v['order_id']}" onclick="return cdel(this);" class="button"><span class="trash icon"></span>{$_lang['delete']}</a>
                     	{/if}
 					</td>

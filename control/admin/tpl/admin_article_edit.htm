@@ -15,7 +15,7 @@
         	<div class="title"><h2>{if $art_id}{$_lang['edit']}{else}{$_lang['add']}{/if}{if $type=='art'}{$_lang['article']}{elseif $type=='help'}{$_lang['help']}{else}{$_lang['single_page']}{/if}</h2></div>       	
             <div class="detail">
                 <form method="post" action="index.php?do={$do}&view={$view}" id="frm_art_edit" enctype="multipart/form-data">
-                <input type="hidden" name="pk[art_id]" value="{$art_info['art_id']}">
+                <input type="hidden" name="pk[art_id]" value="{$art_info['art_id']}" id='art_id'>
                 <input type="hidden" name="type" value="{$type}">
                     <table width="100%" border="0" cellspacing="0" cellpadding="0">
                     
@@ -39,13 +39,33 @@
                                      msg = '{$_lang['please_choose']}{if $type=='art'}{$_lang['article']}{elseif $type=='help'}{$_lang['help']}{else}{$_lang['single_page']}{/if}{$_lang['category']}' 
                                      title='{$_lang['choose_which_category']}{if $type=='art'}{$_lang['article']}{elseif $type=='help'}{$_lang['help']}{else}{$_lang['single_page']}{/if}{$_lang['zh_wh']}' 
                                      msgArea="msg_cat_id">
-	                        {loop $cat_arr $v}
-	                        $v
+							{if $type == 'help'}<option value="">请选择分类下的子类</option>{/if}
+	                        {loop $cat_arr $k $v}
+								$v
+							<!--	<optgroup {if $v['art_cat_pid'] == '0'} label="$v['cat_name']"{/if}>
+									{if $v['art_cat_pid'] == '381'}
+									<option value="$k">$v['cat_name']</option>
+									{/if}
+									{if $v['art_cat_pid'] == '294'}
+									<option value="$k">$v['cat_name']</option>
+									{/if}
+									{if $v['art_cat_pid'] == '293'}
+									<option value="$k">$v['cat_name']</option>
+									{/if}
+									{if $v['art_cat_pid'] == '291'}
+									<option value="$k">$v['cat_name']</option>
+									{/if}
+								</optgroup>
+								
+								-->
+								
 	                        {/loop}
+							
 	                     </select>
 	                     <span id="msg_cat_id"></span> 
 	                	</td>
                       </tr>
+					 
                       
                       <tr>
                         <th scope="row">{$_lang['order']}{$_lang['zh_mh']}</th>
@@ -98,7 +118,7 @@
                       
 					  
 					  
-					  
+					  {if $type != 'help'}
                       <tr>
                         <th scope="row">{$_lang['upload_image']}:</th>
                         <td id="t_pic" class=" p_relative"> 
@@ -121,7 +141,8 @@
                             <p>{$_lang['allowed_to_be_uploaded']}{$basic_config['max_size']}M</p>
                             </div>
                         </td>
-                      </tr> 		  
+                      </tr> 
+					  {/if}		  
  <script>
 //图片上传	  	
 	function pic_upload(id){
@@ -140,7 +161,7 @@
                     art.dialog.alert("{$_lang['upload_fail_file_too_large']}"+ json.err);
                 }else {
                     var hf = $("#hdn_"+id);
-                   $("#hdn_art_pic").val(json.msg.up_file+"?fid="+json.fid);
+                   $("#hdn_art_pic").val(json.msg.up_file);
                    $("#fid").val(json.fid);
 					$("#file_span").html("<span id=\"file_"+json.fid+"\" > <img src='../../"+json.msg.up_file+"' height=\"80\" /> <a title=\"{$_lang['delete']}\" href=\"javascript:void(0);\" onclick=\"del_file('"+json.msg.up_file+"');\"><strong>{$_lang['delete']}×</strong></a></span>");
                 }
@@ -158,14 +179,13 @@
 
 		function del_file(file_path){
 			var value = file_path.split("?")['0'];
-			var fid=$("#fid").val();
-			var url  = '../../index.php?do=ajax&view=file&ajax=del&filepath='+value+"&fid="+fid;
+			var url  = 'index.php?do=article&view=edit&ac=del&filepath='+value+'&pk='+$("#art_id").val();
 			$.post(url,function(json){
+                art.dialog.alert("{$_lang['del_success']}");
 				if(json.status==1){ 
 					 $("#file_span").children().remove();
 					 $("#hdn_art_pic").val("");
 				}
-				
 			},'json');
 		}
 				

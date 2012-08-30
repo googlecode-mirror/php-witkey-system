@@ -3,6 +3,7 @@
     {loop $sub_menu_arr $v}      
         <div class="box link">
         	
+				{if $v['0']}
 				<div class="title">$v['0']['name']</div>
             	<div class="detail pad10">
         		<ul>
@@ -11,7 +12,32 @@
 					{/loop}
 				</ul>
 				</div>
+				{/if}
+				
+				{if $v['1']}
+				<div class="title">$v['1']['name']</div>
+            	<div class="detail pad10">
+        		<ul>
+        			{loop $v['1']['items'] $v2}
+            			<li><a href="javascript:nav_jump('{$v2['resource_url']}');"><span class="font_st">¡¤</span>{$v2['resource_name']}</a></li>
+					{/loop}
+				</ul>
+				</div>
+				{/if}
+				
+				{if $v['2']}
+				<div class="title">$v['2']['name']</div>
+            	<div class="detail pad10">
+        		<ul>
+        			{loop $v['2']['items'] $v2}
+            			<li><a href="javascript:nav_jump('{$v2['resource_url']}');"><span class="font_st">¡¤</span>{$v2['resource_name']}</a></li>
+					{/loop}
+				</ul>
+				</div>
+				{/if}
 		</div>
+		
+	
 	{/loop}
 </div>  
  <script type="text/javascript">

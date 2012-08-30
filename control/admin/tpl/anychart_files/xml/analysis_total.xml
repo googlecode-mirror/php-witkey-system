@@ -30,7 +30,7 @@
           <connector color="Black" opacity="0.4"/>
         </pie_series>
       </data_plot_settings>
-      <data><series name="Series 1"><point name="威客任务" y="8032.52"/><point name="威客商城" y="302.94"/><point name="增值服务" y="450"/><point name="用户认证" y="93"/></series></data>
+      <data><series name="Series 1"><point name="威客任务" y="1892.5"/><point name="威客商城" y="0.41"/><point name="增值服务" y="70"/><point name="用户认证" y="1"/></series></data>
 		<chart_settings>
         <title enabled="true" padding="15">
           <text>盈利分析报表</text>

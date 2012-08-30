@@ -2,7 +2,7 @@
 <div class="page_title">
     	<h1>{$_lang['tag_manage']}</h1>
         <div class="tool">         
-            <a href="index.php?do={$do}&view=taglist">{$_lang['tag_manage']}</a>
+            <a href="index.php?do={$do}&view=taglist&tag_type={$tag_type}&t={$t}">{$_lang['tag_manage']}</a>
 			<a href="#" class="here">$tag_type_arr[$tag_type]['1']</a>
         </div>
 </div>
@@ -12,7 +12,7 @@
 		<h2>$tag_type_arr[$tag_type]['1']{$_lang['tag']}</h2>
 	</div>	
 	<div class="detail">
-		<form method="post" action="index.php?do={$do}&view={$view}&tag_type={$tag_type}&rdo_cat_type=2&tagid=$tagid">
+		<form method="post" action="index.php?do={$do}&view={$view}&tag_type={$tag_type}&type={$type}&rdo_cat_type=2&tagid=$tagid">
 		 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 		  
 		  <tr>
@@ -24,23 +24,7 @@
 				{$_lang['tag_change_notice']}
             </td>
           </tr>
-       	{if sizeof($template_arr)>1}
-		   <tr>
-            <th scope="row"  >
-            	      {$_lang['template_choose']}{$_lang['zh_mh']}
-			</th>
-            <td colspan="2">
-             	 <!--{eval $tmp=explode(",",$taginfo['tpl_type'])}-->
-				 <!--{eval $tpl_type=array($tmp['0']=>$tmp['0'],$tmp['1']=>$tmp['1'],$tmp['2']=>$tmp['2'],$tmp['3']=>$tmp['3'])}-->
-                {loop $template_arr $k $v}
-				<input type="checkbox" name="cbk[]" value="$v['tpl_title']" 
-				{if $tpl_type[$v['tpl_title']]==$v['tpl_title']}checked='checled'{/if}>
-				$v['tpl_title']
-                {/loop}
-							({$_lang['choose_tag_template']}
-            </td>
-          </tr>
-		 {/if}
+       	
 		   <tr>
             <th scope="row"  >
             	    html{$_lang['code']}{$_lang['zh_mh']}
@@ -48,7 +32,7 @@
             <td>
              	<textarea rows="15"  cols="100" name="tar_custom_code" 
 				id="system-create-location" 
-				class="xheditor {urlBase:'$_K['siteurl']/',html5Upload:false,upImgUrl:'../../index.php?do=ajax&view=upload'}"  >{$taginfo['code']}</textarea>
+				class="xheditor {urlBase:'$_K['siteurl']/',tools:'simple',admin:'../../',html5Upload:false,emotMark:false,upImgUrl:'../../index.php?do=ajax&view=upload&file_type=att'}" >{$taginfo['code']}</textarea>
 			</td>
 			<td>
 				

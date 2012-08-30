@@ -2,12 +2,16 @@
 <div class="page_title">
     <h1>{$_lang['union_api_config_manage']}</h1>
     <div class="tool">
-       		 <a href="index.php?do=keke&view=account&op=config" class="here">{$_lang['union_api_config']}</a>
+       		 <a href="index.php?do=keke&view=account&op=config" {if $op=='config'}class="here"{/if}>{$_lang['union_api_config']}</a>
+       	{if $config['keke_app_id']}
+			 <a href="index.php?do=keke&view=account&op=account" {if $op=='account'}class="here"{/if}>个人信息</a>
+		{/if}
 		{if !$config['keke_app_id']}
-			<a href="index.php?do=keke&view=account&op=apply">联盟api申请</a>
+			<a href="index.php?do=keke&view=account&op=apply">{$_lang['union_api_apply']}</a>
 		{/if}
     </div>
 </div>
+{if $op=='config'}
 <div class="box post">
     <div class="tabcon">
         <div class="title">
@@ -22,7 +26,7 @@
                     <tbody id="qq">
                         <tr>
                             <th scope="row" width="130">
-                                UNIOappid{$_lang['zh_mh']}
+                                联盟应用编号{$_lang['zh_mh']}
                             </th>
                             <td>
                                 <label><input type="text" size="50" name="keke_id" class="txt" value="{$config['keke_app_id']}" limit="type:int" msg="UNIOappid" title={$_lang['unionapp_id']} msgArea="txt_unio_appid_msg"/><span id="txt_unio_appid_msg"></span>({$_lang['union_api_id']})</label>
@@ -30,7 +34,7 @@
                         </tr>
                         <tr>
                             <th scope="row" width="130">
-                                UNIOappsecret{$_lang['zh_mh']}
+                                联盟应用密钥{$_lang['zh_mh']}
                             </th>
                             <td>
                                 <label><input type="text" size="50" name="keke_secret" value="{$config['keke_app_secret']}" limit="type:string" msg="UNIOappsecret" title={$_lang['unionapp_id']} msgArea="txt_uniosecret_msg" class="txt"/><span id="txt_uniosecret_msg"></span>({$_lang['union_app_secret_id']})</label>
@@ -55,4 +59,11 @@
         </div>
     </div>
 </div>
+{else}
+<div class="box list">
+    <div class="detail">
+    	<iframe src="http://localhost/server/remote.php?app_id={$config[keke_app_id]}&do=account" id="post_frame" name="post_frame" scrolling="auto" frameborder="0" width="98%" height="500px"></iframe>
+    </div>
+</div>
+{/if}
 <!--{template control/admin/tpl/admin_footer}-->

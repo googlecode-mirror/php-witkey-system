@@ -26,19 +26,13 @@
                			 </td>
           			  </tr>
 					  <tr>
-                        <th scope="row" width="130">{$_lang['tpl_select']}</th>
-                        <td>
-                        	 {loop $template_arr $k $v}
-							   <label for="ckb_{$k}" >
-								<input type="checkbox" name="ckb[]" id="ckb_{$k}"  value="$v['tpl_title']" {if strpos($ad_info['tpl_type'],$v['tpl_title'])!==FALSE} checked="checked"{/if}>
-								$v['tpl_title']
-								</label>
-							{/loop}
-							<div class="padt10 direct">
-                           	 	<p>({$_lang['model_tigs_select']})</p>
-                      		  </div>
-                        </td>
-                      </tr>
+					  	 <th scope="row" width="130">{$_lang['loadcount']}</th>
+              			  <td>
+                 			<input type="text" value="{$ad_info['loadcount']}" name="fds[loadcount]" class="txt" size="4"/>
+							 <div class="padt10 direct"><p>({$_lang['count_you_wish']})</p></div>
+							 <input type="hidden" value="{$ad_info['loadcount']}" name="fds[hdn_loadcount]" />
+               			 </td>
+          			  </tr>
 					  <tr>
                         <th scope="row" width="130">{$_lang['tags_code']}</th>
                         <td>

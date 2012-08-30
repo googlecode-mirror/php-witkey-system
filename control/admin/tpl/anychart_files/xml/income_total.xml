@@ -39,7 +39,7 @@
     			</tooltip_settings>
     		</line_series>
     	</data_plot_settings>
-	    <data><series name="2012年"><point name="1" y="203044.63"/><point name="2" y="990261.48"/><point name="3" y="88011.5"/><point name="4" y="0"/><point name="5" y="0"/><point name="6" y="0"/><point name="7" y="0"/><point name="8" y="0"/><point name="9" y="0"/><point name="10" y="0"/><point name="11" y="0"/><point name="12" y="0"/></series><series name="2011年"><point name="1" y="0"/><point name="2" y="0"/><point name="3" y="0"/><point name="4" y="0"/><point name="5" y="0"/><point name="6" y="0"/><point name="7" y="0"/><point name="8" y="0"/><point name="9" y="0"/><point name="10" y="0"/><point name="11" y="0"/><point name="12" y="103494.11"/></series></data>
+	    <data><series name="2012年"><point name="1" y="0"/><point name="2" y="0"/><point name="3" y="0"/><point name="4" y="0"/><point name="5" y="0"/><point name="6" y="0"/><point name="7" y="0"/><point name="8" y="1217416.79"/><point name="9" y="0"/><point name="10" y="0"/><point name="11" y="0"/><point name="12" y="0"/></series></data>
     </chart>
   </charts>
 </anychart>

@@ -1,4 +1,4 @@
-<?php
+<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * 后台广告列表显示页面
  * @copyright keke-tech
@@ -8,9 +8,9 @@
  * @encoding GBK
  */
 
-	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
-	Keke::admin_check_role(32);
 	
+	kekezu::admin_check_role(32);
+	$target_position_arr = array ('top' => $_lang ['top'], 'bottom' => $_lang ['bottom'], 'left' => $_lang ['left'], 'right' => $_lang ['right'], 'center' => $_lang ['center'], 'global' => $_lang ['global'] );
 	$ad_obj = new Keke_witkey_ad_class();//广告数据
 	//$target_obj = new Keke_witkey_ad_target_class(); //广告类型
 	$table_obj = new keke_table_class('witkey_ad');
@@ -33,15 +33,16 @@
 			$ids = $ckb ? implode(',', $ckb) : intval($ad_id) ;// echo $ids;
 			$ad_obj -> setWhere('ad_id in ('.$ids.')');
 			$result = $ad_obj -> del_keke_witkey_ad();
-			Keke::admin_system_log($_lang['delete_ads'].$ids);
-			Keke::admin_show_msg($result ? $_lang['ads_delete_success'] : $_lang['no_operation'] ,"index.php?do={$do}&view={$view}&target_id={$target_id}&ord={$ord}&page={$page}",3,'',$result?'success':'warning');
+			kekezu::admin_system_log($_lang['delete_ads'].$ids);
+			kekezu::admin_show_msg($result ? $_lang['ads_delete_success'] : $_lang['no_operation'] ,"index.php?do={$do}&view={$view}&target_id={$target_id}&ord={$ord}&page={$page}",3,'',$result?'success':'warning');
 // 		} else {
-// 			Keke::admin_show_msg($_lang['choose_operate_item']);
+// 			kekezu::admin_show_msg($_lang['choose_operate_item']);
 // 		}
 	}
+
 	
 	//广告类型调用
-	$targets_arr =  Keke::get_table_data('*','witkey_ad_target', '', '', '', '', 'target_id');
+	$targets_arr =  kekezu::get_table_data('*','witkey_ad_target', '', '', '', '', 'target_id');
 	//查询数据
 	//$page = isset($page) ? intval($page) : '1' ;
 	$pagesize = isset($page_size) ? intval($page_size) : '10' ;
@@ -57,6 +58,5 @@
 	$ad_arr = $table_obj -> get_grid($where, $url, $page, $pagesize, null, 1, 'ajax_dom'); //var_dump($ad_arr);
 	$pages = $ad_arr['pages'];
 	$ad_arr = $ad_arr['data'];
-	
 	require $template_obj->template ( 'control/admin/tpl/admin_' . $do . '_' . $view);
   

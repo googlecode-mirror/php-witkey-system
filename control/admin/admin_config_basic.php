@@ -1,4 +1,4 @@
-<?php
+<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * @copyright keke-tech
  * @author Michael
@@ -6,14 +6,14 @@
  * 2010-5-17ÏÂÎç02:29:58
  */
 
-defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 
-Keke::admin_check_role ( 1 );
+
+kekezu::admin_check_role ( 1 );
 
 $config_basic_obj = new Keke_witkey_basic_config_class ();
 
 $config_basic_arr = $config_basic_obj->query_keke_witkey_basic_config ();
-
+$lang_arr = keke_lang_class::lang_type();
 foreach ( $config_basic_arr as $k => $v ) {
 	$config_arr [$v ['k']] = $v ['v'];
 }
@@ -29,33 +29,33 @@ $log_nav_arr = array (
 if (isset ( $_POST ) && ! empty ( $_POST )) {
 	foreach ( $_POST as $k => $v ) {
 		$config_basic_obj->setWhere ( "k = '$k'" );
-		$config_basic_obj->setV (Keke::k_input($v));
+		$config_basic_obj->setV (kekezu::k_input($v));
 		$res += $config_basic_obj->edit_keke_witkey_basic_config ();
-	
 	}
 	
-	Keke::admin_system_log ( $_lang ['update'] . $log_nav_arr [$op] );
+	kekezu::admin_system_log ( $_lang ['update'] . $log_nav_arr [$op] );
 	
 	if ($res) {
 		
-		Keke::$_cache_obj->set ( "keke_witkey_basic_config", $config_basic_arr );
+		$kekezu->_cache_obj->set ( "keke_witkey_basic_config", $config_basic_arr );
 		
-		Keke::admin_show_msg ( $_lang ['submit_success'], $url, 3, '', 'success' );
+		kekezu::admin_show_msg ( $_lang ['submit_success'], $url, 3, '', 'success' );
 	
 	} else {
 		
-		Keke::admin_show_msg ( $_lang ['website_config_fail'], $url, 3, '', 'warning' );
+		kekezu::admin_show_msg ( $_lang ['website_config_fail'], $url, 3, '', 'warning' );
 	}
 }
 if ($ac == 'get_url_rule') {
    $rule_arr = get_url_rule();
-   require Keke::$_tpl_obj->template( 'control/admin/tpl/admin_config_get_rule' );
+   require $kekezu->_tpl_obj->template( 'control/admin/tpl/admin_config_get_rule' );
    die();
 }
 function get_url_rule() {
 	// ·þÎñÆ÷
 	$service = array (
 			'apache',
+			'apache-hosts',
 			'iis6',
 			'iis7',
 			'nginx' 
@@ -66,6 +66,25 @@ function get_url_rule() {
 	foreach ( $service as $v ) {
 		// apache
 		switch ($v) {
+			case 'apache-hosts':
+				$r = '
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule ^(.*)/index.html$ $1/index.php
+RewriteRule ^(.*)/(\w+).html$ $1/index.php?do=$2
+RewriteRule ^(.*)/(\w+)-(\w+)-(\w+).html$ $1/index.php?do=$2&$3=$4
+RewriteRule ^(.*)/(\w+)-(\w+)-(\w+)-(\w+)-(\w+).html$ $1/index.php?do=$2&$3=$4&$5=$6
+RewriteRule ^(.*)/(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+).html$ $1/index.php?do=$2&$3=$4&$5=$6&$7=$8
+RewriteRule ^(.*)/(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+).html$ $1/index.php?do=$2&$3=$4&$5=$6&$7=$8&$9=$10
+RewriteRule ^(.*)/(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+).html$ $1/index.php?do=$2&$3=$4&$5=$6&$7=$8&$9=$10&$11=$12
+RewriteRule ^(.*)/(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+).html$ $1/index.php?do=$2&$3=$4&$5=$6&$7=$8&$9=$10&$11=$12&$13=$14
+RewriteRule ^(.*)/(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+).html$ $1/index.php?do=$2&$3=$4&$5=$6&$7=$8&$9=$10&$11=$12&$13=$14&$15=$16
+RewriteRule ^(.*)/(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+).html$ $1/index.php?do=$2&$3=$4&$5=$6&$7=$8&$9=$10&$11=$12&$13=$14&$15=$16&$17=$18
+RewriteRule ^(.*)/(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+)-(\w+).html$ $1/index.php?do=$2&$3=$4&$5=$6&$7=$8&$9=$10&$11=$12&$13=$14&$15=$16&$17=$18&$19=$20
+</IfModule>';
+				$r = htmlspecialchars($r);
+				$rule_arr [$v] = $r;
+				break;
 			case 'apache' :
 				$r='';
 				$r .= "RewriteEngine On \r";
@@ -85,12 +104,12 @@ function get_url_rule() {
 				$rule_arr [$v] = $r;
 				break;
 			case 'iis6' :
-				$r = "RewriteEngine On\r";
-				$r .= "RewriteCompatibility2 On\r";
-				$r .= "RepeatLimit 200\r";
-				$r .= "RewriteBase /\r";
-				$r .= 'RewriteRule ^.*(?:global.asa|default\.ida|root\.exe|\.\.).*$ . [NC,F,O]\r';
-				$r .= 'RewriteRule ^(.*)/index.html$ $1/index.php\r';
+				$r = "RewriteEngine On \r";
+				$r .= "RewriteCompatibility2 On \r";
+				$r .= "RepeatLimit 200 \r";
+				$r .= "RewriteBase / \r";
+				$r .= "RewriteRule ^.*(?:global.asa|default\.ida|root\.exe|\.\.).*\$ . [NC,F,O] \r ";
+				$r .= "RewriteRule ^(.*)/index.html\$ \$1/index.php \r";
 				$p = '(\w+)';
 				$p = '(.*)';
 				for($i = 2; $i <= 20; $i = $i + 2) {
@@ -99,7 +118,7 @@ function get_url_rule() {
 					for($j = 0; $j < $i; $j ++) {
 						if ($j == 0) {
 							$ps .= $p . "/";
-							$ks .= '$1/index.php?do';
+							$ks .= '$1/index.php\?do';
 						} elseif ($j == 1) {
 							$ps .= '(\w+)';
 						} else {

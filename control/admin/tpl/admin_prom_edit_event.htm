@@ -41,10 +41,10 @@
 								{$_lang['no_settlement']}
 							{else}
 								{if $event_info['rake_cash']>0.00}
-									{$_lang['currency']}<font color=red> $event_info['rake_cash']</font>{$_lang['yuan']}
+									<font color=red> {c:$event_info['rake_cash']}</font>
 								{/if}
 								{if $event_info['rake_credit']>0.00}
-									{$_lang['currency']}<font color=red> $event_info['rake_credit']</font>{CREDIT_NAME}
+									<font color=red> {c:$event_info['rake_credit']}</font>{CREDIT_NAME}
 								{/if}
 							{/if}
                         </td>

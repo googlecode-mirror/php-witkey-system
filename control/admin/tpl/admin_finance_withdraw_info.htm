@@ -19,7 +19,14 @@
                       </tr>
 					  <tr>
                         <th scope="row" width="130">{$_lang['withdraw_amount']}</th>
-                        <td>  $withdraw_info['withdraw_cash']</td>
+                        <td>
+							{if $withdraw_info['pay_type']=='alipayjs'}
+                        		<!--{eval $get_cash = keke_finance_class::alipayjs_format_moneys($withdraw_info['withdraw_cash']);}-->
+                        	{else}
+                        		<!--{eval $get_cash = keke_finance_class::get_to_cash($withdraw_info['withdraw_cash']);}-->
+                        	{/if}
+							{c:$get_cash}
+                        </td>
                       </tr>
 					  <tr>
                         <th scope="row" width="130">{$_lang['application_time']}</th>
@@ -50,15 +57,15 @@
                         <td>
 							{if $withdraw_info['withdraw_status']==1}
 								{if $withdraw_info['pay_type']=='alipayjs'}
-									<button class="positive primary button" id="submit_save" type="button" value={$_lang['payment']} onclick="batch_pay({$withdraw_info['withdraw_id']});"><span class="icon check"></span>{$_lang['payment']}</button>
-								{else}
-									<button class="positive primary button" id="submit_save" type="submit" value={$_lang['pass']} onclick="return confirm('{$_lang['confirm']}{$_lang['pass']}{$_lang['me']}?');"><span class="icon check"></span>{$_lang['pass']}</button>
-                       			{/if}
-                           {/if}
-							    <button class="button" type="button" value="{$_lang['delete']}" onclick="location.href='index.php?do=finance&view=withdraw&ac=del&withdraw_id=$withdraw_id'"><span class="icon trash"></span>{$_lang['delete']}</button>
-                                <button class="pill button" type="button" value="{$_lang['return']}" onclick="javascript:history.go(-1);" ><span class="icon uparrow"></span>{$_lang['return']}</button>
-                            </div>
-                        </td>
+									<button class="positive primary button" id="submit_save" type="button" value={$_lang['payment']} onclick="batch_pay({$withdraw_info['withdraw_id']});">
+										<span class="loop  check"></span>{$_lang['confirm_cash']}</button>
+								{/if}
+								<button class="positive primary button" id="submit_save" type="submit" value={$_lang['pass']} onclick="return confirm('{$_lang['confirm']}{$_lang['pass']}{$_lang['me']}?');">
+									<span class="icon check"></span>{$_lang['pass']}</button>
+                       		    <button class="button" type="button" value="{$_lang['nopass']}" onclick="location.href='index.php?do=finance&view=withdraw&ac=nopass&withdraw_id=$withdraw_id'"><span class="icon trash"></span>{$_lang['nopass']}</button>
+                              {/if}
+							  <button class="pill button" type="button" value="{$_lang['return']}" onclick="javascript:history.go(-1);" ><span class="icon uparrow"></span>{$_lang['return']}</button>
+                       </td>
                       </tr>
                     </table>
                     
@@ -66,7 +73,7 @@
             </div>
         </div>
 <script type="text/javascript">
-	var payType='$withdraw_info['pay_type']';
+	var payType="$withdraw_info['pay_type']";
 	function batch_pay(withdraw_id){
 		if(payType=='alipayjs'){
 			$.post("index.php?do=finance&view=withdraw&type=batch&pay_type=alipayjs&ids="+withdraw_id,function(url){

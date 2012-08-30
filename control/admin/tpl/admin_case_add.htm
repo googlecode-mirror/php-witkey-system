@@ -1,6 +1,6 @@
 <!--{template control/admin/tpl/admin_header}-->  
 <div class="page_title">
-    	<h1>{if $case_info['case_id']}{$_lang['edit']}{else}{$_lang['add']}{/if}{$_lang['case']}</h1>
+    	<h1>{$_lang['case_manage']}</h1>
         <div class="tool">
              <a href="index.php?do=$do&view=list">{$_lang['case_list']}</a>
 			 <a class="here" href="index.php?do=$do&view=add&case_id={$case_id}">{if $case_info['case_id']}{$_lang['edit']}{else}{$_lang['add']}{/if}{$_lang['case']}</a>
@@ -21,7 +21,7 @@
 							  <a href="{$_K['siteurl']}/{$case_info['case_img']}" target="_blank">{$file}</a>
 							  <br>
 							{/if}
-		                   <input type="file" name="fle_case_img" id="fle_case_img" >
+		                   <input type="file" name="fle_case_img" id="fle_case_img" ><span id="span_msg" style="color:red"></span>
 		                   <input type="hidden" name = "hdn_case_img" id="hdn_case_img" >
 						   <div class="c999">{$_lang['support_img_type']}</div>
                         </td>
@@ -30,12 +30,12 @@
 					  	<th scope="row" width="130">{$_lang['case_type']}{$_lang['zh_mh']}</th>
 						<td>
 					  	<select name="case_type" id="case_type" onchange ="search_case();">
-					  		<option value="0">---{$_lang['please_choose']}---</option>
-					  		<option value="task" >---{$_lang['task']}---</option>
-							<option value="service" >---{$_lang['shop']}---</option>
+					  		<option value="0" >---{$_lang['please_choose']}---</option>
+					  		<option value="task" {if $case_info['obj_type']=='task'}selected="selected"{/if}>---{$_lang['task']}---</option>
+							<option value="service" {if $case_info['obj_type']=='service'}selected="selected"{/if}>---{$_lang['shop']}---</option>
 					  		</select>
 							
-
+                             <span id="case_type_msg"></span>
 							</td>
 					  	</tr>
 						
@@ -48,6 +48,7 @@
 								height:400,
 								width:700,
 								closeFn:function (){
+									  
 										$("#obj_id").val(art.dialog.data('obj_id_val'));
 										$("#txt_task_title").val(art.dialog.data('title_val'));
 										$("#txt_case_price").val(art.dialog.data('cash_val'));
@@ -68,11 +69,7 @@
                         	<span id="span_name"></span>
 						</td>
                       </tr>
-					    <tr>
-                        <th scope="row" width="130">{$_lang['case_description']}{$_lang['zh_mh']}</th>
-                        <td><textarea name="fds[case_desc]" cols="80" rows="5">{$case_info['case_desc']}</textarea>
-                        </td>
-                      </tr>
+					  
 					   <tr>
                         <th scope="row" width="130">{$_lang['case_money']}{$_lang['zh_mh']}</th>
                         <td>
@@ -80,11 +77,14 @@
 							 name="fds[case_price]" class="txt" style=" width:260px;" onkeyup="clearstr(this)"/>
                         </td>
                       </tr>
+					  
+					  
 					   <tr>
                         <th scope="row">&nbsp;</th>
                         <td>
                             <div class="clearfix padt10">
-                            	<button class="positive pill primary button" name="sbt_edit" type="submit" value="{$_lang['submit']}" onclick="return checkForm(document.getElementById('frm'))">
+                            	<input type="hidden" name="sbt_edit" value="1">
+                            	<button class="positive pill primary button" name="sbt_edit" type="button" value="{$_lang['submit']}" onclick="case_sbt();">
                             		<span class="icon check"></span>
 								{$_lang['submit']}</button>
                                 <button class="pill button" type="button" onclick="to_back();" value={$_lang['return']}><span class="uparrow icon"></span>{$_lang['return']}</button>
@@ -94,4 +94,39 @@
    				 </table>
    	 </div>
 </div>
+<script type="text/javascript">
+      
+	 
+	function case_sbt(){
+		
+		if(!$("#case_type").val()){
+			$("#case_type_msg").html('请选择类型');
+			return false;
+		}
+		var case_img = '{$case_info[case_img]}';
+		if($("#hdn_case_img").val()==''&&$("#fle_case_img").val()==''){
+			$("#hdn_case_img").val(case_img);
+		}
+		if($("#fle_case_img").val()||case_img){ 
+		   
+			if(checkForm(document.getElementById('frm'))){ 
+				$("#frm").submit(); 
+			}		
+		}else{
+			
+			$("#span_msg").html('请上传图片');
+			return false;
+			
+		}
+	 
+		
+	}
+	
+	
+	
+</script>
+
+
+
+
  <!--{template control/admin/tpl/admin_footer}-->

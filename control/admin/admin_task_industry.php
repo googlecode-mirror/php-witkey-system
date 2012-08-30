@@ -8,7 +8,7 @@
  */
 
 defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
-Keke::admin_check_role ( 7 );
+kekezu::admin_check_role ( 7 );
 
 $indus_obj = new Keke_witkey_industry_class ();
 $file_obj = new keke_file_class();
@@ -18,7 +18,7 @@ $url = "index.php?do=$do&view=$view&w[indus_pid]={$w[indus_pid]}&w[indus_name]={
 
 if ($ac == 'del') { //É¾³ı
 	$table_obj->del ( 'indus_id', $indus_id, $url );
-	Keke::admin_show_msg($_lang['delete_success'],'index.php?do=task&view=industry',3,'','success');
+	kekezu::admin_show_msg($_lang['delete_success'],'index.php?do=task&view=industry',3,'','success');
 } elseif (isset ( $sbt_action )) {
 	if ($edit_indus_name_arr) { //±à¼­
 		foreach ( $edit_indus_name_arr as $k => $v ) {
@@ -28,7 +28,7 @@ if ($ac == 'del') { //É¾³ı
 		
 		}
 	
-		Keke::admin_system_log ( $_lang['edit_industry'] );
+		kekezu::admin_system_log ( $_lang['edit_industry'] );
 	} elseif ($add_indus_name_arr) { //É¾³ı
 		 
 		foreach ( $add_indus_name_arr as $k => $aindarr ) {
@@ -43,11 +43,11 @@ if ($ac == 'del') { //É¾³ı
 				$indus_obj->create_keke_witkey_industry ();
 			}
 		}
-		Keke::admin_system_log ( $_lang['delete_industry'] );
+		kekezu::admin_system_log ( $_lang['delete_industry'] );
 	}
 		$file_obj->delete_files(S_ROOT."./data/data_cache/");
 		$file_obj->delete_files(S_ROOT.'./data/tpl_c/');
-	Keke::admin_show_msg ( $_lang['operate_success'], 'index.php?do=' . $do . '&view=' . $view,3,'','success' );
+	kekezu::admin_show_msg ( $_lang['operate_success'], 'index.php?do=' . $do . '&view=' . $view,3,'','success' );
 } elseif ($ac === 'editlistorder') { //¸ÄÅÅĞò
 	if ($iid) {
 		$indus_obj->setWhere ( 'indus_id=' . $iid );
@@ -62,12 +62,12 @@ if ($ac == 'del') { //É¾³ı
 		strval ( $w [indus_name] ) and $where .= " and indus_name like '%$w[indus_name]%'";
 		$ord [1] and $where .= " order by $ord[0] $ord[1]";
 	}
-	$indus_arr = Keke::get_table_data ( "*", "witkey_industry", $where, "", "", "", "", 0 );
+	$indus_arr = kekezu::get_table_data ( "*", "witkey_industry", $where, "", "", "", "", 0 );
 	sort ( $indus_arr );
 	
 	if (! $w) {
 		$t_arr = array ();
-		Keke::get_tree ( $indus_arr, $t_arr, 'cat', NULL, 'indus_id', 'indus_pid', 'indus_name' );
+		kekezu::get_tree ( $indus_arr, $t_arr, 'cat', NULL, 'indus_id', 'indus_pid', 'indus_name' );
 		$indus_show_arr = $t_arr;
 		//var_dump($t_arr);die(); 
 		unset ( $t_arr );
@@ -75,13 +75,14 @@ if ($ac == 'del') { //É¾³ı
 		//sort($indus_arr);
 		$indus_show_arr = $indus_arr;
 	}
+	//var_dump($indus_show_arr);
 	//ËÑË÷ĞĞÒµÏÂÀ­²Ëµ¥
 	$temp_arr = array ();
-	$indus_option_arr = Keke::get_industry ();
-	Keke::get_tree ( $indus_option_arr, $temp_arr, "option", $w [indus_pid] );
+	$indus_option_arr = kekezu::get_industry ();
+	kekezu::get_tree ( $indus_option_arr, $temp_arr, "option", $w [indus_pid] );
 	$indus_option_arr = $temp_arr;
 	unset ( $temp_arr );
-	$indus_index_arr = Keke::get_indus_by_index ();
+	$indus_index_arr = kekezu::get_indus_by_index ();
 }
 
 function sortTree($nodeid, $arTree) {
@@ -96,4 +97,4 @@ function sortTree($nodeid, $arTree) {
 	return $res;
 }
 
-require Keke::$_tpl_obj->template ( "control/admin/tpl/admin_task_$view" );
+require $kekezu->_tpl_obj->template ( "control/admin/tpl/admin_task_$view" );

@@ -2,11 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset={$_K['charset']}">
-<title>{P_NAME} {KEKE_VERSION}--{$_lang['admin_keke_sys']}</title>
+<title>{P_NAME} {KEKE_VERSION}--{$_K['sitename']}</title>
 </head>
 <link href="{BASE_URL}/control/admin/tpl/css/admin_management.css" rel="stylesheet" type="text/css" />
 <link href="{BASE_URL}/resource/css/button/stylesheets/css3buttons.css" rel="stylesheet" type="text/css" />
-<link title="style1" href="{BASE_URL}/control/admin/tpl/skin/default/style.css" rel="stylesheet" type="text/css" />
+<link href="{BASE_URL}/control/admin/tpl/skin/default/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="{BASE_URL}/resource/js/jquery.js"></script>
 </head>
 <body class="skin">
@@ -30,7 +30,7 @@
         </td>
         <td class="pr">
         	<div>
-            <form action="index.php?do=$do" method="post" id="admin_login">
+            <form action="#" method="post" id="admin_login">
             <input type="hidden" name="token" id="token" value="{FORMHASH}"/>
             <input  type="hidden" name="allow_time" id="allow_num" value="{$allow_times}"/>
             <p>
@@ -46,7 +46,7 @@
               </p>
               <p class="loginbtn">
               	
-                <button  type="submit" id="logsubmit" name="login" onclick="return check_login();"><span class="icon key">&nbsp;</span>{$_lang['submit']}</button>
+                <button  type="submit" id="logsubmit" name="login" onclick=" return check_login();"><span class="icon key">&nbsp;</span>{$_lang['submit']}</button>
                 <button id="re" type="reset" name="reset"><span class="icon reload">&nbsp;</span>{$_lang['reset']}</button>	
               </p>
             </form>
@@ -60,7 +60,7 @@
 <!--[if IE 7]></div><![endif]-->
 <!--[if IE 8]></div><![endif]-->
 <script type="text/javascript">
-	var remain_times=parseInt($remain_times)+0;
+	var remain_times=parseInt({$remain_times})+0;
 	$(function(){
 		$("#txt_username").focus();
 		lock_screen(remain_times);
@@ -68,7 +68,10 @@
 	})
 	function check_login(){
 		var allow_num=$("#allow_num").val();
-			if(checkForm(document.getElementById("admin_login"))){
+		
+		var i = checkForm(document.getElementById("admin_login"));
+		
+			if(i){
 				if(allow_num>0){
 					var username=$("#txt_username").val();
 					var password=$("#pwd_pwd").val();
@@ -120,7 +123,7 @@
 <script type="text/javascript" src="{BASE_URL}/resource/js/system/form_and_validation.js"></script>
  
 {if $remain_times>0}
-<script type="text/javascript" src="{BASE_URL}/resource/js/artdialog/artdialog.js"></script>
+<script type="text/javascript" src="{BASE_URL}/resource/js/artdialog/artDialog.js"></script>
 {/if}
  
  

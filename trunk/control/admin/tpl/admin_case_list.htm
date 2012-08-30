@@ -100,11 +100,17 @@
                         {$v['case_id']}
                     </td>
                     <td>
-                        <a href="../../index.php?do=task&task_id=$v['obj_id']" target="_blank">
-                        	<!--{eval echo Keke::cutstr($v['case_title'],54)}--></a>
+                     {if $v[obj_type]=='service'}
+					   <a href="../../index.php?do=service&sid=$v['obj_id']" target="_blank">
+                        	<!--{eval echo kekezu::cutstr($v['case_title'],54)}--></a>
+					 {elseif $v[obj_type]=='task'}
+					   <a href="../../index.php?do=task&task_id=$v['obj_id']" target="_blank">
+                        	<!--{eval echo kekezu::cutstr($v['case_title'],54)}--></a>
+					 {/if}
+					  
                     </td>
                     <td>
-                        {if $v['task_cash']}$v['task_cash'] {else}{$v['case_price']}{/if}
+                        {if $v['task_cash']}{c:$v['task_cash']} {else}{c:$v['case_price']}{/if}
                     </td>
                     <td>
                         {if $v['obj_type']=="task"}{$_lang['task']}{else}{$_lang['shop']}{/if}

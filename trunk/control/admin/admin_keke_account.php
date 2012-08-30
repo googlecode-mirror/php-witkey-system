@@ -9,13 +9,10 @@
 defined ( "ADMIN_KEKE" ) or exit ( "Access denied!" );
 $path = S_ROOT.'/keke_client/keke/config.php';
 include $path;
-$ops = array (
-		'apply',
-		'config' 
-);
-in_array ( $op, $ops ) or $op = 'apply';
-trim ( $config ['keke_app_id'] )&& $op = 'config';
-Keke::admin_check_role ( 133 );
+$op or $op = 'apply';
+$op=='account' and $op='account';
+$op!='account'&&trim ( $config ['keke_app_id'] ) and $op = 'config';
+kekezu::admin_check_role ( 133 );
 $reg_ip = $_SERVER ['REMOTE_ADDR'];
 
 if ( $op=='config' ) {//配置
@@ -29,8 +26,16 @@ if ( $op=='config' ) {//配置
 		"keke_app_secret'] = '$keke_secret'",
 		), $data);
 		if(file_put_contents($path, $res)){
-			Keke::admin_show_msg('配置成功', '', 3);
+			kekezu::admin_show_msg('配置成功', '', 3);
 		}
 	}
 }
-require $template_obj->template ( "control/admin/tpl/admin_{$do}_{$view}_{$op}" );
+//正式地址
+$url = 'http://www.kekezu.com/union/apply.php';
+//测试地址
+$url='http://192.168.1.118/server/apply.php'; 
+if($op=='apply'){
+	require $template_obj->template ( "control/admin/tpl/admin_keke_account_apply" );
+}else{
+	require $template_obj->template ( "control/admin/tpl/admin_keke_account_config" );
+}

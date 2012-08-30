@@ -24,7 +24,8 @@
 						 limit="required:true;len:3-100;general:false" 
 						 msg="{$_lang['site_name_cannot_be_empty']}{$_lang['zh_dh']}{$_lang['length_3_100']}" title='{$_lang['please_input_the_website_name']}'
 						 msgArea="web_name_msg" />
-                    	<span id="web_name_msg"></span> 
+                    	<span id="web_name_msg"></span>
+						<br/>&nbsp;&nbsp;{$_lang['site_name_description']} 
                         </td>
                       </tr>
                       <tr>
@@ -92,6 +93,18 @@
             </tr>
             <tr>
                 <th scope="row">
+                    {$_lang['default_lang']}{$_lang['zh_mh']}
+                </th>
+                <td>
+                <select name="lang">
+                {loop $lang_arr $k $v}
+                	<option value="{$k}" {if $config_arr['lang']==$k}selected{/if}>{$v}</option>
+                {/loop}
+                </select>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">
                     {$_lang['third_party_code_statistics']}{$_lang['zh_mh']}
                 </th>
                 <td>
@@ -133,15 +146,6 @@
                     <label for="rdo_crdeit_is_allow2">
                         <input type="radio" id="rdo_crdeit_is_allow2" onclick="if(this.checked){$('#sp_inp_credit_rename').show();}else{$('#sp_inp_credit_rename').hide()}" name="credit_is_allow" {if $config_arr['credit_is_allow']==1}checked="checked" {/if} value="1">{$_lang['open']}
                     </label><b style="font-weight:normal;" id="sp_inp_credit_rename" {if $credit_is_allow==2}style="display:none;"{/if}>{$_lang['vouchers_renamed']}{$_lang['zh_mh']}  <input type="text"  class="txt" name="credit_rename" id="inp_credit_rename" value="$config_arr['credit_rename']">({$_lang['default_please_leave_blank']})</b>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">
-                    {$_lang['website_title']}{$_lang['zh_mh']}
-                </th>
-                <td>
-                    <input type="text" size="50" name="seo_title" value="{$config_arr['seo_title']}" limit="required:true;len:3-100;general:false" msg="{$_lang['website_title_msg']}" msgArea="seo_title_msg" maxlength="100" class="txt"/><b style="color:red">*</b>
-                    <span id="seo_title_msg"></span>{$_lang['website_title_notice']}
                 </td>
             </tr>
 			<tr>
@@ -218,6 +222,34 @@
                     <a href ="index.php?do=config&view=basic&op=seo&ac=get_url_rule">{$_lang['view_rewrite_rule']}</a>
                 </td>
             </tr>
+			
+			<tr>
+               <th scope="row">
+            {$_lang['second_domain']}
+                </th>
+                <td>
+                    <label for="rdo_second_domain_1">
+                        <input type="radio" id="rdo_second_domain_1" name="second_domain" {if $config_arr['second_domain']==0||!$config_arr['second_domain']} checked="checked" {/if} value="0" />{$_lang['close']}
+                    </label>
+                    <label for="rdo_second_domain_2">
+                        <input type="radio" id="rdo_second_domain_2" name="second_domain" {if $config_arr['second_domain']==1} checked="checked" {/if} value="1" />{$_lang['open']}
+                    </label>
+					<span id="t_domain" style='display:none;'>
+					<input type="text" size="20" name="top_domain" id="top_domain" value="{$config_arr['top_domain']}"
+					 class="txt"><b style="color:red">*</b>{$_lang['top_domain_desc']}
+              		</span>
+					<div>({$_lang['pan_analytic']})</div>
+			   </td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    {$_lang['website_title']}{$_lang['zh_mh']}
+                </th>
+                <td>
+                    <input type="text" size="50" name="seo_title" value="{$config_arr['seo_title']}" limit="required:true;len:3-100;general:false" msg="{$_lang['website_title_msg']}" msgArea="seo_title_msg" maxlength="100" class="txt"/><b style="color:red">*</b>
+                    <span id="seo_title_msg"></span>{$_lang['website_title_notice']}
+                </td>
+            </tr>
 				<tr>
                 <th scope="row">
                     {$_lang['meta_keywords']}{$_lang['zh_mh']}
@@ -259,7 +291,15 @@
 
 <script type="text/javascript">
     $(function(){
-    
+    	$("#rdo_second_domain_2").click(function(){
+			$("#t_domain").show();
+		})
+		if($("#rdo_second_domain_2").is(":checked")){
+			$("#t_domain").show();
+		}
+    	$("#rdo_second_domain_1").click(function(){
+			$("#t_domain").hide();
+		})
         $("#frm_config_basic").submit(function(){
             var value = $("#fle_web_logo").val();
             if (value) {

@@ -79,7 +79,7 @@
 			          <tr>
 			          	<th width="15"><input type="checkbox" id="checkbox" onclick="checkall()"></th>
 			            <th width="20" >UID</th>
-			            <th width="" >{$_lang['username']}</th>
+			            <th width="15" >{$_lang['username']}</th>
 						<th width="45"  class="wraphide">{$_lang['user_group']}</th>
 						<th width="60"  class="wraphide" >{$_lang['user_status']}</th>
 						<th width="90">{$_lang['register_time']}</th>
@@ -101,7 +101,7 @@
 						<td><!--{date('Y-m-d',$value['reg_time'])}--></td>
 			            <td><div class="ws_break" style="width:70%;">{$value['reg_ip']}</div></td>
 			            <td><div class="ws_break" style="width:70%;">{$value['credit']}</div></td>
-						<td><div class="ws_break" style="width:70%;">{$value['balance']}</div></td>
+						<td><div class="ws_break" style="width:70%;">{c:$value['balance']}</div></td>
  
 						<td>
 							<a class="button dbl_target" href="index.php?do=user&view=add&edituid={$value['uid']}&page={$page}"><span class="pen icon"></span>{$_lang['edit']}</a>

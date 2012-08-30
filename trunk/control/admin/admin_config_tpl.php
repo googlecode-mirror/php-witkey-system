@@ -1,20 +1,29 @@
-<?php
+<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * Ä£°å¹ÜÀí
  * @author S
  * @version v 2.0
  * 2011-12-13
  */
-defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 
-Keke::admin_check_role ( 28 );
+
+kekezu::admin_check_role ( 28 );
 
 $config_tpl_obj = new Keke_witkey_template_class ();
 
 $tpl_arr = $config_tpl_obj->query_keke_witkey_template ();
-$skins    = keke_global_class::get_skin_type();
-$tpls    = keke_global_class::get_tpl_type();
- 
+$skins    = get_skin_type();
+function get_skin_type(){
+	$skins = array();
+	if($fp = opendir(S_ROOT.SKIN_PATH.'/theme')){
+		while($skin=readdir($fp)){
+			$skin = trim($skin,'.|svn');
+			$skin&&$skins[$skin] = $skin.'_skin';
+		}
+	}
+	return array_filter($skins);
+}
+
 if ($sbt_edit) {	
 	if ($sbt_edit == $_lang['submit']) {		
 		$config_tpl_obj->setWhere ( 'tpl_id=' . $rdo_is_selected );
@@ -23,7 +32,7 @@ if ($sbt_edit) {
 		
 		if(is_array($skin)&&!empty($skin)){
 			foreach($skin as $k=>$v){
-				dbfactory::execute(sprintf(" update %switkey_template set tpl_pic ='%s' where tpl_title='%s'",TABLEPRE,$v,$k));
+				db_factory::execute(sprintf(" update %switkey_template set tpl_pic ='%s' where tpl_title='%s'",TABLEPRE,$v,$k));
 			}
 		}
 		
@@ -34,14 +43,14 @@ if ($sbt_edit) {
 		$config_tpl_obj->setWhere ( " is_selected =1 limit 1 " );
 		$config_tpl_arr = $config_tpl_obj->query_keke_witkey_template ();
 		if ($res) {
-			Keke::$_cache_obj->del ( "keke_witkey_template" );
-			Keke::$_cache_obj->set ( "keke_witkey_template", $config_tpl_arr );
-			Keke::admin_show_msg ( $_lang['tpl_config_set_success'], 'index.php?do=config&view=tpl',3,'','success' );
+			$kekezu->_cache_obj->del ( "keke_witkey_template" );
+			$kekezu->_cache_obj->set ( "keke_witkey_template", $config_tpl_arr );
+			kekezu::admin_show_msg ( $_lang['tpl_config_set_success'], 'index.php?do=config&view=tpl',3,'','success' );
 		}
 	}
 	if ($sbt_edit == $_lang['from_dir_install'] || $sbt_edit == 'uploadreturn') {
 		if (! $txt_newtplpath) {
-			Keke::admin_show_msg ( $_lang['not_enter_dir'], 'index.php?do=config&view=tpl',3,'','warning' );
+			kekezu::admin_show_msg ( $_lang['not_enter_dir'], 'index.php?do=config&view=tpl',3,'','warning' );
 		}
 		
 		if (file_exists ( S_ROOT . "./tpl/$txt_newtplpath/modinfo.txt" )) {
@@ -55,11 +64,11 @@ if ($sbt_edit) {
 				$m1 = explode ( '=', trim ( $m ) );
 				$modinfo [$m1 ['0']] = $m1 ['1'];
 			}
-			$txt_newtplpath!=$modinfo['tpl_path'] and Keke::admin_show_msg($_lang['tpl_path_do_not_match']."tpl/$txt_newtplpath/modinfo.txt",'index.php?do=config&view=tpl',3,'','warning');
+			$txt_newtplpath!=$modinfo['tpl_path'] and kekezu::admin_show_msg($_lang['tpl_path_do_not_match']."tpl/$txt_newtplpath/modinfo.txt",'index.php?do=config&view=tpl',3,'','warning');
 			
 			$config_tpl_obj->setWhere ( "tpl_path ='$txt_newtplpath'" );
 			if ($config_tpl_obj->count_keke_witkey_template ()) {
-				Keke::admin_show_msg ( $_lang['tpl_alerady_install'], 'index.php?do=config&view=tpl',3,'','warning' );
+				kekezu::admin_show_msg ( $_lang['tpl_alerady_install'], 'index.php?do=config&view=tpl',3,'','warning' );
 			}
 			
 			$config_tpl_obj->setDevelop ( $modinfo ['develop'] );
@@ -69,9 +78,9 @@ if ($sbt_edit) {
 			$config_tpl_obj->setTpl_desc ( $modinfo ['tpl_desc'] );
 			$config_tpl_obj->setIs_selected(1);
 			$config_tpl_obj->create_keke_witkey_template ();
-			Keke::admin_show_msg ( $_lang['tpl_install_success'], 'index.php?do=config&view=tpl',3,'','success' );
+			kekezu::admin_show_msg ( $_lang['tpl_install_success'], 'index.php?do=config&view=tpl',3,'','success' );
 		} else {
-			Keke::admin_show_msg ( $_lang['tpl_not_exists_or_configinfo_err'], 'index.php?do=config&view=tpl',3,'','warning' );
+			kekezu::admin_show_msg ( $_lang['tpl_not_exists_or_configinfo_err'], 'index.php?do=config&view=tpl',3,'','warning' );
 		}
 	}
 	
@@ -96,7 +105,7 @@ if ($sbt_edit) {
 		}
 		closedir ( $fso );
 		
-		include '../../class/helper/keke_zip_class.php';
+		include '../../lib/helper/keke_zip_class.php';
 		$zip_obj = new zip_file ( "../../" . $mod_file );
 		$zip_obj->set_options ( array ('inmemory' => 1 ) );
 		$zip_obj->extractZip ( "../../" . $mod_file, '../../' );
@@ -114,9 +123,9 @@ if ($sbt_edit) {
 	}
 	
 	if (! $newaddfile) {
-		Keke::admin_show_msg ( $_lang['tpl_upload_success'], 'index.php?do=config&view=tpl',3,'','success' );
+		kekezu::admin_show_msg ( $_lang['tpl_upload_success'], 'index.php?do=config&view=tpl',3,'','success' );
 	} else {
-		Keke::admin_show_msg ( $_lang['tpl_upload_success_install'], 'index.php?do=config&view=tpl&sbt_edit=uploadreturn&txt_newtplpath=' . $newaddfile,3,'','success' );
+		kekezu::admin_show_msg ( $_lang['tpl_upload_success_install'], 'index.php?do=config&view=tpl&sbt_edit=uploadreturn&txt_newtplpath=' . $newaddfile,3,'','success' );
 	}
 
 }
@@ -126,8 +135,8 @@ if ($delid) {
 	$res = $config_tpl_obj->del_keke_witkey_template ();
 	if ($res) {
 		
-		Keke::$_cache_obj->del ( "keke_witkey_template" );
-		Keke::admin_show_msg ( $_lang['tpl_config_unloading_success'], 'index.php?do=config&view=tpl',3,'','warning' );
+		$kekezu->_cache_obj->del ( "keke_witkey_template" );
+		kekezu::admin_show_msg ( $_lang['tpl_config_unloading_success'], 'index.php?do=config&view=tpl',3,'','warning' );
 	}
 }
 

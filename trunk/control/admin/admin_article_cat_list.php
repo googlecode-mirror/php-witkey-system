@@ -1,170 +1,154 @@
 <?php
- /**
+/**
+ * 行业管理
  * @copyright keke-tech
- * @author Liyingqing
+ * @author Tao
  * @version v 2.0
- * 2010-7-15 10:00:34
+ * 2011-8-24 16:28
  */
 
+defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+//kekezu::admin_check_role ( 7 );
 
-defined ( 'ADMIN_KEKE' )or exit ( 'Access Denied' );
-Keke::admin_check_role(14);
-$art_cat_obj = new Keke_witkey_article_category_class();
+$cat_obj = new Keke_witkey_article_category_class ();
+$file_obj = new keke_file_class();
+$table_obj = new keke_table_class ( "witkey_article_category" );
+//所有资讯分类的数组
+$cat_all_arr = kekezu::get_table_data('*',"witkey_article_category",'','','','','art_cat_id');
 
-$need_index_art = Keke::get_table_data('*',"witkey_article_category"," art_index='' or art_index is null","",'','','art_cat_id');
+$url = "index.php?do=$do&view=$view&type=$type&w[art_cat_pid]={$w[art_cat_pid]}&w[cat_name]={$w[cat_name]}
+		&$ord[0]={$ord[1]}";
 
-if ($op == "repair_index")
-{
-	$need_index_art = Keke::get_table_data('*',"witkey_article_category","","",'','art_cat_id',null);
-}
-if ($need_index_art)
-{
-	$art_cat_arr = Keke::get_table_data('*',"witkey_article_category","","","",'',"art_cat_id",null);
-	$record_id = '';//+
-	foreach ($need_index_art as $n_art)
-	{
-		$flag = $n_art;
-		$art_index = "";
-		while ($flag['art_cat_pid'])
-		{
-			$art_index = "{{$flag['art_cat_pid']}}".$art_index;
-			$flag = $art_cat_arr[$flag['art_cat_pid']];
+if ($ac == 'del') { //删除
+	//var_dump($art_cat_id);die();
+	$table_obj->del ( 'art_cat_id', $art_cat_id, $url );
+	kekezu::admin_show_msg($_lang['delete_success'],'index.php?do=article&view=cat_list&type='.$type,3,'','success');
+} elseif (isset ( $sbt_action )) {
+	if ($edit_cat_name_arr) { //编辑
+		foreach ( $edit_cat_name_arr as $k => $v ) {
+			$cat_obj->setWhere ( "art_cat_id = $k" );
+			$cat_obj->setCat_name ( $v );
+			$cat_obj->edit_keke_witkey_article_category ();
+		
 		}
-		$art_index = $art_index."{{$n_art['art_cat_id']}}";
-		$art_cat_obj->setWhere("art_cat_id = {$n_art['art_cat_id']}");
-		$art_cat_obj->setArt_index($art_index);
-		$art_cat_obj->edit_keke_witkey_article_category();
-		$record_id .= $n_art['art_cat_id'] . ',';//+
+	
+		kekezu::admin_system_log ( $_lang['edit_article_category'] );
+	} elseif ($add_cat_name_arr) { //删除
+		 
+		foreach ( $add_cat_name_arr as $k => $aindarr ) {
+			foreach ( $aindarr as $kk => $v ) {
+				if (! $v)
+					continue;
+				$cat_obj->_art_cat_id = null;
+				$cat_obj->setCat_name ( $v );
+				$cat_obj->setArt_cat_pid ( $k );
+				$cat_obj->setListorder ( $add_cat_name_listarr [$k] [$kk] ? $add_cat_name_listarr [$k] [$kk] : 0 );
+				$cat_obj->setOn_time ( time () );
+				if($type=='art'){
+				   $cat_type='article';
+				}else{
+				   $cat_type='help';
+				}				
+				$cat_obj->setCat_type($cat_type);
+				$res = $cat_obj->create_keke_witkey_article_category ();
+				$res and db_factory::execute(sprintf("update %switkey_article_category set art_index = '%s' where art_cat_id = $res ",TABLEPRE,$cat_all_arr[$k]['art_index'].'{'.$res.'}'));
+			}
+		}
+		kekezu::admin_system_log ( $_lang['delete_article_cat'] );
 	}
- 
-    Keke::admin_system_log($_lang['mulit_edit_cate'] . $record_id); //日志记录
-}
-
-
-$where = ' 1 = 1 ';
-
-$types =  array ('help', 'art');
-
-$type = (! empty ( $type ) && in_array ( $type, $types )) ? $type : 'art';
-
-switch ( $type )
-{
+		$file_obj->delete_files(S_ROOT."./data/data_cache/");
+		$file_obj->delete_files(S_ROOT.'./data/tpl_c/');
+	kekezu::admin_show_msg ( $_lang['operate_success'], 'index.php?do=' . $do . '&view=' . $view.'&type='.$type,3,'','success' );
+} elseif ($ac === 'editlistorder') { //改排序
+	if ($iid) {
+		$cat_obj->setWhere ( 'art_cat_id=' . $iid );
+		$cat_obj->setListorder ( $val );
+		$cat_obj->edit_keke_witkey_article_category ();
+	}
+} else {
+	$where = ' 1 = 1 ';	
+    $types =  array ('help', 'art');
+    $type = (! empty ( $type ) && in_array ( $type, $types )) ? $type : 'art';
+    switch ( $type ){
 	case 'art':
-		$art_cat_arr = Keke::get_table_data('*',"witkey_article_category","art_index like '%{1}%'"," art_cat_id desc",'','','art_cat_id',null);
-		$where.=" and art_index like ('%{1}%') ";
-		Keke::admin_check_role(31);
+		$art_cat_arr = kekezu::get_table_data('*',"witkey_article_category","cat_type='article'"," art_cat_id desc",'','','art_cat_id',null);
+		$where.=" and cat_type='article' ";
+		kekezu::admin_check_role(14);
 		break;
 		;
 	case 'help':
-		$art_cat_arr = Keke::get_table_data('*',"witkey_article_category","art_index like '%{100}%'"," art_cat_id desc",'','','art_cat_id',null);
-		$where.=" and art_index like ('%{100}%') ";
-		Keke::admin_check_role(44);
-}
-
-
-
-if(isset($sbt_search)){
-	intval($slt_cat_id) and  $where.=" and art_cat_id != $slt_cat_id and art_cat_id like '%{$slt_cat_id}%'";
-	intval($txt_id) 	and  $where.=' and art_cat_id = '.$txt_id;
-	$txt_title 			and  $where.=' and cat_name like '.'"%'.$txt_title.'%" ';
-	$ordertype			and  $where.=' order by '.$ordertype.' '.$orderby.' ';
-}
-
-
-
-//查询结果数组
-$where.=$pages['where'];
-
-$art_cat_obj->setWhere($where);
-
-$art_cat_show_arr = $art_cat_obj->query_keke_witkey_article_category();
-
-
-
-$temp_arr = array();
-Keke::get_tree($art_cat_show_arr,$temp_arr,'list',NULL,'art_cat_id','art_cat_pid','cat_name');
-
-$cat_show_arr = $temp_arr;
-unset($temp_arr);
-/*
-┏
-┣
-   ┣
-   	┗
-   ┗
-┣
-┗
-*/
-//删除分类
-if($ac=='del')
-{
-	if($art_cat_id)
-	{
-		if (in_array($art_cat_id,array(1,100,200))){Keke::admin_show_msg($_lang['first_classification_can_not_be_deleted'],'index.php?do='.$do.'&view='.$view.'&type='.$type,3,'','warning');}
-		
-		$art_cat_obj->setWhere('art_cat_id='.$art_cat_id);
-		$res = $art_cat_obj->del_keke_witkey_article_category();
-		Keke::$_cache_obj->del('keke_witkey_article_category');
-		Keke::admin_system_log($_lang['delete_cate'] . $art_cat_id); //日志记录
-		Keke::admin_show_msg($_lang['cate_delete_successfully'],'index.php?do='.$do.'&view='.$view.'&type='.$type,3,'','success');
+		$art_cat_arr = kekezu::get_table_data('*',"witkey_article_category","cat_type='help'"," art_cat_id desc",'','','art_cat_id',null);
+		$where.=" and cat_type='help' ";
+		kekezu::admin_check_role(44);
+   }
+	//查询条件
+	if (isset ( $sbt_search )) {
+		intval ( $w [art_cat_pid] ) and $where .= " and art_cat_pid = $w[art_cat_pid]";
+		strval ( $w [cat_name] ) and $where .= " and cat_name like '%$w[cat_name]%'";
+		$ord [1] and $where .= " order by $ord[0] $ord[1]";
 	}
-	else
-	{
-		Keke::admin_show_msg($_lang['cate_does_not_exist_delete_fail'],'index.php?do='.$do.'&view='.$view.'&type='.$type,3,'','success');
-	}
-}
-
-//批量操作
-if (isset ( $sbt_action )) 
-{
-	$o_p = $rdo;
-	$keyids = $ckb;
-	//var_dump($keyids);die();
-	 if(is_array($keyids))
-	 {
-	 	$ids = implode(',',$keyids);
-	 }
-	if ( ! count ( $keyids )) Keke::admin_show_msg($_lang['choose_operate_item'],'index.php?do='.$do.'&view='.$view.'&type='.$type,3,'','warning');
+	//var_dump($where);
+	$cat_arr = kekezu::get_table_data ( "*", "witkey_article_category", $where, "", "", "", "", 0 );
+	sort ( $cat_arr );
 	
-	$art_cat_obj->setWhere(' art_cat_id in ('.$ids.') ');
-	switch ($sbt_action) 
-	{
- 		case $_lang['mulit_delete'] : //批量删除
-			$art_cat_obj->setWhere(' art_cat_id in ('.$ids.') and art_cat_id not in (1,100,200) ');
-			$res = $art_cat_obj->del_keke_witkey_article_category();
-			break;
-			;
-		default : 
-			break;
-			;
+	if (! $w) {
+		$t_arr = array ();
+		kekezu::get_tree ( $cat_arr, $t_arr, 'cat', NULL, 'art_cat_id', 'art_cat_pid', 'cat_name' );
+		$cat_show_arr = $t_arr;
+		//var_dump($t_arr);die(); 
+		unset ( $t_arr );
+	} else {
+		//sort($indus_arr);
+		$cat_show_arr = $cat_arr;
 	}
-	Keke::$_cache_obj->del('keke_witkey_article_category');
-	Keke::admin_system_log($_lang['mulit_delete_cate'] . $ids ); //日志记录
-	if($res)
-	{
-		Keke::admin_show_msg($_lang['mulit_operate_success'],'index.php?do='.$do.'&view='.$view.'&type='.$type,3,'','success');//批量操作成功
-	}
-	else
-	{
-		Keke::admin_show_msg($_lang['mulit_operate_fail'],'index.php?do='.$do.'&view='.$view.'&type='.$type,3,'','warning');
-	}
-
+	//var_dump($cat_show_arr);
+	//搜索行业下拉菜单
+//	$temp_arr = array ();
+//	$indus_option_arr = kekezu::get_industry ();
+//	kekezu::get_tree ( $indus_option_arr, $temp_arr, "option", $w [indus_pid] );
+//	$indus_option_arr = $temp_arr;
+//	unset ( $temp_arr );
+//	$indus_index_arr = kekezu::get_indus_by_index ();
+	
+	$temp_arr = array();
+	//var_dump($art_cat_arr);
+	kekezu::get_tree($art_cat_arr,$temp_arr,'option',$w [art_cat_pid],'art_cat_id','art_cat_pid','cat_name');	
+	$cat_option_arr = $temp_arr;
+	unset($temp_arr);
+	$cat_index_arr = get_cat_by_index ();
 }
-if ($op == 'listorder') {
-	$art_obj = new Keke_witkey_article_category_class();
-	$art_obj->setWhere ( "art_cat_id='$art_cat_id'" );
-	$art_obj->setListorder (intval($value));
-	$art_obj->edit_keke_witkey_article_category(); 
-	Keke::admin_system_log($_lang['edit_cate_order'].$art_cat_id);
-	die ();
-} 
 
- 
-//递归分类列表
-$temp_arr = array();
-Keke::get_tree($art_cat_arr,$temp_arr,'option',NULL,'art_cat_id','art_cat_pid','cat_name');
-$cat_arr = $temp_arr;
-unset($temp_arr);
- 
-
+function sortTree($nodeid, $arTree) {
+	$res = array ();
+	for($i = 0; $i < sizeof ( $arTree ); $i ++)
+		if ($arTree [$i] ["indus_pid"] == $nodeid) {
+			array_push ( $res, $arTree [$i] );
+			$subres = sortTree ( $arTree [$i] ["indus_id"], $arTree );
+			for($j = 0; $j < sizeof ( $subres ); $j ++)
+				array_push ( $res, $subres [$j] );
+		}
+	return $res;
+}
+function get_cat_by_index($cat_type='1', $pid = NULL){
+   	global $kekezu;
+		$cat_index_arr = $kekezu->_cache_obj->get ( 'cat_index_arr' . $cat_type . '_' . $pid );
+		if (! $cat_index_arr) {
+			$cat_arr = get_cat ( $pid );
+			$cat_index_arr = array ();
+			foreach ( $cat_arr as $cat ) {
+				$cat_index_arr [$cat ['art_cat_pid']] [$cat ['art_cat_id']] = $cat;
+			}
+			$kekezu->_cache_obj->set ( 'cat_index_arr' . $cat_type . '_' . $pid, $cat_index_arr, 3600 );
+		}
+		return $cat_index_arr;
+}
+function get_cat($pid = NULL, $cache = NULL) {
+		
+		! is_null ( $pid ) and $where = " art_cat_pid = '" . intval ( $pid ) . "'";
+		
+		$cat_arr = kekezu::get_table_data ( '*', "witkey_article_category", $where, "listorder", '', '', 'art_cat_id', $cache );
+		
+		return $cat_arr;
+	
+	}
 require  $template_obj->template('control/admin/tpl/admin_'. $do .'_'. $view);

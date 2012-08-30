@@ -28,15 +28,7 @@
                         	<input type="text" value="{$ad_info['ad_url']}" name="fds[ad_url]" class="txt" style=" width:260px;"/>
                         </td>
                       </tr>
-					  <tr>
-					  	 <th scope="row" width="130">{$_lang['select_tpl']}</th>
-              			  <td>
-                 			 {loop $template_arr $v}
-								<input type="checkbox" name="ckb[]" value="$v['tpl_title']" {if strpos($ad_info['tpl_type'],$v['tpl_title'])!==FALSE} checked="checked"{/if}>
-								$v['tpl_title']
-							{/loop}
-               			 </td>
-          			  </tr>
+					  
 					  <tr>
                         <th scope="row" width="130">{$_lang['upload_file']}</th>
                         <td>

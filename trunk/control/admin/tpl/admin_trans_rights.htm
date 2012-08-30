@@ -105,8 +105,13 @@
 		<th>{$_lang['belong_to']}{if !$obj}{$_lang['object']}{else}{$trans_object[$obj]}{/if}</th>
 	 {/if}
         <th>{$action_arr[$view]['1']}{$_lang['people']}</th>
+		{if $view!='complaint'}
         <th>{$_lang['be']}{$action_arr[$view]['1']}{$_lang['people']}</th>
+		{/if}
 		<th>{$action_arr[$view]['1']}{$_lang['attachment']}</th>
+		{if $view=='complaint'}
+		<th>投诉内容</th>
+		{/if}
         <th>{$action_arr[$view]['1']}{$_lang['time']}</th>
         <th>{$_lang['now_status']}</th>
         <th>{$_lang['process_people']}</th>
@@ -129,16 +134,24 @@
         	{$_lang['view_belongs']}{$trans_object[$v['obj']]}</a>
 		 </td>
 		{/if}
-         <td><a href="{$_K['site_url']}/index.php?do=space&member_id={$v['uid']}" target="_blank">{$v['username']}</a></td>
-		 <td><a href="{$_K['site_url']}/index.php?do=space&member_id={$v['to_uid']}" target="_blank">{$v['to_username']}</a></td>
+         <td><a href="{$_K['siteurl']}/index.php?do=space&member_id={$v['uid']}" target="_blank">{$v['username']}</a></td>
+		 {if $view!='complaint'}
+		 <td><a href="{$_K['siteurl']}/index.php?do=space&member_id={$v['to_uid']}" target="_blank">{$v['to_username']}</a></td>
+		 {/if}
          <td>
          	<!--{eval $filename=substr($v['report_file'],strrpos($v['report_file'],'/')+1);}-->
-			{if $report_file['report_file']}<a href="index.php?do={$do}&view={$view}&ac=download&filename=$filename&filepath={$v['report_file']}">{$filename}</a>{else}{$_lang['not_submit_attachment']}{/if}
+			{if $v['report_file']}<a href="index.php?do={$do}&view={$view}&ac=download&filename=$filename&filepath={$v['report_file']}">{$filename}</a>{else}{$_lang['not_submit_attachment']}{/if}
 		</td>
+		{if $view=='complaint'}
+		<td>
+		 <a href="javascript:d(0);" title="{$v['report_desc']}"><!--{eval echo kekezu::cutstr($v['report_desc'],20);}--></a>
+		</td>
+		{/if}
 		<td><!--{date('Y-m-d H:i:s',$v['on_time'])}--></td>
 		<td>{$trans_status[$v['report_status']]}</td>
-		<td>{if $v['op_uid']}<a href="{$_K['site_url']}/index.php?do=space&member_id={$v['op_uid']}" target="_blank">{$v['op_username']}</a>{else}--{/if}</td>
+		<td>{if $v['op_uid']}<a href="{$_K['siteurl']}/index.php?do=space&member_id={$v['op_uid']}" target="_blank">{$v['op_username']}</a>{else}--{/if}</td>
 		<td>
+		
             {if $v['report_status']=='1'||$v['report_status']=='2'||$v['report_status']=='4'}<!--待处理、处理中、已受理-->
 			<a class="button" href="index.php?do={$do}&view=process&type={$view}&report_id={$v['report_id']}">{if $v['report_status']=='4'}{$_lang['view_scheme']}{else}<span class="check icon"></span>{$_lang['process']}{$action_arr[$view]['1']}{/if}</a>
 			{/if}

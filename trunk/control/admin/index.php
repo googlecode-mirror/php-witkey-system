@@ -1,5 +1,7 @@
-<?php define ( "IN_KEKE", TRUE );
-require '../../index.php';
+<?php
+define ( "ADMIN_KEKE", TRUE );
+define ( "IN_KEKE", TRUE );
+require '../../app_comm.php';
 /*后台禁止静态化*/
 $_K ['is_rewrite'] = 0;
 
@@ -11,8 +13,7 @@ $dos = array ('static','preview','database_manage','permission','prom', 'main', 
 
 (! empty ( $do ) && in_array ( $do, $dos )) or $do = 'index';
 
-$admin_info = Keke::get_user_info ( $_SESSION ['uid'] );
-
+$admin_info = kekezu::get_user_info ( $_SESSION ['uid'] );
 if($do != 'login' && $do != 'logout'){
 	if(! $_SESSION ['auid'] || ! $_SESSION ['uid'] || $admin_info ['group_id'] == 0){
 		echo "<script>window.parent.location.href='index.php?do=login';</script>";
@@ -26,6 +27,7 @@ keke_lang_class::loadlang("admin_$do");
 $view and 	keke_lang_class::loadlang("admin_{$do}_$view");
 $op and keke_lang_class::loadlang("admin_{$do}_{$view}_{$op}");
 keke_lang_class::loadlang("admin_screen_lock");
+$language      = $kekezu->_lang;
 
 
 $menu_arr = array (
@@ -37,7 +39,8 @@ $menu_arr = array (
 'user' => $_lang['user_manage'], 
 'tool' => $_lang['system_tool'],
 'keke'=>$_lang['witkey_union'],
-);
+
+		);
 
 /**
  * 后台业务类测试

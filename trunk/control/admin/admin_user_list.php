@@ -1,41 +1,41 @@
-<?php
+<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * 用户管理
  */
-defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
-Keke::admin_check_role ( 24 );
+
+kekezu::admin_check_role ( 24 );
 //初始化 
-$page_obj = Keke::$_page_obj;
-$edituid and $memberinfo_arr = Keke::get_user_info ( $edituid );
+$page_obj = $kekezu->_page_obj;
+$edituid and $memberinfo_arr = kekezu::get_user_info ( $edituid );
 $table_class = new keke_table_class ( 'witkey_space' );
 $member_class = new keke_table_class ( 'witkey_member' );
 //查询
-$url_str = "index.php?do=$do&view=$view&space['username']={$space['username']}&space['uid']={$space['uid']}&page_size=$page_size&ord=$ord&slt_static=$static";
+$url_str = "index.php?do=$do&view=$view&space[username]={$space['username']}&space[uid]={$space['uid']}&page_size=$page_size&ord=$ord&slt_static=$static";
 
 $grouplist_arr = keke_admin_class::get_user_group ();
 switch ($op) {
 	case "del" : //删除
 		$del_uid = keke_user_class::user_delete ( $edituid );
-		Keke::admin_system_log ( Keke::lang ( 'delete_member}' ) . $memberinfo_arr ['username'] );
-		$del_uid and Keke::admin_show_msg ( $_lang['operate_success'], "index.php?do=user&view=list", 3, '', 'success' ) or Keke::admin_show_msg ( $_lang['operate_fail'], "index.php?do=user&view=list", 3, '', 'warning' );
+		kekezu::admin_system_log ( kekezu::lang ( 'delete_member}' ) . $memberinfo_arr ['username'] );
+		$del_uid and kekezu::admin_show_msg ( $_lang['operate_success'], "index.php?do=user&view=list", 3, '', 'success' ) or kekezu::admin_show_msg ( $_lang['operate_fail'], "index.php?do=user&view=list", 3, '', 'warning' );
 		break;
 	case "disable" : //冻结用户
 		$sql = sprintf ( "update  %switkey_space set status=2 where uid =%d", TABLEPRE, $edituid );
-		dbfactory::execute ( $sql );
-		$v_arr = array ($_lang['username'] => $memberinfo_arr['username'], $_lang['website_name'] => Keke::$_sys_config['website_name'] );
+		db_factory::execute ( $sql );
+		$v_arr = array ($_lang['username'] => $memberinfo_arr['username'], $_lang['website_name'] => $kekezu->_sys_config['website_name'] );
 		keke_shop_class::notify_user ( $memberinfo_arr ['uid'], $memberinfo_arr ['username'], 'freeze', $_lang['user_freeze'], $v_arr );
-		Keke::admin_system_log ( $_lang['unfreeze_member'] . $memberinfo_arr ['username'] );
-		Keke::admin_show_msg ( $_lang['operate_success'], "index.php?do=user&view=list", 3, '', 'success' );
+		kekezu::admin_system_log ( $_lang['unfreeze_member'] . $memberinfo_arr ['username'] );
+		kekezu::admin_show_msg ( $_lang['operate_success'], "index.php?do=user&view=list", 3, '', 'success' );
 		break;
 	case "able" : //解冻用户
-		Keke::admin_check_role ( 24 );
+		kekezu::admin_check_role ( 24 );
 		
 		$sql = sprintf ( "update  %switkey_space set status=1 where uid =%d", TABLEPRE, $edituid );
-		dbfactory::execute ( $sql );
-		$v_arr = array ($_lang['username'] => $memberinfo_arr['username'], $_lang['website_name'] => Keke::$_sys_config['website_name'] );
-		keke_shop_class::notify_user ( $memberinfo_arr ['uid'], $memberinfo_arr ['username'], 'unfreeze', $_lang['user_freeze'], $v_arr );
-		Keke::admin_system_log ( $_lang['unfreeze_member'] . $memberinfo_arr ['username'] );
-		Keke::admin_show_msg ( $_lang['operate_success'], "index.php?do=user&view=list", 3, '', 'success' );
+		db_factory::execute ( $sql );
+		$v_arr = array ($_lang['username'] => $memberinfo_arr['username'], $_lang['website_name'] => $kekezu->_sys_config['website_name'] );
+		keke_msg_class::notify_user ( $memberinfo_arr ['uid'], $memberinfo_arr ['username'], 'unfreeze', $_lang['user_unfreeze'], $v_arr );
+		kekezu::admin_system_log ( $_lang['unfreeze_member'] . $memberinfo_arr ['username'] );
+		kekezu::admin_show_msg ( $_lang['operate_success'], "index.php?do=user&view=list", 3, '', 'success' );
 		break;
 }
 
@@ -43,36 +43,36 @@ if ($sbt_action && is_array ( $ckb )) {
 	
 	$ids = implode ( ',', $ckb );
 	$sql = sprintf ( "select uid,username from %switkey_space where uid in (%s)", TABLEPRE, $ids );
-	$space_arr = dbfactory::query ( $sql );
+	$space_arr = db_factory::query ( $sql );
 	switch ($sbt_action) {
 		case $_lang['mulit_delete'] : //批量删除
 			$table_class->del ( 'uid', $ckb );
 			$member_class->del ( 'uid', $ckb );
-			Keke::admin_system_log ( $_lang['delete_user'] . "$ids" );
-			Keke::admin_show_msg ( $_lang['operate_success'], 'index.php?do=user&view=list', 3, $_lang['mulit_operate_success'], 'success' );
+			kekezu::admin_system_log ( $_lang['delete_user'] . "$ids" );
+			kekezu::admin_show_msg ( $_lang['operate_success'], 'index.php?do=user&view=list', 3, $_lang['mulit_operate_success'], 'success' );
 			break;
 		case $_lang['mulit_disable'] : //批量禁用
 			
 
 			$sql = sprintf ( "update  %switkey_space set status=2 where uid in (%s)", TABLEPRE, $ids );
-			dbfactory::execute ( $sql ); //改变用户状态 
+			db_factory::execute ( $sql ); //改变用户状态 
 			foreach ( $space_arr as $v ) { //邮件通知
-				$v_arr = array ($_lang['username'] => $v['username'], $_lang['website_name'] => Keke::$_sys_config['website_name'] );
+				$v_arr = array ($_lang['username'] => $v['username'], $_lang['website_name'] => $kekezu->_sys_config['website_name'] );
 				keke_shop_class::notify_user ( $v ['uid'], $v ['username'], 'freeze', $_lang['user_freeze'], $v_arr );
 			}
-			Keke::admin_system_log ( $_lang['freeze_user'] . "$ids" );
-			Keke::admin_show_msg ( $_lang['operate_success'], 'index.php?do=user&view=list', 3, $_lang['mulit_disable'], 'success' );
+			kekezu::admin_system_log ( $_lang['freeze_user'] . "$ids" );
+			kekezu::admin_show_msg ( $_lang['operate_success'], 'index.php?do=user&view=list', 3, $_lang['mulit_disable'], 'success' );
 			break;
 		case $_lang['mulit_use'] : //批量开启
 			
 
 			$sql = sprintf ( "update  %switkey_space set status=1 where uid in (%s)", TABLEPRE, $ids );
-			dbfactory::execute ( $sql ); //改变用户状态 
+			db_factory::execute ( $sql ); //改变用户状态 
 			foreach ( $space_arr as $v ) { //邮件通知
-				$v_arr = array ($_lang['username'] => $v['username'], $_lang['website_name'] => Keke::$_sys_config['website_name']);
-				keke_shop_class::notify_user ( $v ['uid'], $v ['username'], 'unfreeze', $_lang['user_open'], $v_arr );
+				$v_arr = array ($_lang['username'] => $v['username'], $_lang['website_name'] => $kekezu->_sys_config['website_name']);
+				keke_msg_class::notify_user ( $v ['uid'], $v ['username'], 'unfreeze', $_lang['user_unfreeze'], $v_arr );
 			}
-			Keke::admin_show_msg ( $_lang['operate_success'], 'index.php?do=user&view=list', 3, $_lang['mulit_open_operate_success'], 'success' );
+			kekezu::admin_show_msg ( $_lang['operate_success'], 'index.php?do=user&view=list', 3, $_lang['mulit_open_operate_success'], 'success' );
 			break;
 	}
 } else {

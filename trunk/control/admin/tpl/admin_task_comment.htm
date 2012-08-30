@@ -105,10 +105,10 @@
                     </td>
                     <td align="left">
                     	<a href="{$_K['siteurl']}/index.php?do=task&task_id={$v['obj_id']}&page={$page}" target="_blank">
-						<!--{eval echo(Keke::cutstr($v['task_title'],20));}--></a>
+						<!--{eval echo(kekezu::cutstr($v['task_title'],20));}--></a>
                     </td>
                     <td align="left">
-                        <!--{eval echo(Keke::cutstr($v['content'],16));}-->
+                        <!--{eval echo(kekezu::cutstr($v['content'],16));}-->
                     </td>
                     <td>
                         {$v['username']}
@@ -127,7 +127,7 @@
                 </tr>
 			{/loop}
 				 <tr>
-                    <td colspan="6">
+                    <td colspan="7">
 	                    <div class="page fl_right">{$pages['page']}</div>
 						<input type="checkbox" onclick="checkall();" id="checkbox" name="checkbox"/>
 	                        <label for="checkbox">{$_lang['select_all']}</label>
@@ -136,7 +136,7 @@
 						
 					</td>	
 				</tr>		
-				</tabody>
+				</tbody>
   			</table>
 		</div>
 		</form>

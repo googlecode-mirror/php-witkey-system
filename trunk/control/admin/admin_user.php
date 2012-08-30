@@ -1,8 +1,8 @@
-<?php
+<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 /**
 后台用户路由
 */
-defined ( 'ADMIN_KEKE' ) or 	exit ( 'Access Denied' );
+
 
 $views = array("add","list","charge","custom_list","group_add","group_list","custom_add");
 

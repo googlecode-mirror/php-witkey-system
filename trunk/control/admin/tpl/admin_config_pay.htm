@@ -152,6 +152,28 @@
                         <th scope="row">{$_lang['date_ment_hight']}{$_lang['zh_mh']}</th>
                         <td><input type="text" name="fds[withdraw_max]" id="txt_withdraw_max"  value="{$pay_config['withdraw_max']['v']}" limit="type:int" title="{$_lang['day_ment_hight']}{$pay_config['withdraw_max']['v']}{$_lang['yuan']}£¬{$_lang['excess_not_ment']}" msg={$_lang['date_ment_big_zero']} msgArea="withdraw_max_msg" maxlength="10" class="txt" style=" width:260px;"/><span id="withdraw_max_msg"></span>{$_lang['umit']}</td>
                       </tr>
+					  <tr>
+		                   <th scope="row">{$_lang['single_tariff']}{$_lang['zh_mh']}</th>
+			               <td>
+			                    <input type="text" name="fds[per_charge]" value="{$pay_config['per_charge']['v']}" class="txt" style=" width:260px;"/>
+								<div class="padt10 direct"><p>({$_lang['user_a_single_charge_ratio']} )</p></div>
+						   </td>
+					   </tr>
+						<tr>
+		                   <th scope="row">{$_lang['single_minimum_charge']}{$_lang['zh_mh']}</th>
+			               <td>
+			                    <input type="text" name="fds[per_low]" value="{$pay_config['per_low']['v']}" class="txt" style=" width:260px;"/>
+								<div class="padt10 direct"><p>({$_lang['user_single_charge_minimum_amount']})</p></div>
+						  </td>
+					   </tr>
+						<tr>
+		                   <th scope="row">{$_lang['single_highest_fees']}{$_lang['zh_mh']}</th>
+			               <td>
+			                    <input type="text" name="fds[per_high]" value="{$pay_config['per_high']['v']}" class="txt" style=" width:260px;"/>
+								<div class="padt10 direct"><p>({$_lang['user_single_charge_highest_amount']})</p></div>
+						  </td>
+					   </tr>
+					   <tr>
                       <tr>
                         <th scope="row">&nbsp;</th>
                         <td>

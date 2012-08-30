@@ -1,19 +1,19 @@
-<?php
+<?php defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * Ö§¸¶½Ó¿ÚÅäÖÃ
  */
-defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
-Keke::admin_check_role ( 2 );
+
+kekezu::admin_check_role ( 2 );
 
 $pay_api_obj = keke_table_class::get_instance ( "witkey_pay_api" );
 
-$payment_config = Keke::get_payment_config ( $payname, $type );
+$payment_config = kekezu::get_payment_config ( $payname, $type );
 
 //var_dump($payment_config);die();
 
 $pay_config = unserialize ( $payment_config ['config'] );
-$payment_exist =dbfactory::get_count(" select payment from ".TABLEPRE."witkey_pay_api where payment='$payname' and type='$type'");
-$payment_config or Keke::admin_show_msg ( $_lang['wrong_model_directory'], "index.php?do=config&view=pay",3,'','warning' );
+$payment_exist =db_factory::get_count(" select payment from ".TABLEPRE."witkey_pay_api where payment='$payname' and type='$type'");
+$payment_config or kekezu::admin_show_msg ( $_lang['wrong_model_directory'], "index.php?do=config&view=pay",3,'','warning' );
 
 $temp = array ();
 foreach ( explode ( ";", $payment_config ['initparam'] ) as $item ) {
@@ -39,6 +39,7 @@ if (isset ( $sbt_edit )) {
 			$pay_config ['account'] = $fds ['account'];
 			break;
 		case 'tenpay' :
+		case 'yeepay':
 			$pay_config ['seller_id'] = $fds ['seller_id'];
 			$pay_config ['safekey'] = $fds ['safekey'];
 			break;
@@ -47,22 +48,23 @@ if (isset ( $sbt_edit )) {
 			$pay_config ['seller_id'] = $fds ['seller_id'];
 			$pay_config ['safekey'] = $fds ['safekey'];
 			break;
+			
 	}
-			$pay_config ['per_charge'] = $fds ['per_charge'];
-			$pay_config ['per_high'] = $fds ['per_high'];
-			$pay_config ['per_low'] = $fds ['per_low'];	
+			//$pay_config ['per_charge'] = $fds ['per_charge'];
+			//$pay_config ['per_high'] = $fds ['per_high'];
+			//$pay_config ['per_low'] = $fds ['per_low'];	
 	$pay_config ['descript'] = $fds['descript'];
 	$pay['config']=serialize ( $pay_config );
 	$res=$pay_api_obj->save($pay,$pk);
-	Keke::admin_system_log($_lang['config'].$payname);
+	kekezu::admin_system_log($_lang['config'].$payname);
 	if($res){
 		//Çå³ýÅäÖÃ»º´æ
 		$file_obj = new keke_file_class();
 		$file_obj->delete_files(S_ROOT."./data/data_cache/");
 		unset($items);
-		Keke::admin_show_msg ( $_lang['submit'], 'index.php?do=config&view=pay&op=' . $type,3,'','success' );
+		kekezu::admin_show_msg ( $_lang['submit'], 'index.php?do=config&view=pay&op=' . $type,3,'','success' );
 	}else{
-		Keke::admin_show_msg ( $_lang['edit_fail'], 'index.php?do=config&view=pay&op=' . $type ,3,'','warning');
+		kekezu::admin_show_msg ( $_lang['edit_fail'], 'index.php?do=config&view=pay&op=' . $type ,3,'','warning');
 	}
 
 }

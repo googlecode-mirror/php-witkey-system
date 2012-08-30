@@ -1,4 +1,4 @@
-<?php
+<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * 数据库恢复
  * @copyright keke-tech
@@ -6,9 +6,9 @@
  * @version v 2.0
  * 2010-5-20下午13:25:13
  */
-defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 
-Keke::admin_check_role ( 18 );
+
+kekezu::admin_check_role ( 18 );
 
 $db_factory = new db_factory ();
 $file_obj = new keke_file_class ();
@@ -35,25 +35,25 @@ switch ($ac) {
 		}
 		
 		foreach ( $ret as $vvv ) {
-			empty ( $vvv ) or $res .= dbfactory::execute ( $vvv );
+			empty ( $vvv ) or $res .= db_factory::execute ( $vvv );
 		}
 		if ($res) {
-			Keke::admin_system_log ( $_lang['restore_database_operate_success'] . $file_arr [$restore_name] [name] );
+			kekezu::admin_system_log ( $_lang['restore_database_operate_success'] . $file_arr [$restore_name] [name] );
 			
-			Keke::echojson ( $_lang['database_restore_success'], 1 );
+			kekezu::echojson ( $_lang['database_restore_success'], 1 );
 		} else {
-			Keke::admin_system_log ( $_lang['restore_database_operate_fail'] );
-			Keke::echojson ( $_lang['database_restore_fail'], 0 );
+			kekezu::admin_system_log ( $_lang['restore_database_operate_fail'] );
+			kekezu::echojson ( $_lang['database_restore_fail'], 0 );
 		}
 		break;
 	case 'del' :
 		//删除sql备份文件
 		$res = unlink ( $backup_patch . $file_arr [$restore_name] [name] );
 		if ($res) {
-			Keke::admin_system_log ( $_lang['delete_database_backup_file'] . $file_arr [$restore_name] [name] );
-			Keke::admin_show_msg ( $_lang['delete_database_backup_file_success'], 'index.php?do=' . $do . '&view=' . $view ,3,'','success');
+			kekezu::admin_system_log ( $_lang['delete_database_backup_file'] . $file_arr [$restore_name] [name] );
+			kekezu::admin_show_msg ( $_lang['delete_database_backup_file_success'], 'index.php?do=' . $do . '&view=' . $view ,3,'','success');
 		} else {
-			Keke::admin_show_msg ( $_lang['delete_database_backup_file_fail'], 'index.php?do=' . $do . '&view=' . $view ,3,'','warning');
+			kekezu::admin_show_msg ( $_lang['delete_database_backup_file_fail'], 'index.php?do=' . $do . '&view=' . $view ,3,'','warning');
 		}
 		break;
 }

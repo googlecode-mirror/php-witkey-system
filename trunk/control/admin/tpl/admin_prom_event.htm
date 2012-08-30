@@ -103,7 +103,6 @@
 			<table cellpadding="0" cellspacing="0">
                <tbody>
                	<tr>
-               		<th><input type="checkbox" id="checkbox" onclick="checkall();" class="checkbox" ></th>
                		<th>{$_lang['item']}ID</th>
 					<th>{$_lang['upline']}</th>
 					<th>{$_lang['downline']}</th>
@@ -137,9 +136,10 @@
 				</tr>
 				{/loop}	
 				<tr>
-                	<td colspan="8">
+                	<td colspan="7">
                 	
                     <div class="clearfix">
+							<input type="checkbox" id="checkbox" onclick="checkall();" class="checkbox" >
 							<label for="checkbox">{$_lang['select_all']}</label>¡¡
 							<input type="hidden" name="sbt_action" class="sbt_action"/>
 							<button type="submit" name="sbt_action" value="{$_lang['mulit_delete']}" class="pill negative" onclick="return batch_act(this,'frm_list')">

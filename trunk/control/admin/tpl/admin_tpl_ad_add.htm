@@ -20,7 +20,9 @@
 				,{$_lang['put_range']}:{$string}
 				,{$_lang['this_ad_position_has']}{$ad_count}{$_lang['tiao_ad_ad_allow']}{$target_arr['ad_num']}{$_lang['tiao']}
 				<br style="float:right" /><b>{$important_msg}</b>
-			</li></ul>
+			</li>
+			<li>上传提示：附件上传最大不得超过{$basic_config['max_size']}M</li>
+			</ul>
         </div>
         {/if}
     </div>
@@ -39,20 +41,7 @@
                             <input type="text" value="{$ad_data['ad_name']}" name="ad_name" id="title" {if $tagname}readonly="readonly"{/if} class="txt" style=" width:260px;" limit="required:true;len:1-50" msg="{$_lang['ad_title_not_null']}" original-title="{$_lang['ads_description']}" msgArea="item_title_msg"/><b style="color:red">*</b>
                             {if $group_arr}<input type="hidden" value="{$ad_data['ad_name']}" name="hdn_ad_name" />{/if}<!-- 隐藏域优先添加 -->
                             <span id="item_title_msg">{$_lang['ads_description']}</span></td>
-                    </tr><!-- 
-					{if $target_arr_range}
-					<tr>
-                        <th scope="row" width="130">{$_lang['select_range']}</th>
-						<td>
-                        	{loop $target_arr_range $k $v}
-                        	<label for ="ckb_range_$v">
-                        	<input type="checkbox" name="ckb_range[]" id="ckb_range_$v" value="$v">
-							{$target_range_arr[$v]}
-							</label>
-							{/loop}
-                        </td>     
-                    </tr>
-					{/if}  -->
+                    </tr> 
                     <tr>
                         <th scope="row" width="130">{$_lang['start_time']}</th><td>
                             <input type="text" value="<!--{date('Y-m-d',$ad_data['start_time'])}-->"  name="start_time" class="txt" onclick="showcalendar(event, this, 0)" title={$_lang['set_ads_ent_time']}>
@@ -69,6 +58,7 @@
                     		{loop $tpl_arr $key $value}
                     		<input type="checkbox" name="ckb_tpl_type[]" value="{$value['tpl_title']}" {if $ac=='edit'&&in_array($value['tpl_title'],$ad_data['tpl_type'])}checked="checked"{/if} />{$value['tpl_title']}
                     		{/loop}
+							<span id="choose_tpl_msg" style="color:red;"></span>
                     	</td>
                     </tr>
                     {/if}
@@ -80,6 +70,7 @@
                     		<input type="radio" name="ad_position" value="{$key}" {if $ad_data['ad_position']==$key}checked="checked"{/if}} /> {$target_position_arr[$key]}
                     	{/loop}
                     	</div>
+						<span id="choose_place_msg" style="color:red;"></span>
                     	</td>
                     </tr>
                     {elseif sizeof($target_arr['position'])==1 && key($target_arr['position'])=='global' }
@@ -134,7 +125,7 @@
 						</tr>{/if}
 						<tr><th>{$_lang['image_width']}</th><td><input type="text" limit="required:false;type:int" msg="{$_lang['width_error']}" value="{if $ad_data['ad_type']==image}{$ad_data['width']}{/if}" name="ad_type_image_width"  id="ad_type_image_width" title={$_lang['img_ads_img_call_address']} class="txt" msgArea="span_width"/><span id="span_width"></span></td></tr>
 						<tr><th>{$_lang['image_height']}</th><td><input type="text" limit="required:false;type:int" msg="{$_lang['height_error']}" value="{if $ad_data['ad_type']==image}{$ad_data['height']}{/if}" name="ad_type_image_height" id="ad_type_image_height"  title={$_lang['enter_img_ads_height']} class="txt"  msgArea="span_height"/><span id="span_height"></span></td></tr>
-						<tr><th>{$_lang['img_url']}</th><td><input type="text" value="{if $ad_data['ad_type']==image && $ad_data['ad_url']}{$ad_data['ad_url']}{/if}" name="ad_type_image_url" title={$_lang['enter_img_ads_width']} class="txt" /></td></tr>
+						<tr><th>链接地址</th><td><input type="text" value="{$ad_data['ad_url']}" name="ad_type_image_url" title={$_lang['enter_img_ads_width']} class="txt" /></td></tr>
                     </tbody>
                     <!-- flash -->
                     <tbody id="div_ad_4" class="hidden">
@@ -172,7 +163,8 @@
                         </th>
                         <td>
                             <div class="clearfix padt10">
-                                <button class="positive pill primary button" type="submit" name="sbt_action" value="{$_lang['submit']}" onclick="return checkForm(document.getElementById('form1'));">
+                            	<input type="hidden" name="sbt_action" value="1">
+                                <button class="positive pill primary button" type="button" name="sbt_action" value="{$_lang['submit']}" onclick="checkform();">
                                     <span class="check icon"></span>{$_lang['submit']}
                                 </button>
 								<button class="pill button" onclick="to_back();" value="{$_lang['return']}" type="button"><span class="uparrow icon"></span>{$_lang['return']}</button>
@@ -182,7 +174,9 @@
                 </table>
             </form>
             <script type="text/javascript">
-            $(function(){
+            	var position_info= '{$position_info}';
+				
+                $(function(){
             		var show_type=$("#hdn_ad_type").val();
             		$("#select_ad_type :radio").each(function(index){
             			var value=$(this).val();
@@ -230,6 +224,53 @@
 						document.getElementById('ad_type_' +o + '_height').value = '';
 					}
 				}
+				function checkform(){
+					
+					var i = checkForm(document.getElementById('form1'));
+					if(i){
+					
+					 if(chkCheckBoxChs()==false){
+						document.getElementById("choose_tpl_msg").innerHTML="（{$_lang['enter_tpl_select']}）";
+						return false;										
+					 }else if(position_info!='global'&&chkRadio()==false){ 
+						document.getElementById("choose_place_msg").innerHTML="（{$_lang['enter_address_ad']}）";
+						return false;												
+					 }else{	 				
+					 	document.getElementById("form1").submit();
+					 }											
+					}else{
+						return false;
+					}
+				}
+				function chkCheckBoxChs(){ //檢測是否有選擇多选框的至少一项
+					var obj = document.getElementsByName('ckb_tpl_type[]'); //獲取多選框數組
+					var objLen= obj.length; //獲取數據長度
+					var objYN; //是否有選擇
+					var i;
+					objYN=false;
+					for (i = 0;i< objLen;i++){
+					if (obj [i].checked==true) {
+					objYN= true;
+					break;
+					}
+					}
+					return objYN;
+					
+					}
+				function chkRadio(){				
+				 var position = document.getElementsByName("ad_position");
+				 var objYN;
+				 var i;
+				 objYN=false;
+				 for(var i=0;i<position.length;i++){
+				  if(position[i].checked==true){
+				   return true;
+				   break;
+				  }
+				 }
+				return objYN;
+				}
+		
             </script>
         </div>
     </div>

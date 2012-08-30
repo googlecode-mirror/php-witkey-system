@@ -13,20 +13,20 @@
 	<div class="detail">
 		<table id="ad_details">
 			<!--{eval $i=1}-->
-			<!--{eval $size=5}--> <!-- 每一行显示的数量,这里定义  -->
+			<!--{eval $size=2}--> <!-- 每一行显示的数量,这里定义  -->
 			{loop $target_arr $key $value}
 				{if ($i-1)%$size===0}
 					<tr>
 				{/if}
 					<td>
+						<div class="fl_l">
 						<img src="../../{$value['sample_pic']}">
-						<br/>
-						<a href="index.php?do={$do}&view=ad_list&target_id={$value['target_id']}">
-							{$value['name']}({$target_ad_arr[$value['target_id']]}/{$value['ad_num']})<!-- 已经添加数/最大数量 -->
-						</a>
-						<a href="index.php?do={$do}&view=ad_add&target_id={$value['target_id']}">
-							添加<!-- 添加 -->
-						</a>
+						</div>
+						<div style="padding-left:120px">
+						<p>广告位置：<a href="index.php?do={$do}&view=ad_list&target_id={$value['target_id']}">{$value['name']}</a></p>
+						<p>广告数量：{$value['ad_num']} 条<!--最大数量 --></p>
+						<p>已投放：{$target_ad_arr[$value['target_id']]} 条<!-- 已经添加数 --></p>
+						<p>{$_lang['ads_group_code']}:{$value['code']}</p>
 						<ul class="list_detail">
 							<li>{$_lang['ads_group_id']}:{$value['target_id']}</li>
 							<li>{$_lang['ads_group_name']}:{$value['name']}</li>
@@ -35,6 +35,7 @@
 							<li>{$_lang['has_been_add_number']}:{$target_ad_arr[$value['target_id']]}</li>
 							<li>{$_lang['maximum_number']}:{$value['ad_num']}</li>
 						</ul>
+						</div>
 					</td>
 				
 				{if $i%$size===0}
@@ -49,7 +50,7 @@
 	$("#ad_details img").each(function(){
 		var p     = $(this);
 		var delay_t;
-		var next = p.siblings("ul");
+		var next = p.parent().siblings().children().find("ul");
 		var offset;
 		var left_p;//position
 		var left_l;//length

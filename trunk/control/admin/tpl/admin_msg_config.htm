@@ -80,15 +80,11 @@
 						<th scope="row">{$_lang['balance_inquiries']}{$_lang['zh_mh']}</th>
                         <td>
                         	<div id="remainfee"></div>
-                        	<!--<button class="pill positive button" type="button" id="remain_fee" value="{$_lang['balance_inquiries']}" name="searchsubmit">{$_lang['balance_inquiries']}</button>-->
+                        	 
                       		 <a class="button" href="http://www.kekezu.com/index.php?do=increase_3" target="_blank"><span class="icon book">&nbsp;</span>&nbsp;</span>{$_lang['user_recharge']}</a>£¨{$_lang['click']}{$_lang['user_recharge']}£©
                        </td>
                     </tr>
-					<!--<tr id="remain" style="display:none">
-						<th scope="row">&nbsp;</th>
-                        <td id="remainfee">
-                     </td>
-                    </tr>-->
+				 
 				</table>
 			 {/if}	
 </div>
@@ -109,23 +105,14 @@
 			$("#frm_bind").submit();
 		}
 	})
-	//$("#remain_fee").click(function(){
-		//$.post("index.php?do=$do&view=$view&op=manage&remain_fee=1",function(json){
-			//if(json.status==1){
-				//num = Math.round(parseFloat(json.msg/0.05));
-				//var str="{$_lang['available_num']}:<span>"+num+"</span>{$_lang['tiao']}<br>";
-					//$("#remain").show();
-					//$("#remainfee").html(str);
-			//}else{
-				//showDialog(json.msg,'alert','{$_lang['error_notice']}');return false;
-			//}
-		//},'json')
-  //})
+ 
   
   $("#remainfee").ready(function(){
 		$.post("index.php?do=$do&view=$view&op=manage&remain_fee=1",function(json){
 			if(json.status==1){
-				num = Math.round(parseFloat(json.msg/0.05));
+				var num = json.msg;
+				var s = num.indexOf('|');
+				num = num.substr(0,s);
 				var str="{$_lang['available_num']}:<span>"+num+"</span>{$_lang['tiao']}<br>";
 					$("#remainfee").html(str);
 			}else{

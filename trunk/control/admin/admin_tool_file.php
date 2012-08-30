@@ -1,4 +1,4 @@
-<?php
+<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * 附件管理
  * @copyright keke-tech
@@ -6,27 +6,27 @@
  * @version v 2.0
  * 2010-5-19早上0:54:00
  */
-defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
-Keke::admin_check_role (21);
-$file_type_arr = keke_global_class::get_file_type();
+
+kekezu::admin_check_role (21);
+$file_type_arr = keke_glob_class::get_file_type();
 $file_obj = new Keke_witkey_file_class (); //实例化附件表对象
  
 $backup_patch = S_ROOT . './data/uploads/';
 intval ( $page ) or $page = 1;
 intval ( $wh ['page_size'] ) or $wh ['page_size'] = 10;
-$url = "index.php?do=$do&view=$view&page=$page&wh['page_size']={$wh['page_size']}&txt_file_id=$txt_file_id&txt_file_name=$txt_file_name&ord[]={$ord['0']}&ord[]=$ord[1]";
+$url = "index.php?do=$do&view=$view&page=$page&wh[page_size]={$wh['page_size']}&txt_file_id=$txt_file_id&txt_file_name=$txt_file_name&ord[]={$ord['0']}&ord[]=$ord[1]";
 //删除附件
 if ($ac == 'del') {
 	if ($file_id) {
 		$file_obj->setWhere ( 'file_id=' . $file_id );
 		$file_info = $file_obj->query_keke_witkey_file ();
 		foreach ( $file_info as $v ) {
-			@unlink ( $backup_patch . $v ['file_name'] ) and Keke::admin_system_log ( $_lang['delete_attachment'].$v['file_name'] );
+			@unlink ( $backup_patch . $v ['file_name'] ) and kekezu::admin_system_log ( $_lang['delete_attachment'].$v['file_name'] );
 		}
 		$file_obj->setWhere ( 'file_id=' . $file_id );
 		$res = $file_obj->del_keke_witkey_file ();
-		Keke::admin_system_log($_lang['delete_attachment'] . $file_id );
-		$res and Keke::admin_show_msg ( $_lang['atachment_delete_success'], $url ,3,'','success') or Keke::admin_show_msg ($_lang['attchment_not_exist_delete_fail'], $url ,3,'','warning');
+		kekezu::admin_system_log($_lang['delete_attachment'] . $file_id );
+		$res and kekezu::admin_show_msg ( $_lang['atachment_delete_success'], $url ,3,'','success') or kekezu::admin_show_msg ($_lang['attchment_not_exist_delete_fail'], $url ,3,'','warning');
 	}
 } elseif (isset ( $sbt_action )) { //批量删除
 	is_array ( $ckb ) and $ids =  implode ( ',', array_filter($ckb));
@@ -40,11 +40,11 @@ if ($ac == 'del') {
 		$file_obj->setWhere ( $where );
 		$res = $file_obj->del_keke_witkey_file ();
 		if ($res) {
-			Keke::admin_system_log ( $_lang['delete_attachment']."$ids" );
-			Keke::admin_show_msg ( $_lang['mulit_operate_success'], $url,3,'','success' );
+			kekezu::admin_system_log ( $_lang['delete_attachment']."$ids" );
+			kekezu::admin_show_msg ( $_lang['mulit_operate_success'], $url,3,'','success' );
 		}
 	} else {
-		Keke::admin_show_msg ($_lang['choose_operate_item'], $url,3,'','warning' );
+		kekezu::admin_show_msg ($_lang['choose_operate_item'], $url,3,'','warning' );
 	}
 } else {
 	$where = ' 1 = 1 '; //默认查询条件

@@ -1,120 +1,18 @@
 <!--{template control/admin/tpl/admin_header}-->
 <div class="page_title">
     <h1>{$_lang['financial_model']}</h1>
-    <div class="tool">
-    	<a href="index.php?do={$do}&view={$view}&fina_type=in" {if $fina_type == 'in'} class="here" {/if}>{$_lang['prom_in']}</a>
-		<a href="index.php?do={$do}&view={$view}&fina_type=out" {if $fina_type =='out'} class="here" {/if}>{$_lang['prom_out']}</a>
-    </div>
 </div>
 {if trim($config['keke_app_id'])}
-<div class="box search p_relative">
-    <div class="title">
-        <h2>{$_lang['search']}</h2>
-    </div>
-    <div class="detail" id="detail">
-        <form action="index.php?do={$do}&view={$view}&fina_type={$fina_type}" method="post" id=frm_user_search>
-        	<input type="hidden" value="{$page}" name="page">
-        	 <table cellspacing="0" cellpadding="0">
-                <tbody>
-			<tr>
-			 <th>{$_lang['period_query_record']}
-			 </th>
-	           <td>
-	                <select name="w[fina_period]">
-	                    <option value="all">{$_lang['all']}</option>
-	       				<option value="week" {if $w['fina_period']=='week'}selected="selected"{/if}>{$_lang['this_week']}</option>
-	       				<option value="month" {if $w['fina_period']=='month'}selected="selected"{/if}>{$_lang['this_month']}</option>
-	       				<option value="half" {if $w['fina_period']=='half'}selected="selected"{/if}>{$_lang['half_year']}</option>
-	        			<option value="year" {if $w['fina_period']=='year'}selected="selected"{/if}>{$_lang['a_year']}</option>
-	               </select>
-	           </td>
-               <td>
-                             <button class="pill" type="submit" value="{$_lang['search']}" name="sbt_search">
-                                <span class="icon magnifier">&nbsp;</span>{$_lang['search']}
-                              </button>
-               </td>
-              </tr>
-                  </tbody>
-            </table>
-        </form>
-    </div>
- </div>
-<!--搜索结束-->
+
 <div class="box list">
-    <div class="title">
-        <h2>{$_lang['statistical_info']}</h2>
+    <div class="detail">
+    	<iframe src="{$gate}/remote.php?app_id={$config[keke_app_id]}&do=fina" id="post_frame" name="post_frame" scrolling="auto" frameborder="0" width="98%" height="530px"></iframe>
     </div>
-     <div class="detail">
-        <form action="index.php?do={$do}&view={$view}" method="post" id=frm_art_action>
-		 	<input type="hidden" value="{$page}" name="page">
-			<input type="hidden" name="w[page_size]" value="{$page_size}">
-			<div id="ajax_dom">
-			<input type="hidden" value="{$page}" name="page"/>
-		  <table cellpadding="0" cellspacing="0">
-             <tbody>
-                 <tr>
-                 	  <th>
-                          ID
-                        </th>
-                        <th>
-                          {$_lang['type']}
-                        </th>
-                        <th>
-                           {$_lang['cash_yuan']}
-                        </th>
-                        <th>
-                          {if $fina_type=='in'}{$_lang['get_type']}{else}支出方式{/if}
-                        </th>
-                        <th>
-                            {$_lang['task_name']}
-                        </th>
-                        <th>
-                           任务时间
-                        </th>
-                    </tr>
-					{if $dxml['fina_details']}
-					{loop $dxml['fina_details'] $v}
-	                    <tr class="item">
-                	   <td>
-                            {$v['fina_id']}
-                        </td>
-                        <td>
-                            {$fina_type_arr[$v['fina_type']]}
-                        </td>
-                        <td>
-                        	{$v['fina_cash']}
-                        	
-                        </td>
-                        <td>
-                        	{$fina_action_arr[$v['fina_action']]}
-                            
-                        </td>
-						<td>
-							<!--{eval echo $kekezu->cutstr( $v['task_title'],80)}-->
-						</td>
-                        <td>
-                            <!--{date('Y-m-d H:i',$v['on_time'])}-->
-                        </td>
-						{/loop}
-						{else}
-						    <td>
-                            {$_lang['now_no_data']}
-                        	</td>
-						
-						{/if}
-                    <tr>
-                  </tr>
-                </tbody>
-              </table>
-			  <div class="page">{$pages['page']}</div>
-			  </div>
-        	</form>
-        </div>
         
     </div>
 {else}
 <div class="box list">
-     <div class="detail t_c"><b>您的联盟API没有申请或暂未通过审核，暂时无法使用此功能。</b></div>
+     <div class="detail t_c"><b>{$_lang['api_not_approved_unable']}</b></div>
 </div>
 {/if}
     <!--{template control/admin/tpl/admin_footer}-->

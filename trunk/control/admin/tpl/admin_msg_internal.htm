@@ -35,10 +35,10 @@
 					<td>$v['desc']</td>
                 <td><!--{eval $send_type=unserialize($v['v']);$is_open=array_sum($send_type);}-->
 						<label for="send_close_{$v['config_id']}">
-						<input type="radio" name="fds[{$v['config_id']}]['send_open']" value="0" id="send_close_{$v['config_id']}" onclick="hide_me($v['config_id']);" {if $is_open==0}checked="checked"{/if}>{$_lang['close']}
+						<input type="radio" name="fds[{$v['config_id']}][send_open]" value="0" id="send_close_{$v['config_id']}" onclick="hide_me($v['config_id']);" {if $is_open==0}checked="checked"{/if}>{$_lang['close']}
 						</label>
 						<label for="send_open_{$v['config_id']}">
-						<input type="radio" name="fds[{$v['config_id']}]['send_open']" value="1" id="send_open_{$v['config_id']}"  onclick="show_me($v['config_id']);"{if $is_open!=0}checked="checked"{/if}>{$_lang['open']}
+						<input type="radio" name="fds[{$v['config_id']}][send_open]" value="1" id="send_open_{$v['config_id']}"  onclick="show_me($v['config_id']);"{if $is_open!=0}checked="checked"{/if}>{$_lang['open']}
                         </label>
 						<div style="display:{if $is_open==0}none{else}inline{/if}" id="show_send_type_{$v['config_id']}">
 						{loop $message_send_type['0'] $k2 $v2}
@@ -49,7 +49,7 @@
 						</div>
 				</td>
 				<td>
-					<button type="button" class="button" value="{$_lang['edit_tpl']}" onclick="window.location.href='index.php?do=msg&view=intertpl&slt_tpl_code=$v['k']'"/>
+					<button type="button" class="button" value="{$_lang['edit_tpl']}" onclick="window.location.href='index.php?do=msg&view=intertpl&slt_tpl_code=$v[k]'"/>
 					<span class="pen icon"></span>{$_lang['edit_tpl']}
 						</button>
                 </td>

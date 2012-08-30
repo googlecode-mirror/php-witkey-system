@@ -11,18 +11,13 @@
 <div class="box search p_relative">
 </div>
 <!--搜索结束-->
+
 <div class="box list">
-    <div class="title">
-    	<h2>任务列表</h2>
-        <!-- <input type="checkbox" value="bulk_op" id="bulk" checked="true" />批量选择行业  -->
-        <form action="" method="post">
-        	<input type="hidden" name="reget" value="reget" />
-        	<button name="ac" type="submit" value="获取任务 " class="positive pill button">
-        		<span class="reload icon"></span>{if $task_list}重新{/if}获取任务
-            </button>
-        </form>
-    </div>
-    {if $task_list}
+    <div class="detail">
+    	{if !$remote}
+    		<iframe src="<!--{eval echo keke_union_class::get_task_list();}-->" id="post_frame" name="post_frame" scrolling="auto" frameborder="0" width="98%" height="530px"></iframe>
+   		{else}
+		{if $task_list}
     <div class="detail">
         <form action="" id='frm_list' method="post">
             <table cellpadding="0" cellspacing="0">
@@ -72,6 +67,8 @@
         </form>
     </div>
     {/if}
+	{/if}
+    </div>
 </div>
 {else}
 <div class="box list">
@@ -79,6 +76,11 @@
 </div>
 {/if}
 <script type="text/javascript">
+	var remote = "{$remote}";
+	var nojump = "{$nojump}";
+		if(remote&&!nojump){
+			parent.location.href=location.href+'&nojump=1';
+		}
 	function cindus(obj){
 		var pid = $(obj).val();
 		if(!pid){return false;}

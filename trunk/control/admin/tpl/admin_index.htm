@@ -10,6 +10,8 @@
 <link title="style1" href="tpl/skin/default/style.css" rel="stylesheet" type="text/css" />
 <!--<link title="style2" href="tpl/skin/light/style.css" rel="stylesheet" type="text/css" />-->
 <script type="text/javascript" src="../../resource/js/jquery.js"></script>
+<script type="text/javascript" src="../../resource/js/jquery.js"></script>
+<script type="text/javascript" src="../../lang/{$language}/script/lang.js" ></script>
 </head>
 
 <body class="skin" scroll="no">
@@ -17,6 +19,12 @@
 <!--[if IE 7]><div id="ie7"><![endif]-->
 <!--[if IE 8]><div id="ie8"><![endif]-->
 <div id="append_parent"></div>
+<div id="ajaxwaitid" style="display:none">
+	<div>
+        	<img src="../../resource/img/system/loading.gif" alt="loading"/>
+			{$_lang['request_processing']}
+	</div>
+</div>
 <div class="login_box">
 <div class="header">
 	<div class="logo">
@@ -32,7 +40,7 @@
 			<!--{/loop}-->    		
 			<!--顶部一级菜单 end-->
         </ul>
-    </div>
+    </div> 
 	<div class="arrow" id="show_much">
 		<a href="#" id="a_show_more" class="show_hide" style="display:none">▼</a>
 		<div class="hide_nav">
@@ -86,8 +94,8 @@
         	<a href="#" title="admin"><!--{userpic($admin_info['uid'],'small')}--></a> </div>
         <div class="name">{$_lang['hello']}，{if $admin_info['uid']==ADMIN_UID}{$_lang['public_admin_uid']}{else}$grouplist_arr[$admin_info['group_id']]['groupname']{/if}<b>$admin_info['username']</b></div>
         <div class="link_bar">
-        	<!--<a href="javascript:;" class="styleswitch" rel="style1" title="{$_lang['default_blue']}">{$_lang['easy_blue']}</a>
-            <a href="javascript:;" class="styleswitch" rel="style2" title="{$_lang['bright_purple']}">{$_lang['bright_purple']}</a>-->
+        	<a href="javascript:;" class="lock" onclick="fresh();" title="{$_lang['lock']}">{$_lang['refresh']}</a> 
+         	<a href="javascript:;" class="lock" onclick="del_cache();" title="{$_lang['lock']}">{$_lang['clear_cache']}</a> 
 			<a href="javascript:;" class="lock" onclick="lock();" title="{$_lang['lock']}">{$_lang['lock']}</a>
             <a href="../../index.php" target="_blank" class="sitehome">{$_lang['website_home']}</a>
             <a href="index.php?do=logout" class="exit">{$_lang['safe_exit']}</a>        
@@ -95,6 +103,37 @@
    </div>
 </div>
 
+<script>
+function del_cache(){
+	var src = $("#display_frame").attr("src");
+	$.post('index.php?do=tool&view=cache&sbt_edit=1&ckb_obj_cache=1&ckb_tpl_cache=1&ajax=1',function (json){
+		if(json.status==1){
+		
+			artDialog.tips(L.clear_success,'1.5');
+		}
+		
+		
+	},'json');
+	
+	 
+	//$("#display_frame").attr("src","src""&index.php?do=tool&view=cache&sbt_edit=1&ckb_obj_cache=1&ckb_tpl_cache=1");
+	
+}
+function fresh(){
+	document.getElementById("display_frame").contentDocument.location.reload(true); 
+	 
+}
+window.onload = function(){ 
+	   
+	 $("body").ajaxStart(function(){
+		   $("#ajaxwaitid").fadeIn();
+	   }).ajaxComplete(function(){
+		   
+		   $("#ajaxwaitid").fadeOut();
+	   })	
+	 
+}
+</script>
 <div  class="side_bar"> 		
         <div class="side_con">
 		        <div id="shortcuts" class="menu_bar">

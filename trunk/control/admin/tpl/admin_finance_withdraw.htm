@@ -4,12 +4,13 @@
     <div class="tool">
 		<a href="index.php?do={$do}&view=all">{$_lang['flow_record']}</a>
 	    <a href="index.php?do={$do}&view=report">{$_lang['graphic_report']}</a>
+	    <a href="index.php?do={$do}&view=revenue">{$_lang['revenue']}</a>
 	    <a href="index.php?do={$do}&view=recharge">{$_lang['recharge_audit']}</a>
 	   <a href="index.php?do={$do}&view=withdraw" class="here">{$_lang['withdraw_audit']}</a>
     </div>
 </div>
-<div class="box tip clearfix p_relative">
-   <div class="control"><a href="javascript:void(0);" title={$_lang['close']}><b>&times;</b></a></div>
+<div class="box tip clearfix p_relative" id="man_tips">
+   <div class="control"><a href="javascript:void(0);" title={$_lang['close']} onclick="$('#man_tips').fadeOut();"><b>&times;</b></a></div>
    <div class="title"><h2>{$_lang['tips']}</h2></div>
    <div class="detail pad10">
       <ul>
@@ -104,7 +105,7 @@
 		  <table cellpadding="0" cellspacing="0">
              <tbody>
                <tr>
-               		<th width="15">
+               	   <th>
                			<input type="checkbox" id="checkbox" onclick="checkall();" class="checkbox" >
                		</th>
                     <th width="20">
@@ -117,7 +118,7 @@
                         {$_lang['withdraw_people']}
                     </th>
                     <th>
-                        {$_lang['withdraw_amount']}
+                       {$_lang['real_withdraw_amount']}/ {$_lang['withdraw_amount']}
                     </th>
                     <th>
                         {$_lang['payment_accoun']}
@@ -129,21 +130,21 @@
                         {$_lang['withdraw_state']}
                     </th>
                     <th>
-                        {$_lang['view']}
+                        {$_lang['operate']}
                     </th>
                     <th>
-                        {$_lang['delete']}
+                        {$_lang['view']}
                     </th>
                 </tr>
   				 {loop $withdraw_arr $key $v}
                 <tr class='item'>
                     <td>
-                        <input type="checkbox" name="ckb[]" class="checkbox" value="{$v['withdraw_id']}">
+                        <input type="checkbox" name="ckb[]" id="ckb_$v['withdraw_id']" class="checkbox" value="{$v['withdraw_id']}">
                     </td>
 					<td>{$v['withdraw_id']}</td>
                     <td>
                         {if $v['pay_type']=='alipayjs'}
-							Ö§¸¶±¦
+							{$_lang['alipay']}
 						{else}
 							$bank_arr[$v['pay_type']]
 						{/if}
@@ -153,9 +154,12 @@
                     </td>
                     <td>
                         <font color="red">
-                        	{$_lang['currency']}{$v['withdraw_cash']}/
-							<!--{eval echo keke_admin_class::get_withdraw_cash($v['withdraw_cash']);}-->
-						{$_lang['yuan']}
+                        	<!--{eval $get_cash = keke_finance_class::get_to_cash($v['withdraw_cash']);}-->
+                        	
+                        	
+							{c:$v['withdraw_cash']}/{c:$get_cash}
+                        		
+						
 						</font>
                     </td>
                     <td>
@@ -167,37 +171,44 @@
                     <td>
                     	{$status_arr[$v['withdraw_status']]}
                     </td>
-					  <td>
+                     <td>
                     	{if $v['withdraw_status']==1}
-					   	 <a href="index.php?do={$do}&view={$view}&ac=pass&withdraw_id={$v['withdraw_id']}&page={$page}&is_submit=1" class="button"><span class="check  icon"></span>{$_lang['audit']}</a>
-                       {/if}
-					    <a href="index.php?do={$do}&view={$view}&ac=pass&withdraw_id={$v['withdraw_id']}&page={$page}" class="button dbl_target"><span class="book icon"></span>{$_lang['view']}</a>
-                    </td>
-                    <td>
-                        <a href="index.php?do={$do}&view={$view}&ac=del&withdraw_id={$v['withdraw_id']}&page={$page}" onclick="return cdel(this);" class="button"><span class="trash icon"></span>{$_lang['delete']}</a>
-                    </td>
-                  
-                </tr>{/loop}
+							{if $v['pay_type'] =='alipayjs'}
+							   	 <a href="###" onclick="batch_pay({$v['withdraw_id']})" class="button">
+							   	 	<span class="loop   icon"></span>{$_lang['alipay']}</a>
+							{/if}
+                       			 <a href="index.php?do={$do}&view={$view}&ac=pass&withdraw_id={$v['withdraw_id']}&page={$page}&is_submit=1" class="button">
+                       			<span class="check  icon"></span>{$_lang['confirm_cash']}</a>
+                        <a href="index.php?do={$do}&view={$view}&ac=nopass&withdraw_id={$v['withdraw_id']}&page={$page}" onclick="return cdel(this);" class="button"><span class="trash icon"></span>{$_lang['nopass']}</a>
+                    	 {/if}
+					  </td>
+					   <td>
+                      	 <a href="index.php?do={$do}&view={$view}&ac=pass&withdraw_id={$v['withdraw_id']}&page={$page}" class="button dbl_target"><span class="book icon"></span>{$_lang['view']}</a>
+                   		</td>
+				 </tr>
+				 {/loop}
                     <tr>
                     <td colspan="9">
                                
                            <div class="clearfix">
                            	 
 							 <input type="hidden" name="action_type" id="action_type" value="0" />
-							<label for="checkbox">{$_lang['select_all']}</label>¡¡
-								 <input type="hidden" name="sbt_action" class="sbt_action"/>    
-                           		 <button name="sbt_action" type="submit" value="{$_lang['mulit_delete']}" onclick="return batch_act(this,'frm_art_action');" class="pill negative button">
-                                      <span class="icon trash"></span>{$_lang['mulit_delete']}
-                                 </button>
+							 <input type="checkbox" id="checkbox" onclick="checkall();" class="checkbox" >
+							<label for="checkbox">{$_lang['select_all']}</label>
+
+								 <input type="hidden" name="sbt_action" class="sbt_action"/>   
 								 {if $w['pay_type']!='alipayjs'}
-								 <button name="sbt_review" type="submit" value="{$_lang['batch_review']}" onclick="return batch_act(this,'frm_art_action');" class="pill positive button">
+								 <button name="sbt_action" type="submit" value="{$_lang['mulit_review']}" onclick="return batch_act(this,'frm_art_action');" class="pill positive button">
                                       <span class="icon check"></span>{$_lang['mulit_review']}
                                  </button>
 								{else}
-								 <button name="sbt_action" type="button" value={$_lang['mulit_payment']} onclick="batch_pay();" class="pill positive button">
+								 <button name="sbt_action" type="button" value="{$_lang['mulit_payment']}" onclick="batch_pay();" class="pill positive button">
                                       <span class="icon check"></span>{$_lang['mulit_payment']}
                                  </button>
-								{/if}
+								{/if} 
+                           		 <button name="sbt_action" type="submit" value="{$_lang['mulit_nopass']}" onclick="return batch_act(this,'frm_art_action');" class="pill negative button">
+                                      <span class="icon trash"></span>{$_lang['mulit_nopass']}
+                                 </button>
 						  </div>
                     </td>
                   </tr>
@@ -210,8 +221,13 @@
         
     </div>
 <script type="text/javascript">
-	function batch_pay(){
+	function batch_pay(withdraw_id){
 		var ids;
+		
+		if(withdraw_id){ 
+			$("#ckb_"+withdraw_id).attr("checked","checked");
+		}
+		
 		if($(":checkbox[name='ckb[]']:checked").length>0){
 			$(":checkbox[name='ckb[]']:checked").each(function(i,n){
 				i==0?ids=$(this).val():ids+=","+$(this).val();

@@ -1,4 +1,4 @@
-<?php
+<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * @copyright keke-tech
  * @author Monkey
@@ -6,16 +6,16 @@
  * 2011-9-2
  */
 
-defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 
-Keke::admin_check_role (57);
+
+kekezu::admin_check_role (57);
 
 $feed_obj = new Keke_witkey_feed_class ();
  
 $tag_obj = new Keke_witkey_tag_class ();
-$feed_type = keke_global_class::get_feed_type ();
+$feed_type = keke_glob_class::get_feed_type ();
 
-$template_arr = dbfactory::query ( " select tpl_title from " . TABLEPRE . "witkey_template", 1, null );
+$template_arr = db_factory::query ( " select tpl_title from " . TABLEPRE . "witkey_template", 1, null );
 
 $type or $type = 'data';
 intval ( $slt_page_size ) or $slt_page_size = 10;
@@ -35,8 +35,11 @@ if ($type == 'data' || ! isset ( $type )) {
 
 }
 
-$ord [1] and $where .= "order by $ord[0] $ord[1]";
-
+if($ord [1]){
+		$where .= " order by $ord[0] $ord[1] ";
+	}else{
+		$where .= " order by feed_time desc";
+	}
 if ($type == 'data' || ! isset ( $type )) {
 	$feed_obj->setWhere ( $where );
 	$count = $feed_obj->count_keke_witkey_feed ();
@@ -53,9 +56,9 @@ if ($type === 'manage') {
 }
 
 $limit = $slt_page_size;
-Keke::$_page_obj->setAjax(1);
-Keke::$_page_obj->setAjaxDom("ajax_dom");
-$pages = Keke::$_page_obj->getPages ( $count, $limit, $page, $url );
+$kekezu->_page_obj->setAjax(1);
+$kekezu->_page_obj->setAjaxDom("ajax_dom");
+$pages = $kekezu->_page_obj->getPages ( $count, $limit, $page, $url );
 
 //查询结果数组
 if ($type == 'data' || ! isset ( $type ) || $type == '') {
@@ -66,10 +69,11 @@ if ($type == 'manage') {
 	$tag_obj->setWhere ( $where . $pages [where] );
 	$feed_arr = $tag_obj->query_keke_witkey_tag ();
 }
+//var_dump($feed_arr);
 foreach ($feed_arr as $k=>$v) {
 		$title_arr = unserialize($v[title]);
-		$title_str =' <a href="'.$title_arr[feed_username][url].'">'.$title_arr[feed_username][content].'</a>'.$title_arr[action][content].'
-		<a href="'.$title_arr[event][url].'">'.$title_arr[event][content].'</a>'; 
+		$title_str =' <a href="../../'.$title_arr[feed_username][url].'" target="_blank">'.$title_arr[feed_username][content].'</a>'.$title_arr[action][content].'
+		<a href="../../'.$title_arr[event][url].'" target="_blank">'.$title_arr[event][content].'</a>'; 
 		$v[title] = $title_str;
 		$new_feed_arr[] = $v;
 }
@@ -78,7 +82,7 @@ $feed_arr = $new_feed_arr;
 
 
 if ($ac == 'del') {
-	$delid or Keke::admin_show_msg ( $_lang['err_parameter'], $url,3,'','warning' );
+	$delid or kekezu::admin_show_msg ( $_lang['err_parameter'], $url,3,'','warning' );
 	if ($type == 'data' || ! isset ( $type ) || $type == '') {
 		$feed_obj->setWhere ( "feed_id='{$delid}'" );
 		$res = $feed_obj->del_keke_witkey_feed ();
@@ -87,9 +91,9 @@ if ($ac == 'del') {
 		$res = $tag_obj->del_keke_witkey_tag ();
 	}
 	if ($res) {
-		Keke::admin_show_msg ( $_lang['delete_success'], $url ,3,'','success' );
+		kekezu::admin_show_msg ( $_lang['delete_success'], $url ,3,'','success' );
 	} else {
-		Keke::admin_show_msg ( $_lang['delete_fail'], $url ,3,'','warning' );
+		kekezu::admin_show_msg ( $_lang['delete_fail'], $url ,3,'','warning' );
 	}
 }
 
@@ -108,14 +112,14 @@ if (isset ( $sbt_action ) && $sbt_action == $_lang['mulit_delete']) {
 			$res = $tag_obj->del_keke_witkey_tag ();
 		}
 		if ($res) {
-			Keke::admin_show_msg ( $_lang['mulit_operate_success'], $url,3,'','success' );
+			kekezu::admin_show_msg ( $_lang['mulit_operate_success'], $url,3,'','success' );
 		} else {
-			Keke::admin_show_msg ( $_lang['mulit_operate_fail'], $url ,3,'','warning');
+			kekezu::admin_show_msg ( $_lang['mulit_operate_fail'], $url ,3,'','warning');
 		}
 	
 	} else {
-		Keke::admin_show_msg ( $_lang['choose_operate_item'], $url ,3,'','warning');
+		kekezu::admin_show_msg ( $_lang['choose_operate_item'], $url ,3,'','warning');
 	}
 }
 
-require Keke::$_tpl_obj->template ( 'control/admin/tpl/admin_tpl_' . $view . '_' . $type );
+require $kekezu->_tpl_obj->template ( 'control/admin/tpl/admin_tpl_' . $view . '_' . $type );

@@ -73,19 +73,17 @@
                     <th width="80">
          ID 
                     </th>
-                    <th width="100">
-                        {$_lang['link_type']}
-                    </th>
-                    <th width="100">
+                   
+                    <th width="150">
                         {$_lang['link_name']}
                     </th>
-                    <th class="motif">
+                    <th class="motif" width="150">
                         {$_lang['link_url']}
                     </th>
                     <th class="80">
                         {$_lang['order']}
                     </th>
-                    <th width="200">
+                    <th width="150">
                         {$_lang['time']} 
                     </th>
                     <th width="60">
@@ -106,7 +104,7 @@
                         {$value['link_name']}
                     </td>
                     <td>
-                        {$value['link_url']}
+                        <a href="{$value['link_url']}" target="_blank" >{$value['link_url']}</a>
                     </td>
                     <td>
                         {$value['listorder']}
@@ -124,9 +122,9 @@
 				{/loop}
 			<tr>
 			    <td colspan="9">
-			    
+			    <input type="checkbox" onclick="checkall(event);" id="checkbox" name="checkbox"/>
                 
-            	<label for="checkbox">{$_lang['select_all']}</label>
+            	<label for="checkbox"> {$_lang['select_all']}</label>
             	<input type="hidden" name="sbt_action" class="sbt_action"/>
 				<button type="submit" name="sbt_action" onclick="return batch_act(this,'frm_art_search')" value="{$_lang['mulit_delete']}" class="pill negative" >
 					<span class="trash icon"></span>{$_lang['mulit_delete']}

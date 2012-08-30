@@ -27,18 +27,6 @@
                			 </td>
           			  </tr>
 					  <tr>
-                        <th scope="row" width="130">{$_lang['select_tpl']}</th>
-                        <td>
-                        	 {loop $template_arr $v}
-								<input type="checkbox" name="ckb[]" value="$v['tpl_title']" {if strpos($ad_info['tpl_type'],$v['tpl_title'])!==FALSE} checked="checked"{/if}>
-								$v['tpl_title']
-							{/loop}
-							<div class="padt10 direct">
-                           	 	<p>({$_lang['select_tag_tpl']})</p>
-                      		  </div>
-                        </td>
-                      </tr>
-					  <tr>
                         <th scope="row" width="130">{$_lang['tag_code']}</th>
                         <td>
                         	<textarea style="width:560px;" name="fds[tag_code]" cols="70" rows="10">{$ad_info['tag_code']}</textarea>

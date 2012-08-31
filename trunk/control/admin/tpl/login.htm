@@ -21,7 +21,7 @@
         <td class="pl">
         	<div>
                 <div>
-                  <h1><img src="{BASE_URL}/control/admin/tpl/img/logo.png" alt="{$_lang['keke_professional_witkey_system']}" title="{$_lang['keke_professional_witkey_system']}"/>{$_lang['system_manage']}</h1>
+                  <h1><img src="{BASE_URL}/control/admin/tpl/img/logo.png"  title="{$_lang['keke_professional_witkey_system']}"/>{$_lang['system_manage']}</h1>
                 </div>
                 <div>
                   <p>Powered by KPPW2.0 &copy;2010 {$_lang['keke_info_technology_company']}</p>
@@ -76,7 +76,7 @@
 					var username=$("#txt_username").val();
 					var password=$("#pwd_pwd").val();
 					var token=$("#token").val();
-					$.post("index.php?do=login&is_submit=1&tt="+new Date().getTime(),
+					$.post("{BASE_URL}/index.php/login/login&tt="+new Date().getTime(),
 					{user_name:username,pass_word:password,allow_num:allow_num,token:token},function(json){
 						if(json.status==1){
 							location.href="index.php";

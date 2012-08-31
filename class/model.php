@@ -6,7 +6,8 @@ abstract  class Model {
 	public $_pk;
 	public $_lifetime;
 	public $_replace = 0;
-	public $_where;
+	public static  $_where = NULL;
+	public static $_instance = null;
 	public function __construct($table_name=null){
 		$this->_db = Database::instance();
 		$this->_tablename = '`'.DBNAME.'`.`'.TABLEPRE . $table_name.'`';
@@ -17,14 +18,19 @@ abstract  class Model {
 	 * @return Model
 	 */
   	public static function factory($table_name){
-		$class =  TABLEPRE . $table_name;
-		return 	new $class ( );
+  		if(self::$_instance[$table_name] == null){
+			$class =  TABLEPRE . $table_name;
+			self::$_instance[$table_name] =  new $class();
+		}
+		
+  		return 	self::$_instance[$table_name];
       	
 	} 
     /**
      * @return Model  
      */
 	abstract public function setWhere($where);
+	
 	/**
 	 * 字段设值
 	 * @param $array  字段健值对数组
@@ -44,7 +50,7 @@ abstract  class Model {
 	abstract public function count();
 	
 	function reset() {
-		unset ($this->_tablename, $this->_where);
+		self::$_where = NULL;
 	}
 	
 }

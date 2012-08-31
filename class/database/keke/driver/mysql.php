@@ -173,6 +173,7 @@ final class Keke_driver_mysql extends Keke_database {
 			$where = $wheresqlarr;
 		}
 		$sql = 'UPDATE ' . $tablename . ' SET ' . $setsql . ' WHERE ' . $where;
+// 		var_dump($sql);die;
 		return $this->query ( $sql, Database::UPDATE );
 	}
 	public function cached($lifetime = NULL) {

@@ -1,4 +1,4 @@
-<?php
+<?php defined ( 'IN_KEKE' ) or die ( 'Access Denied' );
 class Keke_witkey_link extends Model {
 	protected static $_data = array ();
 	function __construct() {
@@ -35,7 +35,7 @@ class Keke_witkey_link extends Model {
 		return self::$_data ['obj_id'];
 	}
 	public function getWhere() {
-		return self::$_data ['where'];
+		return self::$_where;
 	}
 	public function setLink_id($value) {
 		self::$_data ['link_id'] = $value;
@@ -78,7 +78,7 @@ class Keke_witkey_link extends Model {
 		return $this;
 	}
 	public function setWhere($value) {
-		self::$_data ['where'] = $value;
+		self::$_where = $value;
 		return $this;
 	}
 	public function setData($array) {
@@ -106,7 +106,7 @@ class Keke_witkey_link extends Model {
 		if ($this->getWhere ()) {
 			$res = $this->_db->update ( $this->_tablename, self::$_data, $this->getWhere () );
 		} elseif (isset ( self::$_data ['link_id'] )) {
-			self::$_data ['where'] = array (
+			self::$_where = array (
 					'link_id' => self::$_data ['link_id'] 
 			);
 			unset ( self::$_data ['link_id'] );
@@ -127,8 +127,8 @@ class Keke_witkey_link extends Model {
 		} else {
 			$sql = "select %s from $this->_tablename";
 		}
+		empty ( $fields ) and $fields = '*';
 		$sql = sprintf ( $sql, $fields );
-		
 		$this->reset ();
 		return $this->_db->cached ( $cache_time )->cache_data ( $sql );
 	}

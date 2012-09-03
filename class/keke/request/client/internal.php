@@ -72,8 +72,8 @@ class Keke_Request_Client_Internal extends Keke_Request_Client {
 // 			var_dump(class_exists($prefix.$controller));die;
 			if ( ! class_exists($prefix.$controller))
 			{
-				throw new Keke_exception('The requested URL :uri was not found on this server.',
-													array(':uri' => $request->uri()));
+				throw new Keke_exception('The requested URL :uri was not found on this server. :controller',
+									array(':uri' => $request->uri(),':controller'=>$prefix.$controller));
 			}
 
 			// Load the controller using reflection

@@ -122,13 +122,12 @@ class Keke_witkey_link extends Model {
 	 * @return array
 	 */
 	function query($fields = '*', $cache_time = 0) {
-		if ($this->getWhere ()) {
-			$sql = "select %s from $this->_tablename where " . $this->getWhere ();
-		} else {
-			$sql = "select %s from $this->_tablename";
-		}
 		empty ( $fields ) and $fields = '*';
-		$sql = sprintf ( $sql, $fields );
+		if ($this->getWhere ()) {
+			$sql = "select $fields from $this->_tablename where " . $this->getWhere ();
+		} else {
+			$sql = "select $fields from $this->_tablename";
+		}
 		$this->reset ();
 		return $this->_db->cached ( $cache_time )->cache_data ( $sql );
 	}

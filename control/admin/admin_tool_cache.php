@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * ºóÌ¨»º´æÇå³ý
  * @copyright keke-tech
@@ -35,4 +35,4 @@ if(isset($sbt_edit)){
 	
 }
 
-require $template_obj->template ( 'control/admin/tpl/admin_' . $do . '_' . $view );
+require Keke_tpl::template ( 'control/admin/tpl/admin_' . $do . '_' . $view );

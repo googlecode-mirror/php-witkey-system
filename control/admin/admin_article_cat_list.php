@@ -7,7 +7,7 @@
  * 2011-8-24 16:28
  */
 
-defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 //kekezu::admin_check_role ( 7 );
 
 $cat_obj = new Keke_witkey_article_category_class ();
@@ -151,4 +151,4 @@ function get_cat($pid = NULL, $cache = NULL) {
 		return $cat_arr;
 	
 	}
-require  $template_obj->template('control/admin/tpl/admin_'. $do .'_'. $view);
+require  Keke_tpl::template('control/admin/tpl/admin_'. $do .'_'. $view);

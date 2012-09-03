@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * @copyright keke-tech
  * @author Chen
@@ -28,4 +28,4 @@ if ($sbt_edit) { //Ìí¼Ó¡¢±à¼­\
  	$api_open =  db_factory::get_one("select v from ".TABLEPRE."witkey_basic_config where k='map_api_open'"); 
  	$api_open =unserialize($api_open['v']);
 }
-require $template_obj->template ( 'control/admin/tpl/admin_' . $do . '_' . $view );
+require Keke_tpl::template ( 'control/admin/tpl/admin_' . $do . '_' . $view );

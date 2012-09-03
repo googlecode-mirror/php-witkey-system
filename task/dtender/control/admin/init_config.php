@@ -1,6 +1,6 @@
 <?php
 
-if(!defined('ADMIN_KEKE')) {
+if(!defined('IN_KEKE')) {
 	exit('Access Denied');
 }
 

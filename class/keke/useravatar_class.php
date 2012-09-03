@@ -7,7 +7,7 @@
  * 2010-7-6ионГ11:52:51
  */
 keke_lang_class::load_lang_class('keke_user_avatar_class');
-(defined ( "IN_KEKE" )|| defined("ADMIN_KEKE")) or die ( "Access Denied" );
+(defined ( "IN_KEKE" )|| defined("IN_KEKE")) or die ( "Access Denied" );
 define ( '_DATADIR', S_ROOT . "data/" );
 global $_K;
 define ( '_DATAURL', $_K ['siteurl'] . "/data" );

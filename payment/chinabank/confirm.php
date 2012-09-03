@@ -25,5 +25,5 @@ $text = $v_amount . $v_moneytype . $v_oid . $v_mid . $v_url . $key;
 $v_md5info = strtoupper ( md5 ( $text ) );
 
 
-require_once $template_obj->template ( 'payment/chinabank/confirm' );
+require_once Keke_tpl::template ( 'payment/chinabank/confirm' );
 				

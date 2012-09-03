@@ -11,15 +11,16 @@ class keke_admin_class {
 		$_SESSION ['uid'] and $this->_uid = $_SESSION ['uid'];
 	}
 	static function get_admin_menu() {
-		global $kekezu,$_lang;
-		$menuset_arr = Keke::$_cache_obj->get ( 'menu_resource_cache' );
+		global $_lang,$_K;
+		$menuset_arr = Cache::instance()->get('admin_menu');
+		
 		if (! $menuset_arr) {
-			$resource_obj = new Keke_witkey_resource_class ();
+			$resource_obj = new Keke_witkey_resource();
 			$resource_obj->setWhere ( "1=1 order by listorder asc" );
-			$resource_arr = $resource_obj->query_keke_witkey_resource ();
-			$resource_submenu_obj = new Keke_witkey_resource_submenu_class ();
+			$resource_arr = $resource_obj->query();
+			$resource_submenu_obj = new Keke_witkey_resource_submenu();
 			$resource_submenu_obj->setWhere ( "1=1 order by listorder" );
-			$resource_sub_arr = $resource_submenu_obj->query_keke_witkey_resource_submenu ();
+			$resource_sub_arr = $resource_submenu_obj->query ();
 			
 			$temp_arr = array ();
 			$temp_arr2 = array ();
@@ -36,10 +37,12 @@ class keke_admin_class {
 			}
 			
 			$resource_arr = $temp_arr2;
-			$menuset_arr = array ('navgat' => $navgation_arr, 'menu' => $resource_arr, 'submenu' => $submenu_set_arr, 'resource' => $resource_set_arr );
+			$menuset_arr = array ( 'menu' => $resource_arr, 'submenu' => $submenu_set_arr, 'resource' => $resource_set_arr );
 			
 			$model_list = Keke::$_model_list;
 			$i = 0;
+			
+			//加载模型的后台
 			foreach ( $model_list as $model ) {
 				$init_menu = array ();
 				if (! file_exists ( S_ROOT . $model ['model_type'] . '/' . $model ['model_dir'] . '/control/admin/init_config.php' )) {
@@ -53,8 +56,7 @@ class keke_admin_class {
 				
 				$menuset_arr ['menu'] [$model ['model_type']] [] = array ('name' => $model ['model_name'], 'items' => $mulist_arr );
 			}
-			
-			Keke::$_cache_obj->set ( 'menu_resource_cache', $menuset_arr, null );
+            Cache::instance()->set('admin_menu', $menuset_arr,999999);
 		}
 		return $menuset_arr;
 	}
@@ -63,8 +65,8 @@ class keke_admin_class {
 		global $kekezu;
 		$group_arr = Keke::$_cache_obj->get ( "member_group_cache" );
 		if (! $group_arr) {
-			$membergroup_obj = new Keke_witkey_member_group_class ();
-			$group_arr = $membergroup_obj->query_keke_witkey_member_group ();
+			$membergroup_obj = new Keke_witkey_member_group ();
+			$group_arr = $membergroup_obj->query();
 			$temp_arr = array ();
 			foreach ( $group_arr as $v ) {
 				$temp_arr [$v ['group_id']] = $v;
@@ -163,13 +165,13 @@ class keke_admin_class {
 	 */
 	function add_fast_menu($r_id) {
 		global $_lang;
-		$shortcuts_obj = new Keke_witkey_shortcuts_class ();
+		$shortcuts_obj = new Keke_witkey_shortcuts ();
 		$in_shortcuts_list = dbfactory::execute ( " select resource_id from " . TABLEPRE . "witkey_shortcuts where resource_id = '$r_id'" );
 		if (! $in_shortcuts_list) {
 			$shortcuts_obj->_s_id = null;
 			$shortcuts_obj->setUid ( $this->_uid );
 			$shortcuts_obj->setResource_id ( $r_id );
-			$success = $shortcuts_obj->create_keke_witkey_shortcuts ();
+			$success = $shortcuts_obj->create ();
 			if ($success) {
 				Keke::echojson ( $_lang['shortcuts_add_success'], '4' );
 				die ();
@@ -188,7 +190,7 @@ class keke_admin_class {
 	 */
 	function rm_fast_menu($r_id) {
 		global $_lang;
-		$shortcuts_obj = new Keke_witkey_shortcuts_class ();
+// 		$shortcuts_obj = new Keke_witkey_shortcuts ();
 		$shortcuts_list = dbfactory::get_one ( " select uid,resource_id from " . TABLEPRE . "witkey_shortcuts where resource_id = '$r_id' and uid = '$this->_uid'" );
 		if ($shortcuts_list) {
 			if ($shortcuts_list ['uid'] != $this->_uid) {
@@ -231,7 +233,7 @@ class keke_admin_class {
 			$kekezu->echojson ( "login limit!", "8" );
 			die ();
 		} else {
-			if (!Keke::submitcheck($formhash, true)) {//检测hash值
+			if (!Keke::formcheck($formhash, true)) {//检测hash值
 				$_SESSION ['allow_times'] -= 1;
 				-- $allow_times == 0 and $this->set_login_limit_time ( '1' );
 				$hash = Keke::formhash();
@@ -258,7 +260,7 @@ class keke_admin_class {
 				$kekezu->echojson ( $_lang['login_fail'], "4", array('times'=>$allow_times, 'formhash'=>$hash) );
 				die ();
 			} else {  
-				$user_info = Keke::get_user_info ( $user_info['uid'] ); //获取用户信息
+				$user_info = keke_user_class::get_user_info( $user_info['uid'] ); //获取用户信息
 			}
 			if (! $user_info) {
 				$_SESSION ['allow_times'] -= 1;
@@ -271,9 +273,11 @@ class keke_admin_class {
 				$kekezu->echojson ( $_lang['no_rights_login_backstage'], "2", array('times'=>$allow_times, 'formhash'=>$hash) );
 				die ();
 			} else {
-				$_SESSION ['auid'] = $_SESSION ['uid'] = $user_info ['uid'];
+				$_SESSION ['admin_uid'] = $_SESSION ['uid'] = $user_info ['uid'];
 				$_SESSION ['username'] = $user_info ['username'];
+				
 				Keke::admin_system_log ( $user_info ['username'] . date ( 'Y-m-d H:i:s', time () ) . $_lang['login_system'] );
+				
 				$this->set_login_limit_time ();
 				$kekezu->echojson ( $_lang['login_success'], "1" );
 				die ();

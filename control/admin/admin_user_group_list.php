@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 
 
 
@@ -20,6 +20,6 @@ if ($op == 'del') {
 }
 
 
-require $template_obj->template ( 'control/admin/tpl/admin_user_group_list' );
+require Keke_tpl::template ( 'control/admin/tpl/admin_user_group_list' );
 
  

@@ -2,7 +2,7 @@
 /**
  * ÍÆ¹ãÁôÑÔ
  */
-defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 
 kekezu::admin_check_role ( 9 );
 //$model_list = $kekezu->_model_list;
@@ -60,4 +60,4 @@ if ($ac == 'comment_info') {
 	}
 }
  
-require $template_obj->template ( 'control/admin/tpl/admin_task_' . $view );
+require Keke_tpl::template ( 'control/admin/tpl/admin_task_' . $view );

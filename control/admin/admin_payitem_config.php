@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * 增值服务的后台配置路由,跳到对应服务项文件夹中的control层中
  * this not free,powered by keke-tech

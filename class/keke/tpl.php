@@ -50,53 +50,53 @@ class Keke_tpl {
 	public static function parse_rule($template, $tpl = null) {
 		global $_K;
 		($_K['inajax'])&&ob_start();
-		$template = preg_replace ( '/\<\!\-\-\{include\s+([a-z0-9_\/]+)\}\-\-\>/ie', "Keke_tpl::readtemplate('\\1')", $template );
+		$template = preg_replace ( "/\<\!\-\-\{include\s+([a-z0-9_\/]+)\}\-\-\>/ie", "Keke_tpl::readtemplate('\\1')", $template );
 		//处理子页面中的代码
-		$template = preg_replace ( '/\<\!\-\-\{include\s+([a-z0-9_\/]+)\}\-\-\>/ie', "Keke_tpl::readtemplate('\\1')", $template );
+		$template = preg_replace ( "/\<\!\-\-\{include\s+([a-z0-9_\/]+)\}\-\-\>/ie", "Keke_tpl::readtemplate('\\1')", $template );
 		//挂件调用
-		$template = preg_replace ( '/\<\!\-\-\{widget\((.+?)\)\}\-\-\>/ie', "Keke_tpl::runwidget('\\1')", $template );
+		//$template = preg_replace ( "/\<\!\-\-\{widget\((.+?)\)\}\-\-\>/ie", "Keke_tpl::runwidget('\\1')", $template );
 		//标签调用
-		$template = preg_replace ( '/\<\!\-\-\{tag\s+([^!@#$%^&*(){}<>?,.\'\"\+\-\;\":~`]+)\}\-\-\>/ie', "Keke_tpl::readtag(\"'\\1'\")", $template );
+		$template = preg_replace ( "/\<\!\-\-\{tag\s+([^!@#$%^&*(){}<>?,.\'\"\+\-\;\":~`]+)\}\-\-\>/ie", "Keke_tpl::readtag(\"'\\1'\")", $template );
 		//广告调用
-		$template = preg_replace ( '/\<\!\-\-\{showad\((.+?)\)\}\-\-\>/ie', "Keke_tpl::showad('\\1')", $template );
+		$template = preg_replace ( "/\<\!\-\-\{showad\((.+?)\)\}\-\-\>/ie", "Keke_tpl::showad('\\1')", $template );
 		//多广告调用
-		$template = preg_replace ( '/\<\!\-\-\{showads\((.+?)\)\}\-\-\>/ie', "Keke_tpl::showads('\\1')", $template );
+		$template = preg_replace ( "/\<\!\-\-\{showads\((.+?)\)\}\-\-\>/ie", "Keke_tpl::showads('\\1')", $template );
 		//预设广告调用
-		$template = preg_replace ( '/\<\!\-\-\{ad_show\((.+?),(.+?)\)\}\-\-\>/ie', "Keke_tpl::ad_show('\\1','\\2')", $template );
-		$template = preg_replace ( '/\<\!\-\-\{ad_show\((.+?)\)\}\-\-\>/ie', "Keke_tpl::ad_show('\\1')", $template );
+		$template = preg_replace ( "/\<\!\-\-\{ad_show\((.+?),(.+?)\)\}\-\-\>/ie", "Keke_tpl::ad_show('\\1','\\2')", $template );
+		$template = preg_replace ( "/\<\!\-\-\{ad_show\((.+?)\)\}\-\-\>/ie", "Keke_tpl::ad_show('\\1')", $template );
 		//动态调用
-		$template = preg_replace ( '/\<\!\-\-\{loadfeed\((.+?)\)\}\-\-\>/ie', "Keke_tpl::loadfeed('\\1')", $template );
+		$template = preg_replace ( "/\<\!\-\-\{loadfeed\((.+?)\)\}\-\-\>/ie", "Keke_tpl::loadfeed('\\1')", $template );
 		//时间处理
-		$template = preg_replace ( '/\<\!\-\-\{date\((.+?),(.+?)\)\}\-\-\>/ie', "Keke_tpl::datetags('\\1','\\2')", $template );
+		$template = preg_replace ( "/\<\!\-\-\{date\((.+?),(.+?)\)\}\-\-\>/ie", "Keke_tpl::datetags('\\1','\\2')", $template );
 		//货币显示
-		$template = preg_replace ( '/{c\:(.+?)(,?)(\d?)\}/ie', "keke_curren_class::currtags('\\1','\\3')", $template );
+		$template = preg_replace ( "/{c\:(.+?)(,?)(\d?)\}/ie", "keke_curren_class::currtags('\\1','\\3')", $template );
 		
 		//头像处理
-		$template = preg_replace ( '/\<\!\-\-\{userpic\((.+?),(.+?)\)\}\-\-\>/ie', "Keke_tpl::userpic('\\1','\\2')", $template );
+		$template = preg_replace ( "/\<\!\-\-\{userpic\((.+?),(.+?)\)\}\-\-\>/ie", "Keke_tpl::userpic('\\1','\\2')", $template );
 		//PHP代码
-		$template = preg_replace ( '/\<\!\-\-\{eval\s+(.+?)\s*\}\-\-\>/ies', "Keke_tpl::evaltags('\\1')", $template );
+		$template = preg_replace ( "/\<\!\-\-\{eval\s+(.+?)\s*\}\-\-\>/ies", "Keke_tpl::evaltags('\\1')", $template );
 		//开始处理
 		//变量
-		$var_regexp = '((\\\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)(\[[a-zA-Z0-9_\-\.\"\'\[\]\$\x7f-\xff]+\])*)';
-		$template = preg_replace ( '/\<\!\-\-\{(.+?)\}\-\-\>/s', "{\\1}", $template );
-		$template = preg_replace ( '/([\n\r]+)\t+/s', "\\1", $template );
-		$template = preg_replace ( '/(\\\$[a-zA-Z0-9_\[\]\'\"\$\x7f-\xff]+)\.([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)/ies', "\\1['\\2']", $template );
-		$template = preg_replace ( "/\{(\\\$[a-zA-Z0-9_\[\]\'\"\$\.\x7f-\xff]+)\}/is", "<?=\\1?>", $template );
+		$var_regexp = "((\\\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)(\[[a-zA-Z0-9_\-\.\"\'\[\]\$\x7f-\xff]+\])*)";
+		$template = preg_replace ( "/\<\!\-\-\{(.+?)\}\-\-\>/s", "{\\1}", $template );
+		$template = preg_replace ( "/([\n\r]+)\t+/s", "\\1", $template );
+		$template = preg_replace ( "/(\\\$[a-zA-Z0-9_\[\]\'\"\$\x7f-\xff]+)\.([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)/s", "\\1['\\2']", $template );
+		$template = preg_replace ( "/\{(\\\$[a-zA-Z0-9_\[\]\'\"\$\.\x7f-\xff]+)\}/s", "<?=\\1?>", $template );
 		$template = preg_replace ( "/$var_regexp/es", "Keke_tpl::addquote('<?=\\1?>')", $template );
 		$template = preg_replace ( "/\<\?\=\<\?\=$var_regexp\?\>\?\>/es", "Keke_tpl::addquote('<?php echo \\1;?>')", $template );
 		//逻辑
-		$template = preg_replace ( '/\{elseif\s+(.+?)\}/ies', "Keke_tpl::stripvtags('<?php } elseif(\\1) { ?>','')", $template );
-		$template = preg_replace ( '/\{else\}/is', "<?php } else { ?>", $template );
+		$template = preg_replace ( "/\{elseif\s+(.+?)\}/ies", "Keke_tpl::stripvtags('<?php } elseif(\\1) { ?>','')", $template );
+		$template = preg_replace ( "/\{else\}/is", "<?php } else { ?>", $template );
 		//循环
 		for($i = 0; $i < 6; $i ++) {
-			$template = preg_replace ( '/\{loop\s+(\S+)\s+(\S+)\}(.+?)\{\/loop\}/ies', "Keke_tpl::stripvtags('<?php if(is_array(\\1)) { foreach(\\1 as \\2) { ?>','\\3<?php } } ?>')", $template );
-			$template = preg_replace ( '/\{loop\s+(\S+)\s+(\S+)\s+(\S+)\}(.+?)\{\/loop\}/ies', "Keke_tpl::stripvtags('<?php if(is_array(\\1)) { foreach(\\1 as \\2 => \\3) { ?>','\\4<?php } } ?>')", $template );
-			$template = preg_replace ( '/\{if\s+(.+?)\}(.+?)\{\/if\}/ies', "Keke_tpl::stripvtags('<?php if(\\1) { ?>','\\2<?php } ?>')", $template );
+			$template = preg_replace ( "/\{loop\s+(\S+)\s+(\S+)\}(.+?)\{\/loop\}/ies", "Keke_tpl::stripvtags('<?php if(is_array(\\1)) { foreach(\\1 as \\2) { ?>','\\3<?php } } ?>')", $template );
+			$template = preg_replace ( "/\{loop\s+(\S+)\s+(\S+)\s+(\S+)\}(.+?)\{\/loop\}/ies", "Keke_tpl::stripvtags('<?php if(is_array(\\1)) { foreach(\\1 as \\2 => \\3) { ?>','\\4<?php } } ?>')", $template );
+			$template = preg_replace ( "/\{if\s+(.+?)\}(.+?)\{\/if\}/ies", "Keke_tpl::stripvtags('<?php if(\\1) { ?>','\\2<?php } ?>')", $template );
 		}
 		//常量
-		$template = preg_replace ( '/\{([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)\}/s', "<?php echo \\1;?>", $template );
+		$template = preg_replace ( "/\{([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)\}/s", "<?php echo \\1;?>", $template );
 		//换行
-		$template = preg_replace ( '/ \?\>[\n\r]*\<\? /s', " ", $template );
+		$template = preg_replace ( "/ \?\>[\n\r]*\<\? /s", " ", $template );
 		
 		//附加处理
 		$template = "<?php Keke_tpl::checkrefresh('$tpl', '{$_K['timestamp']}' );?>$template<?php Keke_tpl::ob_out();?>";
@@ -172,7 +172,7 @@ class Keke_tpl {
 	}
 	
 	static function stripvtags($expr, $statement = '') {
-		$res = preg_replace ( '/\<\?\=(\\\$.+?)\?\>/ies', "\\1", $expr );
+		$res = preg_replace ( "/\<\?\=(\\\$.+?)\?\>/s", "\\1", $expr );
 		$expr = str_replace ( "\\\"", "\"", $res );
 		$statement = str_replace ( "\\\"", "\"", $statement );
 		return $expr . $statement;

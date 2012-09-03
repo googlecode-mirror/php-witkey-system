@@ -1,4 +1,4 @@
-<?php defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+<?php defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * @copyright keke-tech
  * @author Chen
@@ -22,7 +22,7 @@ if ($sbt_edit){
 kekezu::admin_system_log($_lang['edit_auth'] . $auth_code);//ÈÕÖ¾¼ÇÂ¼
 
 if($auth_code!='weibo') 
-	require  $template_obj->template('control/admin/tpl/admin_'. $do .'_'. $view);
+	require  Keke_tpl::template('control/admin/tpl/admin_'. $do .'_'. $view);
 else 
 	require  S_ROOT.'./auth/'.$auth_item['auth_dir'].'/control/admin/auth_config.php';
 

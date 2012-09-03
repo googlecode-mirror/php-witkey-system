@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' ) or 	exit ( 'Access Denied' );
+<?php	defined ( 'IN_KEKE' ) or 	exit ( 'Access Denied' );
 /**
  * ±à¼­±êÇ©Ä£°å
  * @copyright keke-tech
@@ -23,4 +23,4 @@ if (file_exists($filename)) {
 	fclose($fp);
 }
 
-require_once $template_obj->template ( 'control/admin/tpl/admin_tpl_'.$view );
+require_once Keke_tpl::template ( 'control/admin/tpl/admin_tpl_'.$view );

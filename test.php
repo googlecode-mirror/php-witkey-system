@@ -2,17 +2,8 @@
  
 include 'app_boot.php';
 
-function t(){
-	echo 't';
-}
+
+Keke::utftogbk('ˇˇˇˇˇˇ');
+
  
-class a {
-	function b(){
-		echo 'b';
-		t();
-	}
-}
-
-
-$a = new a;
-$a->b();
+//var_dump(class_exists('Control_admin_main'));

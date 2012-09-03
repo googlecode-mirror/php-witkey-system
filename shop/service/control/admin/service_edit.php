@@ -5,7 +5,7 @@
  * @version v 2.0
  * 2011-09-29 15:31:34
  */
-defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 $service_obj = new service_shop_class();
 $service_info = dbfactory::get_one(sprintf("select * from %switkey_service where service_id='%d'",TABLEPRE,$service_id));
 

@@ -5,7 +5,7 @@
  * @version v 2.0
  * 2011-09-29 14:30:34
  */
-defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 
 $order_obj = keke_table_class::get_instance('witkey_order');//订单
 $goods_obj = keke_table_class::get_instance('witkey_service');//作品表

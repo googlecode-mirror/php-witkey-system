@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * @copyright keke-tech
  * @author Monkey
@@ -23,7 +23,7 @@ if ($sbt_edit) {
 	kekezu::admin_show_msg ( $_lang['tpl_edit_success'], "index.php?do=tpl&view=tpllist&tplname=$tplname",3,'','success' );
 }
 
-require $template_obj->template ( 'control/admin/tpl/admin_tpl_' . $view );
+require Keke_tpl::template ( 'control/admin/tpl/admin_tpl_' . $view );
 
 
 

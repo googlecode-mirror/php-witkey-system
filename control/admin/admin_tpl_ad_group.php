@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * 后台广告组管理
  * @copyright keke-tech
@@ -54,5 +54,5 @@ $tag_arr = $table_obj->get_grid ( $where, $url, $page, $page_size );
 $pages = $tag_arr ['pages'];
 $tag_arr = $tag_arr ['data'];
 //var_dump($tag_arr);
-require $template_obj->template ( 'control/admin/tpl/admin_' . $do . '_' . $view );
+require Keke_tpl::template ( 'control/admin/tpl/admin_' . $do . '_' . $view );
   

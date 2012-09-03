@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * 增值服务购买记录，统计服务销量，分类查询各威客与顾主的购买记录
  * this not free,powered by keke-tech
@@ -54,5 +54,5 @@ $where .= $pages [where];
 $payitem_record_obj->setWhere ( $where );
 $payitem_record_arr = $payitem_record_obj->query_keke_witkey_payitem_record ();
 
-require $template_obj->template ( 'control/admin/tpl/admin_payitem_' . $view );
+require Keke_tpl::template ( 'control/admin/tpl/admin_payitem_' . $view );
  

@@ -1,4 +1,4 @@
-<?php defined ( 'ADMIN_KEKE' )or exit ( 'Access Denied' );
+<?php defined ( 'IN_KEKE' )or exit ( 'Access Denied' );
  /**
  * @copyright keke-tech
  * @author Liyingqing
@@ -105,4 +105,4 @@ $cat_arr = $temp_arr;
 unset($temp_arr);
 //var_dump($cat_arr);
 
-require  $template_obj->template('control/admin/tpl/admin_'. $do .'_'. $view);
+require  Keke_tpl::template('control/admin/tpl/admin_'. $do .'_'. $view);

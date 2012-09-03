@@ -5,7 +5,7 @@
  * @version v 2.0
  * 2011-11-01 11:31:34
  */
-defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 if($report_info ['obj']=='task'){
 	$task_cash = dbfactory::get_one(sprintf("select task_cash,profit_rate from %switkey_task where task_id='%d'",TABLEPRE,$report_info ['origin_id'] ));
 	$obj_info['cash'] = floatval($task_cash['task_cash'])*(1 - floatval($task_cash['profit_rate'])/100);

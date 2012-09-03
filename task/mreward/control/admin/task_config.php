@@ -5,7 +5,7 @@
  * @version v 2.0
  * 2011-11-07 11:31:34
  */
-defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 //$a =dbfactory::query("select uid,username,work_status from ".TABLEPRE."witkey_task_work where task_id=12 and work_status in(1,2,3) ");
 //var_dump($a);
 $ops = array ("config", "control", "priv" );

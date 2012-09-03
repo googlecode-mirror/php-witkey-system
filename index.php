@@ -8,7 +8,10 @@ $request = Request::factory ();
 $_K ['control'] = $request->initial ()->controller ();
 $_K ['action'] = $request->initial ()->action ();
 $_K ['directory'] = $request->initial ()->directory ();
-keke_lang_class::package_init ( "index" );
+
+$_K['directory'] or $_K['directory'] = 'index';
+ 
+keke_lang_class::package_init ( $_K['directory'] );
 keke_lang_class::loadlang ( $_K ['control'] );
 
 $request->execute ();

@@ -71,33 +71,33 @@ class keke_page_class {
 			}
 			
 			if ($this->_ajax) {
-				$Paginationpage = ($curpage - $offset > 1 && $pages > $page ? "<a href=javascript:; onclick=ajaxpage('{$ajax_dom}','{$mpurl}page=1{$anchor}','1')>".$_lang['first_page']."</a>" : '') . ($curpage > 1 ? "<a href=javascript:; onclick=ajaxpage('{$ajax_dom}','{$mpurl}page=" . ($curpage - 1). $anchor."','".($curpage-1)."')><<".$_lang['Previous_page']."</a> " : '');
+				$Paginationpage = ($curpage - $offset > 1 && $pages > $page ? "<a href=javascript:; onclick=ajaxpage('{$ajax_dom}','{$mpurl}page=1{$anchor}&count='.$num,'1')>".$_lang['first_page']."</a>" : '') . ($curpage > 1 ? "<a href=javascript:; onclick=ajaxpage('{$ajax_dom}','{$mpurl}page=" . ($curpage - 1). $anchor."&count='.$num.'','".($curpage-1)."')><<".$_lang['Previous_page']."</a> " : '');
 			
 			}elseif($this->_static){
-				$Paginationpage = ($curpage - $offset > 1 && $pages > $page ? '<a href="' . $mpurl . '1.htm'.$anchor.'">'.$_lang['first_page'].'</a> ' : '') . ($curpage > 1 ? '<a href="' . $mpurl .($curpage - 1).'.htm'.$anchor. '"><<'.$_lang['Previous_page'].'</a> ' : '');
+				$Paginationpage = ($curpage - $offset > 1 && $pages > $page ? '<a href="' . $mpurl . '1.htm'.$anchor.'&count='.$num.'">'.$_lang['first_page'].'</a> ' : '') . ($curpage > 1 ? '<a href="' . $mpurl .($curpage - 1).'.htm'.$anchor. '&count='.$num.'"><<'.$_lang['Previous_page'].'</a> ' : '');
 			}
 			else {
-				$Paginationpage = ($curpage - $offset > 1 && $pages > $page ? '<a href="' . $mpurl . 'page=1'.$anchor.'">'.$_lang['first_page'].'</a> ' : '') . ($curpage > 1 ? '<a href="' . $mpurl . 'page=' . ($curpage - 1).$anchor. '"><<'.$_lang['Previous_page'].'</a> ' : '');
+				$Paginationpage = ($curpage - $offset > 1 && $pages > $page ? '<a href="' . $mpurl . 'page=1'.$anchor.'&count='.$num.'">'.$_lang['first_page'].'</a> ' : '') . ($curpage > 1 ? '<a href="' . $mpurl . 'page=' . ($curpage - 1).$anchor. '&count='.$num.'"><<'.$_lang['Previous_page'].'</a> ' : '');
 			}
 			
 			for($i = $from; $i <= $to; $i ++) {
 				if ($this->_ajax) {
-					$Paginationpage .= $i == $curpage ? '<a class="selected">' . $i . '</a>' : "<a href=javascript:; onclick=ajaxpage('{$ajax_dom}','" . $mpurl . "page={$i}{$anchor}','{$i}')>{$i}</a>";
+					$Paginationpage .= $i == $curpage ? '<a class="selected">' . $i . '</a>' : "<a href=javascript:; onclick=ajaxpage('{$ajax_dom}','" . $mpurl . "page={$i}{$anchor}&count='.$num.'','{$i}')>{$i}</a>";
 				}
 				elseif($this->_static){
-					$Paginationpage .= $i == $curpage ? '<a class="selected">' . $i . '</a>' : '<a href="' . $mpurl. $i . '.htm' .$anchor. '">' . $i . '</a> ';
+					$Paginationpage .= $i == $curpage ? '<a class="selected">' . $i . '</a>' : '<a href="' . $mpurl. $i . '.htm' .$anchor. '&count='.$num.'">' . $i . '</a> ';
 				} else {
-					$Paginationpage .= $i == $curpage ? '<a class="selected">' . $i . '</a>' : '<a href="' . $mpurl . 'page=' . $i .$anchor. '">' . $i . '</a> ';
+					$Paginationpage .= $i == $curpage ? '<a class="selected">' . $i . '</a>' : '<a href="' . $mpurl . 'page=' . $i .$anchor. '&count='.$num.'">' . $i . '</a> ';
 				}
 			}
 			if ($this->_ajax) {
-				$Paginationpage .= ($curpage < $pages ? "<a href=javascript:; onclick=ajaxpage('{$ajax_dom}','" . $mpurl . "page=" . ($curpage + 1) .$anchor. "','".($curpage+1)."')>".$_lang['next_page'].">></a>" : '') . ($to < $pages ? " <a href=javascript:; onclick=ajaxpage('{$ajax_dom}','" . $mpurl . "page={$pages}{$anchor}','{$pages}')>".$_lang['last_page']."</a>" : '');
+				$Paginationpage .= ($curpage < $pages ? "<a href=javascript:; onclick=ajaxpage('{$ajax_dom}','" . $mpurl . "page=" . ($curpage + 1) ."&count='.$num.'" .$anchor. "','".($curpage+1)."')>".$_lang['next_page'].">></a>" : '') . ($to < $pages ? " <a href=javascript:; onclick=ajaxpage('{$ajax_dom}','" . $mpurl . "page={$pages}&count='.$num.'{$anchor}','{$pages}')>".$_lang['last_page']."</a>" : '');
 				$Paginationpage = $Paginationpage ? '<span> ' . $curpage . ' / ' . $pages . $_lang['page'].' </span> ' . $Paginationpage : '';
 			}elseif($this->_static){
 				$Paginationpage .= ($curpage < $pages ? '<a href="' . $mpurl .($curpage + 1).'.htm'.$anchor. '">'.$_lang['next_page'].'>></a>' : '') . ($to < $pages ? ' <a href="' . $mpurl . $pages.'.htm'.$anchor. '">'.$_lang['last_page'].'</a>' : '');
 				$Paginationpage = $Paginationpage ? '<span> ' . $curpage . ' / ' . $pages . $_lang['page'].'</span> ' . $Paginationpage : '';
 			} else {
-				$Paginationpage .= ($curpage < $pages ? '<a href="' . $mpurl . 'page=' . ($curpage + 1).$anchor. '">'.$_lang['next_page'].'>></a>' : '') . ($to < $pages ? ' <a href="' . $mpurl . 'page=' . $pages.$anchor. '">'.$_lang['last_page'].'</a>' : '');
+				$Paginationpage .= ($curpage < $pages ? '<a href="' . $mpurl . 'page=' . ($curpage + 1)."&count=$num".$anchor. '">'.$_lang['next_page'].'>></a>' : '') . ($to < $pages ? ' <a href="' . $mpurl . 'page=' . $pages."&count=$num".$anchor. '">'.$_lang['last_page'].'</a>' : '');
 				$Paginationpage = $Paginationpage ? '<span> ' . $curpage . ' / ' . $pages . $_lang['page'].'</span> ' . $Paginationpage : '';
 			}
 		}
@@ -158,5 +158,3 @@ class keke_page_class {
 		return $page;
 	}
 }
-
-?>

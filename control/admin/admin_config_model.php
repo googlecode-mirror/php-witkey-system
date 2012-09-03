@@ -5,7 +5,7 @@
  * @version v 2.0
  * 2011-12-13
  */
-defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 kekezu::admin_check_role ( 37 );
 $model_type or $model_type = 'task';
 kekezu::empty_cache();
@@ -61,4 +61,4 @@ if ($op == "open") {
 	die ();
 }
 $model_list = $kekezu->_model_list;
-require $template_obj->template ( 'control/admin/tpl/admin_config_model' );
+require Keke_tpl::template ( 'control/admin/tpl/admin_config_model' );

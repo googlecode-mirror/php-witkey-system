@@ -68,4 +68,4 @@ switch ($ac) {
 
 }
 
-require $template_obj->template ( 'ajax/ajax' );
+require Keke_tpl::template ( 'ajax/ajax' );

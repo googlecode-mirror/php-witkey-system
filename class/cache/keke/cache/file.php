@@ -137,7 +137,9 @@ class Keke_cache_file extends Keke_cache {
 		}
 	
 	}
-	
+	function add($id,$val){
+		throw new Keke_exception(__CLASS__.'/'.__FUNCTION__.'() is empty');
+	}
 	function del($id) {
 		if (is_file ( $id )) {
 			unlink ( $id );
@@ -182,9 +184,7 @@ class Keke_cache_file extends Keke_cache {
 	function gc(){
 		$this->deldir ( $this->path,true);
 	}
-	function add($id,$val){
-		
-	}
+	
 
 }
 

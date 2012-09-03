@@ -144,4 +144,4 @@ if ($target_id) {
 }
 $tpl_arr = db_factory::query ( 'select tpl_id,tpl_title from ' . TABLEPRE . 'witkey_template;' );
 // var_dump($ad_data,$tpl_arr);die();
-require $template_obj->template ( 'control/admin/tpl/admin_' . $do . '_' . $view );
+require Keke_tpl::template ( 'control/admin/tpl/admin_' . $do . '_' . $view );

@@ -54,4 +54,4 @@ if ($ac && $ac == 'edit') {
 $template_style_obj = new Keke_witkey_template_class ();  
 $template_arr = $template_style_obj->query_keke_witkey_template ();
 
-require $template_obj->template ( 'control/admin/tpl/admin_' . $do . '_' . $view );
+require Keke_tpl::template ( 'control/admin/tpl/admin_' . $do . '_' . $view );

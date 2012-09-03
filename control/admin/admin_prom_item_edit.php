@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' ) or exit('Access Denied');
+<?php	defined ( 'IN_KEKE' ) or exit('Access Denied');
 /**
  * @copyright keke-tech
  * @author Liyingqing
@@ -27,4 +27,4 @@ if( $sbt_edit ) {
 } else {
 	$item_id and $item_info = db_factory::get_one(" select * from ".TABLEPRE."witkey_prom_item where item_id = '$item_id'");
 }
-require $template_obj->template ( 'control/admin/tpl/admin_'.$do.'_' . $view );
+require Keke_tpl::template ( 'control/admin/tpl/admin_'.$do.'_' . $view );

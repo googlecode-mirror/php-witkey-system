@@ -76,10 +76,10 @@
 					var username=$("#txt_username").val();
 					var password=$("#pwd_pwd").val();
 					var token=$("#token").val();
-					$.post("{BASE_URL}/index.php/login/login&tt="+new Date().getTime(),
+					$.post("{BASE_URL}/index.php/admin/login/login",
 					{user_name:username,pass_word:password,allow_num:allow_num,token:token},function(json){
 						if(json.status==1){
-							location.href="index.php";
+							location.href="{BASE_URL}/index.php/admin/index";
 						}else{
 							if (json.data.times > 0) {
 								$("#allow_num").val(json.data.times);
@@ -87,7 +87,7 @@
 								$("#token").val(json.data.formhash);
 							}
 							if (json.data.times == 0) {
-								location.href='index.php';
+								location.href='{BASE_URL}/index.php/admin/login';
 							}
 							return false;
 						}

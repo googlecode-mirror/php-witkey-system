@@ -5,7 +5,7 @@
  * @version v 2.0
  * 2011-09-29 15:31:34
  */
-defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 
 $goods_config = Keke::get_task_config($model_id);
 is_array($goods_config) and extract($goods_config) or $goods_config=array();

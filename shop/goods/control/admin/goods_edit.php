@@ -5,7 +5,7 @@
  * @version v 2.0
  * 2011-09-29 13:51:34
  */
-defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 $pk['service_id'] and $service_id=$pk['service_id'];
 $service_id or Keke::admin_show_msg($_lang['please_choose_should_edit_goods'],'index.php?do=model&model_id=6&view=list',3,'','warning');
 $indus_p_arr = Keke::$_indus_p_arr;

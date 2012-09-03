@@ -1,4 +1,4 @@
-<?php defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+<?php defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * @copyright keke-tech
  * @author Liyingqing
@@ -77,7 +77,7 @@ $cat_arr = array ();
 
 kekezu::get_tree ( $art_cat_arr, $cat_arr, 'option', $art_id, 'art_cat_id', 'art_cat_pid', 'cat_name' );
 
-require $template_obj->template ( 'control/admin/tpl/admin_' . $do . "_" . $view );
+require Keke_tpl::template ( 'control/admin/tpl/admin_' . $do . "_" . $view );
 
 function get_fid($path){//删除图片时获取图片对应的fid,图片的存放形式是e.g ...img.jpg?fid=1000
 	if(!path){

@@ -5,7 +5,7 @@
  * @version v 2.0
  * 2011-9-01 11:35:13
  */
-defined ( "ADMIN_KEKE" ) or exit ( "Access Denied" ); //控制权限
+defined ( "IN_KEKE" ) or exit ( "Access Denied" ); //控制权限
 Keke::admin_check_role(69);
 $enterprise_obj     = new Keke_witkey_auth_enterprise_class( );//实例化企业认证表对象
 $url = "index.php?do=" . $do . "&view=" . $view . "&auth_code=" . $auth_code . "&w[page_size]=" . $w [page_size] . "&w[enterprise_auth_id]=" . $w [enterprise_auth_id] . "&w[username]=" . $w [username] . "&w[auth_status]=" . $w [auth_status]; //跳转地址

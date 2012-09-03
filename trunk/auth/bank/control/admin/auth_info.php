@@ -5,7 +5,7 @@
  * @version v 2.0
  * 2011-9-01下午2:37:13
  */
-defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 $bank_obj = new Keke_witkey_auth_bank_class(); //实例化企业认证表对象
 $pay_tool_arr = array (1 =>$_lang['alipay'], 2 => $_lang['tenpay'], 3 => $_lang['payment_online'] );
 $bank_name_arr = keke_global_class::get_bank();
@@ -22,4 +22,4 @@ if ($sbt_pay_to_user) {
 }else{
 	$bank_a_id and $bank_info = dbfactory::get_one(sprintf(" select * from %switkey_auth_bank where bank_a_id = '%d'",TABLEPRE,$bank_a_id));
 }
-require $template_obj->template ( 'auth/' . $auth_dir . '/control/admin/tpl/auth_info' );
+require Keke_tpl::template ( 'auth/' . $auth_dir . '/control/admin/tpl/auth_info' );

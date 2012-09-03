@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * 用户管理
  */
@@ -46,4 +46,4 @@ if ($is_submit == 1) {
 	}
 }
 
-require $template_obj->template ( 'control/admin/tpl/admin_user_add' );
+require Keke_tpl::template ( 'control/admin/tpl/admin_user_add' );

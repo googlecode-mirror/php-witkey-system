@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * @copyright keke-tech
  * @author Chen
@@ -25,4 +25,4 @@ if( isset($sbt_edit) ) {
 //查找 有relation_id则为编辑, 没有则为添加
 isset($relation_id) && $relation_info = db_factory::get_one(" select * from ".TABLEPRE."witkey_prom_relation where relation_id = '$relation_id'");
 
-require $template_obj->template('control/admin/tpl/admin_'.$do."_".$view);
+require Keke_tpl::template('control/admin/tpl/admin_'.$do."_".$view);

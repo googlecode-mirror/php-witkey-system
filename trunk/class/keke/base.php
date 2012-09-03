@@ -248,14 +248,11 @@ class Keke_base {
 	}
 	
 	static function gbktoutf($string) {
-		
-		$string = self::charset_encode ( "gb2312", "utf-8", $string );
+		$string = self::charset_encode ( "gbk", "utf-8", $string );
 		return $string;
 	}
 	static function utftogbk($string) { // gbk是gb2312(简体中文)的扩展,包括繁体等
-		
-
-		$string = self::charset_encode ( "utf-8", "gb2312", $string );
+		$string = self::charset_encode ( "utf-8", "gbk", $string );
 		return $string;
 	}
 	
@@ -785,6 +782,18 @@ class Keke_base {
 		curl_close ( $ci );
 		return $response;
 	
+	}
+	// 系统日志
+	static function admin_system_log($msg) {
+		global $_K, $admin_info;
+		$system_log_obj = new Keke_witkey_system_log();
+		$system_log_obj->setLog_content ( $msg );
+		$system_log_obj->setLog_ip ( Keke::get_ip () );
+		$system_log_obj->setLog_time ( time () );
+		$system_log_obj->setUser_type ( $admin_info ['group_id'] );
+		$system_log_obj->setUid ( $admin_info ['uid'] ? $admin_info ['uid'] : $_SESSION ['uid'] );
+		$system_log_obj->setUsername ( $admin_info ['username'] ? $admin_info ['username'] : $_SESSION ['username'] );
+		$system_log_obj->create();
 	}
 
 }

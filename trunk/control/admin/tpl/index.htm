@@ -3,15 +3,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset={$_K['charset']}">
 <title>{P_NAME} {KEKE_VERSION}--{$_lang['admin_keke_sys']}</title>
-<link rel="shortcut icon" href="../../resource/img/system/logo.ico" />
-<link rel="apple-touch-icon" href="../../resource/img/system/logo.ico"/>
-<link href="tpl/css/admin_management.css" rel="stylesheet" type="text/css" />
-<link href="../../resource/css/button/stylesheets/css3buttons.css" rel="stylesheet" type="text/css" />
-<link title="style1" href="tpl/skin/default/style.css" rel="stylesheet" type="text/css" />
-<!--<link title="style2" href="tpl/skin/light/style.css" rel="stylesheet" type="text/css" />-->
-<script type="text/javascript" src="../../resource/js/jquery.js"></script>
-<script type="text/javascript" src="../../resource/js/jquery.js"></script>
-<script type="text/javascript" src="../../lang/{$language}/script/lang.js" ></script>
+<link rel="shortcut icon" href="{BASE_URL}/resource/img/system/logo.ico" />
+<link rel="apple-touch-icon" href="{BASE_URL}/resource/img/system/logo.ico"/>
+<link href="{BASE_URL}/control/admin/tpl/css/admin_management.css" rel="stylesheet" type="text/css" />
+<link href="{BASE_URL}/resource/css/button/stylesheets/css3buttons.css" rel="stylesheet" type="text/css" />
+<link href="{BASE_URL}/control/admin/tpl/skin/default/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="{BASE_URL}/resource/js/jquery.js"></script>
+<script type="text/javascript" src="{BASE_URL}/lang/{$_K['language']}/script/lang.js" ></script>
 </head>
 
 <body class="skin" scroll="no">
@@ -21,14 +19,14 @@
 <div id="append_parent"></div>
 <div id="ajaxwaitid" style="display:none">
 	<div>
-        	<img src="../../resource/img/system/loading.gif" alt="loading"/>
+        	<img src="{BASE_URL}/resource/img/system/loading.gif" alt="loading"/>
 			{$_lang['request_processing']}
 	</div>
 </div>
 <div class="login_box">
 <div class="header">
 	<div class="logo">
-		<h1><img src="tpl/img/logo.png" alt="{$_lang['admin_keke_sys']}" title="{$_lang['admin_keke_sys']}"/></h1>
+		<h1><img src="{BASE_URL}/control/admin/tpl/img/logo.png" alt="{$_lang['admin_keke_sys']}" title="{$_lang['admin_keke_sys']}"/></h1>
     </div>
 	
     <div class="nav" id="nav_div">
@@ -90,14 +88,20 @@
 	
     
     <div class="user_box">
-    	<div class="avatar">
-        	<a href="#" title="admin"><!--{userpic($admin_info['uid'],'small')}--></a> </div>
-        <div class="name">{$_lang['hello']}，{if $admin_info['uid']==ADMIN_UID}{$_lang['public_admin_uid']}{else}$grouplist_arr[$admin_info['group_id']]['groupname']{/if}<b>$admin_info['username']</b></div>
+    	 
+        <div class="name">{$_lang['hello']}，
+		{if $admin_info['uid']==ADMIN_UID}
+		   {$_lang['public_admin_uid']}
+		{else}
+			{$grouplist_arr[$_K['user_info']['group_id']]['groupname']}
+		{/if}
+		<b>{$_K['user_info']['username']}</b>
+		</div>
         <div class="link_bar">
         	<a href="javascript:;" class="lock" onclick="fresh();" title="{$_lang['lock']}">{$_lang['refresh']}</a> 
          	<a href="javascript:;" class="lock" onclick="del_cache();" title="{$_lang['lock']}">{$_lang['clear_cache']}</a> 
 			<a href="javascript:;" class="lock" onclick="lock();" title="{$_lang['lock']}">{$_lang['lock']}</a>
-            <a href="../../index.php" target="_blank" class="sitehome">{$_lang['website_home']}</a>
+            <a href="{BASE_URL}/index.php" target="_blank" class="sitehome">{$_lang['website_home']}</a>
             <a href="index.php?do=logout" class="exit">{$_lang['safe_exit']}</a>        
         </div>
    </div>
@@ -116,8 +120,6 @@ function del_cache(){
 	},'json');
 	
 	 
-	//$("#display_frame").attr("src","src""&index.php?do=tool&view=cache&sbt_edit=1&ckb_obj_cache=1&ckb_tpl_cache=1");
-	
 }
 function fresh(){
 	document.getElementById("display_frame").contentDocument.location.reload(true); 
@@ -143,7 +145,7 @@ window.onload = function(){
 			                        <ul id="ul_kjcz">
 			                        	
 			                        	<!--{loop $fast_menu_arr $k $v}-->
-			                        		<li><a href="{$v['resource_url']}" target="display_frame" {if $k==0}class="select"{/if} r_id="{$v['resource_id']}">{$v['resource_name']}</a></li>
+			                        		<li><a href="{BASE_URL}/{$v['resource_url']}" target="display_frame" {if $k==0}class="select"{/if} r_id="{$v['resource_id']}">{$v['resource_name']}</a></li>
 										<!--{/loop}-->
 									</ul>
 			                  </dd>
@@ -151,14 +153,14 @@ window.onload = function(){
 		       </div>
 			   
 		   <!--{loop $menu_arr  $k $v}-->
-		        <div id="$k" class="menu_bar">
+		        <div id="{$k}" class="menu_bar">
 		       	   <!--{loop $sub_menu_arr[$k] $kk $vv}-->
 				   		<dl>
-		                  	<dt><i class="arrow_r">&nbsp;</i>$vv['name']</dt>
+		                  	<dt><i class="arrow_r">&nbsp;</i>{$vv['name']}</dt>
 			                  <dd>
 			                        <ul >
 			                        	<!--{loop $vv['items'] $kkk $vvv}-->
-											<li><a href="$vvv['resource_url']" target="display_frame" r_id="{$vvv['resource_id']}">$vvv['resource_name']</a></li>
+											<li><a href="{BASE_URL}/{$vvv['resource_url']}" target="display_frame" r_id="{$vvv['resource_id']}">{$vvv['resource_name']}</a></li>
 										<!--{/loop}-->
 	 		                        </ul>
 			                  </dd>
@@ -175,7 +177,7 @@ window.onload = function(){
 
 <div class="tool_box">
 	<div class="bread">
-    <a href="index.php?do=main" target="display_frame">{$_lang['manage_home']}</a>
+    <a href="{BASE_URL}/index.php/admin/main" target="display_frame">{$_lang['manage_home']}</a>
     <span class="font_st">&gt;</span>
     <a href="javascript:void(0)" id="href_title">{$_lang['faster_operate']}</a>
     <a href="#" onclick="shortcuts(this);" id="add_shortcuts" ac='add_shortcuts' title="{$_lang['add_faster_operate']}"><span class="font_st">[+]</span></a>
@@ -188,7 +190,7 @@ window.onload = function(){
 </div>
 
 <div class="frame_box po_re">	
-	<iframe id="display_frame" name="display_frame"  scrolling="auto"  src="index.php?do=main" frameborder="0" ></iframe>
+	<iframe id="display_frame" name="display_frame"  scrolling="auto"  src="{BASE_URL}/index.php/admin/main" frameborder="0" ></iframe>
 </div>
 <script type="text/javascript">
 /*add shortcuts*/  
@@ -264,7 +266,7 @@ function lock(){
 
 /**show screen lock**/
 $(function(){
-	var ifLock=parseInt($check_screen_lock)+0;
+	var ifLock=parseInt({$check_screen_lock})+0;
 	if(ifLock==1){
 		hidepanel();
 		showlogin();
@@ -372,7 +374,8 @@ $(function() {
 				reset_shortcuts(first_sub_menu);//左导航当前选择项快捷[+-]显示方式重置
 			/*---导航点击后左导航首条选中---*/
 		    h =$(first_sub_menu).attr('href');
-		$("#display_frame").attr('src',h+'&tt='+Math.random());
+			
+		$("#display_frame").attr('src',h+'?tt='+Math.random());
 	});
 	$('.side_bar').hover(function(){
 		  $(this).css('overflow-y','auto'); 
@@ -390,10 +393,10 @@ $(function() {
 <!--[if IE 6]></div><![endif]-->
 <!--[if IE 7]></div><![endif]-->
 <!--[if IE 8]></div><![endif]-->
-<script type="text/javascript" src="../../resource/js/artdialog/artDialog.js"></script>
-<script type="text/javascript" src="../../resource/js/artdialog/jquery.artDialog.js?skin=default"></script>
-<script type="text/javascript" src="../../resource/js/artdialog/artDialog.iframeTools.source.js"></script>
-<script type="text/javascript" src="tpl/js/jquery.mousewheel.min.js"></script>
+<script type="text/javascript" src="{BASE_URL}/resource/js/artdialog/artDialog.js"></script>
+<script type="text/javascript" src="{BASE_URL}/resource/js/artdialog/jquery.artDialog.js?skin=default"></script>
+<script type="text/javascript" src="{BASE_URL}/resource/js/artdialog/artDialog.iframeTools.source.js"></script>
+
  
 </body>
 </html>

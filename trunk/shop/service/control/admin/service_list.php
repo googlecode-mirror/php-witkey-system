@@ -5,7 +5,7 @@
  * @version v 2.0
  * 2011-09-29 13:51:34
  */
-defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 $table_obj = keke_table_class::get_instance('witkey_service');
 $service_obj = new service_shop_class();
 

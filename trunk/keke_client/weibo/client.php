@@ -1,8 +1,5 @@
-<?php
+<?php defined ( 'IN_KEKE' )  or 	exit ( 'Access Denied' );
 
-if (! defined ( 'IN_KEKE' ) && ! defined ( 'ADMIN_KEKE' )) {
-	exit ( 'Access Denied' );
-}
 
 class oauth_api_factory {
 	/**

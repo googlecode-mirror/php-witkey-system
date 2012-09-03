@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' ) or 	exit ( 'Access Denied' );
+<?php	defined ( 'IN_KEKE' ) or 	exit ( 'Access Denied' );
 /**
 *客服管理
 */
@@ -33,7 +33,7 @@ switch ($op) {
 				}
 			}
 		}
-		require $template_obj->template ( 'control/admin/tpl/admin_user_custom_add' );
+		require Keke_tpl::template ( 'control/admin/tpl/admin_user_custom_add' );
 		die();
 		break;
 	case "del" :
@@ -77,5 +77,5 @@ switch ($op) {
 		
 		$grouplist_arr = keke_admin_class::get_user_group ();
 		
-require $template_obj->template ( 'control/admin/tpl/admin_user_custom_list' );
+require Keke_tpl::template ( 'control/admin/tpl/admin_user_custom_list' );
 

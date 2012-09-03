@@ -7,7 +7,7 @@
  * 2011-8-24 16:28
  */
 
-defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 kekezu::admin_check_role ( 7 );
 
 $indus_obj = new Keke_witkey_industry_class ();

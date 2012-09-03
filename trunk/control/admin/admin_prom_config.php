@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' ) or die ( 'Access Denied' );
+<?php	defined ( 'IN_KEKE' ) or die ( 'Access Denied' );
 /**
  * @copyright keke-tech
  * @author hr
@@ -102,4 +102,4 @@ switch ($op) {
 
 		break;
 }
-require $template_obj->template ( 'control/admin/tpl/admin_' . $do . '_' . $view );	
+require Keke_tpl::template ( 'control/admin/tpl/admin_' . $do . '_' . $view );	

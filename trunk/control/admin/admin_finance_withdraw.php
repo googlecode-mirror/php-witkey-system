@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * 财务--提现审核
  * @copyright keke-tech
@@ -69,7 +69,7 @@ if (isset ( $ac )) { //处理财务清单申请
 					$bank_arr=keke_glob_class::get_bank();
 					$k_arr   = array_keys($bank_arr);
 				}
-				require $template_obj->template ( 'control/admin/tpl/admin_finance_withdraw_info' );
+				require Keke_tpl::template ( 'control/admin/tpl/admin_finance_withdraw_info' );
 				die ();
 			} else {
 				kekezu::admin_show_msg ( $_lang['audit_withdraw_not_exist'], 'index.php?do=' . $do . '&view=' . $view,3,'','warning' );
@@ -245,4 +245,4 @@ if (isset ( $ac )) { //处理财务清单申请
 	$withdraw_info = $withdraw_info ['0'];
 } */
 
-require $template_obj->template ( 'control/admin/tpl/admin_' . $do . '_' . $view );
+require Keke_tpl::template ( 'control/admin/tpl/admin_' . $do . '_' . $view );

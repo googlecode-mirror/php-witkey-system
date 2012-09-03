@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * ÓÊ¼þÅäÖÃ
  * @copyright keke-tech
@@ -74,4 +74,4 @@ if (isset ( $email )) {
 	die ();
 }
 
-require  $template_obj->template ( 'control/admin/tpl/admin_config_' . $view );
+require  Keke_tpl::template ( 'control/admin/tpl/admin_config_' . $view );

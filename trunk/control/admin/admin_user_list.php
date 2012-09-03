@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * 用户管理
  */
@@ -90,6 +90,6 @@ if ($sbt_action && is_array ( $ckb )) {
 	$pages = $res ['pages'];
 }
 
-require $template_obj->template ( 'control/admin/tpl/admin_user_list' );
+require Keke_tpl::template ( 'control/admin/tpl/admin_user_list' );
 		
  

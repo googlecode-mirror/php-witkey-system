@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * Ä£°å¹ÜÀí
  * @author S
@@ -140,4 +140,4 @@ if ($delid) {
 	}
 }
 
-require $template_obj->template ( 'control/admin/tpl/admin_config_' . $view );
+require Keke_tpl::template ( 'control/admin/tpl/admin_config_' . $view );

@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * 系统日志
  * @copyright keke-tech
@@ -53,4 +53,4 @@ if ($ac == 'del') {
 
 }
 
-require $template_obj->template ( 'control/admin/tpl/admin_' . $do . '_' . $view );
+require Keke_tpl::template ( 'control/admin/tpl/admin_' . $do . '_' . $view );

@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * 增值服务的安装，uninstall,查询，删除
  * this not free,powered by keke-tech
@@ -40,5 +40,5 @@ if ($item_id) {
 
 }
 
-require $template_obj->template ( 'control/admin/tpl/admin_payitem_' . $view );
+require Keke_tpl::template ( 'control/admin/tpl/admin_payitem_' . $view );
  

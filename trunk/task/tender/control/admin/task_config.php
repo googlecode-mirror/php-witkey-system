@@ -5,7 +5,7 @@
  * @version v 2.0
  * 2011-11-07 11:31:34
  */
-defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 $ops = array ("config", "control", "priv","cash_rule");
 in_array ( $op, $ops ) or $op = 'config';
 $ac_url = "index.php?do=model&model_id=$model_id&view=config&op=$op";

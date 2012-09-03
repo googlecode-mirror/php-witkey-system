@@ -6,7 +6,7 @@
  * @version kppw 2.0
  * 2011-12-14
  */
-defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 kekezu::admin_check_role ( 40 );
 $table_obj = keke_table_class::get_instance ( 'witkey_comment' );
 $wh = " obj_type = 6";
@@ -47,8 +47,8 @@ if ($by) {
 		echo $str;
 		die ();
 	}
-	require $template_obj->template ( 'control/admin/tpl/admin_task_' . $view . '_reply' );
+	require Keke_tpl::template ( 'control/admin/tpl/admin_task_' . $view . '_reply' );
 	exit ();
 }
 
-require $template_obj->template ( 'control/admin/tpl/admin_task_' . $view );
+require Keke_tpl::template ( 'control/admin/tpl/admin_task_' . $view );

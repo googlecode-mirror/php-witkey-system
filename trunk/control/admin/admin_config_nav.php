@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * µ¼º½²Ëµ¥ÅäÖÃ
  * @author S
@@ -31,7 +31,7 @@ if($ac == 'edit'){
 		$res = $nav_obj->save($fds,$pk);
 		($res || $set_rs) and kekezu::admin_show_msg($_lang['operate_success'],$url,2,$_lang['edit_success'],"success") or kekezu::admin_show_msg($_lang['operate_fail'],$url,2,$_lang['edit_fail'],"error");
 	}
-	require $template_obj->template ( 'control/admin/tpl/admin_config_' . $view.'_edit' );
+	require Keke_tpl::template ( 'control/admin/tpl/admin_config_' . $view.'_edit' );
 	die;
 }
 //É¾³ýµ¼º½
@@ -76,4 +76,4 @@ function nav_analysis($url){
 	}
 	return $readnonly;
 }
-require $template_obj->template ( 'control/admin/tpl/admin_config_' . $view );
+require Keke_tpl::template ( 'control/admin/tpl/admin_config_' . $view );

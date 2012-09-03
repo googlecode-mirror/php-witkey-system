@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * @copyright keke-tech
  * @author Chen
@@ -61,4 +61,4 @@ if (isset ( $ac )) {//É¾³ý
 
 }
 
-require $template_obj->template ( 'control/admin/tpl/admin_' . $do . '_' . $view );
+require Keke_tpl::template ( 'control/admin/tpl/admin_' . $do . '_' . $view );

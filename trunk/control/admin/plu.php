@@ -10,7 +10,7 @@
  
 $tpl_mode = 1;
  
-define('ADMIN_KEKE',TRUE);
+define('IN_KEKE',TRUE);
 require '../../app_comm.php';
 
 define('ADMIN_ROOT',S_ROOT.'./control/admin/');//后台根目录

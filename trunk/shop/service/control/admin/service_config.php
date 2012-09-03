@@ -5,7 +5,7 @@
  * @version v 2.0
  * 2011-09-29 15:31:34
  */
-defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 $service_config = new shop_service_config_class();//威客服务后台的流程配置实例化
 
 $ops = array ("config", "control", "priv" );

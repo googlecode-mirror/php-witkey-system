@@ -6,7 +6,7 @@
  * 2011-11-11ÏÂÎç02:29:58
  */
 
-defined ( "ADMIN_KEKE" ) or exit ( "Access denied!" );
+defined ( "IN_KEKE" ) or exit ( "Access denied!" );
 $path = S_ROOT.'/keke_client/keke/config.php';
 include $path;
 $op or $op = 'apply';
@@ -35,7 +35,7 @@ $url = 'http://www.kekezu.com/union/apply.php';
 //²âÊÔµØÖ·
 $url='http://192.168.1.118/server/apply.php'; 
 if($op=='apply'){
-	require $template_obj->template ( "control/admin/tpl/admin_keke_account_apply" );
+	require Keke_tpl::template ( "control/admin/tpl/IN_KEKE_account_apply" );
 }else{
-	require $template_obj->template ( "control/admin/tpl/admin_keke_account_config" );
+	require Keke_tpl::template ( "control/admin/tpl/IN_KEKE_account_config" );
 }

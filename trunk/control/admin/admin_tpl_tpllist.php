@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * @copyright keke-tech
  * @author yuan
@@ -12,5 +12,5 @@ $file_obj = new keke_file_class();
 
 $tpllist = $file_obj->get_dir_file_info($filepath,true,true); 
 arsort($tpllist);
-require_once $template_obj->template ( 'control/admin/tpl/admin_tpl_tpllist');
+require_once Keke_tpl::template ( 'control/admin/tpl/admin_tpl_tpllist');
 

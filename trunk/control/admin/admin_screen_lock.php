@@ -6,7 +6,7 @@
  * @version v 2.0
  * 2011-08-30 09:51:34
  */
-defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 switch ($ac){
 	case "lock":
 		$admin_obj->screen_lock();

@@ -14,6 +14,6 @@ $_K['directory'] or $_K['directory'] = 'index';
 keke_lang_class::package_init ( $_K['directory'] );
 keke_lang_class::loadlang ( $_K ['control'] );
 
-$request->execute ();
+echo $request->execute();
 
 

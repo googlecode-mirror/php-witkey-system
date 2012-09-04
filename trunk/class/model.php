@@ -62,7 +62,7 @@ abstract class Model {
 /**
  * 获取网格数据
  * @param String $fields  字段
- * @param String  Array $wh   支持字串与数组
+ * @param String  $wh   只支持字串
  * @param String $uri  跳转url
  * @param String $order  排序字串
  * @param int $page   当前页数
@@ -80,16 +80,11 @@ abstract class Model {
 			$page_obj->setAjax ( '1' );
 			$page_obj->setAjaxDom ( $ajax_dom );
 		}
-		//数组条件
-		if (is_array ( $wh )) {
-			$where = " 1 = 1";
-			$wh ['w'] = array_filter ( $wh ['w'] );
-			foreach ( $wh ['w'] as $k => $v ) {
-				$where .= " and $k = '$v'";
-			}
-		} else {
+		if ( $wh ) {
 			//字符条件
 			$where = $wh;
+		}else{
+			$where = ' 1=1 ';
 		}
 		//统计表的总记录数,如果count有值不用再次查询，确保分页只有一次查询
 		if(!$count){

@@ -45,9 +45,9 @@ class Keke_HTTP_Cache {
 	{
 		if ( ! $cache instanceof Cache)
 		{
-			$cache = Cache::instance($cache);
+			$cache = Cache::instance('file');
 		}
-
+       
 		$options['cache'] = $cache;
 
 		return new Keke_HTTP_Cache($options);
@@ -133,23 +133,23 @@ class Keke_HTTP_Cache {
 	 * @param   Request   request to execute with client
 	 * @return  [Response]
 	 */
-	public function execute(Request_Client $client, Request $request)
+	public function execute(Keke_Request_Client $client, Request $request)
 	{
 		if ( ! $this->_cache instanceof Cache)
 			return $client->execute_request($request);
 
 		// If this is a destructive request, by-pass cache completely
 		if (in_array($request->method(), array(
-			HTTP_Request::POST, 
-			HTTP_Request::PUT, 
-			HTTP_Request::DELETE)))
+			Keke_HTTP_Request::POST, 
+			Keke_HTTP_Request::PUT, 
+			Keke_HTTP_Request::DELETE)))
 		{
 			// Kill existing caches for this request
 			$this->invalidate_cache($request);
 
 			$response = $client->execute_request($request);
 
-			$cache_control = HTTP_Header::create_cache_control(array(
+			$cache_control = Keke_HTTP_Header::create_cache_control(array(
 				'no-cache',
 				'must-revalidate'
 			));
@@ -306,7 +306,7 @@ class Keke_HTTP_Cache {
 	{
 		$headers = $response->headers()->getArrayCopy();
 
-		if ($cache_control = Arr::get($headers, 'cache-control'))
+		if ($cache_control = $headers['cache-control'])
 		{
 			// Parse the cache control
 			$cache_control = Keke_HTTP_Header::parse_cache_control($cache_control);
@@ -375,20 +375,20 @@ class Keke_HTTP_Cache {
 				return FALSE;
 
 			// Do cache hit arithmetic, using fast arithmetic if available
-			if ($this->_cache instanceof Cache_Arithmetic)
+			/* if ($this->_cache instanceof Cache_Arithmetic)
 			{
 				$hit_count = $this->_cache->increment(HTTP_Cache::CACHE_HIT_KEY.$key);
 			}
 			else
-			{
-				$hit_count = $this->_cache->get(HTTP_Cache::CACHE_HIT_KEY.$key);
-				$this->_cache->set(HTTP_Cache::CACHE_HIT_KEY.$key, ++$hit_count);
-			}
+			{ */
+				$hit_count = $this->_cache->get(Keke_HTTP_Cache::CACHE_HIT_KEY.$key);
+				$this->_cache->set(Keke_HTTP_Cache::CACHE_HIT_KEY.$key, ++$hit_count);
+			//}
 
 			// Update the header to have correct HIT status and count
-			$response->headers(HTTP_Cache::CACHE_STATUS_KEY,
-				HTTP_Cache::CACHE_STATUS_HIT)
-				->headers(HTTP_Cache::CACHE_HIT_KEY, $hit_count);
+			$response->headers(Keke_HTTP_Cache::CACHE_STATUS_KEY,
+				Keke_HTTP_Cache::CACHE_STATUS_HIT)
+				->headers(Keke_HTTP_Cache::CACHE_HIT_KEY, $hit_count);
 
 			return $response;
 		}
@@ -397,11 +397,11 @@ class Keke_HTTP_Cache {
 			if (($ttl = $this->cache_lifetime($response)) === FALSE)
 				return FALSE;
 
-			$response->headers(HTTP_Cache::CACHE_STATUS_KEY,
-				HTTP_Cache::CACHE_STATUS_SAVED);
+			$response->headers(Keke_HTTP_Cache::CACHE_STATUS_KEY,
+				Keke_HTTP_Cache::CACHE_STATUS_SAVED);
 
 			// Set the hit count to zero
-			$this->_cache->set(HTTP_Cache::CACHE_HIT_KEY.$key, 0);
+			$this->_cache->set(Keke_HTTP_Cache::CACHE_HIT_KEY.$key, 0);
 
 			return $this->_cache->set($key, $response, $ttl);
 		}
@@ -456,7 +456,7 @@ class Keke_HTTP_Cache {
 		if ($cache_control = $response->headers('cache-control'))
 		{
 			// Parse the cache control header
-			$cache_control = HTTP_Header::parse_cache_control($cache_control);
+			$cache_control = Keke_HTTP_Header::parse_cache_control($cache_control);
 
 			if (isset($cache_control['max-age']))
 			{
@@ -500,4 +500,4 @@ class Keke_HTTP_Cache {
 		return $this->_response_time - $this->_request_time;
 	}
 
-} // End Kohana_HTTP_Cache
+} // End 

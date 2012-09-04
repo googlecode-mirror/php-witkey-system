@@ -25,11 +25,24 @@ function cdel(o,s){
 		c=s;
 	}
 	d.confirm(c, function(){
-		window.location.href = o.href;
+			$.get(o.href,function(data){
+				if(data >0){
+					$(o).parent().parent().remove();
+					
+				}
+			})
 	});
 	return false;	
 }
-
+$(function(){
+	var tips = window.parent.document.getElementById('del_tips')
+	 $(tips).ajaxStart(function(){
+		  tips.innerHTML ='É¾³ýÖÐ...';  
+	 }).ajaxComplete(function(){
+	 	tips.innerHTML ='';
+	 })
+})
+ 
 function pdel(frm){ 
 	d = art.dialog;
 	var frm = frm; 
@@ -46,8 +59,10 @@ function batch_act(obj,frm){
 	var conf = $(":checkbox[name='ckb[]']:checked").length;
 	if (conf > 0) {
 		d.confirm("{$_lang['confirm']}" + c + '?', function(){
-			$(".sbt_action").val(c);
-			$("#" + frm).submit();
+			//$(".sbt_action").val(c);
+			//var ids = $(":checkbox[name='ckb[]']:checked").serialize();
+			//alert(ids);
+			//$("#" + frm).submit();
 		});
 	}else{
 		d.alert("{$_lang['has_none_being_choose']}");

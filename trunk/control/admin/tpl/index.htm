@@ -181,6 +181,7 @@ window.onload = function(){
     <span class="font_st">&gt;</span>
     <a href="javascript:void(0)" id="href_title">{$_lang['faster_operate']}</a>
     <a href="#" onclick="shortcuts(this);" id="add_shortcuts" ac='add_shortcuts' title="{$_lang['add_faster_operate']}"><span class="font_st">[+]</span></a>
+	<span id='del_tips'>删除中... 已经删除成功!</span>
     </div>
     <div class="other">
     		<input type="text" class="txt" name="fds[resource_name]" id="recource"/>
@@ -375,7 +376,7 @@ $(function() {
 			/*---导航点击后左导航首条选中---*/
 		    h =$(first_sub_menu).attr('href');
 			
-		$("#display_frame").attr('src',h+'?tt='+Math.random());
+		$("#display_frame").attr('src',h);
 	});
 	$('.side_bar').hover(function(){
 		  $(this).css('overflow-y','auto'); 

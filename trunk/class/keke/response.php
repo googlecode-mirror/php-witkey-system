@@ -3,13 +3,6 @@
  * Response wrapper. Created as the result of any [Request] execution
  * or utility method (i.e. Redirect). Implements standard HTTP
  * response format.
- *
- * @package    Kohana
- * @category   Base
- * @author     Kohana Team
- * @copyright  (c) 2008-2011 Kohana Team
- * @license    http://kohanaphp.com/license
- * @since      3.1.0
  */
 class Keke_Response implements Keke_HTTP_Response {
 
@@ -178,7 +171,7 @@ class Keke_Response implements Keke_HTTP_Response {
 
 		if ($this->_protocol === NULL)
 		{
-			$this->_protocol = HTTP::$protocol;
+			$this->_protocol = Keke_HTTP::$protocol;
 		}
 
 		return $this->_protocol;
@@ -637,7 +630,7 @@ class Keke_Response implements Keke_HTTP_Response {
 	{
 	    if ($this->_body === NULL)
 		{
-			throw new Request_Exception('No response yet associated with request - cannot auto generate resource ETag');
+			throw new Keke_exception('No response yet associated with request - cannot auto generate resource ETag');
 		}
 
 		// Generate a unique hash for the response
@@ -661,7 +654,7 @@ class Keke_Response implements Keke_HTTP_Response {
 		}
 
 		if ( ! $request)
-			throw new Request_Exception('A Request object must be supplied with an etag for evaluation');
+			throw new Keke_exception('A Request object must be supplied with an etag for evaluation');
 
 		// Set the ETag header
 		$this->_header['etag'] = $etag;
@@ -760,4 +753,4 @@ class Keke_Response implements Keke_HTTP_Response {
 
 		return array($start, $end);
 	}
-} // End Kohana_Response
+} // End 

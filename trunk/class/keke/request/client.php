@@ -58,9 +58,12 @@ abstract class Keke_Request_Client {
 	 */
 	public function execute(Keke_Request $request)
 	{
-		if ($this->_cache instanceof Keke_HTTP_Cache)
+		//var_dump($this->_cache instanceof Keke_HTTP_Cache);die;
+		if ($this->_cache instanceof Keke_HTTP_Cache){
+			
 			return $this->_cache->execute($this, $request);
-
+		}
+		echo 'execute_request';
 		return $this->execute_request($request);
 	}
 

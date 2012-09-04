@@ -39,7 +39,7 @@ abstract class Keke_Request_Client_External extends Keke_Request_Client {
 	 * 
 	 * @var     string    defines the external client to use by default
 	 */
-	public static $client = 'Request_Client_Curl';
+	public static $client = 'Keke_Request_Client_Curl';
 
 	/**
 	 * Factory method to create a new Request_Client_External object based on
@@ -55,14 +55,15 @@ abstract class Keke_Request_Client_External extends Keke_Request_Client {
 	 */
 	public static function factory(array $params = array(), $client = NULL)
 	{
+		
 		if ($client === NULL)
 		{
-			$client = Request_Client_External::$client;
+			$client = Keke_Request_Client_External::$client;
 		}
-
+		
 		$client = new $client($params);
 
-		if ( ! $client instanceof Request_Client_External)
+		if ( ! $client instanceof Keke_Request_Client_External)
 		{
 			throw new Keke_exception('Selected client is not a Request_Client_External object.');
 		}
@@ -101,11 +102,11 @@ abstract class Keke_Request_Client_External extends Keke_Request_Client {
 	public function execute_request(Keke_Request $request)
 	{
 		
-
+		 
 		// Store the current active request and replace current with new request
 		$previous = Request::$current;
 		Request::$current = $request;
-
+		
 		// Resolve the POST fields
 		if ($post = $request->post())
 		{
@@ -137,7 +138,7 @@ abstract class Keke_Request_Client_External extends Keke_Request_Client {
 		// Restore the previous request
 		Request::$current = $previous;
 
-	
+		
 
 		// Return the response
 		return $response;

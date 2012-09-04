@@ -3,13 +3,6 @@
  * Request Client. Processes a [Request] and handles [HTTP_Caching] if 
  * available. Will usually return a [Response] object as a result of the
  * request unless an unexpected error occurs.
- *
- * @package    Kohana
- * @category   Base
- * @author     Kohana Team
- * @copyright  (c) 2008-2011 Kohana Team
- * @license    http://kohanaframework.org/license
- * @since      3.1.0
  */
 abstract class Keke_Request_Client {
 

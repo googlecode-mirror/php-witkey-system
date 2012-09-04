@@ -5,12 +5,6 @@
  * PHP functions `apache_request_headers()` or the `http_parse_headers()`
  * function available within the PECL HTTP library.
  *
- * @package    Kohana
- * @category   HTTP
- * @author     Kohana Team
- * @since      3.1.0
- * @copyright  (c) 2008-2011 Kohana Team
- * @license    http://kohanaphp.com/license
  */
 class Keke_HTTP_Header extends ArrayObject {
 
@@ -864,7 +858,7 @@ class Keke_HTTP_Header extends ArrayObject {
 				$value = implode(', ', $value);
 			}
 
-			$processed_headers[] = Text::ucfirst($header).': '.$value;
+			$processed_headers[] = ucfirst($header).': '.$value;
 		}
 
 		if ( ! isset($headers['content-type']))

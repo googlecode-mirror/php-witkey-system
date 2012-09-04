@@ -29,7 +29,7 @@ class Keke_Request_Client_Stream extends Keke_Request_Client_External {
 	public function _send_message(Keke_Request $request)
 	{
 		// Calculate stream mode
-		$mode = ($request->method() === HTTP_Request::GET) ? 'r' : 'r+';
+		$mode = ($request->method() === Keke_HTTP_Request::GET) ? 'r' : 'r+';
 
 		// Process cookies
 		if ($cookies = $request->cookie())

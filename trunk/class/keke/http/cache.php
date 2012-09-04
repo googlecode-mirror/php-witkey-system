@@ -3,13 +3,6 @@
  * HTTT Caching adaptor class that provides caching services to the
  * [Request_Client] class, using HTTP cache control logic as defined in
  * RFC 2616.
- *
- * @package    Kohana
- * @category   Base
- * @author     Kohana Team
- * @copyright  (c) 2008-2011 Kohana Team
- * @license    http://kohanaframework.org/license
- * @since      3.2.0
  */
 class Keke_HTTP_Cache {
 
@@ -118,7 +111,7 @@ class Keke_HTTP_Cache {
 
 		if ($this->_cache_key_callback === NULL)
 		{
-			$this->cache_key_callback('HTTP_Cache::basic_cache_key_generator');
+			$this->cache_key_callback('Keke_HTTP_Cache::basic_cache_key_generator');
 		}
 	}
 
@@ -177,7 +170,7 @@ class Keke_HTTP_Cache {
 		// Cache the response
 		$this->cache_response($cache_key, $request, $response);
 
-		$response->headers(HTTP_Cache::CACHE_STATUS_KEY, 
+		$response->headers(Keke_HTTP_Cache::CACHE_STATUS_KEY, 
 			Keke_HTTP_Cache::CACHE_STATUS_MISS);
 
 		return $response;

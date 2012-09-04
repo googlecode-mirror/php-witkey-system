@@ -246,12 +246,13 @@ class Keke_base {
 		}
 	
 	}
-	
+	// gbk是gb2312(简体中文)的扩展,包括繁体等
 	static function gbktoutf($string) {
 		$string = self::charset_encode ( "gbk", "utf-8", $string );
 		return $string;
 	}
-	static function utftogbk($string) { // gbk是gb2312(简体中文)的扩展,包括繁体等
+	//那个SB再把gbk 改成gb2312了，我艹
+	static function utftogbk($string) { 
 		$string = self::charset_encode ( "utf-8", "gbk", $string );
 		return $string;
 	}

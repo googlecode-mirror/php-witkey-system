@@ -124,8 +124,8 @@ class Keke_Request_Client_Internal extends Keke_Request_Client {
 		Request::$current = $previous;
 		
 		 
-		var_dump($request->response());die;
+		//var_dump($request->response());die;
 		// Return the response
 		return $request->response();
 	}
-} // End Kohana_Request_Client_Internal
+} // End  

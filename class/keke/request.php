@@ -53,6 +53,7 @@ class Keke_Request  {
 		// If this is the initial request
 		if ( ! Request::$initial)
 		{
+			
 			if ((PHP_SAPI === 'cli'))
 			{
 				// Default protocol for command line is cli://
@@ -98,16 +99,14 @@ class Keke_Request  {
 				{
 					$referrer = $options['referrer'];
 				}
-			}
-			else
-			{
+			}else{
 				if (isset($_SERVER['SERVER_PROTOCOL']))
 				{
 					$protocol = $_SERVER['SERVER_PROTOCOL'];
 				}
 				else
 				{
-					$protocol = HTTP::$protocol;
+					$protocol = Keke_HTTP::$protocol;
 				}
 
 				if (isset($_SERVER['REQUEST_METHOD']))
@@ -118,7 +117,7 @@ class Keke_Request  {
 				else
 				{
 					// Default to GET requests
-					$method = HTTP_Request::GET;
+					$method = Keke_HTTP_Request::GET;
 				}
 
 				if ( ! empty($_SERVER['HTTPS']) AND filter_var($_SERVER['HTTPS'], FILTER_VALIDATE_BOOLEAN))
@@ -231,7 +230,7 @@ class Keke_Request  {
 		{
 			$request = new Keke_Request($uri, $cache, $injected_routes);
 		}
-
+        
 		return $request;
 	}
 
@@ -417,7 +416,8 @@ class Keke_Request  {
 		else
 		{
 			// Load the search group for this type
-			$group = Kohana::$config->load('user_agents')->$value;
+			require S_ROOT.'config/user_agents.php';
+			$group = $user_agents;
 
 			foreach ($group as $search => $name)
 			{
@@ -534,14 +534,15 @@ class Keke_Request  {
 	public static function post_max_size_exceeded()
 	{
 		// Make sure the request method is POST
-		if (Request::$initial->method() !== HTTP_Request::POST)
+		if (Request::$initial->method() !== Keke_HTTP_Request::POST)
 			return FALSE;
 
 		// Get the post_max_size in bytes
+		
 		$max_bytes = Num::bytes(ini_get('post_max_size'));
 
 		// Error occurred if method is POST, and content length is too long
-		return (Arr::get($_SERVER, 'CONTENT_LENGTH') > $max_bytes);
+		return ($_SERVER['CONTENT_LENGTH'] > $max_bytes);
 	}
 
 	/**
@@ -1136,7 +1137,7 @@ class Keke_Request  {
 				':uri' => $this->_uri,
 			));
 		}
-       
+		
 		return $this->_client->execute($this);
 	}
 
@@ -1209,15 +1210,16 @@ class Keke_Request  {
 	 */
 	public function response(Keke_Response $response = NULL)
 	{
+		
 		if ($response === NULL)
 		{
 			// Act as a getter
 			return $this->_response;
 		}
-
+		
 		// Act as a setter
 		$this->_response = $response;
-
+		
 		return $this;
 	}
 
@@ -1281,7 +1283,7 @@ class Keke_Request  {
 			if ($this->_protocol)
 				return $this->_protocol;
 			else
-				return $this->_protocol = HTTP::$protocol;
+				return $this->_protocol = Keke_HTTP::$protocol;
 		}
 
 		// Act as a setter

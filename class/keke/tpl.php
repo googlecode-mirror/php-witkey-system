@@ -309,12 +309,15 @@ class Keke_tpl {
 		}
 		Keke_tpl::obclean ();
 		($_K ['inajax']) and self::xml_out ( $content );
-		//header ( 'Content-Type: text/html; charset='.CHARSET);
-		 echo  $content;
+		header ( 'Content-Type: text/html; charset='.CHARSET);
+		//var_dump($content);die; 
+		//echo  $content;
+		Request::current()->response()->body($content);
 	}
 	static function obclean() {
 		global $_K;
 		 ob_end_clean();
+		 //var_dump($_K['inajax']==1 or GZIP===false);die;
 		 if($_K['inajax']==1 or GZIP===false){
 		 	ob_start();
 		 }else{

@@ -44,7 +44,10 @@ array(
 ->defaults(array(
 'controller' => 'index',
 'action'     => 'index',
-));    
+)); 
+if(!Route::cache()){
+	Route::cache(TRUE);
+}   
 
 $_K = $_K+Keke::$_sys_config;
 $_K['uid'] = Keke::$_uid;

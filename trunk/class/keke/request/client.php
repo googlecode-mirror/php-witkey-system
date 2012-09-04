@@ -63,7 +63,7 @@ abstract class Keke_Request_Client {
 			
 			return $this->_cache->execute($this, $request);
 		}
-		echo 'execute_request';
+		//echo 'execute_request';
 		return $this->execute_request($request);
 	}
 

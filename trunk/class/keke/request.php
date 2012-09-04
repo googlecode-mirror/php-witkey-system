@@ -830,7 +830,7 @@ class Keke_Request  {
 
 			// Params cannot be changed once matched
 			$this->_params = $params;
-
+			 
 			// Apply the client
 			$this->_client = new Keke_Request_Client_Internal(array('cache' => $cache));
 		}

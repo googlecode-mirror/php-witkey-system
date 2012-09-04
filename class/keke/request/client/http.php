@@ -53,7 +53,7 @@ class Keke_Request_Client_HTTP extends Keke_Request_Client_External {
 	public function _send_message(Keke_Request $request)
 	{
 		$http_method_mapping = array(
-			Keke_Keke_HTTP_Request::GET     => HTTPRequest::METH_GET,
+			Keke_HTTP_Request::GET     => HTTPRequest::METH_GET,
 			Keke_HTTP_Request::HEAD    => HTTPRequest::METH_HEAD,
 			Keke_HTTP_Request::POST    => HTTPRequest::METH_POST,
 			Keke_HTTP_Request::PUT     => HTTPRequest::METH_PUT,

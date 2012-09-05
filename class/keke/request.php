@@ -385,12 +385,13 @@ class Keke_Request  {
 			// This value has already been found
 			return $info[$value];
 		}
-
+		include S_ROOT.'config/user_agents.php';
 		if ($value === 'browser' OR $value == 'version')
 		{
 			// Load browsers
-			$browsers = Kohana::$config->load('user_agents')->browser;
-
+			
+			$browsers = $user_agents['browser'];
+			
 			foreach ($browsers as $search => $name)
 			{
 				if (stripos(Request::$user_agent, $search) !== FALSE)
@@ -416,7 +417,7 @@ class Keke_Request  {
 		else
 		{
 			// Load the search group for this type
-			require S_ROOT.'config/user_agents.php';
+			 
 			$group = $user_agents;
 
 			foreach ($group as $search => $name)
@@ -935,24 +936,26 @@ class Keke_Request  {
 	 */
 	public function redirect($url = '', $code = 302)
 	{
+		//var_dump($url);
 		$referrer = $this->uri();
-
+        
 		if (strpos($referrer, '://') === FALSE)
 		{
-			$referrer = Route::site($referrer, TRUE, 'index.php');
+			$referrer = Route::site($referrer, TRUE, Keke::$_index_file);
 		}
-
+		
 		if (strpos($url, '://') === FALSE)
 		{
 			// Make the URI into a URL
-			$url = Route::site($url, TRUE, 'index.php');
+			$url = Route::site($url, TRUE, Keke::$_index_file);
+			
 		}
-
+		 
 		if (($response = $this->response()) === NULL)
 		{
 			$response = $this->create_response();
 		}
-
+		 
 		echo $response->status($code)
 			->headers('Location', $url)
 			->headers('Referer', $referrer)
@@ -1069,7 +1072,7 @@ class Keke_Request  {
 	 * @return  Request_Client
 	 * @return  self
 	 */
-	public function client(Request_Client $client = NULL)
+	public function client(Keke_Request_Client $client = NULL)
 	{
 		if ($client === NULL)
 			return $this->_client;

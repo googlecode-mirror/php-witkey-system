@@ -199,8 +199,8 @@ class Keke_HTTP_Cache {
 	 * used to cache responses if available and valid.
 	 *
 	 * @param   Kohana_Cache  cache engine to use for caching
-	 * @return  Kohana_Cache
-	 * @return  Kohana_Request_Client
+	 * @return  Keke_Cache
+	 * @return  Keke_Request_Client
 	 */
 	public function cache(Cache $cache = NULL)
 	{

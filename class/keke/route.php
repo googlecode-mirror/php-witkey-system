@@ -177,32 +177,35 @@ class Keke_Route {
 	{
 		global $_K;
 		// Start with the configured base URL
-		$base_url = $_K['base_url'];
-	
+		$base_url = BASE_URL;
+	   
 		if ($protocol === TRUE)
 		{
 			// Use the initial request to get the protocol
 			$protocol = Request::$initial;
 		}
-	
-		if ($protocol instanceof Request)
+		
+		//var_dump($protocol instanceof   Keke_Request,'1111');
+		if ($protocol instanceof Keke_Request)
 		{
 			// Use the current protocol
 			list($protocol) = explode('/', strtolower($protocol->protocol()));
+			//var_dump($protocol);
 		}
-	
+		 
 		if ( ! $protocol)
 		{
 			// Use the configured default protocol
 			$protocol = parse_url($base_url, PHP_URL_SCHEME);
 		}
-	    $index_file = 'index.php';
-		if ($index === TRUE AND ! empty($index_file))
+	     
+		if ( ! empty(Keke::$_index_file))
 		{
 			// Add the index file to the URL
-			$base_url .= $index_file.'/';
+			$base_url .= '/'.Keke::$_index_file.'/';
 		}
-	
+		 
+		
 		if (is_string($protocol))
 		{
 			if (($port = parse_url($base_url, PHP_URL_PORT))!=FALSE)
@@ -210,7 +213,7 @@ class Keke_Route {
 				// Found a port, make it usable for the URL
 				$port = ':'.$port;
 			}
-	
+	       
 			if (($domain = parse_url($base_url, PHP_URL_HOST))!=FALSE)
 			{
 				// Remove everything but the path from the URL
@@ -221,11 +224,10 @@ class Keke_Route {
 				// Attempt to use HTTP_HOST and fallback to SERVER_NAME
 				$domain = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME'];
 			}
-	
+	         
 			// Add the protocol and domain to the base URL
 			$base_url = $protocol.'://'.$domain.$port.$base_url;
 		}
-	
 		return $base_url;
 	}
 	
@@ -244,7 +246,7 @@ class Keke_Route {
 	{
 		// Chop off possible scheme, host, port, user and pass parts
 		$path = preg_replace('~^[-a-z0-9+.]++://[^/]++/?~', '', trim($uri, '/'));
- 	
+ 	     
 		// Concat the URL
 		return self::base($protocol, $index).$path;
 	}

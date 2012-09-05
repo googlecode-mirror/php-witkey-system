@@ -21,7 +21,7 @@ class Keke_Response implements Keke_HTTP_Response {
 	 */
 	public static function factory(array $config = array())
 	{
-		return new Response($config);
+		return new Keke_Response($config);
 	}
 
 	// HTTP status codes and messages
@@ -230,6 +230,7 @@ class Keke_Response implements Keke_HTTP_Response {
 	 */
 	public function headers($key = NULL, $value = NULL)
 	{
+		
 		if ($key === NULL)
 		{
 			return $this->_header;

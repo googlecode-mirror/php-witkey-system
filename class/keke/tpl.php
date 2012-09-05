@@ -309,7 +309,7 @@ class Keke_tpl {
 		}
 		Keke_tpl::obclean ();
 		($_K ['inajax']) and self::xml_out ( $content );
-		header ( 'Content-Type: text/html; charset='.CHARSET);
+		//header ( 'Content-Type: text/html; charset='.CHARSET);
 		//var_dump($content);die; 
 		//echo  $content;
 		Request::current()->response()->body($content);

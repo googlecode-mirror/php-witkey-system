@@ -1,6 +1,6 @@
 <?php defined ( "IN_KEKE" ) or die ( "Access Denied" );
 /**
- * The Kohana_Keke_HTTP_Header class provides an Object-Orientated interface
+ * The Keke_HTTP_Header class provides an Object-Orientated interface
  * to HTTP headers. This can parse header arrays returned from the
  * PHP functions `apache_request_headers()` or the `http_parse_headers()`
  * function available within the PECL HTTP library.
@@ -59,7 +59,6 @@ class Keke_HTTP_Header extends ArrayObject {
 	 * @see     http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.1
 	 * @param   string   accept content header string to parse
 	 * @return  array
-	 * @since   3.2.0
 	 */
 	public static function parse_accept_header($accepts = NULL)
 	{
@@ -272,10 +271,10 @@ class Keke_HTTP_Header extends ArrayObject {
 	protected $_accept_language;
 
 	/**
-	 * Constructor method for [Kohana_Keke_HTTP_Header]. Uses the standard constructor
+	 * Constructor method for [Keke_HTTP_Header]. Uses the standard constructor
 	 * of the parent `ArrayObject` class.
 	 *
-	 *     $header_object = new Keke_HTTP_Header(array('x-powered-by' => 'Kohana 3.1.x', 'expires' => '...'));
+	 *     $header_object = new Keke_HTTP_Header(array('x-powered-by' => '3.1.x', 'expires' => '...'));
 	 *
 	 * @param   mixed    Input array
 	 * @param   int      Flags
@@ -847,7 +846,7 @@ class Keke_HTTP_Header extends ArrayObject {
 
 		// Create the response header
 		$processed_headers = array($protocol.' '.$status.' '.Response::$messages[$status]);
-
+        
 		// Get the headers array
 		$headers = $response->headers()->getArrayCopy();
 
@@ -866,13 +865,13 @@ class Keke_HTTP_Header extends ArrayObject {
 			$processed_headers[] = 'Content-Type: '.Keke::$_content_type.
 				'; charset='.CHARSET;
 		}
-
+		 
 		if (Keke::$_expose AND ! isset($headers['x-powered-by']))
 		{
-			$processed_headers[] = 'X-Powered-By: Keke Framework '.
+			$processed_headers[] = 'X-Powered-By: Keke '.
 				KEKE_VERSION;
 		}
-
+       
 		// Get the cookies and apply
 		if ($cookies = $response->cookie())
 		{

@@ -301,6 +301,7 @@ class Keke extends Keke_core {
 	public static $_safe_mode ;
 	public static $_magic_quote;
 	public static $_log;
+	public static $_index_file = 'index.php';
 	public static $_sys_config;
 	public static $_uid;
 	public static $_username;
@@ -328,7 +329,7 @@ class Keke extends Keke_core {
 	public static $_weibo_attent;
 	public static $_attent_api_open;
 	//Êä³öÍ·
-	public static $_expose= false;
+	public static $_expose= true;
 	public static $_content_type= 'text/html'; 
 	public static $_db;
  	

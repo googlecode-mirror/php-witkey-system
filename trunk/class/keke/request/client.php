@@ -44,19 +44,17 @@ abstract class Keke_Request_Client {
 	 *     $request->execute();
 	 *
 	 * @param   Request $request
-	 * @return  Response
-	 * @throws  Kohana_Exception
-	 * @uses    [Kohana::$profiling]
-	 * @uses    [Profiler]
+	 * @return  Keke_Response
 	 */
 	public function execute(Keke_Request $request)
 	{
-		//var_dump($this->_cache instanceof Keke_HTTP_Cache);die;
+// 		var_dump($this->_cache instanceof Keke_HTTP_Cache);die;
 		if ($this->_cache instanceof Keke_HTTP_Cache){
 			
 			return $this->_cache->execute($this, $request);
 		}
 		//echo 'execute_request';
+		//var_dump($this->execute_request($request));die;
 		return $this->execute_request($request);
 	}
 

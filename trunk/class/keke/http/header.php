@@ -835,12 +835,13 @@ class Keke_HTTP_Header extends ArrayObject {
 	 */
 	public function send_headers(Keke_HTTP_Response $response = NULL, $replace = FALSE, $callback = NULL)
 	{
+		
 		if ($response === NULL)
 		{
 			// Default to the initial request message
 			$response = Request::initial()->response();
 		}
-
+        
 		$protocol = $response->protocol();
 		$status = $response->status();
 
@@ -848,8 +849,9 @@ class Keke_HTTP_Header extends ArrayObject {
 		$processed_headers = array($protocol.' '.$status.' '.Response::$messages[$status]);
         
 		// Get the headers array
+		//var_dump(is_object($response->headers()));
 		$headers = $response->headers()->getArrayCopy();
-
+		
 		foreach ($headers as $header => $value)
 		{
 			if (is_array($value))
@@ -868,6 +870,7 @@ class Keke_HTTP_Header extends ArrayObject {
 		 
 		if (Keke::$_expose AND ! isset($headers['x-powered-by']))
 		{
+			header_remove('X-Powered-By');
 			$processed_headers[] = 'X-Powered-By: Keke '.
 				KEKE_VERSION;
 		}

@@ -190,12 +190,12 @@ class Keke_Request  {
 
 			// Create the instance singleton
 			Request::$initial = $request = new Keke_Request($uri, $cache);
-
+           
 			// Store global GET and POST data in the initial request only
 			$request->protocol($protocol)
 				->query($_GET)
 				->post($_POST);
-
+			
 			if (isset($secure))
 			{
 				// Set the request security
@@ -225,12 +225,13 @@ class Keke_Request  {
 				// Set the request body (probably a PUT type)
 				$request->body($body);
 			}
+			
 		}
 		else
 		{
 			$request = new Keke_Request($uri, $cache, $injected_routes);
 		}
-        
+		
 		return $request;
 	}
 
@@ -1213,7 +1214,7 @@ class Keke_Request  {
 	 */
 	public function response(Keke_Response $response = NULL)
 	{
-		
+		 
 		if ($response === NULL)
 		{
 			// Act as a getter

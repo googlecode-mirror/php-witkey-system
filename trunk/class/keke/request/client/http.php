@@ -7,14 +7,8 @@
  * @example
  * 
  *       // In application bootstrap
- *       Request_Client_External::$client = 'Request_Client_HTTP';
+ *       Request_Client_External::$client = 'Keke_Request_Client_HTTP';
  * 
- * @package    Kohana
- * @category   Base
- * @author     Kohana Team
- * @copyright  (c) 2008-2011 Kohana Team
- * @license    http://kohanaframework.org/license
- * @uses       [PECL HTTP](http://php.net/manual/en/book.http.php)
  */
 class Keke_Request_Client_HTTP extends Keke_Request_Client_External {
 
@@ -62,8 +56,7 @@ class Keke_Request_Client_HTTP extends Keke_Request_Client_External {
 			Keke_HTTP_Request::TRACE   => HTTPRequest::METH_TRACE,
 			Keke_HTTP_Request::CONNECT => HTTPRequest::METH_CONNECT,
 		);
-
-		// Create an http request object
+        // Create an http request object
 		$Keke_HTTP_Request = new HTTPRequest($request->uri(), $http_method_mapping[$request->method()]);
 
 		if ($this->_options)
@@ -120,4 +113,4 @@ class Keke_Request_Client_HTTP extends Keke_Request_Client_External {
 		return $response;
 	}
 
-} // End Kohana_Request_Client_HTTP
+} // End

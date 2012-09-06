@@ -22,12 +22,6 @@
  *       $request = Request::factory('http://some.host.tld/foo/bar')
  *           ->client(Request_Client_External::factory('Request_Client_HTTP));
  * 
- * @package    Kohana
- * @category   Base
- * @author     Kohana Team
- * @copyright  (c) 2008-2011 Kohana Team
- * @license    http://kohanaframework.org/license
- * @uses       [PECL HTTP](http://php.net/manual/en/book.http.php)
  */
 abstract class Keke_Request_Client_External extends Keke_Request_Client {
 
@@ -93,16 +87,11 @@ abstract class Keke_Request_Client_External extends Keke_Request_Client {
 	 *
 	 *     $request->execute();
 	 *
-	 * @param   Request $request A request object
-	 * @return  Response
-	 * @throws  Kohana_Exception
-	 * @uses    [Kohana::$profiling]
-	 * @uses    [Profiler]
 	 */
 	public function execute_request(Keke_Request $request)
 	{
 		
-		 
+		var_dump('external');die;
 		// Store the current active request and replace current with new request
 		$previous = Request::$current;
 		Request::$current = $request;
@@ -114,7 +103,7 @@ abstract class Keke_Request_Client_External extends Keke_Request_Client {
 				->headers('content-type', 'application/x-www-form-urlencoded');
 		}
 
-		// If Kohana expose, set the user-agent
+		// If  expose, set the user-agent
 		if (Keke::$_expose)
 		{
 			$request->headers('user-agent', 'Keke Framework '.KEKE_VERSION);
@@ -182,4 +171,4 @@ abstract class Keke_Request_Client_External extends Keke_Request_Client {
 	 */
 	abstract protected function _send_message(Request $request);
 
-} // End Kohana_Request_Client_External
+} // End 

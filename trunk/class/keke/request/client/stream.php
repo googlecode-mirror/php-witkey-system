@@ -9,12 +9,6 @@
  *       // In application bootstrap
  *       Request_Client_External::$client = 'Request_Client_Stream';
  * 
- * @package    Kohana
- * @category   Base
- * @author     Kohana Team
- * @copyright  (c) 2008-2011 Kohana Team
- * @license    http://kohanaframework.org/license
- * @uses       [PHP Streams](http://php.net/manual/en/book.stream.php)
  */
 class Keke_Request_Client_Stream extends Keke_Request_Client_External {
 

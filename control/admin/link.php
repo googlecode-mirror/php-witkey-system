@@ -48,20 +48,59 @@ class Control_admin_link extends Controller {
 		
 		require Keke_tpl::template('control/admin/tpl/link');
 	}
-	//添加与编辑
+	//添加与编辑初始化
 	function action_add(){
 		global $_K,$_lang;
+		$link_id = $_GET['link_id'];
+		//如果有值，就进入编辑状态
+		if($link_id){
+			$link_info = Model::factory('witkey_link')->setWhere('link_id = '.$link_id)->query();
+			$link_info = $link_info[0];
+			$link_pic = $link_info['link_pic'];
+		}
+		
+		if(strpos($link_pic, 'http')!==FALSE){
+			//远程地址
+			$mode = 1;
+		}else{
+			//本地图片
+			$mode = 2;
+		}
 		require Keke_tpl::template('control/admin/tpl/link_add');
+	}
+	//保存数据
+	function action_save(){
+		if($_POST['showMode'] ==1){
+			$link_pic = $_POST['txt_link_pic'];
+		}elseif(!empty($_FILES['fle_link_pic']['name'])){
+			$link_pic = keke_file_class::upload_file('fle_link_pic');
+		}
+		$array = array('link_name'=>$_POST['txt_link_name'],
+				       'link_url'=>$_POST['txt_link_url'],
+					   'link_pic'=>$link_pic,
+					   'listorder' => $_POST['txt_listorder'],				  
+				);
+
+		if($_POST['hdn_link_id']){
+			Model::factory('witkey_link')->setData($array)->setWhere("link_id = '{$_POST['hdn_link_id']}'")->update();
+			Keke::show_msg('系统提示','index.php/admin/link/add?link_id='.$_POST['hdn_link_id'],'提交成功','success');
+		}else{
+			Model::factory('witkey_link')->setData($array)->create();
+			Keke::show_msg('系统提示','index.php/admin/link/add','提交成功','success');
+		}
+		
+		
 	}
 	//删除
 	function action_del(){
-		if($_GET['link_id']){
-			echo  Model::factory('witkey_link')->setWhere('link_id = '.$_GET['link_id'])->del();
+		//删除单条
+		if($_GET['link_id']){  
+			$where = 'link_id = '.$_GET['link_id'];
+		//删除多条	
+		}elseif($_GET['link_ids']){
+			$where = 'link_id in ('.$_GET['link_ids'].')';
 		}
-	}
-	//批量删除
-	function action_del_check(){
-		
+		echo  Model::factory('witkey_link')->setWhere($where)->del();
 	}
 	
 }

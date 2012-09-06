@@ -53,7 +53,7 @@ abstract class Model {
 	 * @param
 	 *        	array
 	 */
-	abstract public function query($fields, $cache_time);
+	abstract public function query($fields='*', $cache_time=0);
 	abstract public function del();
 	abstract public function count();
 	function reset() {

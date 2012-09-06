@@ -3,12 +3,6 @@
  * The HTTP Interaction interface providing the core HTTP methods that
  * should be implemented by any HTTP request or response class.
  *
- * @package    Kohana
- * @category   HTTP
- * @author     Kohana Team
- * @since      3.1.0
- * @copyright  (c) 2008-2011 Kohana Team
- * @license    http://kohanaphp.com/license
  */
 interface Keke_HTTP_Message {
 

@@ -4,12 +4,6 @@
  * by HTTP requests. Over and above [Kohana_HTTP_Interaction], this
  * interface provides method, uri, get and post methods.
  *
- * @package    Kohana
- * @category   HTTP
- * @author     Kohana Team
- * @since      3.1.0
- * @copyright  (c) 2008-2011 Kohana Team
- * @license    http://kohanaphp.com/license
  */
 interface Keke_HTTP_Request extends Keke_HTTP_Message {
 

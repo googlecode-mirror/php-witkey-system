@@ -16,7 +16,7 @@ class Control_admin_login extends Controller {
 		
 		if ($_SESSION ['admin_uid'] and $_K ['user_info'] ['group_id']) {
 			// 已经登录了，跳到首页
-			header ( 'Location:'.BASE_URL.'/index.php/admin/index' );
+			$this->request->redirect('/admin/index');
 		} else {
 			// 初始化登录页面
 			$login_limit = $_SESSION ['login_limit']; // 用户登录限制时间

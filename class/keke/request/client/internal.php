@@ -2,12 +2,6 @@
 /**
  * Request Client for internal execution
  *
- * @package    Kohana
- * @category   Base
- * @author     Kohana Team
- * @copyright  (c) 2008-2011 Kohana Team
- * @license    http://kohanaframework.org/license
- * @since      3.1.0
  */
 class Keke_Request_Client_Internal extends Keke_Request_Client {
 
@@ -34,13 +28,11 @@ class Keke_Request_Client_Internal extends Keke_Request_Client {
 	 * @param   Request $request
 	 * @return  Response
 	 * @throws  Keke_exception
-	 * @uses    [Kohana::$profiling]
-	 * @uses    [Profiler]
-	 * @deprecated passing $params to controller methods deprecated since version 3.1
-	 *             will be removed in 3.2
+
 	 */
 	public function execute_request(Keke_Request $request)
 	{
+		
 		// Create the class prefix
 		$prefix = 'Control_';
 
@@ -63,6 +55,7 @@ class Keke_Request_Client_Internal extends Keke_Request_Client {
 		 
 		// Is this the initial request
 		$initial_request = ($request === Request::$initial);
+
 		
 		try
 		{
@@ -110,7 +103,7 @@ class Keke_Request_Client_Internal extends Keke_Request_Client {
 			
 		}catch (Exception $e){
 			// Restore the previous request
-			if ($previous instanceof Request)
+			if ($previous instanceof Keke_Request)
 			{
 				Request::$current = $previous;
 			}

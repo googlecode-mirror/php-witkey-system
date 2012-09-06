@@ -312,16 +312,19 @@ class Keke_tpl {
 		//header ( 'Content-Type: text/html; charset='.CHARSET);
 		//var_dump($content);die; 
 		//echo  $content;
-		Request::current()->response()->body($content);
+		//Request::current()->response()->body($content);
+		//Request::current()->body($content);
+		//echo $content;
 	}
 	static function obclean() {
 		global $_K;
-		 ob_end_clean();
+		
 		 //var_dump($_K['inajax']==1 or GZIP===false);die;
-		 if($_K['inajax']==1 or GZIP===false){
+		 if($_K['inajax']==1){
+		 	ob_end_clean();
 		 	ob_start();
 		 }else{
-		 	ob_start();
+		 	//ob_start();
 			//ob_start('ob_gzhandler');
 		 }
 		 
@@ -346,7 +349,7 @@ class Keke_tpl {
 		header ( "Content-type: application/xml; charset=".CHARSET );
 		echo '<' . "?xml version=\"1.0\" encoding=\"".CHARSET."\"?>\n";
 		echo "<root><![CDATA[" . trim ( $content ) . "]]></root>";
-		extension_loaded('zlib') and ob_end_flush();//**//
+		//extension_loaded('zlib') and ob_end_flush();//**//
 		exit ();
 	}
 

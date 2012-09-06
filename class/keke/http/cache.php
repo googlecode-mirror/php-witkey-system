@@ -254,7 +254,7 @@ class Keke_HTTP_Cache {
 	 *
 	 * @param   callback  callback 
 	 * @return  mixed
-	 * @throws  HTTP_Exception
+	 * @throws  Keke_HTTP_Exception
 	 */
 	public function cache_key_callback($callback = NULL)
 	{

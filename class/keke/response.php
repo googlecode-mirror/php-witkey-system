@@ -113,7 +113,7 @@ class Keke_Response implements Keke_HTTP_Response {
 	public function __construct(array $config = array())
 	{
 		$this->_header = new Keke_HTTP_Header;
-
+        
 		foreach ($config as $key => $value)
 		{
 			if (property_exists($this, $key))
@@ -128,6 +128,7 @@ class Keke_Response implements Keke_HTTP_Response {
 				}
 			}
 		}
+		
 	}
 
 	/**
@@ -345,7 +346,7 @@ class Keke_Response implements Keke_HTTP_Response {
 	 *
 	 * @param   boolean   replace existing headers
 	 * @param   callback  function to handle header output
-	 * @return  mixed
+	 * @return  Keke_HTTP_Header
 	 */
 	public function send_headers($replace = FALSE, $callback = NULL)
 	{

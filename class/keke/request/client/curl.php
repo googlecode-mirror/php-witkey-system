@@ -3,12 +3,6 @@
  * [Request_Client_External] Curl driver performs external requests using the
  * php-curl extention. This is the default driver for all external requests.
  * 
- * @package    Kohana
- * @category   Base
- * @author     Kohana Team
- * @copyright  (c) 2008-2011 Kohana Team
- * @license    http://kohanaframework.org/license
- * @uses       [PHP cURL](http://php.net/manual/en/book.curl.php)
  */
 class Keke_Request_Client_Curl extends Keke_Request_Client_External {
 

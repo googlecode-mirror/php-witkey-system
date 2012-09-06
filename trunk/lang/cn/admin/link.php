@@ -41,8 +41,13 @@ $lang = array(
 	'comfirm_delete_select'=>'确定删除所选？',
 //admin_tpl_link_php	
 	
-	'links_delete'=>'删除友情链接',	
-	'links_delete_success'=>'友情链接删除成功！',
-	'links_not_exists'=>'友情链接不存在，删除失败！',
+	
+	'remote_link'=>'远程链接',
+	'pic_upload'=>'图片上传',
+ 
+	//admin_tpl_edit_link_php
+	
+
+	'links_edit_success'=>'友情链接编辑成功！',
 );
 	

@@ -59,10 +59,20 @@ function batch_act(obj,frm){
 	var conf = $(":checkbox[name='ckb[]']:checked").length;
 	if (conf > 0) {
 		d.confirm("{$_lang['confirm']}" + c + '?', function(){
-			//$(".sbt_action").val(c);
-			//var ids = $(":checkbox[name='ckb[]']:checked").serialize();
-			//alert(ids);
-			//$("#" + frm).submit();
+			//获取选中的值
+			var str = [];
+			$(":checkbox[name='ckb[]']:checked").each(function(){
+				str.push($(this).val());
+			})
+			var val = str.join(',');
+			var url = '{$del_uri}&link_ids='+val;
+			$.post(url,function(data){
+				if(data>0){
+					$(":checkbox[name='ckb[]']:checked").each(function(){
+						$(this).parent().parent().remove();
+					})
+				}
+			})
 		});
 	}else{
 		d.alert("{$_lang['has_none_being_choose']}");

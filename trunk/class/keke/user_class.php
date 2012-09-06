@@ -15,9 +15,15 @@ class keke_user_class {
 	 * @return array() 用户信息
 	 */
 	static function get_user_info($uid, $isusername = false) {
-		$isusername and $where = " a.username = '$uid'" or $where = " a.uid = '$uid'";
-		$sql = "select a.*,b.rand_code from " . TABLEPRE . "witkey_space a left join " . TABLEPRE . "witkey_member b on a.uid=b.uid where $where";
-		return dbfactory::get_one ( $sql );
+		//$isusername and $where = " a.username = '$uid'" or $where = " a.uid = '$uid'";
+		if($isusername===TRUE){
+			$where = " a.username = '$uid'";
+		}else{
+			$where = " a.uid = '$uid'";
+		}
+		$sql = "select  *  from " . TABLEPRE . "witkey_space a  where $where";
+		
+		return Database::instance()->get_one_row($sql);
 	}
 	/**
 	 * 用户注册   xxxxx??????????

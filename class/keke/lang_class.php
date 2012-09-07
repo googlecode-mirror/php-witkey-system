@@ -1,12 +1,10 @@
 <?php
 class keke_lang_class {
 	
-	 static $_init_lang_set = array();
+	static $_init_lang_set = array();
 	private  static $_package = 'public';
 	public static $_lang='cn';
-	
-	
-	public static function lang($key,$action=null,$package=null){
+ 	public static function lang($key,$action=null,$package=null){
 		$r = self::getlang($key, $action, $package);
 		$package or $package = self::$_package;
 		$action or $action = 'public';
@@ -52,7 +50,15 @@ class keke_lang_class {
 	public static function lang_type(){
 		return  array("cn"=>"简体中文","tw"=>"繁体中文","en"=>"English","ko"=>"korea");
 	}
-	
+	public static function get_curr_list(){
+		global $_lang;
+		return array(
+				'cn'=>array('CNY',$_lang['rmb']),
+				'tw'=>array('HKD',$_lang['hkd']),
+				'ko'=>array('KRW',$_lang['krw']),
+				'en'=>array('USD',$_lang['usd'])
+		);
+	}
 	private static function load_lang_file($action,$package=null){
 		$r = self::get_lang();
 		$package or $package = self::$_package;

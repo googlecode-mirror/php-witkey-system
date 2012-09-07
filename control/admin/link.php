@@ -15,8 +15,8 @@ class Control_admin_link extends Controller {
 		$del_uri = $base_uri.'/del';
 		
 		//通过uri 记住查询条件,访止条件丢失，结果不对
-		$query_uri .= "?txt_link_id=$txt_link_id";
-		$query_uri .= "&txt_link_name=$txt_link_name";
+		$query_uri .= "?txt_case_id=$txt_case_id";
+		$query_uri .= "&txt_case_name=$txt_case_name";
 		$query_uri .= "&ord[]=$ord[0]&ord[]=$ord[1]";
 		$query_uri .= "&slt_page_size=$slt_page_size";
 		

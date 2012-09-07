@@ -796,6 +796,22 @@ class Keke_base {
 		$system_log_obj->setUsername ( $admin_info ['username'] ? $admin_info ['username'] : $_SESSION ['username'] );
 		$system_log_obj->create();
 	}
+	static function get_remote_data($url, $sim = false) {
+		if ($sim == true) {
+			if (function_exists ( 'fsockopen' )) {
+				return self::socket_request ( $url, false );
+			} elseif (function_exists ( 'curl_init' )) {
+				return self::curl_request ( $url, false, 'post' );
+			}
+		} else {
+			if (function_exists ( 'file_get_contents' )) {
+				return file_get_contents ( $url );
+			}
+		}
+	}
+	static function k_round($v, $dec = 0) {
+		return round ( $v * pow ( 10, $dec ) ) / pow ( 10, $dec );
+	}
 
 }
 

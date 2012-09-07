@@ -328,6 +328,8 @@ class Keke extends Keke_core {
 	public static $_style_path;
 	public static $_weibo_attent;
 	public static $_attent_api_open;
+	public static $_currency;
+	public Static $_curr_list;
 	//Êä³öÍ·
 	public static $_expose= true;
 	public static $_content_type= 'text/html'; 
@@ -395,6 +397,7 @@ class Keke extends Keke_core {
 
 		$this->init_out_put ();
 		$this->init_lang ();
+		$this->init_curr();
 		$this->init_model();
 
 		self::$_log = log::instance()->attach(new keke_log_file());
@@ -513,6 +516,16 @@ class Keke extends Keke_core {
 	function init_lang() {
 		Keke::$_lang_list = keke_lang_class::lang_type ();
 		Keke::$_lang = keke_lang_class::get_lang ();
+	}
+	
+	function init_curr() {
+		if ($_SESSION ['currency']) {
+			Keke::$_currency = $_SESSION ['currency'];
+		} else {
+			Keke::$_currency = Keke::$_sys_config ['currency'];
+			$_SESSION ['currency'] = Keke::$_sys_config ['currency'];
+		}
+		Keke::$_curr_list = keke_lang_class::get_curr_list ();
 	}
 	function init_model() {
 		$model_arr = db::select ( '*' )->from ( 'witkey_model' )->cached ()->execute ();

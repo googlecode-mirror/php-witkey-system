@@ -7,14 +7,14 @@
  * 2010-5-19ÏÂÎç09:25:13
  */
 
-//kekezu::admin_check_role(20);
+
 $file_obj = new keke_file_class();
 $backup_patch = S_ROOT.'./data/tpl_c/';
 if(isset($sbt_edit)){
 
 	if($ckb_obj_cache){
 	
-		$res = $file_obj->delete_files(S_ROOT."./data/data_cache/");
+		$res = $file_obj->delete_files(S_ROOT."./data/cache/");
 		$msg = $_lang['object_cache_empty'];
 	}
 	if($ckb_tpl_cache){

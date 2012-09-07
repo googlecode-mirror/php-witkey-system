@@ -1,7 +1,7 @@
 <?php
 define ( 'ADMIN_UID', '1' );
 define ( 'DBHOST', '127.0.0.1');
-define ( 'DBNAME', 'keke_witkey');
+define ( 'DBNAME', 'kppw_google');
 define ( 'DBUSER', 'root');
 define ( 'DBPASS', '123456');
 define ( 'DBCHARSET', 'gbk' );

@@ -166,9 +166,8 @@ class keke_admin_class {
 	function add_fast_menu($r_id) {
 		global $_lang;
 		$shortcuts_obj = new Keke_witkey_shortcuts ();
-		$in_shortcuts_list = dbfactory::execute ( " select resource_id from " . TABLEPRE . "witkey_shortcuts where resource_id = '$r_id'" );
+		$in_shortcuts_list = Dbfactory::get_count( " select resource_id from " . TABLEPRE . "witkey_shortcuts where resource_id = '$r_id'" );
 		if (! $in_shortcuts_list) {
-			$shortcuts_obj->_s_id = null;
 			$shortcuts_obj->setUid ( $this->_uid );
 			$shortcuts_obj->setResource_id ( $r_id );
 			$success = $shortcuts_obj->create ();

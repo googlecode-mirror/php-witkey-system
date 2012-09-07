@@ -3,8 +3,7 @@
 include 'app_boot.php';
 
 
-$user_info = keke_user_class::get_user_info(1);
-var_dump($user_info);
+ echo keke_curren_class::output(500);
 
  
 //var_dump(class_exists('Control_admin_main'));

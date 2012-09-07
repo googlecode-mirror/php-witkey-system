@@ -38,29 +38,7 @@ class Control_admin_index extends Controller{
 		/***锁屏状态判断***/
 		$check_screen_lock=$admin_obj->check_screen_lock();
 	   
-		/**动作集**/
-		switch ($_GET['ac']){
-			case "nav_search"://导航搜索
-				$nav_search=$admin_obj->search_nav($keyword);
-				require $kekezu->_tpl_obj->template("control/admin/tpl/admin_" .$_GET['ac']);
-				die();
-				break;
-			case "lock":
-				$admin_obj->screen_lock();//锁屏
-				break;
-			case "unlock":
-				$unlock_times=$admin_obj->times_limit($unlock_num);//允许登录尝试次数
-				$admin_obj->screen_unlock($unlock_num,$unlock_pwd);//解屏
-				require $kekezu->_tpl_obj->template("control/admin/tpl/admin_screen_lock");
-				die();
-				break;
-			case "add_shortcuts":
-				$admin_obj->add_fast_menu($r_id);
-				break;
-			case "rm_shortcuts":
-				$admin_obj->rm_fast_menu($r_id);
-				break;
-		}
+		
 		
 		require Keke_tpl::template('control/admin/tpl/index');
 	}
@@ -71,6 +49,7 @@ class Control_admin_index extends Controller{
 			echo "<script>window.parent.location.href='".BASE_URL."/index.php/admin/login';</script>";
 		}
 	}
+	
 	function admin_init(){
 		/*后台禁止静态化*/
 		$_K ['is_rewrite'] = 0;
@@ -80,6 +59,36 @@ class Control_admin_index extends Controller{
 		$_K ['admin_tpl_path'] = S_ROOT . './control/admin/tpl/'; //后台模板目录
 	}
 	
+	function action_op(){
+		
+		global $_K,$_lang;
+		$admin_obj=new keke_admin_class();
+		$_GET = $_POST+$_GET;
+		/**动作集**/
+		switch ($_GET['ac']){
+			case "nav_search"://导航搜索
+				$nav_search=$admin_obj->search_nav($_GET['keyword']);
+				require Keke_tpl::template("control/admin/tpl/admin_" .$_GET['ac']);
+				die();
+				break;
+			case "lock":
+				$admin_obj->screen_lock();//锁屏
+				break;
+			case "unlock":
+				$unlock_times=$admin_obj->times_limit($_GET['unlock_num']);//允许登录尝试次数
+				$admin_obj->screen_unlock($_GET['unlock_num'],$_GET['unlock_pwd']);//解屏
+				require Keke_tpl::template("control/admin/tpl/admin_screen_lock");
+				die();
+				break;
+			case "add_shortcuts":
+				$admin_obj->add_fast_menu($_GET['r_id']);
+				break;
+			case "rm_shortcuts":
+				$admin_obj->rm_fast_menu($_GET['r_id']);
+				break;
+		}
+	}
+	 
 	
 }
 

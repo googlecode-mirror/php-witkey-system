@@ -26,7 +26,8 @@
 <div class="login_box">
 <div class="header">
 	<div class="logo">
-		<h1><img src="{BASE_URL}/control/admin/tpl/img/logo.png" alt="{$_lang['admin_keke_sys']}" title="{$_lang['admin_keke_sys']}"/></h1>
+		<h1><img src="{BASE_URL}/control/admin/tpl/img/logo.png" alt="{$_lang['admin_keke_sys']}"
+		 title="{$_lang['admin_keke_sys']}"/></h1>
     </div>
 	
     <div class="nav" id="nav_div">
@@ -178,7 +179,8 @@ window.onload = function(){
     <a href="{BASE_URL}/index.php/admin/main" target="display_frame">{$_lang['manage_home']}</a>
     <span class="font_st">&gt;</span>
     <a href="javascript:void(0)" id="href_title">{$_lang['faster_operate']}</a>
-    <a href="#" onclick="shortcuts(this);" id="add_shortcuts" ac='add_shortcuts' title="{$_lang['add_faster_operate']}"><span class="font_st">[+]</span></a>
+    <a href="#" onclick="shortcuts(this);" id="add_shortcuts" ac='add_shortcuts' 
+	title="{$_lang['add_faster_operate']}"><span class="font_st">[+]</span></a>
 	<span id='del_tips'>删除中... 已经删除成功!</span>
     </div>
     <div class="other">
@@ -201,7 +203,7 @@ function shortcuts(obj){
 	var sub_h      =$(sub).attr('href');//菜单链接
 	var ac         =$(obj).attr('ac');//动作
 	if(sub.length>0){
-		$.post("index.php?do=index",
+		$.post("{BASE_URL}/index.php/admin/index/op",
 			{ac:ac,r_id:r_id},function(json){
 				if(json.status==4){//成功
 					if(ac=='add_shortcuts'){//添加成功

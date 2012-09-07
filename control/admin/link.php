@@ -44,6 +44,7 @@ class Control_admin_link extends Controller {
 		$link_arr = $data_info['data'];
 		$pages = $data_info['pages'];
 		
+		//var_dump(Database::instance()->get_last_query());
 		//echo Database::instance()->get_query_num();
 		
 		require Keke_tpl::template('control/admin/tpl/link');

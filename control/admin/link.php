@@ -70,6 +70,7 @@ class Control_admin_link extends Controller {
 	}
 	//±£´æÊý¾Ý
 	function action_save(){
+		Keke::formcheck($_POST['formhash']);
 		if($_POST['showMode'] ==1){
 			$link_pic = $_POST['txt_link_pic'];
 		}elseif(!empty($_FILES['fle_link_pic']['name'])){

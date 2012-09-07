@@ -80,6 +80,7 @@ class Control_admin_index extends Controller{
 		$_K ['admin_tpl_path'] = S_ROOT . './control/admin/tpl/'; //后台模板目录
 	}
 	
+	
 }
 
 /*后台禁止静态化*/

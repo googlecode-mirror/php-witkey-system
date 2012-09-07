@@ -22,4 +22,9 @@ define ( 'COOKIE_PRE', 'kekeWitkey' );
 define ( 'COOKIE_TTL', 0 );
 define ( 'SESSION_MODULE', 'files' );
 define ( 'SYS_START_TIME', microtime(1) );
+/*
+ * 如果网站在子目录下，就写目录名称 ，后面不要加斜杠，
+* 如果网站在目录就设为空
+*/
+define('BASE_URL', '/kppw_google');
 

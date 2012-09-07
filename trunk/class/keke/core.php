@@ -475,7 +475,7 @@ class Keke extends Keke_core {
 			Keke::$_userinfo = keke_user_class::get_user_info ( Keke::$_uid );
 			Keke::$_user_group = Keke::$_userinfo ['group_id'];
 			$sql = "select count(msg_id) from %switkey_msg where to_uid = '%d' and view_status=0 and msg_status!=1";
-			Keke::$_messagecount = Dbfactory::get_count ( sprintf ( $sql, TABLEPRE, Keke::$_uid ) );
+			//Keke::$_messagecount = Dbfactory::get_count ( sprintf ( $sql, TABLEPRE, Keke::$_uid ) );
 		} elseif (isset ( $_COOKIE ['user_login'] )) {
 			$temp = unserialize ( keke_encrypt_class::decode ( $_COOKIE ['user_login'] ) );
 			$_SESSION ['uid'] = $temp ['uid'];

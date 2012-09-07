@@ -11,11 +11,7 @@ define ( "S_ROOT", dirname ( __FILE__ ).DIRECTORY_SEPARATOR);
 ini_set('unserialize_callback_func', 'spl_autoload_call');
 require (S_ROOT . 'class/keke/core.php');
 
-/*
- * 如果网站在子目录下，就写目录名称 ，后面不要加斜杠，
- * 如果网站在目录就设为空
-*/
-define('BASE_URL', '/kppw_google');
+
 
 $exec_time_traver = Keke::exec_js('get');
 (!isset($exec_time_traver)||$exec_time_traver<time()) and $exec_time_traver = true or $exec_time_traver = false;

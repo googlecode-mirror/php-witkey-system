@@ -1,6 +1,6 @@
 <?php
 define ( 'ADMIN_UID', '1' );
-define ( 'DBHOST', 'localhost');
+define ( 'DBHOST', '192.168.1.69');
 define ( 'DBNAME', 'keke_witkey');
 define ( 'DBUSER', 'root');
 define ( 'DBPASS', '123456');

@@ -1,6 +1,12 @@
-<?php
+<?php  defined ( "IN_KEKE" ) or die ( "Access Denied" );
 
-defined ( "IN_KEKE" ) or die ( "Access Denied" );
+/**
+ * 模型操作的基类
+ * 可以操作所有表映射类
+ * @author michael
+ * @version 2.1
+ */
+
 abstract class Model {
 	public $_db;
 	public $_tablename;
@@ -30,7 +36,7 @@ abstract class Model {
 		return self::$_instance [$table_name];
 	}
 	/**
-	 *
+	 *设置条件
 	 * @return Model
 	 */
 	abstract public function setWhere($where);
@@ -42,7 +48,13 @@ abstract class Model {
 	 * @return Model
 	 */
 	abstract public function setData($array);
+	/**
+	 * 插入数据
+	 */
 	abstract public function create();
+	/**
+	 * 更新数据
+	 */
 	abstract public function update();
 	/**
 	 *
@@ -54,7 +66,13 @@ abstract class Model {
 	 *        	array
 	 */
 	abstract public function query($fields='*', $cache_time=0);
+	/**
+	 * 删除记录
+	 */
 	abstract public function del();
+	/**
+	 * 统计记录数
+	 */
 	abstract public function count();
 	function reset() {
 		self::$_where = NULL;

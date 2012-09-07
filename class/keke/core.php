@@ -409,7 +409,7 @@ class Keke extends Keke_core {
 	 */
 	function init_config() {
 		global $i_model, $_lang, $_K;
-		$sql = sprintf("select k,v from %switkey_basic_config",TABLEPRE);
+		$sql = sprintf("select k,v from %switkey_config",TABLEPRE);
 		
 		if(($basic_arr = Cache::instance()->generate_id($sql)->get(null))==null){
 			$basic_arr = db::query($sql)->execute();

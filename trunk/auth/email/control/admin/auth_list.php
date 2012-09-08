@@ -5,7 +5,7 @@
  * @version v 2.0
  * 2010-08-26 09:40:34
  */
-defined ( "ADMIN_KEKE" ) or exit ( "Access Denied" ); //控制权限
+defined ( "IN_KEKE" ) or exit ( "Access Denied" ); //控制权限
 kekezu::admin_check_role(71);
 $url = "index.php?do=" . $do . "&view=" . $view . "&auth_code=" . $auth_code . "&w[page_size]=" . $w [page_size] . "&w[realname_a_id]=" . $w [realname_a_id] . "&w[username]=" . $w [username] . "&w[auth_status]=" . $w [auth_status]; //跳转地址
 $email_obj = new Keke_witkey_auth_email_class (); //实例化邮箱认证表对象

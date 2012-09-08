@@ -63,7 +63,7 @@ if ($sbt_action) {
 	$height && $ad_obj->setHeight ( $height );
 	//url
 	$url = ${$type . '_url'};
-	$url && $ad_obj->setAd_url ( $url );
+	$ad_obj->setAd_url ( $url );
 	
 	//content
 	$content = ${$type . '_content'};
@@ -92,7 +92,7 @@ if ($sbt_action) {
 }
 $page_tips = $_lang ['add'];
 $ad_data = array ();
-$target_id && $tagname and $ad_data ['ad_name'] = $tagname; //从广告组添加页面跳转过来时,ad_title只能和$tagname相同,并且为readonly
+//$target_id && $tagname and $ad_data ['ad_name'] = $tagname; //从广告组添加页面跳转过来时,ad_title只能和$tagname相同,并且为readonly
 
 
 //编辑 获取单条数据
@@ -110,14 +110,11 @@ if ($ac && $ac == 'edit') {
 
 
 
+
 //获取对应的(一条)广告位相关信息
 if ($target_id) {
 	$target_arr = kekezu::get_table_data ( '*', 'witkey_ad_target', 'target_id=' . intval ( $target_id ) );
 	$target_arr = $target_arr ['0'];
-	$position_info = array_keys(unserialize($target_arr['position']));
-	$position_info = implode(',',$position_info);
-	
-	//var_dump($position_info);
 	/* 如果是幻灯片 ,则要判断有没有对应的广告组, 
 	 * 如果没有跳转至广告组添加页面
 	 * 如果有,那么将广告的ad_title设置为只读,不允许修改*/
@@ -128,20 +125,13 @@ if ($target_id) {
 			kekezu::admin_show_msg ( $_lang ['add_group_msg'], 'index.php?do=tpl&view=ad_group_add&ac=add&target_id=' . $target_arr ['target_id'] . '&tagname=' . $target_arr ['name'], '3', '', 'warning' );
 		} else {
 			$tagname = $group_arr ['0'] ['tagname'];
-			$ad_data ['ad_name'] = $tagname;
+			
 			$important_msg = $_lang ['name_must_same'];
 		}
 	}
-	$target_arr ['ad_size'] = unserialize ( $target_arr ['ad_size'] ); //初始化图片/flash大小
-	$target_arr ['position'] = unserialize ( $target_arr ['position'] ); //初始化 广告位投放位置(位置=>'size')
-	$target_arr_range = explode ( ',', $target_arr ['targets'] );
-	foreach ( $target_arr_range as $key => $value ) {
-		$string .= $target_range_arr [$value] . ',';
-	}
-	$ad_count = kekezu::get_table_data ( 'count(*) as num', 'witkey_ad', 'target_id=' . intval ( $target_id ), '', '', '', '', null );
-	$ad_count = $ad_count ['0'] ['num']; //统计广告位对应的广告条数
-	$string = rtrim ( $string, ',' ); //可投放范围
+
+	$ad_count = db_factory::get_count(" select count(ad_id) as num from  ".TABLEPRE."witkey_ad where target_id =".intval($target_id ));
 }
-$tpl_arr = db_factory::query ( 'select tpl_id,tpl_title from ' . TABLEPRE . 'witkey_template;' );
-// var_dump($ad_data,$tpl_arr);die();
-require Keke_tpl::template ( 'control/admin/tpl/admin_' . $do . '_' . $view );
+
+
+require $template_obj->template ( 'control/admin/tpl/admin_' . $do . '_' . $view );

@@ -6,7 +6,7 @@
  * @version v 2.0
  * 2010-5-24обнГ10:17:13
  */
-defined ( 'IN_KEKE' )or exit ( 'Access Denied' );
+defined ( 'ADMIN_KEKE' )or exit ( 'Access Denied' );
 keke_lang_class::package_init('admin');
 keke_lang_class::loadlang('admin_{$do}_$view');
 

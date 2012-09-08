@@ -1,4 +1,4 @@
-<?php
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * 个人空间的首页
  * @author lj
@@ -6,42 +6,49 @@
  * @version V2.0
  */
 
-defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
-//空间地址
- $p_url =$_K['siteurl']."/index.php?do=space&member_id=$member_id";
-/**信誉**/
+
+ 
+/**信誉等级**/
 $credit_level = unserialize($member_info['seller_level']);
-$indus_arr = Keke::$_indus_arr;
-//商品展示
- $service_obj = new Keke_witkey_service_class();
- $service_obj->setWhere("uid = ".intval($member_id)." order by on_time desc limit 0,9 ");
- $service_arr = $service_obj->query_keke_witkey_service();
-
-$range = range(1,8);
-//技能证书
- $skill_obj = new Keke_witkey_member_ext_class();
- $skill_obj->setWhere(" uid = ".intval($member_id)." and type='cert' order by ext_id desc ");
- $skill_arr = $skill_obj->query_keke_witkey_member_ext();
-  foreach ($skill_arr as $k=>$v) {
-	$v['v1'] = preg_replace("/\..*/", "",  $v['v1']);
- 	$skill_desc_arr[$k] = $v; 
- }
  
 
+$indus_arr = $kekezu->_indus_arr;
+if($shop_open){
+	//商品展示
+	 $service_obj = new Keke_witkey_service_class();
+	 $service_obj->setWhere("uid = ".intval($member_id)." order by on_time desc limit 0,6 ");
+	 $service_arr = $service_obj->query_keke_witkey_service();
+}
+$auth_arr = get_auth($member_info);
+//认证信息
+function get_auth($user_info){
+	$auth_item = keke_auth_base_class::get_auth_item ();
+	$auth_temp = array_keys ( $auth_item );
+	$user_info ['user_type'] == 2 and $un_code = 'realname' or $un_code = "enterprise";
+	$t = implode ( ",", $auth_temp );
+	$auth_info = db_factory::query ( " select a.auth_code,a.auth_status,b.auth_title,b.auth_small_ico,b.auth_small_n_ico from " . TABLEPRE . "witkey_auth_record a left join " . TABLEPRE . "witkey_auth_item b on a.auth_code=b.auth_code where a.uid ='".$user_info['uid']."' and FIND_IN_SET(a.auth_code,'$t')", 1, -1 );
+	$auth_info = kekezu::get_arr_by_key ( $auth_info, "auth_code" );
+	return array('item'=>$auth_item,'info'=>$auth_info,'code'=>$un_code);
+}
 
- $mark_obj  = new Keke_witkey_mark_class();
- $page_obj  = Keke::$_page_obj;
- $page_obj->setAjax('1');
- $page_obj->setAjaxDom('mark_content');
- $page_size = intval ( $page_size ) ? intval ( $page_size ) : 5; 
- $page      = $page ? $page : 1; 
- $url       = "index.php?do=space&member_id=$member_id";
- $where		= "uid =$member_id and mark_type=1 and mark_status>0";
- $mark_obj->setWhere($where);
- $count = intval($mark_obj->count_keke_witkey_mark());
- $pages = $page_obj->getPages($count,$page_size,$page,$url);
- $mark_obj->setWhere($where.$pages['where']);
- $mark_list = $mark_obj->query_keke_witkey_mark();
- 
-require Keke_tpl::template(SKIN_PATH."/space/{$type}_{$view}");
+//威客好评率
+$good_rate  = get_witkey_good_rate($member_info);
+function get_witkey_good_rate($user_info){
+	$st = $user_info['seller_total_num'];
+	return $st?(number_format($user_info['seller_good_num']/$st,2)*100).'%':'0%'; 
+}
+if($task_open){
+	$task_obj = keke_table_class::get_instance('witkey_task');
+	$w = sprintf(' uid = %d',$member_id);
+
+	$page or $page = 1;
+	$limit=10;
+	$task = $task_obj->get_grid($w,$p_url, $page,$limit,' order by start_time desc',1,'task_list');
+	$count = $task_obj->_count;
+	
+	$task_list = $task['data'];
+	$pages     = $task['pages'];
+	$cash_cove = kekezu::get_cash_cove('',true);
+}
+require keke_tpl_class::template(SKIN_PATH."/space/{$type}_{$view}");
 

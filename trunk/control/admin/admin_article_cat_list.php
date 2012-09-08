@@ -7,7 +7,7 @@
  * 2011-8-24 16:28
  */
 
-defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 //kekezu::admin_check_role ( 7 );
 
 $cat_obj = new Keke_witkey_article_category_class ();
@@ -71,7 +71,7 @@ if ($ac == 'del') { //É¾³ý
     $type = (! empty ( $type ) && in_array ( $type, $types )) ? $type : 'art';
     switch ( $type ){
 	case 'art':
-		$art_cat_arr = kekezu::get_table_data('*',"witkey_article_category","cat_type='article'"," art_cat_id desc",'','','art_cat_id',null);
+		$art_cat_arr = kekezu::get_table_data('*',"witkey_article_category","art_cat_pid =1 or art_cat_id = 1"," art_cat_id desc",'','','art_cat_id',null);
 		$where.=" and cat_type='article' ";
 		kekezu::admin_check_role(14);
 		break;
@@ -151,4 +151,4 @@ function get_cat($pid = NULL, $cache = NULL) {
 		return $cat_arr;
 	
 	}
-require  Keke_tpl::template('control/admin/tpl/admin_'. $do .'_'. $view);
+require  $template_obj->template('control/admin/tpl/admin_'. $do .'_'. $view);

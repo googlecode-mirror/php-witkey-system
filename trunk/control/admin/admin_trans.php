@@ -1,4 +1,4 @@
-<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * @copyright keke-tech
  * @author Chen
@@ -23,7 +23,7 @@ if ($ac) {
 		case "del" :
 			if ($report_id) {
 				$res = db_factory::execute ( sprintf ( " delete from %switkey_report where report_id='%d'", TABLEPRE, $report_id ) );
-				$res and kekezu::admin_show_msg ( $action_arr[$view].$_lang['record_delete_success'], $url, "3",'','success' ) or kekezu::admin_show_msg ($action_arr[$view]. $_lang['record_delete_fail'], $url, "3",'','warning');
+				$res and kekezu::admin_show_msg ( $_lang['record_delete_success'], $url, "3",'','success' ) or kekezu::admin_show_msg ($action_arr[$view]. $_lang['record_delete_fail'], $url, "3",'','warning');
 			} else
 				kekezu::admin_show_msg ($_lang['choose_delete_operate'], $url, "3",'','warning' );
 			break;

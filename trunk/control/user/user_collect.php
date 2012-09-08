@@ -1,4 +1,4 @@
-<?php
+<?php	defined ( 'IN_KEKE' ) or exit('Access Denied');
  /**
  * @copyright keke-tech
  * @author Chen
@@ -6,7 +6,16 @@
  * 2011-10-08下午02:57:33
  */
 
-defined ( 'IN_KEKE' ) or exit('Access Denied');
+$ops = array ('task','work','service','shop');
+if($task_open==0){
+	unset($ops[0],$ops[1]);
+}
+if($shop_open==0){
+	unset($ops[2]);
+}
+$ops = array_merge($ops);
+in_array($op,$ops) or $op =$ops[0];
+
 /**
  * 子集菜单
  */
@@ -16,15 +25,27 @@ $sub_nav=array(
 			   "service"=>array( $_lang['collection_of_service'],"layers-1"),
 				"shop"=>array( $_lang['collection_of_shop'],"shop_cart"))
 			);
+if($task_open==0){
+	unset($sub_nav[0]['task'],$sub_nav[0]['work']);
+}
+if($shop_open==0){
+	unset($sub_nav[0]['service']);
+}
+$model_name_arr = 	kekezu::get_table_data ( 'model_code,model_name', 'witkey_model', '', 'model_id asc ', '', '', 'model_code');
 
-$model_name_arr = 	Keke::get_table_data ( 'model_code,model_name', 'witkey_model', '', 'model_id asc ', '', '', 'model_code');
-
-$op or $op='task';//收藏类型
-$title = Keke::lang("collection_of_".$op);
+$title = kekezu::lang("collection_of_".$op);
 
 $favor_obj=new Keke_witkey_favorite_class();//收藏对象
-$page_obj=Keke::$_page_obj;//分页对象
-
+$favor_table_obj = new keke_table_class('witkey_favorite');
+$page_obj=$kekezu->_page_obj;//分页对象
+if(isset($ac)&&$ac=='del'){    
+			if($f_id){ 
+				$res = $favor_table_obj->del("f_id",$f_id);
+				$res and kekezu::show_msg($_lang['operate_tips'],"index.php?do=$do&view=$view&op=$op&page=$page",1,$_lang['del_success'],"alert_right");
+			}else{
+			   kekezu::show_msg($_lang['operate_tips'],"index.php?do=$do&view=$view&op=$op&page=$page",1,$_lang['select_null_for_delete'],"alert_error");
+			}	  
+}
 $ord_arr=array("f_id desc "=> $_lang['collection_num_desc'],
 		   "f_id asc "=> $_lang['collection_num_asc'],
 		   "on_date desc"=> $_lang['collection_time_desc'],
@@ -51,5 +72,5 @@ $favor_arr=$favor_obj->query_keke_witkey_favorite();
 
 
 
-require Keke_tpl::template('user/user_'.$view);
+require keke_tpl_class::template('user/user_'.$view);
 

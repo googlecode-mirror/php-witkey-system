@@ -1,23 +1,34 @@
-<?php
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * 个人空间商品展示
  * @author lj
  * @charset:GBK  last-modify 2011-12-12-上午11:04:44
  * @version V2.0
  */
-defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+
 
 // 商品展示
 $sql = "select * from " . TABLEPRE . "witkey_service where ";
 $csql = sprintf ( "select count(service_id) as c  from `%switkey_service` where", TABLEPRE );
-$where = " uid=" . intval ( $member_id ) . " and  service_status!=1 order by on_time desc";
-$url = "index.php?do=space&member_id=$member_id&view=goods&page_size=$page_size";
-$page_size = 12;
-$count = intval ( dbfactory::get_count ( $csql . $where, 0, null, 3600 ) );
-$page = $page ? $page : 1;
-$pages = Keke::$_page_obj->getPages ( $count, $page_size, $page, $url );
-$where .= $pages ['where'];
-$shop_arr = dbfactory::query ( $sql . $where );
+$where = " uid=" . intval ( $member_id ) . " and  service_status = 2 ";
+$title&&$title!==$_lang['to_search_product_name'] and $where .= " and title like '%" . $title . "%'";
+//分类区域显示需要的查询
+$searh_sql = sprintf(' select count(service_id) c,indus_id,indus_pid from %switkey_service where %s group by indus_id',TABLEPRE,$where);
+$searh_arr = db_factory::query($searh_sql);
+$indus_id and $where .= " and indus_id = $indus_id";
+$i_c  = db_factory::query(sprintf(' select count(service_id) c,indus_id,indus_pid from %switkey_service where %s group by indus_id',TABLEPRE,$where));
 
-require Keke_tpl::template ( SKIN_PATH . "/space/{$type}_{$view}" );
+$where.=" order by on_time desc";
+$page_size = 8;
+$page = $page ? $page : 1;
+$url = "index.php?do=space&member_id=$member_id&view=goods&indus_id=$indus_id";
+$count = intval ( db_factory::get_count ( $csql . $where, 0, null, 3600 ) );
+$kekezu->_page_obj->setAjax(1);
+$kekezu->_page_obj->setAjaxDom('goods');
+$pages = $kekezu->_page_obj->getPages ( $count, $page_size, $page, $url );
+$where .= $pages ['where'];
+$shop_arr = db_factory::query ( $sql . $where );
+
+$indus_arr = $kekezu->_indus_arr;
+require keke_tpl_class::template ( SKIN_PATH . "/space/{$type}_{$view}" );
 

@@ -1,18 +1,18 @@
 
 
 </div>
-<script type="text/javascript" src="{BASE_URL}/resource/js/artdialog/artDialog.js"></script>
-<script type="text/javascript" src="{BASE_URL}/resource/js/artdialog/jquery.artDialog.js?skin=default"></script>
-<script type="text/javascript" src="{BASE_URL}/resource/js/artdialog/artDialog.iframeTools.source.js"></script>
-<script type="text/javascript" src="{BASE_URL}/lang/{$_K['language']}/script/lang.js"></script>
+<script type="text/javascript" src="../../resource/js/artdialog/artDialog.js"></script>
+<script type="text/javascript" src="../../resource/js/artdialog/jquery.artDialog.js?skin=default"></script>
+<script type="text/javascript" src="../../resource/js/artdialog/artDialog.iframeTools.source.js"></script>
+<script type="text/javascript" src="../../lang/$language/script/lang.js"></script>
 <script type="text/javascript">
 	
-	In.add('form_and_validation',{path:"{BASE_URL}/resource/js/system/form_and_validation.js",type:'js'});
-	In.add('xheditor',{path:"{BASE_URL}/resource/js/xheditor/xheditor.js",type:'js'});
-	In.add('mousewheel',{path:"{BASE_URL}/control/admin/tpl/js/jquery.mousewheel.min.js",type:'js'}); 
-	 
-	In.add('table',{path:"{BASE_URL}/control/admin/tpl/js/table.js",type:'js'});
-	In.add('calendar',{path:"{BASE_URL}/resource/js/system/script_calendar.js"});
+	In.add('form_and_validation',{path:"../../resource/js/system/form_and_validation.js",type:'js'});
+	In.add('xheditor',{path:"../../resource/js/xheditor/xheditor.js",type:'js'});
+	In.add('mousewheel',{path:"tpl/js/jquery.mousewheel.min.js",type:'js'}); 
+	//In.add('styleswitch',{path:"tpl/js/styleswitch.js",type:'js'});
+	In.add('table',{path:"tpl/js/table.js",type:'js'});
+	In.add('calendar',{path:"../../resource/js/system/script_calendar.js"});
 	In('form_and_validation','xheditor','mousewheel','table','calendar');
 	 
 	</script>
@@ -25,24 +25,11 @@ function cdel(o,s){
 		c=s;
 	}
 	d.confirm(c, function(){
-			$.get(o.href,function(data){
-				if(data >0){
-					$(o).parent().parent().remove();
-					
-				}
-			})
+		window.location.href = o.href;
 	});
 	return false;	
 }
-$(function(){
-	var tips = window.parent.document.getElementById('del_tips')
-	 $(tips).ajaxStart(function(){
-		  tips.innerHTML ='删除中...';  
-	 }).ajaxComplete(function(){
-	 	tips.innerHTML ='';
-	 })
-})
- 
+
 function pdel(frm){ 
 	d = art.dialog;
 	var frm = frm; 
@@ -59,20 +46,8 @@ function batch_act(obj,frm){
 	var conf = $(":checkbox[name='ckb[]']:checked").length;
 	if (conf > 0) {
 		d.confirm("{$_lang['confirm']}" + c + '?', function(){
-			//获取选中的值
-			var str = [];
-			$(":checkbox[name='ckb[]']:checked").each(function(){
-				str.push($(this).val());
-			})
-			var val = str.join(',');
-			var url = '{$del_uri}&link_ids='+val;
-			$.post(url,function(data){
-				if(data>0){
-					$(":checkbox[name='ckb[]']:checked").each(function(){
-						$(this).parent().parent().remove();
-					})
-				}
-			})
+			$(".sbt_action").val(c);
+			$("#" + frm).submit();
 		});
 	}else{
 		d.alert("{$_lang['has_none_being_choose']}");
@@ -81,11 +56,10 @@ function batch_act(obj,frm){
 }
 </script> 
 {if KEKE_DEBUG}
-<div style="background-color:green;color:#fff;text-align:center;">
-	<!--{eval list($querys,$times)=Keke::execute_time()}-->
-		Querys: {$querys}
-		 &nbsp;
-		Times:{$times}
+<div style="background-color:red;color:#fff;width:400px;text-align:center;">
+	querys: <!--{eval echo db_factory::create()->get_query_num()}-->
+	 &nbsp;
+	times:<!--{eval echo kekezu::execute_time()}-->
 </div>
 					
 {/if}

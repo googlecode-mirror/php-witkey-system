@@ -1,4 +1,4 @@
-<?php defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+<?php defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * @copyright keke-tech
  * @author Liyingqing
@@ -9,24 +9,26 @@
 //kekezu::admin_check_role(15);
 $art_obj = keke_table_class::get_instance ( "witkey_article" );
 
-$types = array ('help', 'art', 'single' );
+$types = array ('help', 'art','bulletin','about' );
 (! empty ( $type ) && in_array ( $type, $types )) or $type = 'art';
 
 switch ($type) {
 	case 'art' :
 		kekezu::admin_check_role ( 15);
-		$art_cat_arr = kekezu::get_table_data ( '*', "witkey_article_category", "art_index like '%{1}%'", " art_cat_id desc", '', '', 'art_cat_id', null );
-
+		$art_cat_arr = kekezu::get_table_data ( '*', "witkey_article_category", "cat_type = 'article'", " art_cat_id desc", '', '', 'art_cat_id', null );
 		break;
 		;
 	case 'help' :
 		kekezu::admin_check_role (43);
-		$art_cat_arr = kekezu::get_table_data ( '*', "witkey_article_category", "art_index like '%{100}%'", "art_cat_id desc", '', '', 'art_cat_id', null );
+		$art_cat_arr = kekezu::get_table_data ( '*', "witkey_article_category", "cat_type = 'help'", " art_cat_id desc", '', '', 'art_cat_id', null );
 		break;
 		;
-	case 'single' :
+	case 'bulletin' :
+		kekezu::admin_check_role (43);
+		break;
+		;
+	case 'about' :
 		kekezu::admin_check_role (54);
-		$art_cat_arr = kekezu::get_table_data ( '*', "witkey_article_category", "art_index like '%{200}%'", " art_cat_id desc", '', '', 'art_cat_id', null );
 		break;
 		;
 }
@@ -41,6 +43,14 @@ if ($sbt_edit) {
 	 
 	//文章发布时间
 	$fields ['pub_time'] = time ();
+	
+	if($type=='art'){
+		$fields ['cat_type'] = 'article';
+	}else{
+		$fields ['cat_type'] = $type;
+	}
+	
+	
 	//文章推荐
 	isset($fields['is_recommend']) or $fields['is_recommend']=0;
 	//跳转地址
@@ -77,7 +87,7 @@ $cat_arr = array ();
 
 kekezu::get_tree ( $art_cat_arr, $cat_arr, 'option', $art_id, 'art_cat_id', 'art_cat_pid', 'cat_name' );
 
-require Keke_tpl::template ( 'control/admin/tpl/admin_' . $do . "_" . $view );
+require $template_obj->template ( 'control/admin/tpl/admin_' . $do . "_" . $view );
 
 function get_fid($path){//删除图片时获取图片对应的fid,图片的存放形式是e.g ...img.jpg?fid=1000
 	if(!path){

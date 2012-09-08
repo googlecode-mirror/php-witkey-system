@@ -6,7 +6,7 @@
  * 2011-11-11下午02:29:58
  */
 
-defined ( "IN_KEKE" ) or exit ( "Access denied!" );
+defined ( "ADMIN_KEKE" ) or exit ( "Access denied!" );
 $path = S_ROOT.'/keke_client/keke/config.php';
 include $path;
 $op or $op = 'apply';
@@ -32,10 +32,8 @@ if ( $op=='config' ) {//配置
 }
 //正式地址
 $url = 'http://www.kekezu.com/union/apply.php';
-//测试地址
-$url='http://192.168.1.118/server/apply.php'; 
 if($op=='apply'){
-	require Keke_tpl::template ( "control/admin/tpl/IN_KEKE_account_apply" );
+	require $template_obj->template ( "control/admin/tpl/admin_keke_account_apply" );
 }else{
-	require Keke_tpl::template ( "control/admin/tpl/IN_KEKE_account_config" );
+	require $template_obj->template ( "control/admin/tpl/admin_keke_account_config" );
 }

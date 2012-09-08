@@ -1,4 +1,4 @@
-<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * ¶ÌÐÅÅäÖÃ
  */
@@ -60,4 +60,4 @@ switch ($op) {
 function check_bind($k) {
 	return db_factory::get_count ( " select k from " . TABLEPRE . "witkey_basic_config where k='$k'" );
 }
-require Keke_tpl::template ( 'control/admin/tpl/admin_' . $do . '_' . $view );
+require $template_obj->template ( 'control/admin/tpl/admin_' . $do . '_' . $view );

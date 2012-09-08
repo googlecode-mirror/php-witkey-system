@@ -1,4 +1,4 @@
-<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * @copyright keke-tech
  * @author Chen
@@ -47,4 +47,4 @@ switch ($ac){
 		}
 		break;
 }
-require Keke_tpl::template('control/admin/tpl/admin_'.$do.'_'.$view);
+require $template_obj->template('control/admin/tpl/admin_'.$do.'_'.$view);

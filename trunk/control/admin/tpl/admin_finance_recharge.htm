@@ -2,9 +2,10 @@
 <div class="page_title">
     <h1>{$_lang['financial_model']}</h1>
     <div class="tool">
+    	<a href="index.php?do={$do}&view=revenue">²ÆÎñ¸Å¿ö</a>
 		<a href="index.php?do={$do}&view=all">{$_lang['flow_record']}</a>
 	    <a href="index.php?do={$do}&view=report">{$_lang['graphic_report']}</a>
-	    <a href="index.php?do={$do}&view=revenue">{$_lang['revenue']}</a>
+	    
 	    <a href="index.php?do={$do}&view=recharge" class="here">{$_lang['recharge_audit']}</a>
 	   <a href="index.php?do={$do}&view=withdraw">{$_lang['withdraw_audit']}</a>
     </div>
@@ -96,11 +97,9 @@
              <tbody>
                <tr>
                		<th>
-               			<input type="checkbox" id="checkbox" onclick="checkall();" class="checkbox" >
+               			<input type="checkbox" id="checkbox" onclick="checkall();" class="checkbox" >ID
                		</th>
-                    <th>
-           ID
-					</th>
+                    
 					   <th>
                         {$_lang['order_type']}
                     </th>
@@ -126,11 +125,10 @@
   				 {loop $recharge_arr $k $v}
                 <tr class='item'>
                 	<td>
-                		<input type="checkbox" name="ckb[]" class="checkbox" value="{$v['order_id']}">
-                	</td>
-                    <td>
-                        {$v['order_id']}
-                    </td>
+                		<input type="checkbox" name="ckb[]" class="checkbox" value="{$v['order_id']}">{$v['order_id']}
+                	
+					</td>
+                   
                     <td>
                     	{$charge_type_arr[$v['order_type']]}
                     </td>
@@ -144,7 +142,7 @@
 						</font>
                     </td>
                     <td>
-                        <a href="index.php?do=user&view=space&member_id=$v['uid']" target="_blank">{$v['username']}</a>
+                        {$v['username']}
                     </td>
 					<td>
                         <font color=red>{c:$v['pay_money']}</font>

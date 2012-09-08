@@ -2,9 +2,10 @@
 <div class="page_title">
     <h1>{$_lang['financial_model']}</h1>
     <div class="tool">
+    	<a href="index.php?do={$do}&view=revenue">²ÆÎñ¸Å¿ö</a>
 		<a href="index.php?do={$do}&view=all">{$_lang['flow_record']}</a>
 	    <a href="index.php?do={$do}&view=report">{$_lang['graphic_report']}</a>
-	    <a href="index.php?do={$do}&view=revenue">{$_lang['revenue']}</a>
+	    
 	    <a href="index.php?do={$do}&view=recharge">{$_lang['recharge_audit']}</a>
 	   <a href="index.php?do={$do}&view=withdraw" class="here">{$_lang['withdraw_audit']}</a>
     </div>
@@ -106,11 +107,9 @@
              <tbody>
                <tr>
                	   <th>
-               			<input type="checkbox" id="checkbox" onclick="checkall();" class="checkbox" >
+               			<input type="checkbox" id="checkbox" onclick="checkall();" class="checkbox" >ID
                		</th>
-                    <th width="20">
-           ID
-					</th>
+                    
                     <th>
                        {$_lang['withdraw_type']}
 					</th>
@@ -139,9 +138,8 @@
   				 {loop $withdraw_arr $key $v}
                 <tr class='item'>
                     <td>
-                        <input type="checkbox" name="ckb[]" id="ckb_$v['withdraw_id']" class="checkbox" value="{$v['withdraw_id']}">
+                        <input type="checkbox" name="ckb[]" id="ckb_$v['withdraw_id']" class="checkbox" value="{$v['withdraw_id']}">{$v['withdraw_id']}
                     </td>
-					<td>{$v['withdraw_id']}</td>
                     <td>
                         {if $v['pay_type']=='alipayjs'}
 							{$_lang['alipay']}
@@ -154,12 +152,12 @@
                     </td>
                     <td>
                         <font color="red">
-                        	<!--{eval $get_cash = keke_finance_class::get_to_cash($v['withdraw_cash']);}-->
-                        	
-                        	
+                        	{if $v['pay_type']=='alipayjs'}
+                        		<!--{eval $get_cash = keke_finance_class::alipayjs_format_moneys($v['withdraw_cash']);}-->
+                        	{else}
+                        		<!--{eval $get_cash = keke_finance_class::get_to_cash($v['withdraw_cash']);}-->
+                        	{/if}
 							{c:$v['withdraw_cash']}/{c:$get_cash}
-                        		
-						
 						</font>
                     </td>
                     <td>

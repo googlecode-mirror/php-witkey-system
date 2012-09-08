@@ -12,9 +12,9 @@
         		<form action="index.php?do=$do&view=$view&op=add" method="post">
         			 <table cellpadding="0" cellspacing="0">
             	<tr>
-                <th scope="row">
+               <!-- <th scope="row">
                     {$_lang['serve_id']}
-                </th>
+                </th>-->
                 <th scope="row">
                     {$_lang['use_status']}
                 </th>
@@ -46,9 +46,9 @@
        {loop $payitem_arr $v}
 			 
             <tr>
-                <td>
+            <!--    <td>
                     $v['item_id']
-                </td>
+                </td>-->
                 <td>
                     {if $v['is_open']==1}
                     {$_lang['yes']}{else}<font color="red">{$_lang['disable']}</font>{/if}

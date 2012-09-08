@@ -1,4 +1,4 @@
-<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * ³äÖµÉóºË
  * @copyright keke-tech
@@ -122,4 +122,4 @@ $order_info or kekezu::admin_show_msg ( $_lang['charge_num_not_exist'], $url,3,'
 	$recharge_arr = $recharge_obj->query_keke_witkey_order_charge();
 }
 
-require Keke_tpl::template ( 'control/admin/tpl/admin_' . $do . '_' . $view );
+require $template_obj->template ( 'control/admin/tpl/admin_' . $do . '_' . $view );

@@ -1,4 +1,4 @@
-<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * 推广关系
  * @copyright keke-tech
@@ -59,4 +59,4 @@ if (isset ( $ac )) { //单个操作
 	$prom_relation_arr = $prom_relation_obj->query_keke_witkey_prom_relation ();
 }
 //echo 'control/admin/tpl/admin_' . $do . '_' .$view ;
-require Keke_tpl::template ( 'control/admin/tpl/admin_' . $do . '_' . $view );
+require $template_obj->template ( 'control/admin/tpl/admin_' . $do . '_' . $view );

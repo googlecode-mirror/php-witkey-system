@@ -1,4 +1,4 @@
-<?php
+<?php	defined ( 'IN_KEKE' ) or exit('Access Denied');
  /**
  * @copyright keke-tech
  * @author Chen
@@ -6,9 +6,9 @@
  * 2011-10-08下午02:57:33
  */
 
-defined ( 'IN_KEKE' ) or exit('Access Denied');
+
 /**店铺信息**/
-$shop_info=dbfactory::get_one(sprintf(" select * from %switkey_shop where uid='%d' ",TABLEPRE,$uid));
+$shop_info=db_factory::get_one(sprintf(" select * from %switkey_shop where uid='%d' ",TABLEPRE,$uid));
 $opps = array('basic','link','member','case','member','cate','notice');
 in_array($opp,$opps) or $opp ="basic";
 
@@ -30,31 +30,32 @@ if($shop_info){
 	}
 	$third_nav["view"] =array($_lang['search_space'],$_lang['search_space'] );
 }else{
+	$ac='open';
 	$third_nav=array("basic" => array ($_lang['space_set'],$_lang['space_set']));	
 	//判断资料是否完善成功
 	if(intval($user_info['user_type'])==2){
-		$space_fds = array('user_type','summary','residency','address','truename','mobile','email','indus_id','indus_pid');
+		$space_fds = array('user_type','summary','address','email','indus_id','indus_pid');
 		$where  = null_sql($space_fds);
 		$where .=' and uid='.$uid;
-		$res = intval(dbfactory::get_count(sprintf("select count(*) from %switkey_space where %s",TABLEPRE,$where)));
+		$res = intval(db_factory::get_count(sprintf("select count(*) from %switkey_space where %s",TABLEPRE,$where)));
 		$enter_fds = array('company','legal','licen_num');
 		$e_where = null_sql($enter_fds);
-		$e_res = intval(dbfactory::get_count(sprintf("select count(*) from %switkey_auth_enterprise where %s and uid='%d'",TABLEPRE,$e_where,$uid)));
+		$e_res = intval(db_factory::get_count(sprintf("select count(*) from %switkey_auth_enterprise where %s and uid='%d'",TABLEPRE,$e_where,$uid)));
 		if(!$res||!$e_res){
 			$access = 1;			
-			$url = "index.php?do=register_wizard&step=e2";
+			$url = 'index.php?do=user&view=setting&op=basic';
 		}else{
 			$access=2;
 		}
 	}else{
-		$fds = array('user_type','sex','residency','birthday','truename','mobile','indus_id','indus_pid','summary');
+		$fds = array('user_type','sex','birthday','truename','indus_id','indus_pid');
 		$where = null_sql($fds);
 		$where .= ' and uid='.$uid;
-		$res = dbfactory::get_count(sprintf("select count(*) from %switkey_space where %s",TABLEPRE,$where));
+		$res = db_factory::get_count(sprintf("select count(*) from %switkey_space where %s",TABLEPRE,$where));
 		$res = intval($res);
 		if(!$res){
 			$access=1;			
-			$url = "index.php?do=register_wizard&step=p2";
+			$url = 'index.php?do=user&view=setting&op=basic';
 		}else{
 			$access=2;
 		}
@@ -63,6 +64,8 @@ if($shop_info){
 		$opp='notice';
 	}
 }
+
+
 require 'user_'.$op.'_'.$opp.'.php';
 	
 function null_sql($fds){

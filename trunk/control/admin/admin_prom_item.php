@@ -1,4 +1,4 @@
-<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * 推广项目管理
  * @copyright keke-tech
@@ -52,4 +52,4 @@ $pages = $kekezu->_page_obj->getPages ( $count, $page_size, $page, $url );
 $prom_item_obj->setWhere ( $where . $pages ['where'] );
 $prom_item_arr = $prom_item_obj->query_keke_witkey_prom_item ();
 
-require Keke_tpl::template ( 'control/admin/tpl/admin_' . $do . "_" . $view . "_list" );
+require $template_obj->template ( 'control/admin/tpl/admin_' . $do . "_" . $view . "_list" );

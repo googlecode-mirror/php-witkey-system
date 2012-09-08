@@ -23,7 +23,7 @@
                         	<input type="text" name="conf[code]" id="currency_code" value="{$currency_config['code']}" class="txt" style="width:260px;" limit="required:true;len:1-10" onkeyup="onlyen(this)"
                         	msg="{$_lang['code_error']}" msgArea="obj_code_msg" title="$_lang['code_desc']" />
                         	<span id="obj_code_msg"></span> 
-						 	<input type="checkbox" value="" {if isset($default_cur)}checked {/if} name="default_cur" id="default_cur" /><label for='default_cur'>$_lang['set_default']</label>
+						 	<input type="checkbox" value="" {if $default_currency == $currency_config['code']}checked {/if} name="default_cur" id="default_cur" /><label for='default_cur'>$_lang['set_default']</label>
 						 </td>
 					  </tr>
 					  <tr>

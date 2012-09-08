@@ -1,4 +1,4 @@
-<?php defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+<?php defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * @copyright keke-tech
  * @author Liyingqing
@@ -13,7 +13,7 @@ $art_obj = new Keke_witkey_article_class ();
 
 $table_obj = new keke_table_class ( "witkey_article" );
 
-$types = array ('help', 'art', 'single' );
+$types = array ('help', 'art','bulletin','about' );
 $type = (! empty ( $type ) && in_array ( $type, $types )) ? $type : 'art';
 $url = "index.php?do=$do&view=$view&w[username]=$w[username]&w[art_title]=$w[art_title]&w[art_cat_id]=$w[art_cat_id]&page_size=$page_size&page=$page&type=$type";
 
@@ -24,23 +24,9 @@ if ($ac == 'del') {
 	sizeof ( $ckb ) or kekezu::admin_show_msg ( $_lang['choose_operate_item'], $url,3,'','warning' );
 	is_array ( $ckb ) and $ids = implode ( ',', array_filter ( $ckb ) );
 	$art_obj->setWhere ( "art_id in ($ids)" );
-	switch ($sbt_action) {
-		case $_lang['recycle'] ://放入回收站
-			$art_obj->setIs_show ( 2 );
-			$res = $art_obj->edit_keke_witkey_article ();
-			kekezu::admin_system_log ( $_lang['mulit_delete_articles'] );//批量删除文章
-			break;
-		case $_lang['recovery_articles'] ://恢复文章
-			$art_obj->setIs_show ( 1 );
-			$res = $art_obj->edit_keke_witkey_article ();
-			kekezu::admin_system_log ( $_lang['mulit_recovery_articles']);
-			break;
-		case $_lang['mulit_delete'] ://批量删除
-			$res = $art_obj->del_keke_witkey_article ();
-			kekezu::admin_system_log ( $_lang['mulit_recovery_articles'] );
-			break;
-		default :
-			break;
+	if($sbt_action){
+		$res = $art_obj->del_keke_witkey_article ();
+		kekezu::admin_system_log ( $_lang['mulit_recovery_articles'] );
 	}
 	$res and kekezu::admin_show_msg ( $_lang['mulit_operate_success'], $url,3,'','success' ) or kekezu::admin_show_msg ( $_lang['mulit_operate_fail'], $url,3,'','warning' );
 
@@ -56,20 +42,24 @@ if ($ac == 'del') {
 	switch ($type) {
 		case 'art' :
 			kekezu::admin_check_role ( 16 );
-			$art_cat_arr = kekezu::get_table_data ( '*', "witkey_article_category", "art_index like '%{1}%'", " art_cat_id desc", '', '', 'art_cat_id', null );
-			$where .= " and art_cat_id in (select art_cat_id from " . TABLEPRE . "witkey_article_category where art_index like '%{1}%') ";
+			$art_cat_arr = kekezu::get_table_data ( '*', "witkey_article_category", "cat_type = 'article'", " art_cat_id desc", '', '', 'art_cat_id', null );
+			$where .= " and cat_type = 'article' ";
 			break;
 			;
 		case 'help' :
 			kekezu::admin_check_role (42);
-			$art_cat_arr = kekezu::get_table_data ( '*', "witkey_article_category", "art_index like '%{100}%'", "art_cat_id desc", '', '', 'art_cat_id', null );
-			$where .= " and art_cat_id in (select art_cat_id from " . TABLEPRE . "witkey_article_category where art_index like '%{100}%')";
+			$art_cat_arr = kekezu::get_table_data ( '*', "witkey_article_category", "cat_type = 'help'", " art_cat_id desc", '', '', 'art_cat_id', null );
+			$where .= " and cat_type = 'help' ";
 			break;
 			;
-		case 'single' :
+		case 'bulletin' :
 			kekezu::admin_check_role ( 53);
-			$art_cat_arr = kekezu::get_table_data ( '*', "witkey_article_category", "art_index like '%{200}%'", " art_cat_id desc", '', '', 'art_cat_id', null );
-			$where .= " and art_cat_id in (select art_cat_id from " . TABLEPRE . "witkey_article_category where art_index like '%{200}%') ";
+			$where .= " and cat_type = 'bulletin' ";
+			break;
+			;
+		case 'about' :
+			kekezu::admin_check_role ( 53);
+			$where .= " and cat_type = 'about' ";
 			break;
 			;
 	}
@@ -89,11 +79,9 @@ if ($ac == 'del') {
 	
 	$ord[0]&&$ord[1] and $where .=' order by '.$ord[0].' '.$ord[1] or $where.=" order by art_id desc ";
 	
-	//$ord and $where .= " order by $ord" or $where.="order by art_id desc";
-
 	$r = $table_obj->get_grid ( $where, $url, $page, $page_size,null,1,'ajax_dom');
 	$art_arr = $r [data];
 	$pages = $r [pages];
 }
 
-require Keke_tpl::template ( 'control/admin/tpl/admin_' . $do . "_" . $view );
+require $template_obj->template ( 'control/admin/tpl/admin_' . $do . "_" . $view );

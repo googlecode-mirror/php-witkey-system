@@ -19,12 +19,7 @@
     		<table cellspacing="0" cellpadding="0">    		
 				<tbody>
 					<tr>
-		                <th>{$_lang['dns_id']}</th>
-		                <td>
-		                  <input type="text" class="txt" size="12" name="txt_feed_id" value="{$txt_feed_id}" onkeyup="clearstr(this);">
-						</td>
-	                 
-		                <th>{$_lang['dns_name']}</th>
+	                <th>{$_lang['dns_name']}</th>
 		                <td>
 		                 <input type="text" class="txt" name="txt_title" id="txt_title" value="{$txt_title}">
 						 *{$_lang['search_by_like']}
@@ -71,7 +66,7 @@
 	 <table width="100%" border="0" cellspacing="0" cellpadding="0"  >
                 <tr>
                     <th width="60">
-                        ID 
+                     
                     </th>
                    
                     <th width="350">
@@ -93,7 +88,7 @@
                 {loop $feed_arr $key $value}
                 <tr class="item">
                     <td>
-                        <input type="checkbox" name="ckb[]" class="checkbox" value="{$value['feed_id']}">{$value['feed_id']}
+                        <input type="checkbox" name="ckb[]" class="checkbox" value="{$value['feed_id']}">
                     </td>
                     <td>
                     	{$value['title']}

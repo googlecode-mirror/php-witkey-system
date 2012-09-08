@@ -1,4 +1,4 @@
-<?php
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * @copyright keke-tech
  * @author Chen
@@ -6,13 +6,13 @@
  * 2011-10-8下午06:42:39
  */
 
-defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+
 $pic_id and $pic_id= intval($pic_id);
 /**
  * 三级菜单
  */
 $third_nav=array('choose'=>$_lang['select_head_pic'],'upload'=>$_lang['upload_head_pic']);
-if(Keke::$_sys_config['user_intergration']==2){
+if($kekezu->_sys_config['user_intergration']==2){
 	unset($third_nav['choose']);
 	$show="upload";
 	include 'keke_client/ucenter/client.php';
@@ -38,13 +38,15 @@ if($ac=='set_pic'){
 	
     abs(intval($pic_id)) and   $id = keke_user_avatar_class::set_user_sys_pic($uid, $pic_id);
     if($id){
-    	Keke::$_cache_obj->del ( "keke_witkey_member_ext" );
-    	Keke::show_msg($_lang['the_selected_pic_is_selected'],$url,3,'','success');
+    	$kekezu->_cache_obj->del ( "keke_witkey_member_ext" );
+    	kekezu::show_msg ( $_lang['system prompt'], $url , '1', $_lang['submit success'], 'alert_right' ) ;
+    	//kekezu::show_msg($_lang['the_selected_pic_is_selected'],$url,3,'','success');
     }else{
-    	Keke::show_msg($_lang['system_error_select_null'],$url,0,'','warning');
+    	kekezu::show_msg ( $_lang['system prompt'], $url , '1', $_lang['submit failure'], 'alert_error' )  ;
+    	//kekezu::show_msg($_lang['system_error_select_null'],$url,0,'','warning');
     }
 }
  
-require Keke_tpl::template ( "user/" . $do . "_" . $op );
+require keke_tpl_class::template ( "user/" . $do . "_" . $op );
 
 

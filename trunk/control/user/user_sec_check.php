@@ -1,4 +1,4 @@
-<?php
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * @copyright keke-tech
  * @author Chen
@@ -7,9 +7,9 @@
  * 2011-10-18 09:10
  */
 
-defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 
 
-require Keke_tpl::template ( "user/" . $do . "_".$view);
+
+require keke_tpl_class::template ( "user/" . $do . "_".$view);
 
 

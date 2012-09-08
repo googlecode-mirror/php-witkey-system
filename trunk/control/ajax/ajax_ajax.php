@@ -16,14 +16,19 @@ switch ($ac) {
 		break;
 	case "secode":
 		if($v){
-			echo  Keke::check_secode($v);
+			echo  kekezu::check_secode($v);
 		}else{
 			echo false;
 		}
 		exit();
 		break;
+	case 'currency':
+		$curr = strtoupper($curr);
+		$_SESSION['currency'] = $curr;
+		die();
+		break;
 	case "safe_secode":
-		$user_info = Keke::$_userinfo;
+		$user_info = $kekezu->_userinfo;
 		$sec_code=keke_user_class::get_password ( $sec_code, $user_info['rand_code'] );
 		$refer = $_SERVER['HTTP_REFERER'];
 		strrpos($refer,"#userCenter")!==FALSE and $refer=str_replace("#userCenter","&ver=1#userCenter", $refer) or $refer.="&ver=1";
@@ -31,11 +36,11 @@ switch ($ac) {
 			$_SESSION['check_secode_'.$user_info['uid']]=1;
 			header("Location:".$refer);
 		}else{
-			Keke::show_msg($_lang['operate_warn'],$refer,3,$_lang['code_input_wrong'],'warning');
+			kekezu::show_msg($_lang['operate_warn'],$refer,3,$_lang['code_input_wrong'],'warning');
 		}
 		break;
 	case "favor"://ÊÕ²Ø
-		Keke::set_favor($pk, $keep_type, $model_code,$obj_uid, $obj_id, $obj_name, $origin_id,'','json');
+		kekezu::set_favor($pk, $keep_type, $model_code,$obj_uid, $obj_id, $obj_name, $origin_id,'','json');
 		break;
 	case "edittel":  
 		if($euid){
@@ -49,23 +54,23 @@ switch ($ac) {
 		exit();
 		break;
 	case 'del_att':   
-			if (Keke::get_table_data('file_id',"witkey_file","file_id = '$fid'")){
-				$b = Keke::del_att_file($fid);
+			if (kekezu::get_table_data('file_id',"witkey_file","file_id = '$fid'")){
+				$b = kekezu::del_att_file($fid);
 				if($b){
-					Keke::echojson($_lang['delete_success'],'1');die();
+					kekezu::echojson($_lang['delete_success'],'1');die();
 				}else {
-					Keke::echojson($_lang['delete_fail'],0);die();
+					kekezu::echojson($_lang['delete_fail'],0);die();
 				}
 				
 			}
 	case 'select_pic':
 		$title =$_lang['edit_user_pic'];
 		 
-		Keke::keke_require_once(S_ROOT . './keke_client/ucenter/client.php');
-		require Keke_tpl::template('select_pic');
+		kekezu::keke_require_once(S_ROOT . './keke_client/ucenter/client.php');
+		require keke_tpl_class::template('select_pic');
 		exit();
 		break;
 
 }
 
-require Keke_tpl::template ( 'ajax/ajax' );
+require $template_obj->template ( 'ajax/ajax' );

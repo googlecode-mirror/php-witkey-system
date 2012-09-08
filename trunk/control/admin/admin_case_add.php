@@ -1,4 +1,4 @@
-<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 
 $case_obj = new Keke_witkey_case_class ();
 $task_obj = new Keke_witkey_task_class ();
@@ -53,4 +53,4 @@ function case_obj_exists($id, $obj = 'task') {
 		return false;
 	}
 }
-require Keke_tpl::template ( 'control/admin/tpl/admin_' . $do . '_' . $view );
+require $template_obj->template ( 'control/admin/tpl/admin_' . $do . '_' . $view );

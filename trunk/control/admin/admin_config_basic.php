@@ -1,4 +1,4 @@
-<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * @copyright keke-tech
  * @author Michael
@@ -198,4 +198,4 @@ EOT;
 }
 
 
-require Keke_tpl::template ( 'control/admin/tpl/admin_config_' . $view );
+require $template_obj->template ( 'control/admin/tpl/admin_config_' . $view );

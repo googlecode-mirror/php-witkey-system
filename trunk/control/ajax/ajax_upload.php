@@ -1,4 +1,4 @@
-<?php
+<?php	defined ( 'IN_KEKE' ) or exit('Access Denied');
 /**
  * @copyright keke-tech
  * @author jie
@@ -6,7 +6,7 @@
  * 2010-6-5下午04:40:43
  */
 
-defined ( 'IN_KEKE' ) or exit('Access Denied');
+
 $upload_obj=keke_ajax_upload_class::get_instance($_SERVER['QUERY_STRING']);
 switch ($upload_obj->_file_type){
 	case 'sys'://系统附件上传

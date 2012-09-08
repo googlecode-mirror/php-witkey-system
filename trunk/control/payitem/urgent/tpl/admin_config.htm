@@ -82,7 +82,7 @@
                         <td>
                            <p>
                                 <label for="rdo_standard_1">
-                                    <input name="fds[item_standard]" type="radio" id="rdo_standard_1" value="times" checked="checked"/>{$_lang['by_times']}
+                                    <input name="fds[item_standard]" type="radio" id="rdo_standard_1" value="day"  checked="checked"/>{$_lang['day']}
                                 </label>
                             </p>
                         </td>
@@ -221,7 +221,7 @@ function uploadResponse(json){
 	 var hf_fid = $("#hdn_"+id+"_fid");
           $(hf).val(json.msg.up_file+"?fid="+json.fid);
           $(hf_fid).val(json.fid);
-		$("#span_"+id).html("<img src='../../"+json.msg.up_file+"'width='80px' height='80px' />").append("<a href=';' onclick='return del(\"hdn_"+id+"\",\"span_"+id+"\")'>删除</a>");
+		$("#span_"+id).html("<img src='../../"+json.msg.up_file+"'width='80px' height='80px' />").append("<a href=';' onclick='return del(\"hdn_"+id+"\",\"span_"+id+"\")'>"+L.del+"</a>");
 }
     function del(str,span){//删除的时候,必须要同时提供filepath和fid才能够删除
 		var value = $("#"+str).val().split("?")['0'];

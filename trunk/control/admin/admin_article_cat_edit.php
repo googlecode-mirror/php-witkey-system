@@ -1,53 +1,32 @@
-<?php defined ( 'IN_KEKE' )or exit ( 'Access Denied' );
- /**
- * @copyright keke-tech
- * @author Liyingqing
- * @version v 2.0
- * 2010-7-15 10:00:34
- */
-
-
-$art_cat_obj = new Keke_witkey_article_category_class();//实例化文章分类表对象
-
+<?php defined ( 'ADMIN_KEKE' )or exit ( 'Access Denied' );
+$art_cat_obj = new Keke_witkey_article_category_class();
 $types =  array ('help', 'art');
 $type = (! empty ( $type ) && in_array ( $type, $types )) ? $type : 'art';
-
- 
-//分类结果数组
-
 if($type=='art'){
 	kekezu::admin_check_role(22);
-	$art_cat_arr = kekezu::get_table_data('*',"witkey_article_category","art_index like '%{1}%'","  art_cat_id desc",'','','art_cat_id',null);
+	$art_cat_arr = kekezu::get_table_data('*',"witkey_article_category","art_cat_pid =1 or art_cat_id = 1","  art_cat_id desc",'','','art_cat_id',null);
 }elseif($type=='help'){
 	kekezu::admin_check_role(45);
 	$art_cat_arr = kekezu::get_table_data('*',"witkey_article_category","art_index like '%{100}%'"," art_cat_id desc",'','','art_cat_id',null);
 }
-
-
-//单条分类信息
 if($art_cat_id){
 	$art_cat_obj->setWhere('art_cat_id='.intval($art_cat_id));
 	$art_cat_info = $art_cat_obj->query_keke_witkey_article_category();
 	$art_cat_info = $art_cat_info[0];
 	$art_cat_pid = $art_cat_info[art_cat_pid];
 }
-
-
-//编辑分类
 if($sbt_edit){
 	$flag = null;
-	if($hdn_art_cat_id){//有自己的ID为编辑
+	if($hdn_art_cat_id){
 		$art_cat_obj->setWhere('art_cat_id='.intval($hdn_art_cat_id));
 		$art_cat_info = $art_cat_obj->query_keke_witkey_article_category();
 		$art_cat_info = $art_cat_info[0];
 		if($art_cat_info['art_cat_pid']>0){
 			$art_cat_obj->setArt_cat_pid($slt_cat_id);
 		}
-	}else{            //无自己的ID为添加
-
+	}else{            
 		$art_cat_obj->setArt_cat_pid($slt_cat_id);
 	}
-	
 	$art_cat_obj->setCat_name(kekezu::escape($txt_cat_name));
 	$art_cat_obj->setListorder($txt_listorder?$txt_listorder:0);
 	$art_cat_obj->setIs_show(intval($chk_is_show));
@@ -61,32 +40,26 @@ if($sbt_edit){
 	}else if ($type=="single"){
 		$art_cat_obj->setCat_type("single");
 	}
-	if($slt_cat_id==0){//选择的是顶级的分类，无值
-		$art_index = $top_index;              //前面加{1}或{100}
-	
-	}else{             //选择非顶级分类，有值
-	    $art_index = $art_cat_arr[$slt_cat_id]['art_index'];   //前面加选择顶级分类的art_index的值
+	if($slt_cat_id==0){
+		$art_index = $top_index;              
+	}else{             
+	    $art_index = $art_cat_arr[$slt_cat_id]['art_index'];   
 	}
-	//$art_index = "";
-	//$art_index = "{{$slt_cat_id}}".$art_index;
 	$flag = $art_cat_arr[$slt_cat_id];
-	
 	while ($flag['art_cat_pid']){
-		//$art_index = "{{$flag['art_cat_pid']}}".$art_index;
 		$flag = $art_cat_arr[$flag['art_cat_pid']];
 	}
-	
 	if($hdn_art_cat_id){
 		$art_cat_obj->setArt_cat_id($hdn_art_cat_id);
 		$art_index = $art_index."{{$hdn_art_cat_id}}";
 		$art_cat_obj->setArt_index($art_index);
-		$res = $art_cat_obj->edit_keke_witkey_article_category();//编辑文章分类
+		$res = $art_cat_obj->edit_keke_witkey_article_category();
 		if($res){
 			kekezu::admin_system_log($_lang['edit_article_cat'].$txt_cat_name);
 			kekezu::admin_show_msg($_lang['edit_article_cat_success'],'index.php?do='.$do.'&view='.$view.'&type='.$type.'&art_cat_id='.$hdn_art_cat_id,3,'','success');
 		}
 	}else{
-		$res = $art_cat_obj->create_keke_witkey_article_category();//添加文章分类
+		$res = $art_cat_obj->create_keke_witkey_article_category();
 		$art_index = $art_index."{{$res}}";
 		if($res){
 			$art_cat_obj->setWhere("art_cat_id='$res'");
@@ -97,12 +70,10 @@ if($sbt_edit){
 		}
 	}
 }
- 
-//递归分类列表
+
+
 $temp_arr = array();
 kekezu::get_tree($art_cat_arr,$temp_arr,'option',$art_cat_pid,'art_cat_id','art_cat_pid','cat_name');
 $cat_arr = $temp_arr;
 unset($temp_arr);
-//var_dump($cat_arr);
-
-require  Keke_tpl::template('control/admin/tpl/admin_'. $do .'_'. $view);
+require  $template_obj->template('control/admin/tpl/admin_'. $do .'_'. $view);

@@ -1,4 +1,4 @@
-<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * 财务--提现审核
  * @copyright keke-tech
@@ -69,7 +69,7 @@ if (isset ( $ac )) { //处理财务清单申请
 					$bank_arr=keke_glob_class::get_bank();
 					$k_arr   = array_keys($bank_arr);
 				}
-				require Keke_tpl::template ( 'control/admin/tpl/admin_finance_withdraw_info' );
+				require $template_obj->template ( 'control/admin/tpl/admin_finance_withdraw_info' );
 				die ();
 			} else {
 				kekezu::admin_show_msg ( $_lang['audit_withdraw_not_exist'], 'index.php?do=' . $do . '&view=' . $view,3,'','warning' );
@@ -101,15 +101,7 @@ if (isset ( $ac )) { //处理财务清单申请
 				
 				$v_arr = array('网站名称'=>$_K['sitename'],'提现方式'=>$pay_way[$withdraw_info['pay_type']],'帐户'=>$withdraw_info['pay_account'],'提现金额'=>$withdraw_info['withdraw_cash']);
 	         	keke_msg_class::notify_user($uid,$username,'withdraw_fail',$_lang['fail_and_check_you_account'],$v_arr);
-	            
-				/* if ($space_info ['email']) {
-=======
-				$v_arr = array($_lang['tx_way']=>$pay_way[$withdraw_info[0]['pay_type']],$_lang['account_msg']=>$withdraw_info[0]['pay_account'],$_lang['cash']=>$withdraw_cash);
-				keke_msg_class::notify_user($uid,$username,'withdraw_fail',$_lang['fail_and_check_you_account'],$v_arr);
-				if ($space_info ['email']) {
->>>>>>> .r29908
-					kekezu::send_mail ( $space_info ['email'], $_lang['audit_withdraw_apply_fail'], $_lang['not_pass_and_check_you_account'] );
-				} */
+	           
 				kekezu::admin_system_log ( $_lang['delete_audit_withdraw'] . $withdraw_id );
 				kekezu::admin_show_msg ( $_lang['delete_audit_withdraw_success'], 'index.php?do=' . $do . '&view=' . $view,3,'','success' );
 			} else {
@@ -146,15 +138,6 @@ if (isset ( $ac )) { //处理财务清单申请
 					$v_arr = array('网站名称'=>$_K['sitename'],'提现方式'=>$pay_way[$withdraw_info['pay_type']],'帐户'=>$withdraw_info['pay_account'],'提现金额'=>$withdraw_cash);
 					keke_msg_class::notify_user($uid,$username,'withdraw_fail',$_lang['fail_and_check_you_account'],$v_arr);
 	                
-					
-					/* if ($space_info ['email']) {
-=======
-					$v_arr = array($_lang['tx_way']=>$pay_way[$withdraw_info[0]['pay_type']],$_lang['txmc']=>$withdraw_info[0]['pay_name'],$_lang['account']=>$withdraw_info[0]['pay_account']);
-	            	keke_msg_class::notify_user($uid,$username,'withdraw_fail',$_lang['fail_and_check_you_account'],$v_arr);
-					if ($space_info ['email']) {
->>>>>>> .r29908
-						kekezu::send_mail ( $space_info ['email'], $_lang['audit_withdraw_fail'], $_lang['not_pass_and_check_you_account'] );
-					} */
 				}
 				//审核通过的批量退款
 				$withdraw_obj->setWithdraw_status (3);
@@ -171,8 +154,6 @@ if (isset ( $ac )) { //处理财务清单申请
 				$res = $withdraw_obj->edit_keke_witkey_withdraw ();
 				
 				foreach ( $withdraw_arr as $withdraw_info ) {
-					//$space_info = kekezu::get_user_info ( $withdraw_info ['uid'] );
-					
 					$withdraw_id = $withdraw_info ['withdraw_id'];
 					/*更新手续费*/
 					if(in_array($withdraw_id,$ids)){
@@ -182,13 +163,6 @@ if (isset ( $ac )) { //处理财务清单申请
 					if ($withdraw_info ['withdraw_status'] != 1) {
 						continue;
 					}
-					
-					//邮件
-					/* $message_obj = new keke_msg_class ();
-					$t_userinfo = db_factory::get_one ( " select mobile,email from " . TABLEPRE . "witkey_space where uid ='".$withdraw_info['uid']."'" );
-					$v = array ($_lang['withdraw_cash'] => $withdraw_info ['withdraw_cash'],$_lang['account_msg']=>$withdraw_info['pay_account'] );
-					$message_obj->send_message ( $withdraw_info ['uid'], $withdraw_info ['username'], 'draw_success', $_lang['withdraw_success'], $v, $t_userinfo ['email'], $t_userinfo ['mobile'] );
-					 */
 					
 					$v_arr = array('网站名称'=>$_K['sitename'],'提现方式'=>$pay_way[$withdraw_info['pay_type']],'帐户'=>$withdraw_info['pay_account'],'提现金额'=>$withdraw_cash);
 					keke_msg_class::notify_user($withdraw_info ['uid'],$withdraw_info ['username'],'draw_success',$_lang['withdraw_success'],$v_arr);
@@ -239,10 +213,4 @@ if (isset ( $ac )) { //处理财务清单申请
 	$withdraw_arr = $withdraw_obj->query_keke_witkey_withdraw ();
 }
 
-/*if ($withdraw_id) {
-	$withdraw_obj->setWhere ( 'withdraw_id=' . $withdraw_id );
-	$withdraw_info = $withdraw_obj->query_keke_witkey_withdraw ();
-	$withdraw_info = $withdraw_info ['0'];
-} */
-
-require Keke_tpl::template ( 'control/admin/tpl/admin_' . $do . '_' . $view );
+require $template_obj->template ( 'control/admin/tpl/admin_' . $do . '_' . $view );

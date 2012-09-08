@@ -1,11 +1,11 @@
-<?php
+<?php	defined ( 'IN_KEKE' ) or exit('Access Denied');
 /**
  * @copyright keke-tech
  * @author Michael
  * @version v 2.0
  * 2010-8-5ÏÂÎç04:55:01
  */
-defined ( 'IN_KEKE' ) or exit('Access Denied');
+
 	 
 
 $ac_arr = array ("login" => $_lang['login'], "register" => $_lang['register'], "update_pic" => $_lang['update_pic'], "edit_userinfo" => $_lang['improve_user_info'], "edit_withdrawinfo" => $_lang['improve_bank_accout'], "buy_vip" => $_lang['buy_vip'], "online_pay" => $_lang['online_pay'], "withdraw" => $_lang['wit_operate'], "pub_task" => $_lang['pub_task'], "view_task" => $_lang['view_task'], "collect_task" => $_lang['collect_task'], 
@@ -33,7 +33,7 @@ if ($op == "getscore") {
 	</div>";
 
 		setcookie ( "score_log", "" );
-		echo $msg = Keke_tpl::xml_out($msg);
+		echo $msg = keke_tpl_class::xml_out($msg);
  		
 	}
 	

@@ -42,7 +42,7 @@
 												<input type=radio id="nolimit_{$v['r_id']}"  name="fds[rule][{$v[r_id]}]" value="0" {if $v['rule']=='0'||!$v['rule']}checked="ckecked"{/if}>{$_lang['no_limit']}{$v['op_name']}</label><br>
 											{elseif $perm_rule[$op_code]['allow_times']=='1'}											
 											<label id="allow_{$v['r_id']}"><input id="allow_{$v['r_id']}" type=radio name="fds[rule][{$v['r_id']}]" value="1" {if $perm_rule[$op_code]['allow_times']==1}checked="ckecked"{/if}>{$_lang['limit_every_24hour']}
-											</label>	<input type=text size=2 class="txt" name="fds[times][{$v[r_id]}]" value="{if $v['rule']>=1}$v['rule']{/if}" id="times_{$v['r_id']}" limit="len:1-5;between:1-" title="{$_lang['limit_times_large_one']}" title="{$_lang['choose_button_if_not']}" msgArea="span_times_{$v['r_id']}">{$_lang['times']}
+											</label>	<input type=text size=2 class="txt" name="fds[times][{$v[r_id]}]" value="$v['rule']" id="times_{$v['r_id']}" limit="len:1-5;between:1-" title="{$_lang['limit_times_large_one']}" title="{$_lang['choose_button_if_not']}" msgArea="span_times_{$v['r_id']}">{$_lang['times']}
 												(-1{$_lang['forbid']}£¬0£¬{$_lang['not_limit']}£¬1~X{$_lang['limited']})
 												<span id="span_times_{$v['r_id']}"></span>
 											{/if}

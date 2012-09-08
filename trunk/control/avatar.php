@@ -1,14 +1,6 @@
 <?php defined ( "IN_KEKE" ) or  die ( "Access Denied" );
 /**
- * 用户图象输出
- * this not free,powered by keke-tech
- * @author jiujiang
- * @charset:GBK  last-modify 2011-10-15-下午09:04:22
- * @version V2.0
- * 
- */
-/**
- * @param 
+ * flash 头象上接收
  * @author Administrator
  *
  */

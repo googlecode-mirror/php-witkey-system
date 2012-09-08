@@ -1,11 +1,11 @@
 <?php
 
-if(!defined('IN_KEKE')) {
+if(!defined('ADMIN_KEKE')) {
 	exit('Access Denied');
 }
 
 $init_menu= array(
-	$_lang['task_list']=>'index.php?do=model&model_id=5&view=list&status=0',
+	$_lang['task_manage']=>'index.php?do=model&model_id=5&view=list&status=0',
 	$_lang['task_config']=>'index.php?do=model&model_id=5&view=config',
 );
 

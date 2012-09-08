@@ -1,5 +1,6 @@
 <?php
 defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+
 $std_cache_name = 'task_cache_'.$pub_mode.'_'.$model_id.'_'.$t_id.'_' . substr ( md5 ( $uid ), 0, 6 );
 $release_obj = sreward_release_class::get_instance ($model_id,$pub_mode);
 
@@ -18,11 +19,15 @@ switch ($r_step) { //任务发布步骤
 	case "step1" :
 		switch ($ajax) {
 			case "getmaxday" : //获取最大天数
+			
 				$release_obj->get_max_day ( $task_cash );
 				break;
 		}
-		if (Keke::submitcheck($formhash)) {
+	
+		if (kekezu::submitcheck($formhash)) {
+			
 			$release_info and $_POST = array_merge ( $release_info, $_POST );
+			$_POST['txt_task_cash'] = keke_curren_class::convert($_POST['txt_task_cash'],0,true);
 			$release_obj->save_task_obj ( $_POST, $std_cache_name ); //信息保存
 			header ( "location:index.php?do=release&pub_mode=$pub_mode&t_id=$t_id&model_id={$model_id}&r_step=step2" );
 			die ();
@@ -31,13 +36,13 @@ switch ($r_step) { //任务发布步骤
 		}
 		break;
 	case "step2" :		
-		if (Keke::submitcheck($formhash)) {
+		if (kekezu::submitcheck($formhash)) {
 			
-			$release_info and $_POST = array_merge ( $release_info, $_POST,$release_obj->user_contact($_POST['contact_type']));
- 			$_POST['txt_title'] = Keke::escape($txt_title);
- 			
- 			$_POST['tar_content'] = Keke::escape($tar_content);
- 	
+			$release_info and $_POST = array_merge ( $release_info, $_POST);
+ 			$_POST['txt_title'] = kekezu::escape($txt_title);
+ 			 
+ 			$_POST['tar_content'] = $tar_content;
+ 	       
 			$release_obj->save_task_obj ($_POST, $std_cache_name ); //信息保存
 			header ( "location:index.php?do=release&pub_mode=$pub_mode&t_id=$t_id&model_id={$model_id}&r_step=step3" );
 			die ();
@@ -46,22 +51,21 @@ switch ($r_step) { //任务发布步骤
 			$kf_info	 = $release_obj->_kf_info; //随机客服
 			$indus_p_arr = $release_obj->get_bind_indus(); //父级行业
 			$indus_arr   = $release_obj->get_task_indus($release_info ['indus_pid']); //子集行业
-			$ext_types   = Keke::get_ext_type (); //附件允许类型
+			$ext_types   = kekezu::get_ext_type (); //附件允许类型
  		}
 		break;
 	case "step3" : 
-		 
 		$limit_max =ceil(( strtotime($release_info['txt_task_day']) - time())/3600/24);  
 		
 		switch ($ajax) {
 			case "save_payitem" : 
-				$release_obj->save_pay_item ( $item_id, $item_code, $item_name, $item_cash, $std_cache_name ,$item_num);
+				$r = $release_obj->save_pay_item ( $item_id, $item_code, $item_name, $item_cash, $std_cache_name ,$item_num);
 				break;
 			case "rm_payitem" :	
 				$release_obj->remove_pay_item ( $item_id, $std_cache_name );
 				break;
 		}
-		if (Keke::submitcheck($formhash)) {
+		if (kekezu::submitcheck($formhash)) {
 		//if($formhash){
 			$release_info and $_POST = array_merge ( $release_info, $_POST );
 			$release_obj->save_task_obj ( $_POST, $std_cache_name ); //信息保存
@@ -81,5 +85,5 @@ switch ($r_step) { //任务发布步骤
 		break;
 }
 
-require Keke_tpl::template ( 'release' );
+require keke_tpl_class::template ( 'release' );
 		

@@ -4,19 +4,20 @@
 <!--ÐÇ¼¶ÆÀ¶¨-->
 
             <div class="grid_24 po_re">
+            	<div class="panel clearfix box">
                 <header class="clearfix box_header">
                     <div class="fl_l pl_10 pr_20">
-                    	<h3 class="font16b lineh_32">{$_lang['evaluate']}[ {$task_info[mark_num]} ]</h3>
+                    	<h3 class="font16b lineh_32">{$_lang['evaluate']}[{$task_info['mark']['all']}]</h3>
                     </div>
 					  <div class="grid_18 alpha">
                       	<nav class="box_nav">
                         	<ul class="clearfix">
-						  	<li><a href="{$basic_url}&view=mark">{$_lang['all_value']}[ {$task_info[mark_num]} ]</a></li>
+						  	<li><a href="{$basic_url}&view=mark">{$_lang['all_value']}[{$task_info['mark']['all']}]</a></li>
 						  	<li><a href="{$basic_url}&view=mark&st=1">{$_lang['good_value']}[ <!--{eval echo intval($mark_count[1][count])}--> ]</a></li>
 							<li><a href="{$basic_url}&view=mark&st=2">{$_lang['middle_value']}[ <!--{eval echo intval($mark_count[2][count])}--> ]</a></li>
 							<li><a href="{$basic_url}&view=mark&st=3">{$_lang['bad_value']}[ <!--{eval echo intval($mark_count[3][count])}--> ]</a></li>
-						  	 <li><a href="{$basic_url}&view=mark&ut=2">{$_lang['from_employer']}[ <!--{eval echo intval($mark_count_ext[2][count])}--> ]</a></li>
-							<li><a href="{$basic_url}&view=mark&ut=1">{$_lang['from_witkey']}[ <!--{eval echo intval($mark_count_ext[1][count])}--> ]</a></li>
+						  	 <li><a href="{$basic_url}&view=mark&ut=2">{$_lang['from_employer']}[{$task_info['mark']['master']}]</a></li>
+							<li><a href="{$basic_url}&view=mark&ut=1">{$_lang['from_witkey']}[{$task_info['mark']['wiki']}]</a></li>
                             </ul>
                          </nav>
 				     </div>
@@ -33,8 +34,8 @@
 								{if $v[mark_status]==1}{$_lang['good_value']}{elseif $v[mark_status]==2}{$_lang['middle_value']}{elseif $v[mark_status]=='3'}{$_lang['bad_value']}{else}{$_lang['no_reply_value']}{/if}
 								<img src="resource/img/ico/ico_mark_{$v[mark_status]}.gif" alt=''>
 								
-								<a href="index.php?do=ajax&view=task&ajax=mark_aid&auid={$v[uid]}&mark_type={$v[mark_type]}&mark_status={$v[mark_status]}&obj_id={$v[obj_id]}"
-								 onclick="return false;" onmouseover="loadMarkAid(this)" id="task_mark_{$v[mark_id]}">{$_lang['check_evalue']}</a>
+								<a onclick="return false;" href="index.php?do=ajax&view=task&ajax=mark_aid&auid={$v[uid]}&mark_type={$v[mark_type]}&mark_status={$v[mark_status]}&obj_id={$v[obj_id]}"
+								 onmouseover="loadMarkAid(this)" id="task_mark_{$v[mark_id]}">{$_lang['check_evalue']}</a>
                             </div>
                         </div>
                         <div class="pl_30 ml_30">
@@ -57,7 +58,4 @@
                 <!--page ·­Ò³ end-->
                 <div class="clear"></div>
             </div>
-<script type="text/javascript">
-	In('rating','metaData','css_rating'); 
-</script>
- 
+			</div>

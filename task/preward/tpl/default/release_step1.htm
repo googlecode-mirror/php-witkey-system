@@ -53,12 +53,11 @@
 	  	<input type="hidden" name="formhash" value="{FORMHASH}">
         <div class="rowElem clearfix po_re">
           <label class="grid_4"><strong>{$_lang['budget']}{$_lang['zh_mh']}</strong></label>
-           <div class="grid_6">
-              <input name="txt_task_cash" value="{if $release_info[txt_task_cash]}$release_info[txt_task_cash]{else}$task_config[min_cash]{/if}" type="text" id="txt_task_cash" msgArea="span_task_cash"  title="{$_lang['mtask_cash_title']}{$task_config[min_cash]}{$_lang['yuan']}" onkeyup="clearstr(this)"
+           <div class="grid_12">
+              <input class="" name="txt_task_cash" value="{if $release_info[txt_task_cash]}$release_info[txt_task_cash]{else}$task_config[min_cash]{/if}" type="text" id="txt_task_cash" msgArea="span_task_cash"  title="{$_lang['mtask_cash_title']}{$task_config[min_cash]}{$_lang['yuan']}" onkeyup="clearstr(this)"
 		    limit="required:true;type:int;between:{$task_config[min_cash]}-" msg="{$_lang['mtask_cash_msg']}{$task_config[min_cash]}{$_lang['yuan']}" onblur="getMaxDday(this.value)"/> 
-			<span class="ml_5">{$_lang['yuan']}</span>
-			<div class="clear"></div>
-			<div id="span_task_cash"></div>
+			<span class="ml_5 ">{$_lang['yuan']}</span>
+			<span id="span_task_cash" class="ml_5"></span>
            </div>
         </div>
 		
@@ -69,31 +68,27 @@
                <input name="txt_task_day"   onclick="showcalendar(event, this, 0)" size="20" value="{if $release_info[txt_task_day]}$release_info[txt_task_day]{else}$default_max_day{/if}" type="text" id="txt_task_day" title="{$_lang['task_round_title']}:{$task_config[min_day]}{$_lang['day']},{$_lang['max_day']}$max_day" msgArea="span_task_day" onkeyup="clearstr(this)"
 			   	limit="required:true;type:date;than:min;less:$default_max_day" msg="{$_lang['task_round_msg']}" max=""  min_day="$task_config[min_day]"/> 
             	
-				 <div class="clear"></div>
-				 <span id="span_task_day"></span>
-				 <div class="clear"></div>
+				 <span id="span_task_day"  class="ml_5"></span>
 				 
 			</div>
         </div>
 		
 		<div class="rowElem clearfix po_re">
            <label class="grid_4"><strong>{$_lang['need_work']}{$_lang['zh_mh']}</strong></label>
-             <div class="grid_6">
+             <div class="grid_9">
              	<input name="txt_work_count" value="{if $release_info[txt_work_count]}$release_info[txt_work_count]{else}1{/if}" type="text" id="txt_work_count" title="{$_lang['need_work_title']}{$_lang['zh_mh']}1" msgArea="span_work_count" onkeyup="clearstr(this)"
 			   	limit="required:true;type:int;between:1-" msg="{$_lang['need_work_msg']}"/>
-				<span class="ml_5">{$_lang['ge']}</span>
-				<div class="clear"></div>
-            	<div id="span_work_count"></div>
+				<span class="ml_5 ">{$_lang['ge']}</span>
+            	<span id="span_work_count"  class="ml_5"></span>
              </div>
         </div>
         <div class="rowElem clearfix po_re">
            <label class="grid_4"><strong>{$_lang['single_cash']}{$_lang['zh_mh']}</strong></label>
-             <div class="grid_6">
+             <div class="grid_9">
              	<input name="txt_single_cash" value="{if $release_info[txt_single_cash]}{/if}" type="text" id="txt_single_cash" title="{$_lang['single_cash_title']}" msgArea="span_single_cash"
 				limit="required:true;type:float" msg="{$_lang['single_cash_msg']}" readonly="readonly"/>
 				<span class="ml_5">{$_lang['yuan']}</span>
-				<div class="clear"></div>
-				<div id="span_single_cash"></div>
+				<span id="span_single_cash"  class="ml_5"></span>
              </div>
         </div>
      </form>
@@ -107,7 +102,7 @@
    <div class="grid_7 omega alpha">
      <div class=" prefix_1 suffix_1 pt_20">
        <h3 class="font14b">{$_lang['what']}{$model_info[model_name]}£¿ </h3>
-         <p><!--{eval echo htmlspecialchars_decode($model_info[model_desc])}--></p>
+         <p><!--{eval echo kekezu::filter_input($model_info[model_desc])}--></p>
      </div>
     </div>
 <!--end ÓÒ±ß²¿·Ö-->

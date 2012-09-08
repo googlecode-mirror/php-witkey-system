@@ -13,10 +13,10 @@
 <section class="clearfix section">
  <!--{template user/user_side}-->
   <div class="show_panel container_24 po_re">
-    <div class="prefix_3">
+    <div class="prefix_3 grid_21">
      <div class="panel clearfix box">
       <!--main content-->
-        <div class="grid_21">
+        <div class="">
           <!--headerÄÚÈÝÍ·²¿ start-->
             <header class="clearfix box_header">
                <div class="messages m_infor">
@@ -33,7 +33,7 @@
                   <div class="suffix_1 clearfix  pb_20 pt_10">
                      <div class="shops">{$_lang['had_not_open_shop']}</div>
                      <div class="memb">
-                     	<div class="hao">{$_lang['had']}{$has_open_shop}{$_lang['open_shop']}</div >
+                     	<div class="hao">{$_lang['had']}{$has_open_shop}{$_lang['ge_member']}{$_lang['open_shop']}</div >
 						<div class="air">
 						<div class="air">{$_lang['shop_desc']}</div>
 					    </div>
@@ -60,15 +60,12 @@
 <!--contain end-->
 
 <script type="text/javascript">
-  var space_desc = '$space_desc';
-  var url = '$url';  
-   function open_shop(){
-   	var ac='';
-   	if(url){
-		 ac ="location.href='"+url+"'";
-	} 
-   	if(space_desc){ 
-		showDialog(space_desc,"confirm","{$_lang['friendly_notice']}",ac);return false;
+   var space_desc = '$space_desc';
+   function open_shop(){  
+   	if(space_desc){
+		showDialog(space_desc,"confirm","{$_lang['friendly_notice']}",function (){
+			location.href='$url';
+		});return false;
 	}else{
 		location.href='index.php?do=user&view=setting&op=space&ac=open'; 
 	}

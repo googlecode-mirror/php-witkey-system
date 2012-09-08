@@ -1,9 +1,9 @@
 <!--{template control/admin/tpl/admin_header}-->
 <div class="page_title">
-    	<h1>{$_lang['witkey_goods']}</h1>
+    	<h1>{$_lang['witkey_goods_manage']}</h1>
         <div class="tool">              
-           <a href="index.php?do={$do}&model_id={$model_id}&view=order">{$_lang['order_manage']}</a>
-		   <a href="index.php?do={$do}&model_id={$model_id}&view=list" class="here" >{$_lang['goods_list']}</a>  
+         <!--  <a href="index.php?do={$do}&model_id={$model_id}&view=order">{$_lang['goods_list']}</a>-->
+		  <a href="index.php?do={$do}&model_id={$model_id}&view=list" class="here" >{$_lang['goods_list']}</a> 
         </div>
 </div>
 <!--Ò³Í·½áÊø-->
@@ -19,22 +19,20 @@
 				<tbody>
 					<tr>
 						<th>{$_lang['goods_id']}</th>
-		                <td><input type="text" class="txt" name="w['service_id']" id="service_id" value="$w['service_id']" onkeyup="clearstr(this);"  ></td>
+		                <td><input type="text" class="txt" name="w[service_id]" id="service_id" value="$w[service_id]" onkeyup="clearstr(this);"  ></td>
 		                <th>{$_lang['goods_name']}</th>
 		                <td>
-		                <input type="text" class="txt" name='w['title']' id="title" value="$w['title']">
+		                <input type="text" class="txt" name='w[title]' id="title" value="$w[title]">
 						</td>
-						</th>
 						<th>{$_lang['shopkeeper']}</th>
 						<td>
-							<input type="text" class="txt" name="w['username']" id="username" value="$w['username']" tips="">
-						</td>						
-					</th>
+							<input type="text" class="txt" name="w[username]" id="username" value="$w[username]" tips="">
+						</td>
 					</tr>
 					<tr>
 						<th>{$_lang['goods_status']}</th>
 						<td>
-							 <select name="w['service_status']">
+							 <select name="w[service_status]">
 							 	<option value="">{$_lang['goods_status']}</option>
 								{loop $status_arr $k $v}
 									<option {if $w['service_status']==$k}selected="selected" {/if}  value="{$k}">{$v}</option>
@@ -50,7 +48,7 @@
 						</td>
 						<th>{$_lang['result_show']}</th>
 						<td colspan="3">
-							<select name="w['page_size']">
+							<select name="w[page_size]">
 	                			<option value="10" {if $w['page_size']=='10'}selected="selected"{/if}>{$_lang['page_size']}10</option>
 	                			<option value="20" {if $w['page_size']=='20'}selected="selected"{/if}>{$_lang['page_size']}20</option>
 	                			<option value="30" {if $w['page_size']=='30'}selected="selected"{/if}>{$_lang['page_size']}30</option>
@@ -69,7 +67,7 @@
     <div class="title"><h2>{$_lang['goods_list']}</h2></div>
     <div class="detail"> 
 	<form action="" method="post" id="frm_list">
-		<input type="hidden" name="w['page_size']" value="{$page_size}">
+		<input type="hidden" name="w[page_size]" value="{$page_size}">
 		<div id="ajax_dom">
 		<input type="hidden" name="page" value="{$page}">
     	<table cellpadding="0" cellspacing="0">
@@ -79,7 +77,7 @@
            		<th width="25%">{$_lang['goods_name']}</th>
            		<th width="10%">{$_lang['quotation_yuan_unit']}</th>
 				<th width="8%">{$_lang['shopkeeper']}</th>
-                <th width="8%">{$_lang['location']}</th>                
+              
 				<th width="10%">{$_lang['goods_status']}</th>				
                 <th width="17%">{$_lang['operate']}</th>
             </tr>
@@ -88,38 +86,32 @@
             <tr class="item">
             	<td><input type="checkbox" name="ckb[]" value="{$v['service_id']}">{$v['service_id']}</td>
                 <td><a target="_blank" href="{$_K['siteurl']}/index.php?do=service&sid={$v['service_id']}">
-                	<!--{eval echo Keke::cutstr($v['title'],44)}--></a></td>
-                <td>{if $v['price']}{$v['price']} / $v['unite_price']{else}{$_lang['no_quotation']}{/if}</td>
+                	<!--{eval echo kekezu::cutstr($v['title'],44)}--></a></td>
+                <td>{if $v['price']}{c:$v['price']} / $v['unite_price']{else}{$_lang['no_quotation']}{/if}</td>
 				<td>{$v['username']}</td>                 
-                <td>{$v['area_range']}</td>
                 <td>{$goods_status_arr[$v['service_status']]}</td>				
                 <td>
 				<a href="index.php?do=$do&model_id=$model_id&view=edit&service_id=$v['service_id']&page={$page}" class="button dbl_target"><span class="pen icon"></span>{$_lang['edit']}</a>
 				<a href="{$url_str}&ac=del&service_id={$v['service_id']}&page={$page}"  onclick="return cdel(this);" class="button"><span class="trash icon"></span>{$_lang['delete']}</a>
-				{if $v['service_status']==1}
-					<a href="{$url_str}&ac=pass&service_id={$v['service_id']}&page={$page}" onclick="return  cdel(this,'{$_lang['confirm_pass_audit']}');" class="button"><span class="check icon"></span>{$_lang['audit']}</a>
+				{if $v['service_status']!=2}
+					<a href="{$url_str}&ac=pass&service_id={$v['service_id']}&page={$page}" onclick="return  cdel(this,'{$_lang['shelves_this_product']}{$_lang['zh_wh']}');" class="button"><span class="check icon"></span>{$_lang['shelves']}</a>
 				{/if}
-				{if $v['service_status']!=4}
-					<a href="{$url_str}&ac=disable&service_id={$v['service_id']}&page={$page}" onclick="return cdel(this,'{$_lang['confirm_disable']}');" class="button"><span class="lock icon"></span>{$_lang['disable']}</a>
-				{/if}
-				{if $v['service_status']==4}
-					<a href="{$url_str}&ac=use&service_id={$v['service_id']}&page={$page}"  onclick="return cdel(this,'{$_lang['confirm_open']}');" class="button"><span class="check icon"></span>{$_lang['use']}</a>
+				{if $v['service_status']==2}
+					<a href="{$url_str}&ac=nopass&service_id={$v['service_id']}&page={$page}" onclick="return cdel(this,'{$_lang['merchandise_off_the_shelf']}{$_lang['zh_wh']}');" class="button"><span class="lock icon"></span>{$_lang['off_the_shelf']}</a>
 				{/if}
 				</td>
             </tr>
-            {/loop} 
-			          
+            {/loop}
           	<tr>
-            	<td colspan="10">
+            	<td colspan="9">
                     <div class="page fl_right">{$pages['page']}</div>
                     <div class="clearfix">
                   		<input type="checkbox" class="checkbox" id="checkbox" onclick="checkall();"/>
                         <label for="checkbox">{$_lang['select_all']}</label>
                         <input type="hidden" name="sbt_action" class="sbt_action" />
 						<button class="pill negative" type="submit" value="{$_lang['mulit_delete']}" onclick="return batch_act(this,'frm_list');"><span class="icon trash">&nbsp;</span>{$_lang['mulit_delete']}</button>                        
-                        <button class="pill negative" type="submit" value="{$_lang['mulit_pass']}" onclick="return batch_act(this,'frm_list');" ><span class="icon check">&nbsp;</span>{$_lang['mulit_pass']}</button>
-						<button class="pill negative" type="submit" value="{$_lang['mulit_disable']}" onclick="return batch_act(this,'frm_list');"><span class="icon lock">&nbsp;</span>{$_lang['mulit_disable']}</button>
-						<button class="pill negative" type="submit" value="{$_lang['mulit_use']}" onclick="return batch_act(this,'frm_list');" ><span class="icon unlock">&nbsp;</span>{$_lang['mulit_use']}</button>
+                        <button class="pill negative" type="submit" value="$_lang['batch_shelves']" onclick="return batch_act(this,'frm_list');" ><span class="icon check">&nbsp;</span>$_lang['batch_shelves']</button>
+						<button class="pill negative" type="submit" value="$_lang['batch_off_the_shelf']" onclick="return batch_act(this,'frm_list');"><span class="icon lock">&nbsp;</span>$_lang['batch_off_the_shelf']</button>
 					</div>
                  </td>
         	</tr>

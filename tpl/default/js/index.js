@@ -25,16 +25,18 @@ $(function(){
 		$(this).addClass("selected").parent().siblings().find("a").removeClass("selected");
 	})
 
-	
-	//商品
-	$('.shop .box_detail .small_list a').not('.first a,.last a').hover(function(){
+	var shopObj = $('.shop .box_detail .small_list a:not(.first a,.last a)');
+		shopObj.live("mouseover",function(){
 		var imgObj = $(this).children('img');
 			imgObj.attr('src',imgObj.attr("big"));
-	},
-	function(){
+			$(this).parent().css('z-index','2');
+		});
+		shopObj.live("mouseout",function(){
 		var imgObj = $(this).children('img');
 			imgObj.attr('src',imgObj.attr("small"));
-	});
+			$(this).parent().css('z-index','1');
+		});
+	//商品
 });
 function indusLinkInit(list_type){
 	

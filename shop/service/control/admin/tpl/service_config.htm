@@ -26,6 +26,32 @@
                             <label><input name="fds[model_status]" type="radio" {if !$model_info[model_status]}checked{/if} value="0"id="model_status_1" />{$_lang['no']}</label>
                         </td>
                       </tr>
+                      <tr>
+		  <th scope="row" width="200">{$_lang['bind_industry_shop']}</th>
+		    <td><!--{eval $milist = explode(',',$model_info['indus_bid']);}-->
+			
+              <select onchange="p_indus_add(this.value)" style="margin-bottom:5px;">
+			   <option value="">{$_lang['choose_industry']}</option>
+			{loop $indus_index['0'] $indus}
+				<option value="$indus['indus_id']">$indus['indus_name']</option>
+			{/loop}
+			  </select>
+			 <br class="clear">
+			 <select name="p_indus_select" id="p_indus_select" multiple=multiple style="width:160px;float:left;height:200px;overflow-y:scroll;background:white;border:#ccc solid 1px" ></select>
+			<div style="width:80px;float:left;height:160px;overflow:hidden;margin-left:20px; text-align:center;padding-top:40px;">
+				<button onclick = "moveitems()" type="button" class="input_but"><<</button><br><br>
+				<button onclick = "additems()" type="button" class="input_but">>></button><br>
+			</div>
+			<select name="fds[indus_bid][]" id="s_indus_select" multiple=multiple style="width:160px;float:left;height:200px;overflow-y:scroll;background:white;border:#ccc solid 1px;margin-left:20px;">
+			{loop $milist $k $m}
+				{if !empty($m)}
+				<option id="s_indus_select_op_{$m}" value="$m" selected="selected"> $indus_arr[$m]['indus_name']</option>
+				{/if}
+			{/loop}
+			</select>
+			<br class="clear">{$_lang['choose_industry_nitice']}
+			</td>
+         </tr>
 		 		 <tr>
 		    <th scope="row" width="200">{$_lang['model_about']}{$_lang['zh_mh']}</th>
 		      <td>
@@ -90,7 +116,7 @@
                         </div>
 					    </td>
                   </tr>
-				   <tr>
+				 <!--  <tr>
                       	 <th scope="row" width="150">{$_lang['service_submit_audit_money']}{$_lang['zh_mh']}</th>
                         <td>
                         <input type="text" value="$config[audit_cash]" name="conf[audit_cash]" id="audit_cash" class="txt" style=" width:260px;" maxlength="100" limit="type:int;len:1-6" msg="{$_lang['submit_audit_money_can_null']}" title="{$_lang['please_input_submit_audit_money']}" msgArea="audit_cash_msg" class="txt"/>{$_lang['yuan']}<b style="color:red">*</b>
@@ -101,7 +127,7 @@
                             </p>
                         </div>
 					    </td>
-                  </tr>
+                  </tr>-->
 				  <!--
 				   <tr>
                       	 <th scope="row" width="150">{$_lang['service_each_stage_min_money']}{$_lang['zh_mh']}</th>
@@ -132,4 +158,54 @@
         </div>
         </div>
     </div>
+    <script type="text/javascript">
+    	function p_indus_add(id){
+						mod = "";
+						{loop $indus_index $k $si}
+						if(id=='$k'){
+							{loop $si $i}
+							if(!$('#s_indus_select_op_{$i[indus_id]}').val()){
+							mod +="<option id=\"p_indus_select_op_{$i['indus_id']}\" value=\"{$i['indus_id']}\">{$i['indus_name']}</option>";
+							}
+							{/loop}
+						}
+						{/loop}
+						$('#p_indus_select').html(mod);
+					}
+					
+					function moveitems(){
+						vs = $('#s_indus_select').val()+'';
+						vs = vs.split(",");
+						var mod = '';
+						for(v=0;v<vs.length;v++){
+							
+							if(String(vs[v]) == "null"){
+								continue;
+							}
+							mod+="<option value="+vs[v]+" id=\"p_indus_select_op_"+vs[v]+"\">"+$('#s_indus_select_op_'+vs[v]).html()+"</option>";
+							$('#s_indus_select_op_'+vs[v]).remove();
+						};
+						if(mod!='')
+						$('#p_indus_select').append(mod);
+					}
+					$(function(){
+							if($("#hdn_indus_id").val()!=''){
+							p_indus_add($("#hdn_indus_id").val());
+						}
+						})
+					function additems(){
+						vs = $('#p_indus_select').val()+'';
+						vs = vs.split(",");
+						var mod = '';
+						for(v=0;v<vs.length;v++){
+							if(String(vs[v]) == "null"){
+								continue;
+							}
+							mod+="<option value="+vs[v]+" id=\"s_indus_select_op_"+vs[v]+"\" selected=\"selected\">"+$('#p_indus_select_op_'+vs[v]).html()+"</option>";
+							$('#p_indus_select_op_'+vs[v]).remove();
+						};
+						if(mod!='')
+						$('#s_indus_select').append(mod);
+					}
+					</script>
 <!--{template control/admin/tpl/admin_footer}-->

@@ -36,7 +36,6 @@ class alipay_notify {
             $veryfy_url = $this->gateway. "partner=".$this->partner."&notify_id=".$_POST["notify_id"];
         }
         $veryfy_result = $this->get_verify($veryfy_url);
-   
 		if(empty($_POST)) {						 
 			return false;
 		}

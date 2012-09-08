@@ -5,29 +5,25 @@
  * @version v 2.0
  * 2011-11-07 11:31:34
  */
-defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 $ops = array ("config", "control", "priv" );
 in_array ( $op, $ops ) or $op = 'config';
 $ac_url = "index.php?do=model&model_id=$model_id&view=config&op=$op";
-Keke::empty_cache();
+kekezu::empty_cache();
 switch ($op) {
 	case "config" : //基本配置
 	
 		if ($sbt_edit) {
 			$model_obj = keke_table_class::get_instance ( "witkey_model" );
-		
 			! empty ( $fds['indus_bid'] ) and $fds ['indus_bid'] = implode ( ",", $fds['indus_bid'] ) or $fds ['indus_bid'] = '';
 			$fds ['on_time'] = time ();
-			$fds=Keke::escape($fds);
-			 
+			$fds=kekezu::escape($fds);
 			$res = $model_obj->save ( $fds, $pk );
-			
-			$res and Keke::admin_show_msg ( $_lang['edit_successfully'], $ac_url, 3,'','success' ) or Keke::admin_show_msg ( "修改失败", $ac_url, 3, '', 'warning' );
+			$res and kekezu::admin_show_msg ( $_lang['edit_successfully'], $ac_url, 3,'','success' ) or kekezu::admin_show_msg ( "修改失败", $ac_url, 3, '', 'warning' );
 		} else {
-	
-			$indus_arr = Keke::$_indus_arr; //任务行业
+			$indus_arr = $kekezu->_indus_arr; //任务行业
 			
-			$indus_index = Keke::get_indus_by_index (); //索引行业
+			$indus_index = kekezu::get_indus_by_index (); //索引行业
 		} 
 		break;
 	case "control" : //流程配置
@@ -46,11 +42,13 @@ switch ($op) {
 			$res .= keke_task_config::set_delay_rule ( $model_id, $delayOld, $delayNew ); //延期规则配置
 			is_array ( $conf ) and $res .= keke_task_config::set_task_ext_config ( $model_id, $conf );
 			
-			$res and Keke::admin_show_msg ( $_lang['edit_successfully'], $ac_url, 3,'','success' ) or Keke::admin_show_msg ( $_lang['edit_fail'], $ac_url, 3, '', 'warning' );
+			$res and kekezu::admin_show_msg ( $_lang['edit_successfully'], $ac_url, 3,'','success' ) or kekezu::admin_show_msg ( $_lang['edit_fail'], $ac_url, 3, '', 'warning' );
 		
 		} else {
 			$confs = unserialize($model_info['config']);
 			is_array($confs)&&extract($confs);//配置解压
+			$agree_sign_time = max($agree_sign_time,1);
+			$agree_complete_time = max($agree_complete_time,2);
 			$time_rule = keke_task_config::get_time_rule ( $model_id ); //时间规则
 			$delay_rule = keke_task_config::get_delay_rule ( $model_id ); //延期规则
 		}
@@ -65,7 +63,7 @@ switch ($op) {
 					$perm_item_obj->edit_keke_witkey_priv_item ();
 				}
 			}
-			Keke::admin_show_msg ( $model_info['model_name'] . $_lang['edit_rights_config_successfully'], "$ac_url", '3','','success' );
+			kekezu::admin_show_msg ( $model_info['model_name'] . $_lang['edit_rights_config_successfully'], "$ac_url", '3','','success' );
 		} else {
 			$perm_item = keke_privission_class::get_model_priv_item ( $model_id ); //权限配置项
 		}
@@ -73,9 +71,12 @@ switch ($op) {
 }
 
 if ($sbt_edit) {
+	//清除配置缓存
+	$file_obj = new keke_file_class();
+	$file_obj->delete_files(S_ROOT."./data/data_cache/");
 	$log_op_arr = array ("config" => $_lang['basic_config'], "control" => $_lang['control_config'], "priv" => $_lang['private_config'] );
 	$log_msg = $_lang['edit_single_reward_task'] . $log_op_arr [$op];
-	Keke::admin_system_log ( $log_msg );
+	kekezu::admin_system_log ( $log_msg );
 }
 
-require Keke_tpl::template ( 'task/' . $model_info ['model_dir'] . '/control/admin/tpl/task_' . $op );
+require keke_tpl_class::template ( 'task/' . $model_info ['model_dir'] . '/control/admin/tpl/task_' . $op );

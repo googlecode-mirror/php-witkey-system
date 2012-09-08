@@ -7,7 +7,7 @@ require_once (dirname ( dirname ( dirname ( __FILE__ ) ) ) . DIRECTORY_SEPARATOR
 require_once ("lib/alipay_service.class.php");
 
 /** 担保配置*/
-$alipaydb_info = Keke::get_payment_config ( 'alipay_trust','trust');
+$alipaydb_info = kekezu::get_payment_config ( 'alipay_trust','trust');
 $payment_config = unserialize ( $alipaydb_info ['config'] );
 
 $interface or $interface = 'create';//调用接口缩写
@@ -22,7 +22,7 @@ switch ($interface){
 	case "cancel_bind":
 		$sql = " select uid sns_user_id,username sns_user_name,bind_key from %switkey_member_oauth 
 			where uid='%d' and source='alipay_trust'";
-		$extra_info = dbfactory::get_one ( sprintf ( $sql, TABLEPRE, $uid ) );
+		$extra_info = db_factory::get_one ( sprintf ( $sql, TABLEPRE, $uid ) );
 		break;
 }
 $alipayService = new AlipayService ($interface, $payment_config,$sign_type, strtoupper ( CHARSET ) );

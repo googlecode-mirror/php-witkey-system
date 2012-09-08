@@ -18,7 +18,7 @@
                     {$_lang['cash_interval']}
                 </th>
                 <td>
-                    <input type="text" value="<!--{eval echo intval($cove_info[start_cove])}-->" name="fds[start_cove]" class="txt" size="15"
+                    <input type="text" value="{$start_cove}" name="fds[start_cove]" class="txt" size="15"
 					 onkeyup="clearstr(this)" limit="required:true;type:int;between:1-" msg="{$_lang['start_cove_can_not_be_null']}" 
 					  title="{$_lang['enter_start_cove']}" msgArea="span_cove" id="start_cove"/>{$_lang['y']}
 					¡ª¡ª<input type="text" class="txt" name="fds[end_cove]" value="<!--{eval echo intval($cove_info[end_cove])}-->"

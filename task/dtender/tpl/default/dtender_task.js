@@ -7,12 +7,12 @@ $(function(){
 function workHand() {
 	if (check_user_login()) {
 		if (uid == guid) {
-			showDialog('操作无效，用户对自己发布的任务交稿!', 'alert', '操作失败提示', '', 0);
+			showDialog(L.t_hand_forbidden, 'alert',L.operate_notice, '', 0);
 			return false;
 		} else {
 			var is_bided = parseInt($("#is_bided").html());
 			if(is_bided==0){
-				showDialog('操作无效，您已经对任务投过标了','alert','操作失败提示','',0);
+				showDialog(L.t_have_handed,'alert',L.operate_notice,'',0);
 			}else{
 				showWindow("work_hand",basic_url+'&op=work_hand',"get",'0');return false;
 			}			
@@ -27,7 +27,7 @@ function workHand() {
  */
 function workBid(work_id,to_status){
 	if(guid!=uid){
-		showDialog("只有雇主才能操作稿件","alert","操作提示");return false;
+		showDialog(L.t_master_can_operate_work,"alert",L.operate_notice);return false;
 	}else{
 		var url=basic_url+'&op=work_choose&work_id='+work_id;
 			$.post(url,{to_status:to_status},function(json){
@@ -60,7 +60,7 @@ function workEdit(work_id) {
 function task_pay(){
 	if(check_user_login()){
 		if(uid!=guid){
-			showDialog('只有雇主才能进行赏金托管','error','操作提示');return false;
+			showDialog(L.t_only_master_can_host_amount,'error',L.operate_notice);return false;
 		}else{
 			var url = basic_url + "&op=hosted_amount";
 			showWindow('hosted_amount',url,'get',0);return false;
@@ -78,7 +78,7 @@ function plan_complete(plan_id,plan_step){
 		$.post(url,{plan_id:plan_id,plan_step:plan_step},function(json){
 			if(json.status==1){
 				$("#complate_"+plan_id).remove();
-				$("#plan_status_"+plan_id).html('待付款');
+				$("#plan_status_"+plan_id).html(L.t_wait_pay);
 				showDialog(json.data,"right",json.msg);return false;
 			}else{
 				showDialog(json.data,"alert",json.msg);return false;
@@ -97,7 +97,7 @@ function plan_confirm(plan_id,plan_step){
 		$.post(url,{plan_id:plan_id,plan_step:plan_step},function(json){
 			if(json.status==1){
 				$("#confirm_"+plan_id).remove();
-				$("#plan_status_"+plan_id).html('完成');
+				$("#plan_status_"+plan_id).html(L.t_work_over);
 				showDialog(json.data,'right',json.msg);return false;
 			}else{
 				showDialog(json.data,'error',json.msg);return false;
@@ -111,20 +111,20 @@ function add_task_plan(){
 	var i = parseInt($("#plan i:last").html());	
 	var k = i+1;	
 	if(k>5){
-		showDialog('工作计划最多不得超过5步','error','消息提示');return false;
+		showDialog(L.t_work_plan_stage_limit,'error',L.operate_notice);return false;
 	}else{		
 		var append_html = "<div id=\"plan_step_"+k+"\" name=\"plan_step_"+k+"\" class=\"pb_10 pl_10\">"+
 		"<div class=\"rowElem clearfix\">"+
-		"<label>计划金额：</label>"+
-		"<input type=\"text\" size=\"3\" name=\"plan_amount[]\" class=\"txt_input\" id=\"plan_amount_"+k+"\" value=\"\" onkeyup=\"clearstr(this)\" limit=\"required:true;type:float\" maxlength=\"5\" msg=\"计划金额填写有误！\" tilte=\"填写计划金额\" msgArea=\"span_plan_cash_"+k+"\">"+
+		"<label>"+L.t_plan_amount+"：</label>"+
+		"<input type=\"text\" size=\"3\" name=\"plan_amount[]\" class=\"txt_input\" id=\"plan_amount_"+k+"\" value=\"\" onkeyup=\"clearstr(this)\" limit=\"required:true;type:float\" maxlength=\"5\" msg=\""+L.t_plan_amount_fill_error+"\" tilte=\""+L.t_fill_in_plan_amount+"\" msgArea=\"span_plan_cash_"+k+"\">"+
 		"<span class=\"ml_5\">元</span>"+
-		"<label>,开始时间：</label>"+
-		"<input type=\"text\" size=\"9\" name=\"start_time[]\" class=\"txt_input\" id=\"start_time_"+k+"\" onkeyup=\"clearstr(this)\" limit=\"required:true;type:date;than:end_time_"+i+"\" maxlength=\"12\"  onclick=\"showcalendar(event, this, 0)\" msg=\"开始时间填写有误！\" tilte=\"填写开始时间\" msgArea=\"span_plan_cash_"+k+"\">"+
-		"<label>,结束时间：</label>"+
-		"<input type=\"text\" size=\"9\" name=\"end_time[]\" class=\"txt_input\" id=\"end_time_"+k+"\" onkeyup=\"clearstr(this)\" limit=\"required:true;type:date;than:start_time_"+k+"\" maxlength=\"12\"  onclick=\"showcalendar(event, this, 0)\" msg=\"结束时间填写有误！\" tilte=\"填写结束时间\" msgArea=\"span_plan_cash_"+k+"\">"+
-		"<label>,工作目标：</label>"+
-		"<input type=\"text\" size=\"11\" name=\"plan_title[]\" class=\"txt_input\" id=\"plan_target_"+k+"\" value=\"\" limit=\"required:true\" maxlength=\"20\" msg=\"工作目标填写有误！\" tilte=\"填写工作目标\" msgArea=\"span_plan_cash_"+k+"\">"+
-		"<button type=\"button\"  class=\"mt_5\" value=\"删除\" id=\"del_plan\" name=\"del_plan\" onclick=\"del_task_plan("+k+");\" >删除</button>"+
+		"<label>,"+L.t_start_time+"：</label>"+
+		"<input type=\"text\" size=\"9\" name=\"start_time[]\" class=\"txt_input\" id=\"start_time_"+k+"\" onkeyup=\"clearstr(this)\" limit=\"required:true;type:date;than:end_time_"+i+"\" maxlength=\"12\"  onclick=\"showcalendar(event, this, 0)\" msg=\""+L.t_start_time_fill_error+"\" tilte=\""+L.t_fill_in_start_time+"\" msgArea=\"span_plan_cash_"+k+"\">"+
+		"<label>,"+L.t_end_time+"：</label>"+
+		"<input type=\"text\" size=\"9\" name=\"end_time[]\" class=\"txt_input\" id=\"end_time_"+k+"\" onkeyup=\"clearstr(this)\" limit=\"required:true;type:date;than:start_time_"+k+"\" maxlength=\"12\"  onclick=\"showcalendar(event, this, 0)\" msg=\""+L.t_end_time_fill_error+"\" tilte=\""+L.t_fill_in_end_time+"\" msgArea=\"span_plan_cash_"+k+"\">"+
+		"<label>,"+L.t_work_target+"：</label>"+
+		"<input type=\"text\" size=\"11\" name=\"plan_title[]\" class=\"txt_input\" id=\"plan_target_"+k+"\" value=\"\" limit=\"required:true\" maxlength=\"20\" msg=\""+L.t_target_fill_error+"\" tilte=\""+L.t_fill_in_target+"\" msgArea=\"span_plan_cash_"+k+"\">"+
+		"<button type=\"button\"  class=\"mt_5\" value=\""+L.del+"\" id=\"del_plan\" name=\"del_plan\" onclick=\"del_task_plan("+k+");\" >"+L.del+"</button>"+
 	"</div><span id=\"span_plan_cash_"+k+"\"></span><i style=\"display:none;\">"+k+"</i></div>"		
 		$("#plan_add").append(append_html);
 	}
@@ -145,7 +145,7 @@ function check_cash(){
 		rule_cash +=cash;
 	}	
 	if(rule_cash!=totle_cash){
-		showDialog('所填计划总金额与报价不符，请重新设置','error','错误提示','$("#plan_amount_1").focus()',0);		 
+		showDialog(L.t_reset_plan_amount,'error',L.operate_notice,'$("#plan_amount_1").focus()',0);		 
 		return false;
 	}else{
 		return true;

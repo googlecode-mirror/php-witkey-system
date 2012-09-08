@@ -16,7 +16,7 @@ $(function() {
 function workHand() {
 	if (check_user_login()) {
 		if (uid == guid) {
-			showDialog('操作无效，用户对自己发布的任务交稿!', 'alert', '操作失败提示', '', 0);
+			showDialog(L.t_hand_forbidden, 'alert', L.operate_notice, '', 0);
 			return false;
 		} else {
 			showWindow("work_hand", basic_url + '&op=work_hand', "get", '0');
@@ -34,10 +34,10 @@ function workHand() {
  *            变更状态
  * @returns {Boolean}
  */
-function workBid(work_id, to_status) {
+function workBid(work_id, to_status,obj) {
 	if (check_user_login()) {
 		if (guid != uid) {
-			showDialog("只有雇主才能操作稿件", "alert", "操作提示");
+			showDialog(L.t_master_can_operate_work, "alert",L.operate_notice);
 			return false;
 		} else {
 			var url = basic_url + '&op=work_choose&work_id=' + work_id;
@@ -58,12 +58,16 @@ function workBid(work_id, to_status) {
 					+ to_status + '_big qualified_big1 po_ab"></div>');
 					$("#" + work_id).find(".work_status_big").remove();
 					divStatus.appendTo($("#" + work_id));
-					showDialog(json.data, "right", json.msg);
+					$(obj).parent().remove();
+					$(obj).remove();
+					showDialog(json.data, "right", json.msg,"location.href='" + basic_url + "&view=work'");
+					
 					return false;
 				} else {
 					showDialog(json.data, "alert", json.msg);
 					return false;
 				}
+
 			}, 'json')
 		}
 	}

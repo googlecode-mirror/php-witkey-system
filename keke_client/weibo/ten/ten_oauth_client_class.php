@@ -46,7 +46,7 @@ class ten_oauth_client_class extends base_client_class{
 		$last_key = $o->getAccessToken($oauth_verifier) ;
 		
 		if (!$last_key['name']){
-			Keke::error_handler(001,'access_token不存在或者已过期');
+			kekezu::error_handler(001,'access_token不存在或者已过期');
 			return false;
 		}
 		
@@ -75,15 +75,15 @@ class ten_oauth_client_class extends base_client_class{
 		
 		if (!$data['data']&&$data['msg']){
 			if (strtolower($_K['charset'])=='gbk'){
-				$data = Keke::utftogbk($data);
+				$data = kekezu::utftogbk($data);
 			}
 			unset($_SESSION['auth_ten']);
-			Keke::error_handler(001,'用户数据获取失败！错误代码:'.$data['msg']);
+			kekezu::error_handler(001,'用户数据获取失败！错误代码:'.$data['msg']);
 			return false;
 		}
 		
 		if (strtolower($_K['charset'])=='gbk'){
-			$data = Keke::utftogbk($data);
+			$data = kekezu::utftogbk($data);
 		}
 		
 		$auth_user_info = $data;
@@ -101,7 +101,7 @@ class ten_oauth_client_class extends base_client_class{
 		$c = $this->get_client();
 		
 		if (strtolower($_K['charset'])=='gbk'){
-			$msg = Keke::gbktoutf($msg);
+			$msg = kekezu::gbktoutf($msg);
 		}
 		$p =array(
 			'c' => $msg,
@@ -111,18 +111,17 @@ class ten_oauth_client_class extends base_client_class{
 		);
 		if ($img){
 			$file_content = file_get_contents($img);
-			$file_type = keke_file_class::get_file_type($img);
-			$img_arr =array($file_type,$img,$file_content); 
+			$f            = array_reverse(explode(".",$img));
+			$img_arr =array($f[0],$img,$file_content); 
 			$p['p']=$img_arr;
 		}
-		
 		$r = $c->postOne($p);
 		if (strtolower($_K['charset'])=='gbk'){
-			$r = Keke::utftogbk($r);
+			$r = kekezu::utftogbk($r);
 		}
 		if (!$r['data']&&$r['msg']){
 // 			unset($_SESSION['auth_ten']);
-			Keke::error_handler(001,'发布失败！错误代码:'.$r['msg']);
+			kekezu::error_handler(001,'发布失败！错误代码:'.$r['msg']);
 			return false;
 		}
 		return $r['data']['id'];
@@ -147,7 +146,7 @@ class ten_oauth_client_class extends base_client_class{
 		$r = $r['data'];
 		global $_K;
 		if (strtolower($_K['charset'])=='gbk'){
-			$r = Keke::utftogbk($r);
+			$r = kekezu::utftogbk($r);
 		}
 		$r = $r['info'];
 		
@@ -165,13 +164,13 @@ class ten_oauth_client_class extends base_client_class{
 		
 		global $_K;
 		if (strtolower($_K['charset'])=='gbk'){
-			$r = Keke::utftogbk($r);
+			$r = kekezu::utftogbk($r);
 		}
 		
 		
 		if (!$r['data']&&$r['msg']){
 			unset($_SESSION['auth_ten']);
-			Keke::error_handler(001,'微博信息获取失败！:'.$r['msg']);
+			kekezu::error_handler(001,'微博信息获取失败！:'.$r['msg']);
 			return false;
 		}
 		$r = $r['data'];
@@ -197,10 +196,10 @@ class ten_oauth_client_class extends base_client_class{
 		$r = $c->setMyidol($p);
 		global $_K;
 		if (strtolower($_K['charset'])=='gbk'){
-			$r = Keke::utftogbk($r);
+			$r = kekezu::utftogbk($r);
 		}
 		if ($r['msg']!='ok'){
-			Keke::error_handler(001,'加关注失败！:'.$r['msg']);
+			kekezu::error_handler(001,'加关注失败！:'.$r['msg']);
 			return false;
 		}
 		$r = $r['data'];
@@ -214,7 +213,7 @@ class ten_oauth_client_class extends base_client_class{
 		$this->init_client();
 		$c = $this->get_client();
 		if(strtolower($_K['charset'])=='gbk'&&$text){
-			$text = Keke::gbktoutf($text);
+			$text = kekezu::gbktoutf($text);
 		}
 		$p =array(
 			'c' => $text,
@@ -227,11 +226,11 @@ class ten_oauth_client_class extends base_client_class{
 		$r = $c->postOne($p);
 		global $_K;
 		if (strtolower($_K['charset'])=='gbk'){
-			$r = Keke::utftogbk($r);
+			$r = kekezu::utftogbk($r);
 		}
 		if (!$r['data']&&!$r['msg']){
 			unset($_SESSION['auth_ten']);
-			Keke::error_handler(001,'转发微博注失败！:'.$r['msg']);//$this->set_error($r['msg']);
+			kekezu::error_handler(001,'转发微博注失败！:'.$r['msg']);//$this->set_error($r['msg']);
 			return false;
 		}
 		return $r['data'];
@@ -245,7 +244,7 @@ class ten_oauth_client_class extends base_client_class{
 		$this->init_client();
 		$c = $this->get_client();
 		if (strtolower($_K['charset'])=='gbk'){
-			$text = Keke::gbktoutf($text);
+			$text = kekezu::gbktoutf($text);
 		}
 		$p =array(
 			'c' => $text,
@@ -258,10 +257,10 @@ class ten_oauth_client_class extends base_client_class{
 		$r = $c->postOne($p);
 		
 		if (strtolower($_K['charset'])=='gbk'){
-			$r = Keke::utftogbk($r);
+			$r = kekezu::utftogbk($r);
 		}
 		if (!$r['data']&&$r['msg']){
-			Keke::error_handler(001,'微博评论失败！:'.$r['msg']);
+			kekezu::error_handler(001,'微博评论失败！:'.$r['msg']);
 			return false;
 		}
 		$r = $r['data'];
@@ -290,7 +289,7 @@ class ten_oauth_client_class extends base_client_class{
 		);
 		$r = $c->getMyfans($p);
 		if (strtolower(CHARSET)=='gbk'){
-			$r = Keke::utftogbk($r);
+			$r = kekezu::utftogbk($r);
 		}
 		return  $r['data']['info'];
 	}

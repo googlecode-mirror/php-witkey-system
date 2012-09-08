@@ -6,10 +6,10 @@
         <div class="container_24 clearfix">
             <!--面包屑-->
             <div class="breadcrumbs clearfix">
-                <a href="index.php">{$_lang['home']}</a>\
+                <a href="index.php">{$_lang['home']}</a> &gt;
             </div>
             <!--end 面包屑-->
-            <div class="page_title">
+             <div class="page_title">
                 <h2 class="title">{$_lang['pay']}</h2>
             </div>
             <div class="clear">
@@ -43,16 +43,16 @@
 	                               
 	                            </td>
 	                            <td class="red font14b">
-	                                {$_lang['currency']}{$order_amount}
+	                                {c:$order_amount}
 	                            </td>
 	                        </tr>
 	                        <tr>
 	                            <td class="flt">
 	                                <a href="#">{$_lang['user_remain_cach']}</a>
-	                                ({$_lang['currency']}:$user_balance)
+	                                ({c:$user_balance})
 	                            </td>
 	                            <td class="red font14b">
-	                              	 {$_lang['you_should_pay_cach']} {$_lang['currency']}{$pay_amount}
+	                              	 {$_lang['you_should_pay_cach']}{c:$pay_amount}
 	                            </td>
 	                        </tr>
 	                         
@@ -62,52 +62,64 @@
 	            <!--data_table数据表格 end-->
 				
 				
-                <div class="form_box">
+                <div class="">
                     
-                    <form action="#" name="pay" id="pay" method="post">
-                        <div class="prefix_1 suffix_1 clearfix">
-                            <div class="mt_10 mb_10">
-                                <b class="c333 font14">{$_lang['choose_pay_way']}</b>
-                            </div>
-                            
-                            <div class="suffix_1 prefix_1" id="online">
-                                <div class="mt_9 mb_9 font12 account1">
-                                    <fieldset>
-                                        <legend>
-                                          	  {$_lang['devel_account']}
-                                        </legend>
-                                        <!--{eval $k=0;}-->
-										{loop $payment_list $pay}
-                                            {if $pay['pay_status']}
-											<!--{eval $k++;}-->
-                                            <div class="grid_4">
-                                               <label for="{$pay['payment']}">
-                                                <input type="radio" name="online" value="{$pay['payment']}" id="{$pay['payment']}" {if $k=='1'}checked="checked"{/if}/>
-												<img src="payment/{$pay['pay_dir']}/{$pay['img']}" align="absmiddle" title="{$pay['pay_name']}" style="width:100px;">
-												 </label>
-                                            </div>
-											{/if}											
-                                         {/loop} 
-										 {if $k==0}
-										 	<div>{$_lang['pay_tips']}</div>
-										 {/if}
-                                    </fieldset>
-                                </div>
-                            </div>
-                         
-                           
-                        </div>
-						<div class="rowElem clearfix t_c mb_20">
-							{if $k>0}
-                            <input type="hidden" name="sbt_pay" value="1">
-                            <button type="submit" value="{$_lang['now_pay']}" style="width:100px" onclick="return user_pay();">
-                            	<span class="check icon"></span>
-                             		  {$_lang['now_pay']}
-                            </button>
-							{/if}
-                        </div>
-                        
-                    </form>
+					
+					<form action="" name="pay" id="pay" method="post">
+		          
+		            <input type="hidden" name="hdn_recharge" id="hdn_recharge" value="$pay_amount">
+		         
+				
+				<!--start 线上支付方式-->
+		           <div class="online">
+		              <div class=" account1 mt_20 clearfix">
+		                    <!--{eval $k=0;}-->
+							{loop $payment_list $pay}
+		                       {if $pay['pay_status']}<!--{eval $k++;}-->
+		                          
+		                              <label class="mr_20"> 
+									  <input class=" mt_10" type="radio" name="online" value="{$pay['payment']}" {if $k=='1'}checked="checked"{/if}/>
+									  <img class="ov_hide" style="width:110px; vertical-align:middle;"  src="payment/{$pay['payment']}/{$pay['payment']}.gif" align="absmiddle" >
+									  </label>
+		                          
+							   {/if} 
+		                    {/loop}
+							{if $k==0}
+							   <div>{$_lang['online_pay']}{$_lang['account_close']}{$_lang['contact_admin']}</div>
+							 {/if} 
+		               
+		               </div>
+					   {if $payment_list['tenpay']['pay_status']}
+					<div class="clearfix form_box">
+						<table id="tbl_ten" cellspacing="0" border="0" cellpadding="0" width="100%" height="120" >
+							<caption class="bf7 pad5"><img src="resource/img/bank/logo.gif"/>{$_lang['provide_payment_service']}</caption>
+							<!--{eval $i=0;}-->
+							<tr>
+							{loop $ten_bank_type_arr $k $v}
+							<!--{eval $i++;}-->
+								<td class="pl_20 pt_10 pb_10"><input type="radio" name="bank_type" {if $i==1} checked="checked" {/if} value="{$k}" id="{$k}"><label for="{$k}" style="cursor:pointer;"><img src="resource/img/bank/{$v}.gif"/></label></td>
+								{if $i%5==0}
+								</tr>
+								<tr>
+								<!--{eval continue;}-->
+								{/if}
+							{/loop}
+							
+								<tr>
+						</table>
+					</div>
+					{/if}
+		            <div class="rowElem clearfix t_c">
+		            	{if $k>0}
+		               		<input type="hidden" name="sbt_pay" value="1">
+		               		<button type="submit" name="sbt_button" value={$_lang['pay']} style="width:100px" onclick=" return user_pay();">{$_lang['pay']}</button>
+					   {else}
+					     <div>{$_lang['pay_tips']}</div>
+					   {/if}
+		            </div>
+					
+		            </div>
+					</form>
                 </div>
 				
 				</div>
@@ -119,15 +131,40 @@
 </div>
 
 <script type="text/javascript">
+	
+	$(function(){
+		//如果是财富通，就隐藏网银列表	
+		$(":radio[name='online']").click(function(){
+			if($(this).val()=='tenpay'){
+				$("#tbl_ten").parent().show();
+			}else{
+				$("#tbl_ten").parent().hide();
+			}
+			
+		})	
+	})
 	function user_pay(){
-		pay();
-		return false;
+		 //支付金额
+	      var cash = parseFloat($("#hdn_recharge").val()) + 0;
+		  //支付方式--财富通，支付宝
+		  var pay_mode = $(":radio[name='online']:checked").val();
+		  //财富通就要添加银行类型
+		  var bank_type = $(":radio[name='bank_type']:checked").val(); 
+		  //弹出付款窗口
+		  pay(pay_mode,cash,bank_type);
+		  return false;
+		 
 	}
-	function pay(){
-		var pay_mode = $(":radio[name='online']:checked").val();
-		var url = "index.php?do=$do&pay_mode="+pay_mode+"&order_id=$order_id&model_id=$order_info['model_id']"; 
-		showWindow("pay",url,'get',0,{cover:1});return false;
-	}
+	function pay(pay_mode,cash,bank_type){
+
+		var url = "index.php?do=$do&pay_mode="+pay_mode+"&order_id=$order_id&model_id=$order_info['model_id']";
+		if(bank_type){
+			url += "&bank_type="+bank_type;	
+		}
+		
+	    showWindow("pay",url,'get',0,{cover:1});return false;
+	} 
+ 
 	
 </script>
 <!--{template footer}-->

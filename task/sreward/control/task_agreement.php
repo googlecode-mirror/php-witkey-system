@@ -39,7 +39,7 @@ switch ($step){
 				if($sbt_edit){
 					$agree_obj->set_report ( $obj, $obj_id, $to_uid,$to_username, $type, $file_url, $tar_content);
 				}else{
-					require Keke_tpl::template("report");
+					require keke_tpl_class::template("report");
 				}die();
 				break;
 			case "confirm":
@@ -61,9 +61,20 @@ switch ($step){
 				die();
 				break;
 		}
+	case "step4"://½øÈë¶³½á½×¶Î
+		switch ($op){
+			case "report":
+				$title=$_lang['zc_submit'];
+				if($sbt_edit){
+					$agree_obj->set_report ( $obj, $obj_id, $to_uid,$to_username, $type, $file_url, $tar_content);
+				}else{
+					require keke_tpl_class::template("report");
+				}die();
+				break;
+		}
 		break;
 }
 $page_title=$agree_info['agree_title'].'--'.$_K['html_title'];
  
 
-require Keke_tpl::template("task/".$model_info['model_dir']."/tpl/".$_K['template']."/agreement/agreement_".$step);
+require keke_tpl_class::template("task/".$model_info['model_dir']."/tpl/".$_K['template']."/agreement/agreement_".$step);

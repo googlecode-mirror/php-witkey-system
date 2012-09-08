@@ -1,10 +1,10 @@
 <!--{template control/admin/tpl/admin_header}-->
 
 <div class="page_title">
-    	<h1>{$_lang['witkey_service']}</h1>
+    	<h1>{$_lang['service_order_manage']}</h1>
         <div class="tool">   
-		 	<a href="index.php?do={$do}&model_id={$model_id}&view=order" class="here" >{$_lang['order_manage']}</a>
-		    <a href="index.php?do={$do}&model_id={$model_id}&view=list">{$_lang['service_list']}</a>    
+		 	<a href="index.php?do={$do}&model_id={$model_id}&view=order" class="here" >{$_lang['order_list']}</a>
+		   <!-- <a href="index.php?do={$do}&model_id={$model_id}&view=list">{$_lang['service_list']}</a> -->   
         </div>
 </div>
 <!--Ò³Í·½áÊø-->
@@ -13,7 +13,7 @@
 
 <div class="box search p_relative">
     	<div class="title"><h2>{$_lang['search']}</h2></div>
-        <div class="detail">
+        <div class="detail" id="detail">
 		  <form method="post" action="index.php?do={$do}&model_id={$model_id}&view={$view}" id="frm_art_search">
 		  	<input type="hidden" name="page" value="{$page}">
 			   <table cellpadding="0" cellspacing="0">    		
@@ -89,8 +89,8 @@
                 	{loop $order_arr $k $v}
                 	<tr class="item">
                     	<td><input type="checkbox" name="ckb[]" value="{$v[order_id]}" />{$v[order_id]}</td>
-                    	<td class="obj_link"><!--{eval echo substr($v[order_body],8)}--></td>
-                    	<td>{$v[order_amount]}</td>
+                    	<td class="obj_link"><!--{eval echo $v['order_body']}--></td>
+                    	<td>{c:$v[order_amount]}</td>
                     	<td>
                     		{if $v[order_status]=="wait"}{$_lang['not_pay']}
 							{elseif $v[order_status]=="ok"}{$_lang['has_pay']}

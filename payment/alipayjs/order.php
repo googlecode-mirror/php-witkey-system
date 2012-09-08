@@ -62,9 +62,12 @@ function get_batch_url($payment_config, $detail_data, $method = 'form', $service
  * @param $method 请求响应方式 form，返回表单。url。返回链接
  * @return string url 
  */
-function get_pay_url($charge_type, $pay_amount, $payment_config, $subject, $order_id, $model_id = null, $obj_id = null, $service = "create_direct_pay_by_user", $sign_type = 'MD5', $method = 'form') {
+function get_pay_url($charge_type, $pay_amount, $payment_config, $subject, $order_id, $model_id = null, $obj_id = null, $service = null, $sign_type = 'MD5', $method = 'form') {
 	global $_K, $uid, $username;
 	$charge_type == 'order_charge' and $t = "订单充值" or $t = "余额充值";
+	if($service===null){
+		$service =  "create_direct_pay_by_user";
+	}
 	$body = $t . "(from:" . $username . ")";
 	$parameter = array ("service" => $service, "partner" => $payment_config ['seller_id'], "return_url" => $_K ['siteurl'] . '/payment/alipayjs/return.php', "notify_url" => $_K ['siteurl'] . '/payment/alipayjs/notify.php', "_input_charset" => CHARSET, "subject" => $subject, "body" => $body, "out_trade_no" => "charge-{$charge_type}-{$uid}-{$obj_id}-{$order_id}-{$model_id}", "total_fee" => $pay_amount, "payment_type" => "1", "show_url" => $_K ['siteurl'] . "/index.php?do=user&view=finance", "seller_email" => $payment_config ['account'],"extend_param"=>"isv^kk11");
 	$alipay = new alipay_service ( $parameter, $payment_config ['safekey'], $sign_type );

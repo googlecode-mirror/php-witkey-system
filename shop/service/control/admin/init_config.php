@@ -5,11 +5,11 @@
  * @version v 2.0
  * 2011-09-10 13:51:34
  */
-defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 
 $init_menu = array(
-    $_lang['service_order']=>'index.php?do=model&model_id=7&view=order',
-	$_lang['service_list']=>'index.php?do=model&model_id=7&view=list&status=0',
+    $_lang['order_manage']=>'index.php?do=model&model_id=7&view=order',
+	$_lang['service_manage']=>'index.php?do=model&model_id=7&view=list&status=0',
 	$_lang['service_config']=>'index.php?do=model&model_id=7&view=config'
 );
 $init_config = array(

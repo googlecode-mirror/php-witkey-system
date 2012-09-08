@@ -6,8 +6,7 @@
 
 <div class="box search p_relative">
 	<div class="control">
-	    <a href="javascript:d(0);" title="{$_lang['hide']}"><b>&Delta;</b></a>
-	    <a href="javascript:d(1);" title="{$_lang['show']}"><b>&nabla;</b></a>
+   <a href="javascript:d();"><b>&times;</b></a>
 	</div>
 	<div class="title"><h2>{$_lang['search']}</h2></div>
 	<div class="detail" id="detail">
@@ -72,7 +71,7 @@
 					<font color="red">{$_lang['wait_confirm']}</font>
 				{/if}	
 				{if $v[auth_status]==2||$v[auth_status]==0}
-					<a href="index.php?do=$do&view=$view&auth_code=$auth_code&action=pass&auth_id=$v[email_a_id]" onclick="return cdel(this,'{$_lang[confirm_pass]}')" class="button dbl_target"><span class="check icon"></span>{$_lang['pass']}</a>
+					<a href="index.php?do=$do&view=$view&auth_code=$auth_code&action=pass&auth_id=$v[email_a_id]&euid={$v['uid']}" onclick="return cdel(this,'{$_lang[confirm_pass]}')" class="button dbl_target"><span class="check icon"></span>{$_lang['pass']}</a>
 				{/if}
 				{if $v[auth_status]==0}
 					<a href="index.php?do=$do&view=$view&auth_code=$auth_code&action=not_pass&auth_id=$v[email_a_id]" onclick="return cdel(this,'{$_lang[confirm_nopass]}')" class="button"><span class="cross icon"></span>{$_lang['nopass']}</a>
@@ -102,5 +101,10 @@
 		</div>
 </div>
 <!--Ö÷Ìå½áÊø-->
-
+<script language="javascript">
+function d()
+{
+		$("#frm_art_search").slideToggle('800');	  
+}
+</script>
 <!--{template control/admin/tpl/admin_footer}-->

@@ -1,53 +1,19 @@
 <!--{template header}-->
-<div class="wrapper">
+<link rel="stylesheet" href="{SKIN_PATH}/css/task.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="{SKIN_PATH}/theme/{$_K['theme']}/css/task.css" rel="stylesheet" type="text/css">
+
+<div class="wrapper">	
 <!--页面头部-->
 	<header class="clearfix page_header">
     	<div class="container_24">
-    	
+
+		<!--{ad_show(TASKLIST_HEAD,任务大厅_头部广告)}-->
+
         <!--页面导航-->
-        	<div class="breadcrumbs clearfix">
-            	<a href="#">{$_lang['home']}</a>\
+        	<div class="breadcrumbs clearfix ">
+            	<a href="index.php">{$_lang['home']}</a> &gt; <span>{if $search_key}$search_key{else}{$_lang['task_hall']}{/if}</span>
         	</div>
         <!--end 页面导航-->
-		
-		<!--页面标题(搜索前)-->
-        	<div class="page_title clearfix">
-            	<div class="grid_20">
-                	<h2 class="title">{if $search_key}$search_key{else}{$_lang['task_hall']}{/if}</h2>
-            	</div>
-				
-            	<div class="grid_4 pt_10">
-                	<a href="index.php?do=release" class="submit block"> {$_lang['pub_task']} </a>
-            	</div>
-				
-            	<div class="clear"></div>
-             
-        	</div>
-        <!--end 页面标题--><!--页面标题(搜索后)-->
-        	<div class="page_title clearfix" style="display:none;">
-            	<div class="grid_20">
-                	<h2 class="title">{$_lang['search_result']}</h2>
-            	</div>
-            	<div class="grid_4 pt_10">
-                	<a href="#" class="submit block">[ {$_lang['release']} ]</a>
-            	</div>
-            	<div class="clear"></div>
-        	</div>
-        <!--end 页面标题--><!--页面子导航-->
-        <nav class="clearfix page_nav po_re">
-            <ul>
-                <li>
-                    <a href="index.php?do=task" title="{$_lang['task_index']}"><span>{$_lang['task_index']}</span></a>
-                </li>
-				 <li class="selected">
-                    <a href="index.php?do=task_list"><span>{$_lang['task_list']}</span></a>
-                </li>
-				<li>
-                    <a href="index.php?do=task_map" title="{$_lang['task_map']}"><span>{$_lang['task_map']}</span></a>
-                </li>
-            </ul>
-        </nav>
-        <!--end 页面子导航-->
     	</div>
 	</header>
 <!--end 页面标题--><!--主内容-->
@@ -57,180 +23,178 @@
 	  <!--大厅列表_头部二栏广告 start-->
 	 		 <!--{ad_show(LIST_HEAD_TWO)}-->
 	  <!--大厅列表_头部二栏广告 end-->
-		<div class="box mt_10 clearfix">
+		<div class=" mb_10 clearfix">
             <div class="grid_24">
                 <!--筛选条件-->
                 <div class="filter box normal po_re">
                 	<div class="inner">
-                    <!--条件列表-->
-                    <div class="condition_list pad10">
-                        <!--分类-->
-                        <dl class="condition clearfix">
-                            <dt class="grid_2 omega">
-                                {$_lang['task_classify']}
-                            </dt>
-                            <dd class="grid_21">
-                                <!--{eval $exist = stristr($path, "A");}-->
-								<a href="$check_all['A']"  {if !$exist}  class='selected' {/if}>{$_lang['all']} </a>
-                                {loop $check_url_arr['A'] $k $v}
-									<a href="$v['url']" {if isset($v['selected'])}  class="selected" {/if}>{$v['indus_name']}</a>
-                                {/loop} 
-                            </dd>
-                        </dl>
-                        
-                        <!--end 分类--><!--条件1-->
-                        <dl class="condition clearfix">
-                            <dt class="grid_2 omega">
-                                {$_lang['task_model']}
-                            </dt>
-                            <dd class="grid_21">
-                                <!--{eval $exist = stristr($path, "B");}-->
-								<span id="single_choice_span" {if $model_ids}  style="display:none" {/if}>
-									<a href="$check_all['B']" {if !$exist}  class='selected' {/if}>{$_lang['all']} </a>
-									
-									{loop $check_url_arr['B'] $k $v}  
-									<a href="$v['url']"  {if isset($v['selected'])}   class="selected" {/if} >$v['model_name'] </a>
-									{/loop}
-								</span>
-								
-                                <!--搜索模式切换--><span id="much_choice_span" {if !$model_ids}  style="display:none" {/if}>
-                                <a href="javascript:model_all();" id="model_all">{$_lang['all']}</a> 
-                                {loop $check_url_arr['B'] $k $v}
-                              		<!--{eval $is_true = in_array( "$v[model_id]",array_filter(explode("M", $model_ids)))}-->
-								<a href="javascript:void(0);"  {if $is_true}   class="selected" {/if}  id="model_a_$v['model_id']" onclick="select_model_a('$v[model_id]')">
-								<input class="model_class" {if $is_true}  checked="checked" {/if}  type="checkbox" id="test_{$v['model_id']}" ext="$v['model_id']" > $v['model_name']</a>
-								{/loop}
-								
-								</span>
-								<a class="button" id="show_much_choice" onclick="much_choice();" {if $model_ids}  style="display:none" {/if}>
-									<span class="icon check"></span>{$_lang['more_model']}</a>
-                                <span id="much_choice_sreach" {if !$model_ids}  style="display:none" {/if}>
-                                	<a class="button" onclick="model_search();"><span class="magnifier icon">
-                                		
-                                	</span>{$_lang['search']}　</a>
-									<a class="button" onclick="model_reset();">
-										<span class="icon reload"></span>{$_lang['reset']}　</a></span>
-                                <!--end -->
-                          </dl>
-                          <!--end 条件1--><!--条件2-->
-                          <dl class="condition clearfix">
-                          		<dt class="grid_2 omega">
-                                   {$_lang['task_reward_money']}
-                                </dt>
-                                    <dd class="grid_21">
-                                        <span id="general_search" {if isset($_COOKIE['kekesearch_cash'])}  style="display:none;" {/if}>
-                                        	<!--{eval $exist = stristr($path, "C");}-->
-											<a href="$check_all['C']" {if !$exist}  class="selected" {/if}>{$_lang['all']} </a>
-											{loop $check_url_arr['C'] $k $v}
-									 
-											<a href="$v['url']" {if isset($v['selected'])} class="selected" {/if} >$v['name'] </a>
+		                    <!--条件列表-->
+		                    <div class="condition_list pad10">
+		                        <!--分类-->
+		                        <dl class="condition clearfix">
+		                            <dt class="grid_2 omega">
+		                                {$_lang['task_classify']}
+		                            </dt>
+		                            <dd class="grid_21">
+		                                <!--{eval $exist = stristr($path, "A");}-->
+										<a href="$check_all['A']"  {if !$exist}  class='selected' {/if}>{$_lang['all']} </a>
+		                                {loop $check_url_arr['A'] $k $v}
+											<a href="$v['url']" {if isset($v['selected'])}  class="selected" {/if}>{$v['indus_name']}</a>
+		                                {/loop} 
+		                            </dd>
+		                        </dl>
+		                        
+		                        <!--end 分类--><!--条件1-->
+		                        <dl class="condition clearfix">
+		                            <dt class="grid_2 omega">
+		                                {$_lang['task_model']}
+		                            </dt>
+		                            <dd class="grid_21">
+		                                <!--{eval $exist = stristr($path, "B");}-->
+										<span id="single_choice_span" {if $model_ids}  style="display:none" {/if}>
+											<a href="$check_all['B']" {if !$exist}  class='selected' {/if}>{$_lang['all']} </a>
+											
+											{loop $check_url_arr['B'] $k $v}  
+											<a href="$v['url']"  {if isset($v['selected'])}   class="selected" {/if} >$v['model_name'] </a>
+											{/loop}
+										</span>
+										
+		                                <!--搜索模式切换--><span id="much_choice_span" {if !$model_ids}  style="display:none" {/if}>
+		                                <a href="javascript:model_all();" id="model_all">{$_lang['all']}</a> 
+		                                {loop $check_url_arr['B'] $k $v}
+		                              		<!--{eval $is_true = in_array( "$v[model_id]",array_filter(explode("M", $model_ids)))}-->
+										<a href="javascript:void(0);"  {if $is_true}   class="selected" {/if}  id="model_a_$v['model_id']" onclick="select_model_a('$v[model_id]')">
+										<input class="model_class" {if $is_true}  checked="checked" {/if}  type="checkbox" id="test_{$v['model_id']}" ext="$v['model_id']" > $v['model_name']</a>
 										{/loop}
 										
-										<a class="button" style="" onclick="custom_search_cash()">
-                                        	<span class="icon cog"></span>{$_lang['user_defined']}</a></span>
-                                        <div id="cool_search" {if !isset($_COOKIE['kekesearch_cash'])}  style="display:none;" {/if}>
-                                            <div class="grid_12">
-                                            	<div class="pr_30">
-	                                                <div id="slider-range" class="mr_5"></div>
-													<div class="clear"></div>
-													<ul class="range-num">
-														<li >0</li>
-	                                                	<li >1000</li>
-														<li >2000</li>
-														<li >3000</li>
-														<li class="lasts">4000</li>
-														<li class="last">5000</li>
-													</ul>
-													<div class="clear"></div>
-										</div>
-												<div class="clear"></div>
-												<div class="pt_10">
-	                                                <label for="amount1">
-	                                                    {$_lang['price']}:
-	                                                </label>
+										</span>
+										<a class="button" id="show_much_choice" onclick="much_choice();" {if $model_ids}  style="display:none" {/if}>
+											<span class="icon check"></span>{$_lang['more_model']}</a>
+		                                <span id="much_choice_sreach" {if !$model_ids}  style="display:none" {/if}>
+		                                	<a class="button" onclick="model_search();"><span class="magnifier icon"></span>{$_lang['search']}</a>
+											<a class="button" onclick="model_reset();"><span class="icon reload"></span>{$_lang['reset']}</a>
+										</span>
+		                                <!--end -->
+										</dd>
+		                          </dl>
+		                          <!--end 条件1--><!--条件2-->
+		                          <dl class="condition clearfix">
+		                          		<dt class="grid_2 omega">
+		                                   {$_lang['task_reward_money']}
+		                                </dt>
+		                                    <dd class="grid_21">
+		                                        <span id="general_search" {if isset($_COOKIE['keketask_list_search_cash'])}  style="display:none;" {/if}>
+		                                        	<!--{eval $exist = stristr($path, "C");}-->
+													<a href="$check_all['C']" {if !$exist}  class="selected" {/if}>{$_lang['all']} </a>
+													{loop $check_url_arr['C'] $k $v}
+											 
+													<a href="$v['url']" {if isset($v['selected'])} class="selected" {/if} >$v['name'] </a>
+												{/loop}
 												
-	                                                <input type="text" id="amount1" class="txt_input" size="5"/> -
-													<input type="text" id="amount2" class="txt_input" size="5"/> {$_lang['yuan']}
-													<a class="button" style="" onclick="search_task_cash()"><span class="magnifier icon"></span>{$_lang['search']}　</a>
-                                            		
+												<a class="button" style="" onclick="custom_search_cash('task_list_search_cash')">
+		                                        	<span class="icon cog"></span>{$_lang['user_defined']}</a></span>
+		                                        <div id="cool_search" {if !isset($_COOKIE['keketask_list_search_cash'])}  style="display:none;" {/if}>
+		                                            <div class="grid_12">
+		                                            	<div class="pr_30">
+			                                                <div id="slider-range" class="mr_5"></div>
+															<div class="clear"></div>
+															<ul class="range-num">
+																<li >0</li>
+			                                                	<li >1000</li>
+																<li >2000</li>
+																<li >3000</li>
+																<li class="lasts">4000</li>
+																<li class="last">5000</li>
+															</ul>
+															<div class="clear"></div>
 												</div>
-											</div>
-											<div class="grid_8"><a class="button" style="" onclick="task_cash_reset()"><span class="icon reload"></span>{$_lang['return']}　</a></div>
-											
-                                        </div>
-                                    </dd>
-                                </dl>
-                                <form id="cash_frm" name="cash_frm" action="" method="get">
-                                    <input type="hidden" name="do" value="task_list">
-									<input type="hidden" name="path" value="{if $path}$path{/if}" id="cash_frm_path">
-									<input type="hidden" name="min" id="min">
-									<input type="hidden" name="max" id="max">
-									<input type="hidden" name="model_ids" id="task_model_ids" value="$model_ids">
-									<input type="hidden" name="page_size" id="page_size" value="$page_size">
-                                </form>
-                                <form id="cash_frm_fh" name="cash_frm_fh" action="" method="get">
-                                    <input type="hidden" name="do" value="task_list"><input type="hidden" name="path" value="{if $path}$path{else};{/if}"><input type="hidden" name="page_size" id="page_size" value="$page_size">
-                                </form><!--end 条件2--><!--隐藏层-->
-                                <div id="condition_list" style="display:none">
-                                    <!--条件3-->
-                                    <dl class="condition clearfix">
-                                        <dt class="grid_2 omega">
-                                            {$_lang['reward_trust']}
-                                        </dt>
-                                        <dd class="grid_21">
-                                            <!--{eval $exist = stristr($path, "D");}-->
-                                            	<a href="$check_all['D']" {if !$exist}  class="selected" {/if}>{$_lang['all']} </a>
-                                            {loop $check_url_arr['D'] $k $v}
-                                             
-                                            <a href="$v['url']" {if isset($v['selected'])}  class="selected" {/if} >$v['name'] </a>
-                                            {/loop}
-                                        </dd>
-                                    </dl>
-                                    <!--end 条件3--><!--条件4-->
-                                    <dl class="condition clearfix">
-                                        <dt class="grid_2 omega">
-                                            {$_lang['pub_time']}
-                                        </dt>
-                                        <dd class="grid_21">
-                                            <!--{eval $exist = stristr($path, "E");}--><a href="$check_all['E']" {if !$exist}  class="selected" {/if}>{$_lang['all']} </a>
-                                            {loop $check_url_arr['E'] $k $v}
-                                             	<a href="$v['url']" {if isset($v['selected'])}  class="selected" {/if}>$v['name'] </a>
-                                            {/loop}
-                                        </dd>
-                                    </dl>
-                                    <!--end 条件4--><!--条件4-->
-                                    <dl class="condition clearfix">
-                                        <dt class="grid_2 omega">
-                                            {$_lang['task_status']}
-                                        </dt>
-                                        <dd class="grid_21">
-                                            <!--{eval $exist = stristr($path, "F");}--><a href="$check_all['F']" {if !$exist}  class="selected" {/if}>{$_lang['all']} </a>
-                                            {loop $check_url_arr['F'] $k $v}
-                                            <a href="$v['url']" {if isset($v['selected'])}  class="selected" {/if} >$v['name'] </a>
-                                            {/loop} 
-                                        </dd>
-                                    </dl>
-                                    <!--end 条件4--><!--条件5-->
-                                    <dl class="condition clearfix border_n">
-                                        <dt class="grid_2 omega">
-                                            {$_lang['other']}
-                                        </dt>
-                                        <dd class="grid_21">
-                                            <!--{eval $exist = stristr($path, "G");}-->
-											<a href="$check_all['G']" {if !$exist}  class="selected" {/if}>{$_lang['all']} </a>
-                                            {loop $check_url_arr['G'] $k $v} 
-												<a href="$v['url']" {if isset($v['selected'])} class="selected" {/if}>$v['name'] </a>
-                                            {/loop} 
-                                        </dd>
-                                    </dl>
-                                    <!--end 条件5-->
-                                </div>
-                                <!--end 隐藏层-->
-								
-								
-                            </div>
-                            <!--end 条件列表-->
-							
+														<div class="clear"></div>
+														<div class="pt_10">
+			                                                <label for="amount1">
+			                                                    {$_lang['price']}:
+			                                                </label>
+														
+			                                                <input type="text" id="amount1" class="txt_input" size="5"/> -
+															<input type="text" id="amount2" class="txt_input" size="5"/> {$_lang['yuan']}
+															<a class="button" style="" onclick="search_task_cash()"><span class="magnifier icon"></span>{$_lang['search']}　</a>
+		                                            		
+														</div>
+													</div>
+													<div class="grid_8"><a class="button" style="" onclick="task_cash_reset('task_list_search_cash')"><span class="icon reload"></span>{$_lang['return']}　</a></div>
+													
+		                                        </div>
+		                                    </dd>
+		                                </dl>
+		                                <form id="cash_frm" name="cash_frm" action="" method="get">
+		                                    <input type="hidden" name="do" value="task_list">
+											<input type="hidden" name="path" value="{if $path}$path{/if}" id="cash_frm_path">
+											<input type="hidden" name="min" id="min">
+											<input type="hidden" name="max" id="max">
+											<input type="hidden" name="model_ids" id="task_model_ids" value="$model_ids">
+											<input type="hidden" name="page_size" id="page_size" value="$page_size">
+		                                </form>
+		                                <form id="cash_frm_fh" name="cash_frm_fh" action="" method="get">
+		                                    <input type="hidden" name="do" value="task_list"><input type="hidden" name="path" value="{if $path}$path{else};{/if}"><input type="hidden" name="page_size" id="page_size" value="$page_size">
+		                                </form><!--end 条件2--><!--隐藏层-->
+		                                <div id="condition_list" style="display:none">
+		                                    <!--条件3-->
+		                                    <dl class="condition clearfix">
+		                                        <dt class="grid_2 omega">
+		                                            {$_lang['reward_trust']}
+		                                        </dt>
+		                                        <dd class="grid_21">
+		                                            <!--{eval $exist = stristr($path, "D");}-->
+		                                            	<a href="$check_all['D']" {if !$exist}  class="selected" {/if}>{$_lang['all']} </a>
+		                                            {loop $check_url_arr['D'] $k $v}
+		                                             
+		                                            <a href="$v['url']" {if isset($v['selected'])}  class="selected" {/if} >$v['name'] </a>
+		                                            {/loop}
+		                                        </dd>
+		                                    </dl>
+		                                    <!--end 条件3--><!--条件4-->
+		                                    <dl class="condition clearfix">
+		                                        <dt class="grid_2 omega">
+		                                            {$_lang['pub_time']}
+		                                        </dt>
+		                                        <dd class="grid_21">
+		                                            <!--{eval $exist = stristr($path, "E");}--><a href="$check_all['E']" {if !$exist}  class="selected" {/if}>{$_lang['all']} </a>
+		                                            {loop $check_url_arr['E'] $k $v}
+		                                             	<a href="$v['url']" {if isset($v['selected'])}  class="selected" {/if}>$v['name'] </a>
+		                                            {/loop}
+		                                        </dd>
+		                                    </dl>
+		                                    <!--end 条件4--><!--条件4-->
+		                                    <dl class="condition clearfix">
+		                                        <dt class="grid_2 omega">
+		                                            {$_lang['task_status']}
+		                                        </dt>
+		                                        <dd class="grid_21">
+		                                            <!--{eval $exist = stristr($path, "F");}--><a href="$check_all['F']" {if !$exist}  class="selected" {/if}>{$_lang['all']} </a>
+		                                            {loop $check_url_arr['F'] $k $v}
+		                                            <a href="$v['url']" {if isset($v['selected'])}  class="selected" {/if} >$v['name'] </a>
+		                                            {/loop} 
+		                                        </dd>
+		                                    </dl>
+		                                    <!--end 条件4--><!--条件5-->
+		                                    <dl class="condition clearfix border_n">
+		                                        <dt class="grid_2 omega">
+		                                            {$_lang['other']}
+		                                        </dt>
+		                                        <dd class="grid_21">
+		                                            <!--{eval $exist = stristr($path, "G");}-->
+													<a href="$check_all['G']" {if !$exist}  class="selected" {/if}>{$_lang['all']} </a>
+		                                            {loop $check_url_arr['G'] $k $v} 
+														<a href="$v['url']" {if isset($v['selected'])} class="selected" {/if}>$v['name'] </a>
+		                                            {/loop} 
+		                                        </dd>
+		                                    </dl>
+		                                    <!--end 条件5-->
+		                                </div>
+		                                <!--end 隐藏层-->
+										
+										
+		                            </div>
+		                    <!--end 条件列表-->
 							
 							<!--已选条件-->
                             <div class="select_condition clearfix pad10">
@@ -251,32 +215,36 @@
                                     {else}<span>{$_lang['no_selected_terms']}</span>
                                     {/if}
                                 </div>
-                            </div> 
+                            
+							</div> 
 							<!--end 已选条件--> 
-							<!--工具栏-->
+                     </div>
+					 <!--工具栏-->
 	                            <div class="operate po_ab">
-	                            	&nbsp;
 	                                <a href="javascript:show_hide()" id="tool_show" title="{$_lang['unfold']}"><div class="icon16 sq-plus">{$_lang['unfold']}</div></a>
-	                   				<a href="javascript:show_hide()" id="tool_hide" style="display:none" title="{$_lang['close']}"><div class="icon16 sq-minus">{$_lang['close']}</div></a>
+	                   				<a href="javascript:show_hide()" id="tool_hide" style="display:none" title="{$_lang['fold']}"><div class="icon16 sq-minus">{$_lang['fold']}</div></a>
 	                            </div>
-	                        <!--end 工具栏-->
-							
-                            </div>
-							</div>
-                            <!--end 筛选条件-->
-                        </div>
-                    </div>
-                    <form action="" method="post" id="frm1">
+	                <!--end 工具栏-->
+			    </div>
+                <!--end 筛选条件-->
+            </div>
+          </div>
+                    
+					<form action="" method="post" id="frm1">
                         <input type="hidden" name="hid_save_cookie" id="hid_save_cookie"><input type="hidden" name="hid_del_cookie" id="hid_del_cookie">
                     </form>
                     <section class="clearfix section">
                         <div class="second_menu container_24 po_ab">
-                            <div class="suffix_23 pull_1" style="margin-right:-5px;">
+                            <div class="suffix_23 pull_1">
                                 <nav class="minor_nav box">
                                     <ul class="nav_group clearfix">
                                         <li>
-                                            <a href="index.php?do=help&fpid=290" title="{$_lang['help_center']}"><div class="icon16 help">{$_lang['help_center']}</div></a>
+                                            <a href="index.php?do=help&fpid=290" title="{$_lang['help_center']}"><div class="icon16 help">{$_lang['help_center']}</div><b class="font14 ml_5 po_re" style="top:4px;">？</b></a>
+											
                                         </li>
+										<li>
+											<a href="index.php?do=task_map" title="{$_lang['task_map']}"><div class="icon16 globe-2">{$_lang['task_map']}</div></a>
+										</li>
                                     </ul>
                                 </nav>
                             </div>
@@ -284,10 +252,10 @@
                         <div class="show_panel container_24 po_re">
                             <div class="po_re clearfix box">
                                 <!--左边内容-->
-                                <div class="grid_20 omega">
+                                <div class="grid_20">
                                     <div class="box normal clearfix">
                                         <!--左内容头-->
-                                        <div class="border_b_c clearfix">
+                                        <div class="border_b_c clearfix hidden">
                                             <div class="grid_5 omega">                  
                                                     
                                                         {$_lang['total_find']}<span class="cc00"> $count </span>{$_lang['tiao_result']}
@@ -322,62 +290,86 @@
                                                 </dt>
                                                 <dd class="tags">
                                                     <ul>
-                                                        <li class="w4 t_l">
-                                                            {$_lang['task']}
+                                                        <li class="w4 t_l m_col2">
+                                                            {$_lang['task_info']} {$_lang['total_find']} $count {$_lang['tiao_result']}
                                                         </li>
-                                                        <li>
+                                                        <li class="m_h">
                                                             
-																<a href="index.php?do=task_list&path=$path&min=$min&max=$max&page_size=$page_size&ord=1"  {if $ord!=2} class="hidden" {/if}  id="pub_time_1" ord=1>{$_lang['pub_time']}▲</a>
-																<a href="index.php?do=task_list&path=$path&min=$min&max=$max&page_size=$page_size&ord=2"  {if $ord==1||!$ord} class="" {else} class="hidden"{/if}   ord=2>{$_lang['pub_time']}▼</a>
-																<a {if $ord!=3&&$ord!=4||!$ord}class="hidden" {/if} href="index.php?do=task_list&path=$path&min=$min&max=$max&page_size=$page_size&ord=2">{$_lang['pub_time']}</a>
+																<a href="index.php?do=task_list&path=$path&min=$min&max=$max&page_size=$page_size&ord=1"  {if $ord!=2} class="hidden" {/if}  id="pub_time_1" ord="1" title="{$_lang['early_release_of_former']}">{$_lang['pub_time']}▲</a>
+																<a href="index.php?do=task_list&path=$path&min=$min&max=$max&page_size=$page_size&ord=2"  {if $ord==1||!$ord} class="" {else} class="hidden"{/if}   ord="2" title="{$_lang['latest_release_of_the_first']}">{$_lang['pub_time']}▼</a>
+																<a {if $ord!=3&&$ord!=4||!$ord}class="hidden" {/if} href="index.php?do=task_list&path=$path&min=$min&max=$max&page_size=$page_size&ord=2" title="{$_lang['click_the_early_release_first_sort_by']}">{$_lang['pub_time']}</a>
                                                        
                                                         </li>
-                                                        <li class="w2">
-                                                            	<a href="index.php?do=task_list&path=$path&min=$min&max=$max&page_size=$page_size&ord=3" ord=3 {if $ord!=4} class="hidden" {/if} id="pub_time_3" >{$_lang['task_reward_money']}▲</a>
-																<a href="index.php?do=task_list&path=$path&min=$min&max=$max&page_size=$page_size&ord=4"  ord=4  {if $ord!=3} class="hidden" {/if} id="pub_time_4" >{$_lang['task_reward_money']}▼</a>
-                                                     			<a {if $ord==3||$ord==4} class="hidden" {/if} href="index.php?do=task_list&path=$path&min=$min&max=$max&page_size=$page_size&ord=4" >{$_lang['task_reward_money']}</a>
+                                                        <li class="w2 m_col2">
+                                                            	<a href="index.php?do=task_list&path=$path&min=$min&max=$max&page_size=$page_size&ord=3" ord=3 {if $ord!=4} class="hidden" {/if} id="pub_time_3" title="{$_lang['low_amount_of_tasks_in_the_former']}">{$_lang['task_reward_money']}▲</a>
+																<a href="index.php?do=task_list&path=$path&min=$min&max=$max&page_size=$page_size&ord=4"  ord=4  {if $ord!=3} class="hidden" {/if} id="pub_time_4" title="{$_lang['the_high_amount_of_tasks_former']}">{$_lang['task_reward_money']}▼</a>
+                                                     			<a {if $ord==3||$ord==4} class="hidden" {/if} href="index.php?do=task_list&path=$path&min=$min&max=$max&page_size=$page_size&ord=4" title="{$_lang['click_the_high_amount_of_tasks_first_sort']}">{$_lang['task_reward_money']}</a>
 													    </li>
 													
-                                                        <li>
+                                                        <li class="m_h">
                                                             {$_lang['task_model']}
                                                         </li>
-                                                        <li>
+                                                        <li class="m_h">
                                                             {$_lang['count']}
                                                         </li>
-                                                        <li>
+                                                        <li class="m_h">
                                                             {$_lang['status']}
                                                         </li>
                                                     </ul>
                                                 </dd>
+                                                
                                                 {loop $task_list_arr $k $v}  
-                                                <dd class="po_re clearfix">
+                                                <dd class="po_re clearfix 
+												   {if $v['pay_item'] == '2' }
+												   		app_top
+												   {elseif $v['pay_item'] == '3'}
+												   		app_urgent
+												   {elseif $v['pay_item'] == '1'}
+												   		app_hide
+												   {elseif $v['is_top'] == '1'}
+														app_recmd
+												   {elseif $v['task_union'] == '1'}
+														app_union
+												   {elseif $v['is_delay'] == '1'}
+														app_delay
+												   {/if}
+												   "
+												>
                                                     <ul>
-                                                        <li class="w4 t_l">
-                                                            <a href="index.php?do=task&task_id={$v['task_id']}" title="{$v['task_title']}" class="font14b">{$v['task_title']}</a>
-                                                            <span class="block">[#{$v['task_id']}]</span>
+                                                        <li class="w4 t_l m_col1">
+                                                            <a href="index.php?do=task&task_id={$v['task_id']}" title="{$v['task_title']}" class="font14b task_title">{$v['task_title']}</a>
+                                                            <span class="block m_h">[#{$v['task_id']}]</span>
 															<!--{eval $time = time();}-->
-                                                            {if $v['top_time']>$time&&$item_config['2']['small_pic']} <img src="{$_K['siteurl']}/{$item_config['2']['small_pic']}" alt="{$_lang['top']}" title="{$_lang['top']}">{/if}  
+                                                            {if $v['top_time']>$time&&$item_config['2']['small_pic']} <img src="{$_K['siteurl']}/{$item_config['2']['small_pic']}" alt="{$_lang['top']}" title="{$_lang['top']}">{/if}
                                                            {if $v['urgent_time']>$time&&$item_config['3']['small_pic']}<img src="{$_K['siteurl']}/{$item_config['3']['small_pic']}" alt="{$_lang['hurry_up']}" title="{$_lang['hurry_up']}">{/if}
+														   {if $v['pay_item'] == '1'} <img src="{$_K['siteurl']}/{$item_config['1']['small_pic']}" alt="{$_lang['hide']}" title="{$_lang['hide']}">{/if}
                                                      	   {if stristr($v['pay_item'],'4')&&$item_config['4']['small_pic']}<img src="{$_K['siteurl']}/{$item_config['4']['small_pic']}" alt="{$_lang['map']}" title="{$_lang['map']}">{/if}
+														   {if $v['is_top'] == '1'}<img src="{$_K['siteurl']}/resource/img/ico/tj.png" alt="{$_lang['recommend']}" title="{$_lang['recommend']}">{/if}
+														   {if $v['task_union'] == '1'}<img src="{$_K['siteurl']}/resource/img/ico/lm.png" alt="{$_lang['union']}" title="{$_lang['union']}">{/if}
+														   {if $v['is_delay'] == '1'}<img src="{$_K['siteurl']}/resource/img/ico/yq.png" alt="{$_lang['delay']}" title="{$_lang['delay']}">{/if}
                                                        
 													    </li>
-                                                        <li>
+                                                        <li class="m_h">
                                                             <a href="index.php?do=space&member_id=$v['uid']">$v['username']</a>
                                                             <span class="block"><!--{eval echo date("Y-m-d",$v['start_time']);}--></span>
                                                         </li>
-                                                        <li class="w2 cc00">
-                                                         {if $v['task_cash_coverage']} {$cash_cove_arr[$v['task_cash_coverage']]['cove_desc']} {else}{$_lang['currency']} {$v['task_cash']} {$_lang['yuan']}{/if}
+                                                        <li class="w2 cc00 m_col1 m_t_l">
+                                                         {if $v['task_cash_coverage']} 
+														 	{c:$cash_coverage[$v['task_cash_coverage']]['start_cove']}-{c:$cash_coverage[$v['task_cash_coverage']]['end_cove']}
+														 {else}
+														 	{c:$v['task_cash']}
+														 {/if}
                                                         </li>
-                                                        <li> 
+                                                        <li class="m_h"> 
                                                             <span class="block">{if isset($where_arr)}{$where_arr['B'][$v['model_id']]['model_name']}{/if}<br/><!--{eval echo get_wb_platform($v['task_id'])}--></span>
                                                         </li>
-                                                        <li class="c999">
+                                                        <li class="c999 m_h">
                                                             $v['view_num']{$_lang['view']}<span class="block">$v['work_num']{$_lang['work_hand']}</span>
                                                         </li>
-                                                        <li class="c999">
-                                                        <!--{eval   $a = $v['model_id'];  $b = $v['task_status']; $end_time = $end_time_arr[$a][$b]['time'];}-->
-														<!--{eval if(isset($end_time)&&$end_time){
-															echo keke_search_class::task_time_desc($v['model_id'],$v['task_status'],$v[$end_time]);
+                                                        <li class="c999 m_h">
+                                                        <!--{eval    $b = $v['task_status']; $end_time = $end_time_arr[$b]['time'];}-->
+														<!--{eval if(isset($end_time)){
+															echo keke_search_class::task_time_desc($v['task_status'],$v[$end_time]);
 														}
 														}-->
 														</span>
@@ -390,7 +382,7 @@
 													<a href="index.php?do=release&t_id={$v['task_id']}&pub_mode=onekey&model_id={$v['model_id']}" title="{$_lang['onkey_release']}"><div class="icon16 hand-2">{$_lang['onkey_release']}</div></a>
                                                     <a href="javascript:favor('task_id','task','{$model_list[$v['model_id']]['model_code']}','{$v['uid']}','{$v['task_id']}','{$v['task_title']}','{$v['task_id']}')" title="{$_lang['favorit']}"><div class="icon16 star-fav-empty">{$_lang['favorit']}</div></a>
                                                     <a href="index.php?do=task&task_id=$v['task_id']" target="_blank" title="{$_lang['new_window_open']}"><div class="icon16 expand">{$_lang['new_window_open']}</div></a>
-                                                    <a href="index.php?do=ajax&view=share&oid=$k&title={$v['task_title']}" class="" id="share$k" onclick="return false;" onmouseover="share(this);return false;" title="{$_lang['share']}"><div class="icon16 share">{$_lang['share']}</div></a>
+                                                    <a class="" href="index.php?do=ajax&view=share&oid=$k&title={$v['task_title']}" id="share$k" onclick="return false;" onmouseover="share(this);return false;" title="{$_lang['share']}"><div class="icon16 share">{$_lang['share']}</div></a>
                                                 
                                                 </div>
                                             </dd>
@@ -410,43 +402,19 @@
                                             <span class="stats">{$_lang['count']} $count {$_lang['tiao']} </span>
                                             $pages['page']
                                         </p>
-                                        <div class="clear">
-                                        </div>
                                     </div>
                                     <!--page 翻页 end-->
                                     <div class="clear">
                                     </div>
                                 </div>
                                 <!--end 左边部分--><!--右边部分-->
-                                <div class="grid_4">
-                                    <div class="box normal mb_10">
-                                    	<div class="inner">
-                                        <!--搜索历史-->
-                                        <div class="history border_b_c">
-                                            <h3 class="title pl_10">{$_lang['search_history']}</h3>
-                                            <div class=" pl_10">
-                                                <p>
-                                                    {$_lang['no_your_history']}
-                                                </p>
-                                                <ul id="history_collect">
-                                                    {loop $cookie_arr $k $v}
-                                                    <li class="mt_5 mb_5 border_b_c">
-                                                        <a href="$v['url']" title="$v['name']" >$v['name']</a>
-                                                    </li>
-                                                    {/loop}
-                                                </ul>
-                                            </div>
-                                        </div>
-										
-                                        <!--end搜索历史-->
-                                        <div class="operate fl_r">
-                                            <a href="javascript:clear_cookie()" title="{$_lang['empty']}"><div class="icon16 trash">{$_lang['empty']}</div></a>
-                                        
-										</div>
-                                        <div class="clear"></div>
-										</div>
-                                    </div>
-									
+                                <div class="grid_4 m_h">
+                                   
+								   <div class="mb_10">
+								   	<a href="{$_K['siteurl']}/index.php?do=release" class="submit block">发布任务</a>
+								   </div>
+								   
+								   
                                     <div class="box normal ws_break">
                                         <!--搜索历史-->
                                         <div class="inner">
@@ -454,33 +422,37 @@
                                             <div class=" pl_10 pr_10 pb_10">
                                                 <ul id="history_collect">
                                                     {loop $dynamic_arr $k $v}
+													{if $v['event']['content']}
                                                     <li class="border_b_c">
                                                         <p><a href="$v['feed_username']['url']">$v['feed_username']['content']</a> $v['action']['content']</p>
 														<p><a href="$v['event']['url']">$v['event']['content']</a></p>
-                                                        <p><!--{eval echo Keke::feed_time ($v['feed_time'] );}--></p>
+                                                        <p><!--{eval echo kekezu::feed_time ($v['feed_time'] );}--></p>
                                                     </li>
+													{/if}
                                                     {/loop}
                                                 </ul>
                                             </div>
                                         </div>
                                         <!--end搜索历史-->
                                     </div>
-                                    
-                                    <!--大厅列表_右侧上下广告 start-->
-										<!--{ad_show(LIST_SIDE_RIGHT)}-->
-									<!--大厅列表_右侧上下广告 end-->
 									
-                                    
+									<div style="margin:0 -5px">
+									<!--任务大厅_右侧广告 start-->
+											<!--{ad_show(TASKLIST_CENTAL_RIGHT)}-->
+									<!--任务大厅_右侧广告 end-->
+									</div>
                                 </div>
+								
+								
                                 <!--end 右边部分-->
                             </div>
                         </div>
                     </section>
 					
 					<div class="clear"></div>
-					  <!--大厅列表_底部通栏广告 start-->
-					 		 <!--{ad_show(LIST_BOTTOM_BANNER)}-->
-					  <!--大厅列表_底部通栏广告 end-->
+
+					<!--{ad_show(TASKLIST_BOTTOM,任务大厅_底部广告)}-->
+	
 					<div class="clear"></div>
                 </div>
                 </section>
@@ -492,7 +464,7 @@
                 <script type="text/javascript">
                     /** 检查用户是否登陆 */
                     var uid = parseInt('{$uid}') + 0;
-                    
+                       var is_rewrite = '{$_K[is_rewrite]}';
                     function check_user_login(){
                         if (isNaN(uid) || uid == 0) { 
                             showDialog("{$_lang['if_now_login']}", 'confirm', "{$_lang['login_notice']}", 'user_login()', 0);
@@ -530,7 +502,7 @@
                                 $("#tool_hide").hide();
                             }
                             else {
-                                setcookie('show_cookie', 1);
+                                setcookie('show_cookie', 1,3600);
                                 $("#tool_hide").show();
                                 $("#tool_show").hide();
                             }
@@ -555,7 +527,14 @@
                         $("#show_much_choice").show();
                         var url = window.location.href;
                         
-                        var new_url = url.replace('&model_ids='+model_ids, '');
+                          if(is_rewrite>0){
+								 var new_url = url.replace('-model_ids-'+model_ids, '');
+								
+							}else{
+								
+								   var new_url = url.replace('&model_ids='+model_ids, '');
+							}
+         
                         location.href = new_url;
                         
                     }
@@ -565,6 +544,7 @@
                     //分享
                     var share = function(obj, title){
 						var id = obj.id;
+						CHARSET.toLowerCase()=='utf-8'?obj.href = encodeURI(obj.href):'';
 						if(id&&obj.tagName=='A'){
 							if($(obj).find('div').length){
 								var div = $(obj).find("div:first");
@@ -625,20 +605,36 @@
                         var url = window.location.href;//获取本页面的url连接
                         var model_ids = '';
 						var new_url = '';
+						var is_rewrite = '{$_K[is_rewrite]}';
 						 $(".model_class").each(function(){//生成model_ids数据 
                             if ($(this).is(":checked")) { 
                               model_ids  += 'M'+$(this).attr("ext");
                             }
                         });
-						//判断是否存在model_ids  
-						if(url.indexOf('model_ids') ==-1){//不存在拼接
-							new_url = url; 
-						}else{//替换 
-							 new_url = url.replace("&model_ids="+model_ids_val,"");     
-						} 
-						 new_url = new_url+'&model_ids='+model_ids; //新地址
-						location.href=new_url;//跳转
-					 
+						
+						
+						if(is_rewrite>0){
+							//判断是否存在model_ids  
+							if(url.indexOf('model_ids') ==-1){//不存在拼接
+								new_url = url; 
+							}else{//替换 
+								 new_url = url.replace("-model_ids-"+model_ids_val,"");     
+							}  
+							
+								 new_url = new_url.replace(".html","-model_ids-"+model_ids+".html");
+							
+						}else{
+							//判断是否存在model_ids  
+							if(url.indexOf('model_ids') ==-1){//不存在拼接
+								new_url = url; 
+							}else{//替换 
+								 new_url = url.replace("&model_ids="+model_ids_val,"");     
+							} 
+							 new_url = new_url+'&model_ids='+model_ids; //新地址
+							
+						}
+						
+						location.href=new_url;//跳转 
                     }
                     
 					
@@ -673,10 +669,8 @@
     In.config('serial',true);
 	In.add('ui_core',{path:"resource/js/others/ui.core.js",type:'js'});
 	In.add('ui_slider',{path:"resource/js/others/ui.slider.js",type:'js',rely:['ui_core']});
-	In.add('search',{path:"{$style_path}/js/search.js",type:'js'});
-	In.add('css_task',{path:"{SKIN_PATH}/css/task.css",type:'css'});  
- 	In.add('css_theme_task',{path:"{SKIN_PATH}/theme/{$_K['theme']}/css/task.css",type:'css'}); 
-	In('css_task','css_theme_task','search','ui_slider',function(){task_bar()});
+	In.add('search',{path:"{$style_path}/js/search.js",type:'js'}); 
+	In('search','ui_slider',function(){task_bar()});
 	
 </script>
 <!--{template footer}-->

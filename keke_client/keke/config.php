@@ -3,11 +3,11 @@
  * 客客推广联盟，初始化配置类
  * @var unknown_type
  */
-global $config;
+global $config,$_K;
 
-$config['keke_app_id'] = '786237';
+$config['keke_app_id'] = '';//
 //用户申请的联盟应用secret
-$config['keke_app_secret'] = 'e11dfd6d2bdecfa0ad7313c153d315bc';
+$config['keke_app_secret'] = '';//
 
 //默认签名方式
 $config['sign_type'] = 'MD5';

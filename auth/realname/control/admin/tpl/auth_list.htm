@@ -5,8 +5,7 @@
 	
 <div class="box search p_relative">
 	<div class="control">
-	    <a href="javascript:d(0);" title="{$_lang['hide']}"><b>&Delta;</b></a>
-	    <a href="javascript:d(1);" title="{$_lang['show']}"><b>&nabla;</b></a>
+	    <a href="javascript:d();"><b>&times;</b></a>
 	</div>
 	<div class="title"><h2>{$_lang['realname_auth_list']}</h2></div>
 	<div class="detail" id="detail">
@@ -60,6 +59,7 @@
 	          	<th width="15">
 	          		<input type="checkbox" id="checkbox" onclick="checkall();">
 	          	</th>
+				
 	            <th width="30">{$_lang['id']}</th>
 	            <th>{$_lang['username']}</th>
 				<th>{$_lang['realname']}</th>
@@ -79,7 +79,7 @@
 				<td>{$v[id_card]}</td>
 				<td><a target="_blank" href="../../{$v[id_pic]}"><img src="../../{$v[id_pic]}" width="40" height="40"></a></td>
  
-				<td class="wraphide">{if $v[cash]}<font color="#ff7700">{$_lang['currency']}{$v[cash]}</font>{$_lang['yuan']}{else}{$_lang['free']}{/if}</td>
+				<td class="wraphide">{if $v[cash]}<font color="#ff7700">{c:$v[cash]}</font>{else}{$_lang['free']}{/if}</td>
 				<td>{if $v[start_time]==$v[end_time]}{$_lang['lifetime_validity']}{else}<!--{date('Y-m-d',$v[start_time])}-->{$_lang['to']}<!--{date('Y-m-d',$v[end_time])}-->{/if}</td>
 				<td>
 					{if $v[auth_status]==1}
@@ -122,5 +122,11 @@
 		</div>
 </div>
 <!--Ö÷Ìå½áÊø-->
+<script language="javascript">
+function d()
+{
+		$("#frm_art_search").slideToggle('800');	  
+}
+</script>
 
 <!--{template control/admin/tpl/admin_footer}-->

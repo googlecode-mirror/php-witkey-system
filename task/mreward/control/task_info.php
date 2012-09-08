@@ -9,12 +9,13 @@ defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 $nav_active_index = 'task';
 $basic_url = "index.php?do=task&task_id=$task_id"; //基本链接
 $task_obj = mreward_task_class::get_instance ( $task_info );
-$cove_arr = Keke::get_table_data("*","witkey_task_cash_cove","","","","","cash_rule_id");
+$task_info= $task_obj->_task_info;
+$cover_cash = kekezu::get_cash_cove('',true);
 $task_config =$task_obj->_task_config;
 $model_id = $task_info ['model_id'];
 $task_status = $task_obj->_task_status;
-$indus_arr = Keke::$_indus_c_arr; //子行业集
-$indus_p_arr = Keke::$_indus_p_arr; //父行业集
+$indus_arr = $kekezu->_indus_c_arr; //子行业集
+$indus_p_arr = $kekezu->_indus_p_arr; //父行业集
 $status_arr = $task_obj->_task_status_arr; //任务状态数组
 $time_desc = $task_obj->get_task_timedesc (); //任务时间描述
 $stage_desc = $task_obj->get_task_stage_desc (); //任务阶段样式
@@ -32,16 +33,22 @@ $task_obj->task_xg_timeout();//判断选稿期是否结束
 $task_obj->task_gs_timeout();//判断告示期是否结束
 $browing_history = $task_obj->browing_history($task_id,$task_info['task_cash']."元",$task_info['task_title']);
 $show_payitem = $task_obj->show_payitem();
-$trust_mode=$task_obj->_trust_mode;//担保模式
-
+$prize_c = $task_obj->get_prize_date();
+$wiki_priv = $task_obj->_priv; //威客留言权限
+$g_info = $task_obj->_g_userinfo;
+//var_dump($wiki_priv['comment']);
 switch ($op) {
 	case "reqedit" : //需求补充
-		$title = $_lang['supply_demand'];
+        if($task_info['ext_desc']){
+		$title = $_lang['edit_supply_demand'];
+		}else{
+		$title =$_lang['supply_demand'];
+		}
 		if ($sbt_edit) {
 			$task_obj->set_task_reqedit ( $tar_content, '', 'json' );
 		} else {
 			$ext_desc = $task_info ['ext_desc'];
-			require Keke_tpl::template ( 'task/task_reqedit' );
+			require keke_tpl_class::template ( 'task/task_reqedit' );
 		}
 		die ();
 		break;
@@ -54,8 +61,8 @@ switch ($op) {
 			$max_day  = intval($task_config['max_delay']);//配置最大延期天数
 			$this_min_cash = intval($delay_rule[$delay_count]['defer_rate']*$task_info['task_cash']/100);//本次最小延期金额
 			$min_cash>$this_min_cash and $real_min = $min_cash or $real_min = $this_min_cash;//真正最小金额
-			$credit_allow =  intval(Keke::$_sys_config ['credit_is_allow']);//金币开启
-			require Keke_tpl::template("task/task_delay");
+			$credit_allow =  intval($kekezu->_sys_config ['credit_is_allow']);//金币开启
+			require keke_tpl_class::template("task/task_delay");
 		}
 		die();
 		break;
@@ -66,7 +73,7 @@ switch ($op) {
 			
 		}else {
 			$workhide_exists = keke_payitem_class::payitem_exists($uid,'workhide','work');//可以隐藏交稿
-			require Keke_tpl::template ( 'task/reward_work' );
+			require keke_tpl_class::template ( 'task/reward_work' );
 		}
 
 		die();
@@ -87,7 +94,7 @@ switch ($op) {
 		if($sbt_edit){
 			$task_obj->set_report ( $obj, $obj_id, $to_uid,$to_username, $type, $file_url, $tar_content);
 		}else{
-			require Keke_tpl::template("report");
+			require keke_tpl_class::template("report");
 		}
 			die();
 		break;
@@ -116,7 +123,7 @@ switch ($op) {
 		if ($sbt_edit) {
 			$task_obj->send_message($title,$tar_content,$to_uid, $to_username,'','json');
 		} else {
-			require Keke_tpl::template ( 'message' );
+			require keke_tpl_class::template ( 'message' );
 		}
 			die ();
 		break;
@@ -128,7 +135,7 @@ switch ($view) {
 		$work_status = $task_obj->get_work_status ();//获取稿件状态数组
 		intval ( $page ) and $p ['page'] = intval ( $page ) or $p ['page']='1';
 		intval ( $page_size ) and $p ['page_size'] = intval ( $page_size ) or $p['page_size']='10';
-		$p['url'] = $basic_url."&view=work&page_size=".$p ['page_size']."&page=".$p ['page'];
+		$p['url'] = $basic_url."&view=work&ut=$ut&page_size=".$p ['page_size']."&page=".$p ['page'];
 		$p ['anchor'] = '';
 		$w['work_id'] = $work_id;//稿件编号
 		$w['work_status'] = $st;//稿件状态
@@ -158,7 +165,7 @@ switch ($view) {
 	    		if($res!=3&&$res!=2){
 	    			$v1 =  $comment_obj->get_comment_info($res);
 	    			$tmp ='replay_comment';
-	    			require Keke_tpl::template ( "task/task_comment_reply" );
+	    			require keke_tpl_class::template ( "task/task_comment_reply" );
 	    		}else{
 	    			echo $res;
 	    		}
@@ -171,7 +178,7 @@ switch ($view) {
 	    		if($res!=3&&$res!=2){
 	    			$v = $comment_obj->get_comment_info($res);
 	    			$tmp ='pub_comment';
-	    			require Keke_tpl::template ( "task/task_comment_reply" );
+	    			require keke_tpl_class::template ( "task/task_comment_reply" );
 	    		}else{
 	    			echo $res;
 	    		}
@@ -183,15 +190,14 @@ switch ($view) {
 	    			//更新个人信息 
 	    			$res = $comment_obj->del_comment($comment_id,$task_id,$comment_info['p_id']);
 	    		}else{
-	    			Keke::keke_show_msg("", $_lang['please_login_now'],"error","json");
+	    			kekezu::keke_show_msg("", $_lang['not_priv'],"error","json");
 	    		}
-	    		$res and Keke::keke_show_msg("", $_lang['delete_success'],"","json") or Keke::keke_show_msg("",$_lang['system_is_busy'],"error","json");
+	    		$res and kekezu::keke_show_msg("", $_lang['delete_success'],"","json") or kekezu::keke_show_msg("",$_lang['system_is_busy'],"error","json");
 	    		break;	
 	    } 
 		break;
 	case "mark":
 		$mark_count = $task_obj->get_mark_count();//评价统计
-		$mark_count_ext = $task_obj->get_mark_count_ext();//来自评价统计
 		intval ( $page ) and $p ['page'] = intval ( $page ) or $p ['page']='1';
 		intval ( $page_size ) and $p ['page_size'] = intval ( $page_size ) or $p['page_size']='10';
 		$p['url'] = $basic_url."&view=mark&page_size=".$p ['page_size']."&page=".$p ['page'];
@@ -209,6 +215,12 @@ switch ($view) {
 	default :
 		$task_file = $task_obj->get_task_file (); //任务附件
 		$kekezu->init_prom();
-		$can_prom = Keke::$_prom_obj->is_meet_requirement ( "bid_task", $task_id );
+		$can_prom = $kekezu->_prom_obj->is_meet_requirement ( "bid_task", $task_id );
+		if($task_info['task_status']==8){
+			$list_work = db_factory::query(' select uid,username from '.TABLEPRE.'witkey_task_work where task_id='.intval($task_id).' and work_status in (1,2,3)');
+		}
+		if($task_info['task_status']==2&&$task_info['uid']==$uid){
+			$item_list= keke_payitem_class::get_payitem_config ( 'employer', null, null, 'item_id' );
+		}
 }
-require Keke_tpl::template ( "task/" . $model_info ['model_code'] . "/tpl/" . $_K ['template'] . "/task_info" );
+require keke_tpl_class::template ( "task/" . $model_info ['model_code'] . "/tpl/" . $_K ['template'] . "/task_info" );

@@ -1,7 +1,7 @@
 <!--安全码验证 start-->
 <article class="box_detail">
-    <div class="messages m_warn">
-        <span class="icon16">warning</span>
+    <div class="messages m_warn clearfix">
+        <span class="icon16 fl_l">warning</span>
         {$_lang['notice_user_msg']}<font color="red"><b>{$_lang['notice_user_title']}</b></font>{$_lang['fuhao']} <a href="###" class="close">&times;</a>
     </div>
     <div class=" prefix_1 suffix_1">
@@ -13,7 +13,8 @@
                         {$_lang['save_code']}
                     </label>
                     <div class="grid_15">
-                        <input type="password" size="40" title="{$_lang['code_notice_title']}" name="sec_code" id="sec_code" limit="required:true;len:6-20" msg="{$_lang['code_notice_msg']}" msgArea="span_secode"/><span id="span_secode"></span>
+                        <input class="txt_input mr_5" type="password" size="40" title="{$_lang['code_notice_title']}" name="sec_code" id="sec_code" limit="required:true;len:6-20" msg="{$_lang['code_notice_msg']}" msgArea="span_secode"/>
+						<span id="span_secode"></span>
                     </div>
                 </div>
                 <div class="rowElem clearfix form_button">

@@ -1,5 +1,5 @@
 
-            <div class="grid_24">
+            <div class="panel clearfix box grid_24">
             	<header class="clearfix box_header">
             		<div class="fl_l pl_10 pr_20">
                 	<h3 class="font16b lineh_32">{$_lang['buy_record']}[ {$service_info[sale_num]} ]</h3>
@@ -49,7 +49,7 @@
 						{/if}
                      </li>
                      <li class="w2 red">
-                       {$_lang['currency']}{$v[order_amount]}
+                       {c:$v[order_amount]}
                       </li>
                      <li class="w4">
                          <!--{date('Y-m-d H:i:s',$v[order_time])}-->

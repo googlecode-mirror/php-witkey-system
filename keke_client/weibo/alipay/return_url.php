@@ -1,11 +1,10 @@
 <?php
 define('IN_KEKE', 1);
-$s_root = dirname(dirname(dirname(dirname (__FILE__))));
-include ($s_root."./app_comm.php");
+include ("../../../app_comm.php");
 include_once '../client.php';
 
-$_app_id  = Keke::$_sys_config["alipay_app_id"];
-$_app_secret = Keke::$_sys_config["alipay_app_secret"];
+$_app_id  = $kekezu->_sys_config["alipay_app_id"];
+$_app_secret = $kekezu->_sys_config["alipay_app_secret"];
 
 $alipay_obj= oauth_api_factory::get_o("alipay", $_app_id, $_app_secret);
 $alipay_config = $alipay_obj->_config;
@@ -28,7 +27,7 @@ if($verify_result) {//验证成功
     //获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表
     $user_id	= $_GET['user_id'];	//支付宝用户id
     $token		= $_GET['token'];	//授权令牌
-    KEKE_DEBUG AND file_put_contents('log.txt', var_export($_GET,1),FILE_APPEND);
+   // KEKE_DEBUG AND file_put_contents('log.txt', var_export($_GET,1),FILE_APPEND);
 	//执行商户的业务程序
 	
 	echo "验证成功<br />";

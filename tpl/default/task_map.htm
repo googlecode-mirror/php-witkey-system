@@ -8,9 +8,9 @@
     	
         <!--页面导航-->
         <div class="breadcrumbs clearfix">
-            <a href="#">{$_lang['home']}</a>\
+            <a href="#">{$_lang['home']}</a> &gt; <span>{$_lang['task_map']}</span>
         </div>
-        <!--end 页面导航--><!--页面标题(搜索前)-->
+        <!--end 页面导航--><!--页面标题(搜索前)--
         <div class="page_title clearfix">
             <div class="grid_20">
                 <h2 class="title">{$_lang['task_map']}</h2>
@@ -37,19 +37,7 @@
             </div> 
         </div>
         <!--end 页面标题--><!--页面子导航-->
-        <nav class="clearfix page_nav po_re">
-            <ul> 
-                <li>
-                    <a href="index.php?do=task" title="{$_lang['task_index']}"><span>{$_lang['task_index']}</span></a>
-                </li>
-				 <li>
-                    <a href="index.php?do=task_list"><span>{$_lang['task_list']}</span></a>
-                </li>
-				<li class="selected">
-                    <a href="index.php?do=task_map" title="{$_lang['task_map']}"><span>{$_lang['task_map']}</span></a>
-                </li>
-            </ul>
-        </nav>
+       
         <!--end 页面子导航-->
     </div>
 </header>
@@ -63,7 +51,7 @@
 	  <!--大厅列表_头部二栏广告 end-->
 		<div class="clear"></div>
 		
-        <div class="box mt_10 clearfix">
+        <div class="box mb_10 clearfix">
             <div class="grid_24">
                   <div class="filter task_map box normal po_re">
                 	<div class="inner" >
@@ -105,13 +93,13 @@
 								<a href="javascript:void(0);"  {if $is_true}   class="selected" {/if}  id="model_a_$v['model_id']" onclick="select_model_a('$v['model_id']')">
 								<input class="model_class" {if $is_true}  checked="checked" {/if}  type="checkbox" id="test_{$v['model_id']}" ext="$v['model_id']" > $v['model_name']</a>
 								{/loop}
-								
+								  
 								</span>
 								<a class="button" id="show_much_choice" onclick="much_choice();" {if $model_ids}  style="display:none" {/if}>
 									<span class="icon check"></span>{$_lang['more_model']}</a>
                                 <span id="much_choice_sreach" {if !$model_ids}  style="display:none" {/if}>
                                 	<a class="button" onclick="model_search();"><span class="magnifier icon">
-                                		
+                            
                                 	</span>{$_lang['search']}　</a>
 									<a class="button" onclick="model_reset();">
 										<span class="icon reload"></span>{$_lang['reset']}　</a></span>
@@ -123,7 +111,7 @@
                                   {$_lang['task_reward']}
                                 </dt>
                                     <dd class="grid_21">
-                                        <span id="general_search" {if isset($_COOKIE['kekesearch_cash'])}  style="display:none;" {/if}>
+                                        <span id="general_search" {if isset($_COOKIE['keketask_map_search_cash'])}  style="display:none;" {/if}>
                                         	<!--{eval $exist = stristr($path, "C");}-->
 											<a href="$check_all['C']" {if !$exist}  class="selected" {/if}>{$_lang['all']} </a>
 											{loop $check_url_arr['C'] $k $v}
@@ -131,9 +119,9 @@
 											<a href="$v['url']" {if isset($v['selected'])} class="selected" {/if} >$v['name'] </a>
 										{/loop}
 										
-										<a class="button" style="" onclick="custom_search_cash()">
+										<a class="button" style="" onclick="custom_search_cash('task_map_search_cash')">
                                         	<span class="icon cog"></span>{$_lang['user_defined']}</a></span>
-                                        <div id="cool_search" {if !isset($_COOKIE['kekesearch_cash'])}  style="display:none;" {/if}>
+                                        <div id="cool_search" {if !isset($_COOKIE['keketask_map_search_cash'])}  style="display:none;" {/if}>
                                             <div class="grid_12">
                                             	<div class="pr_30">
 	                                                <div id="slider-range" class="mr_5"></div>
@@ -160,7 +148,7 @@
                                             		
 												</div>
 											</div>
-											<div class="grid_8"><a class="button" style="" onclick="task_cash_reset()"><span class="icon reload"></span>{$_lang['return']}　</a></div>
+											<div class="grid_8"><a class="button" style="" onclick="task_cash_reset('task_map_search_cash')"><span class="icon reload"></span>{$_lang['return']}　</a></div>
 											
                                         </div>
                                     </dd>
@@ -170,10 +158,10 @@
                                         	  {$_lang['area_search']}
                                         </dt>
                                         <dd class="grid_21">
-                                        	<form>
+                                        	<form >
                                         	<select name="province" id="province" ></select><select name="city" id="city"></select><select name="area" id="area"></select>
 						                    
-											<a onclick="search_area()" style="" class="button ml_5 mt_5">
+											<a onclick="search_area('task_map')" style="" class="button ml_5 mt_5">
                                         	<span class="icon cog"></span>{$_lang['search']}</a>
 											</form>
                                         </dd>
@@ -275,7 +263,6 @@
 							<!--end 已选条件--> 
 							<!--工具栏-->
 	                            <div class="operate po_ab">
-	                            	&nbsp;
 	                                <a href="javascript:show_hide()" id="tool_show" title="{$_lang['unfold']}"><div class="icon16 sq-plus">{$_lang['unfold']}</div></a>
 	                   				<a href="javascript:show_hide()" id="tool_hide" style="display:none" title="{$_lang['close']}"><div class="icon16 sq-minus">{$_lang['close']}</div></a>
 	                            </div>
@@ -291,12 +278,15 @@
                     </form>
                     <section class="clearfix section">
                         <div class="second_menu container_24 po_ab m_h">
-                            <div class="suffix_23 pull_1" style="margin-right:-5px;">
+                            <div class="suffix_23 pull_1">
                                 <nav class="minor_nav box">
                                     <ul class="nav_group clearfix">
                                         <li>
-                                            <a href="#" title="{$_lang['help_center']}"><div class="icon16 help">{$_lang['help_center']}</div></a>
+                                            <a href="index.php?do=help&fpid=290" title="{$_lang['help_center']}"><div class="icon16 help">{$_lang['help_center']}</div><b class="font14 ml_5 po_re" style="top:3px;">？</b></a>
                                         </li>
+										<li>
+											<a href="index.php?do=task_list" title="返回任务列表"><div class="icon16 image-text">返回任务列表</div></a>
+										</li>
                                     </ul>
                                 </nav>
                             </div>
@@ -345,7 +335,7 @@
                                     
                                 </div>
                                 <!--end 左边部分--><!--右边部分-->
-                                <div class="grid_7 omega">
+                                <div class="grid_7 ">
                                     
 									
                                     <div class="box normal ws_break mb_10">
@@ -358,13 +348,11 @@
                                                 	<dd>
                                                 		<ul class="clearfix">
                                                 			<li class="w0 t_l"><a  onmouseover="openMyWin({$k});" href="javascript:void(0);" title="{$v['task_title']}" class="font14b"><span class="cc00">
-                                                			{$_lang['currency']}
-                                                			
-                                                					{if $v[model_id]==4||$v[model_id]==5}
-										                        		$cove_arr[$v[task_cash_coverage]][cove_desc]
-										                        	{else}
-										                        		{$v['task_cash']}
-										                        	{/if} 
+                                                			{if $v['task_cash_coverage']} 
+															 	{c:$cash_coverage[$v['task_cash_coverage']]['start_cove']}-{c:$cash_coverage[$v['task_cash_coverage']]['end_cove']}
+															 {else}
+															 	{c:$v['task_cash']}
+															 {/if}
 										                        	
 										                        	</span> $v['task_title']</a></li>
                                                 		</ul>
@@ -411,10 +399,9 @@
 	In.add('ui_slider',{path:"resource/js/others/ui.slider.js",type:'js',rely:['ui_core']});
 	
 	In.add('search',{path:"{$style_path}/js/search.js",type:'js'}); 
- 	In.add('css_task',{path:"{$style_path}/css/task.css",type:'css'}); 
  	
-	In('pcas','css_task','search','ui_slider',function(){task_bar(),new PCAS("province","city","area",'{$province}','{$city}','{$area}');});
-    
+	In('pcas','search','ui_slider',function(){task_bar(),new PCAS("province","city","area",'{$province}','{$city}','{$area}');});
+    var is_rewrite = '{$_K[is_rewrite]}';
   /** 检查用户是否登陆 */
     var uid = parseInt('{$uid}') + 0;
      function check_user_login(){
@@ -426,6 +413,7 @@
             return true;
         }
     }
+	
     
     
     /** 用户登陆 */
@@ -456,7 +444,7 @@
                 $("#tool_hide").hide();
             }
             else {
-                setcookie('show_cookie', 1);
+                setcookie('show_cookie', 1,3600);
                 $("#tool_hide").show();
                 $("#tool_show").hide();
             }
@@ -480,8 +468,14 @@
             $("#much_choice_sreach").hide();
             $("#show_much_choice").show();
             var url = window.location.href;
-            
-            var new_url = url.replace('&model_ids='+model_ids, '');
+            if(is_rewrite>0){
+				 var new_url = url.replace('-model_ids-'+model_ids, '');
+				
+			}else{
+				
+				   var new_url = url.replace('&model_ids='+model_ids, '');
+			}
+         
             location.href = new_url;
             
         }
@@ -537,21 +531,39 @@
                 var url = window.location.href;//获取本页面的url连接
                 var model_ids = '';
 				var new_url = '';
+				
 				 $(".model_class").each(function(){//生成model_ids数据 
                     if ($(this).is(":checked")) { 
                       model_ids  += 'M'+$(this).attr("ext");
                     }
                 });
-				//判断是否存在model_ids  
-				if(url.indexOf('model_ids') ==-1){//不存在拼接
-					new_url = url; 
-				}else{//替换 
-					 new_url = url.replace("&model_ids="+model_ids_val,"");     
-				} 
-				 new_url = new_url+'&model_ids='+model_ids; //新地址
-				location.href=new_url;//跳转
-			 
-            }
+				
+				
+				
+				if(is_rewrite>0){
+							//判断是否存在model_ids  
+							if(url.indexOf('model_ids') ==-1){//不存在拼接
+								new_url = url; 
+							}else{//替换 
+								 new_url = url.replace("-model_ids-"+model_ids_val,"");     
+							}  
+							
+								 new_url = new_url.replace(".html","-model_ids-"+model_ids+".html");
+							
+						}else{
+							//判断是否存在model_ids  
+							if(url.indexOf('model_ids') ==-1){//不存在拼接
+								new_url = url; 
+							}else{//替换 
+								 new_url = url.replace("&model_ids="+model_ids_val,"");     
+							} 
+							 new_url = new_url+'&model_ids='+model_ids; //新地址
+							
+						}
+						
+						location.href=new_url;//跳转 
+                    }
+                    
     
     //任务模型多选						
     function model_all(){ 

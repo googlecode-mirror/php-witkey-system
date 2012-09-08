@@ -55,9 +55,9 @@ class tender_release_class extends keke_task_release_class {
 			case "onekey" :
 				if (! $release_info) {
 					$sql = " select model_id,task_title,task_desc,indus_id,indus_pid,
-						task_cash_coverage,start_time,end_time from %switkey_task where task_id='%d' and model_id='%d'";
-					$task_info = dbfactory::get_one ( sprintf ( $sql, TABLEPRE, $data ['t_id'] ,$this->_model_id));
-					$task_info or Keke::show_msg($_lang['operate_notice'],$_SERVER['HTTP_REFERER'],3,$_lang['not_exsist_relation_task_and_not_user_onekey'],"warning");
+						task_cash_coverage,start_time,end_time,contact from %switkey_task where task_id='%d' and model_id='%d'";
+					$task_info = db_factory::get_one ( sprintf ( $sql, TABLEPRE, $data ['t_id'] ,$this->_model_id));
+					$task_info or kekezu::show_msg($_lang['operate_notice'],$_SERVER['HTTP_REFERER'],3,$_lang['not_exsist_relation_task_and_not_user_onekey'],"warning");
 					
 					$release_info = $this->onekey_mode_format($task_info);
 					
@@ -84,15 +84,13 @@ class tender_release_class extends keke_task_release_class {
 	 * @param $obj_name session存储对象名
 	 */
 	public function pub_task() {
-		$release_info =Keke::k_input($this->_std_obj->_release_info);
+		$release_info =kekezu::k_input($this->_std_obj->_release_info);
 		$task_obj = $this->_task_obj;  
-		$is_trust = false;
-		$this->_std_obj->_release_info ['trust'] and $is_trust = true;
 		$this->public_pubtask();
 		
 		//根据任务总花费来确顶任务发布状态
 		$task_cash = $this->_std_obj->_release_info ['txt_task_cash']; //任务金额
-		$this->set_task_status ( $this->get_total_cash ( $task_cash ), $task_cash, $is_trust );
+		$this->set_task_status ( $this->get_total_cash ( $task_cash ), $task_cash);
 		$task_obj->setTask_cash_coverage($release_info['task_cash_cove']); 
 		//任务发布
 		$task_id = $task_obj->create_keke_witkey_task (); 

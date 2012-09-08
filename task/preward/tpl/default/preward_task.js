@@ -46,11 +46,11 @@ $(function(){
 function workHand() {
 	if (check_user_login()) {
 		if(if_can_hand==0){
-			showDialog('操作无效，所交稿件已达到任务所需的最大量，不能再交稿了','alert','操作失败提示','',0);
+			showDialog(L.t_work_num_than_expected,'alert',L.operate_notice,'',0);
 			return false;
 		}else{
 			if (uid == guid) {
-				showDialog('操作无效，用户对自己发布的任务交稿!', 'alert', '操作失败提示', '', 0);
+				showDialog(L.t_hand_forbidden, 'alert',L.operate_notice, '', 0);
 				return false;
 			} else {
 				showWindow("work_hand",basic_url+'&op=work_hand',"get",'0');return false;
@@ -70,7 +70,7 @@ function workHand() {
  */
 function workChoose(work_id,to_status){
 	if(guid!=uid){
-		showDialog('只有雇主才能操作稿件',"alert","操作提示");return false;
+		showDialog(L.t_master_can_operate_work,"alert",L.operate_notice);return false;
 	}else{
 		var url = basic_url+"&op=work_choose&work_id="+work_id;
 		$.post(url,{to_status:to_status},function(json){

@@ -52,7 +52,7 @@
         <th scope="row" width="130">{$action_arr[$type][1]}{$_lang['attachment']}</th>
         <td>
 			<!--{eval $filename=substr($report_info[report_file],strrpos($report_info[report_file],'/')+1);}-->
-			{if $v[report_file]}<a href="index.php?do={$do}&view={$type}&ac=download&filename=$filename&filepath={$v[report_file]}">{$filename}</a>{else}{$_lang['uncommitted_attachment']}{/if}
+			{if $report_info[report_file]}<a href="index.php?do={$do}&view={$type}&ac=download&filename=$filename&filepath={$v[report_file]}">{$filename}</a>{else}{$_lang['uncommitted_attachment']}{/if}
 		</td>
     </tr>
 	<tr id="pass">
@@ -65,18 +65,18 @@
 			{$_lang['witkey']}£®{$wk_info[username]}£©{$_lang['get']}<input type="text" name="op_result[wk_get]" id="wk_get" size=4 class="txt">{$_lang['yuan']}
 		{/if}
 		{if $process_can['reset_task']}
-			<label for="reset_task"><input type="checkbox" name="op_result[reset_task]" id="reset_task" vlaue="1">{$_lang['reset_task_extended']}<input type="text" name="op_result[delay_days]" id="delay_days" size=4 class="txt">{$_lang['day']}{$_lang['zh_jh']}</label>
+			<input type="checkbox" name="op_result[reset_task]" id="reset_task" vlaue="1">{$_lang['reset_task_extended']}<input type="text" name="op_result[delay_days]" id="delay_days" size=4 class="txt">{$_lang['day']}{$_lang['zh_jh']}
 			<font color="red">&nbsp;&nbsp;&nbsp;&nbsp;{$_lang['extension_stay_after_setting']}</font><br>
 		{/if}
 		{if $process_can['cancel_bid']}
-			<label for="cancel_bid"><input type="checkbox" name="op_result[cancel_bid]" id="cancel_bid" vlaue="1">{$_lang['cancel_bid']}<font color="red">&nbsp;&nbsp;&nbsp;&nbsp;{$_lang['cancel_bid_user_not_able_bid']}</font></label><br>
+			<input type="checkbox" name="op_result[cancel_bid]" id="cancel_bid" vlaue="1">{$_lang['cancel_bid']}<font color="red">&nbsp;&nbsp;&nbsp;&nbsp;{$_lang['cancel_bid_user_not_able_bid']}</font><br>
 		{/if}
 		{if $process_can['deduct']}
 			&nbsp;&nbsp;&nbsp;&nbsp;{$_lang['be']}{$action_arr[$type][1]}{$_lang['one_remaining']}{$credit_info[type]}:{$credit_info[max_credit]}{$_lang['point']}<br>
-			<label for="deduct_credit"><input type="checkbox" name="op_result[deduct_credit]" id="deduct_credit" vlaue="1">{$_lang['deduction_is']}{$action_arr[$type][1]}»À{$credit_info[type]}<input type="text" name="op_result[{$credit_info[name]}]" id="credit" size=4 class="txt" max="{$credit_info[max_credit]}">{$_lang['point']}{$_lang['zh_jh']}</label><br>
+			<input type="checkbox" name="op_result[deduct_credit]" id="deduct_credit" vlaue="1">{$_lang['deduction_is']}{$action_arr[$type][1]}»À{$credit_info[type]}<input type="text" name="op_result[{$credit_info[name]}]" id="credit" size=4 class="txt" max="{$credit_info[max_credit]}">{$_lang['point']}{$_lang['zh_jh']}(<font color="red">{$_lang['do_not_choose_if_not_deducted']}</font>)<br>
 		{/if}
 		{if $process_can['freeze_user']}
-			<label for="freeze_user"><input type="checkbox" name="op_result[freeze_user]" id="freeze_user" vlaue="1"{$_lang['freezing_is']}>{$_lang['freezing_is']}{$action_arr[$type][1]}{$_lang['people']}<input type="text" name="op_result[freeze_day]" id="freeze_day" size=4 class="txt">{$_lang['day']}{$_lang['zh_jh']}</label>
+			<input type="checkbox" name="op_result[freeze_user]" id="freeze_user" vlaue="1"{$_lang['freezing_is']}>{$_lang['freezing_is']}{$action_arr[$type][1]}{$_lang['people']}<input type="text" name="op_result[freeze_day]" id="freeze_day" size=4 class="txt">{$_lang['day']}{$_lang['zh_jh']}(<font color="red">{$_lang['do_not_choose_if_not_freeze']}</font>)
 		{/if}
 	{else}
 		{$report_info['op_result']}
@@ -135,6 +135,7 @@
 				return false;
 				break;
 			case "report":
+			
 		    	var credit    =parseInt($("#credit").val())+0;
 				var maxCredit =parseInt($("#credit").attr("max"))+0;
 				var freeze_day=parseInt($("#freeze_day").val())+0;
@@ -150,12 +151,16 @@
 					}
 				}
 				if($("#deduct_credit").is(":checked")){
+					
 					if(isNaN(credit)){
+						alert(1);
 						art.dialog.alert("{$_lang['waring_enter_deducted_points']}");return false;
 					}else if(credit<0){
+						alert(2);
 						art.dialog.alert("{$_lang['waring_deducted_points_not_support_negative']}");return false;
 					}
 					else if(credit==0||credit>maxCredit){
+						alert(3);
 						art.dialog.alert("{$_lang['warning_deduction']}{$credit_info[type]}{$_lang['maximum']}:"+maxCredit+"µ„");return false;
 					}
 				}
@@ -172,10 +177,10 @@
 					content+="{$_lang['abolition_user']}{$report_info[to_username]}{$_lang['de']}#{$trans_object[$report_info[obj_id]]}{$_lang['number']}{$trans_object[$report_info[obj]]}{$_lang['the_state']};<br>";
 				}
 				if($("#deduct_credit").is(":checked")){
-					content+="{$_lang['deduction']}{$report_info[to_username]}{$credit_info[type]}'+credit+'{$_lang['point']};<br>";
+					content+="{$_lang['deduction']}{$report_info[to_username]}{$credit_info[type]}"+credit+"{$_lang['point']};<br>";
 				}
 				if($("#freeze_user").is(":checked")){
-					content+="{$_lang['freeze_user']}{$report_info[to_username]}'+freeze_day+'{$_lang['day']}{$_lang['zh_jh']}";
+					content+="{$_lang['freeze_user']}{$report_info[to_username]}"+freeze_day+"{$_lang['day']}{$_lang['zh_jh']}";
 				}
 				art.dialog({
    						title: "{$_lang['confirmation_prompts']}",

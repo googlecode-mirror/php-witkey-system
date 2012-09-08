@@ -376,7 +376,7 @@ class SaeTOAuthV2 {
 		$headers[] = "API-RemoteIP: " . $_SERVER['REMOTE_ADDR'];
 		curl_setopt($ci, CURLOPT_URL, $url );
 		curl_setopt($ci, CURLOPT_HTTPHEADER, $headers );
-		curl_setopt($ci, CURLINFO_HEADER_OUT, TRUE );
+		//curl_setopt($ci, CURLINFO_HEADER_OUT, TRUE );
 
 		$response = curl_exec($ci);
 		$this->http_code = curl_getinfo($ci, CURLINFO_HTTP_CODE);

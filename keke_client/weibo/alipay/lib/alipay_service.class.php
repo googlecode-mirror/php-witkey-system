@@ -23,9 +23,10 @@ class AlipayService {
 	function __construct($aliapy_config){
 		$this->aliapy_config = $aliapy_config;
 	}
-    function AlipayService($aliapy_config) {
+   /* function AlipayService($aliapy_config) {
     	$this->__construct($aliapy_config);
     }
+    */
 	/**
      * 构造快捷登录接口
      * @param $para_temp 请求参数数组

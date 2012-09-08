@@ -56,7 +56,7 @@ class alipay_service {
         $sHtml = $sHtml."<input type='hidden' name='sign' value='".$this->mysign."'/>";
         $sHtml = $sHtml."<input type='hidden' name='sign_type' value='".$this->sign_type."'/></form>";
 
-        $sHtml = $sHtml."<input type='button' name='v_action' value='支付宝确认付款' onClick='document.forms[\"alipaysubmit\"].submit();'>";
+        $sHtml = $sHtml."<button type='submit' class='hidden' name='v_action' value='支付宝确认付款' onClick='document.forms[\"alipaysubmit\"].submit();'>支付宝确认付款</button>";
         return $sHtml;
     }
     

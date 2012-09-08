@@ -1,6 +1,6 @@
 <!--{template control/admin/tpl/admin_header}--> 
 <div class="page_title">
-  <h1>{$model_info[model_name]}{$_lang['manage']}</h1>
+  <h1>{$model_info[model_name]}{$_lang['task_config']}</h1>
     <div class="tool">
       <a href="index.php?do={$do}&model_id={$model_id}&view={$view}&op=config" class="here">{$_lang['basic_config']}</a>
       <a href="index.php?do={$do}&model_id={$model_id}&view={$view}&op=control">{$_lang['control_config']}</a>
@@ -44,7 +44,9 @@
 			</div>
 			<select name="fds[indus_bid][]" id="s_indus_select" multiple=multiple style="width:160px;float:left;height:200px;overflow-y:scroll;background:white;border:#ccc solid 1px;margin-left:20px;">
 			{loop $milist $k $m}
-				 <option id="s_indus_select_op_{$m}" value="$m" selected="selected">$indus_arr[$m][indus_name]</option> 
+				{if !empty($m)}
+				<option id="s_indus_select_op_{$m}" value="$m" selected="selected"> $indus_arr[$m]['indus_name']</option>
+				{/if}
 			{/loop}
 			</select>
 			<br class="clear">{$_lang['industry_binding_notice']}

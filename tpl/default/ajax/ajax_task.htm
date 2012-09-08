@@ -3,27 +3,20 @@
     {loop $comment_info $v2}
     <div class="comment_item">
         <a href="index.php?do=space&member_id=$v2['uid']">{$v2['username']}</a>{$_lang['yu']}<!--{date('Y-m-d H:i:s',$v2['on_time'])}-->{$_lang['comment']}
-        {if $v2['status']=='0'}{$_lang['new']}{/if}:<span class="db"><!--{eval echo Keke::escape($v2['content'])}--></span>
+        {if $v2['status']=='0'}{$_lang['new']}{/if}:<span class="db"><!--{eval echo kekezu::escape($v2['content'])}--></span>
     </div>
     {/loop}
 </div>
 {/if}
 {if $ajax=='mark_aid'}
 	{if $aid_info}<!--星级评定样式-->
-		<link href="resource/js/jqplugins/starrating/jquery.rating.css" rel="stylesheet" type="text/css">
-		<!--星级评定-->
-		<script type="text/javascript" src="resource/js/jquery.js"></script>
-		<script type="text/javascript" src="resource/js/jqplugins/starrating/jquery.rating.js"></script>
-		<script type="text/javascript" src="resource/js/jqplugins/starrating/jquery.MetaData.js"></script>
 			{loop $aid_info $k $v}
 				<div class="grid_3 omega">
 				    <b>{$v['aid_name']}</b>&nbsp;&nbsp;&nbsp;&nbsp;
 				    <font color="red">{$v['avg']}</font>分
 				</div>
 				<div class="grid_2 alpha">
-				    <div class="stars">
-				        <!--{eval echo keke_user_mark_class::gen_star($v['avg'],$k);}-->
-				    </div>
+				        <!--{eval echo keke_user_mark_class::gen_star2($v['avg']);}-->
 				</div>
 				<div class="clear"></div>
 			{/loop}
@@ -46,7 +39,7 @@
 											
 											<strong class="block">
 												<a href="{$v['detail_url']}" target="_blank" class='p_title' title="{$v['title']}">
-												<!--{eval echo Keke::cutstr($v['title'],24)}-->
+												<!--{eval echo kekezu::cutstr($v['title'],24)}-->
 											</a>
 											</strong>
 											

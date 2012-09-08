@@ -1,10 +1,10 @@
 <!--{template control/admin/tpl/admin_header}--> 
  
 	<div class="page_title">	
-    	<h1>{$_lang['more_reward']}{$_lang['task_manage']}</h1>
+    	<h1>{$model_info['model_name']}{$_lang['manage']}</h1>
          <div class="tool">
          	<a href="index.php?do=model&model_id=2&view=list&status=0" class="here">{$_lang['task_list']}</a>
-			<a href="index.php?do=model&model_id=2&view=config">{$_lang['task_config']}</a>
+			<!--<a href="index.php?do=model&model_id=2&view=config">{$_lang['task_config']}</a>-->
 		 </div>
 	</div>
     <!--Ò³Í·½áÊø-->
@@ -88,12 +88,12 @@
                  	<td class="td25"><input type="checkbox" name="ckb[]" class="checkbox" value="{$v[task_id]}" class="checkbox">{$v[task_id]}</td>
                     <td class="td28">
                     	<a href="../../index.php?do=task&task_id={$v['task_id']}" target="_blank">
-                    		<!--{eval echo(Keke::cutstr($v[task_title],40));}--></a>
+                    		<!--{eval echo(kekezu::cutstr($v[task_title],40));}--></a>
 							{if $v[is_top]==1}<font color="red">[{$_lang['recommended']}]</font>{/if}
 					</td>
                     <td>$task_status[$v[task_status]]</td>
                     <td>$v[username]</td>
-					<td>{$v[task_cash]}</td>
+					<td>{c:$v[task_cash]}</td>
                     <td><!--{date('Y-m-d H:i:s',$v[start_time])}--></td>
                     <td>
 	                	{if $v[task_status]==1}
@@ -130,7 +130,7 @@
 	                             <input type="hidden" name="sbt_action" class="sbt_action"/>
 	                        <button type="submit" value="{$_lang['mulit_delete']}" onclick="return batch_act(this,'frm_list');" class="pill negative" ><span class="icon trash"></span>{$_lang['mulit_delete']}</button>
 	                        <button type="submit" value="{$_lang['mulit_pass']}" onclick="return batch_act(this,'frm_list');"  class="positive pill negative"><span class="icon check">&nbsp;</span>{$_lang['mulit_pass']}</button>
-	                    	<button type="submit" value="{$_lang['mulit_freeze']} " onclick="return batch_act(this,'frm_list');"    class="pill negative"><span class="lock icon"></span>{$_lang['mulit_freeze']}</button>
+	                    	<button type="submit" value="{$_lang['mulit_freeze']}" onclick="return batch_act(this,'frm_list');"    class="pill negative"><span class="lock icon"></span>{$_lang['mulit_freeze']}</button>
 							<button type="submit" class="positive pill negative"  onclick="return batch_act(this,'frm_list');" value="{$_lang['mulit_unfreeze']}"><span class="unlock icon"></span>{$_lang['mulit_unfreeze']}</button>
 					  </div>
                     </td>

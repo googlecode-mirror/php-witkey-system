@@ -5,11 +5,11 @@
  * @version v 2.0
  * 2011-11-07 11:31:34
  */
-defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 $ops = array ("config", "control", "priv","cash_rule");
 in_array ( $op, $ops ) or $op = 'config';
 $ac_url = "index.php?do=model&model_id=$model_id&view=config&op=$op";
-Keke::empty_cache();
+kekezu::empty_cache();
 
 switch ($op) {
 	case "config" : //基本配置
@@ -17,24 +17,24 @@ switch ($op) {
 			$model_obj = keke_table_class::get_instance ( "witkey_model" );
 			! empty ( $fds ['indus_bid'] ) and $fds ['indus_bid'] = implode ( ",", $fds ['indus_bid'] ) or $fds ['indus_bid'] = '';
 			$fds ['on_time'] = time ();
-			$fds=Keke::escape($fds);
+			$fds=kekezu::escape($fds);
 			$res = $model_obj->save ( $fds, $pk );
 			
-			$res and Keke::admin_show_msg ($_lang['update_success'], $ac_url, 3,'','success' ) or Keke::admin_show_msg ($_lang['update_fail'], $ac_url, 3, '', 'warning' );
+			$res and kekezu::admin_show_msg ($_lang['update_success'], $ac_url, 3,'','success' ) or kekezu::admin_show_msg ($_lang['update_fail'], $ac_url, 3, '', 'warning' );
 		} else {
-			$indus_arr = Keke::$_indus_arr; //任务行业
-			$indus_index = Keke::get_indus_by_index (); //索引行业
+			$indus_arr = $kekezu->_indus_arr; //任务行业
+			$indus_index = kekezu::get_indus_by_index (); //索引行业
 		}
 		break;
 	case "control" : //流程配置
 		if ($sbt_edit) {
  
 			is_array ( $conf ) and $res .= keke_task_config::set_task_ext_config ( $model_id, $conf );
-			$res and Keke::admin_show_msg ($_lang['update_success'], $ac_url, 3,'','success') or Keke::admin_show_msg ($_lang['update_fail'], $ac_url, 3, '', 'warning' );
+			$res and kekezu::admin_show_msg ($_lang['update_success'], $ac_url, 3,'','success') or kekezu::admin_show_msg ($_lang['update_fail'], $ac_url, 3, '', 'warning' );
 		}else{
 			$confs = unserialize($model_info['config']);
 			is_array($confs)&&extract($confs);//配置解压
-			$cash_cove = Keke::get_cash_cove();
+			$cash_cove = kekezu::get_cash_cove();
 		}
 		break;
 	case "priv" : //权限配置
@@ -47,7 +47,7 @@ switch ($op) {
 					$perm_item_obj->edit_keke_witkey_priv_item ();
 				}
 			}
-			Keke::admin_show_msg ( $model_info ['model_name'] .$_lang['permissions_config_update_success'], "$ac_url", '3','','success' );
+			kekezu::admin_show_msg ( $model_info ['model_name'] .$_lang['permissions_config_update_success'], "$ac_url", '3','','success' );
 		} else {
 			$perm_item = keke_privission_class::get_model_priv_item ( $model_id ); //权限配置项
 		}
@@ -56,8 +56,8 @@ switch ($op) {
 		switch($ac){
 			case "del":
 			 
-				$res = dbfactory::execute(sprintf(" delete from %switkey_task_cash_cove where cash_rule_id='%d'",TABLEPRE,$rule_id));
-				$res and Keke::admin_show_msg ($_lang['update_success'], "index.php?do=model&model_id=4&view=config&op=control", 3,'','success' ) or Keke::admin_show_msg ($_lang['update_fail'], "index.php?do=model&model_id=4&view=config&op=control", 3, '', 'warning' );
+				$res = db_factory::execute(sprintf(" delete from %switkey_task_cash_cove where cash_rule_id='%d'",TABLEPRE,$rule_id));
+				$res and kekezu::admin_show_msg ($_lang['update_success'], "index.php?do=model&model_id=4&view=config&op=control", 3,'','success' ) or kekezu::admin_show_msg ($_lang['update_fail'], "index.php?do=model&model_id=4&view=config&op=control", 3, '', 'warning' );
 				break;
 			case "edit":
 			case "add":
@@ -67,11 +67,18 @@ switch ($op) {
 					$fds['model_code']= $model_info['model_code'];
 					$cove_obj = keke_table_class::get_instance("witkey_task_cash_cove");
 					$res = $cove_obj->save($fds,$pk);
-					$res and Keke::admin_show_msg ($_lang['update_success'], $ac_url.'&op=control', 3,'','success' ) or Keke::admin_show_msg ($_lang['update_fail'], $ac_url.'&ac='.$ac, 3, '', 'warning' );
+					$res and kekezu::admin_show_msg ($_lang['update_success'], $ac_url.'&op=control', 3,'','success' ) or kekezu::admin_show_msg ($_lang['update_fail'], $ac_url.'&ac='.$ac, 3, '', 'warning' );
 				}else{
-					$cash_cove = Keke::get_cash_cove();
+					$cash_cove = kekezu::get_cash_cove();
 					$cove_info = $cash_cove[$rule_id];
-					require Keke_tpl::template('task/'.$model_info['model_dir'].'/control/admin/tpl/task_cove');
+					$cash_cove = end($cash_cove);
+					$end   = intval($cash_cove['end_cove']);
+					if($cove_info){
+						$start_cove=intval($cove_info['start_cove']);
+					}else{
+						$start_cove=$end;
+					}
+					require keke_tpl_class::template('task/'.$model_info['model_dir'].'/control/admin/tpl/task_cove');
 					die();
 				}
 				break;
@@ -79,8 +86,11 @@ switch ($op) {
 		break;
 }
 if($sbt_edit){
+		//清除配置缓存
+	$file_obj = new keke_file_class();
+	$file_obj->delete_files(S_ROOT."./data/data_cache/");
 	$log_op_arr = array("config"=>$_lang['basic_config'],"control"=>$_lang['control_config'],"priv"=>$_lang['private_config']);
 	$log_msg = $_lang['has_update_tender_task'].$log_op_arr[$op];
-	Keke::admin_system_log($log_msg);
+	kekezu::admin_system_log($log_msg);
 }
-require Keke_tpl::template ( 'task/' . $model_info ['model_dir'] . '/control/admin/tpl/task_' . $op );
+require keke_tpl_class::template ( 'task/' . $model_info ['model_dir'] . '/control/admin/tpl/task_' . $op );

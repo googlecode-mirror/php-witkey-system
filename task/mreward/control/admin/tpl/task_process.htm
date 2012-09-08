@@ -44,7 +44,7 @@
         <th scope="row" width="130">{$action_arr[$type][1]}{$_lang['attachment']}</th>
         <td>
 			<!--{eval $filename=substr($report_info[report_file],strrpos($report_info[report_file],'/')+1);}-->
-			{if $v[report_file]}<a href="index.php?do={$do}&view={$type}&ac=download&filename=$filename&filepath={$v[report_file]}">{$filename}</a>{else}{$_lang['no_submit_attachment']}{/if}
+			{if $report_info[report_file]}<a href="index.php?do={$do}&view={$type}&ac=download&filename=$filename&filepath={$v[report_file]}">{$filename}</a>{else}{$_lang['no_submit_attachment']}{/if}
 		</td>
     </tr>
 	<tr>
@@ -61,30 +61,27 @@
 	   	{if $report_info['report_status'] != 4}
 	 
 			{if $process_can['cancel_bid']}
-				<label for="reset_task">
 				<input type="checkbox" name="op_result[reset_task]" id="reset_task" value="1">
-				{$_lang['reset_task_status_is_in']}</label>
+				{$_lang['reset_task_status_is_in']}
 				,{$_lang['task_delay_day']}:<input type="text" name="op_result[delay_days]" id="delay_days"
 				 onblur="clearstr(this)" size="4" maxlength="1" class="txt" >
 				 <br>
-			<label for="cancel_bid">
 			<input type="checkbox" name="op_result[cancel_bid]" id="cancel_bid" value="1">
-			{$_lang['cancel_bid']}</label>
+			{$_lang['cancel_bid']}
 			<font color="red">{$_lang['cancel_bid_to_not_bid']}</font> 
 			{/if}
 			{if $process_can['deduct']}
 				<br>{$_lang['be_report_people_surplus']}{$credit_info[type]}:{$credit_info[max_credit]}{$_lang['point']}
-				       {$_lang['deduction_be_report_people']}{$credit_info[$type][1]}{$credit_info[type]}
+				       {$_lang['deduction_be_report_people']}{$credit_info[$type][1]}{$credit_info[type]}		
 				<input type="text" name="op_result[credit_value]" id="credit" size=4 class="txt"
 				 onblur="clearstr(this)"
-				 max="{$credit_info[max_credit]}">{$_lang['point']}{$_lang['zh_jh']} <span>{$_lang['suggest_deduction_point_not_more']}{$credit_info[max_credit]}</span>
+				 max="{$credit_info[max_credit]}">{$_lang['point']}{$_lang['zh_jh']} <span>{$_lang['suggest_deduction_point_not_more']}{$credit_info[max_credit]}</span>(<font color="red">{$_lang['do_not_choose_if_not_deducted']}</font>)
 			{/if}
 			{if $process_can['freeze_user']}
 				<br>
-				<label for="freeze_user">
 				<input type="checkbox" name="op_result[freeze_user]" id="freeze_user" value="1">
-				{$_lang['freeze_user']}</label>
-				<input type="text" name="op_result[freeze_day]" id="freeze_day" onblur="clearstr(this)" maxlength="2" size=4 class="txt">{$_lang['day']}{$_lang['zh_jh']}
+				{$_lang['freeze_user']}
+				<input type="text" name="op_result[freeze_day]" id="freeze_day" onblur="clearstr(this)" maxlength="2" size=4 class="txt">{$_lang['day']}{$_lang['zh_jh']}(<font color="red">{$_lang['do_not_choose_if_not_freeze']}</font>)
 			{/if}
 		{else}
 		  {$report_info[op_result]}
@@ -149,20 +146,21 @@
 				var maxCredit=parseInt($("#credit").attr("max"))+0;
 				var freeze_day=parseInt($("#freeze_day").val())+0;
 				var delay_days = Math.abs(parseInt($("#delay_days").val())+0);
-				
-				if(!$("#reset_task").is(":checked")&&!$("#cancel_bid").is(":checked")&&!$("#freeze_user").is(":checked")){
+				if(isNaN(credit)&&!$("#reset_task").is(":checked")&&!$("#cancel_bid").is(":checked")&&!$("#freeze_user").is(":checked")){
 					art.dialog.alert("{$_lang['warning_not_choose_process_scheme']}");return false;
 				}
 				if($("#reset_task").is(":checked") && isNaN(delay_days)){
 					art.dialog.alert("{$_lang['please_input_delay_day']}");return false;
-				} 
-				if(isNaN(credit)){
-					art.dialog.alert("{$_lang['warning_fill_in_deduction_point']}");return false;
-				}else if(credit<0){
-					art.dialog.alert("{$_lang['waring_deduction_point_not_negative']}");return false;
 				}
-				else if(credit==0||credit>maxCredit){
-					art.dialog.alert("{$_lang['waring_deduction']}{$credit_info[type]}{$_lang['max_is']}:"+maxCredit+"{$_lang['point']}");return false;
+				if($("#credit").val()){
+					if(isNaN(credit)){
+						art.dialog.alert("{$_lang['warning_fill_in_deduction_point']}");return false;
+					}else if(credit<0){
+						art.dialog.alert("{$_lang['waring_deduction_point_not_negative']}");return false;
+					}
+					else if(credit==0||credit>maxCredit){
+						art.dialog.alert("{$_lang['waring_deduction']}{$credit_info[type]}{$_lang['max_is']}:"+maxCredit+"{$_lang['point']}");return false;
+					}
 				}
 				 
 				if($("#freeze_user").is(":checked")){
@@ -178,10 +176,10 @@
 					content+="{$_lang['cancel_user']}{$report_info[to_username]}{$_lang['of_bid_status']},";
 				}
 				if(credit){
-					content+="{$_lang['deduction']}{$report_info[to_username]}{$credit_info[type]}'+credit+'{$_lang['point']}{$_lang['zh_jh']}<br>";
+					content+="{$_lang['deduction']}{$report_info[to_username]}{$credit_info[type]}"+credit+"{$_lang['point']}{$_lang['zh_jh']}<br>";
 				}
 				if($("#freeze_user").is(":checked")){
-					content+="{$_lang['freeze_user']}{$report_info[to_username]}'+freeze_day+'{$_lang['day']}{$_lang['zh_jh']}";
+					content+="{$_lang['freeze_user']}{$report_info[to_username]}"+freeze_day+"{$_lang['day']}{$_lang['zh_jh']}";
 				}
 				art.dialog({
    						title: "{$_lang['confirm_report']}",

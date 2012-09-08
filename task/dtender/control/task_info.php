@@ -9,7 +9,9 @@ defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 $nav_active_index = 'task';
 $basic_url = "index.php?do=task&task_id=$task_id"; //基本链接
 $task_obj = dtender_task_class::get_instance ( $task_info );
-$cove_arr = Keke::get_table_data("*","witkey_task_cash_cove","","","","","cash_rule_id");
+$task_info= $task_obj->_task_info;
+$cover_id = $task_obj->_task_info['task_cash_coverage'];
+$cover_cash = kekezu::get_cash_cove('',true);
 //时间类处理
 $task_obj->task_tb_timeout();
 $task_obj->task_xb_timeout();
@@ -18,12 +20,13 @@ $task_obj->task_tg_timeout();//托管
 $task_config =$task_obj->_task_config;
 $model_id = $task_info ['model_id'];
 $task_status = $task_obj->_task_status;
-$cash_cove = Keke::get_cash_cove('dtender');//订金招标任务金额范围数组
+$cash_cove = kekezu::get_cash_cove('dtender');//订金招标任务金额范围数组
 $task_info['task_covery'] = $cash_cove[$task_info['task_cash_coverage']]['cove_desc'];//任务招标范围
 $status_arr = $task_obj->_task_status_arr; //任务状态数组
 $time_desc = $task_obj->get_task_timedesc (); //任务时间描述
 $stage_desc = $task_obj->get_task_stage_desc (); //任务阶段样式
-
+$g_uid = $task_obj->_guid;
+$g_info = $task_obj->_g_userinfo;
 $related_task = $task_obj->get_task_related ();//获取相关任务
 $process_can = $task_obj->process_can (); //用户操作权限
 $process_desc = $task_obj->process_desc (); //用户操作权限中文描述
@@ -35,42 +38,46 @@ $show_payitem = $task_obj->show_payitem();
 $loca = explode(",",$user_info['residency']); 
 switch ($op) {
 	case "reqedit" : //需求补充
-		$title = Keke::lang("supply_demand");
+        if($task_info['ext_desc']){
+		$title = $_lang['edit_supply_demand'];
+		}else{
+		$title =$_lang['supply_demand'];
+		}
 		if ($sbt_edit) {
 			$task_obj->set_task_reqedit ( $tar_content, '', 'json' );
 		} else{
 			$ext_desc = $task_info ['ext_desc'];
-			require Keke_tpl::template ( 'task/task_reqedit' );
+			require keke_tpl_class::template ( 'task/task_reqedit' );
 			die ();
 		}
 		break;
 	case "work_hand" : //交稿
-		$title = Keke::lang("hand_work");
+		$title = kekezu::lang("hand_work");
 		if($sbt_edit){
 			$province and $area = $province;
 			$city and $area = $area.','.$city;	
-			$area = Keke::utftogbk($area);
+			$area = kekezu::utftogbk($area);
 			$task_obj->bid_hand($quote, $cycle, $area, $tar_content, $plan_amount, $start_time, $end_time, $plan_title,$bid_hide,'','json');
 		}else{
 			
 			$workhide_exists = keke_payitem_class::payitem_exists($uid,'workhide','work');//可以隐藏交稿
-			require Keke_tpl::template ( "task/" . $model_info ['model_code'] . "/tpl/" . $_K ['template'] . "/dtender_work" );
+			require keke_tpl_class::template ( "task/" . $model_info ['model_code'] . "/tpl/" . $_K ['template'] . "/dtender_work" );
 			die();
 		}
 		break;
 	case "work_edit"://稿件编辑		
-		$title = Keke::lang("edit_work");
+		$title = kekezu::lang("edit_work");
 		if($sbt_edit){
 			$province and $area = $province;
 			$city and $area = $area.','.$city.','.$area;
-			$area = Keke::utftogbk($area);
+			$area = kekezu::utftogbk($area);
 			$task_obj->bid_edit($bid_id, $quote, $cycle, $area, $tar_contnet, $plan_amount, $start_time, $end_time, $plan_title,'','json');
 		}else{
 			$bid_info = $task_obj->get_single_bid($bid_id);
 			$base_info = $bid_info['bid_info'];			
 			$plan_info = $bid_info['plan_info'];
 			$loca = explode(",",$base_info['area']);
-			require Keke_tpl::template ( "task/" . $model_info ['model_code'] . "/tpl/" . $_K ['template'] . "/dtender_work" );
+			require keke_tpl_class::template ( "task/" . $model_info ['model_code'] . "/tpl/" . $_K ['template'] . "/dtender_work" );
 			die();
 		}		
 		break;
@@ -78,14 +85,15 @@ switch ($op) {
 		$task_obj->work_choose ( $work_id, $to_status,'','json');
 		break;
 	case "hosted_amount"://赏金托管
-		$title=Keke::lang("trust_reward");
+		$title=kekezu::lang("trust_reward");
 		if($sbt_edit){
 			$task_obj->hosted_amount('','json');
 		}else{
 			$quote = $task_obj->_bid_info['quote'];
 			$service_cash = $task_info['real_cash'];
 			$sy_cash = floatval($quote) - floatval($service_cash);
-			require Keke_tpl::template("task/".$model_info['model_code']."/tpl/".$_K['template']."/task_hosted");
+			$newurl = $basic_url.'&op=hosted_amount';
+			require keke_tpl_class::template("task/".$model_info['model_code']."/tpl/".$_K['template']."/task_hosted");
 		}
 		break;
 	case "plan_complete":
@@ -100,7 +108,7 @@ switch ($op) {
 		if($sbt_edit){
 			$task_obj->set_report ( $obj, $obj_id, $to_uid,$to_username, $type, $file_url, $tar_content);
 		}else{
-			require Keke_tpl::template("report");
+			require keke_tpl_class::template("report");
 			die();
 		}
 		break;
@@ -123,11 +131,11 @@ switch ($op) {
 		}
 		break;
 	case "message" : //发送消息
-		$title = Keke::lang("send_msg");
+		$title = kekezu::lang("send_msg");
 		if ($sbt_edit) {
 			$task_obj->send_message($title,$tar_content,$to_uid, $to_username,'','json');
 		} else{
-			require Keke_tpl::template ( 'message' );
+			require keke_tpl_class::template ( 'message' );
 			die ();
 		}
 		break;
@@ -140,7 +148,7 @@ switch ($view) {
 		$work_status = $task_obj->get_work_status ();//获取稿件状态数组
 		intval ( $page ) and $p ['page'] = intval ( $page ) or $p ['page']='1';
 		intval ( $page_size ) and $p ['page_size'] = intval ( $page_size ) or $p['page_size']='10';
-		$p['url'] = $basic_url."&view=work&page_size=".$p ['page_size']."&page=".$p ['page'];
+		$p['url'] = $basic_url."&view=work&ut=$ut&page_size=".$p ['page_size']."&page=".$p ['page'];
 		$p ['anchor'] = '';
 		$w['bid_id'] = $bid_id;//稿件编号
 		$w['work_status'] = $st;//稿件状态
@@ -170,7 +178,7 @@ switch ($view) {
 	    		if($res!=3&&$res!=2){
 	    			$v1 =  $comment_obj->get_comment_info($res);
 	    			$tmp ='replay_comment';
-	    			require Keke_tpl::template ( "task/task_comment_reply" );
+	    			require keke_tpl_class::template ( "task/task_comment_reply" );
 	    		}else{
 	    			echo $res;
 	    		}
@@ -183,7 +191,7 @@ switch ($view) {
 	    		if($res!=3&&$res!=2){
 	    			$v = $comment_obj->get_comment_info($res);
 	    			$tmp ='pub_comment';
-	    			require Keke_tpl::template ( "task/task_comment_reply" );
+	    			require keke_tpl_class::template ( "task/task_comment_reply" );
 	    		}else{
 	    			echo $res;
 	    		}
@@ -195,9 +203,9 @@ switch ($view) {
 	    			//更新个人信息 
 	    			$res = $comment_obj->del_comment($comment_id,$task_id,$comment_info['p_id']);
 	    		}else{
-	    			Keke::keke_show_msg("", $_lang['please_login_now'],"error","json");
+	    			kekezu::keke_show_msg("", $_lang['not_priv'],"error","json");
 	    		}
-	    		$res and Keke::keke_show_msg("", $_lang['delete_success'],"","json") or Keke::keke_show_msg("",$_lang['system_is_busy'],"error","json");
+	    		$res and kekezu::keke_show_msg("", $_lang['delete_success'],"","json") or kekezu::keke_show_msg("",$_lang['system_is_busy'],"error","json");
 	    		break;	
 	    } 
 		break;
@@ -207,7 +215,6 @@ switch ($view) {
 		$count = $mark_obj->count_keke_witkey_mark();
 		$mark_count = $task_obj->get_mark_count();//评价统计
 	
-		$mark_count_ext = $task_obj->get_mark_count_ext();//来自评价统计
 		intval ( $page ) and $p ['page'] = intval ( $page ) or $p ['page']='1';
 		intval ( $page_size ) and $p ['page_size'] = intval ( $page_size ) or $p['page_size']='10';
 		$p['url'] = $basic_url."&view=mark&page_size=".$p ['page_size']."&page=".$p ['page'];
@@ -229,7 +236,14 @@ switch ($view) {
 	case "base" :
 	default :
 		$task_file = $task_obj->get_task_file (); //任务附件
+        if($task_info['task_status']==8){
+			$bid_info = db_factory::get_one(' select uid,username from '.TABLEPRE.'witkey_task_bid where task_id='.intval($task_id).' and bid_status =4');
+			$w_info = kekezu::get_user_info($bid_info['uid']);
+		}
+		if($task_info['task_status']==2&&$task_info['uid']==$uid){
+			$item_list= keke_payitem_class::get_payitem_config ( 'employer', null, null, 'item_id' );
+		}
 }
 
 
-require Keke_tpl::template ( "task/" . $model_info ['model_code'] . "/tpl/" . $_K ['template'] . "/task_info" );
+require keke_tpl_class::template ( "task/" . $model_info ['model_code'] . "/tpl/" . $_K ['template'] . "/task_info" );

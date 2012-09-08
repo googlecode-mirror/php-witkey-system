@@ -25,7 +25,7 @@ class preward_report_class extends keke_report_class {
 	 * 对任务的举报成立，扣除雇主的信誉值，不超出任务赏金值
 	 * @since keke_report_class
 	 */
-	function process_report($op_result, $type, $trust_response = false,$trust_status=true) {
+	function process_report($op_result, $type) {
 		keke_lang_class::load_lang_class('preward_report_class');
 		global $_lang;
 		$op_result = $this->op_result_format ( $op_result );

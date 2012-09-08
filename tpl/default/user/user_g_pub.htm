@@ -5,14 +5,14 @@
         <section class="clearfix section">
             <!--{template user/user_side}-->
             <div class="show_panel container_24 po_re">
-                <div class="prefix_3">
+                <div class="prefix_3 grid_21">
                     <div class="panel clearfix box">
                         <!--main content-->
-                        <div class="grid_21">
+                        <div class="">
                             <!--header内容头部 start-->
                             <header class="clearfix box_header">
-                                <h2 class="grid_4 alpha box_title t_c">{$_lang['g_pub']}</h2>
-                                <div class="grid_17 omega">
+                                <h2 class="grid_4 alpha omega box_title t_c">{$_lang['g_pub']}</h2>
+                                <div class="grid_17 alpha omega">
                                     <nav class="box_nav">
                                         <ul>
                                             {loop $third_nav $v}
@@ -28,6 +28,7 @@
                             </header>
                             <!--header内容头部 end--><!--detail内容 start-->
                             <article class="box_detail">
+                              {if $model_id}
                                 <div class="">
                                     <!--from表单 start-->
                                     <div class="clearfix box pad10">
@@ -97,7 +98,7 @@
                                                             <a href="{$_K['siteurl']}/index.php?do=service&sid={$v['service_id']}" target="_blank">$v['title']</a>
                                                         </td>
                                                         <td>
-                                                            {$v['price']}
+                                                            {c:$v['price']}
                                                         </td>
                                                         <td>
                                                             {$v['sale_num']}
@@ -139,6 +140,9 @@
                                     </div>
                                     <!--from表单 end-->
                                 </div>
+							{else}
+								<div class='t_c fontb pad30' style="height:95px">{$_lang['no_shop_model']}</div>
+							{/if}
                             </article>
                             <!--detail内容 end-->
                         </div>
@@ -152,13 +156,16 @@
         <!--main end-->
     </div>
 </div>
+<script type="text/javascript" src="resource/js/xheditor/xheditor.js"></script>
 <script type="text/javascript">
+	
 	var suc = false;
     function del(obj){
         var url = obj.href;
         showDialog("$_lang['confirm_delete_ma']", "confirm", "{$_lang['operate_notice']}", function(){
 			accCheck(url, "{$_lang['has_none_operated_order']}","reload");
         });
+		
         return false;
     }
     
@@ -170,7 +177,7 @@
         }
         else {
             var url = "{$url}&ac=edit&ser_id=" + sid;
-			accCheck(url, "{$_lang['transaction_orders_can_not_be_edited']}","window","service_edit")
+			showWindow('service_edit',url,'get',0);return false;
         }
     }
     function accCheck(url, cont,type,winName){
@@ -182,7 +189,7 @@
             }else{
 				switch(type){
 					case "reload":
-           				 location.href = url;
+           				 formSub(url,'url',false);
 						break;
 					case "window":
           					showWindow(winName, url, 'get', 0); return false;

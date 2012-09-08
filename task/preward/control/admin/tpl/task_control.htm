@@ -3,7 +3,7 @@
 	table tr .t_r{text-align:right}
 </style>
 <div class="page_title">
-  <h1>{$model_info[model_name]}{$_lang['manage']}</h1>
+  <h1>{$model_info[model_name]}{$_lang['task_config']}</h1>
     <div class="tool">
       <a href="index.php?do={$do}&model_id={$model_id}&view={$view}&op=config">{$_lang['basic_config']}</a>
       <a href="index.php?do={$do}&model_id={$model_id}&view={$view}&op=control" class="here">{$_lang['control_config']}</a>
@@ -30,14 +30,14 @@
 	<tr>
 		<th scope="row" width="200" class="t_r">{$_lang['task_min_money']}{$_lang['zh_mh']}</th>
 		 <td>
-			<input type="text" size="10"   name="conf[min_cash]" id="min_cash" value="{$min_cash}" limit="type:float;required:true" msg={$_lang['task_min_money_input_error']} title={$_lang['task_min_money_allow_decimal']}  msgArea="task_min_cash_msg" class="txt"/>{$_lang['yuan']}
+			<input type="text" size="10"   name="conf[min_cash]" id="min_cash" value="{$min_cash}" limit="type:float;required:true;between:1-" msg={$_lang['task_min_money_input_error']} title={$_lang['task_min_money_allow_decimal']}  msgArea="task_min_cash_msg" class="txt"/>{$_lang['yuan']}
 			({$_lang['task_min_money_positive_integer']})<span id="task_min_cash_msg"></span>
 		 </td>
 	</tr>
 	<tr>
 		<th scope="row" width="200" class="t_r">{$_lang['task_royalty_rate']}{$_lang['zh_mh']}</th> 
 		<td>
-			<input type="text" size="10" name="conf[task_rate]" value="{$task_rate}" limit="type:int;len:1-2;between:1-100" msg={$_lang['task_royalty_rate_notice']} title={$_lang['task_royalty_rate_title']} msgArea="task_rate_msg" class="txt"/>%<span id="task_rate_msg"></span>
+			<input type="text" size="10" name="conf[task_rate]" value="{$task_rate}" id="task_rate" limit="type:int;len:1-2;between:0-100" msg={$_lang['task_royalty_rate_notice']} title={$_lang['task_royalty_rate_title']} msgArea="task_rate_msg" class="txt"/>%{$_lang['task_royalty_rate_title']}<span id="task_rate_msg"></span>
 		</td>
 	</tr>	
     <tr>
@@ -109,7 +109,7 @@
 	<tr>
 		<th scope="row" width="200" class="t_r">{$_lang['min_amount_delay']}{$_lang['zh_mh']}</th> 
 		<td>
-			<input type="text" size="10"  name="conf[min_delay_cash]" id="min_delay_cash" value="{$min_delay_cash}" limit="required:true;type:int;between:1-" msg={$_lang['each_extension_least_money_err']} title={$_lang['task_extension_least_1_yuan']} msgArea="span_min_delay_cash" class="txt"/><b style="color:red">*</b>{$_lang['day']}<span id="span_min_delay_cash"></span>
+			<input type="text" size="10"  name="conf[min_delay_cash]" id="min_delay_cash" value="{$min_delay_cash}" limit="required:true;type:int;between:0-" msg={$_lang['each_extension_least_money_err']} title={$_lang['task_extension_least_1_yuan']} msgArea="span_min_delay_cash" class="txt"/><b style="color:red">*</b>{$_lang['yuan']}<span id="span_min_delay_cash"></span>
 		</td>
 	</tr>
 	<tr>
@@ -125,7 +125,7 @@
 		{loop $delay_rule $k $v}
 			<li>
 				{$_lang['di']}<input type="text" size="10" name="delayOld[{$v[defer_rule_id]}][defer_times]" id="defer_times_{$k}"  value="{$v['defer_times']}" readonly="true" class="txt"/>{$_lang['times']}
-				{$_lang['not_less_reward_total_money']}<input type="text" name="delayOld[{$v[defer_rule_id]}][defer_rate]" id="defer_rate_{$k}" value="<!--{eval echo floatval($v['defer_rate'])}-->" size="10"  limit="type:float;required:true;between:1-100"
+				{$_lang['not_less_reward_total_money']}<input type="text" name="delayOld[{$v[defer_rule_id]}][defer_rate]" id="defer_rate_{$k}" value="<!--{eval echo floatval($v['defer_rate'])}-->" size="10"  limit="required:true;type:int;between:0-100"
 				 msg={$_lang['proportional_error_fill']} title={$_lang['task_delay_ratio_for']} msgArea="span_delay_{$k}" class="txt">%<span id="span_delay_{$k}"></span>
 				<a href="javascript:;" class="del_delay_rule" rel="{$v[defer_rule_id]}">{$_lang['delete_rule']}</a>
 	 		</li>

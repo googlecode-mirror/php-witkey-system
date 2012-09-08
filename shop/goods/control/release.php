@@ -14,11 +14,12 @@ $release_obj->get_service_obj ( $std_cache_name ); //获取服务信息对象
 $release_info = $release_obj->_std_obj->_release_info; //服务发布信息
 $goods_config = $release_obj->_service_config; //服务配置
 
-$ext = '.jpg,.jpeg,.gif,.png,.bmp';
+$ext = '*.jpg;*.jpeg;*.gif;*.png;*.bmp';
+
 
 switch ($r_step) { //服务发布步骤
 	case "step1" :
-		if(Keke::submitcheck($formhash)){
+		if(kekezu::submitcheck($formhash)){
 			$release_info and $_POST = array_merge ( $release_info, $_POST );
 			$release_obj->save_service_obj ( $_POST, $std_cache_name ); //信息保存
 			header ( "location:index.php?do=shop_release&model_id={$model_id}&r_step=step2" );
@@ -27,25 +28,28 @@ switch ($r_step) { //服务发布步骤
 		
 		break;
 	case "step2" :
-		if (Keke::submitcheck($formhash)) {
+		if (kekezu::submitcheck($formhash)) {
 			$release_info and $_POST = array_merge ( $release_info, $_POST,$_FILES);
 			//var_dump($_REQUEST);die();
 		 
-			$_POST['txt_title']  = Keke::escape($txt_title);
-			$_POST['tar_content'] = Keke::escape( $tar_content );
+			$_POST['txt_title']  = kekezu::escape($txt_title);
+			$_POST['tar_content'] =  $tar_content ;
+			$_POST['txt_price'] = keke_curren_class::convert($_POST['txt_price'],0,true);
 			$release_obj->save_service_obj ( $_POST, $std_cache_name ); //信息保存		
 			header ( "location:index.php?do=shop_release&model_id={$model_id}&r_step=step3" );
 			die ();
 		} else {
 			$release_obj->check_access ( $r_step, $model_id, $release_info ); //页面进入权限检测
 			$kf_info	 = $release_obj->_kf_info; //随机客服
-			$indus_p_arr = Keke::$_indus_p_arr; //父级行业
+			$indus_p_arr = $release_obj->get_bind_indus(); //父级行业
 			$indus_arr   = $release_obj->get_service_indus($release_info ['indus_pid']); //子集行业
+			$ext_types   = kekezu::get_ext_type (); //附件允许类型
+			
+			//die();
 			$price_unit  = $release_obj->get_price_unit();//价格单位			
 		}
 		break;
 	case "step3" :
-
 		switch ($ajax) {
 				case "save_payitem" : 
 						
@@ -56,7 +60,7 @@ switch ($r_step) { //服务发布步骤
 					$release_obj->remove_pay_item ( $item_id, $std_cache_name );
 					break;
 			}
-		if (Keke::submitcheck ($formhash)) {
+		if (kekezu::submitcheck ($formhash)) {
 		//if($formhash){
 			$release_info and $_POST = array_merge ( $release_info, $_POST );
 			$release_obj->save_service_obj ( $_POST, $std_cache_name ); //信息保存
@@ -77,5 +81,5 @@ switch ($r_step) { //服务发布步骤
 		break;
 }
 
-require Keke_tpl::template ( 'shelves' );
+require keke_tpl_class::template ( 'shelves' );
 		

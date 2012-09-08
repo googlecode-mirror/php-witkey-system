@@ -183,7 +183,7 @@ abstract class PaymentGateway
         $text .= "IPN POST Vars from gateway:\n";
         foreach ($this->ipnData as $key=>$value)
         {
-            $text .= "$key=$value, ";
+            $text .= "$key=$value, \n";
         }
 
         // Log the response from the paypal server

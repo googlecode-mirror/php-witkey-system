@@ -1,10 +1,5 @@
 {if $ajax == 'user_detail'}<!--稿件区威客头像信息-->
 <!--星级评定样式-->
-<link href="resource/js/jqplugins/starrating/jquery.rating.css" rel="stylesheet" type="text/css">
-<!--星级评定-->
-<script type="text/javascript" src="resource/js/jquery.js"></script>
-<script type="text/javascript" src="resource/js/jqplugins/starrating/jquery.rating.js"></script>
-<script type="text/javascript" src="resource/js/jqplugins/starrating/jquery.MetaData.js"></script>
 <ul class="clearfix user_state">
     <li>
         <strong>{$take_num}</strong>
@@ -25,21 +20,17 @@
 </ul>
 <!--辅助评价start-->
 			 <div class="evaluate border_t_c">
-			 	
-
-				<ul class="clearfix">
+				<ol class="clearfix">
 				{loop $buyer_aid $k $v}
 				    <li>
-				        <div class="fl_l">{$v['aid_name']}{$_lang['zh_mh']}</div>
-						<div class="stars fl_l">
-				         	<!--{eval echo keke_user_mark_class::gen_star($v['avg'],$k);}-->
+				    	<div class="fl_l">{$v['aid_name']}{$_lang['zh_mh']}</div>
+						<div class="fl_l">
+				         	<!--{eval echo keke_user_mark_class::gen_star2($v['avg']);}-->
 					    </div>
 						<span class="red fl_l ml_10"> {$v['avg']}</span> {$_lang['fen']} 
 				    </li>
 				{/loop}
-				</ul>
-
-			 	
+				</ol>
 			 </div>
 <!--辅助评价end-->
 <div class="clearfix">
@@ -72,7 +63,7 @@
  </div>
  <div class="pl_10">
  	<div class="pad10">
-		<div class="font14 ws_prewrap ws_break"><!--{eval echo Keke::escape($comm_info['content'])}--></div>
+		<div class="font14 ws_prewrap ws_break"><!--{eval echo kekezu::escape($comm_info['content'])}--></div>
 	</div>
  </div>
 </div>
@@ -90,7 +81,7 @@
 		{/if}
  <div class="pl_10">
  	<div class="pad10">
-		<div class="font14 ws_prewrap ws_break"><!--{eval echo Keke::escape($comm_info['content'])}--></div>
+		<div class="font14 ws_prewrap ws_break"><!--{eval echo kekezu::escape($comm_info['content'])}--></div>
 	</div>
  </div>
 </div>
@@ -165,15 +156,15 @@
 		  {if $model_list[$v['model_id']]['model_code']!='tender'}
 		  	<!--{eval $v['task_cash_coverage'] and $cash=$v['real_cash'] or $cash=$v['task_cash'];}-->
 			<td>{$model_list[$v['model_id']]['model_name']}</td>
-            <td><a href="index.php?do=task&task_id={$v['task_id']}" target="_blank" title="{$v['task_title']}"><!--{eval echo Keke::cutstr($v['task_title'],68)}--></a></td>
-			<td class="t_c">{$_lang['currency']}{$cash}</td>
-			<td class="t_c">{$cash}&times;{$v['profit_rate']}%&times;{$prom_rule['rate']}%=<font color="red"><!--{eval echo $cash*$v['profit_rate']*$prom_rule['rate']/10000;}--></font></td>
+            <td><a href="index.php?do=task&task_id={$v['task_id']}" target="_blank" title="{$v['task_title']}"><!--{eval echo kekezu::cutstr($v['task_title'],68)}--></a></td>
+			<td class="t_c">{c:$cash}</td>
+			<td class="t_c">{c:$cash}&times;{$v['profit_rate']}%&times;{$prom_rule['rate']}%=<font color="red"><!--{eval $cash = keke_curren_class::convert($cash);}--><!--{eval echo $cash*$v['profit_rate']*$prom_rule['rate']/10000;}--></font></td>
 		  	<td><a href="javascript:void(0);" onclick="promLink('bid_task','task','{$v[task_id]}','{$v[task_title]}');">{$_lang['get_pro_link']}</a></td>
 		{/if}
 		{elseif $prom_code=='service'}
 			<td>{$model_list[$v['model_id']]['model_name']}</td>
-			<td><a href="index.php?do=service&sid={$v['service_id']}" target="_blank" title="{$v['title']}"><!--{eval echo Keke::cutstr($v['title'],68)}--></a></td>
-			<td class="t_c">{$v['price']}</td>
+			<td><a href="index.php?do=service&sid={$v['service_id']}" target="_blank" title="{$v['title']}"><!--{eval echo kekezu::cutstr($v['title'],68)}--></a></td>
+			<td class="t_c">{c:$v['price']}</td><!--{eval $v['price'] = keke_curren_class::convert($v['price']);}-->
 			<td class="t_c">{$v['price']}&times;{$v['profit_rate']}%&times;{$prom_rule['rate']}%=<font color="red"><!--{eval echo $v['price']*$v['profit_rate']*$prom_rule['rate']/10000;}--></font></td>
 			<td><a href="javascript:void(0);" onclick="promLink('service','service','{$v[service_id]}','{$v[title]}');">{$_lang['get_pro_link']}</a></td>
 		{/if}
@@ -190,6 +181,6 @@
 {elseif $ajax=='show_secode'}
   <div style="width:160px; margin-left:5px;">
      <img width="100px" style="float:left;" id="secode_img" src="secode_show.php?sid=1111" onclick="document.getElementById('secode_img').src='secode_show.php?sid='+Math.random(); return false;" alt=''>
-     <a href="###" class="fl_l" style="line-height:20px; margin-top:4px" onclick="document.getElementById('secode_img').src='secode_show.php?sid='+Math.random(); return false;">换一组</a>
+     <a href="###" class="fl_l" style="line-height:20px; margin-top:4px" onclick="document.getElementById('secode_img').src='secode_show.php?sid='+Math.random(); return false;">{$_lang['change_a_group']}</a>
   </div>
 {/if}

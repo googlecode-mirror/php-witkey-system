@@ -5,7 +5,7 @@
  * @version v 2.0
  * 2011-09-29 14:30:34
  */
-defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 
 $table_obj = keke_table_class::get_instance('witkey_order');//实例化witkey_order表
 $service_obj = new service_shop_class();
@@ -37,19 +37,19 @@ $pages = $table_arr['pages'];
 
 //删除操作
 if($ac=="del"){
-	$ac_name = dbfactory::get_count(sprintf("select order_name from %switkey_order where order_id='%d' ",TABLEPRE,$order_id));
-	Keke::admin_system_log($_lang['has_delete_order_name_is'].$ac_name.$_lang['of_witkey_service_order']);
+	$ac_name = db_factory::get_count(sprintf("select order_name from %switkey_order where order_id='%d' ",TABLEPRE,$order_id));
+	kekezu::admin_system_log($_lang['has_delete_order_name_is'].$ac_name.$_lang['of_witkey_service_order']);
 	
 	$res = $table_obj->del('order_id', $order_id,$url_str);
-	$res and Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['delete_success'],'success') or Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['delete_fail'],"warning");
+	$res and kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['delete_success'],'success') or kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['delete_fail'],"warning");
 }
 //批量删除操作
 if(isset ( $sbt_action )){
 	$keyids = $ckb;
 	if(is_array($keyids)){
-		Keke::admin_system_log($_lang['has_mulit_delete_service_order']);
-		$service_obj->order_del($keyids) and Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['mulit_delete_success'],'success') or Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['mulit_delete_success'],"warning");
+		kekezu::admin_system_log($_lang['has_mulit_delete_service_order']);
+		$service_obj->order_del($keyids) and kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['mulit_delete_success'],'success') or kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['mulit_delete_success'],"warning");
 	}
 }
 
-require Keke_tpl::template ( 'shop/' . $model_info ['model_dir'] . '/control/admin/tpl/service_' . $view );
+require keke_tpl_class::template ( 'shop/' . $model_info ['model_dir'] . '/control/admin/tpl/service_' . $view );

@@ -10,11 +10,10 @@
              	<a href="index.php?do=task&task_id={$v['task_id']}" title="{$v['task_title']}" target="_blank">
                <!--任务金额 start-->
                  <strong class="money cc00">
-                   	{$_lang['currency']}
-					{if !$v['task_cash_coverage']}
-						{$v['task_cash']}
+                   	{if !$v['task_cash_coverage']}
+						{c:$v['task_cash']}
 					{else}
-						{$cash_coverage[$v['task_cash_coverage']]['start_cove']}-{$cash_coverage[$v['task_cash_coverage']]['end_cove']}
+						{c:$cash_coverage[$v['task_cash_coverage']]['start_cove']}-{c:$cash_coverage[$v['task_cash_coverage']]['end_cove']}
 					{/if}
 				 </strong>
                <!--任务金额 end-->
@@ -38,27 +37,7 @@
 {if $ajax=='shop'}
 <!--商城列表 26条 start-->
 <ul class="small_list clearfix">
-  <!--第一条商品 start-->
-   <li class="first">
-     {if $service_lastes['0']}
-         <a href="index.php?do=service&sid={$service_lastes['0']['service_id']}" title="{$service_lastes['0']['title']}">
-         	 {if $service_lastes['0']['pic']}
-			    <!--{eval $tmp=explode('/',$service_lastes['0']['pic']);$size=sizeof($tmp);}-->
-			    <!--{eval $tmp[$size-1]='210_'.$tmp[$size-1];$src=implode('/',$tmp);}-->
-			{else}
-				<!--{eval $src=$style_path.'/img/shop/shop_default_big.jpg';}-->
-			{/if}
-            <img src="{$src}" alt="{$service_lastes['0']['title']}" title="{$service_lastes['0']['title']}">
-		
-         </a>
-	{else}
-       <a href="javascript:void(0);" title="{$_lang['now_no_goods']}">
-            <img src="{$style_path}/img/shop/shop_default_big.jpg" alt="{$_lang['now_no_goods']}" title="{$_lang['now_no_goods']}">
-       </a>
-	{/if}
-	</li>
-  <!--第一条商品 end-->
-{loop $range $v}
+{loop $range2 $v}
      <li class="item">
         {if $service_lastes[$v]}
           <a href="index.php?do=service&sid={$service_lastes[$v]['service_id']}" title="{$service_lastes[$v]['title']}">
@@ -71,46 +50,36 @@
 				<!--{eval $big=$style_path.'/img/shop/shop_default_big.jpg';}-->
 			{/if}
 		     <img src="{$small}" alt="{$service_lastes[$v]['title']}" title="{$service_lastes[$v]['title']}"
-				small="{$small}" big='{$big}'>
+				>
           </a>
 		{else}
            <a href="javascript:void(0);" title="{$_lang['now_no_goods']}">
               <img src="{$style_path}/img/shop/shop_default.gif" alt="{$_lang['now_no_goods']}" title="{$_lang['now_no_goods']}"
-				small="{$style_path}/img/shop/shop_default.gif" big="{$style_path}/img/shop/shop_default_big.jpg">
+				>
            </a>
 		{/if}
-		{if $v==18}
-				<li class="pad"></li>
-		{/if}
+		 	<dl class="shop_item_info">
+		 		<dt class="title"><a href="index.php?do=service&sid={$recomm_service[$v]['service_id']} ">{$service_lastes[$v]['title']}</a></dt>
+				<dd><strong class="cc00 money">{c:$service_lastes[$v][price]}/{$service_lastes[$v]['unite_price']}</strong></dd>
+		 	</dl>
 	</li>
 	{/loop}
-       <li class="last">
-         {if $service_lastes['25'] }
-              <a href="index.php?do=service&sid={$service_lastes['25']['service_id']}" title="{$service_lastes['25']['title']}">
-         	  {if $service_lastes['25']['pic']}
-			  	<!--{eval $tmp=explode('/',$service_lastes['25']['pic']);$size=sizeof($tmp);}-->
-				<!--{eval $tmp[$size-1]='210_'.$tmp[$size-1];$src=implode('/',$tmp);}-->
-			{else}
-				<!--{eval $src=$style_path.'/img/shop/shop_default_big.jpg'}-->
-			{/if}
-               <img src="{$src}" alt="{$service_lastes['25']['title']}" title="{$service_lastes['25']['title']}">
-			
-             </a>
-		{else}
-            <a href="javascript:void(0);" title="{$_lang['now_no_goods']}">
-              <img src="{$style_path}/img/shop/shop_default_big.jpg" alt="{$_lang['now_no_goods']}" title="{$_lang['now_no_goods']}">
-            </a>
-		{/if}
-	 </li>
 	</ul>
    <div class="clear"></div>
  <!--商城列表 26条 end-->
 <div class="clear"></div>
 {/if}
-{if in_array($ajax,array('rules','withdraw','safe'))}
-  <ul>
-     {loop $art_arr $v}
-		<li><a href="index.php?do=article&view=article_info&art_id={$v['art_id']}">{$v['art_title']}</a></li>
+{if $ajax=='bid_notice'}
+   <ul>
+     {loop $dynamic_arr $v}
+		<li><a href="$v[event][url]">{$v[username]}成功中标{$v[obj_id]}号任务</a></li>
+	 {/loop}
+  </ul>
+{/if}
+{if $ajax=='withdraw'}
+   <ul>
+     {loop $withdraw_arr $v}
+		<li class="c333 pl_10">{$v['username']}成功提现<strong class="cc00">{$v['withdraw_cash']}元</strong></li>
 	 {/loop}
   </ul>
 {/if}

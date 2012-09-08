@@ -6,8 +6,7 @@
 	
 <div class="box search p_relative">
 	<div class="control">
-	    <a href="javascript:d(0);" title="{$_lang['hide']}"><b>&Delta;</b></a>
-	    <a href="javascript:d(1);" title="{$_lang['show']}"><b>&nabla;</b></a>
+   <a href="javascript:d();"><b>&times;</b></a>
 	</div>
 	<div class="title"><h2>{$_lang['search']}</h2></div>
 	<div class="detail" id="detail">
@@ -57,8 +56,8 @@
         <table cellspacing="0" cellpadding="0">
          <tbody>
           <tr>
-          	<th width="15"><input type="checkbox" id="checkbox" onclick="checkall();"></th>
-            <th width="30">{$_lang['id']}</th>
+          	<th width="15"><input type="checkbox" id="checkbox" onclick="checkall();">{$_lang['id']}</th>
+            
             <th>{$_lang['username']}</th>
 			<th>{$_lang['register_num']}</th>
 			<th>{$_lang['licence_pic']}</th>
@@ -69,13 +68,13 @@
           </tr>
 		  {loop $enterprise_arr $v}
 		<tr class="item">
-			<td><input type="checkbox" name="ckb[]" id="cbk_selected" value="{$v[enterprise_auth_id]}"></td>
-			<td>{$v[enterprise_auth_id]}</td>
+			<td><input type="checkbox" name="ckb[]" id="cbk_selected" value="{$v[enterprise_auth_id]}">{$v[enterprise_auth_id]}</td>
+			
 			<td>{$v[username]}</td>
 			<td>{$v[licen_num]}</td>
 			<td><a target="_blank" href="../../{$v[licen_pic]}"><img src="../../{$v[licen_pic]}" width="40" height="40"></a></td>
  
-			<td>{if $v[cash]}<font color="#ff7700">{$_lang['currency']}{$v[cash]}</font>{$_lang['yuan']}{else}{$_lang['free']}{/if}</td>
+			<td>{if $v[cash]}<font color="#ff7700">{c:$v[cash]}</font>{else}{$_lang['free']}{/if}</td>
 			<td>{if $v[start_time]==$v[end_time]}{$_lang['lifetime_validity']}{else}<!--{date('Y-m-d',$v[start_time])}-->{$_lang['to']}<!--{date('Y-m-d',$v[end_time])}-->{/if}</td>
 			<td>
 				{if $v[auth_status]==1}
@@ -95,18 +94,16 @@
 					<a class="button" href="index.php?do={$do}&view={$view}&auth_code=$auth_code&ac=del&enterprise_auth_id={$v[enterprise_auth_id]}&obj=$v[username]" onclick="return cdel(this)"><span class="trash icon"></span>{$_lang['delete']}</a>
 				{/if}
 					</td>
- 
 		</tr>
 		{/loop}
           <tr>
-            <td colspan="8">
-	            
-
-				<label for="checkbox">{$_lang['select_all']}</lable>
+            <td colspan="7">
+				
+				<label for="checkbox">{$_lang['select_all']}</label>
 				<input type="hidden" name="sbt_action" class="sbt_action" />
-				<button type="submit" name="sbt_action" value="{$_lang['mulit_pass']}"   class="pill positive button" onclick="return batch_act(this,'frm_list');"/><span class="icon check"> </span>{$_lang['mulit_pass']}</button>
-				<button type="submit" name="sbt_action" value="{$_lang['mulit_nopass']}" class="pill button" onclick="return batch_act(this,'frm_list');"/><span class="cross icon"></span>{$_lang['mulit_nopass']}</button>
-				<button type="submit" name="sbt_action" value="{$_lang['mulit_delete']}"   class="pill negative" onclick="return batch_act(this,'frm_list');"/><span class="icon trash"></span>{$_lang['mulit_delete']}</button>
+				<button type="submit" name="sbt_action" value="{$_lang['mulit_pass']}"   class="pill positive button" onclick="return batch_act(this,'frm_list');"><span class="icon check"> </span>{$_lang['mulit_pass']}</button>
+				<button type="submit" name="sbt_action" value="{$_lang['mulit_nopass']}" class="pill button" onclick="return batch_act(this,'frm_list');"><span class="cross icon"></span>{$_lang['mulit_nopass']}</button>
+				<button type="submit" name="sbt_action" value="{$_lang['mulit_delete']}"   class="pill negative" onclick="return batch_act(this,'frm_list');"><span class="icon trash"></span>{$_lang['mulit_delete']}</button>
  
 			</td>
           </tr>
@@ -118,4 +115,10 @@
         </div>
 </div>
 <!--ÊéÌå½áÊø-->
+<script language="javascript">
+function d()
+{
+		$("#frm_art_search").slideToggle('800');	  
+}
+</script>
 <!--{template control/admin/tpl/admin_footer}-->

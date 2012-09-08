@@ -25,7 +25,7 @@ class tender_report_class extends keke_report_class {
 	 * 对任务的举报成立，扣除雇主的信誉值，不超出任务赏金值
 	 * @since keke_report_class
 	 */
-	function process_report($op_result, $type, $trust_response = false,$trust_status=true) {
+	function process_report($op_result, $type) {
 		global $_lang;
 		$op_result = $this->op_result_format ( $op_result );
 		$trans_name = $this->get_transrights_name ( $this->_report_info ['report_type'] );
@@ -38,12 +38,12 @@ class tender_report_class extends keke_report_class {
 			if ($op_result ['reset_task'] == 1 && $this->_obj_info ['status'] == 3 && $op_result ['delay_days']) {
 				$end_time = time () + $op_result ['delay_days'] * 3600 * 24;
 				$sql = sprintf ( "update %switkey_task set task_status = 2,end_time = %d where task_id = %d ", TABLEPRE, $end_time, $this->_obj_info ['task_id'] );
-				dbfactory::execute ( $sql );
+				db_factory::execute ( $sql );
 			}
 			//取消中标
 			if ($op_result ['cancel_bid'] == 1 && $this->_report_info ['obj'] == 'work') {
 				$sql = sprintf ( "update %switkey_task_work set work_status = 8 ", TABLEPRE );
-				dbfactory::execute ( $sql );
+				db_factory::execute ( $sql );
 			}
 			//扣信誉/能力值
 			if ($op_result ['credit_value']) {

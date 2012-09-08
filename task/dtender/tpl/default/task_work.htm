@@ -1,5 +1,6 @@
 
      <div class="grid_24 po_re">
+     	<div class="panel clearfix box">
        <header class="clearfix box_header">
        		<div class="fl_l pl_10 pr_20">
           <h3 class="font16b lineh_32">{$_lang['work']}({$task_info[work_num]})</h3>
@@ -36,10 +37,19 @@
 			  {if !in_array($v['bid_status'],array('4','7','8'))}<span id="work_7_{$v[bid_id]}">|<a href="javascript:void(0);" onclick="workBid('{$v[bid_id]}','7',this)">{$_lang['no_qualified']}</a></span>{/if}
 			{/if} 
 			{if $process_can['work_edit']&&$v['bid_status']=='0'&&$uid==$v['uid']}<span id="work_edit_{$v[bid_id]}">|<a href="javascript:void(0);" onclick="workEdit('{$v[bid_id]}');">{$_lang['edit_plan']}</a></span>{/if}
-			{if !$mark[$v[bid_id]]}
-				{if $process_can['work_mark']&&$v['bid_status']=='4'&&$uid==$task_info['uid']}<span>|<a href="javascript:void(0);" onclick="mark('{$basic_url}&op=mark&role_type=2&obj_id={$v[bid_id]}');">{$_lang['mark_to_work']}</a></span>{/if}
-				{if $process_can['task_mark']&&$v['bid_status']=='4'&&$uid==$v['uid']}<span>|<a href="javascript:void(0);" onclick="mark('{$basic_url}&op=mark&role_type=1&obj_id={$v[bid_id]}');">{$_lang['mark_to_g']}</a></span>{/if}
+			{if !$mark[$v[bid_id]]||($mark[$v[bid_id]][mark_status]!=1&&$mark[$v[bid_id]][mark_count]<2)}
+				{if $process_can['work_mark']&&$v['bid_status']=='4'&&$uid==$task_info['uid']}<span>|<a href="javascript:void(0);" onclick="mark('{$basic_url}&op=mark&role_type=2&obj_id={$v[bid_id]}&task_id={$task_id}');">{if $mark[$v[work_id]][mark_status]}{$_lang['modify_mark_info']}{else}{$_lang['mark_to_work']}{/if}</a></span>{/if}
+				{if $process_can['task_mark']&&$v['bid_status']=='4'&&$uid==$v['uid']}<span>|<a href="javascript:void(0);" onclick="mark('{$basic_url}&op=mark&role_type=1&obj_id={$v[bid_id]}&task_id={$task_id}');">{if $mark[$v[work_id]][mark_status]}{$_lang['modify_mark_info']}{else}{$_lang['mark_to_g']}{/if}</a></span>{/if}
 	        {/if}
+			{if $v['uid']==$uid||$uid==$task_info['uid']||$user_info['group']}
+				<span class='fl_r pr_10 c396 fontb'>
+					{if $v['is_view']||$uid==$task_info['uid']}
+						{$_lang['has_viewed']}
+					{else}
+						{$_lang['not_vies']}
+					{/if}
+				</span> 
+			{/if}
              </div>
              
           </div>
@@ -49,22 +59,27 @@
           <!--用户信息栏 start-->
            <div class="sc_left t_c">
              <div class="user_info po_re pt_10" uid="{$v[uid]}" wid="{$v[bid_id]}">
-              <a href="index.php?do=space&member_id={$v[uid]}" target="_blank"> <!--{userpic($v[uid],'larger')}--></a>
+              
 				<!--浮出层-->
                  <div class="po_ab user_detail hidden"></div>
                 <!--end 浮出层-->
 				
 				<!--用户信息-->
-				<div class="ml_20 t_l">
+				<div class="pl_20 t_l">
+					<div class="fl_l mr_10">
+						<a href="index.php?do=space&member_id={$v[uid]}" target="_blank"> <!--{userpic($v[uid],'small')}--></a>
+					</div>
              	<!--{eval $user_leve=unserialize($v[seller_level])}-->
 				
                	 <div>
   				  	<p>
   				  		<a href="index.php?do=space&member_id={$v[uid]}" target="_blank"><strong>{$v[username]}</strong></a>
-						<span class="ml_10">{$user_leve[pic]} </span>
 					</p>
-					<p>$v['residency']</p>
+					<p class="ml_10">{$user_leve[pic]} </p>
+					
                  </div>
+				 <div class="clear"></div>
+				 <p>$v['residency']</p>
                  
              	</div>
 				<!--end 用户信息-->
@@ -75,16 +90,17 @@
              <!--用户信息栏 end-->
              <div class="sc_right pad20 po_re" id="{$v[bid_id]}">
              	<!--稿件详细 start-->
-             <div class="work_status_big work_{$v[bid_status]}_big qualified_big1 po_ab" alt="{$work_status[$v[bid_status]]}" title="{$work_status[$v[bid_status]]}"></div>
+             
 			 <div class="pl_20">
-       		  {if $v[hide_work]==1&&$uid!=$task_info[uid]&&uid!=$v['uid']&&$v[bid_status]!=4}<!--隐藏，非雇主-->
+       		  {if $v[hide_work]==1&&$uid!=$task_info[uid]&&uid!=$v['uid']&&$v[bid_status]!=4&&$user_info['group_id']<1}<!--隐藏，非雇主-->
 					<div><img src="{SKIN_PATH}/img/task/workhide.jpg" alt=''></div>
 			   {else}			  
-			 	 <div>
-			 	 	  	<div>{$_lang['tender_quotation']}{$_lang['zh_mh']}$v['quote']</div>
+			 	 <div class="po_re">
+			 	 	<div class="work_status_big work_{$v[bid_status]}_big qualified_big1 po_ab" alt="{$work_status[$v[bid_status]]}" title="{$work_status[$v[bid_status]]}"></div>
+			 	 	  	<div>{$_lang['tender_quotation']}{$_lang['zh_mh']}{c:$v['quote']}</div>
 								<div>{$_lang['work_time']}{$_lang['zh_mh']}$v['cycle']</div>
 								<div>{$_lang['in_place']}{$_lang['zh_mh']}$v['area']</div>
-								<div>{$_lang['tender_des']}{$_lang['zh_mh']}<!--{eval echo Keke::escape($v['message'])}--></div>
+								<div>{$_lang['tender_des']}{$_lang['zh_mh']}<!--{eval echo kekezu::escape($v['message'])}--></div>
 								<div  class="data_list">								
 									<table width="80%" class="data_table">
 										<thead>
@@ -99,6 +115,7 @@
 										</tr>
 										 </thead>
 										  <tbody>
+										  
 											{loop $plan_info $k2 $v2}	
 											{if $v['bid_id'] == $v2['bid_id']}
 											<tr>
@@ -107,11 +124,14 @@
 												<td><!--{date('Y-m-d',$v2['start_time'])}--></td>
 												<td><!--{date('Y-m-d',$v2['end_time'])}--></td>
 												<td>{$v2['plan_amount']}</td>
-												<td id="plan_status_{$v2[plan_id]}">{$plan_status[$v2['plan_status']]}</td>
+												<!--{eval $m = $k2+1;}-->
+												<td id="plan_status_{$v2[plan_id]}">第{$v2['plan_step']}阶段{$plan_status[$v2['plan_status']]}状态中</td>
 												<td>													
 												{if $v[bid_status]==4}
 													{if ($v2['plan_step']==1&&$v2['plan_status']!=2)||$i==1}<!--{eval $j=1;}-->{else}<!--{eval $j=2;}-->{/if}
+													
 													{if $process_can['plan_complete']&&$v2['plan_status']==0&&$j==1}
+													
 														<a id="complate_{$v2[plan_id]}" href="javascript:void(0);" onclick="plan_complete($v2['plan_id'],$v2['plan_step'])">{$_lang['finish_plan']}</a>
 													{/if}
 													{if $process_can['plan_confirm']&&$v2['plan_status']==1&&$j==1}
@@ -130,7 +150,7 @@
 					</div>
                		 
 					 <!--稿件附件-->
-				 	{if $v[work_file]}
+				 	{if $v['work_file']}
 				 	<!--{eval $file_list=keke_task_class::get_work_file($v[work_file])}-->
 			   		  <details open  class="mb_20" id="file">
 			    		 <!--标题-->
@@ -139,7 +159,7 @@
 			       		<ul>
 					       	{loop $file_list $v2}
 					          <li>
-					             <a href="index.php?do=task&task_id={$task_id}&op=download&filename={$v2[file_name]}&filepath={$v2[save_name]}#file" target="_blank">{$v2[file_name]}<span class="c999">（<!--{eval echo Keke::get_format_size(filesize($v2[save_name]))}-->）</span><span class="icon16 download"></span></a>
+					             <a href="index.php?do=task&task_id={$task_id}&op=download&filename={$v2[file_name]}&filepath={$v2[save_name]}#file" target="_blank">{$v2[file_name]}<span class="c999">（<!--{eval echo kekezu::get_format_size(filesize($v2[save_name]))}-->）</span><span class="icon16 download"></span></a>
 					          </li>
 							{/loop}
 					   </ul>
@@ -179,12 +199,14 @@
                 </div>
               </div>
 			  
-			  <div class="operate po_ab">
+			  <div class="operate fl_r">
             	{if $user_info[group_id]=='7'}<a href="javascript:void(0);" onclick="workDel('{$v[bid_id]}')"><div class=" icon16 trash mr_5"></div>{$_lang['del_work']}</a>|{/if}
-				{if $uid!=$v['uid']}<a href="javascript:void(0);" onclick="favor('bid_id','work','{$model_code}','{$v[uid]}','{$v[bid_id]}','{$task_info[task_title]}{$_lang['ones_work']}','{$task_id}')"><div class="icon16 star-fav-empty mr_5"></div>{$_lang['favorit']}</a>|{/if}
+				{if $uid!=$v['uid']}<a href="javascript:void(0);" onclick="favor('bid_id','work','{$model_code}','{$v[uid]}','{$v[bid_id]}','{$task_info[task_title]}{$_lang[ones_work]}','{$task_id}')"><div class="icon16 star-fav-empty mr_5"></div>{$_lang['favorit']}</a>|{/if}
 				{if $process_can['work_report']&&$uid!=$v['uid']}<a href="javascript:void(0);" onclick="report('work','2','{$v[bid_id]}','{$v[uid]}','{$v[username]}')"><div class=" icon16 hand-1 mr_5"></div>{$_lang['report']}</a>|{/if}
-				{if $process_can['task_rights']}<a href="javascript:void(0);" onclick="report('task','1','{$task_id}','{$uid}','{$username}')"><div class=" icon16 cog mr_5"></div>{$_lang['defend_rights']}</a>|{/if}
+				{if $process_can['task_rights']}<a href="javascript:void(0);" onclick="report('task','1','{$task_id}','{$task_info[uid]}','{$task_info[username]}')"><div class=" icon16 cog mr_5"></div>{$_lang['defend_rights']}</a>{/if}
+				<!--
 				{if $process_can['work_complaint']&&$uid!=$v['uid']}<a href="javascript:void(0);" onclick="report('work','3','{$v[bid_id]}','{$v[uid]}','{$v[username]}')"><div class=" icon16 cog mr_5"></div>{$_lang['complaint']}</a>{/if}
+				-->
 			</div>
 			  
             </div>

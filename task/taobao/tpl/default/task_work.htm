@@ -1,0 +1,193 @@
+<div class="grid_24 po_re">
+	<div class="panel clearfix box">
+       <header class="clearfix box_header">
+       	  <div class="fl_l pl_10 pr_20">	
+          <h3 class="font16b lineh_32">{$_lang['work']}[{$task_info['work_num']}]</h3>
+          </div>
+		  <div class="grid_18 alpha">
+          	<nav class="box_nav">
+            	<ul class="clearfix">
+                    <li><a href="{$basic_url}&view=work">{$_lang['all_works']}[{$task_info['work_num']}]</a></li>
+                    <li><a href="{$basic_url}&view=work&st=6">{$_lang['qualified_work']}[<!--{eval echo intval($search_condit['6']['count'])}-->]</a> </li>
+                    <li><a href="{$basic_url}&view=work&st=7">{$_lang['out_work']}[<!--{eval echo intval($search_condit['7']['count'])}-->]</a> </li>
+                     {if $task_obj->_guid != $uid}
+					<li><a href="{$basic_url}&view=work&ut=my">{$_lang['my_works']}</a></li>
+					{/if}
+            	</ul>
+            </nav>
+		</div>
+       </header>
+	   <div class="gj_summery clearfix">
+       	<div  id="gj_summery">
+   {if $work_info}
+      {loop $work_info $v}
+      	<div class="items mt_5 clearfix box">
+      	<!--稿件标题栏 start-->
+         <div id="work_{$v['work_id']}" class="sum_title po_re clearfix ">
+           	 <strong class="po_ab gj_bg">NO.{$v['work_id']}</strong>
+             <div class="sum_left">
+             	<span>{$_lang['contribute_time']}{$_lang['zh_mh']}<!--{date('Y-m-d H:i:s',$v['work_time'])}--></span> 
+             	<span>{$_lang['platform']}<img src="resource/img/ico/{$v['wb_type']}_t.gif" alt=''/></span><!-- 微博平台 -->
+             {if $v['uid']==$uid||$uid==$task_info['uid']||$user_info['group']}
+				<span class='fl_r pr_10 c396 fontb'>
+					{if $v['is_view']||$uid==$task_info['uid']}
+						{$_lang['has_viewed']}
+					{else}
+						{$_lang['not_vies']}
+					{/if}
+				</span> 
+			{/if}
+		</div>
+          </div>
+          <!--稿件标题栏 end-->
+          <!--稿件内容栏 start-->
+          <div class="sum_content clearfix work_{$v['work_id']}">
+          <!--用户信息栏 start-->
+           <div class="sc_left t_c">
+             <div class="user_info po_re pt_10" uid="{$v['uid']}" wid="{$v['work_id']}">
+              
+				<!--浮出层-->
+                 <div class="po_ab user_detail hidden"></div>
+                <!--end 浮出层-->
+				<!--用户信息-->
+				<div class="pl_20 t_l">
+					<div class="fl_l mr_10">
+						<a href="index.php?do=space&member_id={$v['uid']}" target="_blank"> <!--{userpic($v['uid'],'small')}--></a>
+					</div>
+             	<!--{eval $user_leve=unserialize($v['seller_level'])}-->
+				<div>
+               	 	<p><a href="index.php?do=space&member_id={$v['uid']}" target="_blank"><strong>{$v['username']}</strong></a>
+						
+					</p>
+					<p class="ml_10">{$user_leve['pic']} </p>
+					
+                 </div>
+				 <div class="clear"></div>
+				 <p>$v['residency']</p>
+                </div>
+				<!--end 用户信息-->
+             </div>
+          </div>
+             <!--用户信息栏 end-->
+             <div class="sc_right pb_20 pt_20 clearfix" id="{$v['work_id']}">
+				<div class="bigblog">
+				<table width="100%" border="1px" cellspacing="0" cellpadding="0" height="210">
+					<tbody>
+             	{if $assign==1}
+  					<tr style="height:70px">
+						<td class="t_c">
+    						{$_lang['chuanbo_per']} <img src="resource/img/ico/help.png" title="此项指数与博文被转发、被评论次数和人数及博主自身活跃度有关"/>
+								<div class="mony_star">
+								<!--{eval echo convert_star($v['cbd_num']);}-->
+								</div>
+						</td>
+    					<td class="t_c">
+    						{$_lang['huoyue_per']} <img src="resource/img/ico/help.png" title="此项指数与活跃粉丝所占比重及粉丝评论转发私信聊天数有关"/>
+							<div class="mony_star">
+							<!--{eval echo convert_star($v['hyd_num']);}-->
+							</div>
+						</td>
+    					<td class="t_c">
+    						{$_lang['cover_per']} <img src="resource/img/ico/help.png" title="此项指数与当天登录粉丝数，及有互动行为粉丝数量有关"/>
+							<div class="mony_star">
+							<!--{eval echo convert_star($v['fgd_num']);}-->
+							</div>
+						</td>
+    					<td class="t_c font14b">
+    						{$_lang['affect']}<img src="resource/img/ico/help.png" title="此项指数根据传播度、活跃度、覆盖度计算得出"/>
+							<div class="mony_star">
+							<!--{eval echo convert_star($v['yxl_num']);}-->
+							</div>
+						</td>
+						<td class="t_c font14b effect_grade">
+							影响等级
+						<strong class="c396 block"><!--{eval echo keke_glob_class::num2ch($v['wb_leve'])}-->级</strong></td>
+						<td class="t_c bid font14b ">
+							
+							中标金额
+							<strong class="cc00 block">{$v['get_cash']}</strong>
+						</td>
+  						</tr>
+  					<tr>
+  						<td colspan="4">
+							<!--{eval $weibo_data=unserialize($v['wb_data'])}-->
+							<div class="pl_20 pr_20">
+								<strong>转发内容：</strong>
+								 <p class="font14">{$weibo_data['repost_note']} <a href="{$v['wb_url']}">查看详细 &raquo;</a></p><!-- 转发时的评论 -->
+							<div class="forword bf7 border_c pad10"><!-- 转发的原文的内容 -->
+								<!--{eval $content_field= $v['wb_type']=='sina' ? 'wb_content' : 'ten_content'; }-->{$task_info[$content_field]}
+							</div>
+							</div>
+						</td>
+   	 					<!--<td colspan="{if $platform=='sina'}5{else}3{/if}" class="t_c pt_30"><a href="{$v['wb_url']}">{$v['wb_url']}</a></td>
+    					<td class="t_c"><img src="tpl/default/img/task/task_6_big.gif"></td>-->
+						<td class="t_c" colspan="2" width="25%" alt=''><img src="tpl/default/img/task/task_6_big.gif"></td>
+  					</tr>
+				{else}
+					<tr>
+					    <td rowspan="2" width="70%">
+					    	<!--chart_line图示 start-->
+                              <!--{eval echo click_corve($v['work_id']);}-->
+                  <!--图示 end-->
+						</td>
+					    <td class="t_c font14" width="15%"><strong>{$_lang['click']}</strong><span class="cf90 block font16 font_georgia ">{$v['click_num']}</span></td>
+					    <td class="t_c font14" width="15%"><strong>{$_lang['get_cash']}</strong><span class="cc00 block font16 font_georgia ">{$_lang['currency']}<!--{eval echo $v['get_cash']}--></span></td>
+					  </tr>
+					  <tr>
+					    <td colspan="2" class="t_c"><img src="tpl/default/img/task/task_6_big.gif" alt=''></td>
+					  </tr>
+					  <tr>
+					    <td colspan="3">
+					    	<div class="bf7 pad10">
+					    	<strong>{$_lang['wb_orign']}：</strong>
+			 	 			<p class="ws_break">
+			 	 				{$v['work_desc']}
+							</p>
+							</div>
+					    </td>
+					  </tr>
+				{/if}
+					</tbody>
+				</table>
+			</div>
+			  <div class="operate fl_r">
+			  	{if $user_info['group_id']=='7'}
+                	<a href="javascript:void(0);" title="{$_lang['del_work']}" onclick="workDel('{$v[work_id]}')"><div class=" icon16 delete mr_5"></div>{$_lang['del_work']}</a>|
+                {/if}
+				
+				{if $uid!=$v['uid']}
+                	<a href="javascript:void(0);" title="{$_lang['favorit']}" onclick="favor('work_id','work','{$model_code}','{$v[uid]}','{$v[work_id]}','{$task_info[task_title]}{$_lang[ones_work]}','{$task_id}')"><div class="icon16 star-fav-empty mr_5"></div>{$_lang['favorit']}</a>|
+                {/if}
+				
+				{if $process_can['work_report']&&$uid!=$v['uid']}
+                	<a href="javascript:void(0);" title="{$_lang['complaint']}{$_lang['report']}" onclick="report('work','2','{$v[work_id]}','{$v[uid]}','{$v[username]}')"><div class=" icon16 hand-1 mr_5"></div>{$_lang['complaint']}{$_lang['report']}</a>
+                {/if}
+				<!--
+				{if $process_can['work_complaint']&&$uid!=$v['uid']}
+                	<a href="javascript:void(0);" title="{$_lang['complaint']}" onclick="report('work','3','{$v[work_id]}','{$v[uid]}','{$v[username]}')"><div class=" icon16 cog mr_5"></div>{$_lang['complaint']}</a>
+                {/if}-->
+				</div>
+            </div>
+			
+            <!--稿件标题栏 end-->
+            </div>
+		 {/loop}
+		 {else}
+		 	<div class="t_c"><span class="c999">{$_lang['now_no_record']}</span></div>
+		 {/if}
+         <!--page 翻页 start-->
+         <div class="page">
+             <p class="clearfix"><span class="stats">{$_lang['total']}{$task_info['work_num']}{$_lang['tiao']} </span>{$pages['page']} </p>
+             <div class="clear">
+           </div>
+         </div>
+         <!--page 翻页 end-->
+       </div>
+	   </div><!--end 摘要-->
+     </div>
+	 </div>
+	 <link href="resource/js/jqplugins/starrating/jquery.rating.css" rel="stylesheet" type="text/css">
+<!--星级评定-->
+<script type="text/javascript" src="resource/js/jquery.js"></script>
+<script type="text/javascript" src="resource/js/jqplugins/starrating/jquery.rating.js"></script>
+<script type="text/javascript" src="resource/js/jqplugins/starrating/jquery.MetaData.js"></script>

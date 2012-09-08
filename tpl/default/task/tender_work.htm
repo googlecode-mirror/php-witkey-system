@@ -3,7 +3,7 @@
  	.file{position:absolute; font-size:20px;filter:alpha(opacity=0);-moz-opacity:0;opacity:0;z-index:1}
  </style>
 <div class="winbody">
- <div class="clearfix box {$_K['theme']}_style pad10">
+ <div class="clearfix box  pad10">
  <!--messages消息 start-->
   <div class="messages m_warn">
     <span class="icon16">warning</span>
@@ -12,7 +12,7 @@
   <!--messages消息 end-->
 
     <!--from表单 start-->
-    <form method="post" id="frm_tender" name="frm_tender">
+    <form method="post" id="frm_tender" name="frm_tender" action="">
  	
 				
 		 <div class="rowElem clearfix">
@@ -82,7 +82,7 @@
 
       </div>
       <div class="rowElem clearfix form_button">
-       	 	 <button type="button" class="button" value={$_lang['save']} onclick="subWork()"><span class="check icon"></span>{$_lang['save']}</button>
+       	 	 <button type="button" class="button" value={$_lang['save']} onclick="subWork()" id="sbt_btn"><span class="check icon"></span>{$_lang['save']}</button>
 		 	 <button type="button" class="button" value={$_lang['cancel']} onclick="hideWindow('work_hand')"><span class="reload icon"></span>{$_lang['cancel']}</button>
       </div>
    </form>
@@ -102,8 +102,9 @@
 	function subWork(){
 		var i = checkForm(document.getElementById('frm_tender'));
 		if(i){
-		var shtml 	 = contentCheck('tar_content','{$title}',5,100);
+		var shtml 	 = contentCheck('tar_content','{$title}',5,100,1,'frm_tender');
 			if(shtml){
+				$("#sbt_btn").attr("disabled","disabled");
 				var data= $("#frm_tender").serialize(); 
 				var url = 'index.php?do=task&task_id={$task_id}&op=work_hand&'+data+'&sbt_edit=1';
 				hideWindow('work_hand');	
@@ -130,7 +131,7 @@
 	 	
 		$("#xxx").html(' ');	
 	 }else{ 
-		$("#xxx").html('{$_lang['select_task_quotation_interval']}'); 
+		$("#xxx").html("{$_lang['select_task_quotation_interval']}"); 
 	 }
 	} 
 	

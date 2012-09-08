@@ -1,10 +1,6 @@
 <!--{template header}-->
-
- <style type="text/css">
- 	.file{position:absolute;font-size:20px;filter:alpha(opacity=0);-moz-opacity:0;opacity:0;z-index:1}
- </style>
 <div class="winbody">
- <div class="clearfix box {$_K['theme']}_style pad10">
+ <div class="clearfix pad10">
 
  <!--messages消息 start-->
  
@@ -19,35 +15,25 @@
    <div class="clearfix box" id="upload_tip">
     <!--from表单 start-->
     <form method="post" id="frm_reward" name="frm_reward" action='#'>
+    	<input type="hidden" name="sbting" id="sbting" value="">
      <div class="rowElem clearfix">
- 
-       	 	 	
       		 <label class="fl_l t_r">{$_lang['add_attachment']}{$_lang['zh_mh']} </label>
-			 <div class="fl_l">
-			 	<!--{eval $flie_types = Keke::get_ext_type();}-->
-			 	<input type="file" class="file" name="upload" id="upload" size="1" ext="{$flie_types}" onchange="isExtName(this,1);uploadBlur();">
-		  	 	<a href="javascript:void(0);" id="file_upload" class="button" style="padding:5px;"><span class="icon uparrow"></span>{$_lang['click_upload']}</a>
-             	{$_lang['a_maximum_of_5']}{$basic_config['max_size']}M
-				<div>
-			 	
+			 <div class="fl_l" style="width:350px">
+			 	<!--{eval $flie_types = kekezu::get_ext_type();}-->
 			 	<input type="hidden" name="file_ids" id="file_ids">
-				
-				<p>{$_lang['format']}:{$flie_types}  </p>
-				</div>
-			 </div>
+			 	<input type="file" class="file" name="upload" id="upload">
+		  	 	{$_lang['a_maximum_of_5']}{$basic_config['max_size']}M,{$_lang['format']}:
+			<div class="upfile ws_break">
+                 <span style="line-height:15px; display:block" class=" ws_prewrap ws_break">{$flie_types}</span>
+            </div>
+			</div>
 
       </div>
-
-	   <div class="rowElem clearfix">
-
-			 	<ul id="upfile" class="mt_10 mb_10" style="padding-left:60px;width:400px"></ul>
-
-      </div>	
 	  {if $workhide_exists>0}	  
 	 <div class="rowElem clearfix">
       		 <label class="fl_l t_r">{$_lang['hide_manuscript']}{$_lang['zh_mh']} </label>
 			 <div class="fl_l">			 	
-      		 	<input type="radio" name="workhide" value="1"/><label>{$_lang['yes']}</label>
+      		 	<input type="radio" name="workhide"  value="1"/><label>{$_lang['yes']}</label>
               	<input type="radio" name="workhide" value="2" checked /><label>{$_lang['no']}</label>
 				<div class="clear"></div>
 				<div class="messages">
@@ -79,7 +65,7 @@
 			 </div>
       </div>
       <div class="rowElem clearfix form_button">
-       	 	 <button type="button" class="button" value={$_lang['save']} onclick="subWork();"><span class="check icon"></span>{$_lang['save']}</button>
+       	 	 <button type="button" class="button"  value={$_lang['save']} onclick="subWork();" id="sbt_btn" ><span class="check icon"></span>{$_lang['save']}</button>
 		 	 <button type="button" class="button" value={$_lang['cancel']} onclick="hideWindow('work_hand');"><span class="reload icon"></span>{$_lang['cancel']}</button>
       </div>
    </form>
@@ -89,53 +75,42 @@
 
  </div>
 </div>
-
 <script type="text/javascript">
-	In.add('pop_window',{path:"{$_K['siteurl']}/resource/js/system/pop_window.js",type:'js'});
-	In('form','ajaxfileupload','pop_window');
-	
-	uploadBlur=function(){
-		if(ifOut('upfile','5',1,'upload_tip')&&$("#upload").val()){
-			upload("upload",'att','front','{$task_id}','{$obj_id}','work','','',1,'upload_tip');
-		}else{
-			return false;
-		}
-	}
+	In('form');
+	$(function(){
+			uploadify({
+					auto:true,
+					size:"{$basic_config['max_size']}MB",
+					exts:'{$flie_types}',
+					limit:5}
+				,{
+					task_id:'{$task_id}',
+					obj_id:'{$obj_id}',
+					objType:'work'
+				});
+		})
 	function subWork(){
 		var i = checkForm(document.getElementById('frm_reward'));		
 		if(i){
 		var shtml 	 = contentCheck('tar_content','{$title}',5,100,1,'upload_tip');
 			if(shtml){
+				$("#sbt_btn").attr("disabled","disabled");
 				var data= $("#frm_reward").serialize();
 				var url = 'index.php?do=task&task_id={$task_id}&op={$op}&sbt_edit=1';
-				var winObj = $('body');
-				var maskD  = $("<div class='mask_d'><img src='{$_K['siteurl']}/resource/img/system/loading.gif' class='mask_i'></div>");
-				$.ajax({
-						url:url,
-						data:data,
-						dataType:'json',
-						beforeSend:function(){
-								winObj.prepend(maskD);
-						},
-						success:function(json){
-							maskD.remove();
-							if(json.status=='1'){
-								showDialog(json.data,'right',json.msg,"location.href='index.php?do=task&task_id={$task_id}&view=work&ut=my'");hideWindow('work_hand');
-							}
-							else{
-								showDialog(json.data,'alert',json.msg);
-							}
-							return false;
-						},
-						error:function(){
-							maskD.remove();
-							showDialog("{$_lang['sys_busy_work_fail']}",'alert',"{$_lang['operate_notice']}");
-							return false;
-						}
-				})
+				$.post(url,data,function(json){
+					if(json.status=='1'){
+						
+						showDialog(json.data,'right',json.msg,"location.href='index.php?do=task&task_id={$task_id}&view=work&ut=my'");
+						hideWindow('work_hand');
+					}else{
+						showDialog(json.data,'alert',json.msg);
+					}
+						return false;
+				},'json');
 			}
 		}
 	}
+	
 
 	/**
 	 * 上传完成后的后续操作
@@ -143,13 +118,6 @@
 	 */
 	function uploadResponse(json){
 		if($("#"+json.fid).length<1){
-			var file=$('<li class="clearfix border_t_c border_b_c" id="'+json.fid+'" style="display:none; margin-top:-1px;">'
-	                 +'<div class="font14 fl_l">'
-	                 +'<a href="'+json.msg.url+'" target="_blank">'+json.msg.localname+'</a>'
-               		 +'</div><a href="javascript:;" onclick="del_file('+json.fid+')"'
-					 +" class='fl_r mr_30' >{$_lang['delete']}</a></li>");
-				file.appendTo("#upfile").fadeIn(1000);
-				loadingControl("#upfile li","#loading_"+json.fid,2000);
 				var file_ids = $("#file_ids").val();
 				 if(file_ids){
 					$("#file_ids").val(file_ids+','+json.fid)
@@ -158,21 +126,6 @@
 					$("#upload").val('');
 				}
 		}
-	}
-	
-	/**
-	 * 上传附件删除
- 	* @param file_id 附件编号
- 	*/
-	function del_file(file_id){
-		$.getJSON("index.php?do=ajax&view=file&ajax=delete&file_id="+file_id,function(json){
-			if(json.status=='1'){
-				var file_ids=$("#file_ids").val().toString();
-					file_ids = file_ids.replace(file_id,'');
-					$("#file_ids").val(file_ids);
-				$("#"+file_id).remove();
-			}
-		})	
 	}
 </script>
 <!--{template footer}-->

@@ -15,12 +15,15 @@ require 'PayRequestHandler.php';
  * @param string $sign_type 签名类型(可空）
  * @return string url
  */
-function get_pay_url($charge_type,$pay_amount, $payment_config, $subject, $order_id, $model_id = null, $obj_id = null, $service = "create_direct_pay_by_user", $sign_type = 'MD5') {
+function get_pay_url($charge_type,$pay_amount, $payment_config, $subject, $order_id, $model_id = null, $obj_id = null, $service = "DEFAULT", $sign_type = 'MD5') {
 	global $_K, $uid;
-	$tenpayid = $payment_config[seller_id];
-	$tenpaykey = $payment_config[safekey];
+	$tenpayid = $payment_config['seller_id'];
+	$tenpaykey = $payment_config['safekey'];
  	$tenpay_return_url = $_K ['siteurl'] . '/payment/tenpay/return.php';  //回调地址
 	$order_no = $order_id;
+	if(CHARSET=='utf-8'){
+	  $subject = kekezu::utftogbk($subject);
+	}
 	$product_name = $subject;
 	$order_price = $pay_amount;
 	$out_trade_no = "charge-{$charge_type}-{$uid}-{$obj_id}-{$order_id}-{$model_id}";
@@ -71,9 +74,11 @@ function get_pay_url($charge_type,$pay_amount, $payment_config, $subject, $order
 	$reqHandler->setParameter("return_url", $return_url);				//返回处理地址
 	$reqHandler->setParameter("desc", $desc);	//商品名称  remarkexplain
 	$reqHandler->setParameter("attach", $remarkexplain);
+	$reqHandler->setParameter("bank_type", $service);    //银行类型
 	
 	//用户ip,测试环境时不要加这个ip参数，正式环境再加此参数
-	$reqHandler->setParameter("spbill_create_ip", Keke::get_ip());
+	$reqHandler->setParameter("spbill_create_ip", kekezu::get_ip());
+	
 	
 	//请求的URL
 	$reqUrl = $reqHandler->getRequestURL();
@@ -82,6 +87,6 @@ function get_pay_url($charge_type,$pay_amount, $payment_config, $subject, $order
 }
 function build_postform($p) {
 	$sHtml = "<form id='E_FORM' name='E_FORM' target='_blank' action='$p' method='post'>";
-	$sHtml = $sHtml."<input type='button' name='v_action' value='财付通确认付款' onClick='document.forms[\"E_FORM\"].submit();'>";
+	$sHtml = $sHtml."<button type='submit' class='hidden' name='v_action' value='财付通确认付款' onClick='document.forms[\"E_FORM\"].submit();'>财付通确认付款</button>";
 	return $sHtml;
 }

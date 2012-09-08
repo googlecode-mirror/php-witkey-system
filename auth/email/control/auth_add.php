@@ -15,12 +15,13 @@ if($del_auth_id){
 }
 $step_arr=array("step1"=>array($_lang['step_one'], $_lang['input_email_address']),
 				"step2"=>array($_lang['step_two'], $_lang['auth_email']),
-				"step3"=>array($_lang['step_three'], $_lang['auth_pass']));
+				"step3"=>array($_lang['step_three'], $_lang['auth_result']));
 
 $auth_step= keke_auth_email_class::get_auth_step($auth_step,$auth_info);
 
-//$verify = Keke::reset_secode_session($ver?0:1);//安全码输入
-$verify   = 0;
+
+ 
+// $verify   = 0;
 $ac_url = $origin_url . "&op=$op&auth_code=$auth_code&ver=".intval($ver);
  
 switch ($auth_step){
@@ -29,15 +30,19 @@ switch ($auth_step){
 	case "step2":
 		preg_match("/@(.*)/u",$auth_info['email'],$matches);
 		$mail_ext=$matches[1];
-		
 		if($resend){
 			$succ=$auth_obj->send_mail($auth_info['email_a_id'],$auth_info); 
-			$succ and Keke::echojson( $_lang['send_success_confirm_as_soon'],"1") or Keke::echojson( $_lang['email_send_fail'],"0");
+			$succ and kekezu::echojson( $_lang['send_success_confirm_as_soon'],"1") or kekezu::echojson( $_lang['email_send_fail'],"0");
 			die();
 		}
 		if($send_mail){
+			//邮箱已经通过认证
+			if(email_exists($email)){
+			    kekezu::echojson($_lang['email_already_auth'],0);
+			}
 			$succ=$auth_obj->add_auth($email);//邮箱认证提交 
-			$succ and Keke::echojson( $_lang['send_success_confirm_as_soon'],"1") or Keke::echojson( $_lang['email_send_fail'],"0");
+			$succ and kekezu::echojson( $_lang['send_success_confirm_as_soon'],"1") or kekezu::echojson( $_lang['email_send_fail'],"0");
+			
 			die();
 		}
 		
@@ -46,4 +51,23 @@ switch ($auth_step){
 			$email_a_id&&$ac=='check_email' and $auth_obj->audit_auth($active_code,$email_a_id);//邮箱认证自审
 		break;
 }
-require Keke_tpl::template ( 'auth/' . $auth_dir . '/tpl/' . $_K ['template'] . '/auth_add' );
+function email_exists($email){
+	global $uid;
+	$sql = sprintf('select count(*) from  %switkey_auth_email where email = \'%s\' and auth_status = 1 and uid != \'%d\'',TABLEPRE,$email,$uid);
+	return (bool) db_factory::get_count($sql);
+}
+if($auth_info['auth_status']==1&&$auth_step=='step2'){
+	$auth_step = 'step3';
+}
+
+if($auth_info['auth_status']==1){
+	//通过认证
+	$auth_tips =$_lang['congratulations_pass_email_auth'];
+	$auth_style = 'success';
+}elseif($auth_info['auth_status']==2){
+	//认证失败
+	$auth_tips =$_lang['regrettably_not_pass_email_auth'];
+	$auth_style = 'warning';
+}
+//var_dump($mail_ext);
+require keke_tpl_class::template ( 'auth/' . $auth_dir . '/tpl/' . $_K ['template'] . '/auth_add' );

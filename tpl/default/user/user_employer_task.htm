@@ -5,14 +5,14 @@
         <section class="clearfix section">
             <!--{template user/user_side}-->
             <div class="show_panel container_24 po_re">
-                <div class="prefix_3">
+                <div class="prefix_3 grid_21">
                     <div class="panel clearfix box">
                         <!--main content-->
-                        <div class="grid_21">
+                        <div class="">
                             <!--header内容头部 start-->
                             <header class="clearfix box_header">
-                                <h2 class="grid_4 alpha box_title t_c">{$_lang['task_manage']}</h2>
-                                <div class="grid_17 omega">
+                                <h2 class="grid_4 alpha omega box_title t_c">{$_lang['task_manage']}</h2>
+                                <div class="grid_17 alpha omega">
                                     <nav class="box_nav">
                                         <ul>
                                             {loop $third_nav $v}
@@ -27,14 +27,15 @@
                                 </div>
                             </header>
                             <!--header内容头部 end--><!--detail内容 start-->
-                            <article class="box_detail">
+							<article class="box_detail">
+                            {if $model_id}
                                 <!--messages消息 start-->
                                 <div class="messages m_infor clearfix">
                                     <div class="icon16 fl_l">
                                         info
                                     </div>
 									<div class="grid_18">
-                                    {$_lang['this_week_release']}{$model_list[$model_id]['model_name']}{$_lang['task_number']} :{$pub_count}{$_lang['ge']}{$_lang['zh_jh']}
+                                                                 {$_lang['my_release']}{$model_list[$model_id]['model_name']}{$_lang['task_number']} :<!--{eval echo intval($task_count[$model_id][count])}-->{$_lang['ge']}{$_lang['zh_jh']}
                                 	</div>
 								</div>
                                 <!--messages消息 end-->
@@ -54,8 +55,9 @@
                                                     <label class="t_l fl_l">
                                                         {$_lang['task_status']}{$_lang['zh_mh']}
                                                     </label>
-                                                    <select class="fl_l" name="status">
-                                                        {loop $status_arr $k $v}<option value="$k" {if $k==$status}selected="selected"{/if}>{$v}  </option>
+                                                    <select class="fl_l" name="status"> 
+													     <option value="" {if $len==0}selected="selected"{/if}>{$_lang['all']}</option>                                            	
+                                                        {loop $status_arr $k $v}<option value="$k" {if $k==$status&&$len==1}selected="selected"{/if}>{$v}</option>
                                                         {/loop}
                                                     </select>
                                                 </div>
@@ -84,22 +86,22 @@
                                             <table cellpadding="0" cellspacing="0" class="data_table">
                                                 <thead>
                                                     <tr>
-                                                        <th scope="col">
+                                                        <th scope="col" width="50">
                                                             {$_lang['task_id']}
                                                         </th>
-                                                        <th scope="col" style="width:180px;">
+                                                        <th scope="col">
                                                             {$_lang['task_title']}
                                                         </th>
-                                                        <th scope="col">
+                                                        <th scope="col" width="120">
                                                             {$_lang['task_cash']}
                                                         </th>
-                                                        <th scope="col">
+                                                        <th scope="col" width="70">
                                                             {$_lang['pub_time']}
                                                         </th>
-                                                        <th scope="col">
+                                                        <th scope="col" width="60">
                                                             {$_lang['status']}
                                                         </th>
-                                                        <th scope="col" width="190">
+                                                        <th scope="col" width="235">
                                                             {$_lang['operate']}
                                                         </th>
                                                     </tr>
@@ -113,13 +115,13 @@
                                                         </td>
                                                         <td>
                                                             <!--{eval $time=time();}-->{if $v['top_time']>$time} <img src="resource/img/ico/zd.png" alt="{$_lang['task_top']}" title="{$_lang['task_top']}">{/if} 
-                                                            {if $v['urgent_time']>$time}<img src="resource/img/ico/jj.png" alt="{$_lang['task_urgent']}" title="{$_lang['task_urgent']}">{/if}<a href="index.php?do=task&task_id={$v['task_id']}" title="$v['task_title']"><!--{eval echo Keke::cutstr($v['task_title'],20)}--></a>
+                                                            {if $v['urgent_time']>$time}<img src="resource/img/ico/jj.png" alt="{$_lang['task_urgent']}" title="{$_lang['task_urgent']}">{/if}<a href="index.php?do=task&task_id={$v['task_id']}" title="$v['task_title']"><!--{eval echo kekezu::cutstr($v['task_title'],20)}--></a>
                                                         </td>
                                                         <td>
                                                           {if $v[model_id]==4||$v[model_id]==5}
-                                                          $cove_arr[$v[task_cash_coverage]][cove_desc]
+                                                          {c:$cove_arr[$v[task_cash_coverage]]['start_cove']}-{c:$cove_arr[$v[task_cash_coverage]]['end_cove']}
                                                           {else}
-                                                           $v['task_cash']{$_lang['yuan']}
+                                                           {c:$v['task_cash']}
                                                         {/if}
                                                         </td>
                                                         <td>
@@ -129,16 +131,13 @@
                                                             $status_arr[$v['task_status']]
                                                         </td>
                                                         <td>
-                                                            <a class="button" href="index.php?do=task&task_id={$v['task_id']}"><span class="book icon"></span>{$_lang['view']}</a>
-                                                            {if $v['task_status']=='0'}
-																<a class="button" onclick="return del(this);" href="{$url}&ac=del&task_id=$v['task_id']"><span class="trash icon"></span>{$_lang['delete']}</a>
-	                                                            <a class="button" href="index.php?do={$do}&view={$view}&task_id={$v['task_id']}&model_id={$model_id}&ac=pay"><span class="loop  icon"></span>{$_lang['pay']}</a>
-	                                                        {/if}
-                                                            {if $v['task_status']=='2'}
-																<a href="index.php?do=task&task_id=$v['task_id']&view=tools" class="button">{$_lang['use_tools']}</a>
-                                                            {/if}
-															<a href="index.php?do=release&t_id=$v['task_id']&model_id={$v['model_id']}&pub_mode=onekey" class="button">{$_lang['one_key_pub']}</a>
-														</td>
+															<!--{eval $opera = master_opera($v['model_id'],$v['task_id'],$url,$v['task_cash']);}-->
+															  {loop $opera $v1}
+															  	<a class="button mb_5" href="{$v1['href']}" {if $v1['click']}onclick="{$v1['click']}"{/if}>
+															  		<span class="{$v1['ico']} icon"></span>{$v1['desc']}
+															  	</a>
+															  {/loop}
+                                                        </td>
                                                     </tr>
                                                     {/loop}
                                                     {else}
@@ -167,6 +166,9 @@
                                     </div>
                                     <!--from表单 end-->
                                 </div>
+							{else}
+								<div class='t_c fontb pad30' style="height:95px">{$_lang['task_model_close']}</div>
+							{/if}
                             </article>
                             <!--detail内容 end-->
                         </div>
@@ -182,12 +184,49 @@
 </div>
 <!--contain end-->
 <script type="text/javascript">
-    function del(obj){
+//延期加价
+function taskDelay(url){
+		console.log(url);
+		var url = url+'&op=taskdelay';
+		showWindow('taskdelay',url,'get',0);return false;
+
+}
+//赏金托管
+function task_pay(url){
+			showWindow('hosted_amount',url,'get',0);return false;
+}
+//确认工作
+function work_over(url){
+			showWindow("work_hand",url,"get",'0');
+			return false; 
+}
+function del(obj){
         var url = obj.href;
         showDialog("$_lang['confirm_delete_ma']", "confirm", "{$_lang['operate_notice']}", function(){
-           location.href = url;
+			
+           //location.href = url;
+		   formSub(url,'url',false);
         });
         return false;
+    }
+	function pay(obj,pay_cash,order_id){
+	
+		var url = obj.href;
+		var user_balance = parseInt($user_info['balance'])+0;
+		var user_credit = parseInt($user_info['credit'])+0;
+		var is_allow_credit = $basic_config['credit_is_allow'];
+		//alert(user_balance);
+		if(is_allow_credit==2){
+			user_credit=0;
+		}		
+		if((user_credit+user_balance)>=pay_cash){
+				 formSub(url,'url',false);
+				 return false;
+			}else{	
+			    location.href= "index.php?do=pay&order_id="+order_id;
+				return false;	
+			}         		          
+       return false;
     }
     
     //弹框描述

@@ -44,7 +44,7 @@
         <th scope="row" width="130">{$action_arr[$type][1]}{$_lang['attachment']}</th>
         <td>
 			<!--{eval $filename=substr($report_info[report_file],strrpos($report_info[report_file],'/')+1);}-->
-			{if $v[report_file]}<a href="index.php?do={$do}&view={$type}&ac=download&filename=$filename&filepath={$v[report_file]}">{$filename}</a>{else}{$_lang['uncommitted_attachment']}{/if}
+			{if $report_info[report_file]}<a href="index.php?do={$do}&view={$type}&ac=download&filename=$filename&filepath={$v[report_file]}">{$filename}</a>{else}{$_lang['uncommitted_attachment']}{/if}
 		</td>
     </tr>
 	<tr>
@@ -64,14 +64,13 @@
 				      {$_lang['deduction_of_informants']}{$credit_info[$type][1]}{$credit_info[type]}
 				<input type="text" name="op_result[credit_value]" id="credit" size=4 class="txt"
 				 onblur="clearstr(this)"
-				 max="{$credit_info[max_credit]}">{$_lang['point']}{$_lang['zh_jh']} <span>{$_lang['deducted_points_not_more_than']}{$credit_info[max_credit]}</span>
+				 max="{$credit_info[max_credit]}">{$_lang['point']}{$_lang['zh_jh']} <span>{$_lang['deducted_points_not_more_than']}{$credit_info[max_credit]}</span>(<font color="red">{$_lang['do_not_choose_if_not_deducted']}</font>)
 			{/if}
 			{if $process_can['freeze_user']}
 				<br>
-				<label for="freeze_user">
 				<input type="checkbox" name="op_result[freeze_user]" id="freeze_user" value="1">
-				{$_lang['freezing_username']}</label>
-				<input type="text" name="op_result[freeze_day]" id="freeze_day" onblur="clearstr(this)" maxlength="2" size=4 class="txt">{$_lang['day']}{$_lang['zh_jh']}
+				{$_lang['freezing_username']}
+				<input type="text" name="op_result[freeze_day]" id="freeze_day" onblur="clearstr(this)" maxlength="2" size=4 class="txt">{$_lang['day']}{$_lang['zh_jh']}(<font color="red">{$_lang['do_not_choose_if_not_freeze']}</font>)
 			{/if}
 		{else}
 		{$report_info[op_result]}		   
@@ -109,16 +108,19 @@
 			var maxCredit=parseInt($("#credit").attr("max"))+0;
 			var freeze_day=parseInt($("#freeze_day").val())+0;
 			
-			if(!$("#reset_task").is(":checked")&&!$("#cancel_bid").is(":checked")&&!$("#freeze_user").is(":checked")){
+			if(!$("#freeze_user").is(":checked")&&!$('#credit').val()){
 				art.dialog.alert("{$_lang['warning_not_select_treatment_scheme']}");return false;
-			}			
-			if(isNaN(credit)){
-				art.dialog.alert("{$_lang['warning_please_enter_deducted_points']}");return false;
-			}else if(credit<0){
-				art.dialog.alert("{$_lang['warning_deducted_points_not_negative']}");return false;
-			}
-			else if(credit==0||credit>maxCredit){
-				art.dialog.alert("{$_lang['warning_deduction']}{$credit_info[type]}{$_lang['maximum']}:"+maxCredit+"{$_lang['point']}");return false;
+			}	
+			
+			if($("#credit").val()){		
+				if(isNaN(credit)){
+					art.dialog.alert("{$_lang['warning_please_enter_deducted_points']}");return false;
+				}else if(credit<0){
+					art.dialog.alert("{$_lang['warning_deducted_points_not_negative']}");return false;
+				}
+				else if(credit>maxCredit){
+					art.dialog.alert("{$_lang['warning_deduction']}{$credit_info[type]}{$_lang['maximum']}:"+maxCredit+"{$_lang['point']}");return false;
+				}
 			}
 			 
 			if($("#freeze_user").is(":checked")){
@@ -127,14 +129,11 @@
 				}		
 			}
 			var content='';			
-			if($("#cancel_bid").is(":checked")){
-				content+="{$_lang['cancel_user']}{$report_info[to_username]}{$_lang['the_state']},";
-			}
 			if(credit){
-				content+="{$_lang['deduction']}{$report_info[to_username]}{$credit_info[type]}'+credit+'{$_lang['point']}{$_lang['zh_jh']}<br>";
+				content+="{$_lang['deduction']}{$report_info[to_username]}{$credit_info[type]}"+credit+"{$_lang['point']}{$_lang['zh_jh']}<br>";
 			}
 			if($("#freeze_user").is(":checked")){
-				content+="{$_lang['freezing_username']}{$report_info[to_username]}'+freeze_day+'{$_lang['day']}{$_lang['zh_jh']}";
+				content+="{$_lang['freezing_username']}{$report_info[to_username]}"+freeze_day+"{$_lang['day']}{$_lang['zh_jh']}";
 			}
 			art.dialog({
 						title: "{$_lang['confirmation_prompts']}",

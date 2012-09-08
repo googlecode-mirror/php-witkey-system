@@ -87,7 +87,7 @@
                             {$_lang['cash']}
                         </th>
                         <td>
-                     	   {$_lang['currency']}{$bank_info[cash]}{$_lang['yuan']}
+                     	  {c:$bank_info[cash]}
                         </td>
          </tr>
 		  <tr>
@@ -95,8 +95,8 @@
                             {$_lang['admin_give_cash']}
                         </th>
                         <td>
-                     	 {if $bank_info[pay_to_user_cash]}
-							<font color="#ff7700">{$_lang['currency']}{$bank_info[pay_to_user_cash]}{$_lang['yuan']}</font>
+                     	 {if $bank_info[pay_to_user_cash]>0.00}
+							<font color="#ff7700">{c:$bank_info[pay_to_user_cash]}</font>
 							[{$_lang['give_cash_time']}{$_lang['zh_mh']}<!--{date('Y-m-d H:i:s',$bank_info[pay_time])}-->]
 						{else}
 							<input type="text" name="fds[pay_to_user_cash]" class="txt">{$_lang['yuan']}
@@ -110,7 +110,7 @@
                             {$_lang['user_gain_cash']}
                         </th>
                         <td>
-                     		<font color="#ff7700">{$_lang['currency']}{$bank_info[user_get_cash]}{$_lang['yuan']}</font>
+                     		<font color="#ff7700">{c:$bank_info[user_get_cash]}</font>
                         </td>
          </tr>
 		 <tr>

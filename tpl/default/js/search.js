@@ -22,7 +22,7 @@ function save_cookie(){
 				   $("#history_collect li:first").remove();
 			} 
             var html = "<li><a href=" + window.location.href + ">"+json.data+"</a></li>";
-            $("#history_collect").append(html);
+           // $("#history_collect").append(html);
         } 
 		if(json.status==2){
 			$("#success").html(json.msg);	  
@@ -34,12 +34,13 @@ function save_cookie(){
 
 
 /* 地区搜索 */ 
-function search_area(){  
+function search_area(type){  
 	var province = $("#province").val();
 	var city = $("#city").val(); 
 	var area = $("#area").val()+'slt_city';
 	var new_slt_city =  '&province='+province+'&city='+city+'&area='+area; 
 	var url = window.location.href;
+	url = url.replace(type+".html","index.php?do="+type);
 	if(url.indexOf('&province') ==-1){ 
 		url = url+new_slt_city;
 	}else{
@@ -55,8 +56,8 @@ function search_area(){
 
 
 //赏金重置
-function task_cash_reset(){
-	setcookie('search_cash', '',-999); 
+function task_cash_reset(cookie_val){
+	setcookie(cookie_val, '',-999); 
             $("#cool_search").hide();
             $("#general_search").show();
 
@@ -64,8 +65,8 @@ function task_cash_reset(){
 
 
 //赏金搜索自定义
-function custom_search_cash(){
-	setcookie('search_cash',1); 
+function custom_search_cash(cookie_val){
+	setcookie(cookie_val,1); 
 
     $("#general_search").hide();
     $("#cool_search").show();

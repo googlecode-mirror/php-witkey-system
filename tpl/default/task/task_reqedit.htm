@@ -1,11 +1,11 @@
 <!--{template header}-->
 
  <!--winbody content-->
-<div class="winbody">
- <div class="clearfix box {$_K['theme']}_style pad10">
+<div class="winbody {$_K['theme']}_style">
+ <div class="clearfix box pad10">
    	<div class="messages m_infor"><span class="icon16"></span>{$_lang['be_careful_info']}{$_lang['zh_jh']}</div>
     <!--from±íµ¥ start-->
-    <form method="post" id="frm_reqedit" name="frm_reqedit">
+    <form method="post" id="frm_reqedit" name="frm_reqedit" action="">
        <div class="rowElem clearfix" id="desc">
       		 <label class="hidden">{$title}{$_lang['zh_mh']} </label>
       		<textarea cols="87" rows="8" name="tar_content" id="tar_content" class="txt_input block" onkeydown="checkInner(this,'500',event)" style="width:470px;height:100px">{$ext_desc}</textarea>

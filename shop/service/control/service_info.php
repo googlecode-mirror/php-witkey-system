@@ -10,19 +10,24 @@ $nav_active_index = 'shop';
 $basic_url = $_K['siteurl']."/index.php?do=service&sid=".$sid;
 
 keke_shop_class::plus_view_num($sid, $owner_info['uid']);
-$payitem_arr = unserialize($service_info[payitem_time]); 
+$payitem_arr = unserialize($service_info[payitem_time]);
 $item_config = keke_payitem_class::get_payitem_config ( null, null, null, 'item_id' );
- 
+$item_list= keke_payitem_class::get_payitem_config ( 'employer', 'service', null, 'item_id' );
+//var_dump(date('Y-m-d',$payitem_arr['top']));
+//出售服务的数量
+$seller_goods_num = db_factory::get_count(sprintf("select count(service_id) from %switkey_service where model_id=7 and uid=%d and service_status=2",TABLEPRE,$owner_info['uid']));
+/**店家辅助评价**/
+$shop_aid = keke_user_mark_class::get_user_aid ( $owner_info['uid'], 2, null, 1 );
 switch ($op){
 	case "report" : //举报 
 		$transname = keke_report_class::get_transrights_name($type);
 		$title=$transname.$_lang['submit'];
 		if($sbt_edit){
-			$tar_content = Keke::escape($tar_content);
+			$tar_content = kekezu::escape($tar_content);
 			keke_shop_class::set_report ( $obj_id, $to_uid,$to_username, $type, $file_url, $tar_content);
 		}else{
-			CHARSET=='gbk' and $to_username = Keke::utftogbk($to_username);
-			require Keke_tpl::template("report");
+			CHARSET=='gbk' and $to_username = kekezu::utftogbk($to_username);
+			require keke_tpl_class::template("report");
 		}
 		die();
 		break;
@@ -33,7 +38,7 @@ switch ($view) {
 		$sql =" select count(a.order_id) from %switkey_order a left join %switkey_order_detail b
 				 on a.order_id=b.order_id where b.obj_id='$sid' and b.obj_type='service' 
 				 and day(date(from_unixtime(a.order_time)))=day(curdate()) and order_status='confirm'";
-		$today_sale   = dbfactory::get_count(sprintf($sql,TABLEPRE,TABLEPRE,$sid));//今日统计
+		$today_sale   = db_factory::get_count(sprintf($sql,TABLEPRE,TABLEPRE,$sid));//今日统计
 		
 		intval ( $page ) and $p ['page'] = intval ( $page ) or $p ['page']='1';
 		intval ( $page_size ) and $p ['page_size'] = intval ( $page_size ) or $p['page_size']='10';
@@ -68,7 +73,7 @@ $comment_obj = keke_comment_class::get_instance('service');
 	    		if($res!=3&&$res!=2){
 	    			$v1 =  $comment_obj->get_comment_info($res);
 	    			$tmp ='replay_comment';
-	    			require Keke_tpl::template ( "task/task_comment_reply" );
+	    			require keke_tpl_class::template ( "task/task_comment_reply" );
 	    		}else{
 	    			echo $res;
 	    		}
@@ -81,7 +86,7 @@ $comment_obj = keke_comment_class::get_instance('service');
 	    		if($res!=3&&$res!=2){
 	    			$v = $comment_obj->get_comment_info($res);
 	    			$tmp ='pub_comment';
-	    			require Keke_tpl::template ( "task/task_comment_reply" );
+	    			require keke_tpl_class::template ( "task/task_comment_reply" );
 	    		}else{
 	    			echo $res;
 	    		}
@@ -92,15 +97,14 @@ $comment_obj = keke_comment_class::get_instance('service');
 	    		if($uid ==ADMIN_UID||$user_info['group_id']==7){
 	    			$res = $comment_obj->del_comment($comment_id,$sid,$comment_info[p_id]);//更新个人信息 
 	    		}else{
-	    			Keke::keke_show_msg("", $_lang['do_not_have_access'],"error","json");
+	    			kekezu::keke_show_msg("", $_lang['do_not_have_access'],"error","json");
 	    		}
-	    		$res and Keke::keke_show_msg("", $_lang['delete_success'],"","json") or Keke::keke_show_msg("",$_lang['system_is_busy'],"error","json");
+	    		$res and kekezu::keke_show_msg("", $_lang['delete_success'],"","json") or kekezu::keke_show_msg("",$_lang['system_is_busy'],"error","json");
 	    		break;	
 	    } 
 		break;
 	case "mark":
 		$mark_count = keke_shop_class::get_mark_count($model_code,$sid);//评价统计
-		$mark_count_ext = keke_shop_class::get_mark_count_ext($model_code,$sid);//来自评价统计
 		intval ( $page ) and $p ['page'] = intval ( $page ) or $p ['page']='1';
 		intval ( $page_size ) and $p ['page_size'] = intval ( $page_size ) or $p['page_size']='10';
 		$p['url'] = $basic_url."&view=mark&page_size=".$p ['page_size']."&page=".$p ['page'];
@@ -116,4 +120,6 @@ $comment_obj = keke_comment_class::get_instance('service');
 		$pages     = $mark_arr['pages'];
 		break;
 }
-require Keke_tpl::template ( "shop/" . $model_info ['model_code'] . "/tpl/" . $_K ['template'] . "/service_info" );
+
+
+require keke_tpl_class::template ( "shop/" . $model_info ['model_code'] . "/tpl/" . $_K ['template'] . "/service_info" );

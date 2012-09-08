@@ -1,11 +1,12 @@
 <!--{template header}-->
+<link href="resource/css/public.css" rel="stylesheet" type="text/css">
 <div class="wrapper">
     <!--页面头部-->
     <header class="clearfix page_header">
         <div class="container_24 clearfix">
             <!--面包屑-->
             <div class="breadcrumbs clearfix">
-                <a href="index.php">{$_lang['home']}</a>\<a href="javascript:void(0);">{$_lang['pub_task']}</a>
+                <a href="index.php">{$_lang['home']}</a> &gt; <a href="javascript:void(0);">{$_lang['pub_task']}</a>
             </div>
             <!--end 面包屑-->
             <div class="page_title">
@@ -34,7 +35,7 @@
     <section class="content box">
         <!--布局框-->
         <div class="container_24">
-        <div class="content_d mt_10">
+        <div class="content_d">
             <!--step步骤 start-->
             <div class="step_progress clearfix">
                 {loop $stage_nav $k $v}
@@ -52,7 +53,7 @@
                     <ul>
                         {loop $model_list $k $v}
                         <li>
-                            <a href="index.php?do=release&pub_mode={$pub_mode}&model_id={$k}" {if $k==$model_id}class="selected"{/if}><span class="icon32 task_model"><!--{eval echo Keke::cutstr($v['model_name'],0,2)}--></span><em>{$v['model_name']}</em></a>
+                            <a href="index.php?do=release&pub_mode={$pub_mode}&model_id={$k}" {if $k==$model_id}class="selected"{/if}><span class="icon32 task_model"><!--{eval echo kekezu::cutstr($v['model_name'],0,2)}--></span><em>{$v['model_name']}</em></a>
                         </li>
                         {/loop}
                     
@@ -89,19 +90,20 @@
             </div>
         </div>
         <!--end 布局框-->
-    </section>
+    
     <!--end 详细内容区-->
 </div>
+</section>
+</div>
+<script type="text/javascript" src="resource/js/system/release.js"></script>
 <script type="text/javascript">
     var model_id = parseInt("{$model_id}") + 0;
     var uid = parseInt("{$uid}") + 0;
     var r_step = "{$r_step}";
     var basic_url = "{$basic_url}";
     var min_day = parseInt("{$task_config['min_day']}");
-
-	In.add('release',{path:"resource/js/system/release.js",type:'js',rely:['form']});
-	In.add('css_public',{path:"resource/css/public.css",type:'css'});
-	In('css_public','release','ajaxfileupload','script_city');
+	
+	In('ajaxfileupload','form');
 </script>
 
 <!--{template footer}-->

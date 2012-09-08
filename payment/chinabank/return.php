@@ -2,8 +2,9 @@
 /**
  * 网银在线回调测试页面
  */ 
+define ( "IN_KEKE", true );
 require_once (dirname ( dirname ( dirname ( __FILE__ ) ) ) . DIRECTORY_SEPARATOR . 'app_comm.php');
-$pay_arr = Keke::get_payment_config ( 'chinabank' );
+$pay_arr = kekezu::get_payment_config ( 'chinabank' );
 @extract ( $pay_arr );
 $key = $safekey;
 $v_oid = trim ( $_POST ['v_oid'] ); // 商户发送的v_oid定单编号   
@@ -16,11 +17,9 @@ $remark1 = trim ( $_POST ['remark1'] ); //备注字段1
 $remark2 = trim ( $_POST ['remark2'] ); //备注字段2
 $v_md5str = trim ( $_POST ['v_md5str'] ); //拼凑后的MD5校验值  
 
-
 /* 重新计算md5的值 */
 $text = "{$v_oid}{$v_pstatus}{$v_amount}{$v_moneytype}{$key}";
 $md5string = strtoupper ( md5 ( $text ) );
-
 /* 判断返回信息，如果支付成功，并且支付结果可信，则做进一步的处理 */
 
 list ( $_, $charge_type, $uid, $obj_id, $order_id, $model_id ) = explode ( '-', $v_oid, 6 );

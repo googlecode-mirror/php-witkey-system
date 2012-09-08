@@ -5,14 +5,14 @@
   <section class="clearfix section">
     <!--{template user/user_side}-->
     <div class="show_panel container_24 po_re">
-     <div class="prefix_3">
+     <div class="prefix_3 grid_21">
       <div class="panel clearfix box">
       <!--main content-->
-       <div class="grid_21">
+       <div class="">
         <!--headerÄÚÈÝÍ·²¿ start-->
          <header class="clearfix box_header">
-          <h2 class="grid_4 alpha box_title t_c">{$_lang['order_manage']}</h2>
-           <div class="grid_17 omega">
+          <h2 class="grid_4 alpha omega box_title t_c">{$_lang['order_manage']}</h2>
+           <div class="grid_17 alpha omega">
             <nav class="box_nav">
                <ul>
                   <li {if !$obj_type||$obj_type=='task'}class="selectedLava"{/if}>
@@ -89,7 +89,7 @@
 					{$_lang['order_id']}{$_lang['zh_mh']}#{$v['order_id']}&nbsp;&nbsp;&nbsp;&nbsp;{$_lang['pub_time']}{$_lang['zh_mh']}<!--{date('Y-m-d H:i:s',$v['order_time'])}-->
 					
 					</td>
-                    <td>{$v['order_amount']}</td>
+                    <td>{c:$v['order_amount']}</td>
                     <td>{$status_arr[$v['order_status']]}</td>
                     <td>
                     	{if $v['order_status']=="wait"}<a href="index.php?do=user&view=finance&op=order&order_id=$v['order_id']&model_id=$v['model_id']&ac=ok">{$_lang['go_pay']}</a>{/if}

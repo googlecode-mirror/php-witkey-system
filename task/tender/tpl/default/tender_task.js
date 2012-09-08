@@ -27,13 +27,13 @@ function taskVote(){
 }
 
 /** 稿件提交 */
-function workHand(url) {
+function workHand() {
 	if (check_user_login()) {
 		if (uid == guid) {
-			showDialog('操作无效，用户对自己发布的任务交稿!', 'alert', '操作失败提示', '', 0);
+			showDialog(L.t_hand_forbidden, 'alert',L.operate_notice, '', 0);
 			return false;
 		} else {
-			showWindow("work_hand",url,"get",'0');return false;
+			showWindow("work_hand",basic_url+'&op=work_hand',"get",'0');return false;
 		}
 	}
 }
@@ -45,7 +45,7 @@ function workHand(url) {
 function workVote(work_id,vote_uid){
 	if(check_user_login()){
 		 if(vote_uid==uid){
-			 showDialog("无法对自己进行投票",'alert','操作提示');return false;}
+			 showDialog(L.t_vote_forbidden,'alert',L.operate_notice);return false;}
 		var url = basic_url+'&op=work_vote';
 		$.post(url,{work_id:work_id},function(json){
 			if(json.status==1){
@@ -90,7 +90,7 @@ function work_over(op){
  */
 function workBid(work_id,to_status){
 	if(guid!=uid){
-		showDialog("只有雇主才能操作稿件","alert","操作提示");return false;
+		showDialog(L.t_master_can_operate_work,"alert",L.operate_notice);return false;
 	}else{
 		var url=basic_url+'&op=work_choose&work_id='+work_id;
 			$.post(url,{to_status:to_status},function(json){

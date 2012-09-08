@@ -5,20 +5,20 @@
         <section class="clearfix section">
             <!--{template user/user_side}-->
             <div class="show_panel container_24 po_re">
-                <div class="prefix_3">
+                <div class="prefix_3 grid_21">
                     <div class="panel clearfix box">
                         <!--main content-->
-                        <div class="grid_21">
+                        <div class="">
                             <!--headerÄÚÈÝÍ·²¿ start-->
                             <header class="clearfix box_header">
-                                <h2 class="grid_4 alpha box_title t_c">{$_lang['prom_make_money']}</h2>
-                                <div class="grid_17 omega">
+                                <h2 class="grid_4 alpha omega box_title t_c">{$_lang['prom_make_money']}</h2>
+                                <div class="grid_17 alpha omega">
                                     <nav class="box_nav">
                                         <ul> 
                                             <li {if $show=='income'}class="selectedLava"{/if}>
                                                 <a href="index.php?do=user&view=finance&op=prom&show=income#userCenter" title="{$_lang['prom_profit']}">{$_lang['prom_profit']}</a>
                                             </li>
-                                            <li {if $show=='releation'}class="selectedLava"{/if}>
+                                            <li {if $show=='relation'}class="selectedLava"{/if}>
                                                 <a href="index.php?do=user&view=finance&op=prom&show=relation#userCenter" title="{$_lang['prom_relation']}">{$_lang['prom_relation']}</a>
                                             </li>
                                         </ul>
@@ -36,9 +36,8 @@
 									{if $show=='income'}
                                     {$_lang['prom_total_income']}:{$_lang['currency']}
                                     <font color="red">
-                                        <!--{eval echo number_format($prom_count['cash'],2)}-->
-                                    </font>
-                                    {$_lang['yuan']}¡¢{CREDIT_NAME}
+                                        {c: $prom_count['cash']}
+                                    </font>{CREDIT_NAME}
                                     <font color="red">
                                         <!--{eval echo number_format($prom_count['credit'],2)}-->
                                     </font>
@@ -115,7 +114,7 @@
                                                             $v['username']
                                                         </td>
                                                         <td>
-                                                            $v['rake_cash']
+                                                            {c:$v['rake_cash']}
                                                         </td>
                                                         <td>
                                                             $v['rake_credit']
@@ -174,6 +173,9 @@
                                                 <thead>
                                                     <tr>
                                                         <th scope="col">
+                                                      {$_lang['relation_id']}                                                      
+                                                        </th>
+                                                        <th scope="col">
                                                             {$_lang['relation_type']}
                                                         </th>
                                                         <th scope="col">
@@ -191,6 +193,9 @@
                                                 	{if $relation_arr}
                                                     {loop $relation_arr $v}
                                                     <tr>
+                                                        <td>
+                                                            #{$v['relation_id']}
+                                                        </td>
                                                         <td>
                                                             {$type_arr[$v['prom_type']]['prom_item']}
                                                         </td>

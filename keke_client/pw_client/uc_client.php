@@ -3,12 +3,12 @@
 error_reporting(0);
 define('P_W','admincp');
 
-Keke::keke_require_once(S_ROOT."/config/config_pw.php");
+kekezu::keke_require_once(S_ROOT."/config/config_pw.php");
 define('R_P',S_ROOT.'/');
 define('D_P',R_P);
-Keke::keke_require_once(S_ROOT.'/api/pw_api/security.php');
+kekezu::keke_require_once(S_ROOT.'/api/pw_api/security.php');
 
-Keke::keke_require_once(S_ROOT.'/api/pw_api/pw_common.php');
+kekezu::keke_require_once(S_ROOT.'/api/pw_api/pw_common.php');
 
 // uc_client 包的根目录
 define('UC_CLIENT_ROOT', dirname(__FILE__) . '/');

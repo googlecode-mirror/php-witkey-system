@@ -819,6 +819,8 @@ class taoapi_util
                 default:
                     $this->error = "connection failed (" . $errno . ")";
             }
+            throw  new keke_exception($this->error);
+            
             return false;
         }
     }

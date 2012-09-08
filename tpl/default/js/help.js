@@ -18,10 +18,14 @@ $(function(){
 		var parent = $(this).parents(".all_content");
 		if (parent.children(".article").is(':visible')) {
 				parent.children(".article").addClass('hidden');
+				$(this).removeClass('selected').children('.icon16').removeClass('br-up').addClass('br-down');
 				event.stopPropagation();
 			} else {
+
+				$(this).addClass('selected').children('.icon16').removeClass('br-down').addClass('br-up');
 				parent.children(".article").removeClass('hidden');
-				parent.siblings().children(".article").addClass('hidden');
+				parent.siblings().children('.article').addClass('hidden');
+				parent.siblings().children('.question').removeClass('selected').children('.icon16').removeClass('br-up').addClass('br-down');
 				event.stopPropagation();
 			}
 		
@@ -63,7 +67,7 @@ document.getElementById("keyword").onkeydown = function(event){
 }
 function searchKeyword(){
 	var keyword = $.trim($("#keyword").val());
-	if(keyword&&keyword!="想了解什么?"){
+	if(keyword&&keyword!=L.want_to_know){
 		var hasLoaded=$(".loadcontent[keyword='"+keyword+"']").length;
 		if(hasLoaded==0){
 			var url = "index.php?do=ajax&view=file&ajax=help_search&keyword="+keyword;

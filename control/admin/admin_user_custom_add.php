@@ -1,4 +1,4 @@
-<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 /**
  *客服管理
  */
@@ -23,5 +23,5 @@ if ($is_submit) {
 	kekezu::admin_show_msg ( $_lang['rights_set_success'], "index.php?do=$do&view=custom_list", 2, '', 'success' );
 }
 
-require Keke_tpl::template ( 'control/admin/tpl/admin_user_custom_add' );
+require $template_obj->template ( 'control/admin/tpl/admin_user_custom_add' );
 

@@ -1,4 +1,4 @@
-<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
  /**
  * @copyright keke-tech
  * @author Monkey
@@ -307,4 +307,4 @@ if ($tag_info['tag_type']==1)
 
 
 
-require_once Keke_tpl::template ( 'control/admin/tpl/template_tag_'.$tag_info['tplname'] );
+require_once $template_obj->template ( 'control/admin/tpl/template_tag_'.$tag_info['tplname'] );

@@ -1,4 +1,4 @@
-<?php
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * @copyright keke-tech
  * @author Chen
@@ -6,7 +6,7 @@
  * 2011-10-08ÏÂÎç02:57:33
  */
 
-defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+
 $opps = array ('change_password', "sec_code" );
 
 in_array ( $opp, $opps ) or $opp = "change_password";
@@ -24,7 +24,7 @@ switch ($opp) {
 				$notice = true;
 			}else{
 				$notice = $_lang['pwd_enter_err'];
-				CHARSET=='gbk' and $notice =  Keke::gbktoutf($notice);
+				//CHARSET=='gbk' and $notice =  kekezu::gbktoutf($notice);
 			}
 			echo $notice;
 			die();
@@ -34,16 +34,17 @@ switch ($opp) {
 			$new_pass = $new_password;
 			$new_equal = $new_equal;
 			if ($basic_config ['user_intergration'] != "2" && $old_pass == $new_pass) {
-				Keke::show_msg ( $_lang['modify_pwd_fail'], $ac_url."&opp=$opp", 3, $_lang['old_new_pwd_like'], 'warning' );
+				kekezu::show_msg ( $_lang['system prompt'], $ac_url . "&opp=$opp", '1', $_lang['submit failure'], 'alert_error' ) ;
+				//kekezu::show_msg ( $_lang['modify_pwd_fail'], $ac_url."&opp=$opp", 3, $_lang['old_new_pwd_like'], 'warning' );
 			} elseif ($basic_config ['user_intergration'] != "2" && md5 ( $old_pass ) != $user_info ['password']) {
-				Keke::show_msg ( $_lang['modify_pwd_fail'], $ac_url."&opp=$opp", 3, $_lang['current_pwd_err'], 'warning' );
+				kekezu::show_msg ( $_lang['system prompt'], $ac_url . "&opp=$opp", '1', $_lang['submit failure'], 'alert_error' ) ;
+				//kekezu::show_msg ( $_lang['modify_pwd_fail'], $ac_url."&opp=$opp", 3, $_lang['current_pwd_err'], 'warning' );
 			} elseif ($new_pass != $new_equal) {
-				Keke::show_msg ( $_lang['modify_pwd_fail'], $ac_url."&opp=$opp", 3, $_lang['pwd_enter_not_consistent'], 'warning' );
+				kekezu::show_msg ( $_lang['system prompt'], $ac_url . "&opp=$opp", '1', $_lang['submit failure'], 'alert_error' ) ;
+				//kekezu::show_msg ( $_lang['modify_pwd_fail'], $ac_url."&opp=$opp", 3, $_lang['pwd_enter_not_consistent'], 'warning' );
 			}
-			$message_obj = new keke_msg_class ();
 			$v = array ($_lang['new_pwd'] => $new_pass );
-			$message_obj->send_message ( $user_info ['uid'], $user_info ['username'], 'update_password', $_lang['change_pwd'], $v, $user_info ['email'], $user_info ['mobile'] );
-			
+			keke_msg_class::notify_user($user_info ['uid'], $user_info ['username'], 'update_password', $_lang['change_pwd'],$v);
 			$user_obj = new Keke_witkey_space_class ();
 			$user_obj->setWhere ( "uid='$uid'" );
 			$user_obj->setPassword ( md5 ( $new_password ) );
@@ -58,7 +59,8 @@ switch ($opp) {
 			if ($flag && $res == 1){
 				unset ( $_SESSION );
 			}
-			$flag && $res == 1 ? Keke::show_msg ( $_lang['operate_notice'], $ac_url."&opp=$opp", 3, $_lang['pwd_modify_success'],'success' ) : Keke::show_msg ( $_lang['modify_pwd_fail'], $ac_url."&opp=$opp", 0, "", 'warning' );
+			$flag && $res == 1 ? kekezu::show_msg ( $_lang['system prompt'], $ac_url . "&opp=$opp", '1', $_lang['submit success'], 'alert_right' ) : kekezu::show_msg ( $_lang['system prompt'], $ac_url . "&opp=$opp", '1', $_lang['submit failure'], 'alert_error' ) ;
+			//$flag && $res == 1 ? kekezu::show_msg ( $_lang['operate_notice'], $ac_url."&opp=$opp", 3, $_lang['pwd_modify_success'],'success' ) : kekezu::show_msg ( $_lang['modify_pwd_fail'], $ac_url."&opp=$opp", 0, "", 'warning' );
 		}
 		break;
 	case "sec_code" :
@@ -68,18 +70,21 @@ switch ($opp) {
 				$notice = true;
 			}else{
 				$notice = $_lang['safe_code_enter_err'];
-				CHARSET=='gbk' and $notice =  Keke::gbktoutf($notice);
+				CHARSET=='gbk' and $notice =  kekezu::gbktoutf($notice);
 			}echo $notice;
 			die();
 		}
 		if ($new_sec_code) {
 			$pwd = keke_user_class::get_password ( $old_sec_code, $user_info ['rand_code'] );
 			if ($pwd != $user_info ['sec_code']) {
-				Keke::show_msg ( $_lang['modify_safe_code_fail'], $ac_url."&opp=$opp", 3, $_lang['current_safe_code_err'], 'warning' );
+				kekezu::show_msg ( $_lang['system prompt'], $ac_url . "&opp=$opp", '1', $_lang['submit failure'], 'alert_error' ) ;
+				//kekezu::show_msg ( $_lang['modify_safe_code_fail'], $ac_url."&opp=$opp", 3, $_lang['current_safe_code_err'], 'warning' );
 			} elseif ($new_sec_code == $old_sec_code) {
-				Keke::show_msg ( $_lang['modify_safe_code_fail'], $ac_url."&opp=$opp", 3, $_lang['please_enter_again'], 'warning' );
+				kekezu::show_msg ( $_lang['system prompt'], $ac_url . "&opp=$opp", '1', $_lang['submit failure'], 'alert_error' ) ;
+				//kekezu::show_msg ( $_lang['modify_safe_code_fail'], $ac_url."&opp=$opp", 3, $_lang['please_enter_again'], 'warning' );
 			} elseif ($new_sec_code != $new_equal) {
-				Keke::show_msg ( $_lang['modify_safe_code_fail'], $ac_url."&opp=$opp", 3, $_lang['safe_code_enter_inconsistent'], 'warning' );
+				kekezu::show_msg ( $_lang['system prompt'], $ac_url . "&opp=$opp", '1', $_lang['submit failure'], 'alert_error' ) ;
+				//kekezu::show_msg ( $_lang['modify_safe_code_fail'], $ac_url."&opp=$opp", 3, $_lang['safe_code_enter_inconsistent'], 'warning' );
 			}
 			
 			$message_obj = new keke_msg_class ();
@@ -90,10 +95,10 @@ switch ($opp) {
 			$user_obj->setWhere ( "uid='$uid'" );
 			$user_obj->setSec_code ( keke_user_class::get_password ( $new_sec_code, $user_info ['rand_code'] ) );
 			$res = $user_obj->edit_keke_witkey_space ();
-			
-			$res and Keke::show_msg ( $_lang['operate_notice'], $ac_url."&opp=$opp", 3, $_lang['safe_code_modify_success'],'success' ) or Keke::show_msg ( $_lang['modify_safe_code_fail'], $ac_url."&opp=$opp", 3, "", 'warning' );
+			$res and kekezu::show_msg ( $_lang['system prompt'], $ac_url . "&opp=$opp", '1', $_lang['submit success'], 'alert_right' )  or kekezu::show_msg ( $_lang['system prompt'], $ac_url . "&opp=$opp", '1', $_lang['submit failure'], 'alert_error' ) ;
+			//$res and kekezu::show_msg ( $_lang['operate_notice'], $ac_url."&opp=$opp", 3, $_lang['safe_code_modify_success'],'success' ) or kekezu::show_msg ( $_lang['modify_safe_code_fail'], $ac_url."&opp=$opp", 3, "", 'warning' );
 		}
 		break;
 }
-require Keke_tpl::template('user/user_'.$op.'_' . $opp);
+require keke_tpl_class::template('user/user_'.$op.'_' . $opp);
 

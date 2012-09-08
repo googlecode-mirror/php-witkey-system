@@ -1,4 +1,4 @@
-<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * 站内--短信发送配置管理
  * @copyright keke-tech
@@ -69,4 +69,4 @@ if (isset ( $sbt_edit )) {
 	
 }
 
-require Keke_tpl::template ( 'control/admin/tpl/admin_msg_' . $view );
+require $template_obj->template ( 'control/admin/tpl/admin_msg_' . $view );

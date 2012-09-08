@@ -60,9 +60,9 @@
     	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab_list t_c">
         	<tr class="item">
         		<th width="15">
-        			<input type="checkbox" onclick="checkall();" id="checkbox" name="checkbox"/>
+        			<!--<input type="checkbox" onclick="checkall();" id="checkbox" name="checkbox"/>-->
         		</th>
-        		<th class="td25">ID
+        		<th class="td25">
                 </th>
            		<th align="left">{$_lang['tag_name']}</th>
            		<th>{$_lang['internal_calling_code']}</th>
@@ -74,10 +74,10 @@
                 {loop $tag_arr $key $value}
                 <tr class="item">
                 	<td>
-                        <input type="checkbox" name="ckb[]" class="checkbox" value="{$value['tag_id']}">
+                       <input type="checkbox" name="ckb[]" class="checkbox" value="{$value['tag_id']}">
                     </td>
                     <td>
-                        {$value['tag_id']}
+                       
                     </td>
                     <td>
                         {$value['tagname']}
@@ -103,7 +103,8 @@
 				{/loop}
 				<tr>
             	<td colspan="7">                    
-                    <div class="clearfix">                         
+                    <div class="clearfix"> 
+					     <input type="checkbox" onclick="checkall(event);" id="checkbox" name="checkbox"/>                        
 	                     <label for="checkbox">{$_lang['select_all']}</label>  
 	                     <input type="hidden" name="sbt_action" class="sbt_action" id="sbt_action"/>¡¡                   
                         <button class="pill negative button" type="submit" value="{$_lang['mulit_delete']}" name="sbt_action" onclick="return batch_act(this,'frm_taglist')"><span class="icon trash">&nbsp;</span>{$_lang['mulit_delete']}</button>

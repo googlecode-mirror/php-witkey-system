@@ -3,9 +3,10 @@
 <div class="page_title">
     <h1>{$_lang['financial_model']}</h1>
     <div class="tool">
+    	 <a href="index.php?do={$do}&view=revenue" class="here">财务概况</a>
 		<a href="index.php?do={$do}&view=all">{$_lang['flow_record']}</a>
 	    <a href="index.php?do={$do}&view=report">{$_lang['graphic_report']}</a>
-	    <a href="index.php?do={$do}&view=revenue" class="here">{$_lang['revenue']}</a>
+	   
 	    <a href="index.php?do={$do}&view=recharge">{$_lang['recharge_audit']}</a>
 	   <a href="index.php?do={$do}&view=withdraw">{$_lang['withdraw_audit']}</a>
     </div>
@@ -46,9 +47,12 @@
     </div>
 	
 	<div class="tab">
-        	<a class="select" href="#" onclick="swaptab('cont','select','','3','1',{mpre:'td_',spre:'tb_',hide:1});" class='select' id='td_cont_1' style="width:32%;"><strong>{$_lang['site_in']}{$_lang['zh_mh']}</strong> <strong style="color:green">{c:$fina_in}</strong></a>
-            <a href="#" onclick="swaptab('cont','select','','3','2',{mpre:'td_',spre:'tb_',hide:1,ajax:1,url:'index.php?do={$do}&view={$view}&op=profit&st={$st}&ed={$ed}'});" id='td_cont_2' style="width:31%;"><strong>{$_lang['site_profit']}{$_lang['zh_mh']}</strong> <strong style="color:green">{c:$fina_pro}</strong></a>
-			<a href="#" onclick="swaptab('cont','select','','3','3',{mpre:'td_',spre:'tb_',hide:1,ajax:1,url:'index.php?do={$do}&view={$view}&op=withdraw&st={$st}&ed={$ed}'});" id='td_cont_3' style="width:31%;"><strong>{$_lang['withdraw_count']}{$_lang['zh_mh']}</strong> <strong style="color:green">{c:$fina_wid}</strong></a>
+        	<a class="select" href="#" onclick="swaptab('cont','select','','4','1',{mpre:'td_',spre:'tb_',hide:1});" class='select' id='td_cont_1' style="width:23%;"><strong>流水统计</strong> </a>
+            <a href="#" onclick="swaptab('cont','select','','4','4',{mpre:'td_',spre:'tb_',hide:1,ajax:1,url:'index.php?do={$do}&view={$view}&op=charge&st={$st}&ed={$ed}'});" id='td_cont_4' style="width:23%;"><strong>充值总计</strong></a>
+			<a href="#" onclick="swaptab('cont','select','','4','3',{mpre:'td_',spre:'tb_',hide:1,ajax:1,url:'index.php?do={$do}&view={$view}&op=withdraw&st={$st}&ed={$ed}'});" id='td_cont_3' style="width:23%;"><strong>提现总计</strong></a>
+			<a href="#" onclick="swaptab('cont','select','','4','2',{mpre:'td_',spre:'tb_',hide:1,ajax:1,url:'index.php?do={$do}&view={$view}&op=profit&st={$st}&ed={$ed}'});" id='td_cont_2' style="width:23%;"><strong>网站纯利</strong></a>
+			
+    		
     </div>
 	<div class="tabcon">
 		
@@ -138,42 +142,9 @@
 								</td>
 								<td>{c:$s}</td>
 							</tr>
-							<tr>
-								<td>{$_lang['user_charge']}</td>
-								<td>
-									{if $charge}
-									  <ul>
-										{loop $charge $v}
-											<li>{$fina_type[$v['obj_type']]}({$v['count']}{$_lang['ci']})</li>
-										{/loop}
-									  </ul>
-									{else}
-										{$_lang['no_data']}
-									{/if}
-								</td>
-								<td>
-									{if $charge}
-									  <ul>
-										<!--{eval $c = 0;}-->
-										{loop $charge $v}
-											<!--{eval $ca = abs($v['cash']);}-->
-											<!--{eval $c+=$ca;}-->
-											<li>{c:$ca}</li>
-										{/loop}
-									  </ul>
-									{else}
-										{$_lang['no_data']}
-									{/if}
-								</td>
-								<td>{c:$c}</td>
-							</tr>
+							
 						</tbody>
-						<tfoot>
-							<tr>
-								<td colspan='3'></td>
-								<td><strong>{$_lang['total']}</strong> <strong style="color:red"> <!--{eval $all=$t+$s+$c+$p;}-->{c:$all}</strong></td>
-							</tr>
-						</tfoot>
+					
 					</table>
 			<div class='tip'><div class='title'>{$desc}{$_lang['in_description']}</div></div>
 					
@@ -182,6 +153,8 @@
 			
 			<table id='tb_cont_3' class='t_sub hidden clear_l clear_b'></table>
 			<div class='tip hidden'><div class='title'>{$desc}{$_lang['withdraw_description']}</div></div>	
+			<table id='tb_cont_4' class='t_sub hidden clear_l clear_b'></table>
+			<div class='tip hidden'><div class='title'>{$desc}{$_lang['charge_description']}</div></div>	
 					
 	</div>
         
@@ -195,11 +168,11 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td >{$_lang['task_cash']}</td>
+				<td >任务佣金</td>
 				<td >{c:$task}</td>
 			</tr>
 			<tr>
-				<td >{$_lang['service_sale']}</td>
+				<td >商品抽成</td>
 				<td>{c:$service}</td>
 			</tr>
 			<tr>
@@ -214,8 +187,9 @@
 				<td >{$_lang['user_withdraw']}</td>
 				<td>{c:$withdraw}</td>
 			</tr>
+			
 		</tbody>
-		<tfoot>
+	<tfoot>
 			<tr>
 				<td></td>
 				<td ><strong>{$_lang['total']}</strong> <strong style="color:red"> {c:$p_all}</strong></td>
@@ -310,6 +284,35 @@
 		<td><strong>{$_lang['total']}</strong></td>
 		<td><strong style="color:red">{c:$w_c}</strong></td>
 		<td ><strong style="color:red">{c:$w_f}</strong></td>
+	</tr>
+</tfoot>
+{elseif $op=='charge'}
+<thead align="center">
+	<th> {$_lang['charge_type']} </th>
+	<th> {$_lang['charge_ci']}({$_lang['ci']}) </th>
+	<th> {$_lang['charge_cash']} </th>
+</thead>
+<tbody>
+		<!--{eval $d = 0;}-->
+		{loop $fina_type $k $v}
+	<tr>
+	<td>{$v}</td>
+	<td>
+		{if $charge[$k]['count']}{$charge[$k]['count']}{else}{$_lang['no_data']}{/if}
+	</td>
+	<td>
+		<!--{eval $ca = $charge[$k]['cash'];}-->
+		<!--{eval $d+=abs($ca);}-->
+		{if $ca}{c:$ca}{else}{$_lang['no_data']}{/if}
+	</td>
+	</td>
+</tr>
+{/loop}
+</tbody>
+<tfoot>
+	<tr>
+		<td><strong>{$_lang['total']}</strong></td>
+		<td colspan=2><strong style="color:red">{c:$d}</strong></td>
 	</tr>
 </tfoot>
 {/if}

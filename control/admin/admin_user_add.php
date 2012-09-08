@@ -1,4 +1,4 @@
-<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * 用户管理
  */
@@ -10,7 +10,10 @@ $reg_obj = new keke_register_class ();
 $member_class = new keke_table_class ( 'witkey_member' );
 $space_class = new keke_table_class ( 'witkey_space' );
 //$member_group_class=new keke_table_class ('witkey_member_group');
-$edituid and $member_arr = kekezu::get_user_info ( $edituid );
+if($edituid){
+	$member_arr = kekezu::get_user_info ( $edituid );
+	$shop_open = db_factory::get_count('select shop_id from '.TABLEPRE.'witkey_shop where uid='.$edituid);
+}
 // $edituid and $memberinfo_arr = $member_arr;
 $member_group_arr = db_factory::query ( sprintf ( "select group_id,groupname from %switkey_member_group", TABLEPRE ) );
 
@@ -46,4 +49,4 @@ if ($is_submit == 1) {
 	}
 }
 
-require Keke_tpl::template ( 'control/admin/tpl/admin_user_add' );
+require $template_obj->template ( 'control/admin/tpl/admin_user_add' );

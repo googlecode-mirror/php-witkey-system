@@ -1,4 +1,4 @@
-<?php
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  *  企业空间的首页
  * @author lj
@@ -6,45 +6,45 @@
  * @version V2.0
  */
 
-defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
-//任务描述 
-$end_time_arr = keke_global_class::get_taskstatus_desc();
 
+$level        = unserialize($member_info['seller_level']);
+
+/**卖家辅助评价**/
+$seller_aid = keke_user_mark_class::get_user_aid ( $member_id, '2', null, '1' );
+
+//威客好评率
+$good_rate  = get_witkey_good_rate($member_info);
+function get_witkey_good_rate($user_info){
+	$st = $user_info['seller_total_num'];
+	return $st?(number_format($user_info['seller_good_num']/$st,2)*100).'%':'0%'; 
+}
 //任务模型
-$model_list = Keke::$_model_list; 
-$indus_arr_all = Keke::$_indus_arr;
+$model_list = $kekezu->_model_list; 
+$indus_arr = $kekezu->_indus_arr;
+/*热门商品分类*/
+$rs = kekezu::get_table_data('indus_id,service_id','witkey_service',"uid=$member_id",'views desc','','','indus_id');
+$hot_cat = array_intersect_key($indus_arr, $rs);
+
 //发布的任务
 $sql = sprintf("select * from %switkey_task where uid=%d and task_status!=0 and task_status!=1 order by start_time desc limit 0,5",TABLEPRE,$member_id);
-$pub_task_arr = dbfactory::query($sql);
-//参与的任务
-$sql = "select a.work_id,b.* from %switkey_task_work as a left join %switkey_task as b on a.task_id = b.task_id where a.uid = %d group by b.task_id order by b.start_time desc  limit 0,5";
-$join_task_arr = dbfactory::query(sprintf($sql,TABLEPRE,TABLEPRE,$member_id));
+$pub_task_arr = db_factory::query($sql);
 
+$cash_cove = kekezu::get_cash_cove('',true);//区间
+//$auth_info = keke_auth_fac_class::get_auth_imghtm('', $member_id);
 
-//成功案例
-
-$sql = sprintf("select a.* ,b.* from %switkey_shop_case as a left join %switkey_service as b on a.service_id = b.service_id where  a.shop_id = %d order by b.service_id desc limit 0,9 ",TABLEPRE,TABLEPRE,$e_shop_info['shop_id']);
-$case_arr = dbfactory::query($sql);
+$member_info['user_type']==2 and $w=" auth_code!='realname' "  or $w='';
+ isset($w) and $auth_item_list = keke_auth_base_class::get_auth_item ( null, null, 1 ,$w);
+$auth_temp = array_keys ( $auth_item_list );
+$t = implode ( ",", $auth_temp );
+$auth_info = db_factory::query ( " select a.auth_code,a.auth_status,b.auth_title,b.auth_small_ico,b.auth_small_n_ico from " . TABLEPRE . "witkey_auth_record a left join " . TABLEPRE . "witkey_auth_item b on a.auth_code=b.auth_code where a.uid ='$uid' and FIND_IN_SET(a.auth_code,'$t')", 1, -1 ); 
+$auth_info = kekezu::get_arr_by_key ( $auth_info, "auth_code" );
+$e_desc    = preg_replace("/<img(.*)\/>/iU",'', $e_shop_info['shop_desc']);
 
 //商品展示
-$sql = sprintf("select * from %switkey_service where uid = %d order by  service_id desc limit 0,3",TABLEPRE,$member_id);
-$shop_arr = dbfactory::query($sql);
+$sql = sprintf("select * from %switkey_service where uid = %d and  service_status = 2 order by  service_id desc limit 0,6",TABLEPRE,$member_id);
+$shop_arr = db_factory::query($sql);
+
 //获取认证项
-$sql =sprintf("select * from %switkey_member_ext where uid=%d and type='cert'",TABLEPRE,$member_id);
-$cert_count = dbfactory::execute($sql);
-//服务领域
-$indus_arr = explode(",",  $e_shop_info['service_range']);
- //任务时间描述
-function task_time_desc($model_id,$status, $end_time) {
-	global $end_time_arr;
-	$now_time = time ();
-	$desc_time = $end_time - $now_time;
-	$sy_time = Keke::time2Units ( $desc_time );
-	if(!$end_time){
-		return $end_time_arr[$model_id][$status]['desc'];
-	}
-	if($sy_time){
-		return $sy_time."后".$end_time_arr[$model_id][$status]['desc'];
-	} 
-}
-require Keke_tpl::template(SKIN_PATH."/space/{$type}_{$view}");
+$cert = db_factory::query(sprintf("select * from %switkey_member_ext where uid=%d and type='cert'",TABLEPRE,$member_id));
+
+require keke_tpl_class::template(SKIN_PATH."/space/{$type}_{$view}");

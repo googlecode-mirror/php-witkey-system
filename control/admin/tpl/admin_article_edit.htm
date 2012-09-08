@@ -4,15 +4,15 @@
  <div class="page_title">
     	<h1>{$_lang['article']}{$_lang['manage']}</h1>
         <div class="tool">
-            <a href="index.php?do=$do&view=list&type=$type" {if $view=='list'}class="here" {/if}>{if $type=='art'}{$_lang['article']}{elseif $type=='help'}{$_lang['help']}{else}{$_lang['single_page']}{/if}{$_lang['list']}</a>
-            <a href="index.php?do=$do&view=edit&type=$type" {if $view=='edit'}class="here" {/if}>{if $type=='art'}{$_lang['article']}{elseif $type=='help'}{$_lang['help']}{else}{$_lang['single_page']}{/if}{if $art_id}{$_lang['edit']}{else}{$_lang['add']}{/if}</a>
+            <a href="index.php?do=$do&view=list&type=$type" {if $view=='list'}class="here" {/if}>{if $type=='art'}{$_lang['article']}{elseif $type=='help'}{$_lang['help']}{elseif $type=='bulletin'}{$_lang['bulletin']}{elseif $type=='about'}{$_lang['about']}{else}{$_lang['single_page']}{/if}{$_lang['list']}</a>
+            <a href="index.php?do=$do&view=edit&type=$type" {if $view=='edit'}class="here" {/if}>{if $type=='art'}{$_lang['article']}{elseif $type=='help'}{$_lang['help']}{elseif $type=='bulletin'}{$_lang['bulletin']}{elseif $type=='about'}{$_lang['about']}{else}{$_lang['single_page']}{/if}{if $art_id}{$_lang['edit']}{else}{$_lang['add']}{/if}</a>
     	</div>
 </div>
 <!--页头结束-->    
 
 <div class="box post">
     <div class="tabcon">
-        	<div class="title"><h2>{if $art_id}{$_lang['edit']}{else}{$_lang['add']}{/if}{if $type=='art'}{$_lang['article']}{elseif $type=='help'}{$_lang['help']}{else}{$_lang['single_page']}{/if}</h2></div>       	
+        	<div class="title"><h2>{if $art_id}{$_lang['edit']}{else}{$_lang['add']}{/if}{if $type=='art'}{$_lang['article']}{elseif $type=='help'}{$_lang['help']}{elseif $type=='bulletin'}{$_lang['bulletin']}{elseif $type=='about'}{$_lang['about']}{else}{$_lang['single_page']}{/if}</h2></div>       	
             <div class="detail">
                 <form method="post" action="index.php?do={$do}&view={$view}" id="frm_art_edit" enctype="multipart/form-data">
                 <input type="hidden" name="pk[art_id]" value="{$art_info['art_id']}" id='art_id'>
@@ -20,19 +20,19 @@
                     <table width="100%" border="0" cellspacing="0" cellpadding="0">
                     
                       <tr>
-                        <th scope="row" width="130">{if $type=='art'}{$_lang['article']}{elseif $type=='help'}{$_lang['help']}{else}{$_lang['single_page']}{/if}{$_lang['title']}{$_lang['zh_mh']}</th>
+                        <th scope="row" width="130">{if $type=='art'}{$_lang['article']}{elseif $type=='help'}{$_lang['help']}{elseif $type=='bulletin'}{$_lang['bulletin']}{elseif $type=='about'}{$_lang['about']}{else}{$_lang['single_page']}{/if}{$_lang['title']}{$_lang['zh_mh']}</th>
                         <td>
 	                        <input type="text" name="fields[art_title]" id="txt_art_title"  value="{$art_info['art_title']}" maxlength="100"  class="txt" style=" width:260px;"
 	                        limit="required:true;len:3-100;general:false" 
-	                        msg="{if $type=='art'}{$_lang['article']}{elseif $type=='help'}{$_lang['help']}{else}{$_lang['single_page']}{/if}{$_lang['some_restrictions_about_title']}" 
+	                        msg="{if $type=='art'}{$_lang['article']}{elseif $type=='help'}{$_lang['help']}{elseif $type=='bulletin'}{$_lang['bulletin']}{elseif $type=='about'}{$_lang['about']}{else}{$_lang['single_page']}{/if}{$_lang['some_restrictions_about_title']}" 
 	                        msgArea="art_title_msg" 
 	                        title='{$_lang['please_input']}{if $type=='art'}{$_lang['article']}{elseif $type=='help'}{$_lang['help']}{else}{$_lang['single_page']}{/if}{$_lang['the_title']}' />
 	                        <span id="art_title_msg"></span>
                         </td>
                       </tr>
-                      
+                      {if $type=='art' or $type=='help'}
                       <tr>
-                        <th scope="row">{if $type=='art'}{$_lang['article']}{elseif $type=='help'}{$_lang['help']}{else}{$_lang['single_page']}{/if}{$_lang['category']}{$_lang['zh_mh']}</th>
+                        <th scope="row">{if $type=='art'}{$_lang['article']}{elseif $type=='help'}{$_lang['help']}{elseif $type=='bulletin'}{$_lang['bulletin']}{elseif $type=='about'}{$_lang['about']}{else}{$_lang['single_page']}{/if}{$_lang['category']}{$_lang['zh_mh']}</th>
                         <td> 
                          <select name="fields[art_cat_id]" id="slt_cat_id" style=" width:270px;"
                          			 limit = "required:true;type:int" 
@@ -62,10 +62,12 @@
 	                        {/loop}
 							
 	                     </select>
-	                     <span id="msg_cat_id"></span> 
+	                     <span id="msg_cat_id"></span>
+						 {if $type=='help'}<span>请勿选择父级分类，添加在父级分类下的帮助会无法在帮助中心展示</span>{/if} 
 	                	</td>
+						
                       </tr>
-					 
+					 {/if}
                       
                       <tr>
                         <th scope="row">{$_lang['order']}{$_lang['zh_mh']}</th>
@@ -76,7 +78,7 @@
 						    maxlength="5" 
 								limit = "required:true;type:int" 
                                 onkeyup="clearstr(this)"
-                                msg = '{$_lang['please_input']}{if $type=='art'}{$_lang['article']}{elseif $type=='help'}{$_lang['help']}{else}{$_lang['single_page']}{/if}{$_lang['order']}' 
+                                msg = '{$_lang['please_input']}{if $type=='art'}{$_lang['article']}{elseif $type=='help'}{$_lang['help']}{elseif $type=='bulletin'}{$_lang['bulletin']}{elseif $type=='about'}{$_lang['about']}{else}{$_lang['single_page']}{/if}{$_lang['order']}' 
                                 title='{if $type=='art'}{$_lang['article']}{elseif $type=='help'}{$_lang['help']}{else}{$_lang['single_page']}{/if}{$_lang['order']}' 
                                 msgArea="slt_txt_listorder"/><span id="slt_txt_listorder"></span>
                         </td>
@@ -102,7 +104,7 @@
 						value="$art_source"
                         			 limit = "required:false" 
                                      msg = '{$_lang['choose_from']}' 
-                                     title='{if $type=='art'}{$_lang['article']}{elseif $type=='help'}{$_lang['help']}{else}{$_lang['single_page']}{/if}{$_lang['from_where']}{$_lang['zh_wh']}' 
+                                     title='{if $type=='art'}{$_lang['article']}{elseif $type=='help'}{$_lang['help']}{elseif $type=='bulletin'}{$_lang['bulletin']}{elseif $type=='about'}{$_lang['about']}{else}{$_lang['single_page']}{/if}{$_lang['from_where']}{$_lang['zh_wh']}' 
                                      msgArea="msg_art_source"/><span id="msg_art_source"></span>
                        </td>
                       </tr>
@@ -118,7 +120,7 @@
                       
 					  
 					  
-					  {if $type != 'help'}
+					 {if $type=='art'}
                       <tr>
                         <th scope="row">{$_lang['upload_image']}:</th>
                         <td id="t_pic" class=" p_relative"> 
@@ -196,7 +198,7 @@
 					  
 					  
                       <tr>
-                        <th scope="row">{if $type=='art'}{$_lang['article']}{elseif $type=='help'}{$_lang['help']}{else}{$_lang['single_page']}{/if}{$_lang['content']}{$_lang['zh_mh']}</th>
+                        <th scope="row">{if $type=='art'}{$_lang['article']}{elseif $type=='help'}{$_lang['help']}{elseif $type=='bulletin'}{$_lang['bulletin']}{elseif $type=='about'}{$_lang['about']}{else}{$_lang['single_page']}{/if}{$_lang['content']}{$_lang['zh_mh']}</th>
                         <td>
                          <textarea rows="30" name="fields[content]" style="width:75%;" id="tar_content"  class="xheditor {urlBase:'$_K['siteurl']/',tools:'simple',admin:'../../',html5Upload:false,emotMark:false,upImgUrl:'../../index.php?do=ajax&view=upload&file_type=att'}" cols="70">{$art_info['content']}</textarea>
 						</td>

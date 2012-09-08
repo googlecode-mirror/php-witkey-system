@@ -1,4 +1,4 @@
-<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * 用户管理
  */
@@ -36,6 +36,19 @@ switch ($op) {
 		keke_msg_class::notify_user ( $memberinfo_arr ['uid'], $memberinfo_arr ['username'], 'unfreeze', $_lang['user_unfreeze'], $v_arr );
 		kekezu::admin_system_log ( $_lang['unfreeze_member'] . $memberinfo_arr ['username'] );
 		kekezu::admin_show_msg ( $_lang['operate_success'], "index.php?do=user&view=list", 3, '', 'success' );
+		break;
+	case 'recommend'://推荐
+		$sql = sprintf ( "update  %switkey_space set recommend=1 where uid =%d", TABLEPRE, $edituid );
+		db_factory::execute ( $sql );
+		kekezu::admin_system_log ( $_lang['recommend'] . $memberinfo_arr ['username'] );
+		kekezu::admin_show_msg ( $_lang['operate_success'], $url_str.'&page='.$page, 3, '', 'success' );
+		
+		break;
+	case 'move_recommend'://取消推荐
+		$sql = sprintf ( "update  %switkey_space set recommend=0 where uid =%d", TABLEPRE, $edituid );
+		db_factory::execute ( $sql );
+		kekezu::admin_system_log ( $_lang['move_recommend'] . $memberinfo_arr ['username'] );
+		kekezu::admin_show_msg ( $_lang['operate_success'], $url_str.'&page='.$page, 3, '', 'success' );
 		break;
 }
 
@@ -85,11 +98,16 @@ if ($sbt_action && is_array ( $ckb )) {
 	$slt_static == 1 and $where_str .= "and status=1 ";
 	$slt_static == 2 and $where_str .= "and status=2 ";
 	$ord and $where_str .= " order by {$ord['0']} {$ord['1']}" or $where_str .= " order by uid desc";	
-	$res = $table_class->get_grid ( $where_str, $url_str, $page, $slt_page_size, null, 1, 'ajax_dom' );
+	$res = $table_class->get_grid ( $where_str, $url_str, $page, $slt_page_size, null,1,'ajax_dom');
 	$userlist_arr = $res ['data'];
 	$pages = $res ['pages'];
+	$uids = array();
+	foreach((array)$userlist_arr as $v){
+		$uids[] = $v['uid'];
+	}
+	$shop_open = kekezu::get_table_data('shop_id,uid','witkey_shop','uid in ('.implode(',',$uids).')','','','','uid');
 }
 
-require Keke_tpl::template ( 'control/admin/tpl/admin_user_list' );
+require $template_obj->template ( 'control/admin/tpl/admin_user_list' );
 		
  

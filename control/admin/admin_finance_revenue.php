@@ -1,4 +1,4 @@
-<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 /*
  * @author Chen
  * @version v 2.0
@@ -23,16 +23,9 @@ if($st==$ed&&$st==$today){
 }
 $desc = '<font color="red">'.$desc.'</font>';
 /**
- * 财务概况。默认当天
- */
-$in = db_factory::get_one(sprintf(' select sum(abs(fina_cash)) c,sum(fina_credit) s from %switkey_finance where fina_type = "in"',TABLEPRE).$f_sql);//收入
-$fina_in = $in['c']+$in['s'];
-$fina_pro= db_factory::get_count(sprintf(' select sum(site_profit) c from %switkey_finance where site_profit>0 ',TABLEPRE).$f_sql);//盈利
-$fina_wid= db_factory::get_count(sprintf(' select sum(withdraw_cash) c from %switkey_withdraw where 1 = 1 ',TABLEPRE).$w_sql);//提现
-/**
  * 收支统计。默认当天
  */
-$ops = array('in','profit','withdraw');
+$ops = array('in','profit','withdraw','charge');
 in_array($op,$ops) or $op ='in';
 switch ($op){
 	case 'in'://收入
@@ -48,10 +41,6 @@ switch ($op){
 		$service   = db_factory::query($sql.$s_sql.$f_sql.' group by model_id',1,3600);//服务销售
 		$payitem   = db_factory::get_one($sql.sprintf(' from %switkey_finance where fina_type="out"
 						 and obj_type="payitem" ',TABLEPRE).$f_sql,1,3600);//增值购买
-		$r_sql     = sprintf(' ,obj_type from %switkey_finance
-						 where INSTR(obj_type,"_charge")>0  and fina_type = "in"',TABLEPRE);
-		$charge    = db_factory::query($sql.$r_sql.$f_sql.' group by obj_type ',1,3600);//用户充值
-		$fina_type = keke_glob_class::get_fina_charge_type();
 		break;
 	case 'profit'://盈利
 		$sql      = sprintf(' select sum(site_profit) c from %switkey_finance where site_profit>0 ',TABLEPRE);
@@ -70,6 +59,14 @@ switch ($op){
 		$list&&$list = kekezu::get_arr_by_key($list,'pay_type');
 		$bank_arr = keke_glob_class::get_bank();
 		$pay_online = kekezu::get_payment_config('','online');
+		break;
+	case 'charge':
+		$sql       = ' select sum(fina_cash) cash,sum(fina_credit) credit,count(fina_id) count ';
+		$r_sql     = sprintf(' ,obj_type from %switkey_finance
+						 where INSTR(obj_type,"_charge")>0  and fina_type = "in"',TABLEPRE);
+		$charge    = db_factory::query($sql.$r_sql.$f_sql.' group by obj_type ',1,3600);//用户充值
+		$charge    = kekezu::get_arr_by_key($charge,'obj_type');
+		$fina_type = keke_glob_class::get_fina_charge_type();
 		break;
 }
 require keke_tpl_class::template('control/admin/tpl/admin_finance_revenue');

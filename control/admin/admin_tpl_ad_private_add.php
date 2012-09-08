@@ -29,4 +29,4 @@ if ($target_id) {
 	$target_arr['position'] = var_export(unserialize($target_arr['position']),1);
 }
 
-require Keke_tpl::template ( 'control/admin/tpl/admin_' . $do . '_' . $view );
+require $template_obj->template ( 'control/admin/tpl/admin_' . $do . '_' . $view );

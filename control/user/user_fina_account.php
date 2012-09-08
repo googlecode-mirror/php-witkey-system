@@ -1,4 +1,4 @@
-<?php
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * @copyright keke-tech
  * @author Chen
@@ -6,7 +6,7 @@
  * 2011-10-8ÏÂÎç06:42:39
  */
 
-defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+
 
 $opps=array('add','list');
 

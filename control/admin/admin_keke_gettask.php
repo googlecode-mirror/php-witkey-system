@@ -6,7 +6,7 @@
  * 2012-2-17
  */
 
-defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 kekezu::admin_check_role ( 135 );
 include S_ROOT . '/keke_client/keke/config.php';
 $task_data_dir = S_ROOT . 'keke_client/keke/task_list.txt';
@@ -108,4 +108,4 @@ function get_cover_id($price_range) {
 	return $cove_id;
 }
 
-require Keke_tpl::template ( "control/admin/tpl/admin_{$do}_{$view}" );
+require $template_obj->template ( "control/admin/tpl/admin_{$do}_{$view}" );

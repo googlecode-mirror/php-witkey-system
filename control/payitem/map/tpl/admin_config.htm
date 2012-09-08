@@ -31,7 +31,7 @@
                         <td>
                         	<p>
                                 <label for="rdo_user_type_1">
-                                    <input type="radio" name="fds['user_type]" value="employer" id="rdo_user_type_1" {if !$payitem['user_type']||$payitem['user_type']=='employer'}checked="checked"{/if}/>{$_lang['employer']}
+                                    <input type="radio" name="fds[user_type]" value="employer" id="rdo_user_type_1" {if !$payitem['user_type']||$payitem['user_type']=='employer'}checked="checked"{/if}/>{$_lang['employer']}
                                 </label>
                                 <label for="rdo_user_type_2">
                                     <input name="fds[user_type]" type="radio" id="rdo_user_type_2" value="witkey" {if $payitem['user_type']=='witkey'}checked="checked"{/if} />{$_lang['witkey']}

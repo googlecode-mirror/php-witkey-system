@@ -1,4 +1,4 @@
-<?php
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * @copyright keke-tech
  * @author Chen
@@ -7,7 +7,7 @@
  * 2011-10-08ÏÂÎç02:57:33
  */
 
-defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+
 switch ($ajax) {
 	case "work_comment" : //¸å¼þ»Ø¸´
 		$comment_info = keke_task_class::get_comment ( 'work', $task_id, $work_id, $work_uid );
@@ -20,7 +20,7 @@ switch ($ajax) {
 		$data = keke_taobaoke_class::get_items_info ( $nick, $page_no );
 		break;
 }
-require Keke_tpl::template ( "ajax/ajax_" . $view );
+require keke_tpl_class::template ( "ajax/ajax_" . $view );
 
 
 

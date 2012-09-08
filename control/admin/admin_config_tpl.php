@@ -1,4 +1,4 @@
-<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * Ä£°å¹ÜÀí
  * @author S
@@ -25,7 +25,7 @@ function get_skin_type(){
 }
 
 if ($sbt_edit) {	
-	if ($sbt_edit == $_lang['submit']) {		
+	if ($sbt_edit == $_lang['use']) {		
 		$config_tpl_obj->setWhere ( 'tpl_id=' . $rdo_is_selected );
 		$config_tpl_obj->setIs_selected ( 1 );
 		$res = $config_tpl_obj->edit_keke_witkey_template ();
@@ -33,9 +33,9 @@ if ($sbt_edit) {
 		if(is_array($skin)&&!empty($skin)){
 			foreach($skin as $k=>$v){
 				db_factory::execute(sprintf(" update %switkey_template set tpl_pic ='%s' where tpl_title='%s'",TABLEPRE,$v,$k));
+				//$_SESSION['theme']=$v;
 			}
 		}
-		
 		$config_tpl_obj = new Keke_witkey_template_class ();
 		$config_tpl_obj->setWhere ( 'tpl_id!=' . $rdo_is_selected );
 		$config_tpl_obj->setIs_selected ( 2 );
@@ -140,4 +140,4 @@ if ($delid) {
 	}
 }
 
-require Keke_tpl::template ( 'control/admin/tpl/admin_config_' . $view );
+require $template_obj->template ( 'control/admin/tpl/admin_config_' . $view );

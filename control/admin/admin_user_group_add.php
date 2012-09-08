@@ -1,4 +1,4 @@
-<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 
  
 $menuset_arr = keke_admin_class::get_admin_menu ();
@@ -35,5 +35,5 @@ if ($op == 'add') {
 	}
 	$grouprole_arr = array (); 
 	$editgid and $grouprole_arr = explode ( ',', $groupinfo_arr ['group_roles'] ); 
-	require Keke_tpl::template ( 'control/admin/tpl/admin_user_group_add' ); 
+	require $template_obj->template ( 'control/admin/tpl/admin_user_group_add' ); 
 }

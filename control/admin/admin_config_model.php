@@ -5,7 +5,7 @@
  * @version v 2.0
  * 2011-12-13
  */
-defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 kekezu::admin_check_role ( 37 );
 $model_type or $model_type = 'task';
 kekezu::empty_cache();
@@ -14,7 +14,8 @@ if ($op == "open") {
 	$model_obj->setWhere ( "model_id = $model_id" );
 	$model_obj->setModel_status ( 1 );
 	$model_obj->edit_keke_witkey_model ();
-	
+	$file_obj = new keke_file_class();
+	$file_obj->delete_files(S_ROOT."./data/data_cache/");
 	kekezu::admin_system_log ( $_lang ['open_task_model'] . $model_list [$model_id] [model_name] );
 	kekezu::admin_show_msg ( $_lang ['operate_success'], "index.php?do=config&view=model&model_type=$model_type", 2, '', 'success' );
 } elseif ($op == 'close') {
@@ -22,6 +23,8 @@ if ($op == "open") {
 	$model_obj->setWhere ( "model_id = $model_id" );
 	$model_obj->setModel_status ( 0 );
 	$model_obj->edit_keke_witkey_model ();
+		$file_obj = new keke_file_class();
+	$file_obj->delete_files(S_ROOT."./data/data_cache/");
 	kekezu::admin_system_log ( $_lang ['close_task_model'] . $model_list [$model_id] [model_name] );
 	kekezu::admin_show_msg ( $_lang ['operate_success'], "index.php?do=config&view=model&model_type=$model_type", 2, '', 'success' );
 } elseif ($op == 'add') {
@@ -38,6 +41,9 @@ if ($op == "open") {
 			kekezu::admin_show_msg ( $_lang ['model_add_success'], "index.php?do=config&view=model&model_type=$model_type", 2, '', 'success' );
 		}
 	}
+	
+	$file_obj = new keke_file_class();
+	$file_obj->delete_files(S_ROOT."./data/data_cache/");
 
 } elseif ($op == 'del') {
 	$model_obj = new Keke_witkey_model_class ();
@@ -50,6 +56,8 @@ if ($op == "open") {
 	}
 	
 	$model_obj->del_keke_witkey_model ();
+		$file_obj = new keke_file_class();
+	$file_obj->delete_files(S_ROOT."./data/data_cache/");
 	kekezu::admin_system_log ( $_lang ['delete_task_model'] . $model_list [$model_id] [model_name] );
 	kekezu::admin_show_msg ( $_lang ['model_unloading_success'], "index.php?do=config&view=model&model_type=$model_type", 2, '', 'success' );
 } elseif ($op == 'listorder') {
@@ -57,8 +65,10 @@ if ($op == "open") {
 	$model_obj->setWhere ( "model_id='$model_id'" );
 	$model_obj->setListorder ( $value ? $value : 0 );
 	$model_obj->edit_keke_witkey_model ();
+		$file_obj = new keke_file_class();
+	$file_obj->delete_files(S_ROOT."./data/data_cache/");
 	kekezu::admin_system_log ( $_lang ['edit_task_model'] . $model_list [$model_id] [model_name] );
 	die ();
 }
 $model_list = $kekezu->_model_list;
-require Keke_tpl::template ( 'control/admin/tpl/admin_config_model' );
+require $template_obj->template ( 'control/admin/tpl/admin_config_model' );

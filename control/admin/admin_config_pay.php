@@ -1,4 +1,4 @@
-<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * Ö§¸¶ÅäÖÃ
  * @author S
@@ -84,7 +84,7 @@ switch ($op) {
 				$res and kekezu::admin_show_msg ( $_lang ['edit_add_success'], "index.php?do=config&view=pay&op=offline", "3", '', 'success' ) or kekezu::admin_show_msg ( $_lang ['edit_add_fail'], "index.php?do=config&view=pay&op=offline", "3", '', 'warning' );
 			}
 			
-			require Keke_tpl::template ( 'control/admin/tpl/admin_config_' . $view . '_offline' );
+			require $template_obj->template ( 'control/admin/tpl/admin_config_' . $view . '_offline' );
 			die ();
 		}
 		break;
@@ -118,4 +118,4 @@ switch ($op) {
 		break;
 }
 
-require Keke_tpl::template ( 'control/admin/tpl/admin_config_' . $view );
+require $template_obj->template ( 'control/admin/tpl/admin_config_' . $view );

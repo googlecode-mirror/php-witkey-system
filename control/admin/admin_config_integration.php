@@ -1,4 +1,4 @@
-<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * 用户整合配置
  * @copyright keke-tech
@@ -100,7 +100,7 @@ if ($type == 'uc'){
 
 		kekezu::admin_show_msg($_lang['uc_integrate_success'],"index.php?do=config&view=integration",2,'','success');
 	}
-	require  Keke_tpl::template ( 'control/admin/tpl/admin_config_'.$view.'_uc' );
+	require  $template_obj->template ( 'control/admin/tpl/admin_config_'.$view.'_uc' );
 	die();
 }else if ($type=='pw'){
 	require_once S_ROOT.'/config/config_pw.php';
@@ -122,11 +122,11 @@ if ($type == 'uc'){
 		kekezu::admin_show_msg($_lang['phpwind_integrate_success'],"index.php?do=config&view=integration",2,'','success');
 		
 	}
-	require  Keke_tpl::template ( 'control/admin/tpl/admin_config_'.$view.'_pw' );
+	require  $template_obj->template ( 'control/admin/tpl/admin_config_'.$view.'_pw' );
 	die();
 }
 
-require  Keke_tpl::template ( 'control/admin/tpl/admin_config_'.$view );
+require  $template_obj->template ( 'control/admin/tpl/admin_config_'.$view );
 
 
 

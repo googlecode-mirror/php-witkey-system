@@ -1,4 +1,4 @@
-<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * 支付配置
  * @author S
@@ -14,13 +14,16 @@ if(!empty($cid)){
 	$sql = sprintf("select * from %switkey_currencies where currencies_id ='%d' limit 0,1",TABLEPRE,$cid);
 	$currency_config = db_factory::get_one($sql);
 }
+
 //获取并保存，表单提交过来的值
 if($conf and $sbt_edit){
 	if(preg_match('/([a-z])+/i', $conf['code'])){ //货币代码只能为英文
 		$currencies_obj = new keke_table_class('witkey_currencies');
 		$conf['last_updated']=time();
-		$default_cur and $default_currency_conf = db_factory::execute(sprintf("update %switkey_basic_config set v='%s' where k='currency'",TABLEPRE,$default_cur));
-		$res = $currencies_obj->save($conf,$pk);
+		if($default_cur){
+			$default_currency_conf = db_factory::execute(sprintf("update %switkey_basic_config set v='%s' where k='currency'",TABLEPRE,$default_cur));
+			$_SESSION['currency'] = $default_cur;//更改默认币种、附带更改当前选择币种
+		}$res = $currencies_obj->save($conf,$pk);
 		if($res){
 			kekezu::admin_show_msg($_lang['operate_success'],$url,2,$_lang['edit_success'],"success");
 		}else{
@@ -31,4 +34,4 @@ if($conf and $sbt_edit){
 	}
 }
 
-require Keke_tpl::template ( 'control/admin/tpl/admin_config_' . $view.'_'.$op );
+require $template_obj->template ( 'control/admin/tpl/admin_config_' . $view.'_'.$op );

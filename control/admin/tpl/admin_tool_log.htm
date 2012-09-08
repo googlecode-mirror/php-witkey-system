@@ -62,23 +62,23 @@
 <div class="box list">
  	<div class="title"><h2>{$_lang['system_log']}</h2></div>
       	<div class="detail">
- 		<span style="color:red;">{$_lang['warm_prompt']}</span>
+ 		 <!--<span style="color:red;">{$_lang['warm_prompt']}</span>-->
 		<div id="ajax_dom">
 		<input type="hidden" name="page" value="{$page}">
   		<table width="100%" border="0" cellspacing="0" cellpadding="0" >
           <tr>
-          	<th width="15"><input type="checkbox" id="checkbox" onclick="checkall();"></th>
-            <th width="8%">ID</th>
-            <th width="10%">{$_lang['operator']}</th>
-			<th width="10%">{$_lang['user_groups']}</th>
-			<th width="35%">{$_lang['content']}</th>
+          	<th width="5%"><input type="checkbox" id="checkbox" onclick="checkall();">ID</th>
+      
+            <th width="5%">{$_lang['operator']}</th>
+			<th width="5%">{$_lang['user_groups']}</th>
+			<th width="40%">{$_lang['content']}</th>
             <th width="15%">{$_lang['time']}</th>
-			<th width="6%">{$_lang['delete']}</th>
+			<th width="10%">{$_lang['delete']}</th>
           </tr>
 		{loop $log_data $key $value}
         <tr class="item">
-        	<td><input type="checkbox" name="ckb[]" class="checkbox" value="{$value['log_id']}"></td>
-            <td>{$value['log_id']}</td>
+        	<td><input type="checkbox" name="ckb[]" class="checkbox" value="{$value['log_id']}">{$value['log_id']}</td>
+           
 			<td>{$value['username']}</td>
 			<td>{if $value['uid']==ADMIN_UID}{$_lang['public_admin_uid']}{else}{$group_arr[$value['user_type']]['groupname']}{/if}</td>
             <td><a  href="javascript:void(0)" title="{$value['log_content']}">{$value['log_content']}</a></td>

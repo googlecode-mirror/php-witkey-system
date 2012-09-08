@@ -1,4 +1,4 @@
-<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * 财务流水记录
  * @copyright keke-tech
@@ -58,4 +58,4 @@ if (isset ( $ac ) && $fina_id) { //处理财务清单申请
 	$finace_arr = $finace_obj->query_keke_witkey_finance ();
 
 }
-require Keke_tpl::template ( 'control/admin/tpl/admin_' . $do . '_' . $view );
+require $template_obj->template ( 'control/admin/tpl/admin_' . $do . '_' . $view );

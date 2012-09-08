@@ -1,4 +1,4 @@
-<?php
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * @copyright keke-tech
  * @author Chen
@@ -7,46 +7,46 @@
  * 2011-10-08下午02:57:33
  */
 
-defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+
 switch ($ajax) {
 	case "user_detail" :
 		$user_info 		= keke_user_class::get_user_info ( $user_id );
 		$take_num  		= intval($user_info['take_num']);
 		$accepted_num   = intval($user_info['accepted_num']);
 		$auth_info	    = keke_auth_fac_class::get_submit_auth_record ( $user_id, 1 );
-		$order_count	= intval ( dbfactory::get_count ( sprintf ( " select count(order_id) from %switkey_order where order_status='confirm' and seller_uid='%d' and model_id in(6,7)", TABLEPRE, $user_id ) ) );
+		$order_count	= intval ( db_factory::get_count ( sprintf ( " select count(order_id) from %switkey_order where order_status='confirm' and seller_uid='%d' and model_id in(6,7)", TABLEPRE, $user_id ) ) );
 		$buyer_aid	    = keke_user_mark_class::get_user_aid ( $user_id, '2', null, '1' );
 		break;
 	case 'show_secode':
 		 
-		require Keke_tpl::template('ajax/ajax_menu');
+		require keke_tpl_class::template('ajax/ajax_menu');
 		exit();
 	break;
 	case "set_comment" :
 		$comment_arr = array ("obj_id" => $obj_id, "origin_id" => $origin_id, "obj_type" => $obj_type, "p_id" => $p_id, "uid" => $uid, "username" => $username, "content" => $tar_content, "on_time" => time () );
-		Keke::set_leave ( $comment_arr, $type, $pk, '', 'json' );
+		kekezu::set_leave ( $comment_arr, $type, $pk, '', 'json' );
 		break;
 	case "load_comment" :
 	case "load_reply" :
 		if ($comment_id) {
-			$comm_info = dbfactory::get_one ( sprintf ( " select * from %switkey_comment where comment_id = '%d'", TABLEPRE, $comment_id ) );
+			$comm_info = db_factory::get_one ( sprintf ( " select * from %switkey_comment where comment_id = '%d'", TABLEPRE, $comment_id ) );
 		} else {
 			die ();
 		}
 		break;
 	case "del_comment" :
-		Keke::del_comment ( $pk, $obj_type, $comment_id, $origin_id, '', 'json' );
+		kekezu::del_comment ( $pk, $obj_type, $comment_id, $origin_id, '', 'json' );
 		break;
 	case "prom_link" :
-		$title = "获取推广链接";
+		$title = $_lang['get_promote_links'];;
 		$link = $_K [siteurl] . "/index.php?do=prom&u=" . $user_info ['uid'] . "&p=" . $prom_code;
 		$o and $link .= "&o=" . $o;
 		$l and $link .= "&l=" . $l;
 		$promtext or $promtext = $_K ['html_title'];
 		break;
 	case "prom_list" :
-		$model_list = Keke::$_model_list;
-		$page_obj = Keke::$_page_obj;
+		$model_list = $kekezu->_model_list;
+		$page_obj = $kekezu->_page_obj;
 		$page_obj->setAjax ( '1' );
 		$page_obj->setAjaxDom ( 'ajax_list' );
 		$page or $page = 1;
@@ -81,7 +81,7 @@ switch ($ajax) {
 		}
 		break;
 }
-require Keke_tpl::template ( "ajax/ajax_" . $view );
+require keke_tpl_class::template ( "ajax/ajax_" . $view );
 
 
 

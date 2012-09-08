@@ -75,7 +75,7 @@
               <table cellpadding="0" cellspacing="0">
                 <tbody>
                 <tr>
-                    <th width="8%">ID</th>
+                   
                     <th width="7%">{$_lang['show_order']}</th>
                     <th width="30%">{$_lang['industry_name']}</th>
                     <th width="10%">{$_lang['is_recommend']}</th>
@@ -87,8 +87,8 @@
                 {loop $indus_show_arr $k $v}
 				 <tbody id="indus_item_l_{$v['indus_id']}" {if $v['indus_pid'] && !$w}style="display:none;"{else}style="display:;"{/if}>
                   <tr class="item" align="center">
-                  	<td>$v['indus_id']</td>
-                    <td class="td28">
+                  	
+                    <td class="td28" align="left">
                     	<input type="text" size=3 class="txt" name="indus_item_listorder_{$v['indus_id']}" value="$v['listorder']" onblur="edit_listorder({$v['indus_id']},this.value)"></td>
                     <td align="left">
                     	$v['ext']
@@ -109,10 +109,10 @@
 								<a href="javascript:;" style="color:#ff6600" onclick="addchild({$v['indus_id']},'$v['ext']')">{$_lang['add_son_class']}</a>					
 							{/if}
 					</td>
-                    <td>{if $v['is_recommend']==1}{$_lang['recommend']}{else}{$_lang['no']}{/if}</td>
+                    <td align="left">{if $v['is_recommend']==1}{$_lang['recommend']}{else}{$_lang['no']}{/if}</td>
                      
-                    <td><!--{date('Y-m-d H:i:s',$v['on_time'])}--></td>
-                    <td>
+                    <td align="left"><!--{date('Y-m-d H:i:s',$v['on_time'])}--></td>
+                    <td align="left">
 						<a href="index.php?do={$do}&view=industry_edit&indus_id={$v['indus_id']}&indus_pid=$v['indus_pid']" class="button dbl_target"><span class="pen icon"></span>{$_lang['edit']}</a>
 						<a href="$url&indus_id=$v['indus_id']&ac=del"  onclick="return cdel(this);" class="button"><span class="trash icon"></span>{$_lang['delete']}</a>
 					</td>
@@ -162,8 +162,7 @@ var arr_editstatusarr = Array();
     		{ext = '|';}
     		if(ext!=' ')
     		{ext = '&nbsp;&nbsp;&nbsp;'+ext+'---';}
-    		var mod = '<tr class="item" align="center" id="newindus_c_'+newindus_c+'">';
-    			mod+='<td>&nbsp;</td>';
+    		var mod = '<tr class="item" id="newindus_c_'+newindus_c+'">';
     		  	mod+='<td class="td28">'+'<input type=text size=3 class="txt" name="add_indus_name_listarr['+pid+']['+newindus_c+']" size=3>';+'</td>';
     		  	mod+='<td>'+ext;
     			mod+='<input type=text class="txt" name="add_indus_name_arr['+pid+']['+newindus_c+']">';
@@ -172,7 +171,7 @@ var arr_editstatusarr = Array();
     	 
     		    mod+='<td>&nbsp;</td>';
     			mod+='<td>';
-    			mod+='<a href="javascript:;" onclick="$(\'#newindus_c_'+newindus_c+'\').remove()">';
+    			mod+='<a href="javascript:;" class="button" onclick="$(\'#newindus_c_'+newindus_c+'\').remove()">';
     			mod+='{$_lang['delete']}';
     			mod+='</a>';
     			mod+='</td>';

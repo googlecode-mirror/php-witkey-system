@@ -1,4 +1,4 @@
-<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * ¼¼ÄÜ±à¼­
  */
@@ -42,4 +42,4 @@ $temp_arr = array();
 kekezu::get_tree($indus_arr,$temp_arr,'option',$indus_id,'indus_id','indus_pid','indus_name');
 $indus_arr = $temp_arr;
 unset($temp_arr);
-require_once Keke_tpl::template ( 'control/admin/tpl/admin_task_' . $view );
+require_once $template_obj->template ( 'control/admin/tpl/admin_task_' . $view );

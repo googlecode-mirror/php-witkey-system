@@ -1,4 +1,4 @@
-<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * 后台广告列表显示页面
  * @copyright keke-tech
@@ -58,5 +58,5 @@
 	$ad_arr = $table_obj -> get_grid($where, $url, $page, $pagesize, null, 1, 'ajax_dom'); //var_dump($ad_arr);
 	$pages = $ad_arr['pages'];
 	$ad_arr = $ad_arr['data'];
-	require Keke_tpl::template ( 'control/admin/tpl/admin_' . $do . '_' . $view);
+	require $template_obj->template ( 'control/admin/tpl/admin_' . $do . '_' . $view);
   

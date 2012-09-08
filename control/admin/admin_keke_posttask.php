@@ -6,7 +6,7 @@
  * 2012-02-22 12:22:22
  */
 
-defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 kekezu::admin_check_role(137);
 include S_ROOT.'/keke_client/keke/config.php';
 $model_list = $kekezu->_model_list;

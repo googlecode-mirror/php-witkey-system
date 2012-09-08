@@ -1,4 +1,4 @@
-<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 
  /**
  * @copyright keke-tech
@@ -21,6 +21,7 @@ switch (isset($sbt_action)){
 		$perm_rule= keke_privission_class::get_model_priv_item ($model_id,$op_code,'op_id,op_code,condit,op_name,allow_times','op_code');
 		//获取权限配置
 		$perm_item = keke_privission_class::get_priv_item($model_id);
+	//var_dump($perm_item);
 
 		break;
 	case "1":

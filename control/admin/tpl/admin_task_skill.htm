@@ -70,8 +70,8 @@
               <table cellspacing="0" cellpadding="0">
                 <tbody>
                   <tr>
-                    <th width="15"><input type="checkbox" onclick="checkall();" id="checkbox" name="checkbox"/></th>
-					<th width="10%">ID</th>
+                    <th width="15"><input type="checkbox" onclick="checkall();" id="checkbox" name="checkbox"/>{$_lang['select_all']}</th>
+					
                     <th width="20%">{$_lang['by_industry']}</th>
                     <th width="25%">{$_lang['skill_name']}</th>
                     <th width="10%">{$_lang['order']}</th>
@@ -81,7 +81,7 @@
 				  {loop $skill_arr $k $v}	
                   <tr class="item">
                     <td class="td25"><input type="checkbox" class="checkbox" name="ckb[]" value="$v['skill_id']"></td>
-                    <td width="480">$v['skill_id']</td>
+                  
                     <td class="td28">$indus_show_arr[$v['indus_id']]['indus_name']</td>
 					<td>$v['skill_name']</td>
                     <td>$v['listorder']</td>

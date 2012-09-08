@@ -1,4 +1,4 @@
-<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * ¹ÜÀíÊ×Ò³
  * @copyright keke-tech
@@ -78,4 +78,4 @@ $sys = array (
 );
 $sysinfo = "http://www.kekezu.com/news.php?" . http_build_query ( $sys );
 
-require Keke_tpl::template ( 'control/admin/tpl/admin_' . $do );
+require $template_obj->template ( 'control/admin/tpl/admin_' . $do );

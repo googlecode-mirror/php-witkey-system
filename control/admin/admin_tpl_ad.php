@@ -1,4 +1,4 @@
-<?php	defined ( 'IN_KEKE' ) or die ( 'Access Denied' );
+<?php	defined ( 'ADMIN_KEKE' ) or die ( 'Access Denied' );
 /**
  * 后台广告位管理
  * @copyright keke-tech
@@ -19,4 +19,4 @@ while (list($key, $value) = each($target_arr)){
 	$target_ad_arr[$key] = $target_ad_num[$key]['num'] ? $target_ad_num[$key]['num'] : '0';
 }
  
-require Keke_tpl::template ( 'control/admin/tpl/admin_' . $do . '_' . $view );
+require $template_obj->template ( 'control/admin/tpl/admin_' . $do . '_' . $view );

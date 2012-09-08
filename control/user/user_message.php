@@ -1,4 +1,4 @@
-<?php
+<?php	defined ( 'IN_KEKE' ) or exit('Access Denied');
  /**
  * @copyright keke-tech
  * @author Chen
@@ -6,78 +6,113 @@
  * 2011-10-08下午02:57:33
  */
 
-defined ( 'IN_KEKE' ) or exit('Access Denied');
-
-$ops = array('inbox','outbox','send');
+$ops = array('inbox','output','send','views','del','mulit_del','mulit_views');
+in_array($op,$ops) or $op='inbox';
 $opps= array('system','inbox');
- 
-in_array($op,$ops) or $op ="inbox";
-in_array($opp, $opps) or $opp = "system";
+ $msg_obj = new keke_table_class('witkey_msg');
 
-intval($page) or $page = 1;
-$url_str = "index.php?do=$do&view=$view&op=$op&opp=$opp";
-$msg_obj = keke_table_class::get_instance("witkey_msg");
- 
-/**
- * 子集菜单
- */
 $sub_nav=array(
 			array("send"=>array( $_lang['write_message'],"doc-edit")),
 			array("inbox"=>array( $_lang['inbox'],"contact-card"),
-			   "outbox"=>array( $_lang['outbox'],"cc")));  
-/*删除动作*/
-if($ac=='del'&&$msg_id&&$op=='inbox'){
-    $res = $msg_obj->del("msg_id", intval($msg_id));
-    $res and Keke::show_msg( $_lang['delete_success'],$url_str."&page=$page",3,'','success') or Keke::show_msg( $_lang['delete_fail'],$url_str."&page=$page",3,"","warning");
-}elseif($ckb){
-   $res = $msg_obj->del("msg_id", array_filter($ckb));
-   $res and Keke::show_msg( $_lang['delete_selected_success'],$url_str."&page=$page",3,'','success') or Keke::show_msg( $_lang['select_null_for_delete'],$url_str."&page=$page",3,"","warning") ;
-}elseif($ac=='view'){
-	$msg  = $msg_obj->get_table_info("msg_id", $msg_id);	
-	if ($msg['uid']!=$uid&&$msg['to_uid']!=$uid){
-		Keke::show_msg( $_lang['message_does_not_exist'],$url_str,3,"","warning");
-	}elseif($msg['view_status']==0){
-		$msg_obj->save(array("view_status"=>"1"),array("msg_id"=>$msg_id));
-	}
-   require Keke_tpl::template ( "user/" . $do . "_".$view."_" . $ac);
-   exit();
-}else{
-	$where = "1=1 ";
-	switch ($op) {
-	 
-		case "inbox":
-			if($opp=='inbox'){
-				$where.="and uid>0 and to_uid=$uid and msg_status!=1  ";
-			}elseif($opp=='system'){
-				$where.="and uid<1 and to_uid=$uid and msg_status!=1 ";
-			}
+			   	"output"=>array( $_lang['outbox'],"cc")));  
+$msg_type = $msg_type?$msg_type:"system";
+$op=='output'&&$msg_type='output';
+$op=='send'&&$msg_type='write';
+//系统消息
+$sql = "select * from ".TABLEPRE."witkey_msg where ";
+$where  = "1=1 "; 
+$w1 =$where." and uid<1 and to_uid=".intval($uid);
+$count_system = db_factory::get_count("select count(msg_id) from ".TABLEPRE."witkey_msg where ".$w1);
+$w2 =$where." and uid = ".intval($uid)." and msg_status<1";
+$count_output = db_factory::get_count("select count(msg_id) from ".TABLEPRE."witkey_msg where ".$w2);
+$w3 = $where." and to_uid = ".intval($uid)." and uid>0";
+$count_accept =  db_factory::get_count("select count(msg_id) from ".TABLEPRE."witkey_msg where ".$w3);
+switch ($msg_type){ 
+	case "system"://系统消息
+			$where .=" and uid<1 and to_uid=".intval($uid);
+		break;
+	case "output"://已发短信
+			$where .=" and msg_status=0 and uid = ".intval($uid);
+		break;
+	
+	case "accept"://已收短信
+			$where .=" and to_uid = ".intval($uid)." and uid>0";
 		break;
 		 
-	}
-	$order .= " order by msg_id desc";
-	
-	$res = $msg_obj->get_grid($where, $url_str, $page,12,$order);
-	$data = $res['data'];
-	$pages = $res['pages'];
-}
-//var_dump($expression);
-if (isset ( $check_username ) && ! empty ( $check_username )) {
-	$res =  keke_user_class::check_username ( $check_username );
-	 
-	if(Keke::$_sys_config['user_intergration']==1){
-		if($res){
-			echo true;
-		}
-	}else{
-		if($res==-3){
-			echo true;
-		}
-	}
-	die ();
-}
-if($op=='send' || $op=='outbox'){
-	require 'user_'.$view.'_'.$op.'.php';
-}elseif($op=='inbox'){
-	require Keke_tpl::template ( "user/" . $do . "_".$view."_system");
+	case "write"://写短信
+			require 'user_message_send.php';
+			die();
+		break;
+		 
 }
 
+$k_where = $where;
+//查询
+$where .= " order by msg_id desc ";
+$url = "index.php?do=$do&view=$view&op=$op&msg_type=$msg_type";
+$page = $page ? $page : 1;
+$count = db_factory::get_count("select count(msg_id) from ".TABLEPRE."witkey_msg where ".$where);
+$pages = $kekezu->_page_obj->getPages ( $count, 10, $page, $url );
+$data = db_factory::query($sql.$where.$pages[where]);
+  
+
+if($op=='mulit_del' or $op=='mulit_views'){
+	$msg_id =  $ckb;
+}
+
+switch ($op) {
+	case 'mulit_del':
+	case 'del':  //删除和批量删除
+		if($msg_type=='system'||$msg_type=='accept'){ 
+			if($msg_id){ 
+				$res = $msg_obj->del("msg_id",$msg_id);
+			}else{
+			   kekezu::show_msg($_lang['operate_tips'],"index.php?do=$do&view=$view&msg_type=$msg_type",1,"没有选择操作的项","alert_error");
+			}
+		}else{ 	
+			is_array($msg_id) and $msg_id = implode(",", $msg_id); 
+			$res = db_factory::execute("update ".TABLEPRE."witkey_msg set msg_status=2 where msg_id in ($msg_id)");//改变短信状态值 
+		}  
+		kekezu::show_msg($_lang['operate_tips'],"index.php?do=$do&view=$view&msg_type=$msg_type",1,"删除成功","alert_right");
+
+	break;
+	case 'mulit_views':
+		if($msg_id){
+			is_array($msg_id) and $msg_id = implode(",", $msg_id); 
+			$msg_data = db_factory::query("select * from ".TABLEPRE."witkey_msg where msg_id in ($msg_id)");
+			foreach ($msg_data as $v) {
+				if($uid==$v['to_uid']&&$v['view_status']<1){
+					db_factory::execute("update ".TABLEPRE."witkey_msg set view_status=1 where msg_id = ".intval($v['msg_id']));
+				}
+			}
+		}else{
+		 	kekezu::show_msg($_lang['operate_tips'],"index.php?do=$do&view=$view&msg_type=$msg_type",1,"没有选择操作的项","alert_error");
+		}
+		
+		kekezu::show_msg($_lang['operate_tips'],"index.php?do=$do&view=$view&msg_type=$msg_type",1,$_lang['biaoji_success'],"alert_right");
+	break;
+	case "views"://查看
+		
+		$msg_id and $msg  = $msg_obj->get_table_info("msg_id", $msg_id);	
+		if($uid==$msg['to_uid']&&$msg['view_status']<1){
+			db_factory::execute("update ".TABLEPRE."witkey_msg set view_status=1 where msg_id = ".intval($msg_id));
+		}
+		$next = db_factory::get_one($sql.$k_where.' and msg_id<'.$msg_id.' order by msg_id desc limit 0,1');
+		$pre  = db_factory::get_one($sql.$k_where.' and msg_id>'.$msg_id.' order by msg_id asc limit 0,1');
+		require keke_tpl_class::template ( "user/user_message_view");die();
+	
+		break; 
+}
+ 
+
+if (isset ( $check_username ) && ! empty ( $check_username )) { 
+	$res =  keke_user_class::get_user_info($check_username,1);	  
+	if($res){
+		echo true;
+	}else{
+		echo $_lang['username_not_exist'];
+	} 
+	die ();
+}
+
+require keke_tpl_class::template ( "user/" . $do . "_".$view."_system");

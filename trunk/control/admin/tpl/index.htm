@@ -181,7 +181,9 @@ window.onload = function(){
     <a href="javascript:void(0)" id="href_title">{$_lang['faster_operate']}</a>
     <a href="#" onclick="shortcuts(this);" id="add_shortcuts" ac='add_shortcuts' 
 	title="{$_lang['add_faster_operate']}"><span class="font_st">[+]</span></a>
-	<span id='del_tips' class="success">删除中... 已经删除成功!</span>
+	<div id='del_tips' class="tips_box success">
+		<span  class="tips_info">删除中... 已经删除成功!</span>
+	</div>
     </div>
     <div class="other">
     		<input type="text" class="txt" name="fds[resource_name]" id="recource"/>

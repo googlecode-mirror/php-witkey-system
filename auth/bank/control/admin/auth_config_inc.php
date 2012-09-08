@@ -1,5 +1,5 @@
 <?php
-defined ( 'ADMIN_KEKE' ) or exit('Access Denied');
+defined ( 'IN_KEKE' ) or exit('Access Denied');
 $auth_config=array(
   'auth_code'=>'bank',
   'auth_title' =>$_lang['bank_auth'],

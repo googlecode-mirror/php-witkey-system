@@ -50,11 +50,22 @@ class Control_admin_case extends Controller{
 		
 		require Keke_tpl::template('control/admin/tpl/case');
 	}
+	
 	function action_add(){
 		global $_K,$_lang;
 		
 		require Keke_tpl::template('control/admin/tpl/case_add');
 		
+	}
+	function action_del(){
+		//删除单条
+		if($_GET['case_id']){
+			$where = 'case_id = '.$_GET['case_id'];
+			//删除多条
+		}elseif($_GET['case_ids']){
+			$where = 'case_id in ('.$_GET['case_ids'].')';
+		}
+		echo  Model::factory('witkey_case')->setWhere($where)->del();
 	}
 	
 }

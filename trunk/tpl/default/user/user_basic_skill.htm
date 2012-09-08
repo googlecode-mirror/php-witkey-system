@@ -5,19 +5,19 @@
         <section class="clearfix section">
             <!--{template user/user_side}-->
             <div class="show_panel container_24 po_re">
-                <div class="prefix_3">
+                <div class="prefix_3 grid_21">
                     <div class="panel clearfix box">
                         <!--main content-->
-                        <div class="grid_21">
+                        <div class="">
                             <!--header内容头部 start-->
                             <header class="clearfix box_header">
-                                <h2 class="grid_4 alpha box_title t_c">{$_lang['basics']}</h2>
-                                <div class="grid_17 omega">
+                                <h2 class="grid_4 alpha omega box_title t_c">{$_lang['basics']}</h2>
+                                <div class="grid_17 alpha omega">
                                     <nav class="box_nav ">
                                         <ul>
                                             {loop $third_nav $k $v}
                                             <li {if $k==$opp}class="selectedLava"{/if}>
-                                                <a href="{$ac_url}&opp={$k}#userCenter" title="{$v['1']}">{$v['0']}</a>
+                                                <a href="{$ac_url}&opp={$k}#userCenter" >{$v['0']}</a>
                                             </li>
                                             {/loop}
                                         </ul>
@@ -31,23 +31,22 @@
                                 <div class="clearfix box font14">
                                     <!--from表单 start-->
                                     <form action="{$ac_url}&opp={$opp}" method="post" id="frm" name="frm">
-                                        <!--技能经历start--><h2 class="bf7 prefix_1 suffix_1">{$_lang['skill_mark']}</h2>
                                         <!--messages消息 start-->
-                                        <div class="messages m_infor">
+                                        <div class="messages m_infor clearfix">
                                             <div class="icon16">info</div>
                                             {$_lang['skill_pic_msg']},{$_lang['skill_mark_at_most_five_item']}{$_lang['zh_th']}<a href="###" class="close">&times;</a>
                                         </div>
                                         <!--messages消息 end-->
                                         <div class="clearfix pb_20 pt_10">
                                             <div class="grid_9 suffix_1">
-                                                <h4 class="mb_10">{$_lang['tips_about_skill_mark']}</h4>
+                                                <h4 class="mb_10 messages m_warn">{$_lang['tips_about_skill_mark']}</h4>
                                                 <!--tags_box 标签 start-->
                                                 <div class="tags_box">
                                                 <span id="tags" type="text" class="tags" /></span>
                                             	</div><!--tags_box 标签 end-->
                                         	</div>
                                         <div class="grid_7">
-                                            <h4 class="mb_10 border_b_c">{$_lang['add_skill_mark']}</h4>
+                                            <h4 class="mb_10 border_b_c messages m_warn">{$_lang['add_skill_mark']}</h4>
                                             <div class="">
                                                 <div class="grid_2">
                                                     <label>
@@ -127,7 +126,7 @@
                 $("#tags").addTag(name);
             }
             else {
-                showDialog("{$_lang['selfselect_skill_at_most_five_item']}", 'alert', "{$_lang['operate_notice']}");
+                showDialog("{$_lang['selfselect_skill_at_most_five_item']}", 'notice', "{$_lang['operate_notice']}");
             }
         }
     }
@@ -145,9 +144,9 @@
             tag_str = tags.join(',');
             tag_str = escape(tag_str);
         }
-        $.post("$ac_url&opp=$opp&ac=save_skill&skill=" + tag_str, function(json){
+        $.post("$ac_url&opp=$opp&ac=save_skill",{'skill':tag_str}, function(json){
             if (json.msg) {
-                showDialog("{$_lang['skill_mark_has_been_saved']}!", 'notice', "{$_lang['operate_notice']}");
+                showDialog("{$_lang['skill_mark_has_been_saved']}!", 'right', "{$_lang['operate_notice']}");
             }
             else {
                 showDialog("{$_lang['skill_mark_save_fail']}!", 'alert', "{$_lang['operate_notice']}");
@@ -163,9 +162,10 @@
             'defaultText': ''
         });
         skills = "$user_skill";
+		
         s = skills.split(',');
         for (i = 0; i < s.length; i++) {
-            $("#tags").addTag(s['i']);
+            $("#tags").addTag(s[i]);
         }
         
     }

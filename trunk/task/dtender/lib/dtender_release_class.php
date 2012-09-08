@@ -65,12 +65,12 @@ class dtender_release_class extends keke_task_release_class {
 			case "onekey" :
 				if (! $release_info) {
 					$sql = " select model_id,task_title,task_desc,indus_id,indus_pid,
-						task_cash,task_cash_coverage from %switkey_task where task_id='%d' and model_id='%d'";
-					$task_info = dbfactory::get_one ( sprintf ( $sql, TABLEPRE, $data ['t_id'] ,$this->_model_id));
-					$task_info or Keke::show_msg($_lang['operate_notice'],$_SERVER['HTTP_REFERER'],3,$_lang['not_exsist_relation_task_and_not_user_onekey'],"warning");
+						task_cash,task_cash_coverage,contact from %switkey_task where task_id='%d' and model_id='%d'";
+					$task_info = db_factory::get_one ( sprintf ( $sql, TABLEPRE, $data ['t_id'] ,$this->_model_id));
+					$task_info or kekezu::show_msg($_lang['operate_notice'],$_SERVER['HTTP_REFERER'],3,$_lang['not_exsist_relation_task_and_not_user_onekey'],"warning");
 					
 					$release_info = $this->onekey_mode_format($task_info);
-					$release_info ['slt_cash_cove'] = intval ( $task_info ['task_cash_coverage'] );
+					$release_info ['task_cash_cove'] = intval ( $task_info ['task_cash_coverage'] );
 					$this->save_task_obj ( $release_info, $std_cache_name ); //信息保存
 				}
 				break;
@@ -86,25 +86,23 @@ class dtender_release_class extends keke_task_release_class {
 	public function pub_task() {
 		$task_obj = $this->_task_obj;
 		$std_obj = $this->_std_obj;
-		$is_trust = false;
-		$this->_std_obj->_release_info['trust'] and $is_trust=true;
 		//发布信息公共处理部
 		$this->public_pubtask();		
 		$real_cash = $this->_task_config['deposit'];//任务佣金	
 		$task_obj->setTask_cash (0); //任务金额重置			
 		$task_obj->setReal_cash ($real_cash ); //实际佣金重置		
-		$this->set_dtask_status($this->get_total_cash($real_cash), $real_cash,$is_trust);		
+		$this->set_dtask_status($this->get_total_cash($real_cash), $real_cash);		
 		$task_obj->setStart_time ( time () ); //任务开始时间
 		$task_obj->setEnd_time ( time () + intval ( $this->_task_config['bid_time'] ) * 24 * 3600 ); //任务投稿期
 		$task_obj->setSub_time ( time () + intval ( $this->_task_config['bid_time'] + $this->_task_config ['select_time'] ) * 24 * 3600 ); //任务选稿期		
-		$task_obj->setTask_cash_coverage($this->_std_obj->_release_info['slt_cash_cove']);
+		$task_obj->setTask_cash_coverage($this->_std_obj->_release_info['task_cash_cove']);
 		$task_id = $task_obj->create_keke_witkey_task ();
 		return $task_id;
 	}	
 	
 	public function set_dtask_status($total_cash, $task_cash) {
 		global $kekezu;
-		$basic_config = Keke::$_sys_config;
+		$basic_config = $kekezu->_sys_config;
 		$balance = $this->_user_info ['balance'];
 		$credit = $this->_user_info ['credit'];
 		if ($balance + $credit >= $total_cash) { //用户金额满足总花费的情况下

@@ -3,7 +3,7 @@ error_reporting(0);
 define('P_W','admincp');
 define("IN_KEKE",true);
 $close_allow_fxx = 1;
-require_once '../../app_boot.php';
+require_once '../../app_comm.php';
 require_once(S_ROOT.'./config/config_pw.php');
 
 

@@ -1,6 +1,6 @@
 <!--{template header}--><!--µ¯´°--> 
-<div class="{$_K['theme']}_style">
- <div class="clearfix pad10" style="width:700px">  
+<div class="winbody {$_K['theme']}_style" style="width:700px">
+ <div class="clearfix pad10">  
  <!--messagesÏûÏ¢ start-->
   <div class="messages m_infor">
     <span class="icon16">warning</span>
@@ -14,7 +14,7 @@
     	<div class="rowElem clearfix">
 				<div style='display:inline;'>
 					<label>{$_lang['tender_quotation']}:</label>
-					 	<input type="text" size="4" name="quote" class="txt" value="{$base_info[quote]}" id="quote" onkeyup="clearstr(this)" limit="required:true;type:float" maxlength="6" msg="{$_lang['bid_price_wrong']}" tilte="{$_lang['fill_bid_price']}" msgArea="span_cycle">
+		 			 	<input type="text" size="4" name="quote" class="txt" value="{$base_info[quote]}" id="quote" onkeyup="clearstr(this)" limit="required:true;type:float" maxlength="6" msg="{$_lang['bid_price_wrong']}" tilte="{$_lang['fill_bid_price']}" msgArea="span_cycle">
 	                    <span class="ml_5">{$_lang['yuan']}</span>
 					<label>,{$_lang['work_time']}{$_lang['zh_mh']}</label>
 					 	<input type="text" size="1" name="cycle" class="txt" value="{$base_info[cycle]}" id="cycle" onkeyup="clearstr(this)" limit="required:true;type:int" maxlength="4" msg="{$_lang['work_time_wrong']}" tilte="{$_lang['fill_work_time']}" msgArea="span_cycle">
@@ -99,7 +99,7 @@
       </div> 
 	  {/if} 	 
       <div class="rowElem clearfix form_button">
-       	 	 <button type="button" class="button" value="{$_lang['save']}" onclick="subWork()"><span class="check icon"></span>{$_lang['save']}</button>
+       	 	 <button type="button" class="button" id="sbt_btn" value="{$_lang['save']}" onclick="subWork()"><span class="check icon"></span>{$_lang['save']}</button>
 		 	 <button type="button" class="button" value="{$_lang['cancel']}" onclick="closeWindow('{$op}')"><span class="reload icon"></span>{$_lang['cancel']}</button>
       </div>
    </form>
@@ -109,7 +109,8 @@
 </div> 
 <script type="text/javascript">
 	In.add('pop_window',{path:"{$_K[siteurl]}/resource/js/system/pop_window.js",type:'js'});
-	In('form','pop_window','pcas',function(){
+	In.add('dtender_task',{path:"task/{$model_code}/{SKIN_PATH}/{$model_code}_task.js",type:'js'});
+	In('form','dtender_task','pop_window','calendar','pcas',function(){
 	    new PCAS("province","city","area","{$loca[0]}","{$loca[1]}","{$loca[2]}");
 	});
 function subWork(){
@@ -117,6 +118,7 @@ function subWork(){
 	if(i&&check_cash()){
 		var shtml 	 = contentCheck();
 		if(shtml){
+			$("#sbt_btn").attr("disabled","disabled");
 			var data= $("#frm").serialize();
 			$.post('index.php?do=task&task_id={$task_id}&op={$op}&'+data,{sbt_edit:true},
 			function(json){

@@ -64,21 +64,20 @@
 				<input type="hidden" name="txt_task_cash" value="{$task_config[deposit]}">	
         		<div class="rowElem clearfix po_re">
           			<label class="grid_4"><strong>{$_lang['budget']}{$_lang['zh_mh']}</strong></label>
-           			<div class="grid_10">
-           			<select name="slt_cash_cove" id="slt_cash_cove"  limit="required:truet;ype:int"  msg="{$_lang['budegt_msg']}" title="{$_lang['budget_title']}" msgArea="span_cash_cove" style="width:180px;">
+           			<div class="grid_12">
+           			<select name="task_cash_cove" id="task_cash_cove"  limit="required:truet;ype:int"  msg="{$_lang['budegt_msg']}" title="{$_lang['budget_title']}" msgArea="span_cash_cove" style="width:180px;">
        				<option value="">{$_lang['please_choose']}</option>
 					{loop $cash_cove $v}
-					<option value="{$v['cash_rule_id']}" {if $release_info[slt_cash_cove]==$v[cash_rule_id]} selected="selected" {/if} >{$v['cove_desc']}</option>
+					<option value="{$v['cash_rule_id']}" {if $release_info[task_cash_cove]==$v[cash_rule_id]} selected="selected" {/if} >{$v['cove_desc']}</option>
 					{/loop}
 					</select>
-				<div class="clear"></div>
-				<div id="span_cash_cove"></div>			
+						<span id="span_cash_cove"  class="ml_5"></span>			
            			</div>
         		</div>
       
         		<div class="rowElem clearfix">
            			<label class="grid_4"><strong>{$_lang['cash_assign']}{$_lang['zh_mh']}</strong></label>
-             		<div class="grid_6 mt_5"><strong>{$_lang['single_reward']}</strong></div>
+             		<div class="grid_6"><strong>{$_lang['single_reward']}</strong></div>
         		</div>
      		</form>
    		 </div>
@@ -91,13 +90,13 @@
 <div class="grid_7 alpha omega">
 	<div class=" prefix_1 suffix_1 pt_20">
     	<h3 class="font14b">{$_lang['what']}{$model_info[model_name]}£¿ </h3>
-        <p><!--{eval echo htmlspecialchars_decode($model_info[model_desc])}--></p>
+        <p><!--{eval echo kekezu::filter_input($model_info[model_desc])}--></p>
     </div>
 </div>
 <!--end ÓÒ±ß²¿·Ö-->
 <script type="text/javascript">
 	function stepCheck_ext(){
-		var slt_val = $("#slt_cash_cove").val(); 
+		var slt_val = $("#task_cash_cove").val(); 
 		if(!slt_val){
 			$("#span_cash_cove").addClass("valid_error").html("<span>{$_lang['choose_block']}</span>");	return false;		
 		}else{

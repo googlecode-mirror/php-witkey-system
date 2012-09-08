@@ -9,7 +9,7 @@ define ( "IN_KEKE", true );
 require_once (dirname ( dirname ( dirname ( __FILE__ ) ) ) . DIRECTORY_SEPARATOR . 'app_comm.php');
 require_once ("lib/alipay_notify.class.php");
 /** 担保配置*/
-$alipaydb_info = Keke::get_payment_config ( 'alipay_trust', 'trust' );
+$alipaydb_info = kekezu::get_payment_config ( 'alipay_trust', 'trust' );
 $payment_config = unserialize ( $alipaydb_info ['config'] );
 
 $_input_charset = strtoupper ( CHARSET );
@@ -17,7 +17,7 @@ $sign_type = "DSA";
 
 $uid = $_SESSION['uid'];
 $username = $_SESSION['username'];
-$user_info = Keke::$_userinfo;
+$user_info = $kekezu->_userinfo;
 
 //计算得出通知验证结果
 $alipayNotify = new AlipayNotify ( $payment_config ['seller_id'], $sign_type, $_input_charset );

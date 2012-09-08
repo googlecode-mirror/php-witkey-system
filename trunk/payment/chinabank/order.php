@@ -29,7 +29,7 @@ function get_pay_url($charge_type,$pay_amount,$payment_config,$subject,$order_id
 	$return_url = $_K ['siteurl'] . '/payment/chinabank/return.php';
 	$notify_url = $_K ['siteurl'] . '/payment/chinabank/notify.php';
 	$show_url = $_K ['siteurl'] . "/index.php?do=user&view=finance";
-	$out_trade_no = "charge-{$charge_type}-{$uid}-{$obj_id}-{$order_id}-{$model_id}";
+	$out_trade_no = "charge-{$charge_type}-{$uid}-{$obj_id}-{$order_id}-{$model_id}-".date('His',time());
 	$total_money =$pay_amount ;
 	$charge_type=='order_charge' and $t = "订单充值" or $t="余额充值";
 	$body = $t."(from:".$username.")";
@@ -52,7 +52,7 @@ function build_postform($p) {
 		$sHtml.= "<input type='hidden' name='".$key."' value='".$val."'/>";
 	}
 
-	$sHtml = $sHtml."<input type='button' name='v_action' value='网银确认付款' onClick='document.forms[\"E_FORM\"].submit();'>";
+	$sHtml = $sHtml."<button type='submit' class='hidden' name='v_action' value='网银确认付款' onClick='document.forms[\"E_FORM\"].submit();'>网银确认付款</button>";
 	return $sHtml;
 }
 

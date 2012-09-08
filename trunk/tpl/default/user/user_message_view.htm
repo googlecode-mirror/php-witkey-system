@@ -6,26 +6,26 @@
         <section class="clearfix section">
         <!--{template user/user_side}-->
         <div class="show_panel container_24 po_re">
-        <div class="prefix_3">
+        <div class="prefix_3 grid_21">
             <div class="panel clearfix box">
                 <!--main content-->
-                <div class="grid_21">
+                <div class="">
                 	 <!--header内容头部 start-->
                             <header class="clearfix box_header">
                                 <h2 class="grid_4 alpha box_title t_c">{$_lang['view_message']}</h2>
 								 <nav class="box_nav ">
 	                                        <ul>
-                                            <li {if $op=='inbox'&&$opp=='system'}  class="selectedLava" {/if}>
-                                                <a href="index.php?do=$do&view=$view&op=inbox&opp=system" original-title="{$_lang['system_msg']}">{$_lang['system_msg']}</a>
+                                                <li {if $msg_type =='system'}  class="selectedLava" {/if}>
+                                                <a href="index.php?do=$do&view=$view&msg_type=system" original-title="{$_lang['system_msg']}">{$_lang['system_msg']}</a>
                                             </li>
-                                            <li {if $opp=='inbox'}  class="selectedLava" {/if}>
-                                                <a href="index.php?do=$do&view=$view&op=inbox&opp=inbox" original-title="{$_lang['private_message']}">{$_lang['private_message']}</a>
+                                            <li {if $msg_type=='accept'}  class="selectedLava" {/if}>
+                                                <a href="index.php?do=$do&view=$view&msg_type=accept" original-title="{$_lang['private_message']}">{$_lang['private_message']}</a>
                                             </li>
-                                            <li {if $op=='outbox'}  class="selectedLava" {/if}>
-                                                <a href="index.php?do=$do&view=$view&op=outbox" original-title="{$_lang['private_message']}">{$_lang['sms_has_been_sent']}</a>
+                                            <li {if $msg_type=='output'}  class="selectedLava" {/if}>
+                                                <a href="index.php?do=$do&view=$view&msg_type=output" original-title="{$_lang['private_message']}">{$_lang['sms_has_been_sent']}</a>
                                             </li>
-                                            <li {if $op=='send'}  class="selectedLava" {/if}>
-                                                <a href="index.php?do=$do&view=$view&op=send" original-title="{$_lang['private_message']}">{$_lang['write_message']}</a>
+                                            <li {if $msg_type=='write'}  class="selectedLava" {/if}>
+                                                <a href="index.php?do=$do&view=$view&msg_type=write" original-title="{$_lang['private_message']}">{$_lang['write_message']}</a>
                                             </li>
 											
                                         </ul>
@@ -40,36 +40,21 @@
 								
                                 <div class="clearfix box font14 mt_10">
                                 	
-                                   
-                                        
-                                            <!--<b class="grid_2 t_r">
-                                             	 短信标题:
-                                            </b>-->
-											<b class="font16 c03a">$msg['title']</b>
+                                    
+										<h2 class="font16 c03a mb_10">$msg['title']</h2>
                                         
 										<div class="clear"></div>
-                                        <div class=" mb_5">
-                                            <lable class="font12">
-                                                                                                                                  {$_lang['to_user']}:
-                                            </lable>
-                                           <span class="font12">$msg['to_username']</span>
-                                        </div>
-										<div class=" mb_5">
-                                            <lable class="font12">
-                                                                                                                                  {$_lang['time']}:
-                                            </lable>
-                                           <span class="font12"><!--{date('Y-m-d',$msg['on_time'])}--> </span>
-                                        </div>
-										<div class=" mb_5">
-                                            <lable class="font12">
-                                                                                                                                  {$_lang['from_user']}:
-                                            </lable>
-                                           <span class="font12">{if $msg['uid']}$msg['username']{else}{$_lang['system_msg']}{/if}</span>
+                                        <div class="bord_c font12 pl_10 pr_10 bf7">
+                                          <div class="mr_10">{$_lang['to_user']}：$msg['to_username']</div>
+                                       
+                                          <div class="mr_10">{$_lang['time']}：<!--{date('Y-m-d H:i:s',$msg['on_time'])}--> </div>
+										  
+                                          <div class="mr_10">{$_lang['from_user']}：{if $msg['uid']}$msg['username']{else}{$_lang['system_msg']}{/if}</div>
                                         </div>
 										
 										<div class="clear"></div>
 										
-                                        <div class="rowElem clearfix border_t_c prefix_1 suffix_1">
+                                        <div class="rowElem clearfix prefix_1 suffix_1">
                                             <!--<b class="grid_2 t_r font14">
                                                                                                                                    短信内容:
                                             </b>-->
@@ -77,10 +62,19 @@
 										    <p class="mt_5  ml_5 ws_break">$msg['content']</p>                             
                                         </div>
                                         
+                                        <div class="pad5 border_t_c">
+                                        	<span class="fl_l pl_10">
+                                        		{$_lang['prev_tiao']}:{if $pre}<a href="{$_K['siteurl']}/index.php?do=$do&view=$view&op=$op&ac=$ac&msg_type=$msg_type&msg_id={$pre['msg_id']}">{$pre['title']}</a>{else}{$_lang['now_no']}{/if}
+											</span>
+											<span class="fl_r pr_10">
+												{$_lang['next_tiao']}:{if $next}<a href="{$_K['siteurl']}/index.php?do=$do&view=$view&op=$op&ac=$ac&msg_type=$msg_type&msg_id={$next['msg_id']}">{$next['title']}</a>{else}{$_lang['now_no']}{/if}
+											</span>
+                                        </div>
+										
                                         <div class="rowElem clearfix form_button">
                                             
 											 <a  class="button mr_10" href="javascript:void(0)"  onclick="history.go(-1);"> {$_lang['return']}</button>
-                        					<a  class="button" href="index.php?do=$do&view=$view&op=$op&page=$page&ac=del&msg_id=$msg_id">{$_lang['delete']}</a>
+                        					<a  class="button" onclick="return del(this);" href="index.php?do=$do&view=$view&op=del&page=$page&msg_id=$msg_id&msg_type=$msg_type">{$_lang['delete']}</a>
                                         </div>
                                 
                                 </div>
@@ -95,6 +89,12 @@
         <!--main end-->
     </div>
 </div>
+<script type="text/javascript">
+	  function del(obj){
+		var url = obj.href;
+		showDialog("{$_lang['confirm_delete']}",'confirm',"{$_lang['operate_notice']}","formSub('"+url+"','url',false);");return false;		
+	}
+</script>
 <!--contain end-->
 <!--{template user/user_footer}-->
 <!--{template footer}-->

@@ -7,14 +7,14 @@
   <section class="clearfix section">
   <!--{template user/user_side}-->
   <div class="show_panel container_24 po_re">
-   <div class="prefix_3">
+   <div class="prefix_3 grid_21">
      <div class="panel clearfix box">
      <!--main content-->
-       <div class="grid_21">
+       <div class="">
         <!--headerÄÚÈÝÍ·²¿ start-->
          <header class="clearfix box_header">
-           <h2 class="grid_4 alpha box_title t_c">{$_lang['toolbox']}</h2>
-           <div class="grid_17 omega">
+           <h2 class="grid_4 alpha omega box_title t_c">{$_lang['toolbox']}</h2>
+           <div class="grid_17 alpha omega">
               <nav class="box_nav">
                 <ul>
                     {loop $third_nav $k $v}
@@ -34,7 +34,7 @@
         <span class="icon16"></span>
            {$_lang['make_you_more_competitive']} <a href="###" class="close">&times;</a>
       </div>
-     <div class="prefix_1 suffix_1 ">
+     <div class="prefix_1 suffix_1 mt_10">
       <div class="list">
         <dl>
         	<dd class="tags">
@@ -48,6 +48,7 @@
             </dd>
  {if $payitem_list}           
       {loop $payitem_list $k $v}
+	   {if item_show($v['item_type'])}
       	<dd class="clearfix" style="height:inherit;">
 		<!--{eval $remain= keke_payitem_class::payitem_exists($uid,"$k",$v['item_type']);}-->
 			<ul>
@@ -59,11 +60,19 @@
                     
                </li>
                <li>
-               		<div><strong style="color:#FF6600"><!--{eval echo floatval($v['item_cash'])}-->({$_lang['yuan']}/{$payitem_standard[$v['item_standard']]})</strong></div>
+               		<div><strong style="color:#FF6600">{c:$v['item_cash']}/{$payitem_standard[$v['item_standard']]}</strong></div>
                		
                </li>
                <li class="w2">
-               		<div>{$payitem_type[$v['item_type']]}</div>
+               		<div>
+               			{if $task_open&&$shop_open}
+               				{$payitem_type[$v['item_type']]}
+						{elseif !$task_open}
+							{$_lang['shop_fabu']}
+						{else}
+							{$_lang['task_fabu']}
+						{/if}
+					</div>
                </li>
                <li>
                		<div><strong style="color:#FF6600"><!--{eval echo intval($remain)}--></strong>{$payitem_standard[$v['item_standard']]}</div>
@@ -74,13 +83,14 @@
 			 	<div class="c999 info">{$v['item_desc']}</div>
 			</li>
                <li class="w2">
-
-		          <button type="button" value="{$_lang['buy_now']}" name="{$_lang['buy_now']}" onclick="location.href='{$origin_url}&op={$op}&show={$show}&item_code={$v['item_code']}#userCenter'">
+					
+		          <button class="block fl_r" type="button" value="{$_lang['buy_now']}" name="{$_lang['buy_now']}" onclick="location.href='{$origin_url}&op={$op}&show={$show}&item_code={$v['item_code']}#userCenter'">
 		              <span class="icon plus">&nbsp;</span>{$_lang['buy_now']}
 		           </button>
              </li>
 			 </ul>
-             </dd>
+           </dd>
+		{/if}
      {/loop}
   {else}
   	<dd class="clearfix" style="height:inherit;">

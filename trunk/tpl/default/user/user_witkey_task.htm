@@ -6,14 +6,14 @@
         <section class="clearfix section">
             <!--{template user/user_side}-->
             <div class="show_panel container_24 po_re">
-                <div class="prefix_3">
+                <div class="prefix_3 grid_21">
                     <div class="panel clearfix box">
                         <!--main content-->
-                        <div class="grid_21">
+                        <div class="">
                             <!--header内容头部 start-->
                             <header class="clearfix box_header">
-                                <h2 class="grid_4 alpha box_title t_c">{$_lang['task_manage']}</h2>
-                                <div class="grid_17 omega">
+                                <h2 class="grid_4 alpha omega box_title t_c">{$_lang['task_manage']}</h2>
+                                <div class="grid_17 alpha omega">
                                     <nav class="box_nav">
                                         <ul>
                                             {loop $model_list $k $v}
@@ -29,10 +29,11 @@
                             </header>
                             <!--header内容头部 end--><!--detail内容 start-->
                             <article class="box_detail">
+                             {if $model_id}
                                 <!--messages消息 start-->
                                 <div class="messages m_infor clearfix">
                                     <span class="icon16 fl_l">info</span>
-                                    <div class="grid_18">{$_lang['week_go_in']}{$model_list[$model_id]['model_name']}{$_lang['task_number']} :{$join_count}{$_lang['ge']}{$_lang['zh_jh']}</div>
+                                    <div class="grid_18">{$_lang['my_canyu']}{$model_list[$model_id]['model_name']}{$_lang['task_number']} :<!--{eval echo intval($user_join[$model_id])}-->{$_lang['ge']}{$_lang['zh_jh']}</div>
                                 </div>
                                 <!--messages消息 end-->
                                 <div class="">
@@ -49,8 +50,8 @@
                                                         {$_lang['task_status']}{$_lang['zh_mh']}
                                                     </label>
                                                     <select class="fl_l" name="task_status" style="width:80px">
-                                                        <option value="">{$_lang['all']}</option>
-                                                        {loop $status_arr $k $v}<option value="$k" {if $k==$task_status}selected="selected"{/if}>{$v} </option>
+                                                        <option value="-1" {if !isset($task_status)||$task_status==-1}selected="selected"{/if}>{$_lang['all']}</option>
+                                                        {loop $status_arr $k $v}<option value="$k" {if $k==$task_status&&isset($task_status)}selected="selected"{/if}>{$v} </option>
                                                         {/loop}
                                                     </select>
                                                 </div>
@@ -59,8 +60,8 @@
                                                         {$_lang['manuscript_status']}{$_lang['zh_mh']}
                                                     </label>
                                                     <select class="fl_l" name="$satus_fds" style="width:80px">
-                                                        <option value="">{$_lang['all']}</option>
-                                                        {loop $work_arr $k $v}<option value="$k" {if $k==$work_status}selected="selected"{/if}>{$v} </option>
+                                                        <option value="" {if !isset($task_status)}selected="selected"{/if}>{$_lang['all']}</option>
+                                                        {loop $work_arr $k $v}<option value="$k" {if $k==$work_status&&isset($work_status)}selected="selected"{/if}>{$v} </option>
                                                         {/loop}
                                                     </select>
                                                 </div>
@@ -105,6 +106,9 @@
                                                         <th scope="col">
                                                             {$_lang['manuscript_status']}
                                                         </th>
+                                                        <th scope="col" width="150">
+                                                            {$_lang['operate']}
+                                                        </th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -115,13 +119,13 @@
                                                             #$v[$id_fds]
                                                         </td>
                                                         <td>
-                                                            <a href="index.php?do=task&task_id={$v['task_id']}" title="$v['task_title']" target="_blank"><!--{eval echo Keke::cutstr($v['task_title'],60)}--></a>
+                                                            <a href="index.php?do=task&task_id={$v['task_id']}" title="$v['task_title']" target="_blank"><!--{eval echo kekezu::cutstr($v['task_title'],60)}--></a>
                                                         </td>
                                                         <td>
                                                         {if $v[model_id]==4||$v[model_id]==5}
-                                                          $cove_arr[$v[task_cash_coverage]][cove_desc]
+                                                          {c:$cove_arr[$v[task_cash_coverage]]['start_cove']}-{c:$cove_arr[$v[task_cash_coverage]]['end_cove']}
                                                           {else}
-                                                           $v['task_cash']{$_lang['yuan']}
+                                                           {c:$v['task_cash']}
                                                         {/if}
                                                         </td>
                                                         <td>
@@ -133,11 +137,20 @@
                                                         <td>
                                                             $work_arr[$v[$satus_fds]]
                                                         </td>
+														<td>
+															<!--{eval $opera = wiki_opera($v['model_id'],$v['task_id'],$v['work_id'],$url);}-->
+															
+															  {loop $opera $k $v}
+															  	<a class="button" href="{$v['href']}" {if $v['click']}onclick="{$v['click']}"{/if}>
+															  		<span class="{$v['ico']} icon"></span>{$v['desc']}
+															  	</a>
+															  {/loop}
+														</td>
                                                     </tr>
                                                     {/loop}
 													{else}
 														<tr>
-														    <td colspan="7" class="t_c">
+														    <td colspan="8" class="t_c">
 	                                                            {$_lang['norecord']}
 	                                                        </td>
 	                                                    </tr> 
@@ -145,7 +158,7 @@
                                                 </tbody>
                                                 <tfoot>
                                                     <tr> 
-                                                        <td colspan="7">
+                                                        <td colspan="8">
                                                             {$_lang['total']}:{$count}{$_lang['ge']}
                                                         </td>
                                                     </tr>
@@ -161,6 +174,9 @@
                                     </div>
                                     <!--from表单 end-->
                                 </div>
+							{else}
+								<div class='t_c fontb pad30' style="height:95px">{$_lang['task_model_close']}</div>
+							{/if}
                             </article>
                             <!--detail内容 end-->
                         </div>
@@ -175,5 +191,23 @@
     </div>
 </div>
 <!--contain end-->
+<script type="text/javascript">
+//确认工作
+function work_over(url){
+			showWindow("work_hand",url,"get",'0');
+			return false; 
+}
+    function del(obj){
+        var url = obj.href;
+        showDialog("$_lang['confirm_delete_ma']", "confirm", "{$_lang['operate_notice']}", function(){
+           formSub(url,'url',false);
+        });
+        return false;
+    }
+	function share(t_id){
+		var url = "{$_K['siteurl']}/index.php?do=ajax&view=share&op=center&task_id="+t_id;
+		showWindow('share',url,'get','0');return false;
+	}
+</script>
 <!--{template user/user_footer}-->
 <!--{template footer}-->

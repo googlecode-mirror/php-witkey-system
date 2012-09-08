@@ -1,9 +1,9 @@
-<div class="grid_24">
+<div class="panel clearfix box grid_24">
   <header class="clearfix box_header">
     <div class="fl_l pl_10 pr_20">
       <h3 class="font16b lineh_32"><span class="font16b">{$_lang['buy_record']}[ {$service_info['sale_num']} ]</span></h3>
     </div>
-    <div class="grid_18 alpha">
+    <div class="grid_10 alpha">
       <nav class="box_nav">
         <ul class="clearfix">
           <li {if !$w} class="selectedLava" {/if}>
@@ -16,10 +16,10 @@
       </nav>
     </div>
   </header>
-  <div class="prefix_1 suffix_1 clearfix">
+  <div class="clearfix prefix_1 suffix_1">
   <div class="list mt_10">
     <dl>
-      <dd class="tags">
+      <dd class="tags clearfix">
         <ul>
           <li class="w2"> {$_lang['buyer']}{if !$uid}{$_lang['after_login_view']}{/if}</li>
           <li class="w2"> {$_lang['give_price']} </li>
@@ -34,7 +34,7 @@
           <li class="w2"> {if $uid} <a href="index.php?do=space&member_id={$v['order_uid']}" target="_blank">{$v['order_username']}</a> {else}
             {$_lang['not_can_view']}
             {/if} </li>
-          <li class="w2 red"> {$_lang['currency']}{$v['order_amount']} </li>
+          <li class="w2 red"> {c:$v['order_amount']} </li>
           <li class="w4"> 
             <!--{date('Y-m-d H:i:s',$v['order_time'])}--> 
           </li>

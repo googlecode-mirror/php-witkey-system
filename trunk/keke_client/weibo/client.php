@@ -1,5 +1,8 @@
-<?php defined ( 'IN_KEKE' )  or 	exit ( 'Access Denied' );
+<?php
 
+if (! defined ( 'IN_KEKE' ) && ! defined ( 'ADMIN_KEKE' )) {
+	exit ( 'Access Denied' );
+}
 
 class oauth_api_factory {
 	/**
@@ -11,7 +14,7 @@ class oauth_api_factory {
 	 */
 	static function get_o($wb_type, $app_key, $app_secret) {
 		global $_oauth_api_operate_obj, $_oauth_api_operate_param;
-// 		var_dump($wb_type, $app_key, $app_secret);die();
+//		var_dump($wb_type, $app_key, $app_secret);
 		if ($wb_type) {
 			$_oauth_api_operate_param ['wb_type'] = $wb_type;
 		} else {
@@ -125,7 +128,7 @@ class oauth_api_factory {
 	//根据UID关注某人
 	static function follow_wb_user($u_id, $wb_type = null, $app_key = null, $app_secret = null) {
 		if (strtolower(CHARSET)=='gbk'){
-			$u_id = Keke::gbktoutf($u_id);
+			$u_id = kekezu::gbktoutf($u_id);
 		}
 		$o = oauth_api_factory::get_o ( $wb_type, $app_key, $app_secret );
 		return $o->follow_wb_user ( $u_id );

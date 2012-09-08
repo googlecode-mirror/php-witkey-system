@@ -6,8 +6,7 @@
 	
 <div class="box search p_relative">
 	<div class="control">
-	    <a href="javascript:d(0);" title="{$_lang['hide']}"><b>&Delta;</b></a>
-	    <a href="javascript:d(1);" title="{$_lang['show']}"><b>&nabla;</b></a>
+    <a href="javascript:d();"><b>&times;</b></a>
 	</div>
 	<div class="title"><h2>{$_lang['search']}</h2></div>
 	<div class="detail" id="detail">
@@ -68,7 +67,7 @@
 			<td><input type="checkbox" name="ckb[]" id="cbk_selected" value="{$v[bank_a_id]}"></td>
 			<td>{$v[bank_a_id]}</td>
 			<td>{$v[username]}</td>
-			<td>{if $v[cash]}<font color="#ff7700">{$_lang['currency']}{$v[cash]}</font>{$_lang['yuan']}{else}{$_lang['free']}{/if}</td>
+			<td>{if $v[cash]}<font color="#ff7700">{c:$v[cash]}</font>{else}{$_lang['free']}{/if}</td>
 			<td>
 				{if $v[start_time]==$v[end_time]}
 				{$_lang['lifetime_validity']}
@@ -125,6 +124,12 @@
         </div>
 </div>
 <!--Ö÷Ìå½áÊø-->
+<script language="javascript">
+function d()
+{
+		$("#frm_art_search").slideToggle('800');	  
+}
+</script>
 
 <!--{template control/admin/tpl/admin_footer}-->
 

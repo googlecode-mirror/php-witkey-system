@@ -1,13 +1,12 @@
 <?php
 /**
- * 后台单人悬赏任务管理列表
+ * 后台单人悬赏列表
  */
 
-defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
 //任务配置
 $task_config = unserialize ( $model_info ['config'] );
-
-$model_list = Keke::$_model_list;
+$model_list = $kekezu->_model_list;
 //任务状态
 $task_status = sreward_task_class::get_task_status ();
 
@@ -37,7 +36,7 @@ if ($sbt_search) {
 	$wh .= " order by task_id desc ";
 }
 
-$url_str = "index.php?do=model&model_id=1&view=list&w['task_id']={$w['task_id']}&w['task_title']={$w['task_title']}&w['task_status']={$w['task_status']}&ord[0]=$ord[0]&ord[1]=$ord[1]&page=$page&page_size=$page_size";
+$url_str = "index.php?do=model&model_id=1&view=list&w[task_id]={$w['task_id']}&w[task_title]={$w['task_title']}&w[task_status]={$w['task_status']}&ord[0]=$ord[0]&ord[1]=$ord[1]&page=$page&page_size=$page_size";
 
 //查询
 $table_arr = $table_obj->get_grid ( $wh, $url_str, $page, $page_size, null, 1, 'ajax_dom');
@@ -50,47 +49,44 @@ if($task_id){
 	$url = "<a href =\"$_K[siteurl]/index.php?do=task&task_id=$task_audit_arr[task_id]\" target=\"_blank\" >" . $task_audit_arr[task_title]. "</a>";
 
 }
+
+
 switch ($ac) {
 	case "del" : //删除
-		$task_title = dbfactory::get_count(sprintf("select task_title from %switkey_task where task_id='%d' ",TABLEPRE,$task_id));
-		Keke::admin_system_log($_lang['task_del']."：{$task_title}(".$_lang['single_reward'].")");
-		$res = $table_obj->del ( 'task_id', $task_id, $url_str );
-		$res and Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['delete_success'],'success') or Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['delete_fail'],"warning");
+		$res = keke_task_config::task_del($task_id);
+		$res and kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['delete_success'],'success') or kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['delete_fail'],"warning");
 		break;
 	case "pass" : //通过审核
 
 		$res =keke_task_config::task_audit_pass ( $task_id );
-			$v_arr = array($_lang['username']=>"{$task_audit_arr['username']}",$_lang['task_link']=>$url,$_lang['start_time']=>$start_time,$_lang['end_time']=>$end_time,$_lang['task_id']=>"#".$task_id);
-			keke_shop_class::notify_user($task_audit_arr['uid'], $task_audit_arr['username'], 'task_auth_success', $task_audit_arr['task_title'],$v_arr);
-		$res and Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['examine_successfully'],'success') or Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['nopass'],"warning");
+		$v_arr = array($_lang['username']=>"{$task_audit_arr['username']}",$_lang['task_link']=>$url,$_lang['start_time']=>$start_time,$_lang['end_time']=>$end_time,$_lang['task_id']=>"#".$task_id);
+		keke_shop_class::notify_user($task_audit_arr['uid'], $task_audit_arr['username'], 'task_auth_success', $_lang['task_auth_success'],$v_arr);
+		$res and kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['examine_successfully'],'success') or kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['nopass'],"warning");
 		break;
 	case "nopass" : //不通过审核
 		$res =keke_task_config::task_audit_nopass ( $task_id );
-		$v_arr = array($_lang['username']=>"{$task_audit_arr['username']}",$_lang['task_title']=>$url,$_lang['web_name']=>Keke::$_sys_config['website_name']);
-			keke_shop_class::notify_user($task_audit_arr['uid'], $task_audit_arr['username'], 'task_auth_fail', $task_audit_arr['task_title'],$v_arr);
-		$res and Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['operate_success'],'success') or Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['operate_fail'],"warning");
+		$v_arr = array($_lang['username']=>"{$task_audit_arr['username']}",$_lang['task_title']=>$url,$_lang['web_name']=>"$kekezu->_sys_config['website_name']");
+		keke_shop_class::notify_user($task_audit_arr['uid'], $task_audit_arr['username'], 'task_auth_fail', $_lang['task_auth_fail'],$v_arr); 
+		$res and kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['operate_success'],'success') or kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['operate_fail'],"warning");
 		break;
-	case "freeze" : //冻结任务
+	case "freeze" : //冻结任务\
 		$res =keke_task_config::task_freeze ( $task_id );
-		$v_arr = array($_lang['username']=>"{$task_audit_arr['username']}",$_lang['task_title']=>$url);
-		keke_shop_class::notify_user($task_audit_arr['uid'], $task_audit_arr['username'], 'task_freeze', $task_audit_arr['task_title'],$v_arr);
-
-		$res and Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['task_frooze_successfully'],'success') or Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['task_frooze_fail'],"warning");
+		$res and kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['task_frooze_successfully'],'success') or kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['task_frooze_fail'],"warning");
 		break;
 	case "unfreeze" : //任务解冻
 		$res =keke_task_config::task_unfreeze ( $task_id );
-		$res and Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['task_unfrooze_successfully'],'success') or Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['task_unfrooze_fail'],"warning");
+		$res and kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['task_unfrooze_successfully'],'success') or kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['task_unfrooze_fail'],"warning");
 		break;
 	case "recommend"://任务推荐
 		$res = keke_task_config::task_recommend($task_id);
-		$res and Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['task_recommend_successfully'],'success') or Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['task_recommend_fail'],"warning");
+		$res and kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['task_recommend_successfully'],'success') or kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['task_recommend_fail'],"warning");
 		break;
 	case "unrecommend"://取消任务推荐
 		$res = keke_task_config::task_unrecommend($task_id);
-		$res and Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['task_unrecommend_successfully'],'success') or Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['task_unrecommend_fail'],"warning");
+		$res and kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['task_unrecommend_successfully'],'success') or kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['task_unrecommend_fail'],"warning");
 		break;
 	case "refund":
-		$task_info = dbfactory::get_one(" select * from ".TABLEPRE."witkey_task where task_id='$task_id'");
+		$task_info = db_factory::get_one(" select * from ".TABLEPRE."witkey_task where task_id='$task_id'");
 		$task_obj = new sreward_task_class($task_info);
 		$task_obj->dispose_task_return();
 		break;
@@ -99,19 +95,20 @@ switch ($ac) {
 
 //批量删除
 if ($sbt_action==$_lang['mulit_delete']&&!empty($ckb)) {
-	keke_task_config::task_del($ckb) and Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['mulit_delete_success'],'success') or Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['mulit_delete_fail'],"warning");
+	keke_task_config::task_del($ckb) and kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['mulit_delete_success'],'success') or kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['mulit_delete_fail'],"warning");
 }
 //批量审核
 if ($sbt_action==$_lang['mulit_pass']&&!empty($ckb)) {
-	keke_task_config::task_audit_pass($ckb) and Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['mulit_pass_success'],'success') or Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['mulit_pass_fail'],"warning");
+	keke_task_config::task_audit_pass($ckb) and kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['mulit_pass_success'],'success') or kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['mulit_pass_fail'],"warning");
 }
 //批量冻结
+
 if ($sbt_action==$_lang['mulit_freeze']&&!empty($ckb)) {
-	keke_task_config::task_freeze($ckb) and Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['mulit_freeze_success'],'success') or Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['mulit_freeze_fail'],"warning");
+	keke_task_config::task_freeze($ckb) and kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['mulit_freeze_success'],'success') or kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['mulit_freeze_fail'],"warning");
 }
 //批量解冻
 if ($sbt_action==$_lang['mulit_unfreeze']&&!empty($ckb)) {
-	keke_task_config::task_unfreeze($ckb) and Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['mulit_unfreeze_success'],'success') or Keke::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['mulit_unfreeze_fail'],"warning");
+	keke_task_config::task_unfreeze($ckb) and kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['mulit_unfreeze_success'],'success') or kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['mulit_unfreeze_fail'],"warning");
 }
 function get_task_info($task_id){
 	$task_obj = new Keke_witkey_task_class();
@@ -121,4 +118,4 @@ function get_task_info($task_id){
 	return $task_info;
 
 }
-require Keke::$_tpl_obj->template ( 'task/' . $model_info ['model_dir'] . '/control/admin/tpl/task_' . $view );
+require $kekezu->_tpl_obj->template ( 'task/' . $model_info ['model_dir'] . '/control/admin/tpl/task_' . $view );

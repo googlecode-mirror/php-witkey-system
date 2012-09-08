@@ -32,11 +32,9 @@ class keke_tool_class {
 	public static function keke_interface() {
 		return $param_arr = array (
 					"create_task" =>"keke.task.create",
-					"hand_work" => "keke.task.work.hand",
-					"query_fina" => "keke.task.query.fina",
-					"save_relation" =>"keke.task.relation.save",
-					"change_status" => "keke.task.change.status",
 					"get_task" => "keke.task.get",
+				    'task_close'=>'keke.task.close',
+					'keke_login'=>'keke.login',
 					'verify'=>'keke.notify.verify'
 		);
 	}
@@ -51,43 +49,24 @@ class keke_tool_class {
 					'task_amount'=>$data['task_amount'],
 					'task_title'=>$data['task_title'],
 					'task_status'=>$data['task_status'],
+					'task_desc'=>$data['task_desc'],
+					'task_uid'=>$data['task_uid'],
 					'task_owner'=>$data['task_owner'],
  					'cash_coveage'=>$data['cash_coveage'],
 					'start_time'=>$data['start_time'],
-					'end_time'=>$data['end_time']
+					'sub_time'=>$data['sub_time']
 		);
 		
 	}
 	
 	/**
-	 * 稿件创建
-	 * @param array $data
-	 * @return array $param_data
+	 * 任务关闭task.close
 	 */
-	public static function hand_work($data = array()) {
+	public static function task_close($data=array()){
 		return $param_data = array (
-					'outer_task_id'=>"{$data['model_code']}-{$data['task_id']}",
 					'r_task_id'=>$data['r_task_id'],
-					'work_id'=>$data['work_id'],
-			 		'source_app_id' => $data['source_app_id'],
-					'keke_work_status'=>$data['keke_work_status'],
-					'work_status'=>$data[work_status]
-					
-		);
-	}
-	/**
-	 * 任务（稿件）状态变更
-		[任务、稿件状态需为英文。具体英文定义请严格参照接口文档]
-	 * @param array $data
-	 * @return array $param_data
-	 */
-	public static function change_status($data = array()) {
-		return $param_data = array (
-					'outer_task_id'=>"{$data['model_code']}-{$data['task_id']}",
-					'r_task_id'=>$data['r_task_id'],
-					'work_id'=>$data['work_id'],
-					'work_status'=>$data['work_status'],
-					'task_status'=>$data['task_status']
+					 'indetify'=>$data['indetify'],
+					'bid_uid'=>$data['bid_uid']
 		);
 	}
 	/**
@@ -112,41 +91,29 @@ class keke_tool_class {
 		
 	}
 	/**
-	 * 财务查询
+	 * 用户登陆
 	 * @param array $data
 	 * @param $is_return 是否回调
 	 * @return array $param_data
 	 */
-	public static function query_fina($data = array(),$is_return=false) {
+	public static function keke_login($data = array(),$is_return=false) {
 		switch ($is_return){
 			case false:
-				return $param_data = array (
-							'fina_type'=>$data['fina_type'],
-							'fina_action'=>$data['fina_action'],
-							'period'=>$data['fina_period']
-				);
+				return $param_data = array(
+				'r_task_id'=>$data['r_task_id'],
+				'from_uid'=>$data['from_uid'],
+				'from_username'=>$data['from_username'],
+				'to_uid'=>$data['to_uid'],
+				'to_username'=>$data['to_username'],
+				'releation_id'=>$data['releation_id']);
 				break;
 			case true://回调处理
 				break;
 		}
 		
 	}
+	
 	/**
-	 * 保存关系
-	 * @param array $data
-	 * @param $is_return 是否回调
-	 * @return array $param_data
-	 */
-	public static function save_relation($data = array(),$is_return=false) {
-		switch ($is_return){
-			case false:
-				return $param_data = array('r_task_id'=>$data['r_task_id']);
-				break;
-			case true://回调处理
-				break;
-		}
-		
-	}/**
 	 * 响应函数
 	 * @param unknown_type $url
 	 * @param unknown_type $content
@@ -154,12 +121,14 @@ class keke_tool_class {
 	 */
 	public static function notify($url,$content,$type='success'){
 		global $_lang;
+		header("Location:".$url);
 		switch($type){
 			case "success":
-				Keke::show_msg($_lang['operate_notice'],$url,3,$content,'success');
+				header("Location:".$url);
+				//kekezu::show_msg($_lang['operate_notice'],$url,3,$content,'success');
 				break;
 			case "error":
-				Keke::show_msg($_lang['operate_notice'],$url,3,$content,'warning');
+				kekezu::show_msg($_lang['operate_notice'],$url,3,$content,'warning');
 				break;
 		}
 	}

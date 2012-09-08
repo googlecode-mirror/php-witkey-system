@@ -108,7 +108,7 @@ class taobao_oauth_client_class extends base_client_class {
 		if(is_object($json)){
 			$data = (array)$json;
 		}
-		CHARSET=='gbk' and $data = Keke::utftogbk($data);
+		CHARSET=='gbk' and $data = kekezu::utftogbk($data);
 		return $data;
 	}
 	/**
@@ -119,9 +119,17 @@ class taobao_oauth_client_class extends base_client_class {
 		$p = $_SESSION ['auth_taobao'] ['last_key'];
 		$top_obj  = $this->_taobao_weibo_oauth;
 		if ($p) {
-			$d =keke_taobaoke_class::get_user_info($p['nick']);
+			if(CHARSET== 'gbk'){
+				$p['nick'] = kekezu::utftogbk(urldecode($p['taobao_user_nick']));
+			}else{
+				$p['nick'] = urldecode($p['taobao_user_nick']);
+			} 
+			
+			$d =keke_taobaoke_class::get_user_info($p['nick'],1);
 			$d = $d['user'];
-			CHARSET== 'gbk' and $d = Keke::utftogbk ( $d);
+			//var_dump($d);die();
+			//CHARSET== 'gbk' and $d = kekezu::utftogbk ( $d);
+			//var_dump($d);die();
 			return $d;
 		} else {
 			return false;

@@ -6,14 +6,14 @@
    <section class="clearfix section">
   <!--{template user/user_side}-->
   <div class="show_panel container_24 po_re">
-   <div class="prefix_3">
+   <div class="prefix_3 grid_21">
      <div class="panel clearfix box">
        <!--main content-->
-         <div class="grid_21">
+         <div class="">
            <!--header内容头部 start-->
             <header class="clearfix box_header">
-            <h2 class="grid_4 alpha box_title t_c">{$_lang['data_manage']}</h2>
-             <div class="grid_17 omega">
+            <h2 class="grid_4 alpha omega box_title t_c">{$_lang['space_set']}</h2>
+             <div class="grid_17 alpha omega">
                 <nav class="box_nav">
                    <ul>
                       {loop $third_nav $k $v}
@@ -28,6 +28,7 @@
 						{/if}
                        {/loop}
                      </ul>
+                    
                   </nav>
               </div>
             <div class="clear"></div>
@@ -37,16 +38,17 @@
 		
          <div class="prefix_1 suffix_1">
          	<div id="tips"></div>
-            <div class="clearfix form_box border_n">
+            <div class="clearfix form_box border_n" id="content_tip">
                 <!--from表单 start-->
                   <form action="{$ac_url}" method="post" id="frm" name="frm">
+                  	<input type="hidden" name="formhash" id="formhash" value="{FORMHASH}">
                   	<input type="hidden" value="{if $user_info['user_type']==2}2{else}1{/if}" name="shop_type"/>
 					  <input type="hidden" name="pk[shop_id]" id="shop_id" value="{$shop_info['shop_id']}"><!--基本资料start-->
 					  <input type="hidden" name="ac" value="open"/>
 					     <div class="rowElem clearfix">
                            <label class="grid_3 t_r">{$_lang['shop_name']}{$_lang['zh_mh']}</label>
                             <div class="grid_15">
-                                <input name="shop_name" size="45" type="text" value="{$shop_info['shop_name']}" title="{$_lang['tips_about_shop_name']}" id="shop_name" limit="required:true;len:2-100" msg="{$_lang['input_shop_name_correct_format']}" msgArea="span_shop_name"/><span id="span_shop_name"></span>
+                                <input class="txt_input" name="shop_name" size="45" type="text" value="{$shop_info['shop_name']}" title="{$_lang['tips_about_shop_name']}" id="shop_name" limit="required:true;len:2-30" msg="{$_lang['input_shop_name_correct_format']}" msgArea="span_shop_name"/><span id="span_shop_name"></span>
                             </div>
                         </div>
 
@@ -54,10 +56,16 @@
 						 <div class="rowElem clearfix" id="slogans">
                             <label class="grid_3 t_r">{$_lang['shop_sign']}{$_lang['zh_mh']}</label>
 							<div class="grid_13">
-	                           <textarea cols="71" rows="3" name="shop_slogans" id="shop_slogans" onkeydown="checkInner(this,150,event)">{$shop_info['shop_slogans']}</textarea>
-                                <div class="c999 grid_6" id="length_show">{$_lang['sign_limit']}</div>
+	                           <textarea cols="71" rows="10" name="shop_slogans" id="tar_content" class="xheditor {tools:'Bold,Fontface,FontColor,Italic,Underline,Strikethrough,Align,List,Outdent,Indent,Link,Unlink',skin:'nostyle'}">{$shop_info['shop_slogans']}</textarea>
+                                <div class="c999 grid_6" id="length_show"></div>
 								<div class="clear"></div>
 	                            <div class="ui_note">{$_lang['tips_about_shop_sign']}</div>
+								<script type="text/javascript">
+							       $(function(){
+											editor = $("#shop_slogans").xheditor({'innerCheck':true});
+											editor.checkInner();
+									})
+							  </script>
 								</div>
                         </div>						
 						{/if}
@@ -67,49 +75,21 @@
                                    {$_lang['shop_description']}{$_lang['zh_mh']}
                                </label>
 							   <div class="grid_13 omega">
-	                               <textarea style="width:500px" rows="8" name="conf[shop_desc]" id="shop_desc"
-									  class="xheditor-simple {skin:'nostyle'}">{$shop_info['shop_desc']}</textarea>
+	                               <textarea style="width:500px" rows="12" name="conf[shop_desc]" id="tar_content"
+									   class="xheditor {urlBase:'$_K['siteurl']/',tools:'simple',html5Upload:false,emotMark:false,upImgUrl:'index.php?do=ajax&view=upload&file_type=att'}">{$shop_info['shop_desc']}</textarea>
+								<div class="c999 grid_6" id="length_show"></div>
+								<div class="clear"></div>
 									<div class="ui_note">{$_lang['enterprise_space_desc']}</div>
 								</div>
 							</div>
-                            <!--{template space/bg_setting}-->
-                              <div class="rowElem clearfix">
-                                  <label class="grid_3 t_r">
-                                     {$_lang['enterprise_space_style']}{$_lang['zh_mh']}
-                                  </label>
-                               <div class="grid_15">
-                               {loop $e_space_style $k $v}
-									<div class="grid_3 pb_10">
-										<img src="{$v}" title="{$e_style_arr[$k]}" />
-											<div class="clear"></div>
-											<input type="radio" name="style_name" {if $shop_info['shop_skin']==$k} checked=true {elseif $k=='default'}checked=true{/if} value="$k">
-											<label  for="style_name">{$e_style_arr[$k]}</label>
-								    </div>
-                                {/loop}
-                                </div>
-                              </div>
-							{else}
-                              <div class="rowElem clearfix">
-                                   <!--{template space/bg_setting}-->
-                                 <label class="grid_3 t_r">{$_lang['personal_space_style']}:</label>
-                                   <div class="grid_15">
-                                      {loop $p_space_style $k $v}
-										<div class="grid_3 pb_10">
-											<img src="{$v}" title="{$p_style_arr[$k]}" />
-											<div class="clear"></div>
-											<input type="radio" name="style_name" id="style_name" {if $shop_info['shop_skin']==$k} checked=true{elseif $k=='default'}checked=true {/if} value="$k">
-											<label  for="style_name">{$p_style_arr[$k]}</label>
-                                        </div>
-									{/loop}
-                                  </div>
-                             </div>
-							{/if}						
+					   {/if}						
                             <div class="rowElem clearfix form_button">
                               <input type="hidden" name="sbt_edit" value="1">
-                                 <button type="submit" class="button" value="{$_lang['save']}" onclick="return check('frm')">
+                                 <button type="button" class="button" value="{$_lang['save']}" onclick="check123('frm');">
                                     <span class="check icon"></span>{$_lang['save']}
                                  </button>
                             </div>
+							</form>
                          <!--from表单 end-->
                       </div>
                    </div>
@@ -124,73 +104,23 @@
      </div>
     </div>
     <!--contain end-->
- 
+<script type="text/javascript" src="resource/js/xheditor/xheditor.js"></script>
 <script type="text/javascript">
     In.add('jscolor',{path:"resource/js/others/jscolor.js",type:'js'});
-    In('jscolor','ajaxfileupload','form');      
-                            
+    In('jscolor','form');                    
    /**
     * 表单提交 编辑空间
     * @param  obj
   */
-			{if $user_info['user_type']==1}
-              function check(obj){
-                 var i = checkForm(document.getElementById(obj));
-                    if (i) {
-						if(contentCheck('shop_slogans',"{$_lang['shop_sign']}",20,150,1,'slogans')){
-                                return true;
+              function check123(obj){
+						if(contentCheck('tar_content',"{$_lang['shop_sign']}",20,1000,1,'slogans','editor')){						
+							formSub('frm','form',true);
+                               // return true;
                         }else {
 	                     	return false;
 	                	}
-                   }else {
-	                     return false;
-	              }
             }
-            {/if}
-        /**
-             * 文件上传
-              * @param file_name文件名
-              * @param width 宽度
-             * @param height 高度
-        */
-         function fileUpload(file_name, width, height){
-				upload(file_name, 'att','mode', '', '{$shop_info['shop_id']}', 'space', width, height);
-         }                
-         /**
-            * 上传完成后的后续操作
-         */
-        function uploadResponse(json){			
-			var shop_id = $("#shop_id").val();
-			shop_id = trim(shop_id).length;
-			if(shop_id==0){				
-				$("#file_temp").val(json.msg.up_file);
-				showDialog("{$_lang['successfully_set']}", 'right', "{$_lang['msg_tips']}");return false;
-			}else{
-				$.getJSON("{$ac_url}&ajax=upload_fle&fields=" + json.filename + "&filePath=" + json.msg.up_file, function(data){
-		              if (data.status == 1) {
-		                   showDialog(data.msg, 'notice', "{$_lang['msg_tips']}");
-		                   $("#bg_style").removeAttr("style");
-		                      return false;
-		               }
-		              else {
-		                  showDialog(data.msg, 'alert', "{$_lang['error_tips']}");
-		                 return false;
-		            }
-		         });
-			}
-            
-      }
-        function change_default(obj){
-      	    $.getJSON("{$ac_url}&rever=change",function(data){
-      		  if (data.status == 1) {
-      			$("#bg_style").hide();
-                showDialog(data.msg, 'notice', "{$_lang['msg_tips']}");
-              }else {
-                showDialog(data.msg, 'alert', "{$_lang['error_tips']}");
-              }
-      		  return false;
-      		  });
-      	}
+        
   </script>
   <!--{template user/user_footer}-->
 <!--{template footer}-->

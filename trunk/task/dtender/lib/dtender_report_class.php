@@ -11,6 +11,7 @@ class dtender_report_class extends keke_report_class {
 	}
 	public function __construct($report_id, $report_info, $obj_info,$user_info,$to_userinfo) {
 		parent::__construct ( $report_id, $report_info, $obj_info,$user_info,$to_userinfo );
+	
 	}
 	
 	/**
@@ -21,7 +22,7 @@ class dtender_report_class extends keke_report_class {
 		global $kekezu;
 		global $_lang;
 		$kekezu->init_prom ();
-		$prom_obj = Keke::$_prom_obj;
+		$prom_obj = $kekezu->_prom_obj;
 		
 		$trans_name = $this->get_transrights_name ( $this->_report_type );
 		$op_result = $this->op_result_format ( $op_result ); //格式化处理结果
@@ -31,10 +32,10 @@ class dtender_report_class extends keke_report_class {
 			case "pass" :
 				if ($this->_process_can ['sharing']) { //可以分配
 					$total_cash = floatval ( $this->_obj_info ['cash'] ); //总的佣金
-					$gz_get = floatval ( $op_result ['gz_get'] ); //雇主分得佣金
-					$wk_get = floatval ( $op_result ['wk_get'] ); //威客分得佣金
+					$gz_get = floatval (keke_curren_class::convert($op_result['gz_get'],0,true)); //雇主分得佣金
+					$wk_get = floatval (keke_curren_class::convert($op_result['wk_get'],0,true)); //威客分得佣金
 					if ($total_cash != $gz_get + $wk_get) {
-						Keke::admin_show_msg ( $_lang['wain_you_give_cash_error_notice'], "index.php?do=trans&view=process&type=$type&report_id=" . $this->_report_id, "3", "", "error" );
+						kekezu::admin_show_msg ( $_lang['wain_you_give_cash_error_notice'], "index.php?do=trans&view=process&type=$type&report_id=" . $this->_report_id, "3", "", "error" );
 					} else {
 						$res = keke_finance_class::cash_in ( $g_info ['uid'], $gz_get, '0', 'rights_return' ); //给雇主返钱
 						$res .= keke_finance_class::cash_in ( $w_info ['uid'], $wk_get, '0', 'rights_return' ); //给威客返钱
@@ -42,22 +43,22 @@ class dtender_report_class extends keke_report_class {
 							$this->process_unfreeze ('pass', $op_result ['process_result'] ); //解冻。通知用户
 							$this->change_status ( $this->_report_id, '4',$op_result, $op_result ['process_result'] ); //更新状态为处理完成
 						/** 终止威客的此次推广事件*/
-							$w_event = Keke::$_prom_obj->get_prom_event ($this->_obj_info['origin_id'], $w_info ['uid'], "bid_task" );
-							Keke::$_prom_obj->set_prom_event_status ( $w_event ['parent_uid'], $this->_gusername, $w_event ['event_id'], '3' );
+							$w_event = $kekezu->_prom_obj->get_prom_event ($this->_obj_info['origin_id'], $w_info ['uid'], "bid_task" );
+							$kekezu->_prom_obj->set_prom_event_status ( $w_event ['parent_uid'], $this->_gusername, $w_event ['event_id'], '3' );
 							/** 终止雇主的此次推广事件*/
-							$g_event = Keke::$_prom_obj->get_prom_event ($this->_obj_info['origin_id'], $g_info ['uid'], "pub_task" );
-							Keke::$_prom_obj->set_prom_event_status ( $g_event ['parent_uid'], $this->_gusername, $g_event ['event_id'], '3' );
+							$g_event = $kekezu->_prom_obj->get_prom_event ($this->_obj_info['origin_id'], $g_info ['uid'], "pub_task" );
+							$kekezu->_prom_obj->set_prom_event_status ( $g_event ['parent_uid'], $this->_gusername, $g_event ['event_id'], '3' );
 						}
 					}
-					$res and Keke::admin_show_msg ( $trans_name . $_lang['deal_success'], "index.php?do=trans&view=rights&type=$type", "3" ) or Keke::admin_show_msg ( $trans_name . $_lang['deal_fail'], "index.php?do=trans&view=process&type=$type&report_id=" . $this->_report_id, "3" );
+					$res and kekezu::admin_show_msg ( $trans_name . $_lang['deal_success'], "index.php?do=trans&view=rights&type=$type", "3","","success" ) or kekezu::admin_show_msg ( $trans_name . $_lang['deal_fail'], "index.php?do=trans&view=process&type=$type&report_id=" . $this->_report_id, "3","","warning");
 				} else {
-					Keke::admin_show_msg ( $trans_name . $_lang['deal_fail_now_forbit_deal_cash'], "index.php?do=trans&view=process&type=$type&report_id=" . $this->_report_id, "3" );
+					kekezu::admin_show_msg ( $trans_name . $_lang['deal_fail_now_forbit_deal_cash'], "index.php?do=trans&view=process&type=$type&report_id=" . $this->_report_id, "3" ,"warning");
 				}
 				break;
 			case "nopass" :
 				$this->process_unfreeze ('nopass',$op_result ['reply'] ); //解冻。并通知用户
 				$res=$this->change_status ( $this->_report_id, '3', $op_result, $op_result ['reply'] ); //更新状态为未成立
-				$res and Keke::admin_show_msg ( $trans_name . $_lang['deal_success'], "index.php?do=trans&view=rights&type=$type", "3" ) or Keke::admin_show_msg ( $trans_name . $_lang['deal_fail'], "index.php?do=trans&view=process&type=$type&report_id=" . $this->_report_id, "3" );
+				$res and kekezu::admin_show_msg ( $trans_name . $_lang['deal_success'], "index.php?do=trans&view=rights&type=$type", "3","","success"  ) or kekezu::admin_show_msg ( $trans_name . $_lang['deal_fail'], "index.php?do=trans&view=process&type=$type&report_id=" . $this->_report_id, "3","","warning" );
 				break;
 		}
 	}
@@ -65,7 +66,7 @@ class dtender_report_class extends keke_report_class {
 	 * 举报处理
 	 * @see keke_report_class::sub_process_report()
 	 */
-	public function process_report($op_result, $type, $trust_response = false,$trust_status=true) {
+	public function process_report($op_result, $type) {
 		global $_lang;
 		$trans_name = $this->get_transrights_name ( $this->_report_type );
 		$op_result = $this->op_result_format ( $op_result ); //格式化处理结果
@@ -81,18 +82,18 @@ class dtender_report_class extends keke_report_class {
 					$res.=$this->to_black ( $op_result ['freeze_day'] );
 				}
 				if ($op_result ['deduct_credit'] && $op_result [$this->_credit_info ['name']] && $this->_process_can ['deduct']) { //扣信誉(能力)
-					$res.=dbfactory::execute ( sprintf ( " update %switkey_space set %s=%s-%d where uid='%d'", TABLEPRE, $this->_credit_info ['name'], $this->_credit_info ['name'], intval($op_result [$this->_credit_info ['name']]), $this->_to_user_info ['uid'] ) );
+					$res.=db_factory::execute ( sprintf ( " update %switkey_space set %s=%s-%d where uid='%d'", TABLEPRE, $this->_credit_info ['name'], $this->_credit_info ['name'], intval($op_result [$this->_credit_info ['name']]), $this->_to_user_info ['uid'] ) );
 				}
 				if($res){
 					$this->process_notify('pass',$this->_report_info, $this->_user_info, $this->_to_userinfo,$op_result ['process_result']);//通知用户
 					$this->change_status ( $this->_report_id, '4', $op_result,$op_result ['process_result'] ); //更新状态为处理完成
-					$res and Keke::admin_show_msg ( $trans_name . $_lang['deal_success'], "index.php?do=trans&view=report&type=$type", "3" ) or Keke::admin_show_msg ( $trans_name . $_lang['deal_fail'], "index.php?do=trans&view=process&type=$type&report_id=" . $this->_report_id, "3" );
+					$res and kekezu::admin_show_msg ( $trans_name . $_lang['deal_success'], "index.php?do=trans&view=report&type=$type", "3","","success" ) or kekezu::admin_show_msg ( $trans_name . $_lang['deal_fail'], "index.php?do=trans&view=process&type=$type&report_id=" . $this->_report_id, "3","","warning" );
 				}
 				break;
 			case "nopass" :
 				$this->process_notify('nopass',$this->_report_info, $this->_user_info, $this->_to_userinfo,$op_result ['process_result']);//通知用户
 				$res=$this->change_status ( $this->_report_id, '3', $op_result,$op_result, $op_result ['reply'] ); //更新状态为未成立
-				$res and Keke::admin_show_msg ( $trans_name . $_lang['deal_success'], "index.php?do=trans&view=rights&type=$type", "3" ) or Keke::admin_show_msg ( $trans_name . $_lang['deal_fail'], "index.php?do=trans&view=process&type=$type&report_id=" . $this->_report_id, "3" );
+				$res and kekezu::admin_show_msg ( $trans_name . $_lang['deal_success'], "index.php?do=trans&view=rights&type=$type", "3","","success" ) or kekezu::admin_show_msg ( $trans_name . $_lang['deal_fail'], "index.php?do=trans&view=process&type=$type&report_id=" . $this->_report_id, "3","","warning" );
 				break;
 		}
 	}

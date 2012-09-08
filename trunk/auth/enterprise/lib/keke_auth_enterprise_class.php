@@ -20,12 +20,10 @@ class keke_auth_enterprise_class extends keke_auth_base_class{
 			$step=$auth_step;
 		}elseif($auth_info){
 			$auth_status = intval($auth_info['auth_status']);
-			if($auth_status==3){
+			if($auth_status==0){
 				$step = 'step1';
-			}elseif($auth_status==0){
+			}elseif($auth_status==2 or $auth_status==1){
 				$step="step3";
-			}else{
-				$step="step4";
 			}
 		}
 		return $step;
@@ -40,10 +38,12 @@ class keke_auth_enterprise_class extends keke_auth_base_class{
 		global $kekezu,$user_info,$_lang;
 		
 		$data=$this->format_auth_apply($data);//格式化提交数据
+		//var_dump($file_name);die();
 		$file_name and $licen_pic = keke_file_class::upload_file($file_name);//认证图片上传
-		
+		//var_dump($licen_pic);die();
 		if (! $licen_pic || ! $data ['licen_num']) {
-			Keke::show_msg ( $this->auth_lang().$_lang['apply_submit_fail'],$_SERVER['HTTP_REFERER'], 3, $this->auth_lang().$_lang['apply_submit_fail_for_info_little'], 'warning' );
+			//var_dump(1236544);die();
+			kekezu::show_msg ( $this->auth_lang().$_lang['apply_submit_fail'],$_SERVER['HTTP_REFERER'], 1, $this->auth_lang().$_lang['apply_submit_fail_for_info_little'], 'alert_error' );
 		} 
 		else {
 			$licen_pic and $data[$file_name]=$licen_pic;
@@ -51,18 +51,9 @@ class keke_auth_enterprise_class extends keke_auth_base_class{
 			if($auth_info){
 				$success=$this->_tab_obj->save($data,array($this->_primary_key=>$auth_info[$this->_primary_key]));
 				$this->set_auth_record_status($user_info['uid'], '0');
-				dbfactory::execute(sprintf(" update %switkey_space set user_type='2' where uid='%d'",TABLEPRE,$auth_info[uid]));//更新用户角色为企业
+				db_factory::execute(sprintf(" update %switkey_space set user_type='2' where uid='%d'",TABLEPRE,$auth_info[uid]));//更新用户角色为企业
 			}else{
 				$success=$this->_tab_obj->save($data);
-			}
-			/**企业空间降级**/
-			$shop_info=dbfactory::get_one(sprintf(" select shop_id,shop_type,shop_name from %switkey_shop where uid='%d'",TABLEPRE,$user_info[uid]));
-			if($shop_info&&$shop_info['shop_type']=='2'){
-				$msg=new Keke_msg_class();
-				if ($msg->validate ( 'space_change' )) {
-					$v=array($_lang['space_name']=>$shop_info['shop_name']);
-					$msg->send_message($user_info ['uid'] , $user_info ['username'], 'space_change',$_lang['space_changed'],$v,$user_info [email]);
-				}
 			}
 		}
 		if ($success) {//财务记录
@@ -72,7 +63,7 @@ class keke_auth_enterprise_class extends keke_auth_base_class{
 			$data['start_time']==$data['end_time'] and $end_time=$data['end_time'] or $end_time=0;
 			$this->add_auth_record($data['uid'], $data['username'], $this->_auth_code,$end_time);//添加进入认证记录
 			if($is_jump){
-				Keke::show_msg ( $this->auth_lang().$_lang['apply_submit_success'],"index.php?do=user&view=payitem&op=auth&auth_code=enterprise&auth_step=step3&ver=1#userCenter", 3, $this->auth_lang().$_lang['apply_success_and_wait_audit'] ,'success');
+				kekezu::show_msg ( $this->auth_lang().$_lang['apply_submit_success'],"index.php?do=user&view=payitem&op=auth&auth_code=enterprise&auth_step=step2&ver=1#userCenter", 1, $this->auth_lang().$_lang['apply_success_and_wait_audit'] ,'alert_right');
 			}else{
 				return true;
 			}

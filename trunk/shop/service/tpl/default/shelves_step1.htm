@@ -64,9 +64,7 @@
           </div>
           <div class="pad10">
           <!--源文件协议内容-->
-	          <div class="operate t_r">
-	              <a href="javascript:setprint('agreement');" class=""><span class="icon16 print"></span></a>
-	         </div>
+	         
 	          <div class="source_content clearfix" id="agreement">
 	             <div class="source_agreement">
 	              <h5 class="font16b t_c">{$_lang['service_sell_agreement']}</h5>
@@ -74,8 +72,10 @@
 	             </div>
 	         </div>
          <!--end 源文件协议内容-->
+		 <div class="pt_15">
         <div class="step_button">
         	 <button type="submit" name="is_submit" class="button"><span class="check icon"></span>{$_lang['agree_next_step']}</button>
+		</div>
 		</div>
    		</div>
       </div>
@@ -87,7 +87,7 @@
    <!--右边部分-->
     <div class="grid_7 alpha omega">
 	     <div class=" prefix_1 suffix_1 pt_20">
-	         <!--{eval echo htmlspecialchars_decode($model_info[model_desc]);}-->
+	         <!--{eval echo kekezu::filter_input($model_info[model_desc]);}-->
 		 </div>
     </div>
 	<script type="text/javascript">

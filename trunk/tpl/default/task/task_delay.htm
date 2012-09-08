@@ -1,6 +1,6 @@
 <!--{template header}-->
-<div class="winbody">
- <div class="clearfix box {$_K['theme']}_style pad10">
+<div class="winbody {$_K['theme']}_style">
+ <div class="clearfix box pad10">
 
 	<div class="messages m_infor">
     <span class="icon16"></span>
@@ -8,14 +8,14 @@
 	</div>
     
     <!--from±íµ¥ start-->
-    <form method="post" id="frm_delay" name="frm_delay">
+    <form method="post" id="frm_delay" name="frm_delay" action="">
 
     <div class="rowElem clearfix">
 
       		 <label class="fl_l">{$_lang['your_current_balance_is']}{$_lang['zh_mh']} </label>
              <div class="fl_l">
-			  <strong class="red">{$user_info['balance']}</strong>{$_lang['cash']}¡¡
-              <strong class="red">{$user_info['credit']}</strong>{CREDIT_NAME}
+			  <strong class="red">{c:$user_info['balance']}</strong>¡¡
+              <strong class="red">{c:$user_info['credit']}</strong>
 			  <div class="clear"></div>
 				<div class="c999">{$_lang['bounty_higher__info']}{$_lang['zh_jh']}</div>
 			</div>
@@ -33,7 +33,7 @@
 
       		<label class="fl_l">{$_lang['you_wish_increase_bounty']}{$_lang['zh_mh']}</label>
 			 <div class="fl_l">
-				<input type="text" name="delay_cash" class="txt_input" id="delay_cash" onkeyup="clearstr(this)">({$_lang['minimum_price']}{$real_min}{$_lang['yuan']})
+				<input type="text" name="delay_cash" class="txt_input" id="delay_cash" onkeyup="clearstr(this)">({$_lang['minimum_price']}{c:$real_min})
 			  </div>
 
       </div>
@@ -54,7 +54,7 @@
 
 			 <div class="messages">
 			  	<ul>
-			  		<li>1.{$_lang['a_single_delay_minimum_amount']}<font color="red">{$min_cash}</font>{$_lang['yuan_info']}</li>
+			  		<li>1.{$_lang['a_single_delay_minimum_amount']}<font color="red">{c:$min_cash}</font></li>
 					<li>2.{$_lang['delayed_days_shall_not_exceed']}<font color="red">{$max_day}</font>{$_lang['day']}</li>
 			  		{loop $delay_rule $k $v}
 						<li><!--{eval echo $k+3;}-->.{$_lang['di']}<!--{eval echo $k+1;}-->{$_lang['extension_not_less_totalamount_task']}$v['defer_rate']%</li>

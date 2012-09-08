@@ -1,5 +1,5 @@
 		
-            <div class="grid_24 po_re">
+            <div class="panel clearfix box grid_24">
                 <header class="clearfix box_header">
                 	<div class="fl_l pl_10 pr_20">	
                     	<h3 class="font16b">{$_lang['leave_word']}[{$service_info['leave_num']}]</h3>
@@ -7,22 +7,28 @@
                 </header>
                 <div class="grid_22 prefix_1">
                 	<div id="comment_page">
-                    <a href="#h3_pub_comment" class="button block t_c mt_10 a_comment_id">{$_lang['i_leave_word']}</a>
+                  <!--  <a href="#h3_pub_comment" class="button block t_c mt_10 a_comment_id">{$_lang['i_leave_word']}</a>-->
                     <!--ÁôÑÔ-->
 					{loop $comment_data $k $v}
-                    <div class="ly1 mt_20 mb_10" id="p_$v['comment_id']">
-                        <div class="top1 clearfix mt_10 po_re">
-                            <a href="#" class="block fl_l">
-                            	<!--{userpic($v[uid],'small')}-->
+                    <div class="ly1 mt_20 mb_10 clearfix" id="p_$v['comment_id']">
+                       
+					  
+						
+						
+						
+						<div class="top1 clearfix mt_10 po_re" style="vertical-align:middle;">
+                            <a href="#" class="fl_l block">
+                            	<!--{userpic($v['uid'],'small')}-->
 							</a>
-							<a href="#" class="ml_10 mr_20 block pt_10 mt_5 fl_l">{$v['username']}</a>
-                            <span class="block mt_5 pt_10"><!--{date('Y-m-d H:i:s',$v['on_time'])}--></span>
+							<a href="#" class="ml_10 mt_5 mr_20 fl_l block pt_10 fl_l">{$v['username']}</a>
+                            <span class="pt_10 mt_5 block"><!--{date('Y-m-d H:i:s',$v['on_time'])}--></span>
                             {if $uid ==ADMIN_UID||$user_info['group_id']==7}
 							<div class="operate po_ab hidden"> 
-								<a href="javascript:;" title="{$_lang['delete']}" onclick="comment_del('p_{$v[comment_id]}','$v[comment_id]');return false;"><span class="icon16 trash">{$_lang['delete']}</span></a>
+								<a href="javascript:;" title="{$_lang['delete']}" onclick="comment_del('p_{$v['comment_id']}','$v['comment_id']');return false;"><span class="icon16 trash">{$_lang['delete']}</span></a>
                             </div>
 							{/if}
                         </div>
+					
                         <div class="pad10">
                              <p class="font14 pl_40 ml_10 ws_prewrap ws_break">{$v['content']}</p> 
                         </div>
@@ -91,20 +97,20 @@
                 </header>
                 <!--ÁôÑÔ²¿·Ö-->
                 <div class="lyk prefix_1 mt_10 mb_10 clearfix">
-                    <div class="grid_17">
+                    <div class="grid_14">
                     	
 				 <div class="work_answer">
 					<div class="answer-form">
                        <textarea class="font14 txt_input"  id="tar_comment"  cols="100" onkeydown="checkCommentInner(this,event)">{$_lang['pub_new_comment']}</textarea>
 						<div class=" ">
-							<button type="button" class="button" value="{$_lang['send_comment']}" onclick="comment_add()"><span class="check icon"></span>{$_lang['public']}</button>
+							<button type="button" class="button block fl_l" value="{$_lang['send_comment']}" onclick="comment_add()"><span class="check icon"></span>{$_lang['public']}</button>
 						<span class="answer_word">{$_lang['you_can_input']}</span>
 						</div>
 					</div>
 				</div>
 						
                     </div>
-                    <div class="grid_5">
+                    <div class="grid_8">
                         <p class="ly_notice">
                             	{$_lang['to_people_notice']}
                         </p>

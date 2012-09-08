@@ -6,14 +6,14 @@
         <section class="clearfix section">
             <!--{template user/user_side}-->
             <div class="show_panel container_24 po_re">
-                <div class="prefix_3">
+                <div class="prefix_3 grid_21">
                     <div class="panel clearfix box">
                         <!--main content-->
-                        <div class="grid_21">
+                        <div class="">
                             <!--headerÄÚÈÝÍ·²¿ start-->
                             <header class="clearfix box_header">
-                                <h2 class="grid_4 alpha box_title t_c">{$_lang['accounts_detail']}</h2>
-                                <div class="grid_17 omega">
+                                <h2 class="grid_4 alpha omega box_title t_c">{$_lang['accounts_detail']}</h2>
+                                <div class="grid_17 alpha omega">
                                     <nav class="box_nav">
                                         <ul>
                                             {loop $third_nav $k $v}
@@ -34,49 +34,37 @@
                                     <div class="icon16 fl_l">info</div>
                                     <div class="grid_18">
 									{if $action=='basic'}
-                                    {$_lang['income_total_amount']}:{$_lang['currency']}
-                                    <font color="red">
-                                       <!--{eval echo number_format($fina_count['in']['cash'],2)}-->
-                                    </font>
-                                    {$_lang['yuan']}¡¢{CREDIT_NAME}
-                                    <font color="red">
-                                        <!--{eval echo number_format($fina_count['in']['credit'],2)}-->
-                                    </font>
-                                    {$_lang['zh_jh']}{$_lang['out_total_amount']}:{$_lang['currency']}
-                                    <font color="red">
-                                        <!--{eval echo number_format($fina_count['out']['cash'],2)}-->
-                                    </font>
-                                    {$_lang['yuan']}¡¢{CREDIT_NAME}
-                                    <font color="red">
-                                        <!--{eval echo number_format($fina_count['in']['credit'],2)}-->
-                                    </font>
+                                    {$_lang['money_balance']}:
+                                    <span class="cc00">
+                                      {c:$user_info['balance']}
+                                    </span>&nbsp;{CREDIT_NAME}{$_lang['residue']}
+                                    <span class="cc00">
+                                        $user_info['credit']
+                                    </span>
                                     {elseif $action=='charge'}
-                                    {$_lang['recharge_success_money']}:
-                                    <font color="red">
+  {$_lang['recharge_success_total']}:
+                                    <span class="cc00">
                                       {if $fina_count['ok']['cash']}
-									   <!--{eval echo number_format($fina_count['ok']['cash'],2)}-->
+									   {c:$fina_count['ok']['cash']}
 									  {else}0{/if}
-                                    </font>
-                                    {$_lang['yuan']}{$_lang['to_confirm_money']}{$_lang['zh_mh']}
-                                    <font color="green"> 
+                                    </span>
+                                   {$_lang['to_confirm_money']}{$_lang['zh_mh']}
+                                    <span class="c690"> 
                                        {if $fina_count['wait']['cash']}
-									   <!--{eval echo number_format($fina_count['wait']['cash'],2)}-->
+									  {c:$fina_count['wait']['cash']}
 									   {else}0{/if}
-                                    </font>
-                                    {$_lang['yuan']}{$_lang['zh_jh']}
+                                    </span>{$_lang['zh_jh']}
                                     {elseif $action=='withdraw'}
                                  {$_lang['withdraw_success_money']}:
-                                    <font color="red">
-                                    {if $fina_count['1']['cash']}
-									  <!--{eval echo number_format($fina_count['1']['cash'],2)}-->
+                                    <span class="cc00">
+                                    {if $fina_count['2']['cash']}
+									  {c:$fina_count['2']['cash']}
 									   {else} 0 {/if}
-                                    </font>
-                                    {$_lang['yuan']}{$_lang['zh_jh']}{$_lang['to_audit_money']}{$_lang['zh_mh']}
-                                    <font color="green">
-                                       {if $fina_count['0']['cash']}
-									   <!--{eval echo number_format($fina_count['0']['cash'],2)}--> {else} 0 {/if}
-                                    </font>
-                                    {$_lang['yuan']}
+                                    </span>{$_lang['zh_jh']}{$_lang['to_audit_money']}{$_lang['zh_mh']}
+                                    <span class="c690">
+                                       {if $fina_count['1']['cash']}
+									   {c: $fina_count['1']['cash']} {else} 0 {/if}
+                                    </span>
                                     {/if}
 									</div>
                                 </div>
@@ -92,6 +80,7 @@
                                                 </div>
                                                 <div class=" fl_l">
                                                     <select class=" fl_l" name="fina_type">
+                                                    	<option value="" {if !$fina_type}selected="selected"{/if}>{$_lang['all']}</option>
                                                         <option value="in" {if $fina_type=='in'}selected="selected"{/if}>{$_lang['income']}</option>
                                                         <option value="out" {if $fina_type=='out'}selected="selected"{/if}>{$_lang['out']}</option>
                                                     </select>
@@ -132,13 +121,7 @@
                                                             {$_lang['amount']}
                                                         </th>
                                                         <th scope="col">
-                                                            {$_lang['balance']}
-                                                        </th>
-                                                        <th scope="col">
                                                             {CREDIT_NAME}
-                                                        </th>
-                                                        <th scope="col">
-                                                            {CREDIT_NAME}{$_lang['balance']}
                                                         </th>
                                                         <th scope="col">
                                                             {$_lang['time']}
@@ -150,25 +133,24 @@
                                                     {loop $fina_arr $v}
                                                     <tr>
                                                         <td>
-                                                            $v['unique_num']
+                                                            $v['fina_id']
                                                         </td>
                                                         <td>
                                                             {if $v['fina_type']=='in'}{$_lang['income']}{else}{$_lang['out']}{/if}
                                                         </td>
                                                         <td>
-                                                           {if $v['is_trust']}{$_lang['guarantee']}-{/if}$action_arr[$v['fina_action']]
+														   {$action_arr[$v['fina_action']]}
+														   {if $v['task_title']&&$v['obj_type']=='task'}
+														   		<a href="{$_K['siteurl']}/index.php?do=task&task_id={$v['obj_id']}" target="_blank">{$v['task_title']}</a>
+															{elseif $v['title']&&$v['obj_type']=='service'}
+																<a href="{$_K['siteurl']}/index.php?do=service&sid={$v['obj_id']}" target="_blank">{$v['title']}</a>
+															{/if}
                                                         </td>
                                                         <td>
-                                                            <!--{eval echo number_format($v['fina_cash'],2)}-->
+                                                            {c:$v['fina_cash']}
                                                         </td>
                                                         <td>
-                                                            <!--{eval echo number_format($v['user_balance'],2)}-->
-                                                        </td>
-                                                        <td>
-                                                            <!--{eval echo number_format($v['fina_credit'],2)}-->
-                                                        </td>
-                                                        <td>
-                                                            <!--{eval echo number_format($v['user_credit'],2)}-->
+                                                            $v['fina_credit']
                                                         </td>
                                                         <td>
                                                             <!--{date('Y-m-d H:i:s',$v['fina_time'])}-->
@@ -186,7 +168,7 @@
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
-                                                        <td colspan="7">
+                                                        <td colspan="5">
                                                         </td>
                                                         <td>
                                                             {$_lang['total']}:{$count}{$_lang['tiao']}
@@ -204,6 +186,7 @@
                                                 </div>
                                                 <div class="fl_l">
                                                     <select class=" fl_l" name="order_type">
+                                                    	<option value="" {if !$order_type}selected="selected"{/if}>{$_lang['all']}</option>
                                                         {loop $order_type_arr $k $v}<option value="{$k}" {if $order_type==$k}selected="selected"{/if}>{$v} </option>
                                                         {/loop}
                                                     </select>
@@ -269,14 +252,10 @@
 															{/if}
                                                         </td>
                                                         <td>
-                                                            $v['pay_money']
+                                                            {c:$v['pay_money']}
                                                         </td>
                                                         <td>
-                                                        	{if $v['order_type']=='online_charge'} 
-                                                        		<a title="{$_lang['wait_pay']}">{$_lang['wait_pay']}</a>
-                                                        	{else}
-                                                        		$status_arr[$v['order_status']]
-                                                        	{/if}
+                                                        	$status_arr[$v['order_status']]
                                                         </td>
                                                         <td>
                                                             <!--{date('Y-m-d H:i:s',$v['pay_time'])}-->
@@ -358,13 +337,13 @@
                                                             $v['withdraw_id']
                                                         </td>
                                                         <td>
-                                                            $v['pay_type']
+                                                            {$bank_arr[$v['pay_type']]}
                                                         </td>
                                                         <td>
                                                             $v['pay_account']
                                                         </td>
                                                         <td>
-                                                            $v['withdraw_cash']
+                                                            {c:$v['withdraw_cash']}
                                                         </td>
                                                         <td>
                                                         	{$status_arr[$v['withdraw_status']]}

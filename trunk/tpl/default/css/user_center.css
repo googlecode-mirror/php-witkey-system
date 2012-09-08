@@ -35,6 +35,7 @@
  -----------------------------------------------------*/
 	.btn_width{width:80px; text-align:center;}
 	.auth img{display:inline-block; margin-right:5px;}
+	#ie8 .auth img,#ie7 .auth img,#ie6 .auth img{margin-right:-2px;}
 	ul.trading li{ background:#fff; height:25px; line-height:25px; margin-bottom:2px; padding:0 10px 0 20px;}
 	ul.trading span{margin:0 10px 0 5px;}
 	
@@ -45,16 +46,19 @@
 		.box.default .tool_item #right a{ background:url("../img/center/in_right.gif") no-repeat;}
 		.box.default .tool_item #left{ position:absolute; left:40px; top:35px;}
 		.box.default .tool_item #right{position:absolute; right:40px; top:35px;}
-	h3{ color:#666;}
+	/*h3{ color:#fff;}*/
 	h3 em{ font-style:normal; font-weight:normal; font-size:12px;}
+	
 
 /* 1.1 个人设置
  -----------------------------------------------------*/
 	/* 1.1.1 基本资料
 	------------------------------------------------------*/
 		/* 个人经历*/
+	
 		.exp_info span{ color:#999; display:block}
 		.exp_info p{ clear:both; color:#333; font-size:14px; margin-bottom:10px;}
+		
 
 		/*技能证书*/
 		.upd_infos{ border:1px solid #ccc; min-height:200px;_height: expression( this.scrollHeight < 200 ? "200px" : "auto" );}
@@ -94,7 +98,7 @@
 		/*选择图像*/
 			.choose_tx li { display:inline; float:left; margin:5px;}
 		/*上传图像*/
-			.img_cut{ background:#fefefe; height:280px; }
+			.img_cut{ background:#2e2e2e; height:280px; }
 			/*
 			.shooting{ height:300px; background:#f0f0f0 url(../img/kppw_2.0_user_shooting.png) no-repeat center center;}
 			*/
@@ -104,11 +108,12 @@
 		.box.basic_style  .groupinfo .loading_bar{ border-radius:5px}
 		.box.basic_style  .groupinfo .progress_bar{ background-color:#690;border-radius:5px}
 		.groupinfo p{ margin-bottom:0; clear:both; line-height:30px; padding:10px 0; overflow:hidden}
-		.groupinfo p b{ float:left}
+		.groupinfo p strong{ float:left}
 		.groupinfo p a{ float:right; font-size:2.5em; color:#690; font-weight:bold}
 		.groupinfo p a img{ vertical-align:top}
 		.groupinfo p a.pay{ color:#f60}
 		.groupinfo p a.pay sub{ color:#f90; bottom:1em; font-size:14px;}
+		.groupinfo p span{ display:inline-block; }
 		
 		/*互评记录*/
 		.credit_list{ line-height:50px;}
@@ -147,21 +152,19 @@
 		 	  财务管理--账号充值--等待后台审核;
 		 	  财务管理--账号提现--完成提现  ; 
 	--------------------------------------------------------*/
-		.box.basic_style.complete .completedata{border-bottom:none; overflow:hidden;}
-		.box.basic_style.complete .completedata li{ padding:10px;}
-		.box.basic_style.complete .completedata li img{display:block; float:left;}
-			
+		.box.complete .completedata{border-bottom:none; overflow:hidden;}
+		.box.complete .completedata li{ padding:10px;}
+		.box.complete .completedata li img{display:block; float:left;}
+		#ie8 .account1 .pay_way{width:140px !important;}
+		#ie8 .form_box label.pay_way{width:95px; overflow:hidden;}
+		#ie6 .form_box label.pay_way{width:90px; overflow:hidden;}
 /* 1.4标签页面
  -------------------------------------------------------*/
 	/* 1.4.1  个人用户注册（第二步）;
 	       个人设置--基本资料-- 威客技能;
 	----------------------------------------------------------- */
 		.tags_add a{width:80px; background:#2F549F; color:#fff; text-align:center; line-height:25px; height:25px; margin:0 5px 5px 0; font-size:12px; float:left; *display:inline-block;}
-@media only screen and (min-width: 320px) and (max-width: 640px){
-    .basic_style .box .box_nav,
-	.basic_style .box .btns,
-	.basic_style .box .box_detail{ visibility:visible; height:auto; padding-top:5px !important; padding-bottom:5px !important; overflow:visible;}
-}
+
 /*  选项框  */
 select{margin-right:5px;}
 
@@ -169,5 +172,19 @@ select{margin-right:5px;}
 .box .box_header .box_nav:before,
 .box .box_header .box_nav:after {  content: '\0020';  display: block;  overflow: hidden;  visibility: hidden;  width: 0;  height: 0;}
 .box .box_header .box_nav:after {clear: both;}
-.box .box_header .box_nav {zoom: 1;}
-#ie6 select{float:left;}			
+.box .box_header .box_nav {zoom: 1;}	
+/*公用*/
+
+.box.default.model_bord .box_header{border-color:#F4F4F4;}
+/* 实名认证第三步 */
+.last_step_three .box.complete{border-color:#ccc; background:#fff;}
+	.last_step_three .last_success_step{border:1px solid #ccc; margin:50px 0;}
+	.last_step_three .box.complete .completedata{border:none; margin:40px auto 0; padding:0 50px 0 40px; _padding:0 30px 0 0;}
+		.last_step_three .box.complete .completedata li{border:none; padding:5px 10px;}
+.messages{margin-left:10px; margin-right:10px;}		
+
+@media only screen and (min-width: 320px) and (max-width: 640px){
+ .box .box_nav,
+ .box .btns,
+ .box .box_detail{ visibility:visible; height:auto; padding-top:5px !important; padding-bottom:5px !important; overflow:visible;}
+}

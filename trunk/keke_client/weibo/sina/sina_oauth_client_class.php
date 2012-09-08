@@ -40,7 +40,7 @@ class sina_oauth_client_class extends base_client_class {
 		$keys = $oauth_verifier;
 		$last_key = $o->getAccessToken ( 'code', $keys );
 		if (! $last_key ['uid']) {
-			Keke::error_handler( 001, 'access_token不存在或者已过期' );
+			kekezu::error_handler( 001, 'access_token不存在或者已过期' );
 			return false;
 		}
 		$_SESSION ['auth_sina'] ['last_key'] = $last_key; // last_key 保存
@@ -79,11 +79,11 @@ class sina_oauth_client_class extends base_client_class {
 		$c = $this->get_client ();
 		$auth_user_info = $c->show_user_by_id ( $_SESSION ['auth_sina'] ['last_key'] ['uid'] );
 		if (strtolower ( CHARSET ) == 'gbk') {
-			$auth_user_info = Keke::utftogbk ( $auth_user_info );
+			$auth_user_info = kekezu::utftogbk ( $auth_user_info );
 		}
 		if ($auth_user_info ['error']) {
 			unset ( $_SESSION ['auth_sina'] );
-			Keke::error_handler ( 001, '用户数据获取失败！错误代码:' . keke_debug::dump ( $auth_user_info ['error'] ) );
+			kekezu::error_handler ( 001, '用户数据获取失败！错误代码:' . keke_debug::dump ( $auth_user_info ['error'] ) );
 			return false;
 		}
 		return $auth_user_info;
@@ -96,7 +96,7 @@ class sina_oauth_client_class extends base_client_class {
 		$c = $this->get_client ();
 		global $_K;
 		if (strtolower ( $_K ['charset'] ) == 'gbk') {
-			$msg = Keke::gbktoutf ( $msg );
+			$msg = kekezu::gbktoutf ( $msg );
 		}
 		if (! $img) {
 			$r = $c->update ( $msg );
@@ -104,10 +104,10 @@ class sina_oauth_client_class extends base_client_class {
 			$r = $c->upload ( $msg, $img );
 		}
 		if (strtolower ( $_K ['charset'] ) == 'gbk') {
-			$r = Keke::utftogbk ( $r );
+			$r = kekezu::utftogbk ( $r );
 		}
 		if ($r ['error']) {
-			Keke::error_handler ( 001, '发送失败' . keke_debug::dump ( $r ) );
+			kekezu::error_handler ( 001, '发送失败' . keke_debug::dump ( $r ) );
 			return false;
 		}
 		return $r ['idstr'];
@@ -130,7 +130,7 @@ class sina_oauth_client_class extends base_client_class {
 		$func = is_numeric ( $uid_or_name ) ? 'user_timeline_by_id' : 'user_timeline_by_name';
 		$r = $c->$func ( $page, $page_size );
 		if (strtolower ( $_K ['charset'] ) == 'gbk') {
-			$r = Keke::utftogbk ( $r );
+			$r = kekezu::utftogbk ( $r );
 		}
 		return $r;
 	}
@@ -142,10 +142,10 @@ class sina_oauth_client_class extends base_client_class {
 		$c = $this->get_client ();
 		$r = $c->show_status ( $sid );
 		if (strtolower ( CHARSET ) == 'gbk') {
-			$r = Keke::utftogbk ( $r );
+			$r = kekezu::utftogbk ( $r );
 		}
 		if ($r ['error']) {
-			Keke::error_handler ( 001, '微博信息获取失败' . keke_debug::dump ( $r ) );
+			kekezu::error_handler ( 001, '微博信息获取失败' . keke_debug::dump ( $r ) );
 			return false;
 		}
 		return $r;
@@ -173,10 +173,10 @@ class sina_oauth_client_class extends base_client_class {
 		! $cursor && $cursor = 0;
 		$r = $c->$func ( $uid_or_name, $cursor, $count );
 		if (strtolower ( CHARSET ) == 'gbk') {
-			$r = Keke::utftogbk ( $r );
+			$r = kekezu::utftogbk ( $r );
 		}
 		if ($r ['error']) {
-			Keke::error_handler ( 001, '获取粉丝列表失败' . keke_debug::dump ( $r ) );
+			kekezu::error_handler ( 001, '获取粉丝列表失败' . keke_debug::dump ( $r ) );
 			return false;
 		}
 		return $r ['users'];
@@ -193,7 +193,7 @@ class sina_oauth_client_class extends base_client_class {
 		$func = ctype_digit ( $u_id ) ? follow_by_id : follow_by_name; // 检测是数字还是字符串
 		$r = $c->$func ( $u_id );
 		if (strtolower ( $_K ['charset'] ) == 'gbk') {
-			$r = Keke::utftogbk ( $r );
+			$r = kekezu::utftogbk ( $r );
 		}
 		if ($r ['error']) {
 			// error_handler(001,'关注'.$u_id.'失败'.keke_debug::dump($r));//加关注失败的原因可能是自己关注自己,这种情况下程序不好判断,注释此处(此处错误抛出仅因为方便调试)
@@ -211,7 +211,7 @@ class sina_oauth_client_class extends base_client_class {
 		$c = $this->get_client ();
 		$r = $c->queryid ( $mid, 1, 0, 0, 1 );
 		if ($r ['error']) {
-			Keke::error_handler ( 001, 'MID获取其ID失败' . keke_debug::dump ( $r ) );
+			kekezu::error_handler ( 001, 'MID获取其ID失败' . keke_debug::dump ( $r ) );
 			return false;
 		}
 		return $r ['id'];
@@ -223,15 +223,15 @@ class sina_oauth_client_class extends base_client_class {
 		$this->_error_info = null;
 		$this->init_client ();
 		if (strtolower ( $_K ['charset'] ) == 'gbk' && $text) {
-			$text = Keke::gbktoutf ( $text );
+			$text = kekezu::gbktoutf ( $text );
 		}
 		$c = $this->get_client ();
 		$r = $c->repost ( $sid, $text );
 		if (strtolower ( $_K ['charset'] ) == 'gbk') {
-			$r = Keke::utftogbk ( $r );
+			$r = kekezu::utftogbk ( $r );
 		}
 		if ($r ['error']) {
-			Keke::error_handler ( 001, '转发一条微博失败' . keke_debug::dump ( $r ) );
+			kekezu::error_handler ( 001, '转发一条微博失败' . keke_debug::dump ( $r ) );
 			return false;
 		}
 		return $r;
@@ -245,14 +245,14 @@ class sina_oauth_client_class extends base_client_class {
 		$this->init_client ();
 		$c = $this->get_client ();
 		if (strtolower ( $_K ['charset'] ) == 'gbk') {
-			$text = Keke::gbktoutf ( $text );
+			$text = kekezu::gbktoutf ( $text );
 		}
 		$r = $c->send_comment ( $sid, $text );
 		if (strtolower ( $_K ['charset'] ) == 'gbk') {
-			$r = Keke::utftogbk ( $r );
+			$r = kekezu::utftogbk ( $r );
 		}
 		if ($r ['error']) {
-			Keke::error_handler ( 001, '评论微博失败' . keke_debug::dump ( $r ) );
+			kekezu::error_handler ( 001, '评论微博失败' . keke_debug::dump ( $r ) );
 			return false;
 		}
 		return $r;
@@ -275,7 +275,7 @@ class sina_oauth_client_class extends base_client_class {
 		$r ['sex'] = $data ['gender'] == 'm' ? '男' : $data ['gender'] == 'f' ? '女' : '保密';
 		$r ['create_at'] = strtotime ( $data ['created_at'] ); // 创建的日期(时间戳)
 		/*if (strtolower ( CHARSET ) == 'gbk') {
-			$r = Keke::utftogbk ( $r );
+			$r = kekezu::utftogbk ( $r );
 		}*/
 		return $r;
 	}

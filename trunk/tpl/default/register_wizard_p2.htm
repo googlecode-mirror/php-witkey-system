@@ -1,17 +1,20 @@
 <!--{template header}-->
+<link href="resource/css/public.css" rel="stylesheet" type="text/css">
+<link href="{SKIN_PATH}/css/user_center.css" rel="stylesheet" type="text/css">
+<link href="resource/js/jqplugins/tagsinput/jquery.tagsinput.css" rel="stylesheet" type="text/css">
 <div class="wrapper">
 
 <!--页面头部-->
 	<header class="clearfix page_header">
-    	<div class="container_24 page_title">
-  			<h2 class="mt_10 mb_10 title"><b>{$_lang['perfect_data']}</b></h2>
+    	<div class="container_24 page_title pt_15 pb_5">
+  			<h2 class="title"><b>{$_lang['perfect_data']}</b></h2>
     	</div>
 	</header>
 <!--end 页面标题--><!--主内容-->
 
 	<section class="clearfix content">	
     	<div class="container_24">
-        	<div class="box mt_10  clearfix">
+        	<div class="box  clearfix">
             	<div class="grid_24">
             		<div class="filter box normal po_re">
             			<div class="inner">
@@ -36,11 +39,6 @@
 							<!--end 进度选项-->
 						
 						<div class="step1_detail pl_5 pr_5 clearfix">
-							<!--  <div class="messages m_infor " style="display: block;">
-								<span class="icon16">info</span>
-								{$_lang['person_can_change_company']}
-								<a class="close" href="javascript:;">×</a>
-							</div>-->
 							
 							<div class="prefix_1 suffix_1 clearfix">
 								<form action="index.php?do=register_wizard" name="frm" id="frm" method="post" enctype="multipart/form-data">
@@ -55,7 +53,7 @@
 											<label class="grid_5 t_r">
                                                  	{$_lang['skill_mark']}{$_lang['zh_mh']}
                                             </label>
-											<button type="button" id="btn_skill" class="button">{$_lang['add_skill']}</button>
+											{$_lang['add_skill']}
 											<div class="clearfix prefix_5" id="skill_container11" >
 																							
 	                                            <div class="grid_8 alpha">
@@ -99,7 +97,7 @@
 										</div>										
 										<div class="rowElem clearfix">
 			                              <label class="grid_5 t_r">{$_lang['birthday']}{$_lang['zh_mh']}</label>				                          
-                                            <input name="conf[birthday]" type="text" size="35" value="{if $user_info['birthday']}<!--{date('Y-m-d',$user_info['birthday'])}-->{/if}"
+                                            <input name="conf[birthday]" class="birthday" type="text" size="35" value="{if $user_info['birthday']}{$user_info['birthday']}"
 											 onclick="showcalendar(event, this, 0)" title="" msgArea="span_birthday" 
 												 limit="required:true;type:date;less:1997-02-08" msg="{$_lang['birth_error']}" id="birthday" original-title="{$_lang['birth_title']}" />
 											 <span id="span_birthday"></span>
@@ -150,15 +148,15 @@
                                             <label class="grid_5 t_r">
                                                 {$_lang['sex']}{$_lang['zh_mh']}
                                             </label>
-                                            <input type="radio" name="conf[sex]" value="{$_lang['secret']}" {if !$user_info['sex']||$user_info['sex']==Keke::lang('secret')}checked{/if} />
+                                            <input class="border_n"  type="radio" name="conf[sex]" value="{$_lang['secret']}" {if !$user_info['sex']||$user_info['sex']==kekezu::lang('secret')}checked{/if} />
                                             <label>
                                                 {$_lang['secret']}
                                             </label>
-                                            <input type="radio" name="conf[sex]" value="{$_lang['man']}" {if $user_info['sex']==Keke::lang('man')}checked{/if} />
+                                            <input class="border_n" type="radio" name="conf[sex]" value="{$_lang['man']}" {if $user_info['sex']==kekezu::lang('man')}checked{/if} />
                                             <label>
                                                 {$_lang['man']}
                                             </label>
-                                            <input type="radio" name="conf[sex]" value="{$_lang['woman']}" {if $user_info['sex']==Keke::lang('woman')}checked{/if} />
+                                            <input class="border_n" type="radio" name="conf[sex]" value="{$_lang['woman']}" {if $user_info['sex']==kekezu::lang('woman')}checked{/if} />
                                             <label>
                                                 {$_lang['woman']}
                                             </label>
@@ -168,7 +166,7 @@
                                                  	{$_lang['profile']}{$_lang['zh_mh']}
                                                 </label>
 												<div class="fl_l">
-                                                <textarea cols="80" rows="8" id="tar_content" msgArea="content_msg" name="conf[summary]" class="xheditor-simple {urlBase:'$_K['siteurl']/',html5Upload:false,upImgUrl:'index.php?do=ajax&view=upload&file_type=att',skin:'nostyle'}" style="width:400px;">{$user_info['summary']}</textarea>
+                                                <textarea cols="80" rows="8" id="tar_content" msgArea="content_msg" name="conf[summary]" class="xheditor-simple {skin:'nostyle'}" style="width:400px;">{$user_info['summary']}</textarea>
 												<div style="display:none;"><span id="content_msg"></span></div>
 												</div>                                            
                                             <div class="grid_6 ui_note">{$_lang['profile_tips']} </div>
@@ -189,18 +187,17 @@
 	</div>
 	</section>
 </div>
- 
+ <script type="text/javascript" src="resource/js/xheditor/xheditor.js"></script>
+<script type="text/javascript">
+	 $(function(){
+	 	editor = $("#tar_content").xheditor();
+	 })
+</script>
 <script type="text/javascript">
 
-
-In.add('css_user_center',{path:"{SKIN_PATH}/css/user_center.css",type:'css'}); 
-In.add('ccs_public',{path:"resource/css/public.css",type:'css'}); 
-
-In('ccs_public','css_user_center');
  
-In.add('css_tagsinput', {path: "resource/js/jqplugins/tagsinput/jquery.tagsinput.css", type: 'css' });
 In.add('tagsinput', {path: "resource/js/jqplugins/tagsinput/jquery.tagsinput.js",type: 'js'});
-In('tagsinput','css_tagsinput',  function (){
+In('tagsinput',  function (){
  
 	set_tags(); 	
 });
@@ -287,7 +284,8 @@ function showIndus(indus_pid){
 
 
 function save(){	
-	var i = checkForm(document.getElementById('frm'));	
+	var i = checkForm(document.getElementById('frm'));
+	
 	if(i){
 		os = $("#tags_tagsinput .tag");
 	    s = os.length;		
@@ -302,7 +300,8 @@ function save(){
 				$("#skill_ids").val(tag_str);
 		    }
 		}		
-		var content = contentCheck('tar_content',"{$_lang['profile']}",2,1000);			
+		var content = editor.getSource(); //contentCheck('tar_content',"{$_lang['profile']}",2,1000);
+		
 		if(content){
 			$("#frm").submit();
 		}else{	
@@ -313,5 +312,13 @@ function save(){
 		return false;
 	}
 }
+
+	$('#ie6 .birthday').click(function(){
+		$('#ie6 select').addClass('hidden');
+	}).blur(function(){
+		$('#ie6 select').removeClass('hidden');
+	});
+	
+
 </script>
 <!--{template footer}-->

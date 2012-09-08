@@ -5,7 +5,7 @@
 	exit('Access denied');
 }
  */
-error_reporting(7);
+error_reporting(0);
 require_once(S_ROOT.'./config/config_ucenter.php'); 
 define('IN_UC', TRUE);
 define('UC_CLIENT_VERSION', '1.5.0');

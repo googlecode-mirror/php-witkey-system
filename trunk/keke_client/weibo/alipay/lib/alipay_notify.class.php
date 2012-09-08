@@ -29,9 +29,9 @@ class AlipayNotify {
 	function __construct($aliapy_config){
 		$this->aliapy_config = $aliapy_config;
 	}
-    function AlipayNotify($aliapy_config) {
+/*    function AlipayNotify($aliapy_config) {
     	$this->__construct($aliapy_config);
-    }
+    }*/
     /**
      * 针对notify_url验证消息是否是支付宝发出的合法消息
      * @return 验证结果

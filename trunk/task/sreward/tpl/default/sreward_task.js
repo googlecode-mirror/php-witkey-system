@@ -18,7 +18,7 @@ $(function() {
 function workHand() {
 	if (check_user_login()) {
 		if (uid == guid) {
-			showDialog('操作无效，用户对自己发布的任务交稿!', 'alert', '操作失败提示', '', 0);
+			showDialog(L.operation_invalid+','+L.released_task_turnaround, 'alert', L.operation_failed_tips, '', 0);
 			return false;
 		} else {
 			showWindow("work_hand", basic_url + '&op=work_hand', "get", '0');
@@ -37,7 +37,7 @@ function workHand() {
 function workVote(work_id, vote_uid) {
 	if (check_user_login()) {
 		if (vote_uid == uid) {
-			showDialog("无法对自己进行投票", 'alert', '操作提示');
+			showDialog(L.t_vote_forbidden, 'alert', L.operate_notice);
 			return false;
 		}
 		var url = basic_url + '&op=work_vote';
@@ -70,7 +70,7 @@ function workVote(work_id, vote_uid) {
 function workBid(work_id, to_status) {
 	if (check_user_login()) {
 		if (guid != uid) {
-			showDialog("只有雇主才能操作稿件", "alert", "操作提示");
+			showDialog(L.t_master_can_operate_work, "alert", L.operate_notice);
 			return false;
 		} else {
 			var url = basic_url + '&op=work_choose&work_id=' + work_id;
@@ -78,19 +78,7 @@ function workBid(work_id, to_status) {
 				to_status : to_status
 			}, function(json) {
 				if (json.status == 1) {
-					if(to_status=='4'){
-						switch (trust_mode) {
-						case "0":
-							showDialog(json.data, "right", json.msg,"location.href='" + basic_url + "&view=work'");
-							return false;
-							break;
-						case "1":
-							location.href = json.data;
-							break;
-						}
-					}else{
-						showDialog(json.data, "right", json.msg,"location.href='" + basic_url + "&view=work'");
-					}
+					showDialog(json.data, "right", json.msg,"location.href='" + basic_url + "&view=work'");
 				} else {
 					showDialog(json.data, "alert", json.msg);
 					return false;

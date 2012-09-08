@@ -1,5 +1,5 @@
 <?php
-keke_lang_class::load_lang_class('sreward_task_agreement');
+keke_lang_class::load_lang_class ( 'sreward_task_agreement' );
 class sreward_task_agreement extends keke_task_agreement {
 	
 	protected $_inited = false;
@@ -56,32 +56,37 @@ class sreward_task_agreement extends keke_task_agreement {
 	 * 任务结算
 	 */
 	public function dispose_task() {
-		global $kekezu;
-		$trust_info  = $this->_trust_info;
+		global $kekezu, $_lang;
 		$kekezu->init_prom ();
-		$prom_obj = Keke::$_prom_obj;
+		$prom_obj = $kekezu->_prom_obj;
 		$model_code = $this->_model_code; //模型code
 		$agree_info = $this->_agree_info;
 		/**双方所得金额**/
-		$cash_info = dbfactory::get_one ( sprintf ( " select task_cash,real_cash from %switkey_task where task_id = '%d'", TABLEPRE, $this->_task_id ) );
+		$cash_info = db_factory::get_one ( sprintf ( " select task_cash,task_union,real_cash from %switkey_task where task_id = '%d'", TABLEPRE, $this->_task_id ) );
 		/** 评价数+2***/
 		$this->plus_mark_num ();
 		/**威客记录**/
-		keke_user_mark_class::create_mark_log ( $model_code, '1', $agree_info ['seller_uid'], $agree_info ['buyer_uid'], $agree_info ['work_id'], $cash_info ['task_cash'], $this->_task_id,$this->_seller_username, $this->_buyer_username);
+		keke_user_mark_class::create_mark_log ( $model_code, '1', $agree_info ['seller_uid'], $agree_info ['buyer_uid'], $agree_info ['work_id'], $cash_info ['task_cash'], $this->_task_id, $this->_seller_username, $this->_buyer_username );
 		/**雇主记录**/
-		keke_user_mark_class::create_mark_log ( $model_code, '2', $agree_info ['buyer_uid'], $agree_info ['seller_uid'], $agree_info ['work_id'], $cash_info ['real_cash'], $this->_task_id, $this->_buyer_username,$this->_seller_username);
+		keke_user_mark_class::create_mark_log ( $model_code, '2', $agree_info ['buyer_uid'], $agree_info ['seller_uid'], $agree_info ['work_id'], $cash_info ['real_cash'], $this->_task_id, $this->_buyer_username, $this->_seller_username );
 		$site_profit = $cash_info ['task_cash'] - $cash_info ['real_cash']; //网站利润
-		switch($trust_info['is_trust']){
-			case "1"://担保模式
-				$data = array ("uid" => $agree_info ['seller_uid'], "username" => $this->_seller_username, "obj_id" => $this->_task_id, "fina_cash" => $cash_info ['real_cash'], "fina_time" => time (),"fina_action"=>"task_bid","site_profit"=>$site_profit);
-				keke_finance_class::finance_trust ( $data,$trust_info['trust_type'], 'in' );
-				break;
-			case "0"://非担保模式
-				keke_finance_class::cash_in ( $agree_info ['seller_uid'], $cash_info ['real_cash'], 0, 'task_bid', '', 'task', $agree_info ['work_id'], $site_profit ); //打钱给威客
-				break;
+		$task_title = db_factory::get_count ( sprintf ( " select task_title from %switkey_task where task_id='%d'", TABLEPRE, $this->_task_id ) );
+		$data = array (':task_id' => $this->_task_id, ':task_title' => $task_title );
+		keke_finance_class::init_mem ( 'task_bid', $data );
+		keke_finance_class::cash_in ( $agree_info ['seller_uid'], $cash_info ['real_cash'], 0, 'task_bid', '', 'task', $agree_info ['work_id'], $site_profit ); //打钱给威客
+		/**
+			 * 通知联盟，给钱
+			 */
+		if ($cash_info['task_union']) {
+			$u = new keke_union_class ( $this->_task_id );
+			$u->task_close ( array ('r_task_id' => $u->_r_task_id, 'indetify' => 1, 'bid_uid' =>$agree_info ['seller_uid']) );
 		}
+		//feed
+		$feed_arr = array ("feed_username" => array ("content" => $this->_seller_uid, "url" => "index.php?do=space&member_id={$this->_seller_uid}" ), "action" => array ("content" => $_lang ['success_bid_haved'], "url" => "" ), "event" => array ("content" => $task_title, "url" => "index.php?do=task&task_id=$this->_task_id", 'cash' => $cash_info ['real_cash'] ) );
+		kekezu::save_feed ( $feed_arr, $this->_seller_uid, $this->_seller_username, 'work_accept', $this->_task_id );
+		
 		/** 威客上线结算*/
-		$prom_obj->dispose_prom_event ( "bid_task", $agree_info ['seller_uid'],$this->_task_id);
+		$prom_obj->dispose_prom_event ( "bid_task", $agree_info ['seller_uid'], $this->_task_id );
 		/** 雇主上线结算*/
 		$prom_obj->dispose_prom_event ( "pub_task", $agree_info ['buyer_uid'], $this->_task_id );
 	}
@@ -101,22 +106,22 @@ class sreward_task_agreement extends keke_task_agreement {
 			case "1" : //卖家(威客)
 				if (in_array ( $seller_status, array ('2', '3', '4' ) )) { //已签署协议、源文件上传、等待源文件接收
 					if ($buyer_status == '1') { //此时买家未签署协议
-						$stage_list [] = array ('green', 'successful', $_lang['congratulate_you_yu'] . date ( 'Y-m-d H:i:s', $agree_info ['seller_accepttime'] ) . $_lang['agree_jf_agreement'] );
-						$stage_list [] = array ('orange', 'waring', $_lang['wain_each_not_agree_and_wait_jf'] );
+						$stage_list [] = array ('green', 'successful', $_lang ['congratulate_you_yu'] . date ( 'Y-m-d H:i:s', $agree_info ['seller_accepttime'] ) . $_lang ['agree_jf_agreement'] );
+						$stage_list [] = array ('orange', 'waring', $_lang ['wain_each_not_agree_and_wait_jf'] );
 					} else {
 						if ($agree_info ['buyer_accepttime'] >= $agree_info ['seller_accepttime']) { //买家先签署
-							$stage_list [] = array ('green', 'successful', $_lang['congratulate_you_yu'] . date ( 'Y-m-d H:i:s', $agree_info ['seller_accepttime'] ) . $_lang['agree_jf_agreement'] );
-							$stage_list [] = array ('green', 'successful', $_lang['congratulate_each_yu'] . date ( 'Y-m-d H:i:s', $agree_info ['buyer_accepttime'] ) . $_lang['agree_jf_agreement'] );
+							$stage_list [] = array ('green', 'successful', $_lang ['congratulate_you_yu'] . date ( 'Y-m-d H:i:s', $agree_info ['seller_accepttime'] ) . $_lang ['agree_jf_agreement'] );
+							$stage_list [] = array ('green', 'successful', $_lang ['congratulate_each_yu'] . date ( 'Y-m-d H:i:s', $agree_info ['buyer_accepttime'] ) . $_lang ['agree_jf_agreement'] );
 						} else {
-							$stage_list [] = array ('green', 'successful', $_lang['congratulate_each_yu'] . date ( 'Y-m-d H:i:s', $agree_info ['buyer_accepttime'] ) . $_lang['agree_jf_agreement'] );
-							$stage_list [] = array ('green', 'successful', $_lang['congratulate_you_yu'] . date ( 'Y-m-d H:i:s', $agree_info ['seller_accepttime'] ) . $_lang['agree_jf_agreement'] );
+							$stage_list [] = array ('green', 'successful', $_lang ['congratulate_each_yu'] . date ( 'Y-m-d H:i:s', $agree_info ['buyer_accepttime'] ) . $_lang ['agree_jf_agreement'] );
+							$stage_list [] = array ('green', 'successful', $_lang ['congratulate_you_yu'] . date ( 'Y-m-d H:i:s', $agree_info ['seller_accepttime'] ) . $_lang ['agree_jf_agreement'] );
 						}
 						if ($agree_info ['seller_confirmtime']) { //我提交了源文件
-							$stage_list [] = array ('green', 'successful', $_lang['congratulate_you_yu'] . date ( 'Y-m-d H:i:s', $agree_info ['seller_confirmtime'] ) . $_lang['confirm_jf_resource_file'] );
+							$stage_list [] = array ('green', 'successful', $_lang ['congratulate_you_yu'] . date ( 'Y-m-d H:i:s', $agree_info ['seller_confirmtime'] ) . $_lang ['confirm_jf_resource_file'] );
 							if ($agree_info ['buyer_confirmtime']) { //买家确认接收
-								$stage_list [] = array ('green', 'successful', $_lang['congratulate_each_yu'] . date ( 'Y-m-d H:i:s', $agree_info ['buyer_confirmtime'] ) . $_lang['confirm_recept_resource_file'] );
+								$stage_list [] = array ('green', 'successful', $_lang ['congratulate_each_yu'] . date ( 'Y-m-d H:i:s', $agree_info ['buyer_confirmtime'] ) . $_lang ['confirm_recept_resource_file'] );
 							} else { //未确认接收
-								$stage_list [] = array ('blue', 'info', $_lang['waiting_each_confirm_jf_resource_file'] );
+								$stage_list [] = array ('blue', 'info', $_lang ['waiting_each_confirm_jf_resource_file'] );
 							}
 						}
 					}
@@ -125,23 +130,23 @@ class sreward_task_agreement extends keke_task_agreement {
 			case "2" : //买家(雇主)
 				if (in_array ( $buyer_status, array ('2', '3', '4' ) )) { //已签署协议、源文件上传、等待源文件接收
 					if ($seller_status == '1') { //此时卖家未签署协议
-						$stage_list [] = array ('green', 'successful', $_lang['congratulate_you_yu'] . date ( 'Y-m-d H:i:s', $agree_info ['buyer_accepttime'] ) . $_lang['agree_jf_agreement'] );
-						$stage_list [] = array ('orange', 'waring', $_lang['wain_each_not_agree_and_wait_jf'] );
+						$stage_list [] = array ('green', 'successful', $_lang ['congratulate_you_yu'] . date ( 'Y-m-d H:i:s', $agree_info ['buyer_accepttime'] ) . $_lang ['agree_jf_agreement'] );
+						$stage_list [] = array ('orange', 'waring', $_lang ['wain_each_not_agree_and_wait_jf'] );
 					} else {
 						if ($agree_info ['seller_accepttime'] >= $agree_info ['buyer_accepttime']) { //卖家家先签署
-							$stage_list [] = array ('green', 'successful', $_lang['congratulate_you_yu'] . date ( 'Y-m-d H:i:s', $agree_info ['buyer_accepttime'] ) . $_lang['agree_jf_agreement'] );
-							$stage_list [] = array ('green', 'successful', $_lang['congratulate_each_yu'] . date ( 'Y-m-d H:i:s', $agree_info ['seller_accepttime'] ) . $_lang['agree_jf_agreement'] );
+							$stage_list [] = array ('green', 'successful', $_lang ['congratulate_you_yu'] . date ( 'Y-m-d H:i:s', $agree_info ['buyer_accepttime'] ) . $_lang ['agree_jf_agreement'] );
+							$stage_list [] = array ('green', 'successful', $_lang ['congratulate_each_yu'] . date ( 'Y-m-d H:i:s', $agree_info ['seller_accepttime'] ) . $_lang ['agree_jf_agreement'] );
 						} else {
-							$stage_list [] = array ('green', 'successful', $_lang['congratulate_each_yu'] . date ( 'Y-m-d H:i:s', $agree_info ['seller_accepttime'] ) . $_lang['agree_jf_agreement'] );
-							$stage_list [] = array ('green', 'successful', $_lang['congratulate_you_yu'] . date ( 'Y-m-d H:i:s', $agree_info ['buyer_accepttime'] ) . $_lang['agree_jf_agreement'] );
+							$stage_list [] = array ('green', 'successful', $_lang ['congratulate_each_yu'] . date ( 'Y-m-d H:i:s', $agree_info ['seller_accepttime'] ) . $_lang ['agree_jf_agreement'] );
+							$stage_list [] = array ('green', 'successful', $_lang ['congratulate_you_yu'] . date ( 'Y-m-d H:i:s', $agree_info ['buyer_accepttime'] ) . $_lang ['agree_jf_agreement'] );
 						}
 						if ($agree_info ['seller_confirmtime']) { //对方提交源文件
-							$stage_list [] = array ('green', 'successful', $_lang['congratulate_each_yu'] . date ( 'Y-m-d H:i:s', $agree_info ['seller_confirmtime'] ) . $_lang['confirm_jf_resource_file']);
+							$stage_list [] = array ('green', 'successful', $_lang ['congratulate_each_yu'] . date ( 'Y-m-d H:i:s', $agree_info ['seller_confirmtime'] ) . $_lang ['confirm_jf_resource_file'] );
 							if ($agree_info ['buyer_confirmtime']) { //买家确认接收
-								$stage_list [] = array ('green', 'successful', $_lang['congratulate_you_yu'] . date ( 'Y-m-d H:i:s', $agree_info ['buyer_confirmtime'] ) . $_lang['confirm_recept_resource_file'] );
+								$stage_list [] = array ('green', 'successful', $_lang ['congratulate_you_yu'] . date ( 'Y-m-d H:i:s', $agree_info ['buyer_confirmtime'] ) . $_lang ['confirm_recept_resource_file'] );
 							}
 						} else {
-							$stage_list [] = array ('blue', 'info', $_lang['waiting_each_confirm_jf_resource_file'] );
+							$stage_list [] = array ('blue', 'info', $_lang ['waiting_each_confirm_jf_resource_file'] );
 						}
 					}
 				}
@@ -176,6 +181,9 @@ class sreward_task_agreement extends keke_task_agreement {
 			case "3" :
 				$step = 'step3';
 				break;
+			case "4" :
+				$step = 'step4';
+				break;
 		}
 		return $step;
 	}
@@ -184,7 +192,7 @@ class sreward_task_agreement extends keke_task_agreement {
 	 */
 	public function agreement_stage_nav() {
 		global $_lang;
-		return array ("1" => array ("step1", $_lang['read_hand_work_agreement'], $_lang['each_agree_agreement_start_jf'] ), "2" => array ("step2", $_lang['recept_resource_file'], $_lang['bid_work_to_pub_name'] ), "3" => array ("step3", $_lang['complete_file_jf'], $_lang['work_resource_file_complete'] ) );
+		return array ("1" => array ("step1", $_lang ['read_hand_work_agreement'], $_lang ['each_agree_agreement_start_jf'] ), "2" => array ("step2", $_lang ['recept_resource_file'], $_lang ['bid_work_to_pub_name'] ), "3" => array ("step3", $_lang ['complete_file_jf'], $_lang ['work_resource_file_complete'] ), "4" => array ("step4", "交付过程冻结", "交付超时，系统冻结" ) );
 	}
 	
 	/**
@@ -192,13 +200,13 @@ class sreward_task_agreement extends keke_task_agreement {
 	 */
 	public function get_buyer_status() {
 		global $_lang;
-		return array ("1" => $_lang['wait_agreement'], "2" => $_lang['wait_resource_file_upload'], "3" => $_lang['confirm_recept_source_file'], "4" => $_lang['each_mark'], "5" => $_lang['jf_complete'] );
+		return array ("1" => $_lang ['wait_agreement'], "2" => $_lang ['wait_resource_file_upload'], "3" => $_lang ['confirm_recept_source_file'], "4" => $_lang ['each_mark'], "5" => $_lang ['jf_complete'] );
 	}
 	/**
 	 * 获取卖家交付状态
 	 */
 	public function get_seller_status() {
 		global $_lang;
-		return array ("1" => $_lang['wait_agreement'], "2" => $_lang['confirm_resource_file_upload'], "3" => $_lang['wait_resource_file_recept'], "4" => $_lang['each_mark'], "5" => $_lang['jf_complete'] );
+		return array ("1" => $_lang ['wait_agreement'], "2" => $_lang ['confirm_resource_file_upload'], "3" => $_lang ['wait_resource_file_recept'], "4" => $_lang ['each_mark'], "5" => $_lang ['jf_complete'] );
 	}
 }

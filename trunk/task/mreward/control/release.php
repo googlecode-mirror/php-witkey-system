@@ -12,7 +12,6 @@ $release_info = $release_obj->_std_obj->_release_info; //任务发布信息
 $task_config = $release_obj->_task_config; //任务配置
 $min =time()+ 24*3600*$task_config['min_day'];
 $min = date("Y-m-d",$min); 
- 
 $ajax =='check_priv' and $release_obj->check_pub_priv('','json');
 switch ($r_step) { //任务发布步骤
 	case "step1" :
@@ -22,10 +21,11 @@ switch ($r_step) { //任务发布步骤
 				$release_obj->get_max_day ( $task_cash );
 				break;
 		}
-		if (Keke::submitcheck($formhash)) {
-			$release_info  = $_POST;
-			//$release_info and $_POST = array_merge ( $release_info, $_POST );
-		
+		if (kekezu::submitcheck($formhash)) {
+			//$release_info  = $_POST;
+			$release_info and $_POST = array_merge ( $release_info, $_POST );
+			//任务赏金转换
+			$_POST['txt_task_cash'] = keke_curren_class::convert($_POST['txt_task_cash'],0,true);
 			$release_obj->save_task_obj ( $_POST, $std_cache_name ); //信息保存
 			header ( "location:index.php?do=release&pub_mode=$pub_mode&t_id=$t_id&model_id={$model_id}&r_step=step2" );
 			die ();
@@ -35,10 +35,10 @@ switch ($r_step) { //任务发布步骤
 		
 		break;
 	case "step2" :
-		if (Keke::submitcheck($formhash)) {
-			$release_info and $_POST = array_merge ( $release_info, $_POST,$release_obj->user_contact($_POST['contact_type']));
-			$_POST['txt_title'] = Keke::escape($txt_title);
- 			$_POST['tar_content'] = Keke::escape($tar_content);
+		if (kekezu::submitcheck($formhash)) {
+			$release_info and $_POST = array_merge ( $release_info, $_POST);
+			$_POST['txt_title'] = kekezu::escape($txt_title);
+ 			$_POST['tar_content'] = $tar_content;
 			$release_obj->save_task_obj ( $_POST, $std_cache_name ); //信息保存
 			header ( "location:index.php?do=release&pub_mode=$pub_mode&t_id=$t_id&model_id={$model_id}&r_step=step3" );
 			die ();
@@ -47,7 +47,7 @@ switch ($r_step) { //任务发布步骤
 			$kf_info	 = $release_obj->_kf_info; //随机客服
 			$indus_p_arr = $release_obj->get_bind_indus(); //父级行业
 			$indus_arr   = $release_obj->get_task_indus($release_info ['indus_pid']); //子集行业
-			$ext_types   = Keke::get_ext_type (); //附件允许类型
+			$ext_types   = kekezu::get_ext_type (); //附件允许类型
  
 		}
 		break;
@@ -61,7 +61,7 @@ switch ($r_step) { //任务发布步骤
 				$release_obj->remove_pay_item ( $item_id, $std_cache_name );
 				break;
 		}
-		if (Keke::submitcheck($formhash)) {
+		if (kekezu::submitcheck($formhash)) {
 			$release_info and $_POST = array_merge ( $release_info, $_POST );
 			$release_obj->save_task_obj ( $_POST, $std_cache_name ); //信息保存
 			$task_id = $release_obj->pub_task (); //任务记录产生
@@ -71,7 +71,7 @@ switch ($r_step) { //任务发布步骤
 			$release_obj->check_access ( $r_step, $model_id, $release_info ); //页面进入权限检测
 			$item_list = keke_payitem_class::get_payitem_config ( 'employer',$model_info['model_code'] );//雇主增值服务项
 			$standard = keke_payitem_class::payitem_standard ();//增值服务收费标准中文
-			//$trust_list = Keke::get_payment_config('','trust','1');//担保交易列表
+			//$trust_list = kekezu::get_payment_config('','trust','1');//担保交易列表
 			$total_cash = $release_obj->get_total_cash ( $release_info ['txt_task_cash'] ); //任务总金额
 			$item_info = $release_obj->get_pay_item (); //任务附加项获取
 		}
@@ -80,5 +80,5 @@ switch ($r_step) { //任务发布步骤
 		$release_obj->check_access ( $r_step, $model_id, $release_info,$task_id ); //页面进入权限检测
 		break;
 }
-require Keke_tpl::template ( 'release' );
+require keke_tpl_class::template ( 'release' );
 		

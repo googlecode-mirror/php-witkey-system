@@ -7,14 +7,14 @@
  <section class="clearfix section">
   <!--{template user/user_side}-->
   <div class="show_panel container_24 po_re">
-   <div class="prefix_3">
+   <div class="prefix_3 grid_21">
    <div class="panel clearfix box">
      <!--main content-->
-     <div class="grid_21">
+     <div class="">
       <!--header内容头部 start-->
        <header class="clearfix box_header">
-         <h2 class="grid_4 alpha box_title t_c">{$_lang['toolbox']}</h2>
-           <div class="grid_17 omega">
+         <h2 class="grid_4 alpha omega box_title t_c">{$_lang['toolbox']}</h2>
+           <div class="grid_17 alpha omega">
              <nav class="box_nav">
                <ul>
                   {loop $third_nav $k $v}
@@ -27,9 +27,8 @@
             </div>
            <div class="clear"></div>
        </header>
-      <!--header内容头部 end-->
-							
-     <div class="messages m_infor">
+      <!--header内容头部 end-->				
+     <div class="messages m_infor " style="margin-top:10px;">
         <span class="icon16"></span>
             {$_lang['make_you_more_competitive']} <a href="###" class="close">&times;</a>
         </div>
@@ -100,10 +99,10 @@
                                                             {$_lang['the_amount_spent']}
                                                         </th>
                                                         <th scope="col">
-                                                           {$_lang['tiao']}
+                                                           {$_lang['ci']}
                                                         </th>
                                                         <th scope="col">
-                                                            {$_lang['use_or_buy_time']}
+                                                            {$_lang['use_time']}
                                                         </th>
                                                     </tr>
                                                 </thead>
@@ -118,10 +117,14 @@
                                                             {$payitem_config[$v['item_code']]['item_name']}
                                                         </td>
                                                         <td>
-                                                            {if $v['use_type']=='buy'}{$_lang['buy']}{else}{$_lang['use']}{/if}
+                                                            {if $v['obj_type']=='service'}{$_lang['shop1']}
+															{elseif $v['obj_type']=='task'}{$_lang['task']}
+															{elseif $v['obj_type']=='work'}{$_lang['work']}
+															{else}{$_lang['now_no1']}
+															{/if}
                                                         </td>
                                                         <td>
-                                                            {$v['use_cash']}
+                                                            {c:$v['use_cash']}
                                                         </td>
                                                         <td>
                                                             {if $v['use_num']}{$v['use_num']}{else}--{/if}

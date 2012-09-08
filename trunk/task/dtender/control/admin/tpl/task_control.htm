@@ -5,7 +5,7 @@
     }
 </style>
 <div class="page_title">
-    <h1>{$model_info[model_name]}{$_lang['manage']}</h1>
+    <h1>{$model_info[model_name]}{$_lang['task_config']}</h1>
     <div class="tool">
         <a href="index.php?do={$do}&model_id={$model_id}&view={$view}&op=config">{$_lang['basic_config']}</a>
         <a href="index.php?do={$do}&model_id={$model_id}&view={$view}&op=control" class="here">{$_lang['control_config']}</a>
@@ -41,7 +41,7 @@
                         {$_lang['task_percentage']}{$_lang['zh_mh']}
                     </th>
                     <td>
-                        <input type="text" size="10" name="conf[task_rate]" maxlength="3" id="task_rate" onkeyup="clearstr(this);" value="{$task_rate}" limit="required:true;type:int;between:1-100" msg={$_lang['bidding_percentage_input_error']} title={$_lang['bidding_percentage_is']} msgArea="span_task_rate" class="txt">%({$_lang['bidding_percentage_range_is']})<span id="span_task_rate"></span>
+                        <input type="text" size="10" name="conf[task_rate]" maxlength="3" id="task_rate" onkeyup="clearstr(this);" value="{$task_rate}" limit="required:true;type:int;between:0-100" msg={$_lang['bidding_percentage_input_error']} title={$_lang['bidding_percentage_is']} msgArea="span_task_rate" class="txt">%({$_lang['bidding_percentage_range_is']})<span id="span_task_rate"></span>
                     </td>
                 </tr>
 				 <tr>
@@ -49,7 +49,7 @@
                      {$_lang['task_fail_percentage']}{$_lang['zh_mh']}
                     </th>
                     <td>
-                        <input type="text" size="10" name="conf[task_fail_rate]" maxlength="3" id="task_fail_rate" onkeyup="clearstr(this);" value="{$task_fail_rate}" limit="required:true;type:int;between:1-100" msg={$_lang['fail_bidding']} title={$_lang['fail_bidding_percentage_is']} msgArea="span_task_fail_rate" class="txt">%({$_lang['fail_bidding_commission_ratio_is']})<span id="span_task_fail_rate"></span>
+                        <input type="text" size="10" name="conf[task_fail_rate]" maxlength="3" id="task_fail_rate" onkeyup="clearstr(this);" value="{$task_fail_rate}" limit="required:true;type:int;between:0-100" msg={$_lang['fail_bidding']} title={$_lang['fail_bidding_percentage_is']} msgArea="span_task_fail_rate" class="txt">%({$_lang['fail_bidding_commission_ratio_is']})<span id="span_task_fail_rate"></span>
                     </td>
                 </tr>
 			    <tr>
@@ -178,7 +178,7 @@
                     </th>
                     <td>
                         <div class="clearfix padt10">
-                            <button class="positive primary pill button" type="submit" name="sbt_edit" value={$_lang['submit']}>
+                            <button class="positive primary pill button" type="submit" name="sbt_edit" value="{$_lang['submit']}" onclick="return checkForm(document.getElementById('frm_config_reward'));">
                                 <span class="check icon"></span>{$_lang['submit']}
                             </button>
                         </div>

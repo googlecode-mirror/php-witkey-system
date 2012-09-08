@@ -45,7 +45,7 @@
         <td>{$trans_status[$report_info[report_status]]}</td>
       </tr>
 	 <tr>
-        <th scope="row" width="130">{$action_arr[$type][1]}{lang:explain]</th>
+        <th scope="row" width="130">{$action_arr[$type][1]}{$_lang['explain']}</th>
         <td><!--{eval echo nl2br($report_info['report_desc'])}--></td>
      </tr>
 	 <tr>
@@ -65,21 +65,21 @@
 			{$_lang['seller']}£¨{$wk_info[username]}£©{$_lang['get']}<input type="text" name="op_result[wk_get]" id="wk_get" size=4 class="txt">{$_lang['yuan']}
 		{/if}
 		{if $process_can['reset_task']}
-			<label for="reset_task"><input type="checkbox" name="op_result[reset_task]" id="reset_task" vlaue="1">{$_lang['reset_task']}£¬{$_lang['extension']}<input type="text" name="op_result[delay_days]" id="delay_days" size=4 class="txt">{$_lang['day']}{$_lang['zh_jh']}</label>
+			<input type="checkbox" name="op_result[reset_task]" id="reset_task" vlaue="1">{$_lang['reset_task']}£¬{$_lang['extension']}<input type="text" name="op_result[delay_days]" id="delay_days" size=4 class="txt">{$_lang['day']}{$_lang['zh_jh']}
 			<font color="red">&nbsp;&nbsp;&nbsp;&nbsp;{$_lang['set_extension_day_task_again']}</font><br>
 		{/if}
 		{if $process_can['cancel_bid']}
-			<label for="cancel_bid"><input type="checkbox" name="op_result[cancel_bid]" id="cancel_bid" vlaue="1">{$_lang['bid']}<font color="red">&nbsp;&nbsp;&nbsp;&nbsp;{$_lang['cancel_bid_user_not_again']}</font></label><br>
+			<input type="checkbox" name="op_result[cancel_bid]" id="cancel_bid" vlaue="1">{$_lang['bid']}<font color="red">&nbsp;&nbsp;&nbsp;&nbsp;{$_lang['cancel_bid_user_not_again']}</font><br>
 		{/if}
 		{if $process_can['product_remove']}
-			<label for="product_remove"><input type="checkbox" name="op_result[product_remove]" id="product_remove" vlaue="1">{$_lang['will_be']}{$action_arr[$type][1]}{$_lang['of_goods_down']}{$_lang['zh_jh']}</label><br>
+			<input type="checkbox" name="op_result[product_remove]" id="product_remove" vlaue="1">{$_lang['will_be']}{$action_arr[$type][1]}{$_lang['of_goods_down']}{$_lang['zh_jh']}<br>
 		{/if}
 		{if $process_can['deduct']}
 			&nbsp;&nbsp;&nbsp;&nbsp;{$_lang['be']}{$action_arr[$type][1]}{$_lang['peopel_surplus']}{$credit_info[type]}:{$credit_info[max_credit]}{$_lang['point']}<br>
-			<label for="deduct_credit"><input type="checkbox" name="op_result[deduct_credit]" id="deduct_credit" vlaue="1">{$_lang['deduction_be']}{$action_arr[$type][1]}{$_lang['peopel']}{$credit_info[type]}<input type="text" name="op_result[{$credit_info[name]}]" id="credit" size=4 class="txt" max="{$credit_info[max_credit]}">{$_lang['point']}{$_lang['zh_jh']}</label><br>
+			<input type="checkbox" name="op_result[deduct_credit]" id="deduct_credit" vlaue="1">{$_lang['deduction_be']}{$action_arr[$type][1]}{$_lang['peopel']}{$credit_info[type]}<input type="text" name="op_result[{$credit_info[name]}]" id="credit" size=4 class="txt" max="{$credit_info[max_credit]}">{$_lang['point']}{$_lang['zh_jh']}(<font color="red">{$_lang['do_not_choose_if_not_deducted']}</font>)<br>
 		{/if}
 		{if $process_can['freeze_user']}
-			<label for="freeze_user"><input type="checkbox" name="op_result[freeze_user]" id="freeze_user" vlaue="1">{$_lang['freeze_be']}{$action_arr[$type][1]}{$_lang['people']}<input type="text" name="op_result[freeze_day]" id="freeze_day" size=4 class="txt">{$_lang['day']}{$_lang['zh_jh']}</label>
+			<input type="checkbox" name="op_result[freeze_user]" id="freeze_user" vlaue="1">{$_lang['freeze_be']}{$action_arr[$type][1]}{$_lang['people']}<input type="text" name="op_result[freeze_day]" id="freeze_day" size=4 class="txt">{$_lang['day']}{$_lang['zh_jh']}(<font color="red">{$_lang['do_not_choose_if_not_freeze']}</font>)
 		{/if}
 	{else}
 		{$report_info['op_result']}
@@ -161,13 +161,13 @@
 				}
 				var content='';
 				if($("#product_remove").is(":checked")){
-					content+="{$_lang['will_user']}{$report_info[to_username]}{$_lang['of_goods']}<a href=\"{$_K[website_url]}/shop.php?do=service&service_id={$obj_info[origin_id]}\">{$obj_info[origin_title]}</a>{$_lang['down']}{$_lang['zh_jh']}";
+					content+="{$_lang['will_user']}{$report_info[to_username]}{$_lang['of_goods']}<a href=\"{$_K[siteurl]}/index.php?do=service&sid={$obj_info[origin_id]}\">{$obj_info[origin_title]}</a>{$_lang['down']}{$_lang['zh_jh']}";
 				}
 				if($("#deduct_credit").is(":checked")){
-					content+="{$_lang['deduction']}{$report_info[to_username]}{$credit_info[type]}'+credit+'{$_lang['point']};<br>";
+					content+="{$_lang['deduction']}{$report_info[to_username]}{$credit_info[type]}"+credit+"{$_lang['point']};<br>";
 				}
 				if($("#freeze_user").is(":checked")){
-					content+="{$_lang['freeze_user']}{$report_info[to_username]}'+freeze_day+'{$_lang['day']}{$_lang['zh_jh']}";
+					content+="{$_lang['freeze_user']}{$report_info[to_username]}"+freeze_day+"{$_lang['day']}{$_lang['zh_jh']}";
 				}
 				art.dialog({
    						title: "{$_lang['confirm_report']}",

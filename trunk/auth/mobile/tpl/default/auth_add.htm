@@ -6,14 +6,14 @@
 <section class="clearfix section">
 <!--{template user/user_side}-->
 <div class="show_panel container_24 po_re">
-  <div class="prefix_3">
+  <div class="prefix_3 grid_21">
     <div class="panel clearfix box">
      <!--main content-->
-      <div class="grid_21">
+      <div class="">
         <!--header内容头部 start-->
         <header class="clearfix box_header" >
-           <h2 class="grid_4 alpha box_title t_c">{$_lang['auth_center']}</h2>
-             <div class="grid_17 omega">
+           <h2 class="grid_4 alpha omega box_title t_c">{$_lang['auth_center']}</h2>
+             <div class="grid_17 alpha omega">
                    <nav class="box_nav">
                        <ul>
                        	{loop $auth_item_list $v}
@@ -31,18 +31,18 @@
        <!--messages消息 start-->   
            <div class="messages m_infor">
              <div class="icon16">warning</div>
-                 {$_lang['cellphone_will_cost']}:{$_lang['currency']}{$auth_item['auth_cash']}{$_lang['yuan']}. {$_lang['customer_service_personnel_will']} {$auth_item[auth_day]}{$_lang['working_days_to_complete_certification']}{$_lang['zh_mh']}{$basic_config['kf_phone']}
+                 {$_lang['cellphone_will_cost']}:{c:$auth_item['auth_cash']}. {$_lang['customer_service_personnel_will']} {$auth_item[auth_day]}{$_lang['working_days_to_complete_certification']}{$_lang['zh_mh']}{$basic_config['kf_phone']}
              <a href="###" class="close">&times;</a>
            </div> 
          <!--messages消息 end-->
 		<!--{template verify_secode}-->
 {else}
 	 	 <!--detail内容 start-->
-            <article class="box_detail">
+            <article class="box_detail last_step_three">
                <!--messages消息 start-->   
                    <div class="messages m_infor">
                       <div class="icon16">warning</div>
-                       {$_lang['cellphone_will_cost']}:{$_lang['currency']}{$auth_item['auth_cash']}{$_lang['yuan']}. {$_lang['customer_service_personnel_will']} {$auth_item[auth_day]}{$_lang['working_days_to_complete_certification']}{$_lang['zh_mh']}{$basic_config['kf_phone']}
+                       {$_lang['cellphone_will_cost']}:{c:$auth_item['auth_cash']}. {$_lang['customer_service_personnel_will']} {$auth_item[auth_day]}{$_lang['working_days_to_complete_certification']}{$_lang['zh_mh']}{$basic_config['kf_phone']}
                        <a href="###" class="close">&times;</a>
                    </div> 
                    <!--messages消息 end-->
@@ -61,16 +61,24 @@
 					 
                       <form action="{$ac_url}&auth_step=step1" method="post" id="frm_auth" name="frm_auth">
                       <div class="form_box pt_20">
+                      	<div class="rowElem clearfix">
+							<label class="grid_5 clearfix">
+								<div class="fl_r pr_10">
+									<img src="{$auth_item['auth_big_ico']}" alt="" />
+								</div>
+							</label>
+							<div class="grid_6"> <strong class="font14b">{$auth_item['auth_title']}</strong> <span class="c999 block">{$auth_item['auth_desc']}</span> </div>
+   						</div>
                          <div class="rowElem clearfix">
                             <label class="grid_5 t_r">{$_lang['mobile']}{$_lang['zh_mh']}</label>
                                <input type="text" name="fds[mobile]" id="mobile" size="40" style="color:#999" msgArea="msg_mobile"
-							    value="{$user_info[mobile]}" 
+							    value="{$user_info[mobile]}" ajax="{$_K['siteurl']}/index.php?do=user&view=payitem&op=auth&auth_code=mobile&ver=0&check_mobile="
 							   limit="required:true;type:mobileCn" msg="{$_lang['msg_about_cellphone_num']}" title="{$_lang['title_about_cellphone_num']}"/>
 							  	<span class="red" id="msg_mobile"></span>
 							                                  
                           </div>
                            <div class="rowElem clearfix form_button">
-                           		 <input type="hidden" name="sbt_add" value="1" id="sbt_add">
+                           		  <input type="hidden" name="formhash" id="formhash" value="{FORMHASH}">
                              	 <button type="button" name="sbt_add1" class="button" value="{$_lang['auth_now']}" onclick="user_auth();">{$_lang['auth_now']}</button>
                    		   </div>  
                        </div>
@@ -83,75 +91,47 @@
                          <div class="rowElem clearfix">
                             <label class="grid_5 t_r">{$_lang['verification_code']}{$_lang['zh_mh']}</label>
                                <input type="text" name="fds[valid_code]" id="valid_code" size="40" style="color:#999" msgArea="msg_mobile"
-							    limit="required:true;len:6" msg="{$_lang['msg_about_verification_code']}" title="{$_lang['title_about_verification_code']}"/>
+							    limit="required:true;len:4" msg="{$_lang['msg_about_verification_code']}" title="{$_lang['title_about_verification_code']}"/>
 							  	<span class="red" id="msg_mobile"></span>
 							                                  
                           </div>
                            <div class="rowElem clearfix form_button">
-                           		 <input type="hidden" name="sbt_add" value="1">
+                           		 <input type="hidden" name="formhash" id="formhash" value="{FORMHASH}">
                              	 <button type="button" name="sbt_add" class="button" value="{$_lang['confirm_verification_code']}" onclick="valid()">{$_lang['auth_now']}</button>
                    		   </div>  
                        </div>
                       </form >
 				 {elseif $auth_step=='step3'}
-				 <div class="box complete form_box ml_40 mr_40">
-                    <div class="form_tip">
-                    {if $auth_info&&$auth_info[auth_status]==2}
-						{$_lang['regrettably_not_pass_mobile_auth']}&lt;&lt;<a href="{$ac_url}&auth_step=step1">{$_lang['reauth']}</a><<<a href="javascript:void(0);">{$_lang['contact_customer_service']}</a>
-                   	{else}
-						{$_lang['congratulations_pass_mobile_auth']}&lt;&lt;<a href="{$ac_url}&auth_step=step1">{$_lang['return_and_modify']}</a>
-					{/if}
+				 
+			 		<div class="box complete form_box ml_40 mr_40">
+			        <div class="prefix_4 suffix_4 clearfix ">
+			          	<div class="last_success_step clearfix">
+			          	<div class="fl_l {$auth_style} po_re" style="top:30px; left:30px; _left:0px;">
+								<span class="tip_icon"></span>
+			            </div>
+			            <div class="completedata clearfix">                        		
+			               <ul>
+			               	<li class="clearfix">                        
+			                     <div class=" grid_2"><img src="{$auth_item['auth_big_ico']}" /></div>                                 
+			                      <div class="font14b">{$auth_item['auth_title']}<span class="font12">（{$auth_tips}）</span></div>
+			                      <div class="c999 grid_3 alpha omega">{$auth_item['auth_desc']}</div>
+			                 </li>
+						 
+							<li class="clearfix">                          
+								<div class=" grid_2 ">{$_lang['mobile']}{$_lang['zh_mh']}</div>
+								 <div class="c999"> <!--{eval echo kekezu::set_star($auth_info['mobile'],3,3);}--></div>
+			               	 </li>
+					 
+			            </ul>
+			        </div>
+			       		<div class="fl_r pad10">
+							<a href="{$ac_url}&auth_step=step1" class="button">{$_lang['return_and_modify']}</a>
+						</div>
 					</div>
-                      <div class="prefix_4 suffix_4">
-                        <div class="completedata">
-                           <ul>
-                           	<li>
-                               <div class="pad10">
-                                  <div class=" grid_3 ">	<!--{userpic($uid,small)}--></div>
-                                     <div class=" grid_6 ">
-                                          <div class="font14b">{$_lang['mobile']}</div>
-                                          <div class="c999">$auth_info[mobile]</div>
-                                     </div>
-                                   <div class="clear"></div>
-                                </div>
-                             </li>
-							 <li><div class="pad10">
-							 	{$_lang['after_cellphone_pass']}
-							 </div></li>
-							  <li>
-                               <div class="pad10">
-                                <div class="clear"></div>
-								<div class=" grid_3 font12b">{$_lang['use_cellphone_num_login']}{$_lang['zh_mh']}</div>
-								<div class=" grid_6 ">
-                                  	<div class="c999">{$_lang['you_can_use_cellphone_to_login']}-{$_K[website_name]}</div>
-                               	</div>
-                                <div class="clear"></div>
-								</div>
-                           	 </li>
-							<li>
-                               <div class="pad10">
-								<div class=" grid_3 font12b">{$_lang['important_event_tips']}{$_lang['zh_mh']}</div>
-								 <div class=" grid_6 ">
-                                  	<div class="c999">{$_lang['remind_me']}</div>
-                               	  </div>
-                                <div class="clear"></div>
-								</div>
-                           	 </li>
-							 <li>
-                               <div class="pad10">
-								<div class=" grid_3 font12b ">{$_lang['back_account_pwd']}{$_lang['zh_mh']}</div>
-								 <div class=" grid_6 ">
-                                  	<div class="c999">{$_lang['tips_about_back_account_pwd']}</div>
-                               	  </div>
-                                <div class="clear"></div>
-                                </div>
-                             </li>
-                        </ul>
-                    </div>
-                   </div>
-               </div>
+				   </div>
+			     </div>
              </div> 
-				 {/if}
+		{/if}
             </div> 
             <div class="clear"></div> 
        </article>
@@ -185,13 +165,13 @@
 				if((user_credit+user_balance)>=pay_cash){
 					if(is_allow_credit==1){
 						if(user_credit>=pay_cash){ 
-						 	showDialog("{$_lang['from_your']}{CREDIT_NAME}{$_lang['take_off']}"+pay_cash+"{$_lang['point']}", 'confirm', "{$_lang['confirm_to_pay']}",'form_sbt();',0);return false;
+						 	showDialog("{$_lang['from_your']}{CREDIT_NAME}{$_lang['take_off']} {c:$auth_item[auth_cash]},{$_lang['confirm_to_pay']}", 'confirm', "{$_lang['operate_notice']}",'form_sbt();',0);return false;
 						}else{
 							
-						 	showDialog("{$_lang['will_take_off_from_your_account']}{$_lang['currency']}"+(pay_cash-user_credit)+"{$_lang['yuan']}{CREDIT_NAME}{$_lang['take_off']}"+user_credit+"{$_lang['point']}", 'confirm', "{$_lang['confirm_to_pay']}",'form_sbt()',0);return false;
+						 	showDialog("{$_lang['will_take_off_from_your_account']}"+(pay_cash-user_credit)+"{CREDIT_NAME}{$_lang['take_off']}"+user_credit+"{$_lang['point']},{$_lang['confirm_to_pay']}", 'confirm', "{$_lang['operate_notice']}",'form_sbt()',0);return false;
 						} 
 					}else{
-						showDialog("{$_lang['will_take_off_from_your_account']}{$_lang['currency']}"+pay_cash+"{$_lang['yuan']}", 'confirm', "{$_lang['confirm_to_pay']}",'form_sbt()',0);return false;
+						showDialog("{$_lang['will_take_off_from_your_account']} {c:$auth_item['auth_cash']} ,{$_lang['confirm_to_pay']}", 'confirm', "{$_lang['operate_notice']}",'form_sbt()',0);return false;
 					}
 				}else{
 					showDialog("{$_lang['balance_not_enough']}", 'confirm', "{$_lang['online_pay']}",'online_pay()',0);return false;
@@ -202,19 +182,10 @@
 		}
 	}
 	function valid(){
-		var i = checkForm(document.getElementById("frm_auth"));
-			if(i){
-				form_sbt();
-			}else{
-				return false;
-			}
+		formSub('frm_auth','form',true);
 	}
 	function form_sbt(){
-		 
-        //document.getElementById('frm_auth').submit();
-		$("#frm_auth").submit();
-	
-		
+		formSub('frm_auth','form',true);
 	}
 	function online_pay(){
 		window.location.href='index.php?do=user&view=finance&op=recharge';

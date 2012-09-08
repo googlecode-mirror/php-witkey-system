@@ -1,6 +1,6 @@
 <!--{template control/admin/tpl/admin_header}--> 
 <div class="page_title">
-    <h1>{$model_info['model_name']}{$_lang['manage']}</h1>
+    <h1>{$model_info['model_name']}{$_lang['task_config']}</h1>
     <div class="tool">
       <a href="index.php?do={$do}&model_id={$model_id}&view={$view}&op=config">{$_lang['basic_config']}</a>
       <a href="index.php?do={$do}&model_id={$model_id}&view={$view}&op=control">{$_lang['control_config']}</a>
@@ -25,8 +25,8 @@
 		  <td>{$v['op_name']}</td>
 		  <td>{if $v['limit_obj']==2}{$_lang['buyer']}({$_lang['employer']}){else}{$_lang['seller']}({$_lang['witkey']}){/if}</td>
 		  <td>
-		  	<label id="open_{$k}"><input type="radio" id="open_{$k}" name="fds['allow_times'][{$v['op_id']}]" value="1"{if $v['allow_times']==1}checked="checked"{/if}>{$_lang['open']}</label>
-			<label id="close_{$k}"><input type="radio" id="close_{$k}" name="fds['allow_times'][{$v['op_id']}]" value="0" {if !$v['allow_times']||$v['allow_times']==0}checked="checked"{/if}>{$_lang['close']}</label>
+		  	<label id="open_{$k}"><input type="radio" id="open_{$k}" name="fds[allow_times][{$v['op_id']}]" value="1"{if $v['allow_times']==1}checked="checked"{/if}>{$_lang['open']}</label>
+			<label id="close_{$k}"><input type="radio" id="close_{$k}" name="fds[allow_times][{$v['op_id']}]" value="0" {if !$v['allow_times']||$v['allow_times']==0}checked="checked"{/if}>{$_lang['close']}</label>
 		  </td>
 		  <td>
 			<a href="index.php?do=permission&model_id=$model_id&op_code={$v['op_code']}" class="button"><span class="cog icon"></span>{$_lang['private_config']}</a>

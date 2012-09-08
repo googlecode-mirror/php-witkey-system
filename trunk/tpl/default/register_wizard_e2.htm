@@ -1,9 +1,10 @@
-<!--{template header}--> 
+<!--{template header}-->
+<link href="resource/css/public.css" rel="stylesheet" type="text/css">
 <div class="wrapper">
 <!--页面头部-->
 <header class="clearfix page_header">
-    <div class="container_24 page_title">
-  		<h2 class="mt_10 mb_10 title"><b>{$_lang['perfect_data']}</b></h2>
+    <div class="container_24 page_title pt_15 pb_5">
+  		<h2 class="title"><b>{$_lang['perfect_data']}</b></h2>
     </div>
 </header>
 <!--end 页面标题--><!--主内容-->
@@ -11,7 +12,7 @@
 <section class="clearfix content">
 	
     <div class="container_24 ">
-        <div class="box mt_10  clearfix">
+        <div class="box clearfix">
             <div class="grid_24">
             	<div class="filter box normal po_re">
             		<div class="inner">
@@ -116,10 +117,11 @@
 										</div>
 										<div class="rowElem clearfix">
 											<label class="grid_5 t_r">{$_lang['run_years']}{$_lang['zh_mh']}</label>											
-												<input id="run_years" name="fds[run_years]"
+												<input class="fl_l" id="run_years" name="fds[run_years]"
 												 type="text" msgarea="span_run_years" msg="{$_lang['run_years_error']}" 
 												 limit="required:false;type:int;between:1-100;len:1-3" value="$enter_info['run_years']" size="33"  
-												 style="width: 350px;" original-title="{$_lang['company']}{$_lang['run_years']}">{$_lang['year']}
+												 style="width: 350px;" original-title="{$_lang['company']}{$_lang['run_years']}">
+												 <span class="fl_l ml_5">{$_lang['year']}</span>
 												<span id="span_run_years"></span>
 											<div class="clear"></div>
 										</div>
@@ -129,7 +131,7 @@
 												 type="text" msgarea="span_url" msg="{$_lang['company_url_error']}" 
 												 limit="required:false;type:url" size="35"  value="$enter_info['url']"
 												 style="width:350px;" original-title="{$_lang['company']}{$_lang['company_url']}">
-												<span id="span_url"></span>
+												<span id="span_url"></span>(格式: http://www.sitename.com)
 											<div class="clear"></div>
 										</div>
 										<div class="rowElem clearfix">
@@ -152,7 +154,7 @@
 												<input id="truename" name="conf[truename]"
 												 type="text" msgarea="span_truename" msg="{$_lang['contact_at_most_ten']}" 
 												 limit="required:true;len:2-10" size="35" value="$user_info['truename']" 
-												 style="width:350px;" original-title="{$_lang['company']}{$_lang['detail_address']}">
+												 style="width:350px;" original-title="联系人姓名">
 												<span id="span_truename"></span>
 											<div class="clear"></div>
 										</div>
@@ -199,9 +201,14 @@
 	</div>
 </section>
 </div>
+<script type="text/javascript" src="resource/js/xheditor/xheditor.js"></script>
+<script type="text/javascript">
+	 $(function(){
+	 	editor = $("#tar_content").xheditor();
+	 })
+</script>
  <script type="text/javascript" > 
-	In.add('css_public',{path:"resource/css/public.css",type:'css'});   
-	In('form','css_public','xheditor','pcas',function(){
+	In('form','pcas',function(){
 	    new PCAS("province","city","area");
 	});  
 	

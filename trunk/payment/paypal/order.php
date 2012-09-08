@@ -23,7 +23,7 @@ defined('IN_KEKE') or exit('Access Denied');
  */
 function get_pay_url($charge_type,$pay_amount,$payment_config,$subject,$order_id,$model_id=null,$obj_id=null, $service ="_xclick", $sign_type = 'MD5'){
 	global $_K,$uid;
-	//CHARSET=='gbk' and $subject=Keke::gbktoutf($subject);
+	//CHARSET=='gbk' and $subject=kekezu::gbktoutf($subject);
 	$subject = 'paypal online pay(UID='.$uid.')';
 	$seller_account = $payment_config['account'];
 	$return_url = $_K ['siteurl'] . '/payment/paypal/return.php';
@@ -50,7 +50,7 @@ function build_postform($p) {
 	while (list ($key, $val) = each ($p)) {
 		$sHtml.= "<input type='hidden' name='".$key."' value='".$val."'/>";
 	}
-	$sHtml = $sHtml."<input type='button' name='v_action' value='Paypal确认付款' onClick='document.forms[\"frm_paypal\"].submit();'>";
+	$sHtml = $sHtml."<button type='submit' class='hidden' name='v_action' value='Paypal确认付款' onClick='document.forms[\"frm_paypal\"].submit();'>Paypal确认付款</button>";
 	return $sHtml;
 }
 

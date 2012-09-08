@@ -52,9 +52,9 @@ class mreward_release_class extends keke_task_release_class {
 			case "onekey" :
 				if (! $release_info) {
 					$sql = " select model_id,task_title,task_desc,indus_id,indus_pid,
-						task_cash from %switkey_task where task_id='%d' and model_id='%d'";
-					$task_info = dbfactory::get_one ( sprintf ( $sql, TABLEPRE, $data ['t_id'] ,$this->_model_id));
-					$task_info or Keke::show_msg($_lang['operate_notice'],$_SERVER['HTTP_REFERER'],3,$_lang['not_exsist_relation_task_and_not_user_onekey'],"warning");
+						task_cash,contact from %switkey_task where task_id='%d' and model_id='%d'";
+					$task_info = db_factory::get_one ( sprintf ( $sql, TABLEPRE, $data ['t_id'] ,$this->_model_id));
+					$task_info or kekezu::show_msg($_lang['operate_notice'],$_SERVER['HTTP_REFERER'],3,$_lang['not_exsist_relation_task_and_not_user_onekey'],"warning");
 					
 					$release_info = $this->onekey_mode_format($task_info);
 					
@@ -64,7 +64,7 @@ class mreward_release_class extends keke_task_release_class {
 					
 					$release_info ['txt_task_cash'] = intval ( $task_info ['task_cash'] );
 					/** 获取奖项信息*/
-					$prize_info = dbfactory::query(sprintf("select * from %switkey_task_prize where task_id='%d'",TABLEPRE,$data['t_id']));
+					$prize_info = db_factory::query(sprintf("select * from %switkey_task_prize where task_id='%d'",TABLEPRE,$data['t_id']));
 					foreach ($prize_info as $v){
 						$release_info['txt_prize'.$v['prize'].'_num'] = $v['prize_count'];
 						$release_info['txt_prize'.$v['prize'].'_cash'] = intval($v['prize_cash']);
@@ -85,9 +85,9 @@ class mreward_release_class extends keke_task_release_class {
 		if ($task_cash >= $this->_task_config ['min_cash']) {//任务金额满足最小要求
 			$time = keke_task_release_class::get_default_max_day($task_cash, $this->_model_id,$this->_task_config['min_day']);
 			
-			Keke::echojson ( $time, 1 ,$time);
+			kekezu::echojson ( $time, 1 ,$time);
 		} else {//不满足
-			Keke::echojson ( $_lang['task_min_cash_limit_notice'] . $this->_task_config ['min_cash'], 0 );
+			kekezu::echojson ( $_lang['task_min_cash_limit_notice'] . $this->_task_config ['min_cash'], 0 );
 			die ();
 		}
 	}
@@ -100,14 +100,12 @@ class mreward_release_class extends keke_task_release_class {
 	public function pub_task() {
 		$task_obj = $this->_task_obj;
 		$std_obj = $this->_std_obj;
-		$is_trust = false;
-		$this->_std_obj->_release_info['trust'] and $is_trust=true;
 		
 		//发布信息公共处理部
 		$this->public_pubtask();
 		//根据任务总花费来确顶任务发布状态
 		$task_cash = $this->_std_obj->_release_info['txt_task_cash'];//任务金额
-		$this->set_task_status($this->get_total_cash ($task_cash),$task_cash,$is_trust);
+		$this->set_task_status($this->get_total_cash ($task_cash),$task_cash);
 		//任务发布
 		$task_id = $task_obj->create_keke_witkey_task ();
 		//发布信息多人悬赏私有处理部

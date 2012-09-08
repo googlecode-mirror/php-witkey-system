@@ -1,8 +1,5 @@
 <!--{template header}-->
-<script type="text/javascript">
-	In.add('user_center',{path:"{SKIN_PATH}/css/user_center.css",type:'css'});
-	In('user_center');
-</script>
+<link href="{SKIN_PATH}/css/user_center.css" rel="stylesheet" type="text/css">
 <!--contain start-->
 <div class="wrapper">
     <div class="container_24">
@@ -11,13 +8,13 @@
         <section class="clearfix section">
             <!--{template user/user_side}-->
             <div class="show_panel container_24 po_re">
-                <div class="prefix_3">
+                <div class="prefix_3 grid_21">
                     <div class="panel clearfix box">
                         <!--main content-->
-                        <div class="grid_21">
+                        <div class="">
                             <!--header内容头部 start-->
                             <header class="clearfix box_header">
-                                <h2 class="grid_4 alpha box_title t_c">{$_lang['member_manage']}</h2>
+                                <h2 class="grid_4 alpha box_title t_c">{$_lang['space_set']}</h2>
                                 <div class="grid_14 omega">
                                     <nav class="box_nav">
                                         <ul>
@@ -61,25 +58,25 @@
                                     {if $show=='list'}
                                             {if $member_list}
                                             {loop $member_list $v}
-												<div class="clearfix box mb_10">
-													<div id="{$v['member_id']}" class="case_title po_re clearfix ">
+												<div class="clearfix box mb_10 member{$v['member_id']}" id="{$v['member_id']}">
+													<div class="case_title po_re clearfix ">
 														<strong class="po_ab gj_bg">NO.{$v['member_id']}</strong>
 														<div class="case_word_title">
-															<span class="ml_5">个人简介</span>
+															<span class="ml_5">$_lang['member_intro']</span>
 														</div>
 													</div>
-		                                         	<div class="clearfix box case_box po_re" id="{$v['member_id']}">
+		                                         	<div class="clearfix box case_box po_re">
 														<div class="clearfix case_info po_ab" >
 															<div class="po_re pad10">
 																<a href="#">
-																	<!--{if $v['member_pic']}<img src="{$_K['site_url']}/{$v['member_pic']}" class="block mar_auto pic_img" alt="{$_lang['display_picture']}" title="{$_lang['display_picture']}" width="132" height="139">{else}<img src="resource/img/system/default_avatar/man_big.jpg" class="block mar_auto pic_img" alt="{$_lang['default_picture']}" title="{$_lang['default_picture']}" width="132" height="139">{/if}-->
+																	<!--{if $v['member_pic']}<img src="{$_K['siteurl']}/{$v['member_pic']}" class="block mar_auto pic_img" alt="{$_lang['display_picture']}" title="{$_lang['display_picture']}" width="132" height="139">{else}<img src="data/avatar/default/man_big.jpg" class="block mar_auto pic_img" alt="{$_lang['default_picture']}" title="{$_lang['default_picture']}" width="132" height="139">{/if}-->
 																</a>
 			                                                    <ul>
 			                                                        <li class="t_c"><a href="javascript:void(0)" title="{$v['truename']}"><span>{$v['truename']}</span></a></li>
 			                                                        <li class="ml_20">{$_lang['job_position']}{$_lang['zh_mh']}{$v['member_job']}</li>
 			                                                        <li class="ml_20">{$_lang['edu_background']}{$_lang['zh_mh']}{$v['top_eduction']}</li>
 			                                                        <li class="ml_20">{$_lang['graduated']}{$_lang['zh_mh']}{$v['school']}</li>
-			                                                        <li class="ml_20">{$_lang['entry_age']}{$_lang['zh_mh']}<!--{date('Y年m月d日',$v['entry_age'])}--></li>
+			                                                        <li class="ml_20">{$_lang['entry_age']}{$_lang['zh_mh']}<!--{date('Y-m-d',$v['entry_age'])}--></li>
 			                                                    </ul>
 															</div>
 														</div>	
@@ -91,9 +88,9 @@
 			                                                    </div>
 															</div>
 															<div class="operate po_ab">
-																<a href="{$ac_url}&show=add&member_id={$v['member_id']}#userCenter" title="{$_lang['edit']}" class="mr_10"><div class="icon16 pencil mr_5">edit</div>编辑</a>
+																<a href="{$ac_url}&show=add&member_id={$v['member_id']}#userCenter" title="{$_lang['edit']}" class="mr_10"><div class="icon16 pencil mr_5">{$_lang['edit']}</div>{$_lang['edit']}</a>
 																|
-																<a href="javascript:void(0)" title="delete"class="mr_10" onclick="del($v['member_id'])"><div class="icon16 trash mr_5">delete</div>删除</a>
+																<a href="javascript:void(0)" title="{$_lang['delete']}"class="mr_10" onclick="del($v['member_id'])"><div class="icon16 trash mr_5">{$_lang['delete']}</div>{$_lang['delete']}</a>
 															</div>
 		                                                </div>
 													</div>	
@@ -101,7 +98,7 @@
 											{/loop}
                                             {else}
 	                                            <div class="mt_10 clearfix t_c w0">
-	                                                {$_lang['no_record']}
+	                                                {$_lang['no_member']}
 	                                            </div>
                                             {/if} 
 
@@ -136,9 +133,12 @@
                                                 {$_lang['display_picture']}{$_lang['zh_mh']}
                                             </label>
                                             <div class="grid_15">
-                                                <div class="grid_6">
-                                                    <input type="file" name="member_pic" id="member_pic" ext=".jpg,.gif,.png,.jpeg" class="button block t_c" onchange="isExtName(this,1)">
-                                                </div>
+                                                <div class="grid_10">
+                                                    <input type="file" name="member_pic" id="member_pic" ext=".jpg,.gif,.png,.jpeg" class="button t_c" onchange="isExtName(this,1)">
+                                                	{if $member_info['member_pic']}
+													<a href="{$_K['siteurl']}/{$member_info['member_pic']}" target="_blank"><!--{eval echo ltrim(strrchr($member_info['member_pic'],'/'),'/')}--></a>
+													{/if}
+												</div>
                                                 <div class="grid_12 alpha ui_note">
                                                     {$_lang['best_results_about_display_picture']}
                                                 </div>
@@ -157,7 +157,7 @@
                                                 {$_lang['highest_level_of_edu']}{$_lang['zh_mh']}
                                             </label>
                                             <div class=" fl_l mr_10">
-                                                <select name="conf[top_eduction]" style="width:60px">
+                                                <select name="conf[top_eduction]" style="width:100px">
                                                     {loop $entry_age $v}<option value={$v} {if $v==$member_info['top_eduction']}selected="selected"{/if}>$v&nbsp; </option>
                                                     {/loop}
                                                 </select>
@@ -171,15 +171,17 @@
                                                 <input name="conf[school]" size="39" type="text" title="{$_lang['graduated_length']}" id="school" value="{$member_info['school']}" limit="required:true;len:2-50" msg="{$_lang['tips_about_graduated']}" msgArea="span_school"/><span id="span_school"></span>
                                             </div>
                                         </div>
-                                        <div class="rowElem clearfix" id="desc">
-                                            <div class="grid_13 omega">
+                                        <div class="rowElem clearfix">
+                                            <div class="grid_12 omega">
                                                 <label class="grid_2 t_r">
                                                     {$_lang['member_intro']}{$_lang['zh_mh']}
                                                 </label>
-                                                <textarea name="conf[member_desc]" id="member_desc" cols="80" rows="8" class="grid_10 xheditor-simple {skin:'nostyle'}">
-                                                    {$member_info['member_desc']}
-                                                </textarea>
+                                                <textarea name="conf[member_desc]" id="member_desc" cols="80" rows="8" class="grid_9 xheditor-simple {skin:'nostyle'}">{$member_info['member_desc']}</textarea>
                                             </div>
+											<span id="desc"></span>
+											
+											<div class="clear"></div>
+											<div class="grid_2">&nbsp;</div>
                                             <div class="grid_6 alpha ui_note">
                                                {$_lang['member_intro']}{$_lang['zh_jh']}
                                             </div>
@@ -207,26 +209,27 @@
 
 <!--contain end-->
 <script type="text/javascript">
+	In('form','xheditor');
     /**
      * 删除成员
      * @param {Object} member_id 成员编号
      */
     function del(member_id){
-        if (confirm("{$_lang['confirm_delete']}")) {
-            var url = '$ac_url&show=list&ac=del&member_id=' + member_id;
+		showDialog("{$_lang['confirm_delete']}",'confirm',"{$_lang['operate_notice']}",function(){
+			var url = '$ac_url&show=list&ac=del&member_id=' + member_id;
             $.getJSON(url, function(json){
                 if (json.status == '1') {
                     tipsAppend(member_id, json.msg, 'successful', 'green');
-                    $("#" + member_id).slideUp(2000).remove();
+                    $(".member" + member_id).slideUp(2000).remove();
                     if ($("dl dt").length == 0) {
-                        $("dl").append("<dt class='bf7 mt_10 clearfix t_c font14b'>{$_lang['no_comments_for_this_page']}</dt>");
+                        $("dl").append("<dt class='bf7 mt_10 clearfix t_c font14b'>{$_lang['no_member']}</dt>");
                     }
                 }
                 else {
                     tipsAppend(member_id, json.msg, 'error', 'red');
                 }
             })
-        }
+		});
     }
     
     /**
@@ -236,7 +239,7 @@
     function check_form(obj){
         var shtml = $("#member_desc").val();
         if (shtml.length < 2) {
-            tipsAppend("desc", "{$_lang['description_at_least_two_words']}", 'warning', 'm_warn');
+            tipsAppend("desc", "{$_lang['description_at_least_two_words']}", 'warning', 'm_warn',1);
             $("#member_desc").focus();
             return false;
         }

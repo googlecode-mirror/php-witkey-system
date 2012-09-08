@@ -23,6 +23,7 @@ class taoapi_config
 		$this->_Config = require_once dirname(__FILE__).'/taoapi_config.inc.php';
 
 		$this->setTestMode($this->_Config['TestMode']);
+		$this->setCloseError();
 		$this->_Config['PostMode'] = array('GET' => 'getSend' , 'POST' => 'postSend' , 'POSTIMG' => 'postImageSend');
     }
 

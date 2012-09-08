@@ -6,26 +6,29 @@
 <script type="text/javascript">
 In('form');
 </script>
-
+<div class="grid_24">
+<div class="panel clearfix box">
 <form action="index.php?do=task&task_id={$task_id}&view=tools" method="post" name="frm_payitem" id="frm_payitem">
+	<input type="hidden" name="formhash" id="formhash" value="{FORMHASH}">
 	<input type="hidden" name="px" id="px" value="30.51667"/>
    	<input type="hidden" name="py" id="py" value="114.31667"/>					 
   	<input type="hidden" name="zo" id="zo" value="10"/>
    	<input type="hidden" name="point" id="point">
    	<input type="hidden" name="province" id="hdn_province"/>
-	<input type="hidden" name="formhash" value="{FORMHASH}">
-<div class="prefix_1 suffix_1">
-    <h5 class="font14 mt_10 mb_10">{$_lang['task_tools']}</h5>		
-</div>
-<div class="tools ml_20">
+	
+<header class="clearfix box_header">
+    <h3 class="font16b lineh32 pl_10">{$_lang['task_tools']}</h3>		
+</header>
+<div class="tools pt_10 pl_10 clearfix">
+		<!--{eval $total=0;}-->
 		{loop $payitem_arr $k $v}
-		<!--{eval $exist_num = intval($exist_payitem_arr[$v['item_code']])}-->
+		<!--{eval $exist_num = intval($exist_payitem_arr[$v['item_code']]);$total+=$exist_num;}-->
 		<input type="hidden" name="payitem[]" value="$v['item_id']">
-		<div class="tool_list {if $k!=0}ml_20{/if}{if $exist_num<=0} op_05 {/if}">
-			<div class="w2 t_c mt_10"> &nbsp;
-			<img alt="$v['item_name']" src="$v['big_pic']" original-title="$v['item_name']">			
+		<div class="tool_list {if $exist_num<=0} op_05 {/if}">
+			<div class="fl_l pad10"> 
+				<img alt="$v['item_name']" src="$v['big_pic']" original-title="$v['item_name']">			
             </div>
-			<p class="t_c">$v['item_name']</p>	
+
 			<div class="tool_text">
 				
 				<p>
@@ -45,14 +48,14 @@ In('form');
 					
 					{if $exist_num>0}
 						{if $v['item_code']!='map'}
-					   <input type="text" class="member" name="payitem_num[{$v['item_id']}]"   
+					   <input type="text" class="member txt_input" name="payitem_num[{$v['item_id']}]"   
 						   id="payitem_$v['item_code']" 
-						   size="5px" limit="required:false;type:int;between:1-{$exist_payitem_arr[$v['item_code']]}" 
+						   style="width:53px;" limit="required:false;type:int;between:1-{$exist_payitem_arr[$v['item_code']]}" 
 						   ext="$exist_payitem_arr[$v['item_code']]" 
 						   title="{$_lang['use_times_cannot_exceed']}"
 						   msg="{$_lang['input_times_error']}"
 						   msgarea="msg_$v['item_code']" 						 
-						   > {$payitem_standard[$v['item_standard']]}<span id="msg_$v['item_code']"></span>
+						   > {$payitem_standard[$v['item_standard']]}<span id="msg_$v['item_code']" class="ml_5"></span>
 						   {elseif $v['item_code']=='map'&&!$task_info['point']}
 						   <input type="hidden" name="payitem_num[{$v['item_id']}]" id="payitem_map"/>
 						  <label>{$_lang['using']}{$_lang['zh_mh']}</label><input type="checkbox" temp="payitem_map"/>						   
@@ -66,17 +69,21 @@ In('form');
 		{/loop}
 	
 	</div>
-<div class="step_button"> 
-	<button type="button" name="is_submit"  class="big button" onclick="sbt_payitem()">{$_lang['submit']}</button>
+<div class="step_button mt_20"> 
+	{if $total>0}
+		<button type="button" name="is_submit"  class="big button" onclick="sbt_payitem()">{$_lang['using']}</button>
+	{/if}
 	<button type="button" onclick="location.href='index.php?do=user&view=payitem&op=toolbox'" name="is_submit" class="big button" >{$_lang['buy_now']}</button>
 </div>
 </form>
+</div>
+
 <script type="text/javascript" >
 	function set_map(){ 
 		showWindow("map","index.php?do=release&r_step=step3&ac=show_map",'get',0);return false;
 	}	
 	function sbt_payitem(){ 
-		var i 	 = checkForm(document.getElementById('frm_payitem'));
+		
 		if($("input[temp='payitem_map']").attr("checked")==true){ 
 			if(!$("#point").val()){
 					showDialog("{$_lang['please_choose_map_area']}","alert","{$_lang['friendly_notice']}");
@@ -87,9 +94,11 @@ In('form');
 		}else{
 			$("#payitme_map").val("");
 		}
-		if(i){				
-			$("#frm_payitem").submit();
-		}	
+					
+			//$("#frm_payitem").submit();
+			//alert(23);return false;
+			formSub('frm_payitem','form',true);
+	
 	}
 	
 </script>

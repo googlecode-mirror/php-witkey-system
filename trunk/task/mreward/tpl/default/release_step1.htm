@@ -57,73 +57,65 @@
 	  		<input type="hidden" name="formhash" value="{FORMHASH}">
         	<div class="rowElem clearfix po_re">
           		<label class="grid_4"><strong>{$_lang['reward_cash']}{$_lang['zh_mh']}</strong></label>
-           		<div class="grid_9">
-              	<input class="fl_l" name="txt_task_cash" value="{if $release_info[txt_task_cash]}$release_info[txt_task_cash]{else}$task_config[min_cash]{/if}" type="text" size="25" id="txt_task_cash" msgArea="span_task_cash"  title="{$_lang['mtask_cash_title']}{$task_config[min_cash]}{$_lang['yuan']}" onkeyup="clearstr(this)"
+           		<div class="grid_12">
+              	<input name="txt_task_cash" value="{if $release_info[txt_task_cash]}$release_info[txt_task_cash]{else}$task_config[min_cash]{/if}" type="text" size="25" id="txt_task_cash" msgArea="span_task_cash"  title="{$_lang['mtask_cash_title']}{$task_config[min_cash]}{$_lang['yuan']}" onkeyup="clearstr(this)"
 		    	limit="required:true;type:int;between:{$task_config[min_cash]}-" msg="{$_lang['mtask_cash_msg']}{$task_config[min_cash]}{$_lang['yuan']}" onblur="getMaxDday(this.value)"/>
-          	 	<span class="fl_l ml_5">{$_lang['yuan']}</span>
-			 	<div class="clear"></div>
-			 	<div id="span_task_cash"></div>
+          	 	<span class="ml_5">{$_lang['yuan']}</span>
+			 	<div id="span_task_cash" class="ml_5"></div>
 		   		</div>
           	</div>
 			<div class="clearfix po_re">
         <div class="rowElem clearfix">
         	<label class="grid_4"><strong>{$_lang['prize_1']}{$_lang['zh_mh']}</strong></label>
-        	<div class="grid_9">
-   	   			<input class="fl_l" name="txt_prize1_num" value="{if $release_info[txt_prize1_num]}$release_info[txt_prize1_num]{/if}" type="text" size="3" id="txt_prize1_num" msgArea="span_prize1_cash"  title="{$_lang['prize_num_title']}" onkeyup="clearstr(this)" limit="required:true;type:int;between:1-" msg="{$_lang['prize_no_empty']}" />
-				<span class="fl_l ml_5 mr_5">{$_lang['split_cash']}</span>
-          	    <input class="fl_l" name="txt_prize1_cash" value="{if $release_info[txt_prize1_cash]}$release_info[txt_prize1_cash]{/if}" type="text" size="8" id="txt_prize1_cash" msgArea="span_prize1_cash"  title="{$_lang['prize_cash_title']}" onkeyup="clearstr(this)" limit="required:true;type:int;between:1-" msg="{$_lang['prize_no_empty']}" />
-				<span class="fl_l ml_5">{$_lang['yuan']}</span>
-				<div class="clear"></div>
+        	<div class="grid_12 omega">
+   	   			<input class="" name="txt_prize1_num" value="{if $release_info[txt_prize1_num]}$release_info[txt_prize1_num]{/if}" type="text" size="3" id="txt_prize1_num" msgArea="span_prize1_cash"  title="{$_lang['prize_num_title']}" onkeyup="clearstr(this)" limit="required:true;type:int;between:1-" msg="{$_lang['prize_no_empty']}" />
+				<span class="ml_5 mr_5">{$_lang['split_cash']}</span>
+          	    <input class="" name="txt_prize1_cash" value="{if $release_info[txt_prize1_cash]}$release_info[txt_prize1_cash]{/if}" type="text" size="8" id="txt_prize1_cash" msgArea="span_prize1_cash"  title="{$_lang['prize_cash_title']}" onkeyup="clearstr(this)" limit="required:true;type:int;between:1-" msg="{$_lang['prize_no_empty']}" />
+				<span class=" ml_5 mr_5">{$_lang['yuan']}</span>
 				<div id="span_prize1_cash"></div>
 			</div>
 		</div>
 		
 		<div class="rowElem clearfix"  id="prize_2" {if !$release_info[txt_prize2_num]}style="display:none"{/if}>
         	<label class="grid_4"><strong>{$_lang['prize_2']}{$_lang['zh_mh']}</strong></label>
-           	<div class="grid_9">
-   	   			<input class="fl_l" name="txt_prize2_num" value="{if $release_info[txt_prize2_num]}$release_info[txt_prize2_num]{/if}" type="text" size="3" id="txt_prize2_num" msgArea="span_prize2_cash"  title="{$_lang['prize_num_title']}" onkeyup="clearstr(this)"
+           	<div class="grid_12">
+   	   			<input class="" name="txt_prize2_num" value="{if $release_info[txt_prize2_num]}$release_info[txt_prize2_num]{/if}" type="text" size="3" id="txt_prize2_num" msgArea="span_prize2_cash"  title="{$_lang['prize_num_title']}" onkeyup="clearstr(this)"
 	   			 limit="required:true;type:int;between:1-" msg="{$_lang['prize_no_empty']}" >
-				 <span class="fl_l ml_5 mr_5">{$_lang['split_cash']}</span>
-          		<input class="fl_l" name="txt_prize2_cash" value="{if $release_info[txt_prize2_cash]}$release_info[txt_prize2_cash]{/if}" type="text" size="8" id="txt_prize2_cash" msgArea="span_prize2_cash"  title={$_lang['prize_cash_title']}" onkeyup="clearstr(this)"
+				 <span class=" ml_5 mr_5">{$_lang['split_cash']}</span>
+          		<input class="" name="txt_prize2_cash" value="{if $release_info[txt_prize2_cash]}$release_info[txt_prize2_cash]{/if}" type="text" size="8" id="txt_prize2_cash" msgArea="span_prize2_cash"  title="{$_lang['prize_cash_title']}" onkeyup="clearstr(this)"
 		    	limit="required:true;type:int;between:1-" msg="{$_lang['prize_no_empty']}" />
-				<span class="fl_l ml_5">{$_lang['yuan']}</span>
-				<div class="clear"></div>
+				<span class=" ml_5">{$_lang['yuan']}</span>
 				<div id="span_prize2_cash"></div>
 			</div>
 		</div>
 		<div class="rowElem clearfix"  id="prize_3" $release_info[txt_prize3_num]style="display:none"{/if}>
         	<label class="grid_4"><strong>{$_lang['prize_3']}{$_lang['zh_mh']}</strong></label>
-           	<div class="grid_9">
-   	   			<input class="fl_l" name="txt_prize3_num" value="{if $release_info[txt_prize3_num]}$release_info[txt_prize3_num]{/if}" type="text" size="3" id="txt_prize3_num" msgArea="span_prize3_cash"  title="{$_lang['prize_num_title']}" onkeyup="clearstr(this)"
+           	<div class="grid_12">
+   	   			<input class="" name="txt_prize3_num" value="{if $release_info[txt_prize3_num]}$release_info[txt_prize3_num]{/if}" type="text" size="3" id="txt_prize3_num" msgArea="span_prize3_cash"  title="{$_lang['prize_num_title']}" onkeyup="clearstr(this)"
 	   			 limit="required:true;type:int;between:1-" msg="{$_lang['prize_no_empty']}" />
-				<span class="fl_l ml_5 mr_5">{$_lang['split_cash']}</span>
-          		<input class="fl_l" name="txt_prize3_cash" value="{if $release_info[txt_prize3_cash]}$release_info[txt_prize3_cash]{/if}" type="text" size="8" id="txt_prize3_cash" msgArea="span_prize3_cash"  title="{$_lang['prize_cash_title']}" onkeyup="clearstr(this)"
+				<span class="ml_5 mr_5">{$_lang['split_cash']}</span>
+          		<input class="" name="txt_prize3_cash" value="{if $release_info[txt_prize3_cash]}$release_info[txt_prize3_cash]{/if}" type="text" size="8" id="txt_prize3_cash" msgArea="span_prize3_cash"  title="{$_lang['prize_cash_title']}" onkeyup="clearstr(this)"
 		    	limit="required:true;type:int;between:1-" msg="{$_lang['prize_no_empty']}"/>
-				<span class="fl_l ml_5">{$_lang['yuan']}</span>
-				<div class="clear"></div>
+				<span class="ml_5">{$_lang['yuan']}</span>
 				<div id="span_prize3_cash"></div>
 			</div>
 		</div>
 
 		<div class="rowElem clearfix po_re">
-        	<label class="grid_4"></label>
-           	<div class="fl_l">   	   			
-				<div class="clear"></div>
-				<div id="check_cash"></div>
-			</div>
-		</div>
-		<div class="operate po_ab" style="bottom:8px">
+        	
+			<div class="grid_10 prefix_4">
 			<a class="button" name="add_prize"  id="add_prize" onclick="add();">{$_lang['add_prize']}</a>
 			<a class="button" name="del_prize"  id="del_prize" onclick="del();">{$_lang['del_prize']}</a>
-		</div>	
+			</div>
+		</div>
+			
 	</div>	
 		
       <div class="rowElem clearfix po_re">
           <label class="grid_4"><strong>{$_lang['task_round']}{$_lang['zh_mh']}</strong></label>
             <div class="grid_10">       
                <input name="txt_task_day"   onclick="showcalendar(event, this, 0)" size="25" value="{if $release_info[txt_task_day]}$release_info[txt_task_day]{else}$default_max_day{/if}" type="text" id="txt_task_day" title="{$_lang['task_round_title']}:{$task_config[min_day]},{$_lang['max_day']}$max_day {$_lang['day']}" msgArea="span_task_day" onkeyup="clearstr(this)"
-			   	limit="required:true;type:date;than:min;less:$default_max_day" msg="{$_lang['task_round_msg']}" max=""    min_day = "$task_config[min_day]"/>             	
-				 <div class="clear"></div>
+			   	limit="required:true;type:date;than:min;less:$default_max_day" msg="{$_lang['task_round_msg']}" max=""    min_day = "$task_config[min_day]" class="mr_5"/>             	
 				 <span id="span_task_day"></span>
 				 <div class="clear"></div>				 
 			</div>
@@ -132,7 +124,7 @@
 		
         <div class="rowElem clearfix po_re">
            <label class="grid_4"><strong>{$_lang['cash_assign']}{$_lang['zh_mh']}</strong></label>
-             <div class="grid_6 mt_5"><strong>{$_lang['m_reward']}</strong></div>
+             <div class="grid_6"><strong>{$_lang['m_reward']}</strong></div>
         </div>
      </form>
     </div>
@@ -145,7 +137,7 @@
    <div class="grid_7 omega alpha">
      	<div class=" prefix_1 suffix_1 pt_20">
        		<h3 class="font14b">{$_lang['what']}{$model_info[model_name]}£¿ </h3>
-         <p><!--{eval echo htmlspecialchars_decode($model_info[model_desc])}--></p>
+         <p><!--{eval echo kekezu::filter_input($model_info[model_desc])}--></p>
      	</div>
     </div>
 <script type="text/javascript"> 
@@ -176,13 +168,13 @@
 		var prize_1_price = Number($("#txt_prize1_cash").val()); 
 		var total_prize =prize_1_price ;
 		if($("#prize_2").is(":hidden")){
-			$("#prize_2").remove();  
+			//$("#prize_2").remove();  
 		}	 
 		if($("#prize_3").is(":hidden")){
-			$("#prize_3").remove();  
+			//$("#prize_3").remove();  
 		}	 
 		
-		if ($("#prize_2").is(":visible")) { 
+		if ($("#prize_2").is(":visible")) {
 			var prize_2_price = Number($("#txt_prize2_cash").val()); 
 				total_prize += prize_2_price;
 		}

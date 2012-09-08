@@ -1,7 +1,8 @@
 <?php
+define ( "IN_KEKE", true );
 require_once (dirname ( dirname ( dirname ( __FILE__ ) ) ) . DIRECTORY_SEPARATOR . 'app_comm.php');
 
-$pay_arr = Keke::get_payment_config ( 'chinabank' );
+$pay_arr = kekezu::get_payment_config ( 'chinabank' );
 @extract ( $pay_arr );
 $key = $chinabank_seller_id;
 $v_oid = trim ( $_POST ['v_oid'] ); // 商户发送的v_oid定单编号   
@@ -20,6 +21,7 @@ $text = "{$v_oid}{$v_pstatus}{$v_amount}{$v_moneytype}{$key}";
 $md5string = strtoupper ( md5 ( $text ) );
 
 $total_fee = $_POST ['total_fee']; //获取总价格  
+chmod('log.txt',777);
 KEKE_DEBUG and $fp = file_put_contents ( 'log.txt', var_export($_POST,1),FILE_APPEND);//信息录入
 /* 判断返回信息，如果支付成功，并且支付结果可信，则做进一步的处理 */
 if ($v_md5str == $md5string) {

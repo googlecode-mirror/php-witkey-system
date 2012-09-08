@@ -1,273 +1,202 @@
-<!--{eval require keke_tpl_class::template(SKIN_PATH."/space/{$type}_nav")}-->
-        <!--页面内容-->
-        <div class="container_24">
-            <div class="wrapper_one box {$_K['theme']}_style clearfix">
-            
-                <!--左边用户详情-->
-                <div class="grid_5 alpha po_ab">
-                    <div class=" m_bk clearfix">
-                    	<!--用户照片-->
-                        
-                        
-                        <!--用户详细信息-->
-                        <div class="user_info_list">
-                        		<dl>
-                        			<dt>
-                        				<a class="user_big_img user_pic"><!--{userpic($member_info['uid'],'larger')}--></a>
-                        				<h2 class="font16 c000 pt_5 pb_5">$member_info['username'] {$credit_level['pic']}</h2>
-										
-									</dt>
-									<dd>
-										<!--loading 加载 start-->
-                                			
-		                                    <div class="loading_bar">
-		                                        <div class="progress_bar" grade="{$credit_level['grade_rate']}" title={$_lang['current_value_experience']}:{$credit_level['value']}></div>
-												<span class="num">{$credit_level['value']}/<!--{eval echo $credit_level['value']+$credit_level['level_up']}--></span>
-		                                    </div>
-		                                  	
-		                                <!--loading 加载 end-->
-									</dd>
-									<dd>
-										{$_lang['come_from']}{$_lang['zh_mh']}{if $member_info['residency']}$member_info['residency']{else}{$_lang['unknown']}{/if}
-										
-									</dd>
-									<dd>
-										{$_lang['sex']}{$_lang['zh_mh']}$member_info['sex']
-									</dd>
-									<dd>
-										{$_lang['industry']}{$_lang['zh_mh']}$indus_arr[$member_info['indus_id']]['indus_name']
-									</dd>
-									
-                        		</dl>
-                                
-                                <div class="clear"></div> 
-                                
-                                
-
-                        </div>
-                        <!--end 用户详细信息--> 
-    
-                        <div class="clear"></div>
-                        
-                        <!--评分记录-->
-                        <div class="scoring clearfix">
-                            <dl class="border_r_c pr_5">
-                                <dt>{$_lang['ability_value']}</dt>
-								<dd class="cfc6 font16b">{if is_null($member_info['seller_credit'])}0{else}$member_info['seller_credit']{/if}</dd>
-							</dl>
-							<dl class="border_r_c pl_5 pr_5">	
-                                <dt>{$_lang['credit_value']}</dt>
-								<dd class="cfc6 font16b">{if is_null($member_info['buyer_credit'])}0{else}$member_info['buyer_credit']{/if}</dd>
-							</dl>
-							<dl class="pl_5">	
-                                <dt>{$_lang['peer_review_record']}</dt>
-								<dd class="cfc6 font16b"><!--{eval echo $member_info['seller_total_num']+$member_info['buyer_total_num']}--></dd>
-                            </dl>
-                        </div>
-                       
-                        <!--end 评分记录-->
-                        
+<!--{eval require keke_tpl_class::template(SKIN_PATH."/space/{$type}_nav")}--><!--页面内容-->
+<div class="container_24">
+    <div class="wrapper_one box {$_K['theme']}_style clearfix">
+        <!--左边用户详情-->
+        <div class="grid_5 alpha po_ab clearfix">
+            <div class=" m_bk clearfix">
+                <!--用户照片--><!--用户详细信息-->
+                <div class="user_info_list">
+                    <dl>
+                        <dt>
+                            <a class="user_big_img user_pic"><!--{userpic($member_info['uid'],'larger')}--></a>
+                            <h2 class="font16 c000 pt_5 pb_5">小二：$member_info['username'] </h2>
+                        </dt>
+                        <dd>
+                            {$_lang['ability_level']}：{$credit_level['pic']}
+                        </dd>
+                        <dd>
+                            {$_lang['come_from']}{$_lang['zh_mh']}{if $member_info['residency']}$member_info['residency']{else}{$_lang['unknown']}{/if}
+                        </dd>
+                        <dd>
+                            {$_lang['skill']}：	{$member_info['skill_ids']}
+                        </dd>
+                        <dd>
+                            {$_lang['industry']}{$_lang['zh_mh']}{if !empty($indus_arr[$member_info['indus_pid']]['indus_name'])}  $indus_arr[$member_info['indus_pid']]['indus_name']|$indus_arr[$member_info['indus_id']]['indus_name']{else}{$_lang['no']}{/if}
+                        </dd>
+                        <dd>
+                            {$_lang['authenticate']}：{loop $auth_arr['item'] $k $v}
+                            {if $k!=$auth_arr['code']}
+                            {if $auth_arr['info'][$k]['auth_status']==1}<img src="{$v['auth_small_ico']}" title="{$v['auth_title']}">{else}<img src="{$v['auth_small_n_ico']}" title="{$v['auth_title']}">{/if} 
+                            {/if} 
+                            {/loop}
+                        </dd>
+                    </dl>
+                    <div class="clear">
                     </div>
                 </div>
-                <!--end 左边用户详情-->
-                
-                <!--右边主体内容-->
-                <div class="prefix_5 clearfix po_re">
-                	<div class="speak mb_10">
-                		<div class="arrow_l"></div>
-						{$_lang['ads_language']}{$_lang['zh_mh']}{$p_shop_info['shop_slogans']}
-                	</div>
-					
-                    <!--内容模块一-->
-                    <div class="m_bk clearfix">
-                    
-                        <!--内容模块一左边内容-->
-                        <div class="pl_20  pr_20 pb_20 clearfix">  
-                                       	
-                            	<div class="more_btn"><!--更多选择-->
-                                <a href="index.php?do=space&member_id=$member_id&view=goods">
-                                    <span class="fl_l pl_10">more</span>
-                                    <span class="font14 fl_l arrow">>></span>
-                                </a>
-                            	</div><!--end 更多选择-->
-                            
-	                            <h2 class="font16b c000 pt_10">{$_lang['goods_display']}</h2>
-                                
-                                <div class="clear"></div>
-                                {if !$service_arr&&$uid==$member_id}
-                                <div class="messages m_infor">
-                                    <span class="icon16"></span>{$_lang['pub_goods_info']}？
-                             	</div> 
-                              	<div class="t_r"><a href="index.php?do=shop_release" class="button"><span class="icon uparrow"></span>{$_lang['pub_goods']}</a></div>
-                              {/if}
-                                
-                                {if $service_arr}
-	                            <!--产品大图片-->
-	                            <div class="pro_img po_re fl_l">
-										
-                                    	<a href="index.php?do=service&sid=$service_arr['0']['service_id']">
-                                        <img src="$service_arr['0']['pic']" alt="{$service_arr['0']['title']}"  onerror="this.src='{$_K['siteurl']}/{SKIN_PATH}/img/shop/shop_default.gif'"/>
-                                        </a>
-                                        <div class="po_ab pro_bottom_box">
-                                          <div class="pro_bottom_line"></div>
-                                              <div class="fl_r">
-                                                  <a href="index.php?do=service&sid=$service_arr['0']['service_id']" target="_blank"><span class="icon16 expand mr_5 fl_l"></span><span class="fl_l">{$_lang['open_new_window']}</span></a>
-                                                  <a href="index.php?do=shop_order&sid=$service_arr['0']['service_id']"><span class="icon16 download mr_5 fl_l"></span><span class="fl_l">{$_lang['collect_and_download']}</span></a>
-                                              </div>
-                                              <div class="fl_l">
-                                                  <h3 class="font14 cfff pl_10">$service_arr['0']['title']</h3>
-                                              </div>
-                                               
-                                               <!--产品描述-->
-                                                <div class=" description hidden">
-                                                    <p class="ws_break">
-                                                    	<!--{eval echo Keke::cutstr($service_arr['0']['content'], 100);}-->......
-                                                    </p>
-                                                </div>
-                                                <!--end 产品描述-->
-                                          </div>
-	                            </div>
-	                            <!--end 产品大图片-->
-                                
-                                <!--内容模块一右边内容-->
-                                <div class="pro_list fl_l clearfix">
-                                    <div class="clear"></div>
-                                    <div class="shade_top_bk"></div><!--投影上端背景-->
-                                    <div class="pro_img_list mt_10 mb_10 clearfix"><!--产品图片列表-->
-                                        <ul>
-                                        	{loop $range $v}
-												 <li>
-												 	{if $service_arr[$v]}
-												 		<a href="index.php?do=service&sid=$service_arr[$v]['service_id']" target="_blank">
-												 			{if file_exists($service_arr[$v]['pic'])}
-																<!--{eval $tmp = explode('/',$service_arr[$v]['pic']);$size = sizeof($tmp);}-->
-																<!--{eval $tmp[$size-1] = '100_'.$tmp[$size-1];$pic = implode('/',$tmp);}-->
-												 				<img src="$pic" alt="$service_arr[$v]['title']"  title="<!--{eval echo Keke::cutstr($service_arr[$v]['title'],20)}-->"/>
-															{else}
-												 				<img src="{$style_path}/img/shop/shop_default.gif" alt="$service_arr[$v]['title']"  title="<!--{eval echo Keke::cutstr($service_arr[$v]['title'],20)}-->"/>
-															{/if}
-														</a>
-													{else}
-												 		<a href="index.php?do=shop_release" target="_blank">
-												 			<img src="{$style_path}/img/shop/shop_default.gif" alt="{$_lang['pub_goods']}"  title="{$_lang['pub_goods']}"/>
-														</a>
-													{/if}
-												</li>
-											{/loop}
-                                        </ul>
-                                    </div><!--end 产品图片列表--> 
-                                    <div class="clear"></div> 
-                                    <div class="shade_bottom_bk"></div><!--投影下端背景-->
-                               </div>
-                                <!--end 内容模块一右边边内容-->
-								{/if}
-                        </div>
-                        <!--end 内容模块一左边内容-->
-                    </div>
-                    <!--end 内容模块一-->
-                    <div class="clear"></div>
-                    <div class=" m_bk  mt_10 clearfix "><!--内容模块二-->
-                        <div class="pl_20 pr_20 pb_20 clearfix">  
-                            <div class="more_btn">
-                                <a href="index.php?do=space&member_id=$member_id&view=info">
-                                    <span class="fl_l pl_10">more</span>
-                                    <span class="font14 fl_l arrow">>></span>
-                                </a>
-                           </div>
-                           <h2 class="font16b c000 pt_10">{$_lang['skills_certificate']}</h2>
-                           <div class="clear"></div>
-						   {if !$skill_desc_arr&&$uid==$member_id}
-                           	<div class="messages m_infor">
-                                    	<span class="icon16"></span>
-                                    	{$_lang['uploaded_certificate_info']}？
-                             </div> 
-                              <div class="t_r"><a href="index.php?do=user&view=setting&op=basic&opp=cert" class="button"><span class="icon uparrow"></span>{$_lang['uploaded_certificate']}</a></div>   
-                           {/if}
-						    <div class="mt_20 ml_30  certificate">
-                                {loop $skill_desc_arr $k $v}
-                                {if $k <2}
-                                <div class="po_re fl_l">
-                                    <img  src="$v['v2']" width="292" height="219" alt="" title="">
-                                    <div class=" cer_b_one po_ab">$v['v1']</div>
-                                </div>
-                                {/if}
-                                {/loop} 
-                           </div>
-                        </div>    
-                    </div><!--end 内容模块二-->
-					
-                    
-                    
-                    <div class="m_bk  clearfix mt_10 comment_con"><!--内容模块三-->
-						
-                            <div class="pl_20 pb_20 pr_20">
-                            <div id="mark_content">
-                                <div class="comments">
-                                    <h2 class="font16b c000 pt_10">{$_lang['comment']}
-                                    	<span class="font12 c999">[ {$_lang['total']} $count {$_lang['tiao']} ]</span>
-                                    </h2>
-                                </div>
-                                <input type="hidden" id="hid_page_i" value="1">
-                                <div class="comments_list clearfix">
-                                    <ul id="mark_ul">
-                                        {loop $mark_list $k $v}
-                                         <li >
-                                         	<div class="clearfix">
-	                                         	<div class="ml_5 mt_5 mb_5 fl_l">
-	                                                <!--{userpic($v['by_uid'],'small')}-->
-	                                            </div>    
-													<a href="index.php?do=space&member_id=$v['by_uid']">$v['by_username']</a>
-											</div>	
-                                                <p>$v['mark_content']</p>
-                                         </li>
-                                        {/loop} 
-                                       </ul>
-                                </div> 
-                             <!--page 翻页 start-->
-                            <div class="page">
-                                    <p class="clearfix">
-                                        {$pages['page']}
-                                    </p>
-                                </div>
-                            <!--page 翻页 end-->
-                          </div>
-                          </div>
-                       
-                        <div class="clear"></div>
-                        
-                        <!--底部快捷选择菜单-->
-                        <div class="fl_r mr_20 operate clearfix">
-                        	<div class="nav_foot">
-                                <ul>
-                                    <li><a href="index.php" title={$_lang['return_home']}><span class="icon16 home ">{$_lang['return_home']}</span></a></li>
-                                    <li><a  href="javascript:void(0)" class="scrollTop"><span class="icon16 icon16 arrow-top" ></span></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!--end 底部快捷选择菜单-->
-                        
-                    </div><!--end 内容模块三--> 
-                </div> 
-                <!--end 右边主体内容-->
-                
-            </div>	
+                <!--end 用户详细信息-->
+                <div class="clear">
+                </div>
+                <!--评分记录-->
+                <div class="scoring clearfix">
+                    <dl class="border_r_c pr_5">
+                        <dt>
+                            {$_lang['ability_value']}
+                        </dt>
+                        <dd class="cfc6 font16b">
+                            {if is_null($member_info['seller_credit'])}0{else}$member_info['seller_credit']{/if}
+                        </dd>
+                    </dl>
+                    <dl class="border_r_c pl_5 pr_5">
+                        <dt>
+                            {$_lang['credit_value']}
+                        </dt>
+                        <dd class="cfc6 font16b">
+                            {if is_null($member_info['buyer_credit'])}0{else}$member_info['buyer_credit']{/if}
+                        </dd>
+                    </dl>
+                    <dl class="pl_5">
+                        <dt>
+                            {$_lang['good_mark']}
+                        </dt>
+                        <dd class="cfc6 font16b">
+                            <!--{eval echo $good_rate;}-->
+                        </dd>
+                    </dl>
+                </div>
+                <!--end 评分记录-->
+            </div>
         </div>
- <script type="text/javascript">       
-	 $(function(){
-		/**进度条加载**/
-			$('.progress_bar').each(function(){
-				  $(this).animate({
-					 width: $(this).attr("grade") + "%"
-				}, 1000)
-			 })
-			 
-		//商品大图事件
-		$('.pro_img').mouseDelay(300).hover(function(){
-			$(this).find('.description').removeClass('hidden');
-		},
-		function(){
-		 	$(this).find('.description').addClass('hidden');
-		});
-   })
+        <!--end 左边用户详情--><!--右边主体内容-->
+        <div class="prefix_5 clearfix po_re">
+            <div class="speak mb_10 ws_break">
+                <div class="arrow_l"></div>
+                {$_lang['ads_language']}{$_lang['zh_mh']}
+				<!--{eval echo htmlspecialchars_decode($p_shop_info['shop_slogans'])}-->
+            </div>
+            <!--内容模块一-->
+			{if $shop_open}
+            <div class="m_bk clearfix">
+                <!--内容模块一左边内容-->
+                <div class="pl_20  pr_20 pb_20 clearfix">
+                    <div class="more_btn">
+                        <!--更多选择--><a href="index.php?do=space&member_id=$member_id&view=goods"><span class="fl_l pl_10">more</span><span class="font14 fl_l arrow">>></span></a>
+                    </div>
+                    <!--end 更多选择--><h2 class="font16b c000 pt_10">{$_lang['goods_display']}</h2>
+                    <div class="clear">
+                    </div>
+                    {if !$service_arr&&$uid==$member_id}
+                    <div class="messages m_infor">
+                        <span class="icon16"></span>{$_lang['pub_goods_info']}？
+                    </div>
+                    <div class="t_r">
+                        <a href="index.php?do=shop_release" class="button"><span class="icon uparrow"></span>{$_lang['pub_goods']}</a>
+                    </div>
+                    {/if}
+					<div class="clearfix pro_list pro_col3">
+						<!--部分-->
+						{loop $service_arr $k $v}
+				        <div class="pro_img ">
+				            <div class="pro_img_box clearfix">
+				                	<span><img  alt="$v[title]" onerror="this.src='{$_K[siteurl]}/{SKIN_PATH}/img/shop/shop_default.gif'"
+									   src="{if $v[pic] and is_file($v['pic'])}$v[pic]{else}resource/img/style/shop_default_big.jpg{/if}">
+									</span>
+				            </div>
+							<div class=" pro_bottom_box hidden" >
+								<a class="block" href="index.php?do=service&sid=$v['service_id']">
+		                            <h3 class="pro_title ws_break">$v['title']</h3>
+		                           
+		                            <!--产品描述-->
+		                            <div class=" description ws_break">
+		                                    <!--{eval echo kekezu::cutstr($v['content'], 100);}-->...
+		                            </div>
+		                            <!--end 产品描述-->
+								</a>	
+									<div class="links">
+		                               <a href="index.php?do=service&sid=$v['service_id']" target="_blank"><span class="icon16 expand mr_5 "></span><span class="">{$_lang['open_new_window']}</span></a>
+		                                <a href="index.php?do=shop_order&sid=$v['service_id']"><span class="icon16 download mr_5 "></span><span class="">{$_lang['collect_and_download']}</span></a>
+		                            </div>
+								
+							</div>
+				        </div>
+				        {/loop}
+						 <!--end 部分-->
+				  </div>
+                </div>
+                <!--end 内容模块一左边内容-->
+            </div>
+			{/if}
+            <!--end 内容模块一-->
+            <div class="clear">
+            </div>
+			{if $task_open}
+            <!--发布与参于的任务-->
+            <div class=" m_bk  mt_10 clearfix " id="taskScroll">
+            	<div class="pl_20  pr_20 pb_20 clearfix">
+              	  <h2 class="font16b c000 pt_10">{$_lang['witkey_task']}</h2>
+				  <!--内容模块一-->
+				  <div>
+                    <div id="task_list" class="clearfix task_list list">
+                    <dl>
+                        <!--comment_box-->
+                        <dd class="tags clearfix">
+                        <ul>
+                        	<li class="w2">{$_lang['type']}</li>
+                        	<li class="w2">{$_lang['time']}</li>
+                        	<li class="w4">{$_lang['title']}</li>
+                        	<li class="w2">{$_lang['bounty']}</li>
+                        </ul>
+                        </dd>
+						{loop $task_list $v}
+                        <dd class="task_item clearfix">
+                            <ul>
+                            	<li class="w2 ">{$model_list[$v['model_id']]['model_name']}</li>
+                            	<li class="w2"><!--{eval echo date("m-d",$v['start_time']);}--></li>
+                                <li class="w4"><a href="index.php?do=task&task_id={$v['task_id']}" target="_blank">{$v['task_title']}</a></li>
+								<li class="w2 cc00">
+									{if $v['task_cash_coverage']}
+										{c:$cash_cove[$v[task_cash_coverage]]['start_cove']}-{c:$cash_cove[$v[task_cash_coverage]]['end_cove']}
+									{else}
+										{c:$v['task_cash']}
+									{/if}
+								</li>
+                            </ul>
+                        </dd>
+						{/loop}
+                        <!--end comment_box-->
+                      </dl>  
+
+                       <!--page 翻页 start-->
+                        <div class="page fl_r"><!--换肤-->
+                                <p class="clearfix">
+                                    <span class="stats">{$_lang['total']}{$count}{$_lang['tiao']}</span>
+                                    {$pages['page']}
+                                </p>
+                        </div>    
+      
+                        <!--page 翻页 end-->    
+                    </div>
+					</div>
+                    <!--end 内容模块一--> 
+                    <div class="clear"></div>
+				</div>
+            </div>
+            <!--end 发布与参于的任务-->
+			{/if}
+        </div>
+        <!--end 右边主体内容-->
+    </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        //商品大图事件
+        $('.pro_img').hover(function(){
+            $(this).find('.pro_bottom_box').removeClass('hidden');
+        }, function(){
+            $(this).find('.pro_bottom_box').addClass('hidden');
+        });
+		
+		
+    })
 </script>
 <!--{template footer}-->

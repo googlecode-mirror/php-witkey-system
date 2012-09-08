@@ -31,7 +31,7 @@ $(function() {
 			}, function(data) {
 				var str_data = data;
 				if (trim(str_data) == '') {
-					$slcSubindustry.html('没有项目');
+					$slcSubindustry.html(L.no_project);
 				} else {
 					var results = self.parse(str_data);
 					self.refleshSkill(results);
@@ -124,7 +124,7 @@ $(function() {
 		this.render = function(){
 			var cc = self.selectLength;
 			var cl = ca - cc;
-			var str = '	<div class="bstitle"><h4>您已选择了<span>'+cc+'</span>个能力标签，还有可以选择<span>'+cl+'</span>个</h4><a href="###" class="ctrl-clean">全部清空</a></div>';
+			var str = '	<div class="bstitle"><h4>'+L.you_have_selected+'<span>'+cc+'</span>'+L.a+L.ability_label+','+L.you_can_choose+'<span>'+cl+'</span>个</h4><a href="###" class="ctrl-clean">'+L.all_clear+'</a></div>';
 			str += '    <ul class="list-selected-skill clearfix">';
 			
 			for(var i = 0; i < self.selectList.length; i ++){

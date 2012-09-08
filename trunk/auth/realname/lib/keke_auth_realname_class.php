@@ -23,11 +23,11 @@ class keke_auth_realname_class extends keke_auth_base_class{
 	}
 	public static function get_auth_step($auth_step=null,$auth_info=array()){
 		$step='step1';
-		if($auth_step){
+		 if($auth_step){
 			$step=$auth_step;	
 		}
 		elseif($auth_info){
-			$auth_info['auth_status'] and $step="step4" or $step="step3";
+			$auth_info['auth_status'] and $step="step3" or $step="step2";
 		}
 		return $step;
 	}
@@ -43,7 +43,7 @@ class keke_auth_realname_class extends keke_auth_base_class{
 		$data=$this->format_auth_apply($data);//格式化提交数据
 		$file_name and $id_pic = keke_file_class::upload_file($file_name);//认证图片上传
 		if (! $id_pic || ! $data ['id_card'] || ! $data ['realname']) {
-			Keke::show_msg ( $this->auth_lang().$_lang['apply_submit_fail'],$_SERVER['HTTP_REFERER'], 3, $this->auth_lang().$_lang['apply_submit_fail_for_info_little'], 'warning' );
+			kekezu::show_msg ( $this->auth_lang().$_lang['apply_submit_fail'],$_SERVER['HTTP_REFERER'], 1, $this->auth_lang().$_lang['apply_submit_fail_for_info_little'], 'alert_error' );
 		} 
 		else {
 			$id_pic and $data[$file_name]=$id_pic;
@@ -57,14 +57,14 @@ class keke_auth_realname_class extends keke_auth_base_class{
 		}
 		if ($success) {//财务记录
 			//更新实名
-			dbfactory::execute(sprintf(" update %switkey_space set truename='%s',idcard='%s' where uid ='%d'",TABLEPRE,$data[realname],$data[id_card],$data[uid]));
+			db_factory::execute(sprintf(" update %switkey_space set truename='%s',idcard='%s' where uid ='%d'",TABLEPRE,$data[realname],$data[id_card],$data[uid]));
 			//认证收费。产生财务记录
 			$data['cash'] > 0 and keke_finance_class::cash_out ($data['uid'],$data ['cash'],$this->_auth_name, $data ['cash'], $this->_auth_name, $success );
 			
 			$data['start_time']==$data['end_time'] and $end_time=$data['end_time'] or $end_time=0;
 			$this->add_auth_record($data['uid'], $data['username'], $this->_auth_code,$end_time);//添加进入认证记录
 			if($is_jump){
-				Keke::show_msg ( $this->auth_lang().$_lang['apply_submit_success'], "index.php?do=user&view=payitem&op=auth&auth_code=realname&&auth_step=step3&ver=1#userCenter", 3, $this->auth_lang().$_lang['apply_success_and_wait_audit'],'success' );
+				kekezu::show_msg ( $this->auth_lang().$_lang['apply_submit_success'], "index.php?do=user&view=payitem&op=auth&auth_code=realname&&auth_step=step2&ver=1#userCenter", 1, $this->auth_lang().$_lang['apply_success_and_wait_audit'],'alert_right' );
 			}else{
 				return true;
 			}

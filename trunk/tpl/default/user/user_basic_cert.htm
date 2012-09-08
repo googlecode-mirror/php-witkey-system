@@ -7,19 +7,19 @@
 <section class="clearfix section">
  <!--{template user/user_side}-->
   <div class="show_panel container_24 po_re">
-    <div class="prefix_3">
+    <div class="prefix_3 grid_21">
      <div class="panel clearfix box">
       <!--main content-->
-        <div class="grid_21">
+        <div class="">
           <!--header内容头部 start-->
             <header class="clearfix box_header">
-              <h2 class="grid_4 alpha box_title t_c">{$_lang['basics']}</h2>
-               <div class="grid_17 omega">
+              <h2 class="grid_4 alpha omega box_title t_c">{$_lang['basics']}</h2>
+               <div class="grid_17 alpha omega">
                  <nav class="box_nav">
                   <ul>
                      {loop $third_nav $k $v}
                         <li {if $k==$opp}class="selectedLava"{/if}>
-                           <a href="{$ac_url}&opp={$k}#userCenter" title="{$v['1']}">{$v['0']}</a>
+                           <a href="{$ac_url}&opp={$k}#userCenter" >{$v['0']}</a>
                         </li>
                      {/loop}
                   </ul>
@@ -30,12 +30,11 @@
         <!--header内容头部 end-->
        <div class="prefix_1 suffix_1 mt_10">
          <div class="clearfix box font14">
-          <!--技能证书start--><h2 class="bf7  suffix_1">{$_lang['skill_cert']}</h2>
             <!--messages消息 start-->
               <div id="messages"></div>
                 <!--messages消息 end-->
                   <div class="suffix_1 clearfix  pb_20 pt_10">
-                     <div class="grid_8 suffix_1">
+                     <div class="grid_8">
                        <h4 class="mb_10">{$_lang['certificate_has_been_uploaded']}</h4>
                          <div class="upd_infos">
                             <ul id="upd_infos">
@@ -48,29 +47,30 @@
                             </ul>
                            </div>
                       </div>
-                     <div class="grid_8">
+                     <div class="grid_9">
                      	<form id="frm_cert" name="frm_cert">
                         <h4 class="mb_10 border_b_c">{$_lang['upload_cert']}</h4>
                             <div class="clear"></div>
 							<div class="rowElem clearfix">
                                <label class="grid_2 t_r">{$_lang['cert_pic']} </label>
                                <div class="grid_5">
-								  <input type="file" name="file_name" onchange="isExtName(this,1);showName(this);" id="file_name" ext=".gif,.jpg,.jpeg,.png">
+								  <input class="txt_input" type="file" name="file_name" id="file_name">
                               </div>
                             </div>
 							<div class="rowElem clearfix" id="cert_name_area">
                                <label class="grid_2 t_r">{$_lang['cert_name']} :</label>
-                               <div class="grid_5">
-								 	<input type="text" size="19" name="cert_name" id="cert_name" value="{$_lang['skill_name_example']}" onfocus="if(this.value=='{$_lang['skill_name_example']}') this.value='';this.style.color='#333';" onblur="if(this.value==''){this.value='{$_lang['skill_name_example']}';this.style.color='#999';}" style="color:#999;" title="{$_lang['cert_name']}" limit="required:true;len:2-20"
+                               <div class="grid_6">
+								 	<input class="txt_input" type="text" size="19" name="cert_name" id="cert_name" value="{$_lang['skill_name_example']}" onfocus="if(this.value=='{$_lang[skill_name_example]}') this.value='';this.style.color='#333';"  style="color:#999;" limit="required:true;len:2-20"
 									msg="{$_lang['cert_name_can_not_be_none']}" msgArea="span_cert">
+                               	<span id="span_cert"></span>
+								
 								</div>
                             </div>
 							<div class="rowElem clearfix">
 								 <label class="grid_2 t_r">&nbsp; </label>
                                <div class="grid_5">
-                               	<span id="span_cert"></span>
-								    <button type="button" style="width:270px"ext=".gif,.jpg,.jpeg,.png" onclick="fileUpload()" id="btn_up">
-	                                   {$_lang['upload']}
+								    <button type="button" style="width:150px" onclick="fileUpload();" id="btn_up">
+	                                   {$_lang['save_setting']}
 	                                </button>
                                </div>
                             </div>
@@ -91,15 +91,30 @@
   </div>
 </div>
 <!--contain end-->
- 
+<script type="text/javascript">
+		$(function(){
+			uploadify({
+					auto:false,
+					file:'file_name',
+					hide:true,
+					size:"{$basic_config['max_size']}MB",
+					exts:'*.gif;*.jpg;*.jpeg;*.png',
+					limit:100,
+					text:"{$_lang['select_file']}"}
+				,{
+					fileType:'att',
+					objType:'user_cert'
+				});
+		})
+</script>
 <script type="text/javascript" >
-	In('calendar','ajaxfileupload','form'); 
+	In('calendar','form'); 
     function fileUpload(){
     	if($("#cert_name").val()=="{$_lang['skill_name_example']}"){
     		$("#cert_name").val("");
     	}
 		if(checkForm(document.getElementById('frm_cert'))){
-        	upload('file_name','att','front','','{$uid}','user_cert');
+        	$('#file_name').uploadify('upload');
 		}
     }
 	function showName(obj){
@@ -124,7 +139,8 @@
 					  
 	                   setTimeout("tipsAppend('messages','" + data.msg + "','successful','m_correct')", 100);
 	                   cert.appendTo("#upd_infos");
-	            }
+	            	  $("#cert_name").val("{$_lang['skill_name_example']}").css('color','#999');
+				}
 	           else {
 	                loadingControl('2', 'fail!');
 	                setTimeout("tipsAppend('messages','" + data.msg + "','error','m_error')", 100);
@@ -176,7 +192,7 @@
                     loadingControl(type, content);
                 }
                 else {
-                    loading.css("width", "0px").html("上传中!").animate({
+                    loading.css("width", "0px").html(L.uploading).animate({
                         width: '300px'
                     }, 2000, function(){
                         loading.html(content);

@@ -1,4 +1,5 @@
 <!--{template header}-->
+<link href="resource/css/public.css" rel="stylesheet" type="text/css">
 <!--页面内容区-->
 <div class="wrapper">
  <!--页面头部-->
@@ -6,7 +7,7 @@
    <div class="container_24 clearfix">
     <!--面包屑-->
      <div class="breadcrumbs clearfix">
-      <a href="#">{$_lang['home']}</a>\<a href="#">{$_lang['witkey_shop']}</a>
+      <a href="#">{$_lang['home']}</a> &gt; <a href="#">{$_lang['witkey_shop']}</a>
     </div>
     <!--end 面包屑-->
     <div class="page_title">
@@ -20,7 +21,7 @@
  <section class="content box">
  <!--布局框-->  
   <div class="container_24">
-   <div class="content_d mt_10">
+   <div class="content_d ">
    <!--step步骤 start-->
    <div class="step_progress clearfix">
 	{loop $stage_nav $k $v}
@@ -35,6 +36,7 @@
                     
  <!--步骤下部所有内容-->
  <div class="step1_detail">
+ 	{if $r_step=='step1'}
    <nav class="primary_nav box clearfix primary_nav1">
       <ul>
 		 {loop $model_list $k $v}
@@ -45,6 +47,7 @@
        </ul>
       <div class="clear"></div>
   </nav> 
+  {/if}
   <!--向前 向后-->
 	{if $r_step=='step1'}
 	    <nav class="primary_nav box clearfix primary_nav1 pad10">
@@ -84,8 +87,8 @@
     var basic_url = "{$basic_url}";
     var min_day = parseInt("{$service_config['min_day']}");
 
-     In.add('css_public',{path:"resource/css/public.css",type:'css'});
+
   	 In.add('shelves',{path:"resource/js/system/shelves.js",type:'js'});
-	 In('css_public','shelves','ajaxfileupload','form','script_city'); 
+	 In('shelves','ajaxfileupload','form','script_city'); 
 </script> 
 <!--{template footer}-->

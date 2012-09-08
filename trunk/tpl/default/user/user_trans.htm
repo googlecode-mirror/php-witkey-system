@@ -6,21 +6,27 @@
         <section class="clearfix section">
             <!--{template user/user_side}-->
             <div class="show_panel container_24 po_re">
-                <div class="prefix_3">
+                <div class="prefix_3 grid_21">
                     <div class="panel clearfix box">
                         <!--main content-->
-                        <div class="grid_21">
+                        <div class="">
                             <!--header内容头部 start-->
                             <header class="clearfix box_header">
-                                <h2 class="grid_4 alpha box_title t_c">{$_lang['trading_rights']}</h2>
-                                <div class="grid_17 omega">
+                                <h2 class="grid_4 alpha omega box_title t_c">{$_lang['trading_rights']}</h2>
+                                <div class="grid_17 alpha omega">
                                     <nav class="box_nav">
                                         <ul>
+                                        	{if $op!='complaint'}
                                             {loop $third_nav $k $v}
                                             <li {if $role==$v['2']}class="selectedLava"{/if}>
                                                 <a href="index.php?do={$do}&view={$view}&op={$op}&role={$v['2']}#userCenter" title="{$v['1']}">{$v['0']}</a>
                                             </li>
-                                            {/loop} 
+                                            {/loop}
+											{else}
+											<li {if $role==1}class="selectedLava"{/if}>
+                                                <a href="index.php?do={$do}&view={$view}&op={$op}&role=1}#userCenter" title="提出的建议">提出的建议</a>
+                                            </li>
+											{/if} 
                                         </ul>
                                     </nav>
                                 </div>
@@ -101,7 +107,7 @@
                                                             {$transrights_object[$obj]}{$_lang['id']}
                                                         </th>
                                                         <th scope="col">
-                                                            {if $role=='1'}{$_lang['be']}{/if}{$transrights_type[$op]['1']}{$_lang['people']}
+                                                            {if $role=='1'&&$op!='complaint'}{$_lang['be']}{/if}{$transrights_type[$op]['1']}{$_lang['people']}
                                                         </th>
                                                         {if $op=='complaint'}
                                                         <th scope="col">
@@ -127,14 +133,22 @@
                                                     {loop $report_list $v}
                                                     <tr>
                                                         <td>
-                                                            #{$v['obj_id']}
+                                                        	{if $op=='complaint'}
+                                                             #{$v['report_id']}
+															{else}
+															 #{$v['obj_id']}
+															{/if}
                                                         </td>
                                                         <td>
-                                                            <a href="index.php?do=space&member_id=<!--{eval if($role=='1')echo $v['to_uid'];else echo $v['uid'];}-->" target="_blank">{if $role=='1'}{$v['to_username']}{else}{$v['username']}{/if}</a>
-                                                        </td>
+                                                        	{if $op=='complaint'}
+                                                              <a href="index.php?do=space&member_id=$v[uid]" target="_blank">{$v['username']}</a>
+                                                            {else}
+															 <a href="index.php?do=space&member_id=<!--{eval if($role=='1')echo $v['to_uid'];else echo $v['uid'];}-->" target="_blank">{if $role=='1'}{$v['to_username']}{else}{$v['username']}{/if}</a>
+															{/if}
+														</td>
                                                         {if $op=='complaint'}
                                                         <td scope="col">
-                                                            {if $v['report_desc']}<!--{eval echo Keke::cutstr(strip_tags($v['report_desc']),60)."..."}-->{else}
+                                                            {if $v['report_desc']}<!--{eval echo kekezu::cutstr(strip_tags($v['report_desc']),60)."..."}-->{else}
                                                             {$_lang['no_contents']}
                                                             {/if}
                                                         </td>
@@ -196,7 +210,9 @@
 	{
 		showDialog("{$_lang['deleted_site_will_no_longer_accept_this_provision']}{$transrights_type[$op]['1']}{$_lang['info']}","confirm","{$_lang['operate_tips']}",
 		function(){
-			location.href="{$url}&ac=del&report_id="+report_id+"&filepath="+report_file;
+			var url = "{$url}&ac=del&report_id="+report_id+"&filepath="+report_file;
+			formSub(url,'url',false);
+			//location.href="{$url}&ac=del&report_id="+report_id+"&filepath="+report_file;			
 		},function(){
 			return false;
 		});

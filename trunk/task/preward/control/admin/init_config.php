@@ -3,10 +3,10 @@
  * 多人悬赏任务初始化配置文件
  */
 
-defined('IN_KEKE') or 	exit('Access Denied');
+defined('ADMIN_KEKE') or 	exit('Access Denied');
 
 $init_menu = array(
-	$_lang['task_list']=>'index.php?do=model&model_id=3&view=list&status=0',
+	$_lang['task_manage']=>'index.php?do=model&model_id=3&view=list&status=0',
 	$_lang['task_config']=>'index.php?do=model&model_id=3&view=config',
 );
 

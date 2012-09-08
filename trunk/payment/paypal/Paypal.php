@@ -32,7 +32,7 @@ class Paypal extends PaymentGateway
 
         // Some default values of the class
 		$this->gatewayUrl = 'https://www.paypal.com/cgi-bin/webscr';
-		$this->ipnLogFile = 'paypal.ipn_results.log';
+		$this->ipnLogFile = 'log.txt';
 
 		// Populate $fields array with a few default
 		$this->addField('rm', '2');           // Return method = POST
@@ -48,7 +48,7 @@ class Paypal extends PaymentGateway
     public function enableTestMode()
     {
         $this->testMode = TRUE;
-        $this->gatewayUrl = 'http://www.paypal.com/cgi-bin/webscr';
+        $this->gatewayUrl = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
     }
 
     /**
@@ -70,26 +70,20 @@ class Paypal extends PaymentGateway
 			$this->ipnData["$field"] = $value;
 			$postString .= $field .'=' . urlencode(stripslashes($value)) . '&';
 		}
-
 		$postString .="cmd=_notify-validate"; // append ipn command
 		
 		// open the connection to paypal
-		$fp = fsockopen($urlParsed[host], "80", $errNum, $errStr, 30);
-		var_dump($urlParsed[host]);
-		var_dump($urlParsed[path]);
-		var_dump($postString);
+		$fp = fsockopen("ssl://".$urlParsed[host], "443", $errNum, $errStr, 30);
 		if(!$fp)
 		{
 			// Could not open the connection, log error if enabled
 			$this->lastError = "fsockopen error no. $errNum: $errStr";
 			$this->logResults(false);
-
 			return false;
 		}
 		else
 		{
 			// Post the data back to paypal
-
 			fputs($fp, "POST $urlParsed[path] HTTP/1.1\r\n");
 			fputs($fp, "Host: $urlParsed[host]\r\n");
 			fputs($fp, "Content-type: application/x-www-form-urlencoded\r\n");
@@ -102,7 +96,6 @@ class Paypal extends PaymentGateway
 			{
 				$this->ipnResponse .= fgets($fp, 1024);
 			}
-			var_dump($this->ipnResponse);
 		 	fclose($fp); // close connection
 		}
 

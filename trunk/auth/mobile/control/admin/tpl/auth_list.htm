@@ -5,8 +5,7 @@
 	
 <div class="box search p_relative">
 	<div class="control">
-	    <a href="javascript:d(0);" title="{$_lang['hide']}"><b>&Delta;</b></a>
-	    <a href="javascript:d(1);" title="{$_lang['show']}"><b>&nabla;</b></a>
+   <a href="javascript:d();"><b>&times;</b></a>
 	</div>
 	<div class="title"><h2>{$_lang['search']}</h2></div>
 	<div class="detail" id="detail">
@@ -74,7 +73,7 @@
 				<td>{$value[username]}</td>
 				<td>{$value[mobile]}</td>
 				<td>{$value[valid_code]}</td>
-				<td>{if $value[cash]}<font color="#ff7700">{$_lang['currency']}{$value[cash]}</font>{$_lang['yuan']}{else}{$_lang['free']}{/if}</td>
+				<td>{if $value[cash]}<font color="#ff7700">{c:$value[cash]}</font>{else}{$_lang['free']}{/if}</td>
 				<td><!--{date('Y-m-d',$value[end_time])}-->&nbsp;</td>
  
 				<td>
@@ -109,5 +108,10 @@
 		</div>
 </div>
 <!--Ö÷Ìå½áÊø-->
-
+<script language="javascript">
+function d()
+{
+		$("#frm_art_search").slideToggle('800');	  
+}
+</script>
 <!--{template control/admin/tpl/admin_footer}-->

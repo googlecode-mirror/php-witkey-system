@@ -7,19 +7,19 @@
         <section class="clearfix section">
             <!--{template user/user_side}-->
             <div class="show_panel container_24 po_re">
-                <div class="prefix_3">
+                <div class="prefix_3 grid_21">
                     <div class="panel clearfix box">
                         <!--main content-->
-                        <div class="grid_21">
+                        <div class="">
                             <!--header内容头部 start-->
                             <header class="clearfix box_header">
-                                <h2 class="grid_4 alpha box_title t_c">{$_lang['basics']}</h2>
-                                <div class="grid_17 omega">
+                                <h2 class="grid_4 alpha omega box_title t_c">{$_lang['basics']}</h2>
+                                <div class="grid_17 alpha omega">
                                     <nav class="box_nav">
                                         <ul>
                                             {loop $third_nav $k $v}
                                             <li {if $k==$opp}class="selectedLava"{/if}>
-                                                <a href="{$ac_url}&opp={$k}#userCenter" title="{$v['1']}">{$v['0']}</a>
+                                                <a href="{$ac_url}&opp={$k}#userCenter" >{$v['0']}</a>
                                             </li>
                                             {/loop}
                                         </ul>
@@ -31,26 +31,22 @@
                             <!--header内容头部 end-->
                             
                             </div>
-                            <!--messages消息 start-->
-                            <article class="box_detail" id="messages">
-                            </article>
-                            <!--messages消息 end-->
                             <div class="prefix_1 suffix_1">
                                 <!--个人经历start-->
                                 <div class="clearfix box font14">
                                     <div class="grid_19 suffix_1">
-                                        <h3 class="mt_10 mb_10">{$_lang['have_been_added_personal_experiences']}</h3>
+                                    {if $exp_info}<h3 class="mt_10 mb_10">{$_lang['have_been_added_personal_experiences']}</h3>{/if}
                                         {loop $exp_info $v}
                                         <div class="exp_info pb_10 border_b_c mb_10 clearfix" id="{$v['ext_id']}">
                                             <div class="grid_17 alpha">
                                                 <span>{$v['v1']}{$_lang['to']}{$v['v2']}</span>
                                                 <p style="word-wrap : break-word ;word-break:break-all;">
-                                                    {$v['v3']}
+                                                   <!--{eval echo nl2br($v['v3'])}-->
                                                 </p>
                                             </div>
                                             <div class="grid_2 omega mt_20 tool_bar">
-                                                <a href="javascript:void(0)" title="{$_lang['edit']}" class="mr_10" onclick="edit(this,$v['ext_id'],'$v['v1']','$v['v2']');"><span class="icon16 pencil">{$_lang['edit']}</span></a>
-                                                <a href="javascript:void(0)" title="{$_lang['delete']}"class="mr_10" onclick="del($v['ext_id'])"><span class="icon16 delete">{$_lang['delete']}</span></a>
+                                                <a href="javascript:void(0)" title="{$_lang['edit']}" class="mr_10 fl_l" onclick="edit(this,$v['ext_id'],'$v['v1']','$v['v2']');"><span class="icon16 pencil">{$_lang['edit']}</span></a>
+                                                <a href="javascript:void(0)" title="{$_lang['delete']}"class="fl_l" onclick="del($v['ext_id'])"><span class="icon16 delete">{$_lang['delete']}</span></a>
                                             </div>
                                             <div class="clear">
                                             </div>
@@ -59,17 +55,16 @@
                                     </div>
                                     <!--from表单 start-->
                                     <div id="form">
-                                        <div id="add_tips">
-                                        </div>
                                         <h3 class="mt_10 mb_10">{$_lang['add_personal_exp']}</h3>
                                         <form action="{$ac_url}&opp={$opp}" method="post" id="frm" name="frm">
+                                        	<input type="hidden" name="formhash" id="formhash" value="{FORMHASH}">
                                             <input type="hidden" name="ac" id="ac" value="add">
 											<input type="hidden" name="ext_id" id="ext_id">
                                             <div class="rowElem clearfix" id="start">
                                                 <label class="grid_2 t_r">
                                                    {$_lang['start_time']}{$_lang['zh_mh']}
                                                 </label>
-                                                <input size="22" type="text" name="exp[v1]" onclick="showcalendar(event, this, 0)" title="{$_lang['start_time']}" id="v1"
+                                                <input class="txt_input fl_l" size="22" type="text" name="exp[v1]" onclick="showcalendar(event, this, 0)" title="{$_lang['start_time']}" id="v1"
 												 limit="required:true;type:date;less:<!--{date('Y-m-d',time())}-->" value="<!--{date('Y-m-d',time()-86400)}-->" msgArea="span_v1"
 												  msg="{$_lang['start_time_early']}<!--{date('Y-m-d',time())}-->" title="{$_lang['start_time_early']}<!--{date('Y-m-d',time())}-->"/><span id="span_v1"></span>
                                             </div>
@@ -77,7 +72,7 @@
                                                 <label class="grid_2 t_r">
                                                     {$_lang['deadline']}{$_lang['zh_mh']}
                                                 </label>
-                                                <input size="22" type="text" name="exp[v2]" onclick="showcalendar(event, this, 0)" title="{$_lang['deadline']}" id="v2"
+                                                <input class="txt_input fl_l" size="22" type="text" name="exp[v2]" onclick="showcalendar(event, this, 0)" title="{$_lang['deadline']}" id="v2"
 												 limit="required:true;type:date;than:v1" value="<!--{date('Y-m-d',time())}-->"
 												  msgArea="span_v2" msg="{$_lang['dealy_time_later']}" title="{$_lang['dealy_time_later']}"/><span id="span_v2"></span>
                                             </div>
@@ -85,14 +80,16 @@
                                                 <label class="grid_2 t_r">
                                                     {$_lang['exp_describe']}{$_lang['zh_mh']}
                                                 </label>
-                                                <div class="fl_l">
-                                                <textarea rows="5" cols="70" style="width:300px;height:100px;" title="{$_lang['length_about_exp_description']}"
-												 name="exp[v3]"  id="v3" onkeydown="checkInner(this,180,event)"></textarea>
+                                                <div class="grid_15">
+                                               	 <textarea rows="5" cols="70" style="width:300px;height:100px;" title="{$_lang['length_about_exp_description']}"
+												 name="exp[v3]"  id="v3" onkeydown="checkInner(this,180,event)" class="fl_l"></textarea>
 												 </div>
+												 <div class="clear"></div>
+												 <div class="grid_2">&nbsp;</div>
 												<div class="c999 grid_6" id="length_show">{$_lang['exp_limit']}</div>
                                             </div>
                                             <div class="rowElem clearfix form_button">
-                                                <button type="submit"  name="sbt_add" id="sbt_add" value="{$_lang['add_exp']}" onclick="return check_form('frm')">
+                                                <button type="submit"  name="sbt_add" id="sbt_add" value="{$_lang['add_exp']}" onclick="return check_form('frm');">
                                                     <span class="check icon"></span>{$_lang['add_exp']}
                                                 </button>
                                             </div>
@@ -123,7 +120,7 @@
      * @param {Object} ext_id 经历编号
      */
     function del(ext_id){
-		showDialog("{$_lang['confirm_delete']}{$_lang['this_exp']}","confirm","{$_lang['operate_notice']}",function(){
+		showDialog("{$_lang['del_personal_exp']}","confirm","{$_lang['operate_notice']}",function(){
             var url = '$ac_url&opp=$opp&ac=del&ext_id=' + ext_id;
             $.getJSON(url, function(json){
                 if (json.status == '1') {
@@ -154,14 +151,14 @@
         $("#form #v2").val(v2);
 		var v3 = $(obj).parent().prev().children('p').html();
 		
-        $("#form #v3").val($.trim(v3).replace('&lt;','<','g').replace('&gt;','>','g'));
+        $("#form #v3").val($.trim(v3).replace('&lt;','<','g').replace('&gt;','>','g').replace('<br>','','g'));
         $("#ext_id").val(ext_id);
         $("#form").insertAfter($(obj).parent().parent());
     }
     function checkDay(){
 		 var st = $("#v1").val();
 			if(st>Today){
-			   tipsAppend("start", "{$_lang['warm_about_start']}", 'warning', 'm_warn');
+			   tipsAppend("v1", "{$_lang['warm_about_start']}", 'warning', 'm_warn');
 				return false;
 		}
 	}
@@ -173,23 +170,23 @@
         var st = $("#v1").val();
         var end = $("#v2").val();
 		if(st>Today){
-			  tipsAppend("start", "{$_lang['warm_about_start']}", 'warning', 'm_warn');
+			  tipsAppend("v1", "{$_lang['warm_about_start']}", 'warning', 'm_warn',1);
 			   return false;
 		}
         if (st >= end) {
-            tipsAppend("end", "{$_lang['warm_about_start_time']}", 'warning', 'm_warn');
+            tipsAppend("v2", "{$_lang['warm_about_start_time']}", 'warning', 'm_warn',1);
             var v2 = $("#v2");
             v2.attr(v2['0'].title ? 'title' : 'original-title', "{$_lang['warm_about_start_time']}").focus();
             return false;
         }
 		if(end>Today){
-            tipsAppend("end", "{$_lang['warm_about_end_time']}", 'warning', 'm_warn');
+            tipsAppend("v2", "{$_lang['warm_about_end_time']}", 'warning', 'm_warn',1);
             return false;
 		}
         var i = checkForm(document.getElementById(obj));
          if (i){
-				if(contentCheck('v3',"{$_lang['exp_describe']}",20,180,1,'desc')){
-            		return true;
+				if(contentCheck('v3',"{$_lang['exp_describe']}",20,180,2,'v3')){
+            		formSub('frm','form',true);
 				}else{
           		  return false;
 				}

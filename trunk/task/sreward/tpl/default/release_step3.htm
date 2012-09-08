@@ -26,7 +26,7 @@
                             <a href="javascript:void(0);" title="{$release_info['txt_title']}">{$release_info['txt_title']}</a>
                         </li>
                         <li class="font18 c900">
-                                {$_lang['currency']}<!--{eval echo number_format($release_info['txt_task_cash'],2)}-->
+                                {c:$release_info['txt_task_cash']}
                         </li>
                     </ul>
                 </dd>
@@ -44,7 +44,7 @@
 						<img class="block ml_5" src="payment/{$k}/{$k}db.gif" title="{$v['pay_name']}" alt=''>
 					</li>
                         <li class="w6 t_l font14">
-                            <a href="javascript:void(0);" title="{$v['descript']}"><!--{eval echo Keke::cutstr($v['descript'],80)}--></a>
+                            <a href="javascript:void(0);" title="{$v['descript']}"><!--{eval echo kekezu::cutstr($v['descript'],80)}--></a>
                         </li>
                     </ul>
                 </dd>
@@ -64,7 +64,7 @@
                        	</label>
 							<img class="block ml_5" src="{$v['small_pic']}" title="{$v['item_name']}" alt=''>
 						 </li>
-                        <li class="w4 t_l font14">
+                        <li class="w6 t_l font14">
                            
 							<span>{$_lang['haved_buy']}: <strong class="red"><!--{eval echo  keke_payitem_class::payitem_exists($uid,"$v[item_code]");}--></strong>$payitem_standard[$v['item_standard']] {if $v['item_code']!='map'}<span class="font12 ml_8">{$_lang['payment_item_msg']}</span>{/if}</span>
 							
@@ -84,8 +84,8 @@
 							</script>
 							{/if}
                         </li>
-                        <li class="c900 w2">
-                           {$v['item_cash']} /{$standard[$v['item_standard']]}
+                        <li class="c900 w2 t_l pl_10">
+                           {c:$v['item_cash']} /{$standard[$v['item_standard']]}
 						   {if $v['item_code']=='map'}
 						   <input type="hidden" name="px" id="px" value="{if $release_info['px']}$release_info['px']{else}30.51667{/if}"/>
 						   <input type="hidden" name="py" id="py" value="{if $release_info['py']}$release_info['py']{else}114.31667{/if}"/>					 
@@ -109,13 +109,13 @@
 				{/loop}
           {/if}  
                 <dd class="pub_sum font14b">
-                  {$_lang['pay_cash']}{$_lang['zh_mh']} {$_lang['currency']}<span class="font18" id="total"><!--{eval echo number_format($total_cash,2)}--></span><font color="red" class="font18">{$_lang['yuan']}</font>
+                  {$_lang['pay_cash']}{$_lang['zh_mh']}<span class="font18" id="total">{c:$total_cash}</span><font color="red" class="font18"></font>
                 </dd>
             </dl>
 			<input type="hidden" name="ago_total" id="ago_total" value="$total_cash">
         </form>
     </div>
-    <div class="t_c mt_30">
+    <div class="t_c pt_15 mb_10">
     	<div class="step_button"> <button type="submit" name="is_submit" onclick="stepCheck();" class="big button"><span class="icon check"></span>{$_lang['confirm_release']}</button></div>
     </div>
 </div>

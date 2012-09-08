@@ -1,6 +1,6 @@
 <!--{template header}--><!--页面内容区-->
 <!--页面样式-->
-
+<link href="resource/css/public.css" rel="stylesheet" type="text/css">
 <div class="wrapper">
 <!--页面头部-->
  <header class="clearfix page_header">
@@ -16,7 +16,7 @@
  <section class="content box">
  <!--布局框-->  
   <div class="container_24">
-    <div class="content_d mt_10">
+    <div class=" mt_10">
    	<!--step步骤 start-->
       <div class="step_progress clearfix">
        {loop $stage_nav $k $v}
@@ -80,8 +80,7 @@
 <!--end 页面内容区-->
 <script type="text/javascript" >
 	In.add('sreward_agreement',{path:"task/sreward/{SKIN_PATH}/sreward_agreement.js",type:'js'}); 
-	In.add('public',{path:"resource/css/public.css",type:'css'}); 
-	In('sreward_agreement','public','print'); 
+	In('sreward_agreement','print'); 
 </script> 
 <script type="text/javascript">
 	var basic_url = '{$basic_url}';

@@ -1,10 +1,10 @@
 <!--{template control/admin/tpl/admin_header}--> 
  
 	<div class="page_title">	
-    	<h1>{$_lang['reward_task_manage']}</h1>
+    	<h1>{$model_info['model_name']}{$_lang['manage']}</h1>
          <div class="tool">
          	<a href="index.php?do=model&model_id=1&view=list&status=0" class="here">{$_lang['task_list']}</a>
-			<a href="index.php?do=model&model_id=1&view=config">{$_lang['task_config']}</a>
+		<!--	<a href="index.php?do=model&model_id=1&view=config">{$_lang['task_config']}</a>-->
 		 </div>
 	</div>
     <!--页头结束-->
@@ -21,15 +21,15 @@
 					<tbody>
                         <tr>
                             <th>{$_lang['task_id']}</th>
-                            <td><input type="text" value="$w['task_id']" name="w['task_id']" class="txt"/></td>
+                            <td><input type="text" value="$w['task_id']" name="w[task_id]" class="txt"/></td>
                             <th>{$_lang['task_title']}</th>
-                            <td><input type="text" value="$w['task_title']" name="w['task_title']" class="txt"/> {$_lang['search_by_like']}</td>
+                            <td><input type="text" value="$w['task_title']" name="w[task_title]" class="txt"/> {$_lang['search_by_like']}</td>
                              <th></th><td></td>
 						</tr>
                         <tr>
                             <th>{$_lang['choose_task_status']}</th>
                             <td>
-                            	<select class="ps vm" name="w['task_status']" id="catid">
+                            	<select class="ps vm" name="w[task_status]" id="catid">
                             	{loop $task_status $k $v}
 									<option value="$k" {if $w['task_status']==$k} selected="selected" {/if}>{$v}</option>
 								{/loop}	
@@ -68,7 +68,7 @@
     <div class="box list">
     	<div class="title"><h2>{$_lang['reward_task_list']}</h2></div>
         <div class="detail">
-        	<form action="" id='frm_list' method="post">
+        	<form action="#" id='frm_list' method="post">
         	<input type="hidden" value="{$page}" name="page">
 			<input type="hidden" name="w['page_size']" value="{$page_size}">
                <div id="ajax_dom"><input type="hidden" value="{$page}" name="page">
@@ -87,12 +87,12 @@
                   <tr class="item">
                  	<td class="td25"><input type="checkbox" name="ckb[]" class="checkbox" value="{$v['task_id']}" class="checkbox">{$v['task_id']}</td>
                     <td class="td28">
-                    	<a href="../../index.php?do=task&task_id={$v['task_id']}" target="_blank"><!--{eval echo Keke::cutstr($v['task_title'],40)}--></a>
+                    	<a href="../../index.php?do=task&task_id={$v['task_id']}" target="_blank"><!--{eval echo kekezu::cutstr($v['task_title'],40)}--></a>
 						{if $v['is_top']==1}<font color="red">[{$_lang['recommend']}]</font>{/if}
 					</td>
                     <td>{$task_status[$v['task_status']]}</td>
                     <td><!--{eval echo number_format(($v['end_time']-$v['start_time'])/(3600*24),0)}-->{$_lang['day']}</td>
-                    <td>$v['task_cash']</td>
+                    <td>{c:$v['task_cash']}</td>
                     <td>$v['username']</td>
                     <td>
                     	{if $v['task_status']==1}
@@ -112,7 +112,7 @@
 							<a href="index.php?do=model&model_id=$model_id&view=list&ac=unrecommend&task_id={$v['task_id']}&page={$page}" class="button"><span class="downarrow icon"></span>{$_lang['cancel_recommend']}</a>
 						{/if}
 						<a href="index.php?do=model&model_id=$v['model_id']&view=edit&task_id=$v['task_id']&page={$page}" class="button dbl_target"><span class="pen icon"></span>{$_lang['edit']}</a>
-						{if in_array($v['task_status'],array('0','8','9','10'))}
+						{if in_array($v['task_status'],array('8','9','10'))}
 						<a href="index.php?do=model&model_id=$v['model_id']&view=list&ac=del&task_id=$v['task_id']&page={$page}" class="button"  onclick="return cdel(this);"><span class="trash icon"></span>{$_lang['delete']}</a>
 						{/if}
 						{if $v['is_trust']&&$v['task_status']=='9'&&time()>$v['end_time']}<!--担保模式，任务失败退款-->
@@ -132,7 +132,7 @@
 	                        <input type="hidden" name="sbt_action" class="sbt_action"/>
 	                        <button type="submit" value="{$_lang['mulit_delete']}" onclick="return batch_act(this,'frm_list');" class="pill negative" ><span class="icon trash"></span>{$_lang['mulit_delete']}</button>
 	                        <button type="submit" value="{$_lang['mulit_pass']}" onclick="return batch_act(this,'frm_list');"  class="positive pill negative"><span class="icon check">&nbsp;</span>{$_lang['mulit_pass']}</button>
-	                    	<button type="submit" value="{$_lang['mulit_freeze']} " onclick="return batch_act(this,'frm_list');"    class="pill negative"><span class="lock icon"></span>{$_lang['mulit_freeze']}</button>
+	                    	<button type="submit" value="{$_lang['mulit_freeze']}" onclick="return batch_act(this,'frm_list');"    class="pill negative"><span class="lock icon"></span>{$_lang['mulit_freeze']}</button>
 							<button type="submit" class="positive pill negative"  onclick="return batch_act(this,'frm_list');" value="{$_lang['mulit_unfreeze']}"><span class="unlock icon"></span>{$_lang['mulit_unfreeze']}</button>
 
 	                    </div>

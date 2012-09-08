@@ -5,6 +5,8 @@
 	作者 AUTHOR 		: mg
 	版本 VERSION		: 2012-02-14
 */
+
+
 /*案例列表*/	
 .case{min-height:500px; _height: expression(this.scorllHeight < 500 ? "500px" : "auto" );}
 	ul.case_list li{float:left; border:1px #c0c0c0 dashed; border-top:none; border-left:none;  width:314px;}
@@ -13,20 +15,14 @@
 		.case_con:hover,.case.hover{ background:#fffeb5;}
 			.case_con img{display:block; width:258px; background:#fff; height:258px; overflow:hidden;}
 			.img_title{height:25px; line-height:25px; position:relative;}
-				/*.case_name_price{ margin-top:3px; height:25px; }
-					.case_name_price b{font-size:16px; font-weight:normal; color:#cc0000; margin-right:3px;}*/
-					a.case_name{ width:250px;  font-size:14px; font-weight:bold;  float:left; overflow:hidden;  white-space:nowrap; position:absolute;}
-						a.case_name:hover{ overflow:visible; width:auto; background:#fffeb5;  z-index:2;}
-									
-/*翻页
-.page{background-color: #fff; border:1px solid #e1e1e1; font-size:14px; margin:5px 28px 0 0;}
-	.page p,.page.min_page p{ margin:0;}
-		.page .prev{ border-right:1px solid #e1e1e1;}
-		.page .next{border-left:1px solid #e1e1e1;}		
-		.page.min_page{ margin:0; border-left:1px solid #ccc;; font-size:12px;}
-		.page.min_page a{padding:0px 3px; float:none;}
-		.page a.selected,.page a.selected:hover,.min_page,a.selected,.default .min_page a.selected:hover{ background:#2f549f; color:#fff; text-decoration:none;}
-		.page a:hover,.min_page a:hover{ background:#F0F3FB; color:#2f549f;}
-		.page a,.page span,.min_page a{ vertical-align:middle; display:inline-block; float:left; padding:2px 1em; color:#727272;}
-		.page .stats{ border-right:1px solid #e1e1e1; color:#727272;}
-/*end 翻页*/
+					a.case_name{ width:250px;  font-size:14px; font-weight:bold; float:left; overflow:hidden; text-overflow:ellipsis;  white-space:nowrap; position:absolute;}
+						a.case_name:hover{ overflow:visible; width:auto; background:#fffeb5; z-index:2; position:relative;}
+
+
+@media only screen and (min-width: 1280px) and (max-width: 1600px){
+	ul.case_list li{width:394px;}
+	ul.case_list li.no_rborder{ width:395px}
+	a.case_name{ width:336px;}
+	.case_con img{ margin-left:auto; margin-right:auto;}
+}		
+							

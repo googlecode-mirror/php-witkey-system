@@ -18,7 +18,8 @@ $apiConfig['AppKey'] = array(
 //'12056677'=>'aa68718a6d55287e70dd3db3a4641340',
 //'12278024'=>'faccf8ca8aa7846769a778a88fa86f0e',
 //'12013604'=>'6f93ecda3d1bf6e1ec0709a9a714ee5a'
-Keke::$_weibo_list['taobao_app_id']=>Keke::$_weibo_list['taobao_app_secret'],
+//$kekezu->_weibo_list['taobao_app_id']=>$kekezu->_weibo_list['taobao_app_secret'],
+'21006231'=>'836cfbcf7c520dd81367c0fb67019d13',
 );
  
 //当appKey不只一个时,API次数超限后自动启用下一个APPKEY

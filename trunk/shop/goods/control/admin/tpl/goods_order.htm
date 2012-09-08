@@ -1,10 +1,10 @@
 <!--{template control/admin/tpl/admin_header}-->
 
 <div class="page_title">
-    	<h1>{$_lang['witkey_goods']}</h1>
+    	<h1>{$_lang['goods_order_manage']}</h1>
         <div class="tool">   
-		 	<a href="index.php?do={$do}&model_id={$model_id}&view=order" class="here" >{$_lang['order_manage']}</a>
-		    <a href="index.php?do={$do}&model_id={$model_id}&view=list">{$_lang['goods_list']}</a>    
+		 	<a href="index.php?do={$do}&model_id={$model_id}&view=order" class="here" >{$_lang['order_list']}</a>
+		    <!--<a href="index.php?do={$do}&model_id={$model_id}&view=list">{$_lang['goods_list']}</a> -->   
         </div>
 </div>
 <!--Ò³Í·½áÊø-->
@@ -91,8 +91,8 @@
                 	{loop $order_arr $k $v}
                 	<tr class="item">
                     	<td><input type="checkbox" name="ckb[]" value="{$v['order_id']}" class="checkbox">{$v['order_id']}</td>
-                    	<td class="obj_link"><!--{eval echo substr($v['order_body'],8)}--></td>
-                    	<td>{$v['order_amount']}</td>
+                    	<td class="obj_link"><!--{eval echo $v['order_body']}--></td>
+                    	<td>{c:$v['order_amount']}</td>
                     	<td>
                     		$order_status_arr[$v['order_status']]                           
 						</td>
@@ -101,7 +101,7 @@
 						</td>
                    		<td><!--{date('Y-m-d H:i:s',$v['order_time'])}--></td>
 						<td>
-							<a onclick="return cdel(this);" href='{$url_str}&ac=del&order_id={$v['order_id']}&page={$page}' class="button"><span class="trash icon"></span>{$_lang['delete']}</a>
+							<a onclick="return cdel(this);" href='{$url_str}&ac=del&order_id={$v[order_id]}&page={$page}' class="button"><span class="trash icon"></span>{$_lang['delete']}</a>
                     	</td>
                 	</tr>
                 	{/loop}					

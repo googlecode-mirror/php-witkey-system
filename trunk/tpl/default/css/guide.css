@@ -17,7 +17,7 @@
  --------------------------------------*/
 /* 1.0 公用*/
 .selecter a .icon32{ background-position:-32px 0 ; color:#fff}
-.selecter a:hover .icon32{ background-position:0 0; color:#333}
+.selecter a:hover .icon32{ background-position:0 0; color:#333 !important;}
 
 /* 1.2 添加技能*/	
 .tags_add a{width:80px; background:#2F549F; color:#fff; text-align:center; line-height:25px; height:25px; margin:0 5px 5px 0; font-size:12px; float:left; *display:inline-block;}		

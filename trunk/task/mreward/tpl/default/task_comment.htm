@@ -1,4 +1,5 @@
-            <div class="grid_24 po_re">
+<div class="grid_24 po_re">
+        <div class="panel clearfix box">    	
                 <header class="clearfix box_header">
                 	<div class="fl_l pl_10 pr_20">	
                     	<h3 class="font16b">{$_lang['leave_word']}[{$task_info['leave_num']}]</h3>
@@ -10,7 +11,7 @@
 					{loop $comment_data $k $v}
                     <div class="ly1 mt_20 mb_10" id="p_$v['comment_id']">
                         <div class="top1 clearfix mt_10 po_re">
-                            <a href="#" class="block fl_l">
+                            <a href="index.php?do=space&member_id=$v[uid]" class="block fl_l">
                             	<!--{userpic($v[uid],'small')}-->
 							</a>
 							<a href="index.php?do=space&member_id=$v[uid]" class="ml_10 mr_20 block mt_5 pt_10 fl_l">{$v['username']}</a>
@@ -89,20 +90,20 @@
                 </header>
                 <!--留言部分-->
                 <div class="lyk prefix_1 mt_10 mb_10 clearfix">
-                    <div class="grid_17">
+                    <div class="grid_14">
                     	
 				 <div class="work_answer">
 					<div class="answer-form">
-                       <textarea class="font14 grid_16 alpha omega" id="tar_comment"  cols="100" onkeydown="checkCommentInner(this,event)">{$_lang['pub_new_comment']}</textarea>
+                       <textarea class="font14 " id="tar_comment"  cols="100" onkeydown="checkCommentInner(this,event)">{$_lang['pub_new_comment']}</textarea>
 						<div class=" ">
-							<button type="button" class="button" value="{$_lang['send_comment']}" onclick="comment_add()"><span class="check icon"></span>{$_lang['public']}</button>
+							<button type="button" class="button block fl_l" value="{$_lang['send_comment']}" onclick="comment_add()"><span class="check icon"></span>{$_lang['public']}</button>
 						<span class="answer_word">{$_lang['you_can_input']}</span>
 						</div>
 					</div>
 				</div>
 						
                     </div>
-                    <div class="grid_5">
+                    <div class="grid_8">
                         <p class="ly_notice">
                             	{$_lang['to_people_notice']}
                         </p>
@@ -110,7 +111,7 @@
                 </div>
                 <!--end 留言部分-->
             </div>
- 
+</div>
 <script type="text/javascript">
 	$(function (){ 
 		notice_comment();
@@ -120,7 +121,7 @@
 	{
 		var uid = '$uid';
 			if(check_user_login())
-			{
+			{		
 			var t = $("#tar_comment").val().toString().substr(0,100);
 			if(t=="{$_lang['pub_new_comment']}"||t==''){
 				showDialog('{$_lang['say_little']}','alert',"{$_lang['msg_fail']}","",1);return false;
@@ -139,6 +140,7 @@
 				}
 			
 			 },'text'); 
+			  $("#tar_comment").val(''); 
 			}
 			}
 	}
@@ -172,6 +174,7 @@
 					comment();
 				}
 				},'text'); 
+				$("#txt_reply_"+comment_id).val('');
 		} 
 			function comment(){
 				$('.operate a').tipsy({gravity:$.fn.tipsy.autoNS}).hover(function(){

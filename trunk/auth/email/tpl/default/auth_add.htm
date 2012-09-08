@@ -6,14 +6,14 @@
 <section class="clearfix section">
 <!--{template user/user_side}-->
 <div class="show_panel container_24 po_re">
- <div class="prefix_3">
+ <div class="prefix_3 grid_21">
   <div class="panel clearfix box">
    <!--main content-->
-  <div class="grid_21">
+  <div class="">
    <!--header内容头部 start-->
    <header class="clearfix box_header" >
-    <h2 class="grid_4 alpha box_title t_c">{$_lang['auth_center']}</h2>
-      <div class="grid_17 omega">
+    <h2 class="grid_4 alpha omega box_title t_c">{$_lang['auth_center']}</h2>
+      <div class="grid_17 alpha omega">
        <nav class="box_nav">
          <ul>
           {loop $auth_item_list $v}
@@ -32,11 +32,11 @@
 		 <!--{template verify_secode}-->
 {else}
   <!--detail内容 start-->
-   <article class="box_detail">
+   <article class="box_detail last_step_three">
      <!--messages消息 start-->   
       <div class="messages m_infor">
          <div class="icon16">warning</div>
-                           {$_lang['email_handling_fee']}:{$_lang['currency']}{$auth_item['auth_cash']}{$_lang['yuan']}. {$_lang['customer_service_personnel_will']} {$auth_item[auth_day]}{$_lang['working_days_to_complete_certification']}{$_lang['zh_mh']}{$basic_config['kf_phone']}
+                           {$_lang['email_handling_fee']}:{c:$auth_item['auth_cash']}. {$_lang['customer_service_personnel_will']} {$auth_item[auth_day]}{$_lang['working_days_to_complete_certification']}{$_lang['zh_mh']}{$basic_config['kf_phone']}
            <a href="###" class="close">&times;</a>
       </div> 
      <!--messages消息 end-->
@@ -53,6 +53,14 @@
 {if $auth_step=='step1'}
 <div class="pad10  form_box">
  <form>
+ 	<div class="rowElem clearfix">
+		<label class="grid_5 clearfix">
+			<div class="fl_r pr_10">
+				<img src="{$auth_item['auth_big_ico']}" alt="" />
+			</div>
+		</label>
+		<div class="grid_6"> <strong class="font14b">{$auth_item['auth_title']}</strong> <span class="c999 block">{$auth_item['auth_desc']}</span> </div>
+   </div>
   <div class="rowElem clearfix">
     <label class="grid_5 t_r">{$_lang['mail_address']}{$_lang['zh_mh']}</label>
       <input type="text" name="fds[email]" id="email" msgArea="span_email"
@@ -78,21 +86,17 @@
  </div> 
 {elseif $auth_step=='step2'}
  <div class="box complete form_box ml_40 mr_40">
-  <div class="prefix_3 suffix_3">
+  <div class="prefix_2 suffix_2">
    <div class="completedata">
      <ul>
        <li class="clearfix">
-       
-		 
-             <p class="grid_12 ws_break pl_10">{$_lang['mail_confirmation_link']}
+             <p class="ws_break">{$_lang['mail_confirmation_link']}
 				<a class="at_but b_1_y" onclick="gomail('{$mail_ext}');" href="javascript:void(0)">
 				<u></u>{$_lang['immediately_check_mail']}</a>
 			 </p>
-         
-
        </li>
 	   <li class="clearfix">
-		<div class="pl_10">
+		<div>
 		  <p class="f140">{$_lang['if_you_do_not_receive_mail']}</p>
 			{$_lang['mail_to_reach_the_required_few_minutes']}<strong>{$_lang['rubbish']}</strong>{$_lang['or']}
 					<a href="javascript:void(0)" onclick="resend()">{$_lang['retry_again']}</a><br>
@@ -104,46 +108,40 @@
      </div>
    </div>
 </div>
-{elseif $auth_step=='step3'}
- <div class="box complete form_box ml_40 mr_40">
-  <div class="form_tip">
-   {if $auth_info&&$auth_info[auth_status]==2}
-               {$_lang['regrettably_not_pass_email_auth']}&lt;&lt;<a href="{$ac_url}&auth_step=step1">{$_lang['reauth']}</a><<<a href="javascript:void(0);">{$_lang['contact_customer_service']}</a>
-   {else}
-		{$_lang['congratulations_pass_email_auth']}&lt;&lt;<a href="{$ac_url}&auth_step=step1">{$_lang['return_and_modify']}</a>
-   {/if}
-  </div>
-  <div class="prefix_4 suffix_4">
-    <div class="completedata">
-       <ul>
-         <li class="clearfix">
-          
-             <div class=" grid_2 "><!--{userpic($uid,small)}--></div>
-             <div class=" grid_6 ">
-               <div class="font14b">{$_lang['email_auth']}</div>
-               <div class="c999">{$_lang['use_common_email']}</div>
-             </div>
-         </li>
-		 <li class="clearfix">
-
-		  <div class=" grid_2 ">{$_lang['username']}{$_lang['zh_mh']}</div>
-	      <div class=" grid_6 ">
-               <div class="font14b">{$auth_info[username]}</div>
-          </div>
-
-         </li>
-		 <li class="clearfix">
-
-			  <div class=" grid_2 ">{$_lang['email_address']}{$_lang['zh_mh']}</div>
-			  <div class=" grid_6 ">
-                 <div class="c999">{$auth_info[email]}</div>
-              </div>
-   
-         </li>
-       </ul>
+{elseif $auth_step=='step3'}  
+  <div class="box complete form_box ml_40 mr_40">
+        <div class="prefix_4 suffix_4 clearfix ">
+          	<div class="last_success_step clearfix">
+          	<div class="fl_l {$auth_style} po_re" style="top:30px; left:30px; _left:0px;">
+					<span class="tip_icon"></span>
+            </div>
+            <div class="completedata clearfix">                        		
+               <ul>
+               	<li class="clearfix">                        
+                     <div class=" grid_2"><img src="{$auth_item['auth_big_ico']}" /></div>                                 
+                <div class="font14b">{$auth_item['auth_title']}<span class="font12">（{$auth_tips}）  </span></div>
+                      <div class="c999 grid_3 alpha omega">{$auth_item['auth_desc']}</div>
+                 </li>
+				 
+				 <li class="clearfix">
+						<div class=" grid_2 ">{$_lang['username']}{$_lang['zh_mh']}</div>
+					<div class=" font14b">{$auth_info['username']}</div>
+               	 </li>
+				<li class="clearfix">                          
+					<div class=" grid_2 ">{$_lang['email_address']}{$_lang['zh_mh']}</div>
+					 <div class="c999"> {$auth_info['email']}</div>
+               	 </li>
+		 
+            </ul>
+        </div>
+       		<div class="fl_r pad10">
+				<a href="{$ac_url}&auth_step=step1" class="button">{$_lang['return_and_modify']}</a>
+			</div>
+		</div>
+	   </div>
      </div>
-    </div>
-  </div>
+  
+ 
 </div> 
 {/if}
  </div> 
@@ -182,15 +180,15 @@
 			if((user_credit+user_balance)>=pay_cash){
 				if(is_allow_credit==1){
 					if(user_credit>=pay_cash){
-						showDialog("{$_lang['from_your']}{CREDIT_NAME}{$_lang['take_off']}"+pay_cash+"{$_lang['yuan']}", 'confirm', "{$_lang['operate_tips']}",'mail_send()',0);
+						showDialog("{$_lang['from_your']}{CREDIT_NAME}{$_lang['take_off']}{c:$auth_item['auth_cash']}", 'confirm', "{$_lang['operate_tips']}",'mail_send()',0);
 					}else{
-						showDialog("{$_lang['will_take_off_from_your_account']}{$_lang['currency']}"+(pay_cash-user_credit)+"{$_lang['yuan']}{CREDIT_NAME}"+user_credit+"{$_lang['point']}", 'confirm', "{$_lang['operate_tips']}",'mail_send()',0);
+						showDialog("{$_lang['will_take_off_from_your_account']}"+(pay_cash-user_credit)+"{CREDIT_NAME}"+user_credit+"{$_lang['point']}", 'confirm', "{$_lang['operate_tips']}",'mail_send()',0);
 					}
 				}else{
-					showDialog("{$_lang['will_take_off_from_your_account']}"+pay_cash+"{$_lang['yuan']}", 'confirm', "{$_lang['operate_tips']}",'mail_send()',0);
+					showDialog("{$_lang['will_take_off_from_your_account']}{c:$auth_item['auth_cash']}", 'confirm', "{$_lang['operate_tips']}",'mail_send()',0);
 				}
 			}else{
-				showDialog("{$_lang['your_balance_is_insufficient_need_to_pay_online']}{$_lang['currency']}"+pay_cash+"{$_lang['yuan']}", 'confirm', "{$_lang['online_pay']}",'online_pay('+pay_cash+')',0);
+				showDialog("{$_lang['your_balance_is_insufficient_need_to_pay_online']}{c:$auth_item['auth_cash']}", 'confirm', "{$_lang['online_pay']}",'online_pay('+pay_cash+')',0);
 			}
 			return false;
 		}
@@ -200,7 +198,7 @@
 		var email=$("#email").val();
 		$.getJSON("{$ac_url}&auth_step=step2&send_mail=1&email="+email,function(json){
 			if(json.status=='1'){
-				showDialog(json.msg,'notice',"{$_lang['operate_tips']}",'location.href="{$ac_url}&auth_step=step2#userCenter"');
+				showDialog(json.msg,'right',"{$_lang['operate_tips']}",'location.href="{$ac_url}&auth_step=step2#userCenter"');
 			}else{
 				showDialog(json.msg,'alert',"{$_lang['operate_tips']}");
 			}

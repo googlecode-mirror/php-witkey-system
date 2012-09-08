@@ -3,10 +3,10 @@
  * 单人悬赏任务初始化配置文件
  */
 
-defined('IN_KEKE') or 	exit('Access Denied');
+defined('ADMIN_KEKE') or 	exit('Access Denied');
 
 $init_menu = array(
-	$_lang['task_list']=>'index.php?do=model&model_id=1&view=list&status=0',
+	$_lang['task_manage']=>'index.php?do=model&model_id=1&view=list&status=0',
 	$_lang['task_config']=>'index.php?do=model&model_id=1&view=config',
 	 
 );
@@ -32,5 +32,4 @@ $init_config = array(
 	'reg_vote_limit_time'=>2,
 	'max_agree_time'=>10,
 	'auto_agree_time'=>5,
-	'agree_is_open'=>1,
 );

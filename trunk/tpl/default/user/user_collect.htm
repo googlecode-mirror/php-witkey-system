@@ -6,10 +6,10 @@
         <section class="clearfix section">
             <!--{template user/user_side}-->
             <div class="show_panel container_24 po_re">
-                <div class="prefix_3">
+                <div class="prefix_3 grid_21">
                     <div class="panel clearfix box">
                         <!--main content-->
-                        <div class="grid_21">
+                        <div class="">
                             <!--headerÄÚÈÝÍ·²¿ start-->
                             <header class="clearfix box_header">
                                 <h2 class="grid_4 alpha box_title t_c">{$title}</h2>
@@ -25,10 +25,10 @@
                                             <input type="hidden" name="page" value="{$page}">
                                             <div class="rowElem clearfix">
                                                 <div class="mr_10 fl_l">
-                                                    <input type="text" name="f_id" class="togg_u" value="{$_lang['please_enter_the_collection_num']}" title="{$_lang['please_enter_the_collection_num']}" size="5" style="width:140px;"/>
+                                                    <input type="text" name="f_id" class="togg_u txt_input" value="{$_lang['please_enter_the_collection_num']}" title="{$_lang['please_enter_the_collection_num']}" size="5" style="width:140px;"/>
                                                 </div>
                                                 <div class="mr_10 fl_l">
-                                                    <input type="text" name="obj_name" class="togg_u" value="{$_lang['please_enter_the_collection_name']}" title="{$_lang['please_enter_the_collection_name']}" style="width:150px;"/>
+                                                    <input type="text" name="obj_name" class="togg_u txt_input" value="{$_lang['please_enter_the_collection_name']}" title="{$_lang['please_enter_the_collection_name']}" style="width:150px;"/>
                                                 </div>
                                                 <div class="fl_l">
                                                     <select class="fl_l" name="ord">
@@ -62,6 +62,9 @@
                                                         <th scope="col">
                                                             {$_lang['collection_time']}
                                                         </th>
+														 <th scope="col">
+                                                  {$_lang['operate']}
+                                                        </th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -84,6 +87,10 @@
                                                 <td>
                                                     <!--{date('Y-m-d',$v['on_date'])}-->
                                                 </td>
+												 <td>
+                                                    <a class="button" href="index.php?do=$do&view=$view&ac=del&f_id={$v['f_id']}&page={$page}&op={$op}"
+													 onclick="return del(this);"><span class="trash icon"></span>{$_lang['delete']}</a>
+                                                </td>
                                             </tr>
                                             {/loop}
                                             {else}
@@ -96,6 +103,8 @@
                                             </tbody>
                                             <tfoot>
                                                 <tr>
+                                                	<td>
+                                                		</td>
                                                     <td>
                                                     </td>
                                                     <td>
@@ -128,5 +137,14 @@
             </div>
             </div>
             <!--contain end-->
+ <script type="text/javascript">
+
+	function del(obj){
+		var url = obj.href;
+		//alert(url);
+		showDialog("{$_lang['confirm_delete']}",'confirm',"{$_lang['operate_notice']}",function(){formSub(url,'url',false)});return false;		
+	}
+   </script>
 <!--{template user/user_footer}-->            
 <!--{template footer}-->
+

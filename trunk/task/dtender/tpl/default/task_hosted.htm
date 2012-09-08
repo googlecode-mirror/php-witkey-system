@@ -15,8 +15,8 @@
 	   	 <div class="grid_10 omega t_c">
 			 <div class="grid_7">
 				{$_lang['you_haved_trusted']}{$_lang['zh_mh']}
-					<font color="red">{$service_cash}</font>,
-				{$_lang['witkey']}{$_lang['tender_price']}{$_lang['zh_mh']}<font color="red">{$quote}</font>
+					<font color="red">{c:$service_cash}</font>,
+				{$_lang['witkey']}{$_lang['tender_price']}{$_lang['zh_mh']}<font color="red">{c:$quote}</font>
 				</br>{$_lang['not_need_host']}{if $service_cash>$quote}{$_lang['over_will_be_return']}{/if}
 			</div>
 	  	</div>
@@ -25,7 +25,7 @@
 		<div class="rowElem clearfix">
 	   	 <div class="grid_10 omega t_c">
 			 <div class="grid_7">
-				{$_lang['tender_price']}{$_lang['zh_mh']}<font color="red">{$quote}</font>,{$_lang['you_haved_trusted']}{$_lang['zh_mh']}<font color="red">{$service_cash}</font>,{$_lang['still_trust']}{$_lang['zh_mh']}<font color="red">{$sy_cash}</font> 
+				{$_lang['tender_price']}{$_lang['zh_mh']}<font color="red">{c:$quote}</font>,{$_lang['you_haved_trusted']}{$_lang['zh_mh']}<font color="red">{c:$service_cash}</font>,{$_lang['still_trust']}{$_lang['zh_mh']}<font color="red">{c:$sy_cash}</font> 
 			</div>
 	  	</div>
 	 	</div> 
@@ -33,7 +33,7 @@
 	       	 <div class="grid_10 omega">
 	      		 <label class="grid_2 t_r">{$_lang['now_your_balance']}{$_lang['zh_mh']} </label>
 				 <div class="grid_7">
-				 <font color="red">{$user_info[balance]}</font>{$_lang['cash']}¡¡<font color="red">{$user_info[credit]}</font>{CREDIT_NAME}
+				 <font color="red">{c:$user_info[balance]}</font>{$_lang['cash']}¡¡<font color="red">{c:$user_info[credit]}</font>{CREDIT_NAME}
 				  <div class="clear"></div>
 					<div class=" prefix_5 c999 t_c"></div>
 				</div>
@@ -43,7 +43,7 @@
 	       	 <div class="grid_10 omega">
 	      		<label class="grid_2 t_r">{$_lang['trusted_cash']}{$_lang['zh_mh']}</label>
 				 <div class="grid_10">
-				 	<font color="red">{$sy_cash}</font>
+				 	<font color="red">{c:$sy_cash}</font>
 				 </div>
 	         </div>
 	    </div>
@@ -60,8 +60,12 @@
 </div>
 <script type="text/javascript">
 
-function subWork(){	
-	$.post(basic_url+'&op={$op}',{sbt_edit:true},
+function subWork(){
+	var furl = "{$newurl}";
+	var basic_url = "{$basic_url}";
+	furl = furl?furl:(basic_url+'&op={$op}');
+	$.post(furl,{sbt_edit:true},
+	//$.post(basic_url+'&op={$op}',{sbt_edit:true},
 	function(json){
 		if(json.status=='1'){
 			showDialog(json.data,'right',json.msg,"location.href='"+basic_url+"&view=work'");closeWindow('{$op}');return false;

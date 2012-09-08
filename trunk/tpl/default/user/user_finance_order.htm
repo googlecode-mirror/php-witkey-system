@@ -5,14 +5,14 @@
   <section class="clearfix section">
     <!--{template user/user_side}-->
     <div class="show_panel container_24 po_re">
-     <div class="prefix_3">
+     <div class="prefix_3 grid_21">
       <div class="panel clearfix box">
       <!--main content-->
-       <div class="grid_21">
+       <div class="">
         <!--headerÄÚÈÝÍ·²¿ start-->
-         <header class="clearfix box_header">
-          <h2 class="grid_4 alpha box_title t_c">{$_lang['order_manage']}</h2>
-           <div class="grid_17 omega">
+         <header class="11clearfix box_header">
+          <h2 class="grid_4 alpha omega box_title t_c">{$_lang['order_manage']}</h2>
+           <div class="grid_17 alpha omega">
             <nav class="box_nav">
                <ul>
                   <li {if !$obj_type||$obj_type=='task'}class="selectedLava"{/if}>
@@ -76,7 +76,7 @@
               <thead>
                 <tr>
                  <th scope="col" width="40%">{$_lang['order_name']}</th>
-             	<th scope="col" width="15%">{if $obj_type=='service'}{$_lang['after_sales']}1{else}{/if}</th>
+             	<th scope="col" width="15%">{$_lang['after_sales']}</th>
                  <th scope="col" width="10%">{$_lang['single_price_yuan']}</th>
                  <th scope="col" width="10%">{$_lang['trans_status']}</th>
                  <th scope="col" width="10%">{$_lang['trans_operate']}</th>

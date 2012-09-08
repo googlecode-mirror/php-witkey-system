@@ -1,10 +1,6 @@
 <!--{template header}--><!--页面内容区-->
+<link href="resource/css/public.css" rel="stylesheet" type="text/css">
 <!--页面样式-->
- 
- <style type="text/css">
- 	.file_input{float:right;position:relative;width:72px;height:30px;filter:alpha(opacity=0);-moz-opacity:0;opacity:0;z-index:1}
-	#upload_button{position:absolute;float:right;right:10px;z-index:0}
- </style>
 <div class="wrapper">
 <!--页面头部-->
  <header class="clearfix page_header">
@@ -20,7 +16,7 @@
  <section class="content box">
  <!--布局框-->  
   <div class="container_24">
-    <div class="content_d mt_10">
+    <div class="content_d">
    	<!--step步骤 start-->
       <div class="step_progress clearfix">
        {loop $stage_nav $k $v}
@@ -45,10 +41,10 @@
                  <h5 class="font14b mt_20 mb_10 grid_12">{$_lang['deliver_obj']}</h5>
 				 {if $task_status!=9}
 					 {if $uid==$buyer_uid}
-					 	<button type="button" onclick="report('work','1','{$agree_info['work_id']}','{$seller_uid}','{$seller_username}');" class="button mt_20 mb_10">{$_lang['apply_zc']}</button>
+					 	<button type="button" onclick="report('work','1','{$agree_info[work_id]}','{$seller_uid}','{$seller_username}');" class="button mt_20 mb_10">{$_lang['apply_zc']}</button>
 	                 {/if}
 					 {if $uid==$seller_uid}
-					 	<button type="button" onclick="report('task','1','{$agree_info['task_id']}','{$buyer_uid}','{$buyer_username}');" class="button mt_20 mb_10">{$_lang['apply_zc']}</button>
+					 	<button type="button" onclick="report('task','1','{$agree_info[task_id]}','{$buyer_uid}','{$buyer_username}');" class="button mt_20 mb_10">{$_lang['apply_zc']}</button>
 	                 {/if}
 				 {else}
 	                  <div class="messages m_warn">
@@ -62,7 +58,7 @@
                     <div class="{if $uid==$buyer_uid}bidder{else}publisher bord_c{/if}">
                       <div class="{if $uid==$buyer_uid}user_info1{else} user_info border_b_c{/if} clearfix pad10 ">
                        <div class="fl_l mr_10">
-                          <p><!--{userpic($agree_info['buyer_uid'],'large')}--></p>
+                          <p><!--{userpic($agree_info['buyer_uid'],'larger')}--></p>
                        </div>
                            <ul class="intor">
                               <li class="font14b">{$_lang['pub_name']}{if $uid==$buyer_uid}({$_lang['me']}){/if}</li>
@@ -97,7 +93,7 @@
                     <div class="{if $uid==$seller_uid} bidder {else} publisher bord_c {/if}">
                       <div class="{if $uid==$seller_uid}user_info1{else} user_info border_b_c{/if} clearfix pad10 ">
                         <div class="fl_l mr_10">
-                          <p><!--{userpic($agree_info['seller_uid'],'large')}--></p>
+                          <p><!--{userpic($agree_info['seller_uid'],'larger')}--></p>
                         </div>
                          <ul class="intor">
                             <li class="font14b">{$_lang['bidder']}{if $uid==$seller_uid}({$_lang['me']}){/if}</li>
@@ -132,12 +128,14 @@
               <div class="grd_14 prefix_1">
 				  <div class=" messages m_infor">
 				  	<input type="hidden" name="file_str" id="file_str"> 
-					<!--{eval $flie_types = Keke::get_ext_type();}-->
-	                     <span class="icon16">info</span>{$_lang['most_upload_attachment']}({$flie_types} .{$_lang['toplimit']}{$basic_config['max_size']}M)
-	             		<input type="file" class="file_input" name="upload_input" id="upload_input" size="1" ext="{$flie_types}" onchange="uploadBlur2();">
-		  	 		    <button type="button" class="button" id="upload_button">{$_lang['source_upload']}</button>
+					<!--{eval $flie_types = kekezu::get_ext_type();}-->
+	                     <span class="icon16">info</span>
+						 {$_lang['most_upload_attachment']}.{$_lang['toplimit']}{$basic_config['max_size']}M):
+						<div class="upfile ws_break">
+			                 <span style="line-height:15px; display:block" class=" ws_prewrap ws_break">{$flie_types}</span>
+			            </div>
+	             		<input type="file" class="file_input" name="upload_input" id="upload_input">
 					</div>
-				  <ul id="upload_file"></ul>
 			 </div>
 			 {/if}
 			 {if $process_can['download']&&$file_list}
@@ -147,7 +145,7 @@
 			 	<li id="{$v['file_id']}">
 			 		<div class="messages green"><span class="icon16">successful</span>
 					   <b class="font14 grid_10">{$v['file_name']}</b>
-					   <a href="index.php?do=ajax&view=file&ajax=download&file_name={$v['file_name']}&file_path={$v['save_name']}" class="grid_2">{$_lang['download']}</a>
+					   <a class="grid_2" href="index.php?do=ajax&view=file&ajax=download&file_name={$v['file_name']}&file_path={$v['save_name']}" >{$_lang['download']}</a>
 					</div>
 				</li>
 				{/loop}
@@ -189,29 +187,32 @@
 <!--end 详细内容区-->
 </div>
 <!--end 页面内容区-->
-
+<script type="text/javascript">
+		$(function(){
+			uploadify({
+					auto:true,
+					size:"{$basic_config['max_size']}MB",
+					exts:'{$flie_types}',
+					file:'upload_input',
+					text:"{$_lang['file_str']}",
+					limit:5}
+				,{
+					task_id:"{$agree_info['task_id']}",
+					obj_id:'{$agree_id}',
+					objType:'agreement'
+				});
+		})
+</script>
 <script type="text/javascript">
 	var basic_url  = '{$basic_url}';
 	var uid        = parseInt('{$uid}')+0;
 	var trust_mode = "{$trust_mode}";
-	uploadBlur2=function(){
-		if(ifOut('upload_file','5')&&$("#upload_input").val()){
-			upload("upload_input",'att','front','{$agree_info['task_id']}','{$agree_id}','agreement');
-		}else{
-			return false;
-		}
-	}
 	/**
 	 * 上传完成后的后续操作
 	 * @param {Object} data 响应的json对象
 	 */
 	function uploadResponse(json){
 		if($("#"+json.fid).length<1){
-			var file = $('<li class="items" id="'+json.fid+'" style="display:none">'
-                 +'<span>'+json.msg.localname+'</span>'
-                 +'<a href="javascript:;" class="close fl_r mr_30" onclick="del_file('+json.fid+')">&times;</a></li>');
-				file.appendTo("#upload_file").fadeIn(1000);
-				loadingControl("#upload_file li","#loading_"+json.fid,2000);
 			var file_str = $("#file_str").val();
 				 if(file_str){
 					$("#file_str").val(file_str+','+json.fid);
@@ -221,26 +222,11 @@
 				}
 		}
 	}
-	/**
-	 * 上传附件删除
- 	* @param file_id 附件编号
- 	*/
-	function del_file(file_id){
-		$.getJSON("index.php?do=ajax&view=file&ajax=delete&file_id="+file_id,function(json){
-			if(json.status=='1'){
-				var file_str=$("#file_str").val().toString();
-					file_str = file_str.replace(file_id,'');
-					$("#file_str").val(file_str);
-				$("#"+file_id).remove();
-			}
-		})	
-	}
 </script>
  
 <script type="text/javascript" >
  	In.add('sreward_agreement',{path:"task/sreward/{SKIN_PATH}/sreward_agreement.js",type:'js'}); 
-	In.add('public',{path:"resource/css/public.css",type:'css'}); 
 	
-	In('sreward_agreement','public','ajaxfileupload','form'); 
+	In('sreward_agreement','form'); 
 </script> 
 <!--{template footer}-->

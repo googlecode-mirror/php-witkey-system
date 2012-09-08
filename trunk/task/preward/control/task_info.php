@@ -1,15 +1,16 @@
 <?php
-
 defined('IN_KEKE') or exit('Access Denied');
 $nav_active_index = 'task';
 $basic_url = 'index.php?do=task&task_id='.$task_id;
 $task_obj = preward_task_class::get_instance($task_info);
+$task_info= $task_obj->_task_info;
 $model_id = $task_info ['model_id'];
 //Ê±¼äÀà´¦Àí
+$time_obj = new preward_time_class();
 $task_obj->task_jg_timeout();
 $task_obj->task_xg_timeout();
 keke_task_class::hp_timeout();
-$cove_arr = Keke::get_table_data("*","witkey_task_cash_cove","","","","","cash_rule_id");
+$cover_cash = kekezu::get_cash_cove('',true);
 $trust_mode=$task_obj->_trust_mode;//µ£±£Ä£Ê½
 $process_can = $task_obj->process_can();//¿É²Ù×÷°´Å¥
 $process_desc = $task_obj->process_desc();//°´Å¥ÎÄ×Ö
@@ -28,25 +29,28 @@ $if_can_hand = intval($task_obj->check_work_if_standard('hand'));//ÊÇ·ñ»¹¿ÉÒÔ½»¸
 $max_work_num = $task_obj->get_work_count('max');//¿É½»¸å¼þ×ÜÊý
 $browing_history = $task_obj->browing_history($task_id,$task_info['task_cash']."Ôª",$task_info['task_title']);
 $show_payitem = $task_obj->show_payitem();
-
-
+$sub_task_user_level =$g_info = $task_obj->_g_userinfo;
 switch ($op){
 	case 'message':
 		$title=$_lang['send_msg'];
 		if($sbt_edit){
 			$task_obj->send_message($title, $tar_content, $to_uid, $to_username,'','json');			
 		}else{
-			require Keke_tpl::template('message');			
+			require keke_tpl_class::template('message');			
 		}
 		die();
 		break;
 	case 'reqedit':
-		$title = $_lang['supply_demand'];
+       if($task_info['ext_desc']){
+		$title = $_lang['edit_supply_demand'];
+		}else{
+		$title =$_lang['supply_demand'];
+		}
 		if ($sbt_edit) {
 			$task_obj->set_task_reqedit ( $tar_content, '', 'json' );
 		} else
 			$ext_desc = $task_info ['ext_desc'];
-		require Keke_tpl::template ( 'task/task_reqedit' );
+		require keke_tpl_class::template ( 'task/task_reqedit' );
 		die ();
 		break;
 	case "taskdelay" : //ÑÓÆÚ
@@ -58,8 +62,8 @@ switch ($op){
 			$max_day  = intval($task_config['max_delay']);//ÅäÖÃ×î´óÑÓÆÚÌìÊý
 			$this_min_cash = intval($delay_rule[$delay_count]['defer_rate']*$task_info['task_cash']/100);//±¾´Î×îÐ¡ÑÓÆÚ½ð¶î
 			$min_cash>$this_min_cash and $real_min = $min_cash or $real_min = $this_min_cash;//ÕæÕý×îÐ¡½ð¶î
-			$credit_allow =  intval(Keke::$_sys_config ['credit_is_allow']);//½ð±Ò¿ªÆô
-			require Keke_tpl::template("task/task_delay");
+			$credit_allow =  intval($kekezu->_sys_config ['credit_is_allow']);//½ð±Ò¿ªÆô
+			require keke_tpl_class::template("task/task_delay");
 		}		
 		die();
 		break;
@@ -69,7 +73,7 @@ switch ($op){
 			$task_obj->work_hand($tar_content, $file_ids,$workhide,'','json');
 		}else{			
 			$workhide_exists = keke_payitem_class::payitem_exists($uid,'workhide','work');//¿ÉÒÔÒþ²Ø½»¸å
-			require Keke_tpl::template ( 'task/reward_work' );
+			require keke_tpl_class::template ( 'task/reward_work' );
 		}		
 		die();
 		break;
@@ -79,7 +83,7 @@ switch ($op){
 		if($sbt_edit){
 			$task_obj->set_report($obj, $obj_id, $to_uid, $to_username, $type, $file_url, $tar_content);
 		}
-			require Keke_tpl::template("report");
+			require keke_tpl_class::template("report");
 		die();
 		break;	
 	case "work_choose"://Ñ¡¸å
@@ -110,8 +114,8 @@ switch ($view){
 		$search_condit = $task_obj->get_search_condit();
 		$work_status = $task_obj->get_work_status();
 		intval ( $page ) and $p ['page'] = intval ( $page ) or $p ['page']='1';
-		intval ( $page_size ) and $p ['page_size'] = intval ( $page_size ) or $p['page_size']='10';
-		$p['url'] = $basic_url."&view=work&page_size=".$p ['page_size']."&page=".$p ['page'];
+		intval ( $page_size ) and $p ['page_size'] = intval ( $page_size ) or $p['page_size']=10;
+		$p['url'] = $basic_url."&view=work&ut=$ut&page_size=".$p ['page_size']."&page=".$p ['page'];
 		$p ['anchor'] = '#work_list';
 		$w['work_id'] = $work_id;//¸å¼þ±àºÅ
 		$w['work_status'] = $st;//¸å¼þ×´Ì¬
@@ -120,6 +124,7 @@ switch ($view){
 		$pages = $work_arr ['pages'];
 		$work_info = $work_arr ['work_info'];	
 		$mark      = $work_arr['mark'];
+		//var_dump($mark);
 		///*¼ì²âÊÇ·ñÓÐÐÂÁôÑÔ**/
 		$has_new  = $task_obj->has_new_comment($p ['page'],$p ['page_size']);			
 		break;
@@ -140,7 +145,7 @@ switch ($view){
 	    		if($res!=3&&$res!=2){
 	    			$v1 =  $comment_obj->get_comment_info($res);
 	    			$tmp ='replay_comment';
-	    			require Keke_tpl::template ( "task/task_comment_reply" );
+	    			require keke_tpl_class::template ( "task/task_comment_reply" );
 	    		}else{
 	    			echo $res;
 	    		}
@@ -153,7 +158,7 @@ switch ($view){
 	    		if($res!=3&&$res!=2){
 	    			$v = $comment_obj->get_comment_info($res);
 	    			$tmp ='pub_comment';
-	    			require Keke_tpl::template ( "task/task_comment_reply" );
+	    			require keke_tpl_class::template ( "task/task_comment_reply" );
 	    		}else{
 	    			echo $res;
 	    		}
@@ -165,15 +170,14 @@ switch ($view){
 	    			//¸üÐÂ¸öÈËÐÅÏ¢ 
 	    			$res = $comment_obj->del_comment($comment_id,$task_id,$comment_info['p_id']);
 	    		}else{
-	    			Keke::keke_show_msg("", $_lang['please_login_now'],"error","json");
+	    			kekezu::keke_show_msg("", $_lang['not_priv'],"error","json");
 	    		}
-	    		$res and Keke::keke_show_msg("", $_lang['delete_success'],"","json") or Keke::keke_show_msg("",$_lang['system_is_busy'],"error","json");
+	    		$res and kekezu::keke_show_msg("", $_lang['delete_success'],"","json") or kekezu::keke_show_msg("",$_lang['system_is_busy'],"error","json");
 	    		break;	
 	    } 
 		break;
 	case "mark":
 		$mark_count = $task_obj->get_mark_count();//ÆÀ¼ÛÍ³¼Æ
-		$mark_count_ext = $task_obj->get_mark_count_ext();//À´×ÔÆÀ¼ÛÍ³¼Æ
 		intval ( $page ) and $p ['page'] = intval ( $page ) or $p ['page']='1';
 		intval ( $page_size ) and $p ['page_size'] = intval ( $page_size ) or $p['page_size']='10';
 		$p['url'] = $basic_url."&view=mark&page_size=".$p ['page_size']."&page=".$p ['page'];
@@ -192,8 +196,14 @@ switch ($view){
 	default:
 		$task_file = $task_obj->get_task_file();
 		$kekezu->init_prom();
-		$can_prom = Keke::$_prom_obj->is_meet_requirement ( "bid_task", $task_id );
+		$can_prom = $kekezu->_prom_obj->is_meet_requirement ( "bid_task", $task_id );
+		if($task_info['task_status']==8){
+			$list_work = db_factory::query(' select uid,username from '.TABLEPRE.'witkey_task_work where task_id='.intval($task_id).' and work_status in (4,6)');
+		}
+		if($task_info['task_status']==2&&$task_info['uid']==$uid){
+			$item_list= keke_payitem_class::get_payitem_config ( 'employer', null, null, 'item_id' );
+		}
 		break;
 }
 
-require Keke_tpl::template ( "task/" . $model_info ['model_code'] . "/tpl/" . $_K ['template'] . "/task_info" );
+require keke_tpl_class::template ( "task/" . $model_info ['model_code'] . "/tpl/" . $_K ['template'] . "/task_info" );

@@ -6,14 +6,14 @@
         <section class="clearfix section">
         <!--{template user/user_side}-->
         <div class="show_panel container_24 po_re">
-        <div class="prefix_3">
+        <div class="prefix_3 grid_21">
             <div class="panel clearfix box">
                 <!--main content-->
-                <div class="grid_21">
+                <div class="">
                     <!--headerÄÚÈÝÍ·²¿ start-->
                     <header class="clearfix box_header">
-                        <h2 class="grid_4 alpha box_title t_c">{$_lang['setting_head_pic']}</h2>
-                        <div class="grid_17 omega">
+                        <h2 class="grid_4 alpha omega box_title t_c">{$_lang['setting_head_pic']}</h2>
+                        <div class="grid_17 alpha omega">
                             <nav class="box_nav">
                                 <ul>
                                     {loop $third_nav $k $v}
@@ -35,20 +35,21 @@
   
                         	<div class=" prefix_1 suffix_1">						
 								<h3 class=" mb_10 border_b_c ">{$_lang['upload_head_pic']}</h3>
-								<div class="messages m_infor">
-                                    <span class="icon16">&nbsp;</span>
-                                   {$_lang['click_the_button_can_upload_your_own_pic']}
-								   {$_lang['upload_check_effect']}
+								<div class="messages m_infor clearfix">
+                                    <span class="icon16 fl_l">&nbsp;</span>
+                                   <div class="grid_16">{$_lang['click_the_button_can_upload_your_own_pic']}
+								   {$_lang['upload_check_effect']}</div>
 								   <a href="###" class="close">&times;</a>
                         		</div>
                             	<div class="pad10 bf7">
                             	
-	                                <div class="img_cut mb_10">
+	                                <div class="img_cut mb_10 ">
 	                                    <div style="width:520px; margin:auto;">$user_swf</div>
 	                                </div>
-									<div class="clear"></div>
-	                                <div>
-										<a href="javascript:window.location.reload();" class="button block t_c" title="{$_lang['update_pic']}"><span class="icon loop"></span>{$_lang['update_pic']}</a>
+	                                <div class="t_c">
+										<a href="javascript:window.location.reload();" class="button block t_c">
+											<span class="icon loop"></span>{$_lang['update_pic']}
+										</a>
 	                                </div>
 									
 										
@@ -81,7 +82,8 @@
                         	<h3 class="mb_10 border_b_c">{$_lang['system_head_pic']}</h3>
                             <ul class="choose_tx clearfix mt_10 mb_20">
                                 {loop $sys_pic $k $v}
-                                <li style="cursor:pointer;" title="{$_lang['we_chose_this']}" onclick="location.href='index.php?do=$do&view=$view&op=$op&show=$show&ac=set_pic&pic_id=$v'">
+                                <li style="cursor:pointer;" title="{$_lang['we_chose_this']}"
+								onclick="formSub('index.php?do=$do&view=$view&op=$op&show=$show&ac=set_pic&pic_id=$v','url',false);">
                                     <img src="data/avatar/system/{$v}_small.jpg" class="pic_small" />
                                 </li>{/loop}
                             </ul>

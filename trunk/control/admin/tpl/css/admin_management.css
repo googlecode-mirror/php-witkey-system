@@ -78,7 +78,7 @@ h1,h2,h3,h4,h5,h6{ font-size:14px;}
 
 /*model*/
 .box{ margin-bottom:10px;}
-.title{ line-height:25px; background:#f7f7f7; border-top:1px solid #efefef; font-size:14px; padding:0 10px;color:#333}
+.title{ line-height:25px; background:#eee; border-top:1px solid #efefef; font-size:14px; padding:0 10px;color:#333}
 .title h2{border-top:1px solid #efefef; cursor:pointer;}
 .detail{background-color: transparent;background-color: rgba(255, 255, 255, 0.6); filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#99FFFFFF,endColorstr=#99FFFFFF); zoom: 1}
 /*.search .detail{display:none}*/
@@ -222,10 +222,10 @@ button.pill{*margin:0 5px;}
 	#ie6 .header .user_box .link_bar {clear:both; }
 	.header .user_box .link_bar a {text-decoration: none; padding:2px 5px; padding:4px 5px 2px\9;  *margin-top:-40px; display:inline-block; font-size:12px;border-radius:3px;}
 
-	.header .nav{ position:absolute;z-index: 4; left:200px; top:0; width:auto; height:50px; overflow: hidden; right:360px;_margin-right:360px;}
+	.header .nav{ position:absolute;z-index: 4; margin-top:10px; left:200px; top:0; width:auto; height:40px; overflow: hidden; right:360px;_margin-right:360px;}
 	.header .nav ul,.header .nav li{ display:block;}
 	.header .nav li{ float:left;}
-	.header .nav a{ display:inline-block; text-decoration:none; padding:0 3px; height:50px; line-height:50px; white-space:nowrap;}
+	.header .nav a{ display:inline-block; text-decoration:none; padding:0 10px; margin:height:40px; line-height:40px; white-space:nowrap;}
 
 .side_bar {width: 180px;overflow:hidden;position: absolute;z-index: 4;height: auto;top: 50px;bottom: 0px;}
 	.side_bar .side_con { overflow:hidden;}

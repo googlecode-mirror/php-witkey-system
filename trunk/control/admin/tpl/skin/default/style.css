@@ -25,7 +25,7 @@
 .skin a.exit{}
 .skin a.exit:hover {}
 
-.skin .header .nav a{ font-size:14px; color:#e3f3ff;border-radius:0px;/*text-shadow:0px -1px 0px rgba(0,0,0,.8);*/}
+.skin .header .nav a{ font-size:14px; color:#e3f3ff;border-radius:5px 5px 0 0;/*text-shadow:0px -1px 0px rgba(0,0,0,.8);*/}
 .skin .header .nav a:hover{ background:rgba(255, 255, 255,.8);color:#000;box-shadow:0 0 5px rgba(0,0,0,.8);text-shadow:1px 1px 1px rgba(255,255,255,.8);            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#CCFFFFFF,endColorstr=#CCFFFFFF);zoom: 1;}
 .skin .header .nav a:active{background:rgba(43, 86, 145,.9); color:#fff; box-shadow:inset 0 0 3px rgba(0,0,0,.5);text-shadow:1px 1px 1px rgba(0,0,0,.3);filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#E52B5691,endColorstr=#E52B5691);zoom: 1;}
 .skin .header .nav a.select{ background:rgba(43, 86, 145,.9); color:#fff; box-shadow:inset 0 0 3px rgba(0,0,0,.5);filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#E52B5691,endColorstr=#E52B5691);zoom: 1;}

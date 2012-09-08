@@ -1,6 +1,6 @@
 <?php
 
-defined('ADMIN_KEKE') or 	exit('Access Denied');
+defined('IN_KEKE') or 	exit('Access Denied');
 //ÓïÑÔ°ü³õÊ¼»¯
 keke_lang_class::package_init ( "task_{$model_info ['model_dir']}" );
 keke_lang_class::loadlang("task_process");

@@ -427,3 +427,7 @@ text-align:center;
 .ztree li span.button.switch{ float:left;}
 .ztree li span.button.switch{margin-top:9px;}
 .ztree li a.curSelectedNode{ border:none !important; background-color:#FCFED7 !important; opacity:1 !important;}
+
+.tips_box{ display:block; position:absolute; top:10px; width:100%; left:0;}
+.tips_box .tips_info{ display:block; width:160px; margin:auto; height:20px; line-height:20px; text-align:center;border-radius:5px;}
+.success .tips_info{ background:#360; color:#fff;}

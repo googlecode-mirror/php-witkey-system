@@ -179,12 +179,16 @@ class Keke_db_query {
 		
 		// 生成sql语句
 		$sql = $this->compile ( $db );
-		// 使用数据库实例与sql作为缓存的键名
-		$cache_key = Cache::instance()->generate_id( $sql);
+		
 		
 		if ($this->_lifetime !== NULL and $this->_type === Database::SELECT) {
+			// 使用数据库实例与sql作为缓存的键名
+			$cache_key = Cache::instance()->generate_id( $sql)->get_id();
 			//先读取缓存再去删除lifetime<=0 的缓存
-				return Cache::instance()->get($cache_key);
+			$result =  Cache::instance()->get($cache_key);
+			if($result){
+				return $result;
+			}
 		}
 		
 		// Execute the query
@@ -199,5 +203,3 @@ class Keke_db_query {
 	}
 
 }
-
-?>

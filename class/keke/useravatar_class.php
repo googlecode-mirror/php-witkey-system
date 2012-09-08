@@ -1,4 +1,4 @@
-<?php
+<?php defined ( "IN_KEKE" ) or  die ( "Access Denied" );
 
 /**
  * @copyright keke-tech
@@ -7,7 +7,7 @@
  * 2010-7-6ÉÏÎç11:52:51
  */
 keke_lang_class::load_lang_class('keke_user_avatar_class');
-(defined ( "IN_KEKE" )|| defined("IN_KEKE")) or die ( "Access Denied" );
+
 define ( '_DATADIR', S_ROOT . "data/" );
 global $_K;
 define ( '_DATAURL', $_K ['siteurl'] . "/data" );
@@ -158,8 +158,7 @@ class keke_useravatar_class extends keke_user_class {
 		! is_dir ( $dir . '/' . $dir1 . '/' . $dir2 . '/' . $dir3 ) && mkdir ( $dir . '/' . $dir1 . '/' . $dir2 . '/' . $dir3, 0777 );
 	}
 	static function get_avatar($uid, $size = 'big', $type = '') {
-		global $kekezu;
-		global $_lang;
+		 
 		$size = in_array ( $size, array ('big', 'middle', 'small' ) ) ? $size : 'big';
 		$uid = abs ( intval ( $uid ) );
 		$uid = sprintf ( "%09d", $uid );
@@ -195,7 +194,7 @@ class keke_useravatar_class extends keke_user_class {
 	 * @return Í¼ÏóId
 	 */
 	static function get_user_sys_pic($fpath,$dir,$size) {
-		global $_K,$_lang,$kekezu;
+		global $_K,$_lang;
 		$path=S_ROOT."/data/avatar/";
 		$log_file = $path.$dir.'_avatar.txt';
 		if(file_exists($log_file)){
@@ -223,7 +222,7 @@ class keke_useravatar_class extends keke_user_class {
 	 * @return $last_id
 	 */
 	static function set_user_sys_pic($uid, $pic_id,$type='sys') {
-		global $_K,$kekezu;
+		global $_K;
 	
 		$rpath=S_ROOT."/data/avatar/";
 		$uid = abs ( intval ( $uid ) );

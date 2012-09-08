@@ -801,7 +801,7 @@
                       <dd>
                            <ul>
                            	<!--{eval $i=0;}-->
-                            {loop $indus_p_arr $k $v}
+                            {loop Keke::$_indus_p_arr $k $v}
 								{if $v['is_recommend']==1 and $i<5}
 								  <!--{eval $i++;}-->
 				            	<li><a href="index.php?do=task_list&path=A{$k}"  target="_blank">{$v['indus_name']}</a></li>

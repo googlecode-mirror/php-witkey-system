@@ -27,7 +27,10 @@
 <!--box样式-->
 <link href="{$_K['siteurl']}/resource/css/box.css" rel="stylesheet">
 <!--布局样式-->
-<link href="{$_K['siteurl']}/resource/css/layout/layout.css" rel="stylesheet">
+<link href="{BASE_URL}/resource/css/layout/layout.css" rel="stylesheet">
+
+<link href="{BASE_URL}/resource/css/animate.css" rel="stylesheet">
+<link href="{BASE_URL}/{SKIN_PATH}/css/common.css" rel="stylesheet">
 
 <link href="{$_K['siteurl']}/{SKIN_PATH}/theme/{$_K['theme']}/css/{$_K['theme']}_style.css" rel="stylesheet">
 
@@ -57,7 +60,9 @@
 	In.add('lavalamp',{path:"{BASE_URL}/resource/js/jqplugins/lavalamp/jquery.lavalamp-1.3.5.min.js",type:'js'});
 	In.add('tipsy',{path:"{$_K['siteurl']}/resource/js/jqplugins/tipsy/jquery.tipsy.js",type:'js'});
 	In.add('autoIMG',{path:"{BASE_URL}/resource/js/jqplugins/autoimg/jQuery.autoIMG.min.js",type:'js'});
+	
  	In.add('slides',{path:"{BASE_URL}/resource/js/jqplugins/slides.min.jquery.js",type:'js'});
+	
 	In.add('ajaxfileupload',{path:"{BASE_URL}/resource/js/system/ajaxfileupload.js",type:'js'});
 	In.add('header_top',{path:"{BASE_URL}/resource/js/system/header_top.js",type:'js',rely:['mouseDelay']}); 
 	In.add('lazy',{path:"{BASE_URL}/resource/js/system/lazy.js",type:'js'});

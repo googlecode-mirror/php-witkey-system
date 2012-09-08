@@ -27,7 +27,7 @@ $lang=array(
        'audit_not_pass'=>'审核未通过!',
        'delete_task'=>'删除任务',
        'pass_audit'=>'通过审核',
-       'pass_audit'=>'拒绝审核',
+       'no_pass_audit'=>'不通过审核',
        'freeze_task'=>'冻结任务',
        'unfreeze_task'=>'解冻任务'
 );

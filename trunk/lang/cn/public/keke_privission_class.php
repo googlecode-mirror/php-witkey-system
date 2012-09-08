@@ -16,5 +16,5 @@ $lang=array(
       'employer_is_not'=>'雇主不受',
       'limit'=>'限制',
       'admin_customer_service_no_limit'=>'管理员、客服不受限制',
-      'current_user_not_login'=>'当前用户未登陆'
+      'current_user_not_login'=>'当前用户未登陆',
 );

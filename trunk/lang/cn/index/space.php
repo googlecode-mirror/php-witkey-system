@@ -12,7 +12,7 @@ $lang = array(
     'picture_save_success'=>'图片保存成功',
     'success_notice'=>'成功提示',
     'picture_save_fail'=>'图片保存失败',
-    'this_user_no_open_space'=>'该用户还没有开通空间',
+    'this_user_no_open_space'=>'该用户还没有开通店铺',
     'insufficient_permissions'=>'权限不足!',
     'change_the_slide'=>'更改幻灯片',
 );

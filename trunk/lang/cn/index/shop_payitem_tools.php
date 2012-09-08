@@ -13,5 +13,6 @@ $lang = array(
 	'choose_map_area'=>'请选择地图区域',
 	'remain'=>'还剩',
 	'use'=>'使用',
+	'you_can_not_access_this_page'=>'您不能访问此页面',
 
 );

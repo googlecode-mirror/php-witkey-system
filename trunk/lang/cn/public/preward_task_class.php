@@ -10,7 +10,7 @@ $lang = array(
 	'task_over_notice'=>'任务结束通知',
 	'you_pub_task'=>'您发布的任务',
 	'haved_pefect_over'=>'已圆满结束',
-	'work_no_recept'=>'稿件未采纳',
+	'work_no_recept'=>'稿件不合格',
 	'you_submit_to'=>'您提交到',
 	'task_work_no_recept_to_employer'=>'任务的稿件未被雇主采纳',
 	'work_bid'=>'稿件中标',
@@ -26,7 +26,7 @@ $lang = array(
 	'work_cancel_bid_set_fail'=>'稿件取消中标设置失败',
 	'task_hg_work_full_and_not_operate_bid_work'=>'任务合格稿件已达标，无法选择该稿件中标',
 	'task_bid_work_full_and_not_operate_choose_work'=>'当前操作稿件已是中标状态，无法再对该稿件进行选稿操作',
-	'task_not_recept_work_full_and_not_operate_choose_work'=>'当前操作稿件已是未采纳状态，无法再对该稿件进行选稿操作',
+	'task_not_recept_work_full_and_not_operate_choose_work'=>'当前操作稿件已是不合格状态，无法再对该稿件进行选稿操作',
 	'task_not_operate_work_and_not_operate_choose_work'=>'当前稿件状态为不可中标状态，无法再对该稿件进行选稿操作',
 	'task_timeout_notice'=>'任务过期通知',
 	'task_cach_'=>'任务现金：',
@@ -36,7 +36,7 @@ $lang = array(
 	'hand_work_timeout_no_works_and_task_fail'=>'投稿期已过，没有人交稿，任务失败,',
 	'task_over_notice'=>'任务结束通知',
 	'choose_timeout_and_task_fail'=>'选稿期已过，任务已结束。',
-	'not_recept'=>'未采纳',
+	'not_recept'=>'不合格',
 
 
 );

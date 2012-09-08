@@ -1,11 +1,11 @@
 <?php
 $lang = array(
 	'default'=>'默认',
-	'not_recept'=>'未采纳',
+	'not_recept'=>'不合格',
 	'your_jh'=>'你的#',
 	'task_auto_choose_work_and_return_remain'=>'任务自动选稿,余款返还,￥',
 	'task_auto_choose_bid_and_you_get_cash'=>'任务自动选稿中标,您获得了￥',
-	'work_not_recept'=>'稿件未采纳',
+	'work_not_recept'=>'稿件不合格',
 	'you_submit_to'=>'您提交到',
 	'task_work_not_recept_by_employer'=>'任务的稿件未被雇主采纳。',
 	'work_bid'=>'稿件中标',

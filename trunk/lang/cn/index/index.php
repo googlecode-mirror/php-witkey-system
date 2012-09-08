@@ -6,14 +6,29 @@
  * @author lj
  * 
  */
+global $_K;
 $lang = array(
 /**index.htm**/
+		/******************20120830汉化*****************/
+
+		'praise_rate'=>'好评率',
+		'submit'=>'提交',
+		'feedback'=>'投诉建议',
+		'I_have_comments_or_suggestions_now'=>'我对 '.$_K['sitename'].' 有意见或建议，现在就',
+		'shopkeeper'=>'店主',
+		'industry'=>'行业',
+		'carry_announcement'=>'提现',
+		'bid_announcement'=>'中标通告',
+		'website_bulletin'=>'公告',
+	'more_category_of_task'=>'更多任务分类',
+	'more_category_of_shop'=>'更多商城分类',
+	/******************20120830汉化*****************/	
 	'shop_classify'=>'商城分类',
 	'all_classfiy'=>'全部分类',
-	'announcement'=>'公告',
-	'rules'=>'规则',
-	'withdraw'=>'提现',
-	'safe'=>'安全',
+	//'announcement'=>'公告',
+	//'rules'=>'规则',
+	//'withdraw'=>'提现',
+	//'safe'=>'安全',
 	'website_statistics'=>'网站统计',
 	'register_user_number'=>'注册用户数[个]',
 	'auth_statistics_number'=>'认证统计数[个]',

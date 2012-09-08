@@ -333,6 +333,40 @@ class Keke_base {
 		}
 	}
 	/**
+	 * 构造个人空间链接
+	 * [可构造二级域名]
+	 * @param int $mid 用户编号
+	 */
+	static function build_space_url($mid) {
+		global $_K;
+		if (Keke::$_sys_config ['second_domain']) { //开启二级域名
+			$top = Keke::$_sys_config ['top_domain'];
+			$p_url = preg_replace ( '/(\w*\.)?' . $top . '/', $mid . '.' . $top, $_K ['siteurl'] );
+		} else {
+			$p_url = $_K ['siteurl'] . "/index.php?do=space&member_id=$mid";
+		}
+		return $p_url;
+	}
+	/**
+	 * 过滤通过文本输入的内容中的特殊标签
+	 * [input|textarea|button|marquee|iframe|frame...]
+	 * Enter description here ...
+	 * @param unknown_type $string
+	 */
+	static function filter_input($str) {
+		if (is_array ( $str )) {
+			$key = array_keys ( $str );
+			$s = sizeof ( $str );
+			for($i = 0; $i < $s; $i ++) {
+				$str [$key [$i]] = self::filter_input ( $str [$key [$i]] );
+			}
+		} else {
+			$str = htmlspecialchars_decode ( $str );
+			$str = preg_replace ( '/<(input|textarea|select|button|marquee|iframe|frame|form|script)/', '</\\1', $str );
+		}
+		return $str;
+	}
+	/**
 	 * echo json
 	 *
 	 * @param unknown_type $msg        	

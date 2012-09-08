@@ -20,8 +20,8 @@ class keke_curren_class {
 	}
 	public function __construct() {
 		self::$_currencies = self::get_curr_list();
-		self::$_curr = strtoupper ( $Keke::$_sys_config ['currency'] ); //默认币种
-		self::$_now = $Keke::$_currency;
+		self::$_curr = strtoupper ( Keke::$_sys_config ['currency'] ); //默认币种
+		self::$_now = Keke::$_currency;
 		self::$_default = self::$_currencies [self::$_curr];
 		self::$_symbol_right = self::$_currencies [self::$_curr]['symbol_right'];
 	}

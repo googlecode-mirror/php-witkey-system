@@ -35,11 +35,11 @@ function cdel(o,s){
 	return false;	
 }
 $(function(){
-	var tips = window.parent.document.getElementById('del_tips')
+	var tips = window.parent.document.getElementById('del_tips');
 	 $(tips).ajaxStart(function(){
-		  tips.innerHTML ='É¾³ýÖÐ...';  
+		tips.innerHTML ='É¾³ýÖÐ...';  
 	 }).ajaxComplete(function(){
-	 	tips.innerHTML ='';
+		tips.innerHTML ='';
 	 })
 })
  

@@ -37,9 +37,9 @@ function cdel(o,s){
 $(function(){
 	var tips = window.parent.document.getElementById('del_tips');
 	 $(tips).ajaxStart(function(){
-		tips.innerHTML ='删除中...';  
+		$(tips).children().html('删除中... 已经删除成功!').addClass('tips_info');  
 	 }).ajaxComplete(function(){
-		tips.innerHTML ='';
+		$(tips).children().html('').removeClass('tips_info');
 	 })
 })
  

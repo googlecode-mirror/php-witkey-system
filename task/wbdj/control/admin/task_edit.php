@@ -2,7 +2,7 @@
 /**
  * ĞüÉÍÈÎÎñ±à¼­ 
  */
-defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 
 intval ( $task_id ) or kekezu::admin_show_msg ( $_lang ['param_error'], 'index.php?do=model&model_id=' . $model_id . '&view=list', 3, '', 'warning' );
 $ops = array ('basic', 'work', 'comm', 'mark');

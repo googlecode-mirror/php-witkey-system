@@ -2,7 +2,7 @@
 /**
  * 后台多人悬赏列表
  */
-defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 //任务配置
 $task_config = unserialize ( $model_info ['config'] );
 

@@ -3,7 +3,7 @@
  * 后台转发微博列表
  */
 
-defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 //任务配置
 $task_config = unserialize ( $model_info ['config'] );
 $model_list = $kekezu->_model_list;

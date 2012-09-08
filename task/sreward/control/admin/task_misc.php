@@ -2,7 +2,7 @@
 /**
  * ÈÎÎñÔÓÏî
  */
-defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 $page = max ( $page, 1 );
 $limit = max ( $limit, 5 );
 $url = 'index.php?do=' . $do . '&model_id=' . $model_id . '&view=edit&task_id=' . $task_id . '&op=' . $op;

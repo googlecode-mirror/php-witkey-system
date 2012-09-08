@@ -2,7 +2,7 @@
 
 include 'app_boot.php';
 
-isset ( $m ) && $m == "user" and $do = "avatar";
+//isset ( $_GET['m'] ) && $_GET['m'] == "user" and $do = "avatar";
 
 $request = Request::factory ();
 $_K ['control'] = $request->initial ()->controller ();

@@ -3,7 +3,7 @@
  * 微博转发任务初始化配置文件
  */
 
-defined('ADMIN_KEKE') or 	exit('Access Denied');
+defined('IN_KEKE') or 	exit('Access Denied');
 
 $init_menu = array(
 	$_lang['task_manage']=>'index.php?do=model&model_id=10&view=list&status=0',

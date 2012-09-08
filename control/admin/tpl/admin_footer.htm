@@ -24,6 +24,7 @@ function cdel(o,s){
 	if(s){
 		c=s;
 	}
+	//d.follow(o);
 	d.confirm(c, function(){
 			$.get(o.href,function(data){
 				if(data >0){
@@ -31,7 +32,7 @@ function cdel(o,s){
 					
 				}
 			})
-	});
+	}).follow(o);
 	return false;	
 }
 $(function(){
@@ -73,7 +74,7 @@ function batch_act(obj,frm){
 					})
 				}
 			})
-		});
+		}).follow(obj);
 	}else{
 		d.alert("{$_lang['has_none_being_choose']}");
 	}

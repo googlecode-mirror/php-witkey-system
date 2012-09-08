@@ -313,7 +313,10 @@ class Keke extends Keke_core {
 	public static $_tpl_obj;
 	public static $_cache_obj;
 	public static $_page_obj;
-	 
+	//任务是否开启
+	public static $_task_open=0;
+	//商城是否开启
+	public static $_shop_open=0; 
 	public static $_mark;
  
 	public static $_messagecount;
@@ -513,11 +516,12 @@ class Keke extends Keke_core {
 		}
 		Keke::$_attent_api_open = unserialize ( Keke::$_sys_config ['attent_api_open'] );
 	}
+	//初始化语言
 	function init_lang() {
 		Keke::$_lang_list = keke_lang_class::lang_type ();
 		Keke::$_lang = keke_lang_class::get_lang ();
 	}
-	
+	//初始化货币
 	function init_curr() {
 		if ($_SESSION ['currency']) {
 			Keke::$_currency = $_SESSION ['currency'];
@@ -530,6 +534,41 @@ class Keke extends Keke_core {
 	function init_model() {
 		$model_arr = db::select ( '*' )->from ( 'witkey_model' )->cached ()->execute ();
 		Keke::$_model_list = Keke::get_arr_by_key ( $model_arr, 'model_id' );
+		foreach ( Keke::$_model_list as $v ) {
+			if ($v ['model_type'] == 'task') {
+				Keke::$_task_open = (Keke::$_task_open or $v ['model_status']);
+			} else {
+				Keke::$_shop_open = (Keke::$_shop_open or $v ['model_status']);
+			}
+		}
+		$this->nav_filter ();
+	}
+	/**
+	 * 导航过滤
+	 */
+	public function nav_filter() {
+		global $_K;
+		$nav_arr = Keke::$_nav_list;
+		if ((Keke::$_task_open and  Keke::$_shop_open) == FALSE) {
+			foreach ( $nav_arr as $k => $v ) {
+				if (Keke::$_task_open == FALSE) {
+					if (in_array ( $_K ['action'], array ('task', 'task_list', 'weibo' ) )) {
+						unset ( $nav_arr [$k] );
+					}
+				}
+				if (Keke::$_shop_open == FALSE) {
+					if (in_array ( $_K ['action'], array ('shop', 'shop_list', 'seller_list' ) )) {
+						unset ( $nav_arr [$k] );
+					}
+				}
+				if (Keke::$_shop_open == FALSE  and Keke::$_task_open == FALSE) {
+					if ($_K ['action'] == 'case') {
+						unset ( $nav_arr [$k] );
+					}
+				}
+			}
+		}
+		Keke::$_nav_list = $nav_arr;
 	}
 	 
 	function init_session() {

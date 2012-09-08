@@ -1,6 +1,17 @@
 <?php
 
 $lang = array (
+	'info'=>'信息',
+	'tips'=>'提示',
+		'set_cookie'=>'设置cookie',
+		'get_cookie'=>'获取cookie',
+		'sorry_you_visit_the_page_not_found_or_deleted'=>'对不起，您访问的页面没有找到或者删除',
+		'please_check_that_you_visit_the_URL_is_correct'=>'请检查您访问的网址是否正确',
+		'if_you_visit_the_URL_is_correct_please_contact_customer_service'=>'如果您访问的网址正确无误，请联系客服',
+		'or'=>'或者',
+		
+		'view_other'=>'，查看其它栏目',
+	'use'=>'使用',
 	'now_no_record'=>'暂无相应记录',
 	'search_result'=>'搜索结果',
 	'send_web_msg'=>'发送站内信',
@@ -18,8 +29,8 @@ $lang = array (
 	'selected_terms'=>'已选条件',
 	'save_search_terms'=>'保存搜索条件',
 	'no_selected_terms'=>'您暂无选择筛选条件',
-      'total_find'=>'共找到',
-	'tiao_result'=>'条结果',
+      'total_find'=>'共',
+	'tiao_result'=>'条',
 	'search_history'=>'搜索历史',
 	'no_your_history'=>'您暂无搜索历史',
     'search_history_record'=>'搜索历史记录',
@@ -90,7 +101,7 @@ $lang = array (
 	'mark_content'=>'评价内容：',
 	'mark_content_msg'=>'已输入长度:0,还可以输入:100',
 	'assistant_mark'=>'辅助评价：',
-	'assistant_mark'=>'好评质量',
+	'assistant_mark'=>'评价质量',
 	'mark_type'=>'评价类型：',
 	'wap'=>'手机版',
 	'company'=>'公司名称:',	

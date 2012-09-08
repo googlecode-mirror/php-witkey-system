@@ -78,8 +78,8 @@ class Control_index extends Controller{
 		 * 首页feed
 		*/
 		$feed_list = Dbfactory::query ( "select uid,username,title,feed_time from " . TABLEPRE . "witkey_feed order by feed_time desc limit 0,4", 1, 3600 );
-		$mode_list = $Keke->_model_list;
-		$cash_coverage = Keke::get_cash_cove ( '', true ); //Keke::get_table_data ( "cash_rule_id,start_cove,end_cove", "witkey_task_cash_cove", "", "", "", "", "cash_rule_id", 3600 );
+		$mode_list = Keke::$_model_list;
+		$cash_coverage = Sys_misc::get_cash_cove('',true) ;
 		/**
 		 * 新闻
 		*/
@@ -124,6 +124,7 @@ class Control_index extends Controller{
 		//帮助中心
 		$link_help = Keke::get_table_data ( "art_cat_id,cat_name", "witkey_article_category", "art_cat_pid=0 and cat_type='help'", " listorder asc", "", "5", "", 3600 );
 		
+		$flink = Keke::get_table_data("link_id,link_name,link_url","witkey_link",""," link_id asc","","","",3600);
 		
 		require Keke_tpl::template ( 'index' );
 	}

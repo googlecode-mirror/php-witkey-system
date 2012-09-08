@@ -201,12 +201,12 @@ class Keke_core extends Keke_base {
 	}
 	
 	/**
-	 * $fileds,$where可以为数组 , $pk为@return数组的key , 对dbfactory -> select()的改进,添加缓存
+	 * $fileds,$where可以为数组 , $pk为@return数组的key , 对Dbfactory -> select()的改进,添加缓存
 	 *
 	 * @return array($pk => data)
 	 */
 	public static function get_table_data($fileds = '*', $table, $where = '', $order = '', $group = '', $limit = '', $pk = '', $cachetime = 0) {
-		return dbfactory::get_table_data ( $fileds, $table, $where, $order, $group, $limit, $pk, $cachetime );
+		return Dbfactory::get_table_data ( $fileds, $table, $where, $order, $group, $limit, $pk, $cachetime );
 	}
 	
 	/**
@@ -254,9 +254,9 @@ class Keke_core extends Keke_base {
 		global $_K, $kekezu;
 		$res = null;
 		$login_uid = Keke::$_uid;
-		$user_oltime = dbfactory::get_one ( sprintf ( "select last_op_time from %switkey_member_oltime where uid = '%d'", TABLEPRE, $login_uid ) );
+		$user_oltime = Dbfactory::get_one ( sprintf ( "select last_op_time from %switkey_member_oltime where uid = '%d'", TABLEPRE, $login_uid ) );
 		if ((SYS_START_TIME - $user_oltime ['last_op_time']) > $_K ['timespan']) {
-			$res = dbfactory::execute ( sprintf ( "update %switkey_member_oltime set online_total_time = online_total_time+%d,last_op_time = '%d' where uid = '%d'", TABLEPRE, $_K ['timespan'], SYS_START_TIME, $login_uid ) );
+			$res = Dbfactory::execute ( sprintf ( "update %switkey_member_oltime set online_total_time = online_total_time+%d,last_op_time = '%d' where uid = '%d'", TABLEPRE, $_K ['timespan'], SYS_START_TIME, $login_uid ) );
 		}
 		return $res;
 	}
@@ -415,12 +415,14 @@ class Keke extends Keke_core {
 	 */
 	function init_config() {
 		global $i_model, $_lang, $_K;
-		$sql = sprintf("select k,v from %switkey_config",TABLEPRE);
 		
-		if(($basic_arr = Cache::instance()->generate_id($sql)->get(null))==null){
+		//$sql = sprintf("select k,v from %switkey_config",TABLEPRE);
+		/* if(($basic_arr = Cache::instance()->generate_id($sql)->get(null))==null){
 			$basic_arr = db::query($sql)->execute();
 			Cache::instance()->generate_id($sql)->set(null,$basic_arr);
-		}
+		} */
+		
+		$basic_arr = DB::select('`k`,`v`')->from('witkey_config')->cached(60000)->execute();
 		Keke::$_sys_config = $basic_arr ;
 		
 		$config_arr = array ();
@@ -428,11 +430,7 @@ class Keke extends Keke_core {
 		for($i = 0; $i < $size; $i ++) {
 			$config_arr [$basic_arr [$i] ['k']] = $basic_arr [$i] ['v'];
 		}
-		$sql = sprintf('select * from %switkey_nav where ishide!=1 order by listorder',TABLEPRE);
-		if(($nav_list=Cache::instance()->generate_id($sql)->get(null))==null){
-			$nav_list = db::query($sql)->execute();
-			Cache::instance()->generate_id($sql)->set(null, $nav_list);
-		}
+		$nav_list = DB::select('*')->from('witkey_nav')->cached()->execute();
 		$nav_list = Keke::get_arr_by_key($nav_list,'nav_id');
 		Keke::$_nav_list = $nav_list;
 		$template = Keke::get_tpl ();

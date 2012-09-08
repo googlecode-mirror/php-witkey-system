@@ -15,6 +15,11 @@ $lang = array(
 
 
 /*get_password.htm*/
+		'sure_send_to_this_mail'=>'确认发送密码到此邮箱',
+		'your_email'=>'您的邮箱',
+		'send_mail_fail_please_send'=>'很遗憾！您的邮箱号未填写或未通过邮箱认证，网站无法给您发送邮件。请通过',
+		'web_link'=>'网站联系',
+		'phone_to_admin_thank'=>'电话找管理员处理，谢谢！',
       'find_back_password'=>'找回密码',
 		'username_input_error'=>'用户名输入错误',
 		'please_input_register_account'=>'请输入用户名',

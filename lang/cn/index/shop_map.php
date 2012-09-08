@@ -25,5 +25,8 @@ $lang = array(
     'goods_class'=>'商品分类',
     'goods_kinds'=>'商品种类',
     'goods_money'=>'商品金额',
+	/*****************/
+		'back_to_shop_list'=>'返回商城列表',
+		
 		
 );

@@ -8,6 +8,18 @@
  
  */
 $lang = array(
+	/*****************20120830********************/
+	'early_release_of_former'=>'早期发布在前',	
+		'latest_release_of_the_first'=>'最新发布在前',
+		'click_the_early_release_first_sort_by'=>'点击早期发布在前排序',
+		'low_amount_of_tasks_in_the_former'=>'低金额任务在前',
+		'the_high_amount_of_tasks_former'=>'高金额任务在前',
+		'click_the_high_amount_of_tasks_first_sort'=>'点击高金额任务在前排序',
+		'hide'=>'隐藏',
+		'recommend'=>'推荐',
+		'union'=>'联盟',
+		'delay'=>'延期',
+	/*****************20120830********************/
 	'no_trust'=>'未托管',
 	'trusted'=>'已托管',
 	'zfb_trust'=>'支付宝托管',
@@ -31,6 +43,7 @@ $lang = array(
 	'search'=>'搜  索',   
 	'work_hide'=>'稿件隐藏',
 	'task_reward_money'=>'任务赏金',
+	'task_info'=>'任务信息',
 	
 	'other'=>'其他选项',
 	'save_suc'=>'保存成功',

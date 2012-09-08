@@ -1,12 +1,12 @@
-<!--{template header}-->
+<!--{include header}-->
 <!--首页样式--> 
-<link href="{SKIN_PATH}/css/index.css" rel="stylesheet"/>
-<link href="{SKIN_PATH}/theme/{$_K['theme']}/css/index.css" rel="stylesheet"/> 
+<link href="{BASE_URL}/{SKIN_PATH}/css/index.css" rel="stylesheet"/>
+<link href="{BASE_URL}/{SKIN_PATH}/theme/{$_K['theme']}/css/index.css" rel="stylesheet"/> 
  <!--内容区 satrt-->
   <div class="wrapper clearfix">
     <div class="container_24 clearfix"> 
      <div class="pb_10"></div>
-	 {if $task_open||$shop_open}
+	 {if Keke::$_task_open||Keke::$_shop_open}
        <div class="grid_5 mb_10">
        	<div class="orange_box">
        	<div class="box default  m_h">
@@ -16,15 +16,15 @@
 	            <div id="category_box" class="category po_re">
 	              <!--分类切换 start-->
 	               <ul class="tab block clearfix" id="indus">
-	               	{if $task_open}
+	               	{if Keke::$_task_open}
 	               	 	<li id="ul_indus_1" onclick="swaptab('indus','backLava','',2,1)"><a href="javascript:void(0);" class="selected" rel="task_list">{$_lang['task_classify']}</a></li>
                     {/if}
-				    {if $shop_open}
+				    {if Keke::$_shop_open}
 						<li id="ul_indus_2" onclick="swaptab('indus','backLava','',2,2,{ajax:1,url:'index.php?ajax=indus_index'});"><a href="javascript:void(0);" rel="shop_list">{$_lang['shop_classify']}</a></li>
   	              	{/if}
 				   </ul>
 	             <!--分类切换 end-->
-				 {if $task_open}
+				 {if Keke::$_task_open}
 					<div id='div_indus_1'>
 	                   <ul class="indus_list">
 	                 	<!--{eval $is=0;$s=sizeof($final_task);$load=array();}-->
@@ -62,7 +62,7 @@
 	                   </ul>
 	                   </div>
 					  {/if}
-					  {if $shop_open}
+					  {if Keke::$_shop_open}
 	                   <div id='div_indus_2' class="hidden"></div>
  					  {/if}
 					   <script type="text/javascript">
@@ -78,7 +78,7 @@
 									$(this).find('ul').addClass('hidden');
 								})
 							})
-							var tp= '{$task_open}';
+							var tp= '{Keke::$_task_open}';
 							if(tp==0){
 								$('li#ul_indus_2').triggerHandler('click');
 							}
@@ -180,13 +180,13 @@
 
         <!--认证统计 end-->
         <!--任务统计 start-->
-		 {if $task_open}
+		 {if Keke::$_task_open}
             <li><p>{$_lang['task_order_money']}</p><p><strong class="num godown" >{$task_in}</strong></p></li>
             <li><p>{$_lang['task_number']}</p><p><strong class="num goup" >{$task_count}</strong></p></li>
          {/if}
         <!--任务统计 end-->
        <!--商城统计 start-->
-          {if $shop_open}
+          {if Keke::$_shop_open}
              <li><p>{$_lang['shop_order_money']} </p><p><strong class="num  godown " >{$service_in}</strong></p></li>
              <li><p>{$_lang['goods_number']} </p><p><strong class="num godown " >{$service_count}</strong></p></li>
 		  {/if}
@@ -280,7 +280,7 @@
 											{$_lang['get_task_reward']}<font color="red">{$info['event']['cash']}</font>{$_lang['yuan']}
 										{/if}
 										</p>
-                                         <p><!--{eval echo kekezu::feed_time ($v['feed_time']);}--> </p>
+                                         <p><!--{eval echo Sys_feed::feed_time ($v['feed_time']);}--> </p>
                                        </div>
                                      </li>
 								{/loop}
@@ -323,7 +323,7 @@
      </div>
      
      <div class="clear"></div>
-     {if $task_open}
+     {if Keke::$_task_open}
  			 <!--{ad_show(HOME_CENTAL_ONE,首页_中部一栏广告)}-->
       <div class="grid_24 mb_10">
         <div class="box model blue">
@@ -379,7 +379,7 @@
                          <h2 class="task_title"><a href="index.php?do=task&task_id={$v['task_id']}" title="{$v['task_title']}" target="_blank">{$v['task_title']}</a></h2>
                          <!--任务标题 end-->
                          <!--任务发布者 start-->
-                         <div class="publisher"><a href="<!--{eval echo kekezu::build_space_url($v['uid']);}-->" title="{$v['username']}" target="_blank">{$v['username']}</a></div>
+                         <div class="publisher"><a href="<!--{eval echo Keke::build_space_url($v['uid']);}-->" title="{$v['username']}" target="_blank">{$v['username']}</a></div>
                          <!--任务发布者 end-->
                          <!--任务模型 start-->
                          <div class="task_mode">{$mode_list[$v['model_id']]['model_name']}</div>
@@ -450,7 +450,7 @@
   </div>
  </div>
   {/if}
-  {if $shop_open}
+  {if Keke::$_shop_open}
  		 <!--{ad_show(HOME_CENTAL_TWO,首页_中部二栏广告)}-->
   	<div class="grid_24 mb_10">
        <div class="box model purple orange_shop">
@@ -493,16 +493,16 @@
 		   			<li class="grid_8 alpha omega">
 		   				<div class="item">
 		   					<div class=" fl_l mr_10">
-			   					<a href="<!--{eval echo kekezu::build_space_url($v['uid']);}-->" title="{$v['username']}">
+			   					<a href="<!--{eval echo Keke::build_space_url($v['uid']);}-->" title="{$v['username']}">
 	                      		<!--{userpic($v['uid'],'middle')}-->
 	                      		</a>
 							</div>
 							<div class="shoper_info">
 								<ul>
-									<li><a href="<!--{eval echo kekezu::build_space_url($v['uid']);}-->" class="font14" title="{$v['shop_name']}"><strong>{$v['shop_name']}</strong></a></li>
+									<li><a href="<!--{eval echo Keke::build_space_url($v['uid']);}-->" class="font14" title="{$v['shop_name']}"><strong>{$v['shop_name']}</strong></a></li>
 									<li>{$_lang['praise_rate']}{$_lang['zh_mh']}<span class="cc00">{if $v['seller_total_num']}<!--{eval echo number_format($v[seller_good_num]*100/$v[seller_total_num],2)}-->{else}100{/if}%</span></li>
 									<li>{$_lang['industry']}{$_lang['zh_mh']}<span>{$indus_p_arr[$v[indus_pid]][indus_name]} | {$indus_c_arr[$v[indus_id]][indus_name]} </span></li>
-									<li>{$_lang['shopkeeper']}{$_lang['zh_mh']}<a href="<!--{eval echo kekezu::build_space_url($v['uid']);}-->" title="{$v['username']}">{$v['username']}</a></li>
+									<li>{$_lang['shopkeeper']}{$_lang['zh_mh']}<a href="<!--{eval echo Keke::build_space_url($v['uid']);}-->" title="{$v['username']}">{$v['username']}</a></li>
 								</ul>
 							</div>
 						</div>
@@ -608,7 +608,7 @@
 		                 </div>
 		                  <!--头条描述 start-->
 		                     <div class="sort_info">
-		                         <span><!--{eval echo kekezu::cutstr(kekezu::filter_input($v['content']),80)}-->.....</span>
+		                         <span><!--{eval echo Keke::cutstr(Keke::filter_input($v['content']),80)}-->.....</span>
 		                     </div>
 		                 <!--头条描述 end-->
 		                 <div class="clear"></div>
@@ -735,7 +735,7 @@
                 <ul class="small_list">
                   {loop $talent_list $v}
                       <li class="item">
-                      	<a href="<!--{eval echo kekezu::build_space_url($v['uid']);}-->" title="{$v['username']}">
+                      	<a href="<!--{eval echo Keke::build_space_url($v['uid']);}-->" title="{$v['username']}">
                       		<!--{userpic($v['uid'],'small')}-->
                       	</a>
 					  </li>
@@ -758,7 +758,7 @@
                           <li {if $k==0}class="first"{elseif $k==4}class="last"{/if}>
                              <div class="item">
                                 <span class="rank_no"><!--{eval echo ++$k;}--></span>
-                                <a href="<!--{eval echo kekezu::build_space_url($v['uid']);}-->">{$v['username']}</a>
+                                <a href="<!--{eval echo Keke::build_space_url($v['uid']);}-->">{$v['username']}</a>
                                 <span class="cc00 money">{c:$v['cash']}</span>
                              </div>
                           </li>
@@ -794,7 +794,7 @@
     <div class="container_24 clearfix">
     	
     <!--推荐分类-->
-	{if $task_open||$shop_open}
+	{if Keke::$_task_open||Keke::$_shop_open}
 
                 <dl>
                     <dt>{$_lang['recommend_cate']}</dt>
@@ -813,7 +813,7 @@
 
 	 {/if}
 	<!--任务大厅-->
-	{if $task_open}
+	{if Keke::$_task_open}
     
        <dl>
          <dt>{$_lang['task_hall']}</dt>
@@ -829,7 +829,7 @@
   
 	  {/if}
 	  <!--威客商城-->
-	  {if $shop_open}
+	  {if Keke::$_shop_open}
     
          <dl>
             <dt>{$_lang['witkey_shop']}</dt>
@@ -892,7 +892,7 @@
 </div>
 <!--网站地址 end-->
 
- {if !isset($footer_load) }
+ {if !isset($link_unload) }
 <section class="site_links clearfix m_h">
  <div class="container_24 ">
  	  
@@ -917,14 +917,12 @@
 
 
 <!--内容区 end-->
-<!--{template footer}-->
+<!--{include footer}-->
 <script type="text/javascript" >
-	In.add('easySlider',{path:"resource/js/jqplugins/easySlider1.5.js",type:'js'});
-	In.add('index',{path:"$style_path/js/index.js",type:'js',rely:['easySlider']});
+	In.add('easySlider',{path:"{BASE_URL}/resource/js/jqplugins/easySlider1.5.js",type:'js'});
+	In.add('index',{path:"{BASE_URL}/{SKIN_PATH}/js/index.js",type:'js',rely:['easySlider']});
 	
- 	//In.add('lazy',{path:"resource/js/system/lazy.js",type:'js'});
- 
-	In('easySlider','index','lazy',function(){
+	In('easySlider','index','lazy','slides',function(){
 		loadPics();
 	});
 		
@@ -932,5 +930,6 @@ $(".box.model .task .box_detail .small_list li").hover(
     function(){$(this).addClass('hover')},
 	function(){$(this).removeCss('hover')}
 	);
+
 </script>
 

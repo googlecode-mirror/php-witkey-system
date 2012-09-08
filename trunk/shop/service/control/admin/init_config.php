@@ -5,7 +5,7 @@
  * @version v 2.0
  * 2011-09-10 13:51:34
  */
-defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 
 $init_menu = array(
     $_lang['order_manage']=>'index.php?do=model&model_id=7&view=order',

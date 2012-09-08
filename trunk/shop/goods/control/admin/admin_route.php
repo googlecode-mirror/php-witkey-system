@@ -5,7 +5,7 @@
  * @version v 2.0
  * 2011-09-08 11:31:34
  */
-defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 //”Ô—‘∞¸≥ı ºªØ
 keke_lang_class::package_init ( "shop" );
 keke_lang_class::loadlang("goods_process");

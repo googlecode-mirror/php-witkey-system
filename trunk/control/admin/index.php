@@ -25,10 +25,10 @@ class Control_admin_index extends Controller{
 		
 		);
 		$grouplist_arr = $admin_obj->get_user_group();
-		
+		 
 		/**后台全局菜单信息**/
 		$menu_conf = $admin_obj->get_admin_menu();
-		
+		 
 		/**子菜单列表**/
 		$sub_menu_arr = $menu_conf['menu'];
 		

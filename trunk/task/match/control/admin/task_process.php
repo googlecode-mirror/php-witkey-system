@@ -6,7 +6,7 @@
  * @since control/admin/admin_trans_process
  * 2011-11-01 11:31:34
  */
-defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 //实例化处理对象
 $process_obj=match_report_class::get_instance($report_id,$report_info,$obj_info);
 $report_info = $process_obj->_report_info;

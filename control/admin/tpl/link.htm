@@ -9,7 +9,6 @@
 
 <form method="get" action="{BASE_URL}/index.php/admin/link" id="frm_art_search">
 	<div class="box search p_relative">
-    	<div class="title"><h2>{$_lang['search']}</h2></div>
     	<div class="detail"  id="detail"> 
     		<table cellspacing="0" cellpadding="0">    		
 				<tbody>
@@ -24,7 +23,7 @@
 						 *{$_lang['search_by_like']}
 						 </td>
 	                </tr>
-					<tr>
+					<!--<tr>
 						<th>{$_lang['result_order']}</th>
 						<td>
 							<select name="ord[]">
@@ -48,18 +47,17 @@
 								<span class="icon magnifier">&nbsp;</span>{$_lang['search']}
 							</button>
 						</td>
-					</tr>          			
+					</tr>  -->        			
            		</tbody>
 			</table>
     	</div> 
 </div>
 
 <div class="box list">
-<div class="title"><h2>{$_lang['tag_list']}</h2></div>
     <div class="detail" id="ajax_dom"> 
             <table   border="0" cellspacing="0" cellpadding="0"  >
                 <tr>
-                    <th width="80">ID</th>
+                    <th width="80">ID ¡ü¡ý</th>
                     <th width="150">{$_lang['link_name']}</th>
                     <th class="motif" width="150">{$_lang['link_url']}</th>
                     <th class="80">{$_lang['order']}</th>

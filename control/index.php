@@ -111,7 +111,7 @@ class Control_index extends Controller{
 		
 		
 		
-		$page_title = $_K ['html_title'];
+		$_K['page_title'] = Keke::$_sys_config['seo_title'];
 		
  
 		/** 网站地图*/
@@ -162,8 +162,9 @@ class Control_index extends Controller{
 		}
 	}
 	function action_ajax(){
-		if (isset ( $_GET['ajax'] )) {
-			switch ($_GET['ajax']) {
+		$ajax = $this->request->param('id');
+		
+			switch ($ajax) {
 				case "task" :
 					/**
 					 * 最新任务
@@ -200,8 +201,6 @@ class Control_index extends Controller{
 					require Keke_tpl::template ( "ajax/index" );
 					die ();
 					break;
-			}
-		
 		}
 	}
 	function get_art($cat_id) {

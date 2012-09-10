@@ -109,6 +109,7 @@ $lang = array(
 	'asc'=>'递增',
 	'select_all'=>'全选',
 	'id'=>'编号',
+	'name'=>'名称',
 	'search'=>'搜索',
 	'page_size'=>'每页显示',
 	'result_order'=>'结果排序',

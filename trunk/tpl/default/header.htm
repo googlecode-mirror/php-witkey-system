@@ -12,7 +12,7 @@
                 	{loop $_K['nav_arr'] $k $v}
                    		<li>
                    			 
-                   			<a href="{$v['nav_url']}" {if isset($nav_active_index) && $v['nav_style']==$nav_active_index}class="selected"{/if} {if $v['newwindow']}target="_blank"{/if}>
+                   			<a href="{$v['nav_url']}" {if $v['nav_style']==$_K['action']}class="selected"{/if} {if $v['newwindow']}target="_blank"{/if}>
                    			 {$v['nav_title']}</a></li>
 						<li class="line"></li>
 					{/loop}

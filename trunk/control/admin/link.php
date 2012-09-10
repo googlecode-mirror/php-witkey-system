@@ -160,7 +160,7 @@ class Control_admin_link extends Controller {
 			$where = 'link_id = '.$_GET['link_id'];
 		//É¾³ý¶àÌõ	
 		}elseif($_GET['link_ids']){
-			$where = 'link_id in ('.$_GET['link_ids'].')';
+			$where = 'link_id in ('.$_GET['ids'].')';
 		}
 		echo  Model::factory('witkey_link')->setWhere($where)->del();
 	}

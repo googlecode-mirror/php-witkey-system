@@ -53,6 +53,7 @@ function submitSort(uri,f,ord){
 	location.href = uri;
 }
 					 
+/*
 function pdel(frm){ 
 	d = art.dialog;
 	var frm = frm; 
@@ -62,9 +63,11 @@ function pdel(frm){
 	}); 
 	return false;  
 }
-function batch_act(obj,frm){ 
+*/
+//批量删除，obj=>删除按钮对象
+function batch_act(obj){ 
 	d = art.dialog;
-	var frm = frm; 
+	//var frm = frm; 
 	var c = $(obj).val(); 
 	var conf = $(":checkbox[name='ckb[]']:checked").length;
 	if (conf > 0) {
@@ -75,7 +78,7 @@ function batch_act(obj,frm){
 				str.push($(this).val());
 			})
 			var val = str.join(',');
-			var url = '{$del_uri}&link_ids='+val;
+			var url = '{$del_uri}&ids='+val;
 			$.post(url,function(data){
 				if(data>0){
 					$(":checkbox[name='ckb[]']:checked").each(function(){

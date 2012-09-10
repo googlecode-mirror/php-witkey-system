@@ -3,7 +3,7 @@
     	<h1>{$_lang['links']}</h1>
         <div class="tool">         
             <a href="{BASE_URL}/index.php/admin/link" {if $_K['action'] != 'add'}class="here"{/if}>{$_lang['link_manage']}</a>
-			<a href="{BASE_URL}/index.php/admin/link/add" {if $_K['action'] == 'add'}class="here"{/if}>{if $link_id}{$_lang['link_edit']}{else}{$_lang['link_add']}{/if}</a>
+			<a href="{BASE_URL}/index.php/admin/link/add" {if $_K['action'] == 'add'}class="here"{/if}>{if $link_id}{$_lang['edit']}{else}{$_lang['add']}{/if}</a>
         </div>
 </div> 
 

@@ -37,13 +37,14 @@
 .skin .side_bar .menu_bar dt:active{background-color: #C39F49;background-image: -webkit-gradient(linear, left top, left bottom, from(#C39F49), to(#A48336)); background-image:-webkit-linear-gradient(top, #C39F49, #A48336); background-image:-moz-linear-gradient(top, #C39F49,#A48336 ); background-image:-ms-linear-gradient(top, #C39F49,#A48336 ); background-image:-o-linear-gradient(top, #C39F49, #A48336); background-image:linear-gradient(top, #A48336,#C39F49 );filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#C39F49', EndColorStr='#A48336');}
 .skin .side_bar .menu_bar dd {font-size: 14px;}
 .skin .side_bar .menu_bar a{color: #363; border-radius:0;/*text-shadow:0px -1px 0px rgba(0,0,0,.5);*/}
-.skin .side_bar .menu_bar a:hover{ background:rgba(255, 255, 255,.8); color:#254A7D; box-shadow:0 0 3px rgba(0,0,0,.5);text-shadow:0px 1px 0px rgba(255,255,255,.8);filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#E5FFFFFF,endColorstr=#E5FFFFFF);zoom: 1;}
+.skin .side_bar .menu_bar a:hover{ background:rgba(255, 255, 255,.8); color:#708728; box-shadow:0 0 3px rgba(0,0,0,.5);text-shadow:0px 1px 0px rgba(255,255,255,.8);filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#E5FFFFFF,endColorstr=#E5FFFFFF);zoom: 1;}
 .skin .side_bar .menu_bar a:active{background:rgba(51,51,51,.8); color:#fff;box-shadow:0 1px 2px rgba(0, 0, 0, 0.3) inset,0 1px 0 rgba(255, 255, 255, 0.2);text-shadow:0px 1px 0 rgba(0,0,0,.8);filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#E52B5691,endColorstr=#E52B5691);zoom: 1;}
 .skin .side_bar .menu_bar a.select{background:rgba(51,51,51,.8); color:#fff; font-weight:bold; box-shadow:0 1px 2px rgba(0, 0, 0, 0.3) inset,0 1px 0 rgba(255, 255, 255, 0.2);filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#E52B5691,endColorstr=#E52B5691);zoom: 1;}
 .skin .side_bar .menu_bar a.select:hover{text-shadow:1px 1px 1px rgba(0,0,0,.8);}
 .skin .side_bar .menu_bar a.select .arrow_l{ border-width:7px; margin-top:2px;}
 
-.skin .hide_nav{ background:#2b66a8;}
+.skin .hide_nav{ background:#3E6E25;}
+.skin .hide_nav a{ color:#fff;}
 
 .skin .tool_box{ background:rgba(255,255,255,.9); color:#333; background:none\0;filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#E5FFFFFF,endColorstr=#E5FFFFFF);zoom: 1;}
 .skin .tool_box .bread a{ color:#393; text-decoration:none;}

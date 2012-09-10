@@ -43,7 +43,16 @@ $(function(){
 		$(tips).children().html('').removeClass('tips_info');
 	 })
 })
- 
+//排序 
+function submitSort(uri,f,ord){
+	uri += (uri.indexOf('?')==-1)?"?":"&";
+	uri += 'f='+f;
+	uri += '&ord='+ord;
+	//要去掉同级A标签到中最后一个排序字符
+	
+	location.href = uri;
+}
+					 
 function pdel(frm){ 
 	d = art.dialog;
 	var frm = frm; 

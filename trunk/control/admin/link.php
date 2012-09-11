@@ -1,16 +1,21 @@
 <?php defined ( "IN_KEKE" ) or die ( "Access Denied" );
-
+/**
+ * 后台友连管理的控制器
+ * @author michael
+ *
+ */
 class Control_admin_link extends Controller {
+	
 	/**
 	 * 友链管理初始化页面
-	 * index 是必须的话，否则路由找不到index，程序就挂了啊
+	 * index 是必须的，否则路由找不到index，程序就挂了啊
 	 * 坑爹的注释啊,这是必须要写的(*_*)!
 	 */
 	function action_index() {
 		//定义全局变量与语言包，只要加载模板，这个是必须要定义.操
 		global $_K,$_lang;
 		
-		//要显示的字段,即SQl中要用到的字段
+		//要显示的字段,即SQl中SELECT要用到的字段
 		$fields = ' `link_id`,`link_name`,`link_url`,`listorder`,`on_time` ';
 		//要查询的字段,在模板中显示用的
 		$query_fields = array('link_id'=>$_lang['id'],'link_name'=>$_lang['name'],'on_time'=>$_lang['time']);
@@ -18,101 +23,31 @@ class Control_admin_link extends Controller {
 		$count = intval($_GET['count']);
 		//基本uri,当前请求的uri ,本来是能通过Rotu类可以得出这个uri,为了程序灵活点，自己手写好了
 		$base_uri = BASE_URL."/index.php/admin/link";
+		
 		//添加编辑的uri,add这个action 是固定的
 		$add_uri =  $base_uri.'/add';
 		//删除uri,del也是一个固定的，写成其它的，你死定了
 		$del_uri = $base_uri.'/del';
+		//默认排序字段，这里按时间降序
+		$this->_default_ord_field = 'on_time';
 		//这里要口水一下，get_url就是处理查询的条件
-	    extract($this->get_url($base_uri));
-
+		extract($this->get_url($base_uri));
+		//获取列表分页的相关数据,参数$where,$uri,$order,$page来自于get_url方法
 		$data_info = Model::factory('witkey_link')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
-		
+		//列表数据
 		$link_arr = $data_info['data'];
+		//分页数据
 		$pages = $data_info['pages'];
 		
 		//查询当前的Sql
 		//var_dump(Database::instance()->get_last_query());
 		//查询当的sql数量
 		//echo Database::instance()->get_query_num();
-		
+		$query_sql = Database::instance()->get_last_query();
+		var_dump($query_sql);
 		require Keke_tpl::template('control/admin/tpl/link');
 	}
-	/**
-	 * 
-	 * @param string $base_uri
-	 * @return multitype:string number
-	 */
-	function get_url($base_uri){
-		$r = array();
-		//初始化where的值
-		$where = ' 1=1 ';
-		$query_uri = '?';
-		//字段与条件
-		if($_GET['slt_fields']  and $_GET['txt_condition']){
-			//时间的查询处理
-			if(strtotime($_GET['txt_condition'])){
-				//字段值为时间时
-				$c =  $_GET['txt_condition'];
-				//这里的数据库中的on_time 字段必须是时间戳
-				$f =  "FROM_UNIXTIME(`{$_GET['slt_fields']}`,'%Y-%m-%d')";
-				
-			}else{
-				//非时间的条件
-				$c = $_GET['txt_condition'];
-				$f = "`{$_GET['slt_fields']}`";
-			}
-			//如果是like 条件的值要加%
-			if($_GET['slt_cond']=='like'){
-				$c = "%$c%";
-			}
-			//拼接url字段
-			$where .= "and $f {$_GET['slt_cond']} '$c'";
-			
-			$query_uri .= "slt_cond={$_GET['slt_cond']}";
-			$query_uri .= "&slt_fields={$_GET['slt_fields']}&txt_condition={$_GET['txt_condition']}";
-		}
-		if($_GET['page_size']){
-			$query_uri .= '&page_size='.$_GET['page_size'];
-		}
-		//页数
-		$_GET['page'] and $page = $_GET['page'] or $page = 1;
-		
-		//排序的uri,f表示要排序的字段
-		if($_GET['f']){
-			$query_uri .= '&f='.$_GET['f'].'&ord='.$_GET['ord'];
-		}
-		//查询uri
-		$uri = $base_uri.$query_uri;
-		//排序标记，定义js 中的变量
-		//降序
-		if(isset($_GET['ord']) and $_GET['ord']==1){
-			$ord_tag = 0;
-			$ord_char = '↓';
-			//升序
-		}elseif(isset($_GET['ord']) and $_GET['ord']==0){
-			$ord_tag = 1;
-			$ord_char = '↑';
-		}else{
-			//默认不显示
-			$ord_tag = 0;
-			$ord_char = '';
-		}
-		
-		
-		//排序的条件
-		if(isset($_GET['f'])){
-			$t = $ord_tag==1?'desc':'asc';
-			$order = " order by {$_GET['f']} $t ";
-		}
-		$r['where'] = $where;
-		//$r['query_uri'] =$query_uri;
-		$r['uri'] = $uri;
-		$r['ord_tag']=$ord_tag;
-		$r['ord_char']=$ord_char;
-		$r['order'] = $order;
-		$r['page']=$page;
-		return $r;		
-	}
+	
 	//添加与编辑初始化
 	function action_add(){
 		//始始化全局变量，语言包变量

@@ -7,9 +7,9 @@
         </div>
 </div> 
 <form method="get" action="{BASE_URL}/index.php/admin/link" id="frm_art_search">
-	<div class="box search p_relative">
-    	<div class="detail"  id="detail"> 
-    		<table cellspacing="0" cellpadding="0">    		
+<div class="box list"  id="ajax_dom">
+	<div class="box search p_relative" id="detail">
+   		<table class="detail"  cellspacing="0" cellpadding="0">    		
 				<tbody>
 					<tr>
 		                <th>²éÑ¯×Ö¶Î
@@ -36,18 +36,15 @@
 	                </tr>  			
            		</tbody>
 			</table>
-    	</div> 
+    
 </div>
-
-<div class="box list">
-    <div class="detail" id="ajax_dom"> 
-            <table   border="0" cellspacing="0" cellpadding="0"  >
+          <table class="detail"   border="0" cellspacing="0" cellpadding="0"  >
                 <tr>
-                    <th width="80">ID </th>
-                    <th width="150"><a href="javascript:;" onclick="submitSort('{$uri}','link_name',{$ord_tag})">{$_lang['link_name']}{$ord_char}</a></th>
+                    <th width="80"><a href="javascript:;" onclick="submitSort('{$uri}','link_id',{$ord_tag})">ID{if $_GET['f']=='link_id'}{$ord_char}{/if}</a></th>
+                    <th width="150"><a href="javascript:;" onclick="submitSort('{$uri}','link_name',{$ord_tag})">{$_lang['link_name']}{if $_GET['f']=='link_name'}{$ord_char}{/if}</a></th>
                     <th class="motif" width="150">{$_lang['link_url']}</th>
                    
-                    <th width="150"><a href="javascript:;" onclick="submitSort('{$uri}','on_time',{$ord_tag})">{$_lang['time']}{$ord_char}</a></th>
+                    <th width="150"><a href="javascript:;" onclick="submitSort('{$uri}','on_time',{$ord_tag})">{$_lang['time']}{if $_GET['f']=='on_time'}{$ord_char}{/if}</a></th>
                     <th width="60">{$_lang['edit']}</th>
                     <th width="60">{$_lang['delete']}</th>
                 </tr>
@@ -63,10 +60,10 @@
                     
                     <td><!--{eval echo date('Y-m-d',$value['on_time'])}--></td>
                     <td>
-                        <a href="{$add_uri}&link_id={$value['link_id']}" class="button dbl_target"> <span class="pen icon"></span>{$_lang['edit']}</a>
+                        <a href="{$add_uri}?link_id={$value['link_id']}" class="button dbl_target"> <span class="pen icon"></span>{$_lang['edit']}</a>
                     </td>
                     <td>
-                       <a href="{$del_uri}&link_id={$value['link_id']}" onclick="return cdel(this);" class="button"> 
+                       <a href="{$del_uri}?link_id={$value['link_id']}" onclick="return cdel(this);" class="button"> 
 					   <span class="trash icon"></span>{$_lang['delete']}</a>
                     </td>
                 </tr>
@@ -85,8 +82,7 @@
             	</td>
         </tr>
         </table>
-		<div class="page ">{$pages['page']}</div>
-</div>
+		<div class="page">{$pages['page']}</div>
 </div>		
  
 </form>

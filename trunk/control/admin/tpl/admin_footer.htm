@@ -95,10 +95,15 @@ function batch_act(obj){
 </script> 
 {if KEKE_DEBUG}
 <div style="background-color:green;color:#fff;text-align:center;">
-	<!--{eval list($querys,$times)=Keke::execute_time()}-->
-		Querys: {$querys}
-		 &nbsp;
-		Times:{$times}
+	<!--{eval list($times,$memory)=Keke::execute_time()}-->
+	Ö´ÐÐÊ±¼ä: {$times} &nbsp;{$memory}
+	<!--{eval $query_sql = Database::instance()->get_last_query();}-->
+	<div>
+		{loop $query_sql $v}
+		{$v}
+		{/loop}
+	</div>
+	
 </div>
 					
 {/if}

@@ -87,7 +87,7 @@ abstract class Model {
  * @param int $count 总页数，防止分时再次查询
  * @param Int $page_size  当前页的条数
  * @param string $ajax_dom  ajax div 标签 id 
- * @return multitype:<array(data,pages), string>
+ * @return array(data,pages)
  */
 	function get_grid($fields ,$wh = '1=1', $uri=NULL, $order = null,$page=1, $count=NULL,$page_size = 10, $ajax_dom = null) {
 		

@@ -17,7 +17,17 @@ class Control_admin_tool_dbbackup extends Controller{
 	 * 备份数据库
 	 */
 	function action_save(){
-		keke_backup_class::run_backup ();
+		global  $_lang;
+		if(!$_GET['t']){
+			keke_backup_class::run_backup ();
+		}else{
+			if($_GET['t']==1){
+				Keke::show_msg ('系统提示',  "index.php/admin/tool_dbrestore",'提交成功','success' );
+			}else{
+				Keke::show_msg ( '系统提示', "index.php/admin/tool_backup", '提交失败','warning' );
+			}
+		}
+		
 	}
 }
 

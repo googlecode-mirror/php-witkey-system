@@ -1,5 +1,3 @@
-
-
 </div>
 <script type="text/javascript" src="{BASE_URL}/resource/js/artdialog/artDialog.js"></script>
 <script type="text/javascript" src="{BASE_URL}/resource/js/artdialog/jquery.artDialog.js?skin=default"></script>
@@ -18,6 +16,7 @@
 	</script>
  
 <script type="text/javascript">
+var tips = window.parent.document.getElementById('del_tips');
 function cdel(o,s){
 	d = art.dialog;
 	var c = "{$_lang['you_comfirm_delete_operate']}";
@@ -26,22 +25,42 @@ function cdel(o,s){
 	}
 	//d.follow(o);
 	d.confirm(c, function(){
-			$.get(o.href,function(data){
+		$.ajax({
+			url:o.href,
+			dataType:'text',
+			beforeSend:function(){
+	 	        $(tips).children().html('删除中... 已经删除成功!').addClass('tips_info'); 
+			},
+			success: function(data){
+			   if(data >0){
+					$(o).parent().parent().remove();
+				}
+			},
+			complete:function(){
+				$(tips).children().html('').removeClass('tips_info');
+			}
+			
+		});
+			/*
+$.get(o.href,function(data){
 				if(data >0){
 					$(o).parent().parent().remove();
 					
 				}
 			})
+*/
 	}).follow(o);
 	return false;	
 }
 $(function(){
-	var tips = window.parent.document.getElementById('del_tips');
+/*
+var tips = window.parent.document.getElementById('del_tips');
 	 $(tips).ajaxStart(function(){
 		$(tips).children().html('删除中... 已经删除成功!').addClass('tips_info');  
 	 }).ajaxComplete(function(){
 		$(tips).children().html('').removeClass('tips_info');
 	 })
+*/
 })
 //排序 
 function submitSort(uri,f,ord){
@@ -79,13 +98,32 @@ function batch_act(obj){
 			})
 			var val = str.join(',');
 			var url = '{$del_uri}?ids='+val;
-			$.post(url,function(data){
+			/*
+$.post(url,function(data){
 				if(data>0){
 					$(":checkbox[name='ckb[]']:checked").each(function(){
 						$(this).parent().parent().remove();
 					})
 				}
 			})
+*/
+			$.ajax({
+				url:url,
+			dataType:'text',
+			beforeSend:function(){
+	 	        $(tips).children().html('删除中... 已经删除成功!').addClass('tips_info'); 
+			},
+			success: function(data){
+			  if(data>0){
+					$(":checkbox[name='ckb[]']:checked").each(function(){
+						$(this).parent().parent().remove();
+					})
+				}
+			},
+			complete:function(){
+				$(tips).children().html('').removeClass('tips_info');
+			}
+			});
 		}).follow(obj);
 	}else{
 		d.alert("{$_lang['has_none_being_choose']}");

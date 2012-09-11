@@ -8,9 +8,9 @@
 */
 $lang=array(
 /*admin_tool_file.php*/
-      'delete_attachment'=>'删除附件',
+     /*  'delete_attachment'=>'删除附件',
       'atachment_delete_success'=>'附件删除成功！',
-      'attchment_not_exist_delete_fail'=>'附件不存在，删除失败！',
+      'attchment_not_exist_delete_fail'=>'附件不存在，删除失败！', */
 
 
 /*admin_tool_file.htm*/

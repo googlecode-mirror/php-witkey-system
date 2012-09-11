@@ -68,22 +68,34 @@
                     </td>
                 </tr>
 				{/loop}
-			<tr>
-			    <td colspan="9">
-			    <input type="checkbox" onclick="checkall(event);" id="checkbox" name="checkbox"/>
-                
-            	<label for="checkbox"> {$_lang['select_all']}</label>
-            	<input type="hidden" name="sbt_action" class="sbt_action"/>
-				<button type="submit" name="sbt_action" onclick="return batch_act(this)" value="{$_lang['mulit_delete']}" class="pill negative" >
-					<span class="trash icon"></span>{$_lang['mulit_delete']}
-				</button>
-				<a   name="sbt_add" value={$_lang['links_add']} class="pill negative button"
-			 	 href="{$base_uri}/add"><span class="check icon"></span>{$_lang['links_add']} </a>
-            	</td>
-        </tr>
-        </table>
-		<div class="page">{$pages['page']}</div>
+			<tfoot>	
+				<tr >
+					    <td colspan="9">
+					    <div class="page" >{$pages['page']}</div>
+					    <input type="checkbox" onclick="checkall(event);" id="checkbox" name="checkbox"/>
+		                
+		            	<label for="checkbox"> {$_lang['select_all']}</label>
+		            	<input type="hidden" name="sbt_action" class="sbt_action"/>
+						<button type="submit" name="sbt_action" onclick="return batch_act(this)" value="{$_lang['mulit_delete']}" class="pill negative" >
+							<span class="trash icon"></span>{$_lang['mulit_delete']}
+						</button>
+						
+						<a   name="sbt_add" value={$_lang['links_add']} class="pill negative button"
+					 	 href="{$base_uri}/add"><span class="check icon"></span>{$_lang['links_add']} </a>
+						 
+		            	</td>
+		        </tr>
+		 </tfoot>
+    </table>
+		
 </div>		
  
 </form>
+<script type="text/javascript">
+	$(function(){
+		$(".page a ").click(function(){
+			//alert(1);
+		});
+	})
+</script>
 <!--{include control/admin/tpl/admin_footer}-->

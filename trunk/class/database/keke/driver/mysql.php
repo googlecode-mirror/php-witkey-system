@@ -15,7 +15,7 @@ final class Keke_driver_mysql extends Keke_database {
 	private $_last_query_id = null;
 	private $_return_insert_id = FALSE;
 	private $_query_num = 0;
-	private $_query_sql = array ();
+	//private $_query_sql = array ();
 	private static  $_query_list = array ();
 	
 	function __construct($config = array()) {
@@ -119,7 +119,7 @@ final class Keke_driver_mysql extends Keke_database {
 		$this->free_result ();
 		return $res;
 	}
-	public function get_last_query(){
+	public function get_query_list(){
 		return self::$_query_list;
 	}
 	/**
@@ -226,7 +226,9 @@ final class Keke_driver_mysql extends Keke_database {
 		! is_resource ( $this->_link ) and $this->dbconnection ();
 		
 		$is_nubuffer == 1 and $query_type = "mysql_unbuffered_query" or $query_type = "mysql_query";
-		
+		//var_dump($sql);
+		//self::$_query_list[] = $sql;
+		//var_dump(self::$_query_list);
 		array_push ( self::$_query_list, $sql );
 		$this->_last_query_id = $query_type ( $sql, $this->_link ) or $this->halt ( mysql_error (), $sql );
 		$this->_query_num ++;

@@ -43,8 +43,9 @@ class Control_admin_link extends Controller {
 		//var_dump(Database::instance()->get_last_query());
 		//查询当的sql数量
 		//echo Database::instance()->get_query_num();
-		$query_sql = Database::instance()->get_last_query();
-		var_dump($query_sql);
+		//$querys = Keke::utftogbk( Database::instance()->get_query_list());
+// 		var_dump($querys);die;
+		
 		require Keke_tpl::template('control/admin/tpl/link');
 	}
 	

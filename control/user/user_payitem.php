@@ -20,9 +20,9 @@ in_array ( $op, $ops ) or $op = $ops[0];
  * ×Ó¼¯²Ëµ¥
  */
 $sub_nav =array(
-			array("auth"=>array(kekezu::lang("auth"),"document"),
-			   "toolbox"=>array(kekezu::lang("toolbox"),"icon16 box"),
-			   "promotion"=>array(kekezu::lang("prom_make_money"),"layers-1"))
+			array("auth"=>array(Keke::lang("auth"),"document"),
+			   "toolbox"=>array(Keke::lang("toolbox"),"icon16 box"),
+			   "promotion"=>array(Keke::lang("prom_make_money"),"layers-1"))
 			);
 if($task_open==0&&$shop_open==0){
 	unset($sub_nav[0]['toolbox']);

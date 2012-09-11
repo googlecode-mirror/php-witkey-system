@@ -1,4 +1,4 @@
-<?php defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+<?php defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * @copyright keke-tech
  * @author Liyingqing
@@ -14,6 +14,6 @@ $views = array ('list', 'edit', 'cat_edit', 'cat_list' );
 if (file_exists ( ADMIN_ROOT . 'admin_article_' . $view . '.php' )) {
 	require ADMIN_ROOT . 'admin_article_' . $view . '.php';
 } else {
-	kekezu::admin_show_msg ( $_lang['404_page'],'',3,'','warning' );
+	Keke::admin_show_msg ( $_lang['404_page'],'',3,'','warning' );
 }
 

@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * 导航菜单配置
  * @author S
@@ -7,10 +7,10 @@
  */
 
 
-kekezu::admin_check_role ( 41 );
-$nav_list = kekezu::get_table_data ( '*', 'witkey_nav', '', 'listorder', '', '', "nav_id");
+Keke::admin_check_role ( 41 );
+$nav_list = Keke::get_table_data ( '*', 'witkey_nav', '', 'listorder', '', '', "nav_id");
 //nav_list的json，方便JS赋值
-$nav_list_json = kekezu::json_encode_k(kekezu::gbktoutf($nav_list));
+$nav_list_json = Keke::json_encode_k(Keke::gbktoutf($nav_list));
 $nav_obj = new keke_table_class ( "witkey_nav" );
 
 $url = "index.php?do=$do&view=$view";
@@ -19,17 +19,17 @@ $url = "index.php?do=$do&view=$view";
 if($ac == 'edit'){
 	if(!empty($nav_id)){
 		$sql = sprintf("select * from %switkey_nav where nav_id ='%d' limit 0,1",TABLEPRE,$nav_id);
-		$nav_config = db_factory::get_one($sql);
+		$nav_config = Dbfactory::get_one($sql);
 		$readonly = nav_analysis($nav_config['nav_url']);
 	}
 	if($fds and $sbt_edit){
 		if($set_index){ 
-			$set_rs = db_factory::execute(sprintf("update %switkey_basic_config set v='%s' where k='set_index'",TABLEPRE,$fds['nav_style']));
+			$set_rs = Dbfactory::execute(sprintf("update %switkey_basic_config set v='%s' where k='set_index'",TABLEPRE,$fds['nav_style']));
 		}else{
-			$set_rs = db_factory::execute(sprintf("update %switkey_basic_config set v='index' where k='set_index'",TABLEPRE));
+			$set_rs = Dbfactory::execute(sprintf("update %switkey_basic_config set v='index' where k='set_index'",TABLEPRE));
 		}
 		$res = $nav_obj->save($fds,$pk);
-		($res || $set_rs) and kekezu::admin_show_msg($_lang['operate_success'],$url,2,$_lang['edit_success'],"success") or kekezu::admin_show_msg($_lang['operate_fail'],$url,2,$_lang['edit_fail'],"error");
+		($res || $set_rs) and Keke::admin_show_msg($_lang['operate_success'],$url,2,$_lang['edit_success'],"success") or Keke::admin_show_msg($_lang['operate_fail'],$url,2,$_lang['edit_fail'],"error");
 	}
 	require $template_obj->template ( 'control/admin/tpl/admin_config_' . $view.'_edit' );
 	die;
@@ -37,12 +37,12 @@ if($ac == 'edit'){
 //删除导航
 if ($ac == 'del') {
 	$nav_obj->del ( 'nav_id', $nav_id, $url );
-	kekezu::admin_show_msg ($_lang['delete_nav_success'], "index.php?do=config&view=nav",3,'','success' );
+	Keke::admin_show_msg ($_lang['delete_nav_success'], "index.php?do=config&view=nav",3,'','success' );
 }
 //设为首页
 if($ac=='set_index'){
-	$res = db_factory::execute(sprintf("update %switkey_basic_config set v='%s' where k='set_index'",TABLEPRE,$nav_style));
-	kekezu::admin_show_msg ( $_lang['set_index_success'], "index.php?do=config&view=nav",3,'','success' );
+	$res = Dbfactory::execute(sprintf("update %switkey_basic_config set v='%s' where k='set_index'",TABLEPRE,$nav_style));
+	Keke::admin_show_msg ( $_lang['set_index_success'], "index.php?do=config&view=nav",3,'','success' );
 }
 if($sbt_edit){
 	$sql = '';
@@ -53,17 +53,17 @@ if($sbt_edit){
 		$sql.=',nav_style="'.$v['nav_style'].'"';
 		$sql.=',listorder='.intval($v['listorder']);
 		$sql.=' where nav_id='.intval($nav_id);
-		db_factory::execute($sql);
+		Dbfactory::execute($sql);
 	}
-	kekezu::admin_system_log('编辑后台菜单');
-	kekezu::admin_show_msg ('菜单编辑成功', "index.php?do=config&view=nav",3,'','success' );
+	Keke::admin_system_log('编辑后台菜单');
+	Keke::admin_show_msg ('菜单编辑成功', "index.php?do=config&view=nav",3,'','success' );
 }
 /**
  * 地址分析
  */
 function nav_analysis($url){
 	global $_K;
-	$front_route = kekezu::route_output();/**前台路由数组*/
+	$front_route = Keke::route_output();/**前台路由数组*/
 	$readnonly = true;
 	$site_ali = parse_url($_K['siteurl']);
 	$nav_ali = parse_url($url);

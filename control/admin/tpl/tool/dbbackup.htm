@@ -1,26 +1,20 @@
-<!--{template control/admin/tpl/admin_header}-->
-
-
+<!--{include control/admin/tpl/admin_header}-->
 <div class="page_title">
     	<h1>{$_lang['db_mange']}</h1>
-         <div class="tool">         
-            <a href="index.php?do=tool&view=dbbackup" class="here">{$_lang['backup']}</a>
-            <a href="index.php?do=tool&view=dbrestore">{$_lang['restore']}</a>
-			<a href="index.php?do=tool&view=dboptim">{$_lang['optim']}</a>
-			<a href="index.php?do=tool&view=dboptim&op=repair">{$_lang['repair']}</a>
+        <div class="tool">         
+            <a href="{BASE_URL}/index.php/admin/tool_dbbackup" class="here">{$_lang['backup']}</a>
+            <a href="{BASE_URL}/index.php/admin/tool_dbrestore">{$_lang['restore']}</a>
+			<a href="{BASE_URL}/index.php/admin/tool_dboptim">{$_lang['optim']}</a>
+			<a href="{BASE_URL}/index.php/admin/tool_dboptim/repair">{$_lang['repair']}</a>
 		</div>
 </div>
 <div class="box list">
-  <div class="detail">
-    <div class="tabcon">
      <div class="title"><h2>{$_lang['database_backup']}</h2></div>
 		<form method="post" action="#" id="frm_cat_edit">
-   			<input type="hidden" name="do" value="{$do}">
-			<input type="hidden" name="view" value="{$view}">
-          	 <table cellpadding="0" cellspacing="0">
+          	 <table class="detail" cellpadding="0" cellspacing="0">
            	  <tbody>
             	  <tr class="item">
-              		<td width="300"><img src="tpl/img/SQl15bg.gif"></td>
+              		<td width="300"><img src="{BASE_URL}/control/admin/tpl/img/SQl15bg.gif"></td>
               		<td class="loading" align="center">{DBNAME}</td>
               		<td width="300">
               			<button type="button" name="sbt_edit" id="backup" class="primary positive pill button">
@@ -31,8 +25,7 @@
           	 </tbody>
              </table>
        </form>
-    </div>
- </div><div class="backshow"></div>
+<div class="backshow"></div>
 </div>
 <script type="text/javascript">
 	$("#backup").click(function(){
@@ -70,4 +63,4 @@ function winReload(t){
 	window.location.replace("index.php?do=tool&view=dbbackup&t="+t);
 }
 </script>
-<!--{template control/admin/tpl/admin_footer}-->
+<!--{include control/admin/tpl/admin_footer}-->

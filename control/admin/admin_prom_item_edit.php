@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' ) or exit('Access Denied');
+<?php	defined ( 'IN_KEKE' ) or exit('Access Denied');
 /**
  * @copyright keke-tech
  * @author Liyingqing
@@ -18,13 +18,13 @@ if( $sbt_edit ) {
 		$item_pic and $fds['item_pic'] = $item_pic;
 		if ($item_id) {
 			$edit=$tab_obj->save($fds,$pk); //关系编辑
-			kekezu::admin_system_log($_lang['edit_prom_material'] . $item_id );
-			$edit &&  kekezu::admin_show_msg($_lang['prom_material_edit_success'],'',3,'','success');//die
+			Keke::admin_system_log($_lang['edit_prom_material'] . $item_id );
+			$edit &&  Keke::admin_show_msg($_lang['prom_material_edit_success'],'',3,'','success');//die
 		}
 		$add = $tab_obj->save($fds); //关系添加
-		kekezu::admin_system_log($_lang['add_prom_material']);
-		$add && kekezu::admin_show_msg($_lang['prom_material_add_success'],'',3,'','success');
+		Keke::admin_system_log($_lang['add_prom_material']);
+		$add && Keke::admin_show_msg($_lang['prom_material_add_success'],'',3,'','success');
 } else {
-	$item_id and $item_info = db_factory::get_one(" select * from ".TABLEPRE."witkey_prom_item where item_id = '$item_id'");
+	$item_id and $item_info = Dbfactory::get_one(" select * from ".TABLEPRE."witkey_prom_item where item_id = '$item_id'");
 }
 require $template_obj->template ( 'control/admin/tpl/admin_'.$do.'_' . $view );

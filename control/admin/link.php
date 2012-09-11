@@ -40,7 +40,7 @@ class Control_admin_link extends Controller {
 		$pages = $data_info['pages'];
 		
 		//查询当前的Sql
-		//var_dump(Database::instance()->get_last_query());
+		//var_dump(Database::instance()->get_query_list());
 		//查询当的sql数量
 		//echo Database::instance()->get_query_num();
 		//$querys = Keke::utftogbk( Database::instance()->get_query_list());
@@ -90,7 +90,8 @@ class Control_admin_link extends Controller {
 		$array = array('link_name'=>$_POST['txt_link_name'],
 				       'link_url'=>$_POST['txt_link_url'],
 					   'link_pic'=>$link_pic,
-					   'listorder' => $_POST['txt_listorder'],				  
+					   'listorder' => $_POST['txt_listorder'],
+				       'on_time'=>time(),				  
 		);
         //这是个隐藏字段，也就是主键的值，这个主键有值，就是要编辑(update)数据到数据库
 		if($_POST['hdn_link_id']){

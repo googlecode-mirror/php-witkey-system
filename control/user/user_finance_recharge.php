@@ -10,7 +10,7 @@
 $step_list = array ("step1" => array ($_lang['step_one'],$_lang['input_recharge_money'] ), "step2" => array ($_lang['step_two'], $_lang['choose_pay_account'] ),"step3" => array ($_lang['step_three'], $_lang['waiting_for_background_review'] ));
 $step or $step = 'step1';
 
-//$verify = kekezu::reset_secode_session($ver?0:1);//安全码输入
+//$verify = Keke::reset_secode_session($ver?0:1);//安全码输入
 $ac_url = $origin_url . "&op=$op&ver=".intval($ver);
 
 
@@ -31,7 +31,7 @@ switch ($step) {
 			   $paytitle = $username . "(" . $_K ['html_title'] . $_lang['balance_recharge'] . trim ( sprintf ( "%10.2f", $total_money ) ) . $_lang['yuan'].")";
 				
 				if (isset ( $ajax ) && $ajax == 'confirm') { //确认充值
-					$payment_config = kekezu::get_payment_config($pay_mode);
+					$payment_config = Keke::get_payment_config($pay_mode);
 					
 					require S_ROOT . "/payment/" . $pay_mode . "/order.php";
 					
@@ -46,20 +46,20 @@ switch ($step) {
 				   
 				   require keke_tpl_class::template ( "pay_cash");
 					die();
-					//kekezu::show_msg($_lang['operate_notice'],'',3,$from,"confirm_info",'success');
+					//Keke::show_msg($_lang['operate_notice'],'',3,$from,"confirm_info",'success');
 				}
 				break;
 				
 			case "offline_charge" : //线下充值
-				if (isset($formhash)&&kekezu::submitcheck($formhash)) {
-		            $pay_info=kekezu::escape($pay_info);
+				if (isset($formhash)&&Keke::submitcheck($formhash)) {
+		            $pay_info=Keke::escape($pay_info);
 		            $cash = keke_curren_class::convert(abs($recharge),0,true)+0;
 					$order_id=keke_order_class::create_user_charge_order('offline_charge', $pay_account,$cash,'',$pay_info);
 					 if($order_id){
-						kekezu::show_msg ( $_lang['system prompt'],$ac_url."&op=detail&action=charge#userCenter",'3',"{$_lang['order_submit_success_notice']}",'alert_right');
+						Keke::show_msg ( $_lang['system prompt'],$ac_url."&op=detail&action=charge#userCenter",'3',"{$_lang['order_submit_success_notice']}",'alert_right');
 						
 					}else{
-						kekezu::show_msg ( $_lang['system prompt'],$ac_url."&step=step2&show=offline#userCenter",'3',"{$_lang['order_submit_fail']}",'alert_error');
+						Keke::show_msg ( $_lang['system prompt'],$ac_url."&step=step2&show=offline#userCenter",'3',"{$_lang['order_submit_fail']}",'alert_error');
 					}
 				}
 				break;
@@ -73,7 +73,7 @@ function get_pay_config($paymentname = "", $pay_type = 'online'){
   $where = " 1=1 ";
   $paymentname and $where  .= " and payment='$paymentname' ";
   $pay_type and  $where .= " and type = '$pay_type' ";	
-  $list=  kekezu::get_table_data ( '*', "witkey_pay_api", $where, "pay_id asc", '', '', '', null );
+  $list=  Keke::get_table_data ( '*', "witkey_pay_api", $where, "pay_id asc", '', '', '', null );
    
   $tmp = array();
   foreach ($list as $k=>$v){

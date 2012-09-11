@@ -336,7 +336,7 @@ function get_wb_platform($task_id) {
 function get_wbtask_info($path) {
 	$where = get_where ( $path );
 	$result = array ();
-	global $kekezu;
+	global $Keke;
 	
 	if (Keke::$_model_list ['8'] ['model_status'] && Keke::$_model_list ['9'] ['model_status']) {
 		$sql = "SELECT d.*,a.task_id, concat(IFNULL(b.wb_platform,''),ifnull(c.wb_platform,'')) as platform  FROM `%switkey_task` a left join %switkey_task_wbzf b on  a.task_id = b.task_id LEFT JOIN  %switkey_task_wbdj c on a.task_id = c.task_id  

@@ -34,7 +34,7 @@ if($shop_open==0){
 }
 
 //var_dump($sub_nav);die;
-$model_list=kekezu::get_table_data ( '*', 'witkey_model', " model_type = '$op' and model_status=1", 'model_id asc ', '', '', 'model_id', 3600 );
+$model_list=Keke::get_table_data ( '*', 'witkey_model', " model_type = '$op' and model_status=1", 'model_id asc ', '', '', 'model_id', 3600 );
 $model_fds = array_keys($model_list);
 $model_id or $model_id = intval($model_fds['0']);
  

@@ -35,7 +35,7 @@ $page_title=$_lang['weike_shop'].'- '.$_K['html_title'];
  	case 'hot' ://默认最热
  		$order = 'views desc';
  }
- $services_list = $kekezu -> get_table_data($fields, $table, $where, $order, '', '0,16', 'service_id', 60*60);
+ $services_list = $Keke -> get_table_data($fields, $table, $where, $order, '', '0,16', 'service_id', 60*60);
  $top2 = array_splice($services_list,0,2);
 
  //统计_交易中选稿中

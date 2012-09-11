@@ -8,7 +8,7 @@
 
 
 
-$page_obj = $kekezu->_page_obj;
+$page_obj = $Keke->_page_obj;
 $action or $action = 'basic';
 /**三级菜单**/
 $third_nav=array("basic"=>array($_lang['finance_detail'],$_lang['finance_record_stats']),
@@ -25,7 +25,7 @@ switch ($action) {
 		$fina_obj = new Keke_witkey_finance_class ();
 		$action_arr = keke_glob_class::get_finance_action (); //财务用途
 		$ord_arr = array (" a.fina_id desc " =>$_lang['finance_id_desc'], " a.fina_id asc " =>$_lang['finance_id_asc'], " a.fina_time desc " =>$_lang['pay_time_desc'], " a.fina_time asc " => $_lang['pay_time_asc']);
-		$fina_count =kekezu::get_table_data(" sum(fina_cash) as cash, sum(fina_credit) as credit,fina_type ","witkey_finance"," $where    and fina_action not in ('withdraw','offline_recharge','offline_charge','online_charge','online_recharge','withdraw_fail')",""," fina_type","","fina_type");
+		$fina_count =Keke::get_table_data(" sum(fina_cash) as cash, sum(fina_credit) as credit,fina_type ","witkey_finance"," $where    and fina_action not in ('withdraw','offline_recharge','offline_charge','online_charge','online_recharge','withdraw_fail')",""," fina_type","","fina_type");
 		/**搜索条件 start**/
 		$sql = ' select a.*,b.task_title,c.title from '.TABLEPRE.'witkey_finance a left join '
 				.TABLEPRE.'witkey_task b on a.obj_id=b.task_id left join '.TABLEPRE
@@ -35,9 +35,9 @@ switch ($action) {
 		$fina_type and $where .= " and a.fina_type = '$fina_type' ";
 		$ord and $where .= " order by $ord " or $where .= " order by a.fina_id desc ";
 		/**搜索条件 end**/
-		$count = intval(db_factory::get_count(' select count(fina_id) from '.TABLEPRE.'witkey_finance where uid='.$uid.' and fina_action not in ("withdraw","offline_recharge","offline_charge","online_charge","online_recharge","withdraw_fail")'));
+		$count = intval(Dbfactory::get_count(' select count(fina_id) from '.TABLEPRE.'witkey_finance where uid='.$uid.' and fina_action not in ("withdraw","offline_recharge","offline_charge","online_charge","online_recharge","withdraw_fail")'));
 		$pages = $page_obj->getPages ( $count, $page_size, $page, $url, '#userCenter' );
-		$fina_arr = db_factory::query($sql.$where.$pages['where']);
+		$fina_arr = Dbfactory::query($sql.$where.$pages['where']);
 		break;
 	case "charge" :
 		$charge_obj=new Keke_witkey_order_charge_class();//充值记录表
@@ -45,7 +45,7 @@ switch ($action) {
 		$bank_arr=keke_glob_class::get_bank();
 		$status_arr = keke_order_class::get_order_status();
 		$ord_arr = array (" order_id desc " =>$_lang['recharge_id_desc'], " order_id asc " => $_lang['recharge_id_asc'], " pay_time desc " =>$_lang['recharge_time_desc'], " pay_time asc " =>$_lang['recharge_time_asc']);
-		$fina_count =kekezu::get_table_data(" sum(pay_money) as cash,order_status ","witkey_order_charge"," $where ",""," order_status","","order_status");
+		$fina_count =Keke::get_table_data(" sum(pay_money) as cash,order_status ","witkey_order_charge"," $where ",""," order_status","","order_status");
 
 		/**搜索条件 start**/
 		$order_id && $order_id != $_lang['please_input_recharge_id'] and $where .= " and order_id = '$order_id' ";
@@ -61,7 +61,7 @@ switch ($action) {
 	case "withdraw" :
 		$status_arr  = keke_glob_class::withdraw_status();
 		$withdraw_obj=new Keke_witkey_withdraw_class();//提现记录表
-		$fina_count =kekezu::get_table_data(" sum(withdraw_cash) as cash,withdraw_status ","witkey_withdraw"," $where ",""," withdraw_status","","withdraw_status");
+		$fina_count =Keke::get_table_data(" sum(withdraw_cash) as cash,withdraw_status ","witkey_withdraw"," $where ",""," withdraw_status","","withdraw_status");
 		
 		
 		$ord_arr = array (" withdraw_id desc " => $_lang['withdraw_id_desc'], " withdraw_id asc " =>$_lang['withdraw_id_asc'], " applic_time desc " =>$_lang['apply_time_desc'], " applic_time asc " => $_lang['apply_time_asc'] );

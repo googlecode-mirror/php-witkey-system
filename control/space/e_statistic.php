@@ -11,15 +11,15 @@ $credit_level = unserialize ( $member_info ['seller_level'] );
 $saler_aid = keke_user_mark_class::get_user_aid ( $member_id, '2', null, '1' );
 $sql = sprintf ( "SELECT sum(sale_num)as num FROM %switkey_service where uid=%d", TABLEPRE, $member_id );
 
-$pub_service = db_factory::query( $sql );
+$pub_service = Dbfactory::query( $sql );
 $pub_service_num = $pub_service['0']['num'];
  $sql = sprintf ( "select * from %switkey_order where model_id in(6,7) and seller_uid=%d", TABLEPRE, $member_id ); 
-$buy_service_num = db_factory::execute ( $sql ); 
+$buy_service_num = Dbfactory::execute ( $sql ); 
 
 $page or $page = 1;
 $page_size or $page_size=10;
 $p_url = "index.php?do=space&member_id=$member_id&view=statistic&come=$come";
-$page_obj = $kekezu->_page_obj;
+$page_obj = $Keke->_page_obj;
 $page_obj->setAjax(1);
 $page_obj->setAjaxDom('ajax_dom');
 $page_obj->setAjaxCove(1);

@@ -13,11 +13,11 @@ $target_range_arr = array ("index" => $_lang ['home'], "task_list" => $_lang ['t
 $target_position_arr = array ('top' => $_lang ['top'], 'bottom' => $_lang ['bottom'], 'left' => $_lang ['left'], 'right' => $_lang ['right'], 'center' => $_lang ['center'], 'global' => $_lang ['global'] );
 //判断此广告位已有广告多少，及允许多少
 if($target_id&&$ac!='edit'){
-   $target_info = db_factory::get_one(sprintf("select * from %switkey_ad_target where target_id = %d",TABLEPRE,$target_id));
+   $target_info = Dbfactory::get_one(sprintf("select * from %switkey_ad_target where target_id = %d",TABLEPRE,$target_id));
    $ad_num = $target_info[ad_num];//允许广告数
-   $have_ad_num = db_factory::get_count(sprintf("select count(ad_id) count from %switkey_ad where target_id = %d",TABLEPRE,$target_id));
+   $have_ad_num = Dbfactory::get_count(sprintf("select count(ad_id) count from %switkey_ad where target_id = %d",TABLEPRE,$target_id));
    if($have_ad_num>=$ad_num){
-    kekezu::admin_show_msg ( $_lang ['ads_num_over'], 'index.php?do=tpl&view=ad', '3', '', 'warning' );   	
+    Keke::admin_show_msg ( $_lang ['ads_num_over'], 'index.php?do=tpl&view=ad', '3', '', 'warning' );   	
    }
 }
 //var_dump($ad_num,$have_ad_num);
@@ -83,12 +83,12 @@ if ($sbt_action) {
 		}
 		$ad_obj->setWhere ( 'ad_id=' . intval ( $ad_id ) );
 		$result = $ad_obj->edit_keke_witkey_ad ();
-		kekezu::admin_system_log ( $_lang ['edit_ads_data'] . $ad_id );
-		kekezu::admin_show_msg ( $result ? $_lang ['edit_ads_success_jump_adslist'] : $_lang ['not_make_changes_return_again'], 'index.php?do=tpl&view=ad_add&ac=edit&ad_id=' . $ad_id, 3, '', $result ? 'success' : 'warning' ); //die掉了
+		Keke::admin_system_log ( $_lang ['edit_ads_data'] . $ad_id );
+		Keke::admin_show_msg ( $result ? $_lang ['edit_ads_success_jump_adslist'] : $_lang ['not_make_changes_return_again'], 'index.php?do=tpl&view=ad_add&ac=edit&ad_id=' . $ad_id, 3, '', $result ? 'success' : 'warning' ); //die掉了
 	}
 	$result = $ad_obj->create_keke_witkey_ad ();
-	kekezu::admin_system_log ( $_lang ['add_ads_data'] );
-	kekezu::admin_show_msg ( $result ? $_lang ['add_ads_success'] : $_lang ['add_fail_return_again'], 'index.php?do=tpl&view=ad_list&target_id=' . $hdn_target_id, 3, '', $result ? 'success' : 'warning' ); //die掉了
+	Keke::admin_system_log ( $_lang ['add_ads_data'] );
+	Keke::admin_show_msg ( $result ? $_lang ['add_ads_success'] : $_lang ['add_fail_return_again'], 'index.php?do=tpl&view=ad_list&target_id=' . $hdn_target_id, 3, '', $result ? 'success' : 'warning' ); //die掉了
 }
 $page_tips = $_lang ['add'];
 $ad_data = array ();
@@ -97,7 +97,7 @@ $ad_data = array ();
 
 //编辑 获取单条数据
 if ($ac && $ac == 'edit') {
-	empty ( $ad_id ) && kekezu::admin_show_msg ( $_lang ['edit_parameter_error_jump_listpage'], 'index.php?do=tpl&view=ad_list', 3, '', 'warning' );
+	empty ( $ad_id ) && Keke::admin_show_msg ( $_lang ['edit_parameter_error_jump_listpage'], 'index.php?do=tpl&view=ad_list', 3, '', 'warning' );
 	$page_tips = $_lang ['edit'];
 	unset ( $ad_data );
 	$ad_id = intval ( $ad_id );
@@ -113,16 +113,16 @@ if ($ac && $ac == 'edit') {
 
 //获取对应的(一条)广告位相关信息
 if ($target_id) {
-	$target_arr = kekezu::get_table_data ( '*', 'witkey_ad_target', 'target_id=' . intval ( $target_id ) );
+	$target_arr = Keke::get_table_data ( '*', 'witkey_ad_target', 'target_id=' . intval ( $target_id ) );
 	$target_arr = $target_arr ['0'];
 	/* 如果是幻灯片 ,则要判断有没有对应的广告组, 
 	 * 如果没有跳转至广告组添加页面
 	 * 如果有,那么将广告的ad_title设置为只读,不允许修改*/
 	$is_slide = substr ( $target_arr ['code'], - 5 );
 	if (strtolower ( $is_slide ) == 'slide') {
-		$group_arr = db_factory::query ( 'select * from ' . TABLEPRE . 'witkey_tag where tagname="' . $target_arr ['name'] . '" and tag_type="9"' );
+		$group_arr = Dbfactory::query ( 'select * from ' . TABLEPRE . 'witkey_tag where tagname="' . $target_arr ['name'] . '" and tag_type="9"' );
 		if (! $group_arr) {
-			kekezu::admin_show_msg ( $_lang ['add_group_msg'], 'index.php?do=tpl&view=ad_group_add&ac=add&target_id=' . $target_arr ['target_id'] . '&tagname=' . $target_arr ['name'], '3', '', 'warning' );
+			Keke::admin_show_msg ( $_lang ['add_group_msg'], 'index.php?do=tpl&view=ad_group_add&ac=add&target_id=' . $target_arr ['target_id'] . '&tagname=' . $target_arr ['name'], '3', '', 'warning' );
 		} else {
 			$tagname = $group_arr ['0'] ['tagname'];
 			
@@ -130,7 +130,7 @@ if ($target_id) {
 		}
 	}
 
-	$ad_count = db_factory::get_count(" select count(ad_id) as num from  ".TABLEPRE."witkey_ad where target_id =".intval($target_id ));
+	$ad_count = Dbfactory::get_count(" select count(ad_id) as num from  ".TABLEPRE."witkey_ad where target_id =".intval($target_id ));
 }
 
 

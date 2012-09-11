@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * 后台任务模型入口 
  * @copyright keke-tech
@@ -9,9 +9,9 @@
 
 
 
-$model_id or kekezu::admin_show_msg ( $_lang['error_model_param'], "index.php?do=info",3,'','warning' );
+$model_id or Keke::admin_show_msg ( $_lang['error_model_param'], "index.php?do=info",3,'','warning' );
 
-$model_info = db_factory::get_one ( " select * from " . TABLEPRE . "witkey_model where model_id = '$model_id'" );
+$model_info = Dbfactory::get_one ( " select * from " . TABLEPRE . "witkey_model where model_id = '$model_id'" );
 
 if (! $model_info ['model_status']) {
 	header ( "location:index.php?do=config&view=model" );

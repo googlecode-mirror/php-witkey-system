@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' )  or 	exit ( 'Access Denied' );
+<?php	defined ( 'IN_KEKE' )  or 	exit ( 'Access Denied' );
 /**
  * @copyright keke-tech
  * @author shang

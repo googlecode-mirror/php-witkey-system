@@ -20,7 +20,7 @@ class Control_test_link extends Controller{
 		 
 		//检查表单
 		Keke::formcheck($_POST['formhash']);
-				
+		
 		//字段验证
 		$p = Keke_validation::factory($_POST)
 				//多条件验证

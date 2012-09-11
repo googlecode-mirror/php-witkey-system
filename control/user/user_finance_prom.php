@@ -11,7 +11,7 @@
 $shows = array ("relation", "income" );//关系。收益
 in_array ( $show, $shows ) or $show = 'income';
 
-$page_obj = $kekezu->_page_obj;
+$page_obj = $Keke->_page_obj;
 $page_size and $page_size=intval ( $page_size ) or $page_size = '10';
 $page and $page=intval ( $page ) or $page = '1';
 $event_id and $event_id= intval($event_id);
@@ -23,7 +23,7 @@ switch($show){
 		$ord_arr=array("event_id desc"=>$_lang['prom_id_desc'],"event_id asc"=>$_lang['prom_id_asc'],"rake_cash desc"=>$_lang['gain_cash_desc'],"rake_cash asc"=>$_lang['gain_cash_asc']);
 		//查询获得的推广收益（已完成的）
 		$where=" parent_uid='$uid'";
-		$prom_count=kekezu::get_table_data("sum(rake_cash) as cash ,sum(rake_credit) as credit","witkey_prom_event",$where);
+		$prom_count=Keke::get_table_data("sum(rake_cash) as cash ,sum(rake_credit) as credit","witkey_prom_event",$where);
 		//搜索条件
 		$event_id&&$event_id!=$_lang['input_prom_id'] and $where .= "and event_id= '$event_id'";
 		$ord and $where .= "order by $ord" or $where .="order by event_id desc";

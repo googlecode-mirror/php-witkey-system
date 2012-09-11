@@ -1,4 +1,4 @@
-<?php defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+<?php defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * @copyright keke-tech
  * @author Liyingqing
@@ -6,7 +6,7 @@
  * 2010-7-15 10:00:34
  */
 
-//kekezu::admin_check_role(15);
+//Keke::admin_check_role(15);
 $art_obj = keke_table_class::get_instance ( "witkey_article" );
 
 $types = array ('help', 'art','bulletin','about' );
@@ -14,21 +14,21 @@ $types = array ('help', 'art','bulletin','about' );
 
 switch ($type) {
 	case 'art' :
-		kekezu::admin_check_role ( 15);
-		$art_cat_arr = kekezu::get_table_data ( '*', "witkey_article_category", "cat_type = 'article'", " art_cat_id desc", '', '', 'art_cat_id', null );
+		Keke::admin_check_role ( 15);
+		$art_cat_arr = Keke::get_table_data ( '*', "witkey_article_category", "cat_type = 'article'", " art_cat_id desc", '', '', 'art_cat_id', null );
 		break;
 		;
 	case 'help' :
-		kekezu::admin_check_role (43);
-		$art_cat_arr = kekezu::get_table_data ( '*', "witkey_article_category", "cat_type = 'help'", " art_cat_id desc", '', '', 'art_cat_id', null );
+		Keke::admin_check_role (43);
+		$art_cat_arr = Keke::get_table_data ( '*', "witkey_article_category", "cat_type = 'help'", " art_cat_id desc", '', '', 'art_cat_id', null );
 		break;
 		;
 	case 'bulletin' :
-		kekezu::admin_check_role (43);
+		Keke::admin_check_role (43);
 		break;
 		;
 	case 'about' :
-		kekezu::admin_check_role (54);
+		Keke::admin_check_role (54);
 		break;
 		;
 }
@@ -55,37 +55,37 @@ if ($sbt_edit) {
 	isset($fields['is_recommend']) or $fields['is_recommend']=0;
 	//跳转地址
 	$url = "index.php?do=$do&view=list&type=$type";
-	$fields=kekezu::escape($fields);
+	$fields=Keke::escape($fields);
 	$res = $art_obj->save ( $fields, $pk );
 	
 	$log_ac = array('edit'=>$_lang['edit_art'],'add'=>$_lang['add_art']);
 	if($pk['art_id']){
-		kekezu::admin_system_log($log_ac['edit'].":".$fields['art_title']) ;
+		Keke::admin_system_log($log_ac['edit'].":".$fields['art_title']) ;
 	}else{
-		kekezu::admin_system_log($log_ac['add'].":".$fields['art_title']) ;
+		Keke::admin_system_log($log_ac['add'].":".$fields['art_title']) ;
 	} 
 	if($res){
-		kekezu::admin_show_msg($_lang['operate_success'],$url,3,'','success');
+		Keke::admin_show_msg($_lang['operate_success'],$url,3,'','success');
 	}else{
 	
-		kekezu::admin_show_msg($_lang['operate_fail'],$url,3,'','warning');
+		Keke::admin_show_msg($_lang['operate_fail'],$url,3,'','warning');
 	}
 }
  
 if(isset($ac)&&$ac=='del'){
 	if($filepath){
-		$pk and db_factory::execute(" update ".TABLEPRE."witkey_article set art_pic ='' where art_id = ".intval($pk));
-		$file_info = db_factory::get_one(" select * from ".TABLEPRE."witkey_file where save_name = '.$filepath.'");
+		$pk and Dbfactory::execute(" update ".TABLEPRE."witkey_article set art_pic ='' where art_id = ".intval($pk));
+		$file_info = Dbfactory::get_one(" select * from ".TABLEPRE."witkey_file where save_name = '.$filepath.'");
 	
 		keke_file_class::del_att_file($file_info['file_id'], $file_info['save_name']);
-		kekezu::echojson ( '', '1' );
+		Keke::echojson ( '', '1' );
 	}
 }
 
 //递归分类列表
 $cat_arr = array ();
 
-kekezu::get_tree ( $art_cat_arr, $cat_arr, 'option', $art_id, 'art_cat_id', 'art_cat_pid', 'cat_name' );
+Keke::get_tree ( $art_cat_arr, $cat_arr, 'option', $art_id, 'art_cat_id', 'art_cat_pid', 'cat_name' );
 
 require $template_obj->template ( 'control/admin/tpl/admin_' . $do . "_" . $view );
 

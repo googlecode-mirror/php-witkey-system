@@ -47,7 +47,7 @@ function get_art_by_year() {
  * @return array 文章数据和分页数据
  */
 function get_art_list($page, $page_size, $url, $where,$static=0) {
-	global $kekezu;
+	global $Keke;
 	$sql = "select a.* ,b.cat_name from " . TABLEPRE . "witkey_article a left join " . TABLEPRE . "witkey_article_category b on a.art_cat_id=b.art_cat_id where b.cat_type='article'  $where";
 	$csql = "select count(a.art_id) as c  from " . TABLEPRE . "witkey_article a left join " . TABLEPRE . "witkey_article_category b on a.art_cat_id=b.art_cat_id where b.cat_type='article'  $where";
 

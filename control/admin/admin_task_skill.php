@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * 技能管理
  * @copyright keke-tech
@@ -7,19 +7,19 @@
  * 2010-5-19早上0:54:00
  */
 
-kekezu::admin_check_role ( 8);
+Keke::admin_check_role ( 8);
 $table_obj = new keke_table_class ( "witkey_skill" );
 
 //搜索行业下拉菜单
 $temp_arr = array ();
-$indus_option_arr = kekezu::get_industry ();
-kekezu::get_tree ( $indus_option_arr, $temp_arr,"option",$w[indus_pid] );
+$indus_option_arr = Keke::get_industry ();
+Keke::get_tree ( $indus_option_arr, $temp_arr,"option",$w[indus_pid] );
 $indus_option_arr = $temp_arr;
 unset ( $temp_arr );
 is_array($indus_arr)&&sort ( $indus_arr );
 $indus_show_arr = array();
-kekezu::get_tree($indus_arr, $indus_show_arr,'cat',NULL,'indus_id','indus_pid','indus_name');
-$indus_show_arr = kekezu::get_table_data('*',"witkey_industry","",'indus_id','','','indus_id');
+Keke::get_tree($indus_arr, $indus_show_arr,'cat',NULL,'indus_id','indus_pid','indus_name');
+$indus_show_arr = Keke::get_table_data('*',"witkey_industry","",'indus_id','','','indus_id');
 $where = ' 1 = 1';
 
 
@@ -46,26 +46,26 @@ $pages = $r [pages];
 if ($ac == 'del') { 
 	$skill_log = keke_table_class::all_table_info("witkey_skill", array("skill_id"=>$skill_id));
 	$res = $table_obj->del('skill_id', $skill_id); 
-	kekezu::admin_system_log($_lang['delete_skill'].":".$skill_log[skill_name]);
-	$res and kekezu::admin_show_msg($_lang['delete_success'], $url,'3','','success') or kekezu::admin_show_msg($_lang['delete_fail'], $url,'3','','warning');
+	Keke::admin_system_log($_lang['delete_skill'].":".$skill_log[skill_name]);
+	$res and Keke::admin_show_msg($_lang['delete_success'], $url,'3','','success') or Keke::admin_show_msg($_lang['delete_fail'], $url,'3','','warning');
 }
 //批量删除
 if ($sbt_action) {
 	if (! count($ckb)){
-		kekezu::admin_show_msg ($_lang['choose_operation'], $url ,'3','','warning');
+		Keke::admin_show_msg ($_lang['choose_operation'], $url ,'3','','warning');
 	}else{
 		$res = $table_obj->del ('skill_id',$ckb);
 		
-		kekezu::admin_system_log($_lang['mulit_delete_skill']);
-		$res and kekezu::admin_show_msg($_lang['delete_success'], $url,'3','','success') or kekezu::admin_show_msg($_lang['delete_fail'], $url,'3','','warning');
+		Keke::admin_system_log($_lang['mulit_delete_skill']);
+		$res and Keke::admin_show_msg($_lang['delete_success'], $url,'3','','success') or Keke::admin_show_msg($_lang['delete_fail'], $url,'3','','warning');
 	}
 }
 //递归分类列表
 $temp_arr = array ();
-kekezu::get_tree ( $indus_arr, $temp_arr, 'option', NULL, 'indus_id', 'indus_pid', 'indus_name' );
+Keke::get_tree ( $indus_arr, $temp_arr, 'option', NULL, 'indus_id', 'indus_pid', 'indus_name' );
 $indus_arr = $temp_arr;
 
 unset ( $temp_arr );
-require $kekezu->_tpl_obj->template ( 'control/admin/tpl/admin_task_' . $view );
+require $Keke->_tpl_obj->template ( 'control/admin/tpl/admin_task_' . $view );
 
 

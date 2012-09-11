@@ -25,23 +25,23 @@ function get_auth($user_info){
 	$auth_temp = array_keys ( $auth_item );
 	$user_info ['user_type'] == 2 and $un_code = 'realname' or $un_code = "enterprise";
 	$t = implode ( ",", $auth_temp );
-	$auth_info = db_factory::query ( " select a.auth_code,a.auth_status,b.auth_title,b.auth_small_ico,b.auth_small_n_ico from " . TABLEPRE . "witkey_auth_record a left join " . TABLEPRE . "witkey_auth_item b on a.auth_code=b.auth_code where a.uid ='".$user_info['uid']."' and FIND_IN_SET(a.auth_code,'$t')", 1, -1 );
-	$auth_info = kekezu::get_arr_by_key ( $auth_info, "auth_code" );
+	$auth_info = Dbfactory::query ( " select a.auth_code,a.auth_status,b.auth_title,b.auth_small_ico,b.auth_small_n_ico from " . TABLEPRE . "witkey_auth_record a left join " . TABLEPRE . "witkey_auth_item b on a.auth_code=b.auth_code where a.uid ='".$user_info['uid']."' and FIND_IN_SET(a.auth_code,'$t')", 1, -1 );
+	$auth_info = Keke::get_arr_by_key ( $auth_info, "auth_code" );
 	return array('item'=>$auth_item,'info'=>$auth_info,'code'=>$un_code);
 }
 
 
 //出售的商品数 
-$sale_num = intval(db_factory::get_count(sprintf(" select count(order_id) count from %switkey_order where seller_uid='%d' and model_id in (6,7)",TABLEPRE,$member_id)));
+$sale_num = intval(Dbfactory::get_count(sprintf(" select count(order_id) count from %switkey_order where seller_uid='%d' and model_id in (6,7)",TABLEPRE,$member_id)));
 //购买的商品数 
-$buy_num = intval(db_factory::get_count(sprintf(" select count(order_id) count from %switkey_order where order_uid='%d' and model_id in (6,7)",TABLEPRE,$member_id)));
+$buy_num = intval(Dbfactory::get_count(sprintf(" select count(order_id) count from %switkey_order where order_uid='%d' and model_id in (6,7)",TABLEPRE,$member_id)));
 
 //AJAX分页请求
 $page or $page = 1;
 $page_size or $page_size=10;
 $come or $come='gz';
 $p_url = "index.php?do=space&member_id=$member_id&view=statistic&come=$come";
-$page_obj = $kekezu->_page_obj;
+$page_obj = $Keke->_page_obj;
 $page_obj->setAjax(1);
 $page_obj->setAjaxDom('ajax_dom');
 $page_obj->setAjaxCove(1);

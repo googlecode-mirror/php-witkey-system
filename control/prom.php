@@ -6,7 +6,7 @@ $views = array ('index', 'task', 'talent');
 in_array ( $view, $views ) and $view or $view = 'index';
 $nav_active_index = "prom";
 
-$kekezu->init_prom();
+$Keke->init_prom();
  //初始化推广
 	
 switch (isset ( $_COOKIE ['user_prom_event'] )){

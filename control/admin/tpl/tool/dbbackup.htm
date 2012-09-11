@@ -10,16 +10,14 @@
 </div>
 <div class="box list">
      <div class="title"><h2>{$_lang['database_backup']}</h2></div>
-		<form method="post" action="#" id="frm_cat_edit">
+		<form method="post" action="{BASE_URL}/index.php/admin/tool_dbbackup/save" id="frm_list">
           	 <table class="detail" cellpadding="0" cellspacing="0">
            	  <tbody>
             	  <tr class="item">
               		<td width="300"><img src="{BASE_URL}/control/admin/tpl/img/SQl15bg.gif"></td>
               		<td class="loading" align="center">{DBNAME}</td>
               		<td width="300">
-              			<button type="button" name="sbt_edit" id="backup" class="primary positive pill button">
-              				<span class="book icon"></span>{$_lang['backup_now']}
-						</button>
+              		 	<input type="button"  name="sbt_edit" id="backup" value="{$_lang['backup_now']}">
 					</td>
              	 </tr>
           	 </tbody>
@@ -30,10 +28,10 @@
 <script type="text/javascript">
 	$("#backup").click(function(){
 		$.ajax({
-			url:"index.php?do=tool&view=dbbackup&sbt_edit=1",
+			url:"{BASE_URL}/index.php/admin/tool_dbbackup/save",
 			dataType:'json',
 			beforeSend:function(){
-				$(".loading").html("{$_lang['building']}</br><img src='tpl/img/loading.gif'>");
+				$(".loading").html("{$_lang['building']}</br><img src='{BASE_URL}/control/admin/tpl/img/loading.gif'>");
 			},
 			success:function(json){
 				if(json.status==1){
@@ -60,7 +58,7 @@
 })
 
 function winReload(t){
-	window.location.replace("index.php?do=tool&view=dbbackup&t="+t);
+	window.location.replace("{BASE_URL}/index.php/admin/tool_dbbackup/save?t="+t);
 }
 </script>
 <!--{include control/admin/tpl/admin_footer}-->

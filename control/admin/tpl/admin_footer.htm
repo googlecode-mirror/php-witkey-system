@@ -78,7 +78,7 @@ function batch_act(obj){
 				str.push($(this).val());
 			})
 			var val = str.join(',');
-			var url = '{$del_uri}&ids='+val;
+			var url = '{$del_uri}?ids='+val;
 			$.post(url,function(data){
 				if(data>0){
 					$(":checkbox[name='ckb[]']:checked").each(function(){
@@ -97,12 +97,8 @@ function batch_act(obj){
 <div style="background-color:green;color:#fff;text-align:center;">
 	<!--{eval list($times,$memory)=Keke::execute_time()}-->
 	Ö´ÐÐÊ±¼ä: {$times} &nbsp;{$memory}
-	<!--{eval $query_sql = Database::instance()->get_last_query();}-->
-	<div>
-		{loop $query_sql $v}
-		{$v}
-		{/loop}
-	</div>
+	
+ 
 	
 </div>
 					

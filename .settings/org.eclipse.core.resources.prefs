@@ -1,2 +1,5 @@
 eclipse.preferences.version=1
+encoding//class/database/keke/driver/mysql.php=GBK
+encoding//class/model.php=GBK
+encoding//class/model/keke_witkey_link.php=GBK
 encoding//tpl/default/header_top.htm=GBK

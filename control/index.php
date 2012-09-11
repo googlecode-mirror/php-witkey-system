@@ -126,7 +126,8 @@ class Control_index extends Controller{
 		$link_help = Keke::get_table_data ( "art_cat_id,cat_name", "witkey_article_category", "art_cat_pid=0 and cat_type='help'", " listorder asc", "", "5", "", 3600 );
 		
 		$flink = Keke::get_table_data("link_id,link_name,link_url","witkey_link",""," link_id asc","","","",3600);
-		
+		/* $query_sql = Database::instance()->get_query_list();
+		print_r($query_sql); */
 		require Keke_tpl::template ( 'index' );
 	}
 	//Ω®“È

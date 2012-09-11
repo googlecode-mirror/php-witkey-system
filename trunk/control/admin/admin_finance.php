@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * 后台财务入口路由
  * @copyright keke-tech
@@ -17,5 +17,5 @@ $views = array ('withdraw', 'report', 'all','analysis','recharge','revenue');
 if (file_exists ( ADMIN_ROOT . 'admin_'.$do.'_' . $view . '.php' )) {
 	require ADMIN_ROOT . 'admin_'.$do.'_' . $view . '.php';
 } else {
-	kekezu::admin_show_msg ( $_lang['404_page'],'',3,'','warning' );
+	Keke::admin_show_msg ( $_lang['404_page'],'',3,'','warning' );
 }

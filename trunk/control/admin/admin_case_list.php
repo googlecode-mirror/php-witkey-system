@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * @copyright keke-tech
  * @author S
@@ -6,7 +6,7 @@
  * 2011-12-14
  */
 
-kekezu::admin_check_role(52);
+Keke::admin_check_role(52);
 $case_obj = new Keke_witkey_case_class ();
 //分页
  
@@ -21,12 +21,12 @@ if (isset ( $ac )) { //单个删除
 			case "del" :
 				$case_obj->setWhere ( 'case_id=' . $case_id );
 				$res = $case_obj->del_keke_witkey_case ();
-				kekezu::admin_system_log( $_lang['delete_case'].':' . $case_id );//日志记录
-				$res and kekezu::admin_show_msg ( $_lang['delete_success'], $url,3,'','success' ) or kekezu::admin_show_msg ( $_lang['delete_fail'], $url,3,'','warning' );
+				Keke::admin_system_log( $_lang['delete_case'].':' . $case_id );//日志记录
+				$res and Keke::admin_show_msg ( $_lang['delete_success'], $url,3,'','success' ) or Keke::admin_show_msg ( $_lang['delete_fail'], $url,3,'','warning' );
 				break; 
 		}
 	} else {
-		kekezu::admin_show_msg ( $_lang['del_fail_select_operate'], $url );
+		Keke::admin_show_msg ( $_lang['del_fail_select_operate'], $url );
 	}
 } elseif (isset ( $sbt_action )) { //批量删除
 	$ckb_string = $ckb;
@@ -34,13 +34,13 @@ if (isset ( $ac )) { //单个删除
 	if (count ( $ckb_string )) {
 		$case_obj->setWhere ( 'case_id in (' . $ckb_string . ')' );
 		$res = $case_obj->del_keke_witkey_case ();//删除
-		kekezu::admin_system_log($_lang['mulit_delete_case'].':' . $ckb_string );//日志记录
-		$res and kekezu::admin_show_msg ( $_lang['mulit_operate_success'], $url ,3,'','success') or kekezu::admin_show_msg ( $_lang['mulit_operate_fail'], $url,3,'','warning' );
+		Keke::admin_system_log($_lang['mulit_delete_case'].':' . $ckb_string );//日志记录
+		$res and Keke::admin_show_msg ( $_lang['mulit_operate_success'], $url ,3,'','success') or Keke::admin_show_msg ( $_lang['mulit_operate_fail'], $url,3,'','warning' );
 	} else
-		kekezu::admin_show_msg ( $_lang['mulit_del_fail_select_operate'], $url,3,'','warning' );
+		Keke::admin_show_msg ( $_lang['mulit_del_fail_select_operate'], $url,3,'','warning' );
 } else {
 	
-	$model_list = kekezu::get_table_data ( '*', 'witkey_model', "model_status=1 and model_dir!='employtask'", 'listorder asc ', '', '', 'model_id', null );
+	$model_list = Keke::get_table_data ( '*', 'witkey_model', "model_status=1 and model_dir!='employtask'", 'listorder asc ', '', '', 'model_id', null );
 	$count = $case_obj->count_keke_witkey_case();
 	
 //	$sql = "select *,ifnull(case_title,task_title) task_title from ".TABLEPRE."witkey_case as a left join ".TABLEPRE."witkey_task as b on a.obj_id = b.task_id ";
@@ -57,11 +57,11 @@ if (isset ( $ac )) { //单个删除
 	$where=$where.$order_where;
 	
 	//$w ['ord'] and $where .= " order by $w['ord']" or $where .= " order by case_id desc";//排序
-	$kekezu->_page_obj->setAjax(1);
-	$kekezu->_page_obj->setAjaxDom("ajax_dom");
-	$pages = $kekezu->_page_obj->getPages ( $count, $page_size, $page, $url );
+	$Keke->_page_obj->setAjax(1);
+	$Keke->_page_obj->setAjaxDom("ajax_dom");
+	$pages = $Keke->_page_obj->getPages ( $count, $page_size, $page, $url );
 	$sql.=$where.$pages['where'];
-	$case_arr =db_factory::query($sql);
+	$case_arr =Dbfactory::query($sql);
 
 }
 

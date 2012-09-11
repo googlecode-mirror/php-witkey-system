@@ -12,7 +12,7 @@ $skill_obj = new Keke_witkey_member_ext_class();
 //威客技能
 //$skill_arr = explode(',', $member_info['skill_ids']); 
 
-$indus_arr =  $kekezu->_indus_arr ;
+$indus_arr =  $Keke->_indus_arr ;
 
 //技能证书 
  $skill_obj->setWhere(" uid = ".intval($member_id)." and type='cert' order by ext_id desc ");
@@ -26,6 +26,6 @@ $indus_arr =  $kekezu->_indus_arr ;
 $skill_obj->setWhere("uid = ".intval($member_id)." and type='exp' order by ext_id desc limit 0, 5");
 $skill_exp_arr = $skill_obj->query_keke_witkey_member_ext();
 //获取保密
-$sect_info = kekezu::get_table_data ( "*", "witkey_member_ext", " type='sect' and uid='$member_id' ", "", "", "", "k" );
+$sect_info = Keke::get_table_data ( "*", "witkey_member_ext", " type='sect' and uid='$member_id' ", "", "", "", "k" );
 require keke_tpl_class::template(SKIN_PATH."/space/{$type}_{$view}");
 

@@ -31,19 +31,19 @@ if($task_open==0){
 if($shop_open==0){
 	unset($sub_nav[0]['service']);
 }
-$model_name_arr = 	kekezu::get_table_data ( 'model_code,model_name', 'witkey_model', '', 'model_id asc ', '', '', 'model_code');
+$model_name_arr = 	Keke::get_table_data ( 'model_code,model_name', 'witkey_model', '', 'model_id asc ', '', '', 'model_code');
 
-$title = kekezu::lang("collection_of_".$op);
+$title = Keke::lang("collection_of_".$op);
 
 $favor_obj=new Keke_witkey_favorite_class();//收藏对象
 $favor_table_obj = new keke_table_class('witkey_favorite');
-$page_obj=$kekezu->_page_obj;//分页对象
+$page_obj=$Keke->_page_obj;//分页对象
 if(isset($ac)&&$ac=='del'){    
 			if($f_id){ 
 				$res = $favor_table_obj->del("f_id",$f_id);
-				$res and kekezu::show_msg($_lang['operate_tips'],"index.php?do=$do&view=$view&op=$op&page=$page",1,$_lang['del_success'],"alert_right");
+				$res and Keke::show_msg($_lang['operate_tips'],"index.php?do=$do&view=$view&op=$op&page=$page",1,$_lang['del_success'],"alert_right");
 			}else{
-			   kekezu::show_msg($_lang['operate_tips'],"index.php?do=$do&view=$view&op=$op&page=$page",1,$_lang['select_null_for_delete'],"alert_error");
+			   Keke::show_msg($_lang['operate_tips'],"index.php?do=$do&view=$view&op=$op&page=$page",1,$_lang['select_null_for_delete'],"alert_error");
 			}	  
 }
 $ord_arr=array("f_id desc "=> $_lang['collection_num_desc'],

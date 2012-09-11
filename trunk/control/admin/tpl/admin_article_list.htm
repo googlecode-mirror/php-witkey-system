@@ -1,4 +1,4 @@
-<!--{template control/admin/tpl/admin_header}--> 
+<!--{include control/admin/tpl/admin_header}--> 
  
 	<div class="page_title">	
     	<h1>{if $type=='art'}{$_lang['article']}{elseif $type=='help'}{$_lang['help']}{elseif $type=='bulletin'}{$_lang['bulletin']}{elseif $type=='about'}{$_lang['about']}{else}{$_lang['single_page']}{/if}{$_lang['manage']}</h1>
@@ -166,4 +166,4 @@
 		})
  }
 </script>
-<!--{template control/admin/tpl/admin_footer}-->
+<!--{include control/admin/tpl/admin_footer}-->

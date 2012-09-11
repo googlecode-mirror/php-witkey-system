@@ -27,7 +27,7 @@ if ($sbt_edit) {
 	if ($sbt_edit == $_lang['ads_group_add']) {
 		$result = $tag_obj->create_keke_witkey_tag ();
 	}
-	kekezu::admin_system_log ( $sbt_edit.$fds ['tagname'] );
+	Keke::admin_system_log ( $sbt_edit.$fds ['tagname'] );
 	$result_msg = $result ? $sbt_edit . $_lang['success'] : $sbt_edit . $_lang['fail'];
 	if ($target_id){
 		$jump_url = $result ? 'index.php?do=tpl&view=ad_add&ac=add&tagname='.$tagname.'&target_id='.$target_id 
@@ -35,7 +35,7 @@ if ($sbt_edit) {
 		$result_msg .= $result ? $_lang['jump_to_advertisement_page'] : $_lang['before_jump_to_page'];
 	}
 	$jump_url = $jump_url ? $jump_url : $_SERVER [HTTP_REFERER] ;
-	kekezu::admin_show_msg ( $result_msg, $jump_url,'3','','success' );
+	Keke::admin_show_msg ( $result_msg, $jump_url,'3','','success' );
 
 }
 $page_tips = $_lang['add'];
@@ -43,7 +43,7 @@ $page_tips = $_lang['add'];
 $ad_info = array();
 $tagname && $ad_info['tagname']=$tagname;
 if ($ac && $ac == 'edit') {	
-	empty ( $tag_id ) && kekezu::admin_show_msg ($_lang['edit_parameter_error'], 'index.php?do=tpl&view=ad_group_add&ac=add',3,'','warning' ); //die
+	empty ( $tag_id ) && Keke::admin_show_msg ($_lang['edit_parameter_error'], 'index.php?do=tpl&view=ad_group_add&ac=add',3,'','warning' ); //die
 	$page_tips = $_lang['edit'];
 	$tag_id = intval ( $tag_id );
 	$tag_obj->setWhere ( 'tag_id="' . $tag_id . '"' );

@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * 财务流水记录
  * @copyright keke-tech
@@ -7,10 +7,10 @@
  * 2011-09-03 15:18:30
  */
 
-kekezu::admin_check_role ( 4 );
+Keke::admin_check_role ( 4 );
 
 $finace_obj = new Keke_witkey_finance_class (); //实例化财务清单表对象
-$page_obj = $kekezu->_page_obj; //实例化分页对象
+$page_obj = $Keke->_page_obj; //实例化分页对象
 
 
 //分页
@@ -22,8 +22,8 @@ if (isset ( $ac ) && $fina_id) { //处理财务清单申请
 		case "del" : //删除
 			$finace_obj->setWhere ( 'fina_id=' . $fina_id );
 			$res = $finace_obj->del_keke_witkey_finance ();
-			kekezu::admin_system_log ( kekezu::lang(delete_financial_records) . "_$fina_id" );
-			$res and kekezu::admin_show_msg ( $_lang['list_finance_delete_success'], $url,3,'','success' ) or kekezu::admin_show_msg ( $_lang['list_finance_delete_fail'], $url,3,'','warning' );
+			Keke::admin_system_log ( Keke::lang(delete_financial_records) . "_$fina_id" );
+			$res and Keke::admin_show_msg ( $_lang['list_finance_delete_success'], $url,3,'','success' ) or Keke::admin_show_msg ( $_lang['list_finance_delete_fail'], $url,3,'','warning' );
 			break;
 	}
 } elseif (isset ( $ckb )) { //批量删除
@@ -32,10 +32,10 @@ if (isset ( $ac ) && $fina_id) { //处理财务清单申请
 	switch ($sbt_action) {
 		case $_lang['mulit_delete'] : //批量删除
 			$res = $finace_obj->del_keke_witkey_finance ();
-			kekezu::admin_system_log ( $_lang['mulit_delete_financial_records'] . "_$ids" );
+			Keke::admin_system_log ( $_lang['mulit_delete_financial_records'] . "_$ids" );
 			break;
 	}
-	$res and kekezu::admin_show_msg ( $_lang['mulit_operate_success'], $url,3,'','success' ) or kekezu::admin_show_msg ( $_lang['mulit_operate_fail'], $url,3,'','warning' );
+	$res and Keke::admin_show_msg ( $_lang['mulit_operate_success'], $url,3,'','success' ) or Keke::admin_show_msg ( $_lang['mulit_operate_fail'], $url,3,'','warning' );
 
 } else {
 	$where = ' 1 = 1 '; //默认查询条件

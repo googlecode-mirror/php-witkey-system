@@ -1,5 +1,5 @@
 {if $op=='in'}
-<!--{template control/admin/tpl/admin_header}-->
+<!--{include control/admin/tpl/admin_header}-->
 <div class="page_title">
     <h1>{$_lang['financial_model']}</h1>
     <div class="tool">
@@ -160,7 +160,7 @@
         
     </div>
 
-    <!--{template control/admin/tpl/admin_footer}-->
+    <!--{include control/admin/tpl/admin_footer}-->
 {elseif $op=='profit'}
 		<thead align="center">
 			<th> {$_lang['from']} </th>

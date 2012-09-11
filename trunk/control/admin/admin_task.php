@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * 后台task入口路由
  * @copyright keke-tech
@@ -12,5 +12,5 @@ $view = (! empty ( $view ) && in_array ( $view, $views )) ? $view : 'industry';
 if (file_exists ( ADMIN_ROOT . 'admin_task_' . $view . '.php' )) {
 	require ADMIN_ROOT . 'admin_task_' . $view . '.php';
 } else {
-	kekezu::admin_show_msg ($_lang['404_page'],'',3,'','warning');
+	Keke::admin_show_msg ($_lang['404_page'],'',3,'','warning');
 }

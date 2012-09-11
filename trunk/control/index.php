@@ -8,7 +8,7 @@
 class Control_index extends Controller{
 	
 	function action_index(){
-		global $kekezu,$_K,$_lang;
+		global $Keke,$_K,$_lang;
 		
 		if (Keke::$_task_open) {
 			$final_task = Sys_indus::get_classify_indus();

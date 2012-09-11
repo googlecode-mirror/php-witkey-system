@@ -7,6 +7,6 @@
  */
 
 
-$str = kekezu::check_secode ( $txt_code );
+$str = Keke::check_secode ( $txt_code );
 echo $str;
 die ();

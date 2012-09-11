@@ -6,7 +6,7 @@
  * @version V2.0
  */
 
-$d_url = $kekezu->_sys_config ['website_url'];
+$d_url = $Keke->_sys_config ['website_url'];
 
 $member_id and $member_id = intval ( $member_id );
 
@@ -15,12 +15,12 @@ $sql = "select a.*,a.indus_id in_id,b.* from " . TABLEPRE . "witkey_shop_case as
 
 $url = "index.php?do=space&member_id=$member_id&view=case&page_size=$page_size";
 $page_size = 3;
-$count = db_factory::execute ( $sql );
+$count = Dbfactory::execute ( $sql );
 $page = $page ? $page : 1;
-$kekezu->_page_obj->setAjax(1);
-$kekezu->_page_obj->setAjaxDom('case_list');
-$pages = $kekezu->_page_obj->getPages ( $count, $page_size, $page, $url );
+$Keke->_page_obj->setAjax(1);
+$Keke->_page_obj->setAjaxDom('case_list');
+$pages = $Keke->_page_obj->getPages ( $count, $page_size, $page, $url );
 $where = $pages ['where'];
-$shop_arr = db_factory::query ( $sql . $where );
+$shop_arr = Dbfactory::query ( $sql . $where );
 require keke_tpl_class::template ( SKIN_PATH . "/space/{$type}_{$view}" );
 

@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' ) or 	exit ( 'Access Denied' );
+<?php	defined ( 'IN_KEKE' ) or 	exit ( 'Access Denied' );
 /**
  * @copyright keke-tech
  * @author shang
@@ -23,7 +23,7 @@ $check_screen_lock=$admin_obj->check_screen_lock();
 switch ($ac){
 	case "nav_search"://µ¼º½ËÑË÷
 			$nav_search=$admin_obj->search_nav($keyword);
-			require $kekezu->_tpl_obj->template("control/admin/tpl/admin_" .$ac);
+			require $Keke->_tpl_obj->template("control/admin/tpl/admin_" .$ac);
 			die();
 		break;
 	case "lock":
@@ -32,7 +32,7 @@ switch ($ac){
 	case "unlock":
 		$unlock_times=$admin_obj->times_limit($unlock_num);//ÔÊÐíµÇÂ¼³¢ÊÔ´ÎÊý
 		$admin_obj->screen_unlock($unlock_num,$unlock_pwd);//½âÆÁ
-		require $kekezu->_tpl_obj->template("control/admin/tpl/admin_screen_lock");
+		require $Keke->_tpl_obj->template("control/admin/tpl/admin_screen_lock");
 		die();
 		break;
 	case "add_shortcuts":

@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
  /**
  * @copyright keke-tech
  * @author Monkey
@@ -8,10 +8,10 @@
 
 
 
-kekezu::admin_check_role(52);
+Keke::admin_check_role(52);
 
 
-$tagid = $tagid?$tagid:kekezu::admin_show_msg($_lang['error_param'],"index.php?do=tpl&view=taglist",3,'','warning');
+$tagid = $tagid?$tagid:Keke::admin_show_msg($_lang['error_param'],"index.php?do=tpl&view=taglist",3,'','warning');
 
 $tag_obj = new Keke_witkey_tag_class();
 $tag_obj->setWhere("tag_id='{$tagid}'");
@@ -142,7 +142,7 @@ if ($tag_info['tag_type']==1)
 		$task_arr = $task_obj->query_keke_witkey_task();
 		
 		$temp_arr = array();
-		$indus_arr = kekezu::get_industry();
+		$indus_arr = Keke::get_industry();
 		foreach ($task_arr as $v)
 		{
 			$a = array();
@@ -294,7 +294,7 @@ if ($tag_info['tag_type']==1)
 	elseif ($tag_info['tag_type']==4)
 	{
 		$sql = $tag_info['sql'];
-		$temp_arr = db_factory::query($sql);
+		$temp_arr = Dbfactory::query($sql);
 	}
 	elseif ($tag_info['tag_type']==5)
 	{

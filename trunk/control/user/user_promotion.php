@@ -33,13 +33,13 @@ $effect_mode = keke_prom_class::get_prom_rule($show);
 switch ($show){
 	case "reg":
 		$effect_mode = keke_prom_class::get_prom_rule($effect_mode['auth_step']);
-		$global_config = $kekezu->get_table_data ( '*', 'witkey_basic_config', ' type="prom"', '', '', '', 'k' );		
+		$global_config = $Keke->get_table_data ( '*', 'witkey_basic_config', ' type="prom"', '', '', '', 'k' );		
 		break;
 	case "pub_task":
 	case "bid_task":
 	case "service":
-		$model_list = kekezu::get_table_data("model_id,model_name","witkey_model","model_status='1'","","","","model_id",3600);
-		$indus_list = $kekezu->_indus_arr;
+		$model_list = Keke::get_table_data("model_id,model_name","witkey_model","model_status='1'","","","","model_id",3600);
+		$indus_list = $Keke->_indus_arr;
 		break;
 }
 require keke_tpl_class::template("user/user_".$op);

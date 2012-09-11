@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * @copyright keke-tech
  * @author yuan
@@ -6,7 +6,7 @@
  * 2010-6-28 18:17:13
  */
 
-kekezu::admin_check_role (28);
+Keke::admin_check_role (28);
 $filepath = S_ROOT.'./tpl/'.$tplname;
 $file_obj = new keke_file_class();
 

@@ -1,4 +1,4 @@
-<?php defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+<?php defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * @copyright keke-tech
  * @author Liyingqing
@@ -8,7 +8,7 @@
  */
 
 
-//kekezu::admin_check_role(16);
+//Keke::admin_check_role(16);
 $art_obj = new Keke_witkey_article_class ();
 
 $table_obj = new keke_table_class ( "witkey_article" );
@@ -19,46 +19,46 @@ $url = "index.php?do=$do&view=$view&w[username]=$w[username]&w[art_title]=$w[art
 
 if ($ac == 'del') {
 	$res = $table_obj->del ( 'art_id', $art_id, $url );
-	$res and kekezu::admin_show_msg ( $_lang['operate_success'], $url,3,'','success' ) or kekezu::admin_show_msg ( $_lang['operate_fail'], $url,3,'','warning' );
+	$res and Keke::admin_show_msg ( $_lang['operate_success'], $url,3,'','success' ) or Keke::admin_show_msg ( $_lang['operate_fail'], $url,3,'','warning' );
 } elseif (isset ( $sbt_action )) {
-	sizeof ( $ckb ) or kekezu::admin_show_msg ( $_lang['choose_operate_item'], $url,3,'','warning' );
+	sizeof ( $ckb ) or Keke::admin_show_msg ( $_lang['choose_operate_item'], $url,3,'','warning' );
 	is_array ( $ckb ) and $ids = implode ( ',', array_filter ( $ckb ) );
 	$art_obj->setWhere ( "art_id in ($ids)" );
 	if($sbt_action){
 		$res = $art_obj->del_keke_witkey_article ();
-		kekezu::admin_system_log ( $_lang['mulit_recovery_articles'] );
+		Keke::admin_system_log ( $_lang['mulit_recovery_articles'] );
 	}
-	$res and kekezu::admin_show_msg ( $_lang['mulit_operate_success'], $url,3,'','success' ) or kekezu::admin_show_msg ( $_lang['mulit_operate_fail'], $url,3,'','warning' );
+	$res and Keke::admin_show_msg ( $_lang['mulit_operate_success'], $url,3,'','success' ) or Keke::admin_show_msg ( $_lang['mulit_operate_fail'], $url,3,'','warning' );
 
 } elseif ($op == 'listorder') {
 	$art_obj = new Keke_witkey_article_class();
 	$art_obj->setWhere ( "art_id='$art_id'" );
 	$art_obj->setListorder (intval($value));
 	$art_obj->edit_keke_witkey_article(); 
-	kekezu::admin_system_log($_lang['edit_art_order'].$art_id);
+	Keke::admin_system_log($_lang['edit_art_order'].$art_id);
 	die ();
 } else {
 	$where = ' 1 = 1 ';
 	switch ($type) {
 		case 'art' :
-			kekezu::admin_check_role ( 16 );
-			$art_cat_arr = kekezu::get_table_data ( '*', "witkey_article_category", "cat_type = 'article'", " art_cat_id desc", '', '', 'art_cat_id', null );
+			Keke::admin_check_role ( 16 );
+			$art_cat_arr = Keke::get_table_data ( '*', "witkey_article_category", "cat_type = 'article'", " art_cat_id desc", '', '', 'art_cat_id', null );
 			$where .= " and cat_type = 'article' ";
 			break;
 			;
 		case 'help' :
-			kekezu::admin_check_role (42);
-			$art_cat_arr = kekezu::get_table_data ( '*', "witkey_article_category", "cat_type = 'help'", " art_cat_id desc", '', '', 'art_cat_id', null );
+			Keke::admin_check_role (42);
+			$art_cat_arr = Keke::get_table_data ( '*', "witkey_article_category", "cat_type = 'help'", " art_cat_id desc", '', '', 'art_cat_id', null );
 			$where .= " and cat_type = 'help' ";
 			break;
 			;
 		case 'bulletin' :
-			kekezu::admin_check_role ( 53);
+			Keke::admin_check_role ( 53);
 			$where .= " and cat_type = 'bulletin' ";
 			break;
 			;
 		case 'about' :
-			kekezu::admin_check_role ( 53);
+			Keke::admin_check_role ( 53);
 			$where .= " and cat_type = 'about' ";
 			break;
 			;
@@ -66,7 +66,7 @@ if ($ac == 'del') {
 	
 	//Œƒ’¬∑÷¿‡
 	$temp_arr = array ();
-	kekezu::get_tree ( $art_cat_arr, $temp_arr, 'option', NULL, 'art_cat_id', 'art_cat_pid', 'cat_name' );
+	Keke::get_tree ( $art_cat_arr, $temp_arr, 'option', NULL, 'art_cat_id', 'art_cat_pid', 'cat_name' );
 	$cat_arr_list = $temp_arr;
 	unset ( $temp_arr );
 	

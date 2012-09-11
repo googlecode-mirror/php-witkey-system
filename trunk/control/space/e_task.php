@@ -8,8 +8,8 @@
 
 $action = $action?$action:"pub";
 $member_id = intval($member_id); 
-$kekezu->_page_obj->setAjax(1);
-$kekezu->_page_obj->setAjaxDom('task_list');
+$Keke->_page_obj->setAjax(1);
+$Keke->_page_obj->setAjaxDom('task_list');
 if($action == 'pub'){ 
 
 	//发布的任务 
@@ -20,11 +20,11 @@ if($action == 'pub'){
 	
 	$url = "index.php?do=space&member_id=$member_id&view=task&page_size=$page_size&action=$action&ord=$ord";
 	$page_size = 15;
-	$count = db_factory::execute ( $sql.$where );
+	$count = Dbfactory::execute ( $sql.$where );
 	$page = $page ? $page : 1;
-	$pages = $kekezu->_page_obj->getPages ( $count, $page_size, $page, $url );
+	$pages = $Keke->_page_obj->getPages ( $count, $page_size, $page, $url );
 	$where .=$pages['where']; 
-	$task_arr = db_factory::query($sql.$where);
+	$task_arr = Dbfactory::query($sql.$where);
 	
 }elseif($action == 'join'){
 	//参加的任务
@@ -34,14 +34,14 @@ if($action == 'pub'){
 	
 	$url = "index.php?do=space&member_id=$member_id&view=task&page_size=$page_size&action=$action&ord=$ord";
 	$page_size = 15;
-	$count = db_factory::execute ( $sql.$where );
+	$count = Dbfactory::execute ( $sql.$where );
 	$page = $page ? $page : 1;
 	$pages = $page_obj->getPages ( $count, $page_size, $page, $url );
 	$where .=$pages['where']; 
-	$task_arr = db_factory::query($sql.$where);
+	$task_arr = Dbfactory::query($sql.$where);
  
 }
-$cash_cove = kekezu::get_cash_cove('',true);
+$cash_cove = Keke::get_cash_cove('',true);
  
 require keke_tpl_class::template ( SKIN_PATH . "/space/{$type}_{$view}" );
 

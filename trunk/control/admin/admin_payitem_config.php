@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * 增值服务的后台配置路由,跳到对应服务项文件夹中的control层中
  * this not free,powered by keke-tech
@@ -21,16 +21,16 @@ if($sbt_edit){
 	$fds['big_pic']!=$payitem['big_pic'] and keke_file_class::del_file($payitem['big_pic']);
 	$res=$payitem_obj->save($fds,$pk);
 	if($res){ 
-		 kekezu::admin_system_log($_lang['edit'].$payitem['item_name']);
-		 kekezu::admin_show_msg($payitem['item_name'].$_lang['edit_success'],$_SERVER['HTTP_REFERER'],"3",'','success');
+		 Keke::admin_system_log($_lang['edit'].$payitem['item_name']);
+		 Keke::admin_show_msg($payitem['item_name'].$_lang['edit_success'],$_SERVER['HTTP_REFERER'],"3",'','success');
 	}else 
-		kekezu::admin_show_msg($payitem['item_name'].$_lang['edit_fail'],$_SERVER['HTTP_REFERER'],"3",'','warning');
+		Keke::admin_show_msg($payitem['item_name'].$_lang['edit_fail'],$_SERVER['HTTP_REFERER'],"3",'','warning');
 }else{
-	$model_list=$kekezu->_model_list;
+	$model_list=$Keke->_model_list;
     $code_arr=explode(",",$payitem['model_code']);
 	
 }
-$kekezu->_cache_obj->gc();
+$Keke->_cache_obj->gc();
 require keke_tpl_class::template("/control/payitem/$item_code/tpl/admin_config");
 function get_fid($path){//删除图片时获取图片对应的fid,图片的存放形式是e.g ...img.jpg?fid=1000
 	if(!path){ return false;}

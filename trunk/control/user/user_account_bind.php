@@ -18,8 +18,8 @@ $oauth_obj = new Keke_witkey_member_oauth_class();
  * 获取绑定信息
  */ 
 $api_name = keke_glob_class::get_open_api();
-$oauth_url = $kekezu->_sys_config['website_url']."/index.php?do=$do&view=$view&op=$op&ac=$ac&type=$type";
-$res = kekezu::get_table_data('*','witkey_member_oauth',"uid=$uid","","source",6,"source");
+$oauth_url = $Keke->_sys_config['website_url']."/index.php?do=$do&view=$view&op=$op&ac=$ac&type=$type";
+$res = Keke::get_table_data('*','witkey_member_oauth',"uid=$uid","","source",6,"source");
 $url = "index.php?do=$do&view=$view&op=$op";
 /**
  * 将绑账号信息$res与$r数组进行合并
@@ -52,8 +52,8 @@ switch ($ac) {
 					   $oauth_user_info = $oa->get_login_user_info();
 					}
 					//检查这个用户是否已经绑定过
-					$is_bind = db_factory::get_count("select count(id) from ".TABLEPRE."witkey_member_oauth  where source ='$type' and oauth_id='{$oauth_user_info['account']}' and uid='$uid'");
-					$is_bind and kekezu::show_msg($_lang['operate_notice'],$url,3,$_lang['account_been_bind'],'warning');
+					$is_bind = Dbfactory::get_count("select count(id) from ".TABLEPRE."witkey_member_oauth  where source ='$type' and oauth_id='{$oauth_user_info['account']}' and uid='$uid'");
+					$is_bind and Keke::show_msg($_lang['operate_notice'],$url,3,$_lang['account_been_bind'],'warning');
 					//得到用户信息进行绑定
 					$oauth_obj->setAccount($oauth_user_info['name']);
 					
@@ -63,7 +63,7 @@ switch ($ac) {
 					$oauth_obj->setUid($uid);
 					$oauth_obj->setUsername($username);
 					$oauth_obj->setOn_time(time());
-					$oauth_obj->create_keke_witkey_member_oauth() and kekezu::show_msg($_lang['operate_notice'],$url,2,$_lang['bind_success'],'success')  or kekezu::show_msg($_lang['operate_notice'],$url,2,$_lang['bind_fail'],'warning');
+					$oauth_obj->create_keke_witkey_member_oauth() and Keke::show_msg($_lang['operate_notice'],$url,2,$_lang['bind_success'],'success')  or Keke::show_msg($_lang['operate_notice'],$url,2,$_lang['bind_fail'],'warning');
 			break;
 			}
 		}		
@@ -79,7 +79,7 @@ switch ($ac) {
 				case false:
 				   unset($_SESSION['auth_'.$type]['last_key']);
 				   $oauth_obj->setId($id);
-				   $oauth_obj->del_keke_witkey_member_oauth() and kekezu::show_msg($_lang['operate_notice'],$url,2,$_lang['unbind_success'],'success')  or kekezu::show_msg($_lang['operate_notice'],$url,2,$_lang['unbind_fail'],'warning') ;
+				   $oauth_obj->del_keke_witkey_member_oauth() and Keke::show_msg($_lang['operate_notice'],$url,2,$_lang['unbind_success'],'success')  or Keke::show_msg($_lang['operate_notice'],$url,2,$_lang['unbind_fail'],'warning') ;
 				break;
 			}
 		}

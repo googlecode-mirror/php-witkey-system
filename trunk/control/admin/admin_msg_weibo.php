@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * @copyright keke-tech
  * @author Chen
@@ -6,11 +6,11 @@
  * 2011-9-19上午10:15:13
  */
 
-kekezu::admin_check_role(63);
+Keke::admin_check_role(63);
 $oauth_type_list = keke_glob_class::get_open_api();
 $config_basic_obj = new Keke_witkey_basic_config_class ();
-$config_arr = $kekezu->_weibo_list;
-$api_open = $kekezu->_api_open;
+$config_arr = $Keke->_weibo_list;
+$api_open = $Keke->_api_open;
 /**微博任务开放平台**/
 $url = 'index.php?do=msg&view=weibo';
 //是否编辑
@@ -27,12 +27,12 @@ if (isset ( $submit )) {
 		$config_basic_obj->setV(serialize($oauth_api));
 		$config_basic_obj->edit_keke_witkey_basic_config ();
 		
-		kekezu::admin_system_log($_lang['config_interface_log']);
+		Keke::admin_system_log($_lang['config_interface_log']);
 		if ($res) {
-			$kekezu->_cache_obj->del("keke_b3c58336");
-			kekezu::admin_show_msg($_lang['oauth_api_config_success'],$url,3,'','success');
+			$Keke->_cache_obj->del("keke_b3c58336");
+			Keke::admin_show_msg($_lang['oauth_api_config_success'],$url,3,'','success');
 		}else{
-			kekezu::admin_show_msg($_lang['oauth_api_config_fail'],$url,3,'','warning');
+			Keke::admin_show_msg($_lang['oauth_api_config_fail'],$url,3,'','warning');
 		}
  
 

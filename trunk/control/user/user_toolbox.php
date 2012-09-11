@@ -24,7 +24,7 @@ switch ($show) {
 		$payitem_type = keke_glob_class::get_payitem_type (); //使用范围
 		$payitem_standard = keke_payitem_class::payitem_standard (); //收费标准		
 		if ($item_code) { //购买页面加载
-			in_array ( $item_code, array ('top', 'urgent', 'workhide', 'map' ) ) or kekezu::show_msg ( $_lang ['operate_notice'], 'index.php?do=user&view=payitem&op=toolbox', 3, $_lang ['param_error'], 'warning' );
+			in_array ( $item_code, array ('top', 'urgent', 'workhide', 'map' ) ) or Keke::show_msg ( $_lang ['operate_notice'], 'index.php?do=user&view=payitem&op=toolbox', 3, $_lang ['param_error'], 'warning' );
 			$item_info = $payitem_list [$item_code]; //选择项信息
 			$ac_url = $origin_url . "&op=$op&show=buy&item_code=" . $item_code; //提交链接
 			require "control/payitem/$item_code/control/user_buy.php";

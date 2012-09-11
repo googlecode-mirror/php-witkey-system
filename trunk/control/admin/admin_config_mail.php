@@ -1,4 +1,4 @@
-<?php	defined ( 'ADMIN_KEKE' ) or exit ( 'Access Denied' );
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * ÓÊ¼þÅäÖÃ
  * @copyright keke-tech
@@ -7,7 +7,7 @@
  * 2010-5-18ÔçÉÏ2:37:00
  */
 
-kekezu::admin_check_role(23);
+Keke::admin_check_role(23);
 $config_basic_obj = new Keke_witkey_basic_config_class ();
 $config_basic_arr = $config_basic_obj->query_keke_witkey_basic_config ();
 foreach ( $config_basic_arr as $k => $v ) {
@@ -27,13 +27,13 @@ if (isset ( $submit )) {
 		$res += $config_basic_obj->edit_keke_witkey_basic_config ();
 	
 	}
-	$kekezu->_cache_obj->gc();
-	kekezu::admin_system_log($_lang['email_config_param']);
+	$Keke->_cache_obj->gc();
+	Keke::admin_system_log($_lang['email_config_param']);
 	if ($res) {
-		$kekezu->_cache_obj->set ( "keke_witkey_basic_config", $config_basic_arr );
-		kekezu::admin_show_msg ( $_lang['submit_success'], $url,3,'','success' );
+		$Keke->_cache_obj->set ( "keke_witkey_basic_config", $config_basic_arr );
+		Keke::admin_show_msg ( $_lang['submit_success'], $url,3,'','success' );
 	} else {
-		kekezu::admin_show_msg ( $_lang['website_config_fail'], $url,3,'','warning' );
+		Keke::admin_show_msg ( $_lang['website_config_fail'], $url,3,'','warning' );
 	}
 
 }

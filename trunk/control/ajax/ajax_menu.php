@@ -14,7 +14,7 @@ switch ($ajax) {
 		$take_num  		= intval($user_info['take_num']);
 		$accepted_num   = intval($user_info['accepted_num']);
 		$auth_info	    = keke_auth_fac_class::get_submit_auth_record ( $user_id, 1 );
-		$order_count	= intval ( db_factory::get_count ( sprintf ( " select count(order_id) from %switkey_order where order_status='confirm' and seller_uid='%d' and model_id in(6,7)", TABLEPRE, $user_id ) ) );
+		$order_count	= intval ( Dbfactory::get_count ( sprintf ( " select count(order_id) from %switkey_order where order_status='confirm' and seller_uid='%d' and model_id in(6,7)", TABLEPRE, $user_id ) ) );
 		$buyer_aid	    = keke_user_mark_class::get_user_aid ( $user_id, '2', null, '1' );
 		break;
 	case 'show_secode':
@@ -24,18 +24,18 @@ switch ($ajax) {
 	break;
 	case "set_comment" :
 		$comment_arr = array ("obj_id" => $obj_id, "origin_id" => $origin_id, "obj_type" => $obj_type, "p_id" => $p_id, "uid" => $uid, "username" => $username, "content" => $tar_content, "on_time" => time () );
-		kekezu::set_leave ( $comment_arr, $type, $pk, '', 'json' );
+		Keke::set_leave ( $comment_arr, $type, $pk, '', 'json' );
 		break;
 	case "load_comment" :
 	case "load_reply" :
 		if ($comment_id) {
-			$comm_info = db_factory::get_one ( sprintf ( " select * from %switkey_comment where comment_id = '%d'", TABLEPRE, $comment_id ) );
+			$comm_info = Dbfactory::get_one ( sprintf ( " select * from %switkey_comment where comment_id = '%d'", TABLEPRE, $comment_id ) );
 		} else {
 			die ();
 		}
 		break;
 	case "del_comment" :
-		kekezu::del_comment ( $pk, $obj_type, $comment_id, $origin_id, '', 'json' );
+		Keke::del_comment ( $pk, $obj_type, $comment_id, $origin_id, '', 'json' );
 		break;
 	case "prom_link" :
 		$title = $_lang['get_promote_links'];;
@@ -45,8 +45,8 @@ switch ($ajax) {
 		$promtext or $promtext = $_K ['html_title'];
 		break;
 	case "prom_list" :
-		$model_list = $kekezu->_model_list;
-		$page_obj = $kekezu->_page_obj;
+		$model_list = $Keke->_model_list;
+		$page_obj = $Keke->_page_obj;
 		$page_obj->setAjax ( '1' );
 		$page_obj->setAjaxDom ( 'ajax_list' );
 		$page or $page = 1;

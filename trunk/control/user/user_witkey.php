@@ -33,7 +33,7 @@ if($shop_open==0){
 	unset($sub_nav[0],$sub_nav[1]['shop'],$sub_nav[1]['g_pub']);
 }
 $op=='task' and $model_type='task' or $model_type='shop';
-$model_list=kekezu::get_table_data ( '*', 'witkey_model', " model_type = '$model_type' and model_status=1", 'model_id asc ', '', '', 'model_id', 3600 );
+$model_list=Keke::get_table_data ( '*', 'witkey_model', " model_type = '$model_type' and model_status=1", 'model_id asc ', '', '', 'model_id', 3600 );
 $model_fds = array_keys($model_list);
 $model_id or $model_id = intval($model_fds['0']);
 		

@@ -9,12 +9,12 @@ defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 
 //echo 1;die;
 //新手指南
-$res = kekezu::get_table_data ( "art_cat_id", 'witkey_article_category', "art_index like '%{294}%'", '', '', '', 'art_cat_id', 3600 );
-$model_list = $kekezu->_model_list;
+$res = Keke::get_table_data ( "art_cat_id", 'witkey_article_category', "art_index like '%{294}%'", '', '', '', 'art_cat_id', 3600 );
+$model_list = $Keke->_model_list;
 if ($res) {
 	$cat_ids = array_keys ( $res );
 	$cat_ids = implode ( ',', $cat_ids );
-	$new_help = db_factory::query ( sprintf ( "select art_id,art_title,art_cat_id from %switkey_article where art_cat_id in (%s) order by views desc limit 0,3", TABLEPRE, $cat_ids ), 1, 3600 );
+	$new_help = Dbfactory::query ( sprintf ( "select art_id,art_title,art_cat_id from %switkey_article where art_cat_id in (%s) order by views desc limit 0,3", TABLEPRE, $cat_ids ), 1, 3600 );
 }
 $basic_url.='?do='.$do.'&view='.$view;
 //认证信息
@@ -23,16 +23,16 @@ $auth_item = keke_auth_base_class::get_auth_item ();
 $auth_temp = array_keys ( $auth_item );
 $user_info ['user_type'] == 2 and $un_code = 'realname' or $un_code = "enterprise";
 $t = implode ( ",", $auth_temp );
-$auth_info = db_factory::query ( " select a.auth_code,a.auth_status,b.auth_title,b.auth_small_ico,b.auth_small_n_ico from " . TABLEPRE . "witkey_auth_record a left join " . TABLEPRE . "witkey_auth_item b on a.auth_code=b.auth_code where a.uid ='$uid' and FIND_IN_SET(a.auth_code,'$t')", 1, - 1 );
-$auth_info = kekezu::get_arr_by_key ( $auth_info, "auth_code" );
+$auth_info = Dbfactory::query ( " select a.auth_code,a.auth_status,b.auth_title,b.auth_small_ico,b.auth_small_n_ico from " . TABLEPRE . "witkey_auth_record a left join " . TABLEPRE . "witkey_auth_item b on a.auth_code=b.auth_code where a.uid ='$uid' and FIND_IN_SET(a.auth_code,'$t')", 1, - 1 );
+$auth_info = Keke::get_arr_by_key ( $auth_info, "auth_code" );
 
 //待付款任务数，商品数
-$wait_task = intval ( db_factory::get_count ( sprintf ( "select count(*) from %switkey_task where task_status=0 and uid='%d'", TABLEPRE, $uid ) ) );
-$wait_shop = intval ( db_factory::get_count ( sprintf ( "select count(*) from %switkey_order where order_status='wait' and model_id in(6,7) and order_uid='%d'", TABLEPRE, $uid ) ) );
+$wait_task = intval ( Dbfactory::get_count ( sprintf ( "select count(*) from %switkey_task where task_status=0 and uid='%d'", TABLEPRE, $uid ) ) );
+$wait_shop = intval ( Dbfactory::get_count ( sprintf ( "select count(*) from %switkey_order where order_status='wait' and model_id in(6,7) and order_uid='%d'", TABLEPRE, $uid ) ) );
 //待选稿任务数
-$xg_task = intval ( db_factory::get_count ( sprintf ( "select count(*) from %switkey_task where task_status=3 and uid='%d'", TABLEPRE, $uid ) ) );
+$xg_task = intval ( Dbfactory::get_count ( sprintf ( "select count(*) from %switkey_task where task_status=3 and uid='%d'", TABLEPRE, $uid ) ) );
 //待确认商品数
-$confirm_service = intval ( db_factory::get_count ( sprintf ( "select count(*) from %switkey_order where order_status='wait' and model_id in(6,7) and order_uid='%d'", TABLEPRE, $uid ) ) );
+$confirm_service = intval ( Dbfactory::get_count ( sprintf ( "select count(*) from %switkey_order where order_status='wait' and model_id in(6,7) and order_uid='%d'", TABLEPRE, $uid ) ) );
 //工具箱
 $payitem_list = keke_payitem_class::get_payitem_config ( null, null, null, 'item_id' ); //可购买服务
 
@@ -40,23 +40,23 @@ $payitem_list = keke_payitem_class::get_payitem_config ( null, null, null, 'item
 //任务状态数组
 $task_status = sreward_task_class::get_task_status ();
 //任务区间数组
-$task_cove = kekezu::get_table_data ( '*', "witkey_task_cash_cove", '', "start_cove", '', '', 'cash_rule_id', 3600 );
+$task_cove = Keke::get_table_data ( '*', "witkey_task_cash_cove", '', "start_cove", '', '', 'cash_rule_id', 3600 );
 
 //发布任务
-$pub_task = db_factory::query ( sprintf ( "select * from %switkey_task where uid = '%d' and task_status in (0,3,6,8) order by start_time desc limit 0,6", TABLEPRE, $uid ) );
+$pub_task = Dbfactory::query ( sprintf ( "select * from %switkey_task where uid = '%d' and task_status in (0,3,6,8) order by start_time desc limit 0,6", TABLEPRE, $uid ) );
 $pub_task = get_pub_list ( $pub_task );
 //发布的商品
-$pub_service = db_factory::query ( sprintf ( "
+$pub_service = Dbfactory::query ( sprintf ( "
 		SELECT a.order_id,a.order_uid,a.order_username,a.order_status,a.seller_uid,a.seller_username,a.order_time,c.* from %switkey_order a
 		left join %switkey_order_detail b on a.order_id =b.order_id and a.order_status in ('wait','ok','send','accept')
 		left join %switkey_service c on b.obj_id = c.service_id where a.seller_uid='%d' and a.model_id in(6,7) and b.obj_type='service' group by c.service_id", TABLEPRE, TABLEPRE, TABLEPRE, $uid ) );
 //参与的任务
 $sql = "select a.* from %switkey_task a left join %switkey_task_bid b on a.task_id = b.task_id left join %switkey_task_work c on a.task_id = c.task_id where task_status in (2,3,4,5,6) and (b.uid=%d or c.uid=%d) group by a.task_id order by start_time desc";
 
-$join_task = db_factory::query ( sprintf ( $sql, TABLEPRE, TABLEPRE, TABLEPRE, $uid, $uid ) );
+$join_task = Dbfactory::query ( sprintf ( $sql, TABLEPRE, TABLEPRE, TABLEPRE, $uid, $uid ) );
 $join_task = get_pub_list ( $join_task );
 //购买的商品
-$buy_service = db_factory::query ( sprintf ( "
+$buy_service = Dbfactory::query ( sprintf ( "
 		SELECT a.order_id,a.order_uid,a.order_username,a.order_status,a.seller_uid,a.seller_username,a.order_time,c.* from %switkey_order a
 		left join %switkey_order_detail b on a.order_id =b.order_id and a.order_status in ('wait','ok','send','accept')
 		left join %switkey_service c on b.obj_id = c.service_id where a.order_uid='%d' and a.model_id in(6,7) and b.obj_type='service' group by c.service_id", TABLEPRE, TABLEPRE, TABLEPRE, $uid ) );
@@ -77,7 +77,7 @@ function get_pub_list($list) {
 }
 if (isset ( $ac ) && $order_id && $model_id) {
 	//var_dump($ac,$order_id,$model_id);die();
-	$model_info = $kekezu->_model_list [$model_id];
+	$model_info = $Keke->_model_list [$model_id];
 	$class_name = $model_info ['model_code'] . "_" . $model_info ['model_type'] . "_class";
 	$obj = new $class_name ( $task_info );
 	$res = $obj->dispose_order ( $order_id, $ac );
@@ -97,20 +97,20 @@ function get_mark_info($order_id, $obj_id, $order_uid, $seller_uid) {
 		$mark_type = 2;
 		$auid = $seller_uid;
 	}
-	$mark_info = db_factory::get_one ( sprintf ( "select * from %switkey_mark where obj_id=%d and origin_id=%d and mark_type=%d and uid=$auid and by_uid=$uid", TABLEPRE, $order_id, $obj_id, $mark_type ) );
+	$mark_info = Dbfactory::get_one ( sprintf ( "select * from %switkey_mark where obj_id=%d and origin_id=%d and mark_type=%d and uid=$auid and by_uid=$uid", TABLEPRE, $order_id, $obj_id, $mark_type ) );
 	return $mark_info;
 }
-$art_notice_arr = db_factory::query ( sprintf ( "select * from %switkey_article a left join %switkey_article_category b on a.art_cat_id=b.art_cat_id where b.cat_type='article' order by a.pub_time desc limit 0,4", TABLEPRE, TABLEPRE ) );
+$art_notice_arr = Dbfactory::query ( sprintf ( "select * from %switkey_article a left join %switkey_article_category b on a.art_cat_id=b.art_cat_id where b.cat_type='article' order by a.pub_time desc limit 0,4", TABLEPRE, TABLEPRE ) );
 if (isset ( $ajax )) {
 	switch ($ajax) {
 		case 'bid_notice' :
-			$dynamic_arr = kekezu::get_feed ( "feedtype='work_accept'", "feed_time desc", 4 ); // 动态信息	
+			$dynamic_arr = Keke::get_feed ( "feedtype='work_accept'", "feed_time desc", 4 ); // 动态信息	
 			//var_dump($dynamic_arr);	
 			require keke_tpl_class::template ( "ajax/index" );
 			die ();
 			break;
 		case 'withdraw' :
-			$withdraw_arr = db_factory::query ( sprintf ( "select * from %switkey_withdraw where withdraw_status=2 order by process_time desc limit 0,4", TABLEPRE ) );
+			$withdraw_arr = Dbfactory::query ( sprintf ( "select * from %switkey_withdraw where withdraw_status=2 order by process_time desc limit 0,4", TABLEPRE ) );
 			require keke_tpl_class::template ( "ajax/index" );
 			die ();
 			break;
@@ -125,9 +125,9 @@ if (isset ( $ajax )) {
  * @param $url  操作链接
  */
 function master_opera($m_id, $t_id, $url, $task_cash) {
-	global $kekezu;
+	global $Keke;
 	$button = array ();
-	$model_code = $kekezu->_model_list [$m_id] ['model_code'];
+	$model_code = $Keke->_model_list [$m_id] ['model_code'];
 	$c = $model_code . '_task_class';
 	if ($model_code && method_exists ( $c, 'master_opera' )) {
 		$button = call_user_func_array ( array ($c, 'master_opera' ), array ($m_id, $t_id, $url, $task_cash ) );
@@ -148,9 +148,9 @@ function master_opera($m_id, $t_id, $url, $task_cash) {
  * @param $url  操作链接
  */
 function wiki_opera($m_id, $t_id, $w_id, $url) {
-	global $kekezu;
+	global $Keke;
 	$button = array ();
-	$model_code = $kekezu->_model_list [$m_id] ['model_code'];
+	$model_code = $Keke->_model_list [$m_id] ['model_code'];
 	$c = $model_code . '_task_class';
 	if ($model_code && method_exists ( $c, 'wiki_opera' )) {
 		$button = call_user_func_array ( array ($c, 'wiki_opera' ), array ($m_id, $t_id, $w_id, $url ) );

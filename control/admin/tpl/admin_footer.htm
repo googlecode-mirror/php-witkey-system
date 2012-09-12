@@ -11,7 +11,7 @@
 	 
 	In.add('table',{path:"{BASE_URL}/control/admin/tpl/js/table.js",type:'js'});
 	In.add('calendar',{path:"{BASE_URL}/resource/js/system/script_calendar.js"});
-	In('form_and_validation','xheditor','mousewheel','table','calendar');
+	In('form_and_validation','mousewheel','table');
 	 
 	</script>
  
@@ -41,26 +41,12 @@ function cdel(o,s){
 			}
 			
 		});
-			/*
-$.get(o.href,function(data){
-				if(data >0){
-					$(o).parent().parent().remove();
-					
-				}
-			})
-*/
+ 
 	}).follow(o);
 	return false;	
 }
 $(function(){
-/*
-var tips = window.parent.document.getElementById('del_tips');
-	 $(tips).ajaxStart(function(){
-		$(tips).children().html('删除中... 已经删除成功!').addClass('tips_info');  
-	 }).ajaxComplete(function(){
-		$(tips).children().html('').removeClass('tips_info');
-	 })
-*/
+ 
 })
 //排序 
 function submitSort(uri,f,ord){
@@ -72,17 +58,7 @@ function submitSort(uri,f,ord){
 	location.href = uri;
 }
 					 
-/*
-function pdel(frm){ 
-	d = art.dialog;
-	var frm = frm; 
-	var c = "{$_lang['you_comfirm_delete_operate']}";  
-	d.confirm(c, function(){
-	 	$("#"+frm).submit();
-	}); 
-	return false;  
-}
-*/
+ 
 //批量删除，obj=>删除按钮对象
 function batch_act(obj){ 
 	d = art.dialog;
@@ -98,15 +74,7 @@ function batch_act(obj){
 			})
 			var val = str.join(',');
 			var url = '{$del_uri}?ids='+val;
-			/*
-$.post(url,function(data){
-				if(data>0){
-					$(":checkbox[name='ckb[]']:checked").each(function(){
-						$(this).parent().parent().remove();
-					})
-				}
-			})
-*/
+ 
 			$.ajax({
 				url:url,
 			dataType:'text',

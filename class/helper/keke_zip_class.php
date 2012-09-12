@@ -1,16 +1,4 @@
 <?php
-/*--------------------------------------------------
- | TAR/GZIP/BZIP2/ZIP ARCHIVE CLASSES 2.1
- | By Devin Doucette
- | Copyright (c) 2005 Devin Doucette
- | Email: darksnoopy@shaw.ca
- +--------------------------------------------------
- | Email bugs/suggestions to darksnoopy@shaw.ca
- +--------------------------------------------------
- | This script has been created and released under
- | the GNU GPL and is free to use and redistribute
- | only if this copyright statement is not removed
- +--------------------------------------------------*/
 
 class archive
 {
@@ -674,7 +662,7 @@ class zip_file extends archive
 			$this->add_data($this->options['comment']);
 
 		chdir($pwd);
-
+		
 		return 1;
 	}
 } ?>

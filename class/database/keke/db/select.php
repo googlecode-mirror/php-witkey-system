@@ -11,7 +11,11 @@ class Keke_db_select extends Keke_db_query {
 	
 	protected $_query_list = array ();
 	protected $_lifetime;
+	protected $_cached_id;
 	public function __construct($fields){
+		if($fields===NULL){
+			$fields = '*';
+		}
 		$this->select($fields);
 	}
 	public function select($fields) {
@@ -53,7 +57,7 @@ class Keke_db_select extends Keke_db_query {
 			$length = $offset;
 			$offset = 0;
 		}
-		$this->_query_list ['limit'] = 'limit ' . $offset . ',' . $length;
+		$this->_query_list ['limit'] = ' limit ' . $offset . ',' . $length;
 		return $this;
 	}
 	
@@ -73,10 +77,13 @@ class Keke_db_select extends Keke_db_query {
 		$this->_query_list ['having'] = $having;
 		return $this;
 	}
-	public function cached($lifetime = NULL, $force = FALSE) {
+	public function cached($lifetime = NULL, $cached_id = NULL) {
 		if ($lifetime === NULL) {
 			// 默认缓存时间
 			$lifetime = Cache::DEFAULT_CACHE_LIFE_TIME;
+		}
+		if($cached_id !== NULL){
+			$this->_cached_id = $cached_id;
 		}
 		$this->_lifetime = $lifetime;
 		return $this;
@@ -140,9 +147,20 @@ class Keke_db_select extends Keke_db_query {
 		$this->_parameters= null; 
 		return $this;
 	}
-	
+	/**
+	 * 缓存查询结果，缓存方式为系统默认配置,见config.inc.php
+	 * @param string $sql  sql语句
+	 * @param string $db   mysql,mysqli...,默认为空
+	 * @param string $default 结果为空的默认值
+	 * @param string $key  缓存的ID
+	 * @return unknown|Ambigous <number, multitype:multitype: >
+	 */
 	public function cache_data($sql,$db=null, $default = 'null') {
-		$key = Cache::instance ()->generate_id ( $sql )->get_id();
+		if($this->_cached_id === NULL){
+			$key = Cache::instance ()->generate_id ( $sql )->get_id();
+		}else{
+			$key = $this->_cached_id;
+		}
 		if ($this->_lifetime > 0 and $datalist = Cache::instance ()->get ( $key )) {
 			return $datalist;
 		} elseif ($this->_lifetime <= 0) {

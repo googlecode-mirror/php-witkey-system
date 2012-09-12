@@ -22,9 +22,9 @@ class Control_admin_tool_dbbackup extends Controller{
 			keke_backup_class::run_backup ();
 		}else{
 			if($_GET['t']==1){
-				Keke::show_msg ('系统提示',  "index.php/admin/tool_dbrestore",'提交成功','success' );
+				Keke::show_msg ($_lang ['operate_notice'],  "index.php/admin/tool_dbrestore",$_lang ['operate_success'],'success' );
 			}else{
-				Keke::show_msg ( '系统提示', "index.php/admin/tool_backup", '提交失败','warning' );
+				Keke::show_msg ( $_lang ['operate_notice'], "index.php/admin/tool_backup", $_lang ['operate_fialed'],'warning' );
 			}
 		}
 		

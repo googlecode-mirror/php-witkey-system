@@ -223,26 +223,22 @@ class Keke_core extends Keke_base {
 		}
 		return $ext;
 	}
-	
+	/**
+	 * 获取系统当前的模板
+	 * @return Ambigous <string, unknown, Ambigous, unknown, number, multitype:multitype: >
+	 */
 	public static function get_tpl() {
-		$sql = sprintf ( "select tpl_title,tpl_pic from %switkey_template where is_selected = '1' limit 1", TABLEPRE );
-		if(($res= Cache::instance()->generate_id($sql)->get(null))==null){
-			$res = Database::instance()->get_one_row($sql);
-			Cache::instance()->generate_id($sql)->set(null, $res);
-		}
-		return $res;
+		$res =  DB::select('tpl_title,tpl_pic')->from('witkey_template')
+		       ->where('is_selected = 1')->limit(0, 1)
+		       ->cached(66666,'keke_template')->execute();
+		return $res[0];
 	}
 	static function execute_time() {
 		$stime = explode ( ' ', SYS_START_TIME );
 		$etime = explode ( ' ', microtime ( 1 ) );
 		$ex_time = ($etime [0] - $stime[0]);
-		
 		$memory = sprintf ( ' memory usage: %s', self::get_format_size ( memory_get_usage() ) );
-		return array (
-				$ex_time,
-				$memory 
-		);
-	
+		return array (	$ex_time,$memory);
 	}
 	
 	static function lang($key) {
@@ -416,13 +412,7 @@ class Keke extends Keke_core {
 	function init_config() {
 		global $i_model, $_lang, $_K;
 		
-		//$sql = sprintf("select k,v from %switkey_config",TABLEPRE);
-		/* if(($basic_arr = Cache::instance()->generate_id($sql)->get(null))==null){
-			$basic_arr = db::query($sql)->execute();
-			Cache::instance()->generate_id($sql)->set(null,$basic_arr);
-		} */
-		
-		$basic_arr = DB::select('`k`,`v`')->from('witkey_config')->cached(60000)->execute();
+		$basic_arr = DB::select('`k`,`v`')->from('witkey_config')->cached(60000,'keke_config')->execute();
 		Keke::$_sys_config = $basic_arr ;
 		
 		$config_arr = array ();

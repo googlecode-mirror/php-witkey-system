@@ -6,7 +6,7 @@
  * @version v 2.0
  * 2011-9-2
 */
-class Control_admin_man_feed extends Controller{
+class Control_admin_tool_feed extends Controller{
 	function action_index(){
 		//定义全局变量与语言包，只要加载模板，这个是必须要定义.操
 		global $_K,$_lang;
@@ -17,8 +17,8 @@ class Control_admin_man_feed extends Controller{
 		$query_fields = array('feed_id'=>$_lang['id'],'username'=>$_lang['name'],'feed_time'=>$_lang['time']);
 		//总记录数,分页用的，你不定义，数据库就是多查一次的。为了少个Sql语句，你必须要写的，亲!
 		$count = intval($_GET['count']);
-		//man本来是一个目录，由于没有定义man为目录的路由,所以这个控制层的文件来man_feed So这里不能写为man/feed
-		$base_uri = BASE_URL."/index.php/admin/man_feed";
+		//tool本来是一个目录，由于没有定义man为目录的路由,所以这个控制层的文件来tool_feed So这里不能写为tool/feed
+		$base_uri = BASE_URL."/index.php/admin/tool_feed";
 		//删除uri,del也是一个固定的，写成其它的，你死定了
 		$del_uri = $base_uri.'/del';
 		//默认排序字段，这里按时间降序
@@ -34,7 +34,7 @@ class Control_admin_man_feed extends Controller{
 		$pages = $data_info['pages'];
 		//$file_type_arr = keke_global_class::get_file_type();
 		$feed_type = keke_global_class::get_feed_type ();
-		require Keke_tpl::template('control/admin/tpl/man/feed');
+		require Keke_tpl::template('control/admin/tpl/tool/feed');
 	}
 	/**
 	 * 这里是删除的action 主要是处理要单条删除

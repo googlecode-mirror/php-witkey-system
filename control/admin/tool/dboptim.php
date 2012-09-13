@@ -20,7 +20,7 @@ class Control_admin_tool_dboptim extends Controller{
 		foreach ( $table_arr as $k => $v ) {
 			//碎片数据大于>0的表 
 			if($v ['Data_free'] > 0){
-				array_push($optim_table_list[$k], $v);
+				$optim_table_list[$k]=$v;
 			} 
 		}
 		require Keke_tpl::template('control/admin/tpl/tool/dboptim');

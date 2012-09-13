@@ -2,8 +2,8 @@
 <div class="page_title">
     <h1>{$_lang['ads']}{$page_tips}</h1>
     <div class="tool">
-        <a href="{BASE_URL}/index.php/admin/man/ad_list">{$_lang['ads_list']}</a>
-        <a href="{BASE_URL}/index.php/admin/man/ad_add/target_id={$target_id}" class="here">{$_lang['add_ads']}{$page_tips}</a>
+        <a href="{BASE_URL}/index.php/admin/tool_adlist">{$_lang['ads_list']}</a>
+        <a href="{BASE_URL}/index.php/admin/tool/ad_add/target_id={$target_id}" class="here">{$_lang['add_ads']}{$page_tips}</a>
     </div>
 </div>
 <div class="box post">
@@ -31,8 +31,9 @@
             <h2>{$_lang['ads']}{$page_tips}</h2>
         </div>
         <div class="detail">
-            <form method="post" action="{BASE_URL}/index.php/admin/man/ad_list/save"  enctype="multipart/form-data" id="form1">
-                <input type="hidden" name="ad_id" value="{$ad_data['ad_id']}">
+            <form method="post" action="{BASE_URL}/index.php/admin/tool_adlist/save"  enctype="multipart/form-data" id="form1">
+                <input type="hidden" name="sbt_action" value="1">
+				<input type="hidden" name="ad_id" value="{$ad_data['ad_id']}">
                 <input type="hidden" name="hdn_ad_type" id="hdn_ad_type" value="{$ad_data['ad_type']}" />
                 <input type="hidden" name="hdn_target_id" id="hdn_ad_type" value="{$target_id}" />
                 <table width="100%" border="0" cellspacing="0" cellpadding="0">

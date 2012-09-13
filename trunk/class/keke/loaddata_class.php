@@ -1,9 +1,14 @@
 <?php
 keke_lang_class::load_lang_class('keke_loaddata_class');
 class keke_loaddata_class {
+	/**
+	 * 获取标签列表
+	 * @param  $mode 1=>tag_id 索引数组,其它的用tagname 索引数组
+	 * @return array
+	 */
 	public static function get_tag($mode = '') {
 		$tag_obj = new Keke_witkey_tag();
-		$taginfo = $tag_obj->query(6000);
+		$taginfo = $tag_obj->query('*',6000);
 	
 		$temp_arr = array ();
 		if (! $mode) {
@@ -58,14 +63,14 @@ class keke_loaddata_class {
 	
     static function init_tag(){
     	$tag = new Keke_witkey_tag();
-    	$tag_arr = $tag->query(6000);
+    	$tag_arr = $tag->query('*',6000);
     	return Keke::get_arr_by_key($tag_arr,'tagname');
     }
 	static function readtag($name) { 
 		global $kekezu,$_lang;
         //Keke::$_tag or $kekezu->init_tag();
          
-       	$tag_arr = self::init_tag();
+       	$tag_arr = self::get_tag(0);
 		//$tag_arr = Keke::$_tag; 
  		$tag_info = $tag_arr [$name];
 	    if ($tag_info ['tag_type'] == 5) {
@@ -100,20 +105,22 @@ class keke_loaddata_class {
 		return $content;
 	}
 	
-	//显示tag的预览
+	/**
+	 * 显示tag的预览
+	 */
 	static function previewtag($tag_info) {
-		$datalist = keke_loaddata_class::loaddata ( $tag_info );
 		if ($tag_info ['tag_type'] == 5) {
-			echo htmlspecialchars_decode ( $tag_info ['code'] );
+			echo htmlspecialchars_decode ( $tag_info ['tag_code'] );
 		} else {
-			require Keke_tpl::parse_code ( htmlspecialchars_decode ( $tag_info [tag_code] ), $tag_info [tag_id] );
+			$datalist = keke_loaddata_class::loaddata ( $tag_info );
+			require Keke_tpl::parse_code ( htmlspecialchars_decode ( $tag_info ['tag_code'] ), $tag_info ['tag_id'] );
 		}
 	
 	}
 	//显示feed的预览
 	static function preview_feed($tag_info) {
 		if ($tag_info) {
-			$code = unserialize ( $tag_info [code] );
+			$code = unserialize ( $tag_info ['tag_code'] );
 			$tag_info = array_merge ( $tag_info, $code );
 			extract ( $tag_info );
 		}
@@ -128,15 +135,16 @@ class keke_loaddata_class {
 	static function loaddata($tag_info) {
 		global $_K;
 		$tag_type = keke_global_class::get_tag_type ();
-		if ($tag_info [tag_type] != 5) {
-			$func_name = "load_" . $tag_type [$tag_info ['tag_type']] [2] . "_data";
+		if ($tag_info ['tag_type'] != 5) {
+			$f = $tag_type [$tag_info ['tag_type']] [2]?$tag_type [$tag_info ['tag_type']] [2]:'article';
+			$func_name = "load_" . $f . "_data";
 			$temp_arr = self::$func_name ( $tag_info );
 			return $temp_arr;
 		}
 	}
 	static function load_service_data($tag_info) {
 		global $_K,$_lang;
-		$service_obj = new Keke_witkey_service_class ();
+		$service_obj = new Keke_witkey_service ();
 		$service_limit_ext = unserialize ( $tag_info [code] );
 		$where = " 1 = 1 and service_type='$service_limit_ext[service_type]'";
 		if ($service_limit_ext [service_type] == 2) {
@@ -147,7 +155,7 @@ class keke_loaddata_class {
 			$where .= " limit 0," . $tag_info ['loadcount'];
 		}
 		$service_obj->setWhere ( $where );
-		$service_arr = $service_obj->query_keke_witkey_service ();
+		$service_arr = $service_obj->query ();
 		$temp_arr = array ();
 		foreach ( $service_arr as $v ) {
 			$a = array ();
@@ -172,7 +180,7 @@ class keke_loaddata_class {
 		global $_K,$_lang;
 		$cat_obj = null;
 		if ($tag_info ['cat_type'] == 2) {
-			$cat_obj = new Keke_witkey_article_category_class ();
+			$cat_obj = new Keke_witkey_article_category ();
 			$where = "1=1 ";
 			
 			$where .= $tag_info ['cat_cat_ids'] ? "and art_cat_id in ({$tag_info['cat_cat_ids']}) " : $tag_info ['cat_cat_ids'] ? "and art_cat_id in ({$tag_info['cat_cat_ids']}) " : "";
@@ -185,7 +193,7 @@ class keke_loaddata_class {
 				$where .= "limit 0,{$tag_info['loadcount']} ";
 			}
 			$cat_obj->setWhere ( $where );
-			$cat_arr = $cat_obj->query_keke_witkey_article_category ();
+			$cat_arr = $cat_obj->query ();
 			$temp_arr = array ();
 			foreach ( $cat_arr as $v ) {
 				$a = array ();
@@ -196,7 +204,7 @@ class keke_loaddata_class {
 				$temp_arr [] = $a;
 			}
 		} else {
-			$cat_obj = new Keke_witkey_industry_class ();
+			$cat_obj = new Keke_witkey_industry ();
 			$where = "1=1 ";
 			
 			$where .= $tag_info ['cat_cat_ids'] ? "and indus_id in ({$tag_info['cat_cat_ids']})" : $tag_info ['cat_cat_ids'] ? "and indus_id in ({$tag_info['cat_cat_ids']})" : "";
@@ -211,7 +219,7 @@ class keke_loaddata_class {
 				$where .= "limit 0,{$tag_info['loadcount']} ";
 			}
 			$cat_obj->setWhere ( $where );
-			$cat_arr = $cat_obj->query_keke_witkey_industry (true, 5*60);
+			$cat_arr = $cat_obj->query ('*', 5*60);
 			$temp_arr = array ();
 			foreach ( $cat_arr as $v ) {
 				$a = array ();
@@ -227,7 +235,7 @@ class keke_loaddata_class {
 	}
 	static function load_task_data($tag_info) {
 		global $_K,$_lang;
-		$task_obj = new Keke_witkey_task_class ();
+		$task_obj = new Keke_witkey_task ();
 		$where = "1=1 ";
 		if ($tag_info ['task_ids']) {
 			$where .= "and task_id in ({$tag_info['task_ids']})";
@@ -332,7 +340,7 @@ class keke_loaddata_class {
 		}
 		$task_obj->setWhere ( $where );
 		
-		$task_arr = $task_obj->query_keke_witkey_task ();
+		$task_arr = $task_obj->query ();
 		
 		$temp_arr = array ();
 		$task_cash_rule = Keke::get_config_rule ( "witkey_task_cash_cove" );
@@ -365,7 +373,7 @@ class keke_loaddata_class {
 	}
 	static function load_article_data($tag_info) {
 		global $_K;
-		$art_obj = new Keke_witkey_article_class ();
+		$art_obj = new Keke_witkey_article ();
 		$where = "1=1 ";
 		
 		if ($tag_info ['art_ids']) {
@@ -411,7 +419,7 @@ class keke_loaddata_class {
 			$where .= "limit 0,{$tag_info['loadcount']} ";
 		}
 		$art_obj->setWhere ( $where );
-		$art_arr = $art_obj->query_keke_witkey_article (true, 5*60);
+		$art_arr = $art_obj->query('*', 5*60);
 		
 		$temp_arr = array ();
 		$cat_arr = keke_admin_class::get_article_cate ();
@@ -514,16 +522,6 @@ class keke_loaddata_class {
 	static function ad($adid) {
 		
 		$ad_arr = self::init_ad();
-		
-		//$ad_arr = Keke::get_ad ();
-		/* $size = sizeof ( $ad_arr );
-		$temp = array ();
-		for($i = 0; $i < $size; $i ++) {
-			$temp [$ad_arr [$i] ['ad_id']] = $ad_arr [$i];
-		}
-		$ad_arr = $temp;
-		unset ( $temp ); */
-		
 		$ad_info = $ad_arr [$adid];
 		if ($ad_info ['ad_type'] == 1) {
 			$adstr = '<embed src="' . $ad_info ['ad_file'] . '" quality="high" width="' . $ad_info ['width'] . '" height="' . $ad_info ['height'] . '" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash"></embed>';
@@ -545,13 +543,12 @@ class keke_loaddata_class {
 	 * 广告组，一般用于幻灯片调用
 	 */
 	static function adgroup($adname,$ad_limit_num) {
-		global $kekezu,$_K;
+		global $_K;
 		//$datalist = Keke::get_ad ( $adname,$ad_limit_num );
-		$tag_arr = $tag_arr = self::init_tag();
+		$tag_arr = self::get_tag(0);
 		$tag_info = $tag_arr [$adname];
+	
 		require Keke_tpl::parse_code ( htmlspecialchars_decode ( $tag_info ['tag_code'] ), $tag_info ['tag_id'] );
 	}
 
-}
-
-?>
+}//end

@@ -15,7 +15,7 @@
 				<th>{$_lang['author']}</th>
 				<th>{$_lang['operate']}</th>
             </tr>
-			<form name="frm_list" action="{BASE_URL}/index.php/admin/man_tpl/save" method="post">
+			<form name="frm_list" action="{BASE_URL}/index.php/admin/tool_tpl/save" method="post">
 			{loop $list_arr $v}
 			<tr class="item">
                 <td>{$_lang[$v['tpl_title']]}</td>
@@ -40,10 +40,10 @@
                 <td>
                 	<button type="submit"  name="sbt_edit" id="sbt_edit" class="button" value="{$_lang['use']}"> {$_lang['use']} </button>
                 	 <a type="button" class="button" value="{$_lang['preview']}" onclick="window.open('http://www.kekezu.com/app_store-view-app_tpl.html#holder')"><span class="book icon"></span>{$_lang['view']}</a>
-                     <a type="button" class="button" value="{$_lang['edit']}" href='{BASE_URL}/index.php/admin/man_tpl/list?tplname={$v['tpl_path']}'><span class="pen icon"></span>{$_lang['edit']}</a>
-					 <a type="button" class="button" value="{$_lang['export']}" href='{BASE_URL}/index.php/admin/man_tpl/backup?tplname={$v['tpl_path']}'>{$_lang['backup']}</a>
+                     <a type="button" class="button" value="{$_lang['edit']}" href='{BASE_URL}/index.php/admin/tool_tpl/list?tplname={$v['tpl_path']}'><span class="pen icon"></span>{$_lang['edit']}</a>
+					 <a type="button" class="button" value="{$_lang['export']}" href='{BASE_URL}/index.php/admin/tool_tpl/backup?tplname={$v['tpl_path']}'>{$_lang['backup']}</a>
 					 {if $v['tpl_path']!='default'}
-                        <a href="{BASE_URL}/index.php/admin/man_tpl/del?delid=$v['tpl_id']" 
+                        <a href="{BASE_URL}/index.php/admin/tool_tpl/del?delid=$v['tpl_id']" 
 						type="button" class="button" value="{$_lang['uninstall']}" onclick="return confirm({$_lang['comfirm_want_del']})">{$_lang['uninstall']}</a>
                      {/if}
                 </td>  
@@ -57,7 +57,7 @@
                 </td>
                 <td colspan="6">
                 	{$_lang['enter_dir_name']}
-					<form name="frm_list" action="{BASE_URL}/index.php/admin/man_tpl/install" method="post" enctype="multipart/form-data">
+					<form name="frm_list" action="{BASE_URL}/index.php/admin/tool_tpl/install" method="post" enctype="multipart/form-data">
 					<input name="txt_newtplpath" type="text" class="txt" >
 					<button type="submit" name="sbt_edit" class="button" value={$_lang['from_dir_install']}>{$_lang['from_dir_install']}</button>
 					</form>

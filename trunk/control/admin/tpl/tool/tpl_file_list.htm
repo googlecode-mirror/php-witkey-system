@@ -1,7 +1,7 @@
 <!--{include control/admin/tpl/admin_header}-->
 <div class="page_title"><h1>{$_lang['tpl_manage']}</h1>
 	<div class="tool">
-		<a href="{BASE_URL}/index.php/admin/man_tpl" class="here">{$_lang['tpl_manage']}</a>
+		<a href="{BASE_URL}/index.php/admin/tool_tpl" class="here">{$_lang['tpl_manage']}</a>
 	</div>
 </div>
 <div class="box list">
@@ -30,13 +30,13 @@
                   <td>
                   	 {if $value['sub']!='index'}
 						 {if $value['sub']}
-	                      <a href="{BASE_URL}/index.php/admin/man_tpl/edit?tplname=$tplname&tname=$value['sub']/$key" class="button">
+	                      <a href="{BASE_URL}/index.php/admin/tool_tpl/edit?tplname=$tplname&tname=$value['sub']/$key" class="button">
 						{else}
-							<a href="{BASE_URL}/index.php/admin/man_tpl/edit?tplname=$tplname&tname=$key" class="button">
+							<a href="{BASE_URL}/index.php/admin/tool_tpl/edit?tplname=$tplname&tname=$key" class="button">
 						{/if}
 						<span class="pen icon"></span>{$_lang['edit']}</a>
 						<!--不提供文件删除功能 
-	                     <a href="{BASE_URL}/index.php/admin/man_tpl/del?tname=$key" onclick="return cdel(this)" class="button">
+	                     <a href="{BASE_URL}/index.php/admin/tool_tpl/del?tname=$key" onclick="return cdel(this)" class="button">
 	                     <span class="trash icon"></span>{$_lang['delete']}</a>-->
                  	{else}
 						<a href="javascript:;" onclick="show_file('$key');" > <span id="show_$key">{$_lang['unfold']}</span></a>
@@ -46,7 +46,7 @@
 		{/loop}
             <tr>
                 <td colspan="2" align="left">
-                	<button  type="button"  name="rst_edit" class="pill button" value={$_lang['return']} onclick="document.location.href='{BASE_URL}/index.php/admin/man_tpl'"><span class="uparrow icon"></span>{$_lang['return']}</button>
+                	<button  type="button"  name="rst_edit" class="pill button" value={$_lang['return']} onclick="document.location.href='{BASE_URL}/index.php/admin/tool_tpl'"><span class="uparrow icon"></span>{$_lang['return']}</button>
                 </td>
             </tr>
       </table>

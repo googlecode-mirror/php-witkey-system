@@ -14,8 +14,7 @@ $lang = array(
 	/* admin_case_list_htm */
 	'case_manage'=>'案例管理',
 	'case_list'=>'案例列表',
-	'case_add'=>'案例添加',
-	'name'=>'名称',
+	
 	'uploader'=>'上传者',
 	'pub_time'=>'提交时间',
 	'up_time'=>'上传时间',

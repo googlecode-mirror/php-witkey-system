@@ -94,8 +94,8 @@ abstract class Keke_Controller {
 		$query_uri = '?';
 		//字段与条件
 		if($_GET['slt_fields']  and $_GET['txt_condition']){
-			//时间的查询处理
-			if(strtotime($_GET['txt_condition'])){
+			//时间的查询处理,时间字段须含有time，这里有点不严谨，不好判断这个字段是不是时间字段,蛋疼!
+			if(strtotime($_GET['txt_condition']) and strpos($_GET['slt_fields'], 'time')!==false){
 				//字段值为时间时
 				$c =  $_GET['txt_condition'];
 				//这里的数据库中的on_time 字段必须是时间戳

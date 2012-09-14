@@ -15,7 +15,19 @@ class Control_admin_user_group extends Controller{
 	}
 	function action_add(){
 		global $_K,$_lang;
-		
+		//一级标题
+		$menu_arr = keke_admin_class::get_admin_menu();
+// 		var_dump($menu_arr);
+		//二级标题
+		$list_arr = keke_admin_class::get_user_group();
+// 		var_dump($list_arr);
+		$membergroup_obj = new Keke_witkey_member_group();
+		$groupinfo_arr = $membergroup_obj->query ();
+		$groupinfo_arr = $groupinfo_arr ['0'];
+		$grouprole_arr = array();
+		$grouprole_arr = explode ( ',', $groupinfo_arr ['group_roles'] );
+		var_dump($grouprole_arr);die;
+		require keke_tpl::template("control/admin/tpl/user/group_add");
 	}
 }
 

@@ -42,8 +42,7 @@
     <!--搜索结束-->
     <div class="box list">
     	<div class="title"><h2>{$_lang['ads_list']}</h2></div>
-        <div class="detail">
-        	<form action="" id='frm_list' method="post">
+        	<form class="detail" action="" id='frm_list' method="post">
         	<div id="ajax_dom"> 
               <table cellpadding="0" cellspacing="0">
                 <tbody>
@@ -66,7 +65,7 @@
                     <td>{if $v['is_allow']==1}<span style="color:green">{$_lang['available']}</span>{else}<span style="color:red">{$_lang['not_available']}</span>{/if}</td><!-- 是否可用 -->
                     <td>
 						<!-- <a href="../../index.php?do=article&view=article_info&art_id=" target="_blank">{$_lang['view']}</a> -->
-						<a href="{BASE_URL}/index.php/admin/tool_adlist/edit" class="button dbl_target"><span class="pen icon"></span>{$_lang['edit']}</a>
+						<a href="{BASE_URL}/index.php/admin/tool_adlist/add?ad_id=$v['ad_id']" class="button dbl_target"><span class="pen icon"></span>{$_lang['edit']}</a>
 						<!--<a href="index.php?do={$do}&view=ad_list&ac=del&ad_id=$v['ad_id']&target_id={$v['target_id']}&page={$page}&ord={$ord}"  onclick="return cdel(this);" class="button"><span class="trash icon"></span>{$_lang['delete']}</a>-->
 						<!-- <a href="#" onclick="javascript:setCopy(document.getElementById('code_{$v['ad_id']}').value, {$_lang['copy_code']});" class="button"><span class="book icon"></span>{$_lang['copy']}</a>  -->
 					</td>
@@ -82,7 +81,7 @@
 									<option {if $target_id==$v['target_id']||$key==1}selected="selected"{/if} value="{$v['target_id']}">{$v['name']}</option>
 								{/loop}
 							</select>
-							<a href="#" id="add_ad" class="button" onclick="return setlinks();"><span class="check icon"></span>{$_lang['add_ads']}</a>
+							<a href="#" id="add_ad" class="button" onclick="return setlinks();"><span class="check icon"></span>{$_lang['add_ad']}</a>
 	                    </div>
                     </td>
                   </tr>
@@ -98,7 +97,7 @@
     		var target_id=document.getElementById("ad_target_id");
     		var alink=document.getElementById("add_ad");
     		if(target_id.value!=""){
-    			alink.href="{BASE_URL}/index.php/admin/tool_adlist/add/"+target_id.value;
+    			alink.href="{BASE_URL}/index.php/admin/tool_adlist/add?target_id="+target_id.value;
     			return true;
     		}
     		return false;

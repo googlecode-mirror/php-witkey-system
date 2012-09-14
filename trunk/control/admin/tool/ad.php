@@ -27,7 +27,7 @@ class Control_admin_tool_ad extends Controller{
 		//var_dump(Database::instance()->get_query_list());
 		//获取target_id和已经在广告中占有的条数
 		$target_ad_num = Keke::get_table_data('target_id, count(*) as num', 'witkey_ad', 'target_id is not null', '', 'target_id', '', 'target_id', null);
-		while (list($key, $value) = each($list_arr)){
+		while ((list($key, $value) = each($list_arr))!=null){
 			$target_ad_arr[$key] = $target_ad_num[$key]['num'] ? $target_ad_num[$key]['num'] : '0';
 		}
 		require Keke_tpl::template('control/admin/tpl/tool/ad');

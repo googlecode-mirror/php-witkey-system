@@ -1,0 +1,111 @@
+<!--{include control/admin/tpl/admin_header}-->
+<style type="text/css">
+.plus {background: url({BASE_URL}/control/admin/tpl/img/plus.gif); width:11px; height:11px; display:block;}
+.less {background: url({BASE_URL}/control/admin/tpl/img/minus.gif); width:11px; height:11px; display:block;}
+</style>
+<div class="page_title">
+    <h1>{$_lang['cat_manage']}</h1>
+    <div class="tool">
+    	 <a href="{BASE_URL}/index.php/admin/article_cate" class="here">{$_lang['cat_manage']}</a>
+         <a href="{BASE_URL}/index.php/admin/article_cate/add">{if $_GET['art_cat_id']}{$_lang['cat_edit']}{else}{$_lang['cat_add']}{/if}</a>
+    </div>
+</div>
+<div class="box search p_relative">
+	<form method="get" action="{BASE_URL}/index.php/admin/article_cate"  id="frm_list">
+        	<table class="detail" cellspacing="0" cellpadding="0">
+			 <tbody>
+			 	<tr>
+		                <th>查询字段
+		                   <select name="slt_fields">
+		                   	<option></option>
+		                   	{loop $query_fields $k $v}
+		                   	 <option  value="$k" {if $k == $_GET['slt_fields']} selected="selected" {/if}>{$v}</option>
+							{/loop} 
+		                   </select>
+						 <select name="slt_cond">
+						 	<option value="=" {if $_GET['slt_cond']=='='}selected="selected"{/if}>=</option>
+							<option value=">" {if $_GET['slt_cond']=='>'}selected="selected"{/if}>></option>
+							<option value="<" {if $_GET['slt_cond']=='<'}selected="selected"{/if}><</option>
+							<option value="like" {if $_GET['slt_cond']=='like'}selected="selected"{/if}>Like</option>
+						 </select>
+		                 <input type="text" class="txt" name="txt_condition" id="txt_condition" value="{$_GET['txt_condition']}">
+						 <select name="page_size">
+                			<option value="10" {if $_GET['page_size']=='10'}selected="selected"{/if}>{$_lang['page_size']}10条</option>
+                			<option value="20" {if $_GET['page_size']=='20'}selected="selected"{/if}>{$_lang['page_size']}20条</option>
+                			<option value="30" {if $_GET['page_size']=='30'}selected="selected"{/if}>{$_lang['page_size']}30条</option>
+            			</select>
+						 <input type="submit" value="{$_lang['search']}">
+						 </td>
+	            </tr>
+		 </tbody>
+	</table>
+ </form>
+</div>
+
+    <!--搜索结束-->
+<div class="box list">
+      <form action="" class="detail" id='frm_list' method="post">
+              <table cellpadding="0" cellspacing="0">
+                <thead>
+                <tr>
+                    <th width="5%">ID</th>
+                    <th width="50%">{$_lang['category']}{$_lang['name']}</th>                    
+                    <th width="7%">显示顺序</th>
+                   <th width="13%">{$_lang['operate']}</th>
+                </tr>
+                </thead>
+				<tbody>
+                {loop $list_arr $v}
+				  <tr class="item" align="left" dir="{$v['art_cat_pid']}">
+                  <td {if $v['art_cat_pid']==0} onclick="exp(this,'{$v[art_cat_id]}')" {/if}>
+                  	{if $v['art_cat_pid']==0}
+					<i class="plus"></i>
+					{else}
+					<i class="less"></i>
+					{/if}
+				   </td>
+				  <td>{$v['ext']} $v['cat_name'] -[id:{$v['art_cat_id']}] [pid: {$v['art_cat_pid']}]</td>
+				  <td>
+                    	<input type="text" class="txt" size="5" value="$v['listorder']" onblur="update_ord('{$v[art_cat_id]}',this.value)">
+                  </td>
+                  <td>
+						<a href="{$add_uri}?art_cat_id={$v['art_cat_id']}&art_cat_pid={$v['art_cat_pid']}&type={$type}" class="button dbl_target"><span class="pen icon"></span>{$_lang['edit']}</a>
+						{if $v['level']==0}
+						<a href="{$add_uri}?art_cat_id={$v['art_cat_id']}&art_cat_pid={$v['art_cat_pid']}&type={$type}" class="button">增加子分类</a>
+						{/if}
+						<a href="{$del_uri}?art_cat_id=$v['art_cat_id']"  onclick="return cdel(this);" class="button"><span class="trash icon"></span>{$_lang['delete']}</a>
+				  </td>
+                  </tr>
+				  {/loop} 
+				  </tbody>
+				  <script type="text/javascript">
+				  	function exp(obj,sid){
+					   
+					   $("tr[dir="+sid+"]").each(function(i,n){
+					   	 $(n).hide();
+					   })
+					   
+					}
+				  </script>
+				 <tfoot>	
+					<tr >
+					    <td colspan="9">
+					    <div class="page" >{$pages['page']}</div>
+					    
+			        	</td>
+			        </tr>
+			   </tfoot>
+              </table>
+	</form>
+                
+</div>
+<script type="text/javascript">
+function update_ord(id,v){
+   $.get('{$base_uri}/update_ord',{'id':id,'val':v},function(data){
+   	  if(data>0){
+	  	artDialog.tips('提交成功','1');
+	  }
+   });
+}
+</script>	
+<!--{include control/admin/tpl/admin_footer}-->

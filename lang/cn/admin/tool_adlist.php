@@ -100,7 +100,9 @@
  	'not_available'=>'不可用',
  	'copy_code'=>'复制代码',
  	'copy'=>'复制',
-	'add_ads'=>'添加广告',
+	'add_ads'=>'广告',
+ 	'add_ad'=>'添加广告',
+ 		'ads_id'=>'广告编号',
 //admin_tpl_ad_list_php
  
   	'delete_ads'=>'删除广告',

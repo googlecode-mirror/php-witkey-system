@@ -1,8 +1,26 @@
 <?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+class Control_admin_user_group extends Controller{
+	function action_index(){
+		//加载全局变量和语言包
+		global $_K,$_lang;
+		//需要显示的字段
+		$list_arr = DB::select()->from('witkey_member_group')->where('1=1')->execute();
+		//页面uri
+		$base_uri = BASE_URL.'/index.php/admin/user_group';
+		//编辑uri
+		$edit_uri = $base_uri.'/edit';
+		//删除uri
+		$del_uri = $base_uri.'/del';
+		require keke_tpl::template("control/admin/tpl/user/group");
+	}
+	function action_add(){
+		global $_K,$_lang;
+		
+	}
+}
 
 
-
-Keke::admin_check_role ( 13 );
+/* Keke::admin_check_role ( 13 );
 
 $menuset_arr = keke_admin_class::get_admin_menu ();
 $membergroup_obj = new Keke_witkey_member_group_class ();
@@ -21,5 +39,5 @@ if ($op == 'del') {
 
 
 require $template_obj->template ( 'control/admin/tpl/admin_user_group_list' );
-
+ */
  

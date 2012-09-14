@@ -47,24 +47,24 @@ class Control_admin_article_case extends Controller {
 			$case_info = $case_info[0];
 			$file = pathinfo($case_info['case_img'], PATHINFO_BASENAME);
 		}
+		//var_dump($case_info);
 		//加载模板
 		require Keke_tpl::template('control/admin/tpl/article/case_add');
 	}
 	function action_save(){
 		//防止跨域提交，你懂的
 		Keke::formcheck($_POST['formhash']);
-		//这里是业务判断,连接是图片还有url地址
-		if($_POST['showMode'] ==1){
-			$link_pic = $_POST['txt_link_pic'];
-		}elseif(!empty($_FILES['fle_link_pic']['name'])){
+		 
+	    if(!empty($_FILES['fle_case_img']['name'])){
 			//上传文件用的，这个对新手来说好使,要就是简单
-			$link_pic = keke_file_class::upload_file('fle_link_pic');
+			$case_img = keke_file_class::upload_file('fle_case_img');
 		}
 		//这里怎么说呢，定义生成sql 的字段=>值 的数组，你不懂，就是你太二了.
-		$array = array('link_name'=>$_POST['txt_link_name'],
-				'link_url'=>$_POST['txt_link_url'],
-				'link_pic'=>$link_pic,
-				'listorder' => $_POST['txt_listorder'],
+		$array = array('case_title'=>$_POST['txt_task_title'],
+				'case_price'=>$_POST['txt_case_price'],
+				'case_img'=>$case_img,
+				'obj_type' => $_POST['case_type']=='search'?'task':'service',
+				'obj_id'=>$_POST['obj_id'],
 				'on_time'=>time(),
 		);
 		//这是个隐藏字段，也就是主键的值，这个主键有值，就是要编辑(update)数据到数据库
@@ -74,7 +74,7 @@ class Control_admin_article_case extends Controller {
 			Keke::show_msg('系统提示','index.php/admin/article_case/add?case_id='.$_POST['hdn_case_id'],'提交成功','success');
 		}else{
 			//这也当然就是添加(insert)到数据库中
-			Model::factory('witkey_link')->setData($array)->create();
+			Model::factory('witkey_case')->setData($array)->create();
 			Keke::show_msg('系统提示','index.php/admin/article_case/add','提交成功','success');
 		}
 	}

@@ -34,7 +34,8 @@
 			  		</select>
 					
                      <span id="case_type_msg"></span>
-					</td>
+					 <input type="hidden" id="obj_id" >
+				</td>
 			  	</tr>
 			  <tr>
                 <th scope="row" width="130">{$_lang['case_name']}{$_lang['zh_mh']}</th>
@@ -57,7 +58,7 @@
                 <th scope="row">&nbsp;</th>
                 <td>
                     <div class="clearfix padt10">
-                    	<input type="hidden" name="sbt_edit" value="1">
+                    	
                     	<button class="positive pill primary button" name="sbt_edit" type="button" value="{$_lang['submit']}" onclick="case_sbt();">
                     		<span class="icon check"></span>
 						{$_lang['submit']}</button>

@@ -156,6 +156,9 @@ final class Keke_driver_mysql extends Keke_database {
 		
 		$setsql = '';
 		$fields = array ();
+		if(empty($setsqlarr)){
+			throw new Keke_exception('update setsqlarr is emtpy!,please check!');
+		}
 		foreach ( $setsqlarr as $k => $v ) {
 			$fileds [] = $this->quote_field ( $k ) . '=' . $this->quote_string ( $v );
 		}
@@ -173,7 +176,7 @@ final class Keke_driver_mysql extends Keke_database {
 			$where = $wheresqlarr;
 		}
 		$sql = 'UPDATE ' . $tablename . ' SET ' . $setsql . ' WHERE ' . $where;
-// 		var_dump($sql);die;
+//  		var_dump($sql);die;
 		return $this->query ( $sql, Database::UPDATE );
 	}
 	public function cached($lifetime = NULL) {

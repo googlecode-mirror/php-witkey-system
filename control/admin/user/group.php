@@ -17,6 +17,7 @@ class Control_admin_user_group extends Controller{
 		global $_K,$_lang;
 		//一级标题
 		$menus_arr = keke_admin_class::get_admin_menu();
+// 		var_dump($menus_arr['menu']);die;
 		//权限中加黑部分语言包
 		$menu_arr = array (
 				'config' => $_lang['global_config'],
@@ -28,33 +29,44 @@ class Control_admin_user_group extends Controller{
 				'tool' => $_lang['system_tool'],
 				'demo'=>'MVC演示',
 		);
+		//获取group_id，存在判断是编辑
 		$group_id=$_GET['group_id'];
 		if ($group_id){
 			$groupinfo_arr = DB::select()->from('witkey_member_group')->where('group_id ='. $group_id)->execute();
 			$groupinfo_arr = $groupinfo_arr[0];
 		}
 // 		var_dump($groupinfo_arr);die;
+        //多选框选项字符串分解为数组
 		$grouprole_arr = explode ( ',', $groupinfo_arr ['group_roles'] );
 		require keke_tpl::template("control/admin/tpl/user/group_add");
 	}
 	function action_save(){
 		//防止跨域提交
 		keke::formcheck($_POST['formhash']);
+		//获取选中的多选条件的group_id，为数组
 		$group_roles = $_POST['chb_resource'];
+		//将数组转化为字符串
 		$group_roles = implode(",", $group_roles);
+		//需要进行存储的字段
 		$array = array('group_id'=>$_POST['group_id'],
 				'groupname'=>$_POST['txt_groupname'],
 				'group_roles'=>$group_roles,
 				'on_time'=>time()
 				);
 		if ($_POST['is_submit']){
+			//编辑情况下提交，更新
 			Model::factory('witkey_member_group')->setData($array)->setWhere('group_id = '.$_POST['is_submit'])->update();
 			keke::show_msg('系统提交','/index.php/admin/user_group/add?group_id='.$_POST['is_submit'],'编辑成功','success');
 		}else{
+			//添加情况下提交，直接插入
 			Model::factory('witkey_member_group')->setData($array)->create();
 			keke::show_msg('系统提交','index.php/admin/user_group/add','提交成功','success');
 		}
 	}
+	/*
+	 * 通过group_id来删除需要删除的一行数据，无多行删除
+	 *  @group_id int
+	 **/
 	function action_del(){
 		if($_GET['group_id']){
 			$where = 'group_id ='.$_GET['group_id'];

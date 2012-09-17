@@ -16,19 +16,50 @@ class Control_admin_user_group extends Controller{
 	function action_add(){
 		global $_K,$_lang;
 		//一级标题
-		$menu_arr = keke_admin_class::get_admin_menu();
-// 		var_dump($menu_arr);
-		//二级标题
-		$list_arr = keke_admin_class::get_user_group();
-		$membergroup_obj = new Keke_witkey_member_group();
-		if($_POST['is_submit']){
-			$groupinfo_arr = $membergroup_obj->query ();
-			$groupinfo_arr = $groupinfo_arr ['0'];
+		$menus_arr = keke_admin_class::get_admin_menu();
+		//权限中加黑部分语言包
+		$menu_arr = array (
+				'config' => $_lang['global_config'],
+				'article' => $_lang['article_manage'],
+				'task' => $_lang['task_manage'],
+				'shop' => $_lang['shop_manage'],
+				'finance' => $_lang['finance_manage'],
+				'user' => $_lang['user_manage'],
+				'tool' => $_lang['system_tool'],
+				'demo'=>'MVC演示',
+		);
+		$group_id=$_GET['group_id'];
+		if ($group_id){
+			$groupinfo_arr = DB::select()->from('witkey_member_group')->where('group_id ='. $group_id)->execute();
+			$groupinfo_arr = $groupinfo_arr[0];
 		}
-		$grouprole_arr = array();
+// 		var_dump($groupinfo_arr);die;
 		$grouprole_arr = explode ( ',', $groupinfo_arr ['group_roles'] );
-// 		var_dump($grouprole_arr);die;
 		require keke_tpl::template("control/admin/tpl/user/group_add");
+	}
+	function action_save(){
+		//防止跨域提交
+		keke::formcheck($_POST['formhash']);
+		$group_roles = $_POST['chb_resource'];
+		$group_roles = implode(",", $group_roles);
+		$array = array('group_id'=>$_POST['group_id'],
+				'groupname'=>$_POST['txt_groupname'],
+				'group_roles'=>$group_roles,
+				'on_time'=>time()
+				);
+		if ($_POST['is_submit']){
+			Model::factory('witkey_member_group')->setData($array)->setWhere('group_id = '.$_POST['is_submit'])->update();
+			keke::show_msg('系统提交','/index.php/admin/user_group/add?group_id='.$_POST['is_submit'],'编辑成功','success');
+		}else{
+			Model::factory('witkey_member_group')->setData($array)->create();
+			keke::show_msg('系统提交','index.php/admin/user_group/add','提交成功','success');
+		}
+	}
+	function action_del(){
+		if($_GET['group_id']){
+			$where = 'group_id ='.$_GET['group_id'];
+		}
+		echo Model::factory('witkey_member_group')->setWhere($where)->del();
 	}
 }
 

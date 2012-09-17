@@ -11,7 +11,7 @@
     <div class="tabcon">
 				<form class="detail" action="{BASE_URL}/index.php/admin/user_group" method="post">
 				    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-					  <!-- <input type="hidden" name="is_submit" value="1"/>-->
+					  <input type="hidden" name="is_submit" value="$groupinfo_arr['group_id']"/>
 					   <tr>
 				        <th width="10%" scope="row">{$_lang['group_name']}{$_lang['zh_mh']}</th>
 				        <td><input type="text" value="{$groupinfo_arr['groupname']}" name="txt_groupname" id="txt_groupname" maxlength="50" 
@@ -30,9 +30,9 @@
 							<dl><dt>$vv['name']:</dt>
 							  <dd>
 								<ul>
-								{loop $list_arr['resource'] $resource}
+								{loop $list_arr $resource}
 								<label>
-								<input type="checkbox" {if in_array($resource['resource_id'],$grouprole_arr)}checked="checked"{/if} name="chb_resource[]" value="{$resource['resource_id']}">{$resource['resource_name']}
+								<input type="checkbox" {if in_array($resource['group_id'],$grouprole_arr)}checked="checked"{/if} name="chb_resource[]" value="{$resource['group_id']}">{$resource['groupname']}
 								</label>
 								{/loop}
 								</ul>

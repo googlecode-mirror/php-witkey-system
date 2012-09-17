@@ -5,7 +5,7 @@ class Cookie {
 	public static $_path = COOKIE_PATH;
 	public static $_domain = COOKIE_DOMAIN;
 	public static $_secure = FALSE;
-	public static $_httponly = FALSE;
+	public static $_httponly = TRUE;
 	public static $_salt = ENCODE_KEY;
 	public static function get($key, $default = NULL) {
 		//前缀+key = 实际的KEY

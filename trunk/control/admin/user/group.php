@@ -46,10 +46,17 @@ class Control_admin_user_group extends Controller{
 		//获取选中的多选条件的group_id，为数组
 		$group_roles = $_POST['chb_resource'];
 		//将数组转化为字符串
+		if($group_roles!=''){
 		$group_roles = implode(",", $group_roles);
+		}
+		if($_POST['txt_groupname']){
+			$txt_groupname = $_POST['txt_groupname'];
+		}else{
+			keke::show_msg('系统提示','index.php/admin/user_group/add','组名不能为空！！','warning');
+		}
 		//需要进行存储的字段
 		$array = array('group_id'=>$_POST['group_id'],
-				'groupname'=>$_POST['txt_groupname'],
+				'groupname'=>$txt_groupname,
 				'group_roles'=>$group_roles,
 				'on_time'=>time()
 				);

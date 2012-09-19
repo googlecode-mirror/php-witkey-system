@@ -262,7 +262,7 @@ function find_nav(){
 }
 /**lock screen**/
 function lock(){
-	$.post("index.php?do=index&ac=lock");
+	$.post("index.php/admin/lock");
 	hidepanel();
 	showlogin();
 }
@@ -295,7 +295,7 @@ function hidepanel(){
 };
 /*show_login*/
 function showlogin(){
-	var lock_window=art.dialog.open('index.php?do=index&ac=unlock',
+	var lock_window=art.dialog.open('{BASE_URL}/index.php/admin/lock',
 	{title:"{$_lang['lock_status']}",
 	width:320,
 	height:130,

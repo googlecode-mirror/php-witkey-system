@@ -32,16 +32,16 @@
 	
     <div class="nav" id="nav_div">
     	<ul>
-    		<!--¶¥²¿Ò»¼¶²Ëµ¥ start-->
+    		<!--é¡¶éƒ¨ä¸€çº§èœå• start-->
 			<li><a href="#" rel="shortcuts"class="select">{$_lang['faster_operate']}</a></li>
     		<!--{loop $menu_arr $k $v}-->
 				<li><a href="#" rel="{$k}">{$v}</a></li>
 			<!--{/loop}-->    		
-			<!--¶¥²¿Ò»¼¶²Ëµ¥ end-->
+			<!--é¡¶éƒ¨ä¸€çº§èœå• end-->
         </ul>
     </div> 
 	<div class="arrow" id="show_much">
-		<a href="#" id="a_show_more" class="show_hide" style="display:none">¨‹</a>
+		<a href="#" id="a_show_more" class="show_hide" style="display:none">â–¼</a>
 		<div class="hide_nav">
 			<ul>
 			<!--{loop $menu_arr $k $v}-->
@@ -90,7 +90,7 @@
     
     <div class="user_box">
     	 
-        <div class="name">{$_lang['hello']}£¬
+        <div class="name">{$_lang['hello']}ï¼Œ
 		{if $admin_info['uid']==ADMIN_UID}
 		   {$_lang['public_admin_uid']}
 		{else}
@@ -198,29 +198,29 @@ window.onload = function(){
 <script type="text/javascript">
 /*add shortcuts*/  
 function shortcuts(obj){
-	var fastObj    =$('#shortcuts ul');//¿ì½İµ¼º½¶ÔÏó
-	var sub        =$(".menu_bar a[class='select']:visible");//²Ëµ¥¶ÔÏó
-	var r_id       =$(sub).attr('r_id');/*»ñÈ¡²Ëµ¥±àºÅ*/
-	var sub_name   =$(sub).text();//²Ëµ¥Ãû³Æ
-	var sub_h      =$(sub).attr('href');//²Ëµ¥Á´½Ó
-	var ac         =$(obj).attr('ac');//¶¯×÷
+	var fastObj    =$('#shortcuts ul');//å¿«æ·å¯¼èˆªå¯¹è±¡
+	var sub        =$(".menu_bar a[class='select']:visible");//èœå•å¯¹è±¡
+	var r_id       =$(sub).attr('r_id');/*è·å–èœå•ç¼–å·*/
+	var sub_name   =$(sub).text();//èœå•åç§°
+	var sub_h      =$(sub).attr('href');//èœå•é“¾æ¥
+	var ac         =$(obj).attr('ac');//åŠ¨ä½œ
 	if(sub.length>0){
 		$.post("{BASE_URL}/index.php/admin/index/op",
 			{ac:ac,r_id:r_id},function(json){
-				if(json.status==4){//³É¹¦
-					if(ac=='add_shortcuts'){//Ìí¼Ó³É¹¦
+				if(json.status==4){//æˆåŠŸ
+					if(ac=='add_shortcuts'){//æ·»åŠ æˆåŠŸ
 						var li="<li><a href="+sub_h+" target='display_frame' r_id="+r_id+">"+sub_name+"</a>"
 							+"<span class='arrow_l' style='display:none;'></span></li>";
 						fastObj.append(li);	
-					}else if(ac='rm_shortcuts'){//É¾³ı³É¹¦
+					}else if(ac='rm_shortcuts'){//åˆ é™¤æˆåŠŸ
 						if($(".side_bar .side_con #shortcuts").css('display')=='none'){
-							fastObj.find("a[r_id='"+r_id+"']").parent().remove();//ÔÚÆäËûÒ³Ãæ
+							fastObj.find("a[r_id='"+r_id+"']").parent().remove();//åœ¨å…¶ä»–é¡µé¢
 						}else{
-							sub.removeClass('select').parent().slideUp('1000').remove();//ÔÚ¿ì½İÁĞ±íÒ³Ãæ»¬³ö
+							sub.removeClass('select').parent().slideUp('1000').remove();//åœ¨å¿«æ·åˆ—è¡¨é¡µé¢æ»‘å‡º
 						}								
 					}
 						reset_shortcuts(sub);
-						artDialog.tips(json.msg,'1.5');//ÏûÏ¢ÌáÊ¾
+						artDialog.tips(json.msg,'1.5');//æ¶ˆæ¯æç¤º
 					;return false;
 				}else{
 						art.dialog.alert(json.msg);return false;
@@ -230,17 +230,17 @@ function shortcuts(obj){
 		art.dialog.alert("{$_lang['please_choose_add_faster_operate']}");return false;
 	}
 }
-/*²Ëµ¥¿ì½İ[+-]ÖØÖÃ*/
+/*èœå•å¿«æ·[+-]é‡ç½®*/
 $(".menu_bar a").click(function(){
     var href_title = $(this).html();
 	$("#href_title").html(href_title);
 	reset_shortcuts(this);
 })
 function reset_shortcuts(obj){
-	var in_short_list='0';//²»´æÔÚÓÚ¿ì½İµ¼º½ÖĞ
+	var in_short_list='0';//ä¸å­˜åœ¨äºå¿«æ·å¯¼èˆªä¸­
 	var r_id=$(obj).attr('r_id');
-	var s_cus=$("#shortcuts a[r_id='"+r_id+"']");//»ñÈ¡Ö¸¶¨¿ì½İ¶ÔÏó
-	if(s_cus.length>0)	in_short_list='1';//²éÕÒÊÇ·ñ´æÔÚ¿ì½İ 
+	var s_cus=$("#shortcuts a[r_id='"+r_id+"']");//è·å–æŒ‡å®šå¿«æ·å¯¹è±¡
+	if(s_cus.length>0)	in_short_list='1';//æŸ¥æ‰¾æ˜¯å¦å­˜åœ¨å¿«æ· 
 	if(in_short_list=='1'){
 		$('#add_shortcuts').attr('ac','rm_shortcuts').attr('title',"{$_lang['delete_faster_operate']}").find(".font_st").text('[-]');
 	}else if(in_short_list=='0'){
@@ -333,9 +333,9 @@ $(function() {
 	
 	$('.menu_bar dl:first-child').find('dd').slideDown().end().find('dt').children('i').removeClass().addClass('arrow_b').end();
 	
-	reset_shortcuts($(".menu_bar a[class='select']"));/*×óµ¼º½²Ëµ¥¿ì½İ[+-]ÏÔÊ¾·½Ê½³õÊ¼»¯*/
-	/*²Ëµ¥¿ì½İ[+-]ÏÔÊ¾·½Ê½*/
-		/*+++++×ó±ßµ¼º½µã»÷+++++*/
+	reset_shortcuts($(".menu_bar a[class='select']"));/*å·¦å¯¼èˆªèœå•å¿«æ·[+-]æ˜¾ç¤ºæ–¹å¼åˆå§‹åŒ–*/
+	/*èœå•å¿«æ·[+-]æ˜¾ç¤ºæ–¹å¼*/
+		/*+++++å·¦è¾¹å¯¼èˆªç‚¹å‡»+++++*/
 			$('.menu_bar dl dt').click(function(){
 				
 				$(this).parent().siblings().find('a').removeClass().children('.arrow_l').remove();
@@ -344,8 +344,8 @@ $(function() {
 				
 				reset_shortcuts($(this).siblings().find('a:eq(0)'));
 			})
-		/*---×ó±ßµ¼º½µã»÷ end---*/
-	/*-----²Ëµ¥¿ì½İ[+-]ÏÔÊ¾·½Ê½ end----*/
+		/*---å·¦è¾¹å¯¼èˆªç‚¹å‡» end---*/
+	/*-----èœå•å¿«æ·[+-]æ˜¾ç¤ºæ–¹å¼ end----*/
 	$('.menu_bar dl dd ul li ').find('a').live("click",function(){
 
 		$('.menu_bar dl dd ul li a').removeClass().children('.arrow_l').remove();
@@ -366,7 +366,7 @@ $(function() {
 		$(navid).siblings().hide();
 		$(this).addClass("select").parent().siblings().children('a').removeClass("select");
 		var first_sub_menu = $(navid+" dl:first-child  dd  ul:first-child").find('a:eq(0)');
-			/*++++µ¼º½µã»÷ºó×óµ¼º½Ê×ÌõÑ¡ÖĞ++++++*/
+			/*++++å¯¼èˆªç‚¹å‡»åå·¦å¯¼èˆªé¦–æ¡é€‰ä¸­++++++*/
 				$(".side_bar .side_con").find("a").removeClass().children('.arrow_1').remove(); 
 			 
 				var length = $(first_sub_menu).find("span").length;
@@ -374,8 +374,8 @@ $(function() {
 			 		$(first_sub_menu).addClass('select').prepend("<span class='arrow_l'><\/span>");
 			 }
 			$(first_sub_menu).addClass('select');
-				reset_shortcuts(first_sub_menu);//×óµ¼º½µ±Ç°Ñ¡ÔñÏî¿ì½İ[+-]ÏÔÊ¾·½Ê½ÖØÖÃ
-			/*---µ¼º½µã»÷ºó×óµ¼º½Ê×ÌõÑ¡ÖĞ---*/
+				reset_shortcuts(first_sub_menu);//å·¦å¯¼èˆªå½“å‰é€‰æ‹©é¡¹å¿«æ·[+-]æ˜¾ç¤ºæ–¹å¼é‡ç½®
+			/*---å¯¼èˆªç‚¹å‡»åå·¦å¯¼èˆªé¦–æ¡é€‰ä¸­---*/
 		    h =$(first_sub_menu).attr('href');
 			
 		$("#display_frame").attr('src',h);

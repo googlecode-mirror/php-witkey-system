@@ -1,4 +1,4 @@
-<?php
+<?php defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * ºóÌ¨ËøÆÁ
  * @copyright keke-tech
@@ -6,7 +6,13 @@
  * @version v 2.0
  * 2011-08-30 09:51:34
  */
-defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+class Control_admin_lock extends Controller{
+	function action_index(){
+		global $_K,$_lang;
+		
+	}
+}
+/* defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 switch ($ac){
 	case "lock":
 		$admin_obj->screen_lock();
@@ -16,4 +22,4 @@ switch ($ac){
 		break;
 		
 }
-require $Keke->_tpl_obj->template("control/admin/tpl/admin_" .$do);
+require $Keke->_tpl_obj->template("control/admin/tpl/admin_" .$do); */

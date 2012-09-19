@@ -203,7 +203,7 @@ class Keke_base {
 	 * @param 输入 $array        	
 	 * @param 输出 $temp_arr        	
 	 * @param 显示方式 $out
-	 * option=><select> !option=>array()
+	 * option=>下拉列表  !option=>array()数组
 	 * @param 选中项索引 $index
 	 * selected=selected
 	 */

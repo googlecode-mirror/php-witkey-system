@@ -7,38 +7,64 @@
  */
 class Control_admin_article_list extends Controller {
  
-	function action_index() {
+	function action_index($type=null) {
 		//定义全局变量与语言包，只要加载模板，这个是必须要定义.操
 		global $_K,$_lang;
 		//要显示的字段,即SQl中SELECT要用到的字段
-		$fields = ' `case_id`,`obj_id`,`obj_type`,`case_img`,`case_title`,`case_desc`,`case_price`,`on_time` ';
+		$fields = ' `art_id`,`art_cat_id`,`username`,`art_title`,`cat_type`,`listorder`,`is_show`,`is_delineas`,`is_recommend`,`art_pic`,`pub_time`,`views` ';
 		//要查询的字段,在模板中显示用的
-		$query_fields = array('case_id'=>$_lang['id'],'case_title'=>$_lang['name'],'on_time'=>$_lang['time']);
+		$query_fields = array('art_id'=>$_lang['id'],'art_title'=>$_lang['name'],'pub_time'=>$_lang['time']);
 		//总记录数,分页用的，你不定义，数据库就是多查一次的。为了少个Sql语句，你必须要写的，亲!
 		$count = intval($_GET['count']);
 		//基本uri,当前请求的uri ,本来是能通过Rotu类可以得出这个uri,为了程序灵活点，自己手写好了
-		$base_uri = BASE_URL."/index.php/admin/article_case";
+		$base_uri = BASE_URL."/index.php/admin/article_list";
 		//添加编辑的uri,add这个action 是固定的
 		$add_uri =  $base_uri.'/add';
 		//删除uri,del也是一个固定的，写成其它的，你死定了
 		$del_uri = $base_uri.'/del';
 		//默认排序字段，这里按时间降序
-		$this->_default_ord_field = 'on_time';
+		$this->_default_ord_field = 'pub_time';
 		//这里要口水一下，get_url就是处理查询的条件
 		extract($this->get_url($base_uri));
+		//查指定类型的文章
+		if(isset($_GET['type'])){
+			$type = $_GET['type'];
+		}elseif(!isset($type)){
+			$type = 'article';
+		}
+		$where .= " and  cat_type = '$type' ";
+		$uri .= "&type=$type";
+		
 		//获取列表分页的相关数据,参数$where,$uri,$order,$page来自于get_url方法
-		$data_info = Model::factory('witkey_case')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
+		$data_info = Model::factory('witkey_article')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
 		//列表数据
 		$list_arr = $data_info['data'];
 		//分页数据
 		$pages = $data_info['pages'];
-
-		require Keke_tpl::template('control/admin/tpl/article/case');
+        //分类数组
+		$art_cat_arr  = Model::factory('witkey_article_category')->query('*',66666);
+		//生成键值班数组
+		$art_cat_arr = Keke::get_arr_by_key($art_cat_arr,'art_cat_id');
+		//$sql_list = Database::instance()->get_query_list();
+		//var_dump($sql_list);
+		
+		require Keke_tpl::template('control/admin/tpl/article/list');
+	}
+	
+	function action_bulletin(){
+		$this->action_index('bulletin');
+	}
+	function action_about(){
+		$this->action_index('about');
+	}
+	function action_help(){
+		$this->action_index('help');
 	}
 	function action_add(){
 		//始始化全局变量，语言包变量
 		global $_K,$_lang;
-		$case_id = $_GET['case_id'];
+		$type = $_GET['type'];
+		$art_id = $_GET['art_id'];
 		//如果有值，就进入编辑状态
 		if($case_id){
 			$case_info = Model::factory('witkey_case')->setWhere('case_id = '.$case_id)->query();
@@ -47,7 +73,7 @@ class Control_admin_article_list extends Controller {
 		}
 		//var_dump($case_info);
 		//加载模板
-		require Keke_tpl::template('control/admin/tpl/article/case_add');
+		require Keke_tpl::template('control/admin/tpl/article/add');
 	}
 	function action_save(){
 		//防止跨域提交，你懂的
@@ -88,76 +114,7 @@ class Control_admin_article_list extends Controller {
 		//注释中不能打单引，否则去注释的工具失效,蛋痛的工具啊!
 		echo  Model::factory('witkey_case')->setWhere($where)->del();
 	}
-	function action_search(){
-		global $_K,$_lang;
-		$model_type_arr  = keke_global_class::get_task_type();
-		/* Keke::$_page_obj->setAjax(1);
-		Keke::$_page_obj->setAjaxDom('ajax_dom'); */
-		$search_type = $_GET['search_type'];
-		$search_id = $_GET['search_id'];
-		$page_size = $_GET['page_size'];
-		$fields = ' * ';
-		//基本uri,当前请求的uri ,本来是能通过Rotu类可以得出这个uri,为了程序灵活点，自己手写好了
-		$base_uri = BASE_URL."/index.php/admin/article_case/search";
-		//总记录数,分页用的，你不定义，数据库就是多查一次的。为了少个Sql语句，你必须要写的，亲!
-		$count = intval($_GET['count']);
-			//要查询的字段,在模板中显示用的
-			$query_fields = array('task_id'=>$_lang['id'],'task_title'=>$_lang['name'],'start_time'=>$_lang['time']);
-			//默认排序字段，这里按时间降序
-			$this->_default_ord_field = 'start_time';
-			//这里要口水一下，get_url就是处理查询的条件
-			extract($this->get_url($base_uri));
-			//已经结束的任务
-			$where .= ' and task_status = 8 ';
-		    
-			//获取列表分页的相关数据,参数$where,$uri,$order,$page来自于get_url方法
-			$data_info = Model::factory('witkey_task')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
-			//列表数据
-			$list_arr = $data_info['data'];
-			//分页数据
-			$pages = $data_info['pages'];
- 
-		 
-		
-		require Keke_tpl::template ( 'control/admin/tpl/article/case_search' );
-	}
-	
-	function action_search_service(){
-		global $_K,$_lang;
-		//$model_type_arr  = keke_global_class::get_task_type();
-		/* Keke::$_page_obj->setAjax(1);
-		 Keke::$_page_obj->setAjaxDom('ajax_dom'); */
-		$search_type = $_GET['search_type'];
-		$search_id = $_GET['search_id'];
-		$page_size = $_GET['page_size'];
-		$fields = ' * ';
-		//基本uri,当前请求的uri ,本来是能通过Rotu类可以得出这个uri,为了程序灵活点，自己手写好了
-		$base_uri = BASE_URL."/index.php/admin/article_case/search_service";
-		//总记录数,分页用的，你不定义，数据库就是多查一次的。为了少个Sql语句，你必须要写的，亲!
-		$count = intval($_GET['count']);
 	 
-		 
-			//要查询的字段,在模板中显示用的
-			$query_fields = array('service_id'=>$_lang['id'],'title'=>$_lang['name'],'on_time'=>$_lang['time']);
-			//默认排序字段，这里按时间降序
-			$this->_default_ord_field = 'on_time';
-			//这里要口水一下，get_url就是处理查询的条件
-			extract($this->get_url($base_uri));
-			//已经结束的任务
-			$where .= ' and service_status != 1 ';
-				
-			 
-			//获取列表分页的相关数据,参数$where,$uri,$order,$page来自于get_url方法
-			$data_info = Model::factory('witkey_service')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
-			//列表数据
-			$list_arr = $data_info['data'];
-			//分页数据
-			$pages = $data_info['pages'];
-		
-		 
-		
-		require Keke_tpl::template ( 'control/admin/tpl/article/case_search' );
-	}
 }
 
 

@@ -2,8 +2,8 @@
 <div class="page_title">
 	<h1>{$_lang['system_group_manage']}</h1>
      <div class="tool"> 
-        <a href="{BASE_URL}/index.php/admin/user_group">{$_lang['user_group_manage']}</a>
-        <a href="{BASE_URL}/index.php/admin/user_group/add" >{$_lang['add_user_group']}</a>
+         <a href="{BASE_URL}/index.php/admin/user_group"      {if $_K['action'] != 'add'}class="here"{/if}>{$_lang['user_group_manage']}</a>
+        <a href="{BASE_URL}/index.php/admin/user_group/add" {if $_K['action'] == 'add'}class="here"{/if}>{$_lang['add_user_group']}</a>
 	</div>
 </div>
 <!--Ò³Í·½áÊø-->

@@ -61,7 +61,7 @@ document.getElementById("unlock_pwd").onkeydown = function(event){
 					$.post(
 					"index.php?do=index&ac=unlock&unlock_pwd="+unlock_pwd+"&unlock_num="+unlock_num,
 						function(json){
-							if (json.status == 2) {//锟斤拷锟斤拷晒锟�
+							if (json.status == 2) {
 								success(win);
 								return false;
 							}

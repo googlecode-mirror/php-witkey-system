@@ -60,10 +60,10 @@ class Control_admin_index extends Controller{
 	}
 	
 	function action_op(){
-		
 		global $_K,$_lang;
 		$admin_obj=new keke_admin_class();
 		$_GET = $_POST+$_GET;
+		var_dump($_GET['ac']);die;
 		/**动作集**/
 		switch ($_GET['ac']){
 			case "nav_search"://导航搜索
@@ -77,7 +77,7 @@ class Control_admin_index extends Controller{
 			case "unlock":
 				$unlock_times=$admin_obj->times_limit($_GET['unlock_num']);//允许登录尝试次数
 				$admin_obj->screen_unlock($_GET['unlock_num'],$_GET['unlock_pwd']);//解屏
-				require Keke_tpl::template("control/admin/tpl/admin_screen_lock");
+				require Keke_tpl::template("control/admin/tpl/lock");
 				die();
 				break;
 			case "add_shortcuts":

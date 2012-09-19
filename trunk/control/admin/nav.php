@@ -7,7 +7,9 @@
  */
 class Control_admin_nav extends Controller{
 	function action_index(){
+		//加载全局变量和语言包
 		global $_K,$_lang;
+		//获取后台的父目录和子目录
 		$menus_arr = keke_admin_class::get_admin_menu();
 		$menus_arr = $menus_arr['menu'];
 /* 		foreach ( $menus_arr as $list){

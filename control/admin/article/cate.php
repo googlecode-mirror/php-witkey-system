@@ -10,16 +10,21 @@ class Control_admin_article_cate extends Controller {
 	/**
 	 * 文章分类列表
 	 */
-	function action_index() {
+	function action_index($type='article') {
 		//定义全局变量与语言包，只要加载模板，这个是必须要定义.操
 		global $_K,$_lang;
 		//要显示的字段,即SQl中SELECT要用到的字段
-		$fields = ' `art_cat_id`,`art_cat_pid`,`cat_name`,`is_show`,`cat_type`,`art_index`,`listorder`,`on_time` ';
+		$fields = ' `art_cat_id`,`art_cat_pid`,`cat_name`,`cat_type`,`listorder`,`on_time` ';
 		//要查询的字段,在模板中显示用的
 		$query_fields = array('art_cat_id'=>$_lang['id'],'cat_name'=>$_lang['name'],'on_time'=>$_lang['time']);
 		//总记录数,分页用的，你不定义，数据库就是多查一次的。为了少个Sql语句，你必须要写的，亲!
 		$count = intval($_GET['count']);
 		//基本uri,当前请求的uri ,本来是能通过Rotu类可以得出这个uri,为了程序灵活点，自己手写好了
+		if($type=='help'){
+			$ac = '/help';
+		}else{
+			$ac = '/index';
+		}
 		$base_uri = BASE_URL."/index.php/admin/article_cate";
 		//添加编辑的uri,add这个action 是固定的
 		$add_uri =  $base_uri.'/add';
@@ -29,17 +34,18 @@ class Control_admin_article_cate extends Controller {
 		$this->_default_ord_field = 'on_time';
 		//这里要口水一下，get_url就是处理查询的条件
 		extract($this->get_url($base_uri));
-		$where .= " and cat_type = 'article' ";
+		//判断是文章分类，还是帮助分类
+		$where .= " and cat_type = '$type' ";
+		$uri .= "&type=$type";
 		//获取列表分页的相关数据,参数$where,$uri,$order,$page来自于get_url方法
-		$data_info = Model::factory('witkey_article_category')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
+		$data_info = Model::factory('witkey_article_category')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']=500);
 		//列表数据
 		$list_arr = $data_info['data'];
 		$temp_arr = array();
-	//var_dump($art_cat_arr);
-		Keke::get_tree($list_arr,$temp_arr,'cat','','art_cat_id','art_cat_pid','cat_name');
+    	Keke::get_tree($list_arr,$temp_arr,'cat','','art_cat_id','art_cat_pid','cat_name');
 		$list_arr = $temp_arr;
 		unset($temp_arr);
-		//var_dump($list_arr);
+		
 		//分页数据
 		$pages = $data_info['pages'];
 
@@ -49,22 +55,34 @@ class Control_admin_article_cate extends Controller {
 	 * 帮助分类列表
 	 */
 	function action_help(){
-		
+		$this->action_index($type='help');
 	}
 	/**
 	 * 分类添加
 	 */
 	function action_add(){
 		//始始化全局变量，语言包变量
-		global $_K,$_lang;
-		$case_id = $_GET['art_cat_id'];
-		//如果有值，就进入编辑状态
-		if($case_id){
-			$case_info = Model::factory('witkey_article_category')->setWhere('art_cat_id = '.$case_id)->query();
-			$case_info = $case_info[0];
-			$file = pathinfo($case_info['case_img'], PATHINFO_BASENAME);
+		global $_K,$_lang,$kekezu;
+		$cate_id = $_GET['art_cat_id'];
+		$type=$_GET['type'];
+		if($type=='help'){
+			$ac = '/help';
+		}else{
+			$ac = '/index';
 		}
-		//var_dump($case_info);
+		//如果有值，就进入编辑状态
+		if($cate_id){
+			$cate_info = Model::factory('witkey_article_category')->setWhere('art_cat_id = '.$cate_id)->query();
+			$cate_info = $cate_info[0];
+		}
+		
+	    $cate_arr = Model::factory('witkey_article_category')->setWhere("cat_type='$type'")->query();
+		$t_arr = array ();
+		
+		//如果有传传pid 否index 就是pid
+		$index = $_GET['art_cat_pid']?$_GET['art_cat_pid']:$cate_info['art_cat_pid'];
+		
+ 		Keke::get_tree ( $cate_arr, $t_arr, 'option', $index, 'art_cat_id', 'art_cat_pid', 'cat_name' );
 		//加载模板
 		require Keke_tpl::template('control/admin/tpl/article/cate_add');
 	}
@@ -74,29 +92,30 @@ class Control_admin_article_cate extends Controller {
 	function action_save(){
 		//防止跨域提交，你懂的
 		Keke::formcheck($_POST['formhash']);
-		 
-	    if(!empty($_FILES['fle_case_img']['name'])){
-			//上传文件用的，这个对新手来说好使,要就是简单
-			$case_img = keke_file_class::upload_file('fle_case_img');
-		}
+		$cat_type=$_POST['hdn_cat_type'];
 		//这里怎么说呢，定义生成sql 的字段=>值 的数组，你不懂，就是你太二了.
-		$array = array('case_title'=>$_POST['txt_task_title'],
-				'case_price'=>$_POST['txt_case_price'],
-				'case_img'=>$case_img,
-				'obj_type' => $_POST['case_type']=='search'?'task':'service',
-				'obj_id'=>$_POST['obj_id'],
+		$array = array('art_cat_pid'=>$_POST['slt_cat_id'],
+				'cat_name'=>$_POST['txt_cat_name'],
+				'cat_type'=>$cat_type,
+				'listorder' => $_POST['txt_listorder'],
 				'on_time'=>time(),
 		);
 		//这是个隐藏字段，也就是主键的值，这个主键有值，就是要编辑(update)数据到数据库
 		if($_POST['hdn_art_cat_id']){
-			Model::factory('witkey_article_category')->setData($array)->setWhere("case_id = '{$_POST['hdn_art_cat_id']}'")->update();
+			Model::factory('witkey_article_category')->setData($array)->setWhere("art_cat_id = '{$_POST['hdn_art_cat_id']}'")->update();
 			//执行完了，要给一个提示，这里没有对执行的结果做判断，是想偷下懒，如果执行失败的话，肯定给会报红的。亲!
-			Keke::show_msg('系统提示','index.php/admin/article_case/add?art_cat_id='.$_POST['hdn_art_cat_id'],'提交成功','success');
+			Keke::show_msg('系统提示','index.php/admin/article_cate/add?art_cat_id='.$_POST['hdn_art_cat_id'].'&type='.$cat_type,'提交成功','success');
 		}else{
 			//这也当然就是添加(insert)到数据库中
-			Model::factory('witkey_article_category')->setData($array)->create();
-			Keke::show_msg('系统提示','index.php/admin/article_case/add','提交成功','success');
+			$cate_id = Model::factory('witkey_article_category')->setData($array)->create();
+			//更新art_index
+			$this->update_art_index($cate_id);
+			Keke::show_msg('系统提示','index.php/admin/article_cate/add?type='.$cat_type,'提交成功','success');
 		}
+	}
+	
+	function update_art_index($cate_id){
+		
 	}
 	/**
 	 * 分类删除

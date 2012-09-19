@@ -9,9 +9,10 @@
 <link href="{BASE_URL}/resource/css/button/stylesheets/css3buttons.css" rel="stylesheet" type="text/css" />
 <link href="{BASE_URL}/control/admin/tpl/skin/default/green.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="{BASE_URL}/resource/js/jquery.js"></script>
-<script type="text/javascript"  
+<script type="text/javascript" src="{BASE_URL}/lang/{$_K['language']}/script/lang.js" ></script>
+</head>
+
 <body class="skin" scroll="no">
-<!--{include control/admin/tpl/admin_header}-->
 <!--[if IE 6]><div id="ie6"><![endif]-->
 <!--[if IE 7]><div id="ie7"><![endif]-->
 <!--[if IE 8]><div id="ie8"><![endif]-->
@@ -141,6 +142,7 @@ window.onload = function(){
 		                  	<dt><i class="arrow_r">&nbsp;</i>{$_lang['faster_operate']}</dt>
 			                  <dd>
 			                        <ul id="ul_kjcz">
+			                        	
 			                        	<!--{loop $fast_menu_arr $k $v}-->
 			                        		<li><a href="{BASE_URL}/{$v['resource_url']}" target="display_frame" {if $k==0}class="select"{/if} r_id="{$v['resource_id']}">{$v['resource_name']}</a></li>
 										<!--{/loop}-->
@@ -148,11 +150,12 @@ window.onload = function(){
 			                  </dd>
 		                </dl>
 		       </div>
-		   <!--{loop $menu_conf  $k $v}-->
+			   
+		   <!--{loop $menu_arr  $k $v}-->
 		        <div id="{$k}" class="menu_bar">
 		       	   <!--{loop $sub_menu_arr[$k] $kk $vv}-->
 				   		<dl>
-		                  	<dt><i class="arrow_r">&nbsp;</i>{$vv['name']}11111</dt>
+		                  	<dt><i class="arrow_r">&nbsp;</i>{$vv['name']}</dt>
 			                  <dd>
 			                        <ul >
 			                        	<!--{loop $vv['items'] $kkk $vvv}-->
@@ -166,7 +169,11 @@ window.onload = function(){
 		   <!--{/loop}-->
              
         </div>
+
 </div>
+
+
+
 <div class="tool_box">
 	<div class="bread">
     <a href="{BASE_URL}/index.php/admin/main" target="display_frame">{$_lang['manage_home']}</a>
@@ -255,7 +262,7 @@ function find_nav(){
 }
 /**lock screen**/
 function lock(){
-	$.post("index.php/admin/index?ac=lock");
+	$.post("index.php?do=index&ac=lock");
 	hidepanel();
 	showlogin();
 }
@@ -392,6 +399,7 @@ $(function() {
 <script type="text/javascript" src="{BASE_URL}/resource/js/artdialog/artDialog.js"></script>
 <script type="text/javascript" src="{BASE_URL}/resource/js/artdialog/jquery.artDialog.js?skin=default"></script>
 <script type="text/javascript" src="{BASE_URL}/resource/js/artdialog/artDialog.iframeTools.source.js"></script>
+
  
 </body>
 </html>

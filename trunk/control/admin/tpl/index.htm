@@ -168,11 +168,7 @@ window.onload = function(){
 		   <!--{/loop}-->
              
         </div>
-
 </div>
-
-
-
 <div class="tool_box">
 	<div class="bread">
     <a href="{BASE_URL}/index.php/admin/main" target="display_frame">{$_lang['manage_home']}</a>
@@ -261,7 +257,7 @@ function find_nav(){
 }
 /**lock screen**/
 function lock(){
-	$.post("{BASE_URL}/index.php/admin/lock");
+	$.post("{BASE_URL}/index.php/admin/lock?action=lock");
 	hidepanel();
 	showlogin();
 }

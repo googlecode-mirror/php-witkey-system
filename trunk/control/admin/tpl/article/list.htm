@@ -66,7 +66,7 @@
 			</td>
             <td class="wraphide">$v['views']</td>
             <td class="wraphide">{if $v['username']}{$v['username']}{else}{$_lang['anonymous']}{/if}</td>
-            <td class="ws_break"><!--{date('Y-m-d',$v['pub_time'])}--></td>
+            <td class="ws_break">{date('Y-m-d',$v['pub_time'])}</td>
             <td>
             	 
 				<a href="{if $type=='art'}../../index.php?do=article&view=article_info&art_id={$v['art_id']}&page={$page}{elseif $type=='help'}../../index.php?do=help&spid={$v['art_cat_id']}&page={$page}{else}../../index.php?do=single&art_id={$v['art_id']}{/if}" target="_blank" class="button"><span class="book icon"></span>{$_lang['view']}</a> 
@@ -99,7 +99,8 @@
 </div>
 	<!--主体结束-->
 <script type="text/javascript">
-	function createHtml(writedir,filename){
+	/* 生成静态html 此功能目前暂未开发
+function createHtml(writedir,filename){
 		var url = "index.php?do=static&view=update&sbt_edit=1&write_dir="+writedir+"&file_name="+filename;
 			ajaxDialog(url);
 	}
@@ -121,5 +122,6 @@
 				noFn :function(){this.close();return false;}
 		})
  }
+*/
 </script>
 <!--{include control/admin/tpl/admin_footer}-->

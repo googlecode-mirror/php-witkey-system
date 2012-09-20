@@ -67,12 +67,11 @@ class Keke_tpl {
 		//动态调用
 		$template = preg_replace ( "/\<\!\-\-\{loadfeed\((.+?)\)\}\-\-\>/ie", "Keke_tpl::loadfeed('\\1')", $template );
 		//时间处理
-		$template = preg_replace ( "/\<\!\-\-\{date\((.+?),(.+?)\)\}\-\-\>/ie", "Keke_tpl::datetags('\\1','\\2')", $template );
+		$template = preg_replace ( "/\{date\((.+?),(.+?)\)\}/ie", "Keke_tpl::datetags('\\1','\\2')", $template );
 		//货币显示
 		$template = preg_replace ( "/{c\:(.+?)(,?)(\d?)\}/ie", "keke_curren_class::currtags('\\1','\\3')", $template );
-		
 		//头像处理
-		$template = preg_replace ( "/\<\!\-\-\{userpic\((.+?),(.+?)\)\}\-\-\>/ie", "Keke_tpl::userpic('\\1','\\2')", $template );
+		$template = preg_replace ( "/\{userpic\((.+?),(.+?)\)\}/ie", "Keke_tpl::userpic('\\1','\\2')", $template );
 		//PHP代码
 		$template = preg_replace ( "/\<\!\-\-\{eval\s+(.+?)\s*\}\-\-\>/ies", "Keke_tpl::evaltags('\\1')", $template );
 		//开始处理
@@ -108,9 +107,31 @@ class Keke_tpl {
 	}
 	
 	static function addquote($var) {
-		return str_replace ( "\\\"", "\"", preg_replace ( '/\[([a-zA-Z0-9_\-\.\x7f-\xff]+)\]/s', "['\\1']", $var ) );
+		$var =  str_replace ( "\\\"", "\"", preg_replace ( '/\[([a-zA-Z0-9_\-\.\x7f-\xff]+)\]/s', "['\\1']", $var ) );
+		return $var;
 	}
-	
+	/**
+	 * 转义页面输入的字符中,防止sql注入
+	 * @param string,array $value
+	 * @param bool $double_encode
+	 * @return string 安全的字符
+	 */
+	public static function chars($value, $double_encode = FALSE)
+	{
+		if(CHARSET==='gbk'){
+			$charset = 'iso-8859-1';
+		}else{
+			$charset = CHARSET;
+		}
+		if(is_array($value) or is_object($value)){
+			foreach ($value as $k=>$v){
+			   $value[$k]=Keke_tpl::chars($v,$double_encode);
+			}
+		}else{
+			$value = htmlspecialchars( (string) $value, ENT_QUOTES, $charset, $double_encode);
+		}
+		return $value;
+	}
 	static function striptagquotes($expr) {
 		$expr = preg_replace ( '/\<\?\=(\\\$.+?)\?\>/s', "\\1", $expr );
 		$expr = str_replace ( "\\\"", "\"", preg_replace ( '/\[\'([a-zA-Z0-9_\-\.\x7f-\xff]+)\'\]/s', "[\\1]", $expr ) );

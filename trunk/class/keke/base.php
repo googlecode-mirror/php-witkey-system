@@ -28,25 +28,31 @@ class Keke_base {
 		}
 		return $string;
 	}
+    /**
+     * 循环清理输入的变量 
+     * @param string $value
+     * @return 干净的变量 
+     */
+	public static function k_stripslashes($value)
+	{
+		if (is_array($value) OR is_object($value)){
+			foreach ($value as $key => $val){
+				// 转义每一个变量 
+				$value[$key] = Keke::k_stripslashes($val);
+			}
+		}elseif (is_string($value)){
+			if (Keke::$_magic_quote === TRUE){
+				// 清除加的转义符
+				$value = stripslashes($value);
+			}
 	
-	static public function k_stripslashes($string) {
-		if (is_array ( $string )) {
-			$key = array_keys ( $string );
-			$s = sizeof ( $key );
-			for($i = 0; $i < $s; $i ++) {
-				$string [$key [$i]] = self::k_stripslashes ( $string [$key [$i]] );
-			}
-		} elseif(is_string($string)) {
-			if(Keke::$_magic_quote===true){
-				//去掉转义符号
-				$string = stripcslashes ( trim ( $string ) );
-			}
-			if (strpos($string, "\r") !== false){
-				//换成标准的换行
-				$string = str_replace(array("\r\n", "\r"), "\n", $string);
+			if (strpos($value, "\r") !== FALSE){
+				// 去掉换行符
+				$value = str_replace(array("\r\n", "\r"), "\n", $value);
 			}
 		}
-		return $string;
+	
+		return $value;
 	}
 
 	/**
@@ -705,9 +711,9 @@ class Keke_base {
 			} elseif ($return_json == true) {
 				return false;
 			} elseif ($_K ['inajax']) {
-				Keke::show_msg ( $_lang ['operate_error'], "", 5, $_lang ['repeat_form_submit'], 'alert_error' );
+				Keke::show_msg ( $_lang ['operate_error'], $_SERVER ['HTTP_REFERER'], $_lang ['repeat_form_submit'], 'alert_error' );
 			} else {
-				Keke::show_msg ( $_lang ['operate_error'], "index.php", 30, $_lang ['illegal_or_repeat_submit'], 'alert_error' );
+				Keke::show_msg ( $_lang ['operate_error'], $_SERVER ['HTTP_REFERER'],  $_lang ['illegal_or_repeat_submit'], 'warning' );
 			}
 		} else {
 			return false;

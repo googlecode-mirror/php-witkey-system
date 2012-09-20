@@ -240,10 +240,6 @@ class Keke_Request  {
 	 * REQUEST_URI, PHP_SELF or REDIRECT_URL.
 	 *
 	 *     $uri = Request::detect_uri();
-	 *
-	 * @return  string  URI of the main request
-	 * @throws  Kohana_Exception
-	 * @since   3.0.8
 	 */
 	public static function detect_uri()
 	{
@@ -321,7 +317,6 @@ class Keke_Request  {
 	 *     $request = Request::current();
 	 *
 	 * @return  Request
-	 * @since   3.0.5
 	 */
 	public static function current()
 	{
@@ -362,8 +357,6 @@ class Keke_Request  {
 	 *
 	 * @param   mixed   $value String to return: browser, version, robot, mobile, platform; or array of values
 	 * @return  mixed   requested information, FALSE if nothing is found
-	 * @uses    Kohana::$config
-	 * @uses    Request::$user_agent
 	 */
 	public static function user_agent($value)
 	{
@@ -779,7 +772,7 @@ class Keke_Request  {
 		// external pages.
 		if (Request::$initial === NULL OR strpos($uri, '://') === FALSE)
 		{
-			global  $_K;
+			//global  $_K;
 			// Remove trailing slashes from the URI
 			$uri = trim($uri, '/');
 			if($uri==='index.php'){
@@ -1123,8 +1116,6 @@ class Keke_Request  {
 	 * @return  Response
 	 * @throws  Request_Exception
 	 * @throws  HTTP_Exception_404
-	 * @uses    [Kohana::$profiling]
-	 * @uses    [Profiler]
 	 */
 	public function execute()
 	{

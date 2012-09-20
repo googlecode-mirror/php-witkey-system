@@ -474,14 +474,14 @@ class keke_file_class {
 	 *        	$del_more='100,200'(分别代表size是100和200的2张图片)
 	 */
 	static function del_att_file($fid = 0, $filepath = '', $del_more = '') {
-		$file_obj = new Keke_witkey_file_class ();
+		$file_obj = new Keke_witkey_file ();
 		if ($fid > 0) {
 			$where = 'file_id=' . $fid;
 			$filepath != '' && $where .= ' and save_name="' . $filepath . '"';
 			$file_obj->setWhere ( $where );
-			$file_info = $file_obj->query_keke_witkey_file ();
+			$file_info = $file_obj->query();
 			$file_obj->setWhere ( $where );
-			$res = $file_obj->del_keke_witkey_file ();
+			$res = $file_obj->del();
 			$filepath = $file_info [0] ['save_name'];
 			if (is_file ( $filepath )) {
 				$unlink = unlink ( $filepath );

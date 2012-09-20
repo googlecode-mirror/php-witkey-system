@@ -55,13 +55,13 @@ document.getElementById("unlock_pwd").onkeydown = function(event){
 	function unlock(){
 		var win=art.dialog.open.origin;
 			var unlock_num=$("#unlock_times").val();
-			alert(unlock_num);
 			var unlock_pwd=$("#unlock_pwd").val();
 			if (checkForm(document.getElementById('lock_frm'))) {
 				if(unlock_num>0)
 					$.post(
-					"index.php/admin/lock/un?unlock_pwd="+unlock_pwd+"&unlock_num="+unlock_num,
+					"{BASE_URL}/index.php/admin/lock/unlock?unlock_pwd="+unlock_pwd+"&unlock_num="+unlock_num,
 						function(json){
+							alert('1111');
 							if (json.status == 2) {
 								success(win);
 								return false;
@@ -76,7 +76,6 @@ document.getElementById("unlock_pwd").onkeydown = function(event){
 							}
 						},'json')		
 			}
-		
 	}
 	function success(win){
 		win.showpanel();

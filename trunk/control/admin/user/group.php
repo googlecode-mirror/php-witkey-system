@@ -41,6 +41,8 @@ class Control_admin_user_group extends Controller{
 		require keke_tpl::template("control/admin/tpl/user/group_add");
 	}
 	function action_save(){
+		//防止sql注入，
+		$_POST = Keke_tpl::chars($_POST);
 		//防止跨域提交
 		keke::formcheck($_POST['formhash']);
 		//获取选中的多选条件的group_id，为数组

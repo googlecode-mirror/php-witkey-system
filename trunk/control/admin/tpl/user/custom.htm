@@ -3,7 +3,7 @@
     <h1>{$_lang['kf_manage']}</h1>
     <div class="tool">
         <a href="{BASE_URL}/index.php/admin/user_custom" class="here">{$_lang['kf_list']}</a>
-        <a href="index.php?do=user&view=custom_add">{$_lang['add_new_kf']}</a>
+        <a href="{BASE_URL}/index.php/admin/user_custom/add">{$_lang['add_new_kf']}</a>
     </div>
 </div>
 <div class="box search p_relative">
@@ -64,11 +64,11 @@
                 <td>{$v['qq']}</td>
                 <td>
 				{if $admin_info['uid']!=$v['uid']}
-                    <a class="button dbl_target" href="{BASE_URL}index.php/admin/user_custom/edit?uid={$v['uid']}&page={$page}"><span class="pen icon"></span>{$_lang['edit']}</a>
+                    <a class="button dbl_target" href="{BASE_URL}index.php/admin/user_custom/add?uid={$v['uid']}"><span class="pen icon"></span>{$_lang['edit']}</a>
 				{/if}
 				</td>
                 <td>
-                    <a class="button" href="{BASE_URL}/index.php/admin/user_custom/del?uid=$v['uid']" onclick="return cdel(this);">
+                    <a class="button" href="{BASE_URL}/index.php/admin/user_custom/del?uid={$v['uid']}" onclick="return cdel(this);">
                     <span class="trash icon"></span>{$_lang['delete']}</a>
                 </td>
             </tr>

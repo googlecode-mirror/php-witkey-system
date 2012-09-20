@@ -420,7 +420,7 @@ class Keke extends Keke_core {
 		for($i = 0; $i < $size; $i ++) {
 			$config_arr [$basic_arr [$i] ['k']] = $basic_arr [$i] ['v'];
 		}
-		$nav_list = DB::select('*')->from('witkey_nav')->cached()->execute();
+		$nav_list = DB::select('*')->from('witkey_nav')->cached(6000,'keke_nav')->execute();
 		$nav_list = Keke::get_arr_by_key($nav_list,'nav_id');
 		Keke::$_nav_list = $nav_list;
 		$template = Keke::get_tpl ();

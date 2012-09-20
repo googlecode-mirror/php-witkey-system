@@ -2,8 +2,8 @@
 <div class="page_title">
     <h1>{$_lang['rights_set']}</h1>
     <div class="tool">
-  		<a href="index.php?do=user&view=custom_list" {if $view=='custom_list'} class="here" {/if}>{$_lang['customer_service_manage']}</a>
-        <a href="index.php?do=user&view=custom_add" {if $view=='custom_add'} class="here" {/if} >{$_lang['add_customer_service']}</a>
+  		<a href="{BASE_URL}/index.php/admin/user_custom" {if $K['action']!='add'}class="here" {/if}>{$_lang['customer_service_manage']}</a>
+        <a href="{BASE_URL}/index.php/admin/user_custom/add" {if $K['action']=='add'} class="here" {/if} >{$_lang['add_customer_service']}</a>
     </div>
 </div>
 <div class="box post">

@@ -7,7 +7,7 @@
  */
 
 
-class Contorl_ajax_upload extends Controller{
+class Control_ajax_upload extends Controller{
 	
 	function action_index(){
 		$upload_obj=keke_ajax_upload_class::get_instance($_SERVER['QUERY_STRING']);

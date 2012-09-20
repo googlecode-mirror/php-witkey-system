@@ -7,7 +7,8 @@
 	</div>
 </div>
 <div class="box search p_relative" id="detail">
- <form action="{BASE_URL}/index.php/admin/article_list?type=$type" method="get">	
+<form action="{BASE_URL}/index.php/admin/article_list" method="get">
+<input type="hidden" name="type" value="{$type}"> 		
 <table class="detail"  cellspacing="0" cellpadding="0">    		
 	<tbody>
 		<tr>

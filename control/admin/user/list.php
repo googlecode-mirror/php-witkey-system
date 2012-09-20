@@ -2,10 +2,10 @@
 /**
 后台用户路由
 */
-class Control_admin_user_user extends Controller{
+class Control_admin_user_list extends Controller{
 	function action_index(){
 		global $_K,$_lang;
-		require keke_tpl::template('control/admin/tpl/user/user');
+		require keke_tpl::template('control/admin/tpl/user/list');
 	}
 }
 

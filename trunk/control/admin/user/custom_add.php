@@ -4,8 +4,7 @@
  */
 
 
-Keke::admin_check_role ( 33 );
-
+/* Keke::admin_check_role ( 33 );
 $space_obj = new Keke_witkey_space_class ();
 $member_group_arr = Dbfactory::query ( sprintf ( "select group_id,groupname from %switkey_member_group", TABLEPRE ), 1, 3600 );
 $edituid = intval ( $edituid );
@@ -23,5 +22,5 @@ if ($is_submit) {
 	Keke::admin_show_msg ( $_lang['rights_set_success'], "index.php?do=$do&view=custom_list", 2, '', 'success' );
 }
 
-require $template_obj->template ( 'control/admin/tpl/admin_user_custom_add' );
+require $template_obj->template ( 'control/admin/tpl/admin_user_custom_add' ); */
 

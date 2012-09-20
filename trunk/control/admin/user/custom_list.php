@@ -4,7 +4,7 @@
 */
 
 
-Keke::admin_check_role ( 33 );
+/* Keke::admin_check_role ( 33 );
  
 $kf_obj = keke_table_class::get_instance ( "witkey_space" );
 $member_obj = new Keke_witkey_member_class ();
@@ -77,5 +77,5 @@ switch ($op) {
 		
 		$grouplist_arr = keke_admin_class::get_user_group ();
 		
-require $template_obj->template ( 'control/admin/tpl/admin_user_custom_list' );
+require $template_obj->template ( 'control/admin/tpl/admin_user_custom_list' ); */
 

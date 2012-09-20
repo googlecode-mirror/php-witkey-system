@@ -100,26 +100,26 @@ class keke_admin_class {
 	function screen_unlock($unlock_num, $unlock_pwd) {
 		global $kekezu;
 		global $_lang;
-		($_SESSION ['uid'] && $_SESSION ['auid']) or $kekezu->admin_show_msg ( $_lang['you_not_login'], 'index.php' );
+		//($_SESSION ['uid'] && $_SESSION ['auid']) or keke::show_msg ( $_lang['you_not_login'], 'index.php/admin/login' ,'','success');
 		if ($unlock_num > 0) { //解锁判断
 			/**获取当前登录用户密码**/
 			$admin_pwd = dbfactory::get_count ( " select password from " . TABLEPRE . "witkey_member where uid = '" . $_SESSION ['uid'] . "'" );
 			$unlock_pwd = md5 ( $unlock_pwd ); //解锁密码
 			if ($admin_pwd == $unlock_pwd) {
 				$_SESSION ['lock_screen'] = '0';
-				$kekezu->echojson ( '', '2' );
+				keke::echojson ( '', '2' );
 				die (); //解锁成功
 			} else {
 				if ($unlock_num > 1) {
 					$_SESSION ['allow_times']=--$unlock_num;
-					$kekezu->echojson ( $_lang['unlock_fail'].".", '1', $unlock_num );
+					keke::echojson ( $_lang['unlock_fail'].".", '1', $unlock_num );
 					die (); //解锁失败
 				} else { //最后一次操作失败
 					$_SESSION ['allow_times']='0';
 					$_SESSION ['lock_screen'] = '0';
 					$_SESSION ['uid'] = '';
 					$_SESSION ['username'] = '';
-					$kekezu->echojson ( $_lang['wrong_times_much_login_again'], '0' );
+					keke::echojson ( $_lang['wrong_times_much_login_again'], '0' );
 					die ();
 				}
 			}

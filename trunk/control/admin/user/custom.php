@@ -13,6 +13,18 @@ class Control_admin_user_custom extends Controller{
 		require keke_tpl::template('control/admin/tpl/user/custom');
 	}
 	function action_add(){
+		global $_K,$_lang;
+		if ($_GET['uid']){
+			$where .= 'uid ='.$_GET['uid'];
+			$spaceinfo = DB::select()->from('witkey_space')->where($where)->execute();
+			$spaceinfo = $spaceinfo[0];
+			$member_group_arr = DB::select()->from('witkey_member_group')->where('1=1')->execute();
+		}
+		if ($_POST['guid']){
+			$keke_user_info = new Keke_core(); 
+			Keke::echojson(1,1,$keke_user_info->init_user($_POST['guid']));
+			die;
+		}
 		require keke_tpl::template('control/admin/tpl/user/custom_add');
 	}
 	function action_del(){

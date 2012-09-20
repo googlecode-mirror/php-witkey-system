@@ -2,7 +2,12 @@
 /**
  * ÓÃ»§Ìí¼Ó
  */
-
+class Control_admin_user_add extends Controller{
+	function action_index(){
+		global $_K,$_lang;
+		require keke_tpl::template('control/admin/tpl/user/add');
+	}
+}
 /* Keke::admin_check_role ( 11 );
 $basic_config = $Keke->_sys_config;
 

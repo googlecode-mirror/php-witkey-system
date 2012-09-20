@@ -7,7 +7,7 @@
  * 2011-10-08обнГ02:57:33
  */
 
-class Contorl_ajax_task extends Controller{
+class Control_ajax_task extends Controller{
      function action_index(){
      	extract($_GET,EXTR_SKIP);
      	switch ($ajax) {

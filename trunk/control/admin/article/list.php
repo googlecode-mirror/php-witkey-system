@@ -147,15 +147,15 @@ class Control_admin_article_list extends Controller {
 	
 	function action_del(){
 		//删除单条,这里的case_id 是在模板上的请求连接中有的
-		if($_GET['case_id']){
-			$where = 'case_id = '.$_GET['case_id'];
+		if($_GET['art_id']){
+			$where = 'art_id = '.$_GET['art_id'];
 			//删除多条,这里的条件统一为ids哟，亲
 		}elseif($_GET['ids']){
-			$where = 'case_id in ('.$_GET['ids'].')';
+			$where = 'art_id in ('.$_GET['ids'].')';
 		}
 		//输出执行删除后的影响行数，模板上的js 根据这个值来判断是否移聊tr标签到
 		//注释中不能打单引，否则去注释的工具失效,蛋痛的工具啊!
-		echo  Model::factory('witkey_case')->setWhere($where)->del();
+		echo  Model::factory('witkey_article')->setWhere($where)->del();
 	}
 	 
 }//end

@@ -444,10 +444,10 @@ class Keke extends Keke_core {
 		$_K ['refer'] = "index.php";
 		$_K ['block_search'] = $_K ['block_replace'] = array ();
 		$_lang = array ();
-		is_file ( S_ROOT . '/config/lic.php' ) and include (S_ROOT . '/config/lic.php');
+		//is_file ( S_ROOT . '/config/lic.php' ) and include (S_ROOT . '/config/lic.php');
 		$config_arr ['seo_title'] and $_K ['html_title'] = $config_arr ['seo_title'] or $_K ['html_title'] = $config_arr ['website_name'];
 		define ( 'SKIN_PATH', 'tpl/' . $_K ['template'] );
-		define ( 'UPLOAD_RULE', date ( 'Y/m/d' ) );
+		define ( 'UPLOAD_RULE', date ( 'Y/m/d/' ) );
 		define ( 'UPLOAD_ROOT', S_ROOT . '/data/uploads/' . UPLOAD_RULE ); // 附件保存物理路径
 		define ( 'UPLOAD_ALLOWEXT', '' . $config_arr ['file_type'] ); // 允许上传的文件后缀，多个后缀用“|”分隔
 		define ( 'UPLOAD_MAXSIZE', '' . $config_arr ['max_size'] * 1024 * 1024 ); // 允许上传的附件最大值

@@ -122,4 +122,15 @@ abstract class Model {
 		return $res_info;
 		
 	}
+	/**
+	 * ¹ıÂËµôNULLÖµ
+	 * @param Sting $v
+	 * @return boolean
+	 */
+	public static function remove_null($v){
+		if(is_null($v)){
+			return FALSE;
+		}
+		return TRUE;
+	}
 }

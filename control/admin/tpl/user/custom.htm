@@ -64,7 +64,7 @@
                 <td>{$v['qq']}</td>
                 <td>
 				{if $admin_info['uid']!=$v['uid']}
-                    <a class="button dbl_target" href="{BASE_URL}index.php/admin/user_custom/add?uid={$v['uid']}"><span class="pen icon"></span>{$_lang['edit']}</a>
+                    <a class="button dbl_target" href="{BASE_URL}/index.php/admin/user_custom/add?uid={$v['uid']}"><span class="pen icon"></span>{$_lang['edit']}</a>
 				{/if}
 				</td>
                 <td>
@@ -81,7 +81,7 @@
                     <button name="sbt_action" type="submit" value="{$_lang['mulit_delete']}" onclick="return batch_act(this,'frm_list');" class="pill negative">
                         <span class="icon trash"></span>{$_lang['mulit_delete']}
                     </button>
-                    <a name="sbt_action" value="{$_lang['add_new_kf']} " class="positive pill button" href="index.php?do=user&view=custom_add">
+                    <a name="sbt_action" value="{$_lang['add_new_kf']} " class="positive pill button" href="{BASE_URL}/index.php/admin/user_custom/add">
 					<span class="plus icon"></span>{$_lang['add_new_kf']}
                     </a>
                 </div>

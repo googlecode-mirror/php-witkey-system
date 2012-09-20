@@ -9,14 +9,16 @@
 class Control_admin_lock extends Controller{
 	function action_index(){
 		global $_K,$_lang;
+		$admin_obj = new keke_admin_class();
+		$admin_obj->check_screen_lock();
+		$unlock_times = $admin_obj->times_limit() ;
+// 		$admin_obj->screen_lock();
 		require keke_tpl::template('control/admin/tpl/lock');
 	}
 	function action_unlock(){
-		$admin_obj = new keke_admin_class(); 
-		if($_GET['unlock_times']){
-		}
+		$admin_obj = new keke_admin_class();
 		$admin_obj->screen_unlock($_GET['unlock_times'],$_GET['unlock_pwd']);
-		require keke_tpl::template('control/admin/tpl/index');
+		require keke_tpl::template('control/admin/tpl/lock');
 	}
 }
 /* defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );

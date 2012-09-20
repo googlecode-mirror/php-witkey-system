@@ -90,6 +90,7 @@ class Control_admin_article_cate extends Controller {
 	 * 分类保存
 	 */
 	function action_save(){
+		$_POST = Keke_tpl::chars($_POST);
 		//防止跨域提交，你懂的
 		Keke::formcheck($_POST['formhash']);
 		$cat_type=$_POST['hdn_cat_type'];

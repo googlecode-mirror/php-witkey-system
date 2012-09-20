@@ -1,26 +1,5 @@
-<?php
-//
-// +------------------------------------------------------------------------+
-// | PHP Version 5                                                          |
-// +------------------------------------------------------------------------+
-// | Copyright (c) All rights reserved.                                     |
-// +------------------------------------------------------------------------+
-// | This source file is subject to version 3.00 of the PHP License,        |
-// | that is available at http://www.php.net/license/3_0.txt.               |
-// | If you did not receive a copy of the PHP license and are unable to     |
-// | obtain it through the world-wide-web, please send a note to            |
-// | license@php.net so we can mail you a copy immediately.                 |
-// +------------------------------------------------------------------------+
-// | Author:                                                                |
-// +------------------------------------------------------------------------+
-//
-// $Id$
-//
+<?php defined ( 'IN_KEKE' ) or exit('Access Denied');
 
-
-/**
- * @author       Administrator
- */
 keke_lang_class::load_lang_class ( 'keke_ajax_upload_class' );
 class keke_ajax_upload_class {
 	private $_ext_url;
@@ -60,7 +39,11 @@ class keke_ajax_upload_class {
 		$url_data ['file_type'] and $this->_file_type = $url_data ['file_type'];
 		intval($url_data ['img_width']) and $this->_img_width = $url_data ['img_width'];
 		intval($url_data ['img_height']) and $this->_img_height = $url_data ['img_height'];
-		$url_data ['task_id'] and $this->_task_id = $url_data ['task_id'];
+		 
+		//限制task_id 的值，因为query_string不太安全 
+		if(in_array($url_data['task_id'],array('ad','auth','mark','tools')) or intval($url_data['task_id'])>0){
+			$this->_task_id = $url_data ['task_id'];
+		}
 		$url_data ['work_id'] and $this->_work_id = $url_data ['work_id'];
 		$url_data ['obj_id'] and $this->_obj_id = $url_data ['obj_id'];
 		$url_data ['obj_type'] and $this->_obj_type = $url_data ['obj_type'];
@@ -73,7 +56,7 @@ class keke_ajax_upload_class {
 	public function upload_file() {
 		global $_K;
 		global $_lang;
-		$file_obj = new Keke_witkey_file_class ();
+		$file_obj = new Keke_witkey_file ();
 		if ($this->_img_width) {
 			$img_info = getimagesize ( $_FILES [$this->_file_name] ['tmp_name'] );
 			if ($img_info) {
@@ -134,7 +117,7 @@ class keke_ajax_upload_class {
 			$file_obj->setObj_type ( $this->_obj_type );
 			$file_obj->setOn_time ( time () );
 			
-			$res = $file_obj->create_keke_witkey_file ();
+			$res = $file_obj->create ();
 			
 			$err = '';
 		} else {
@@ -166,8 +149,6 @@ class keke_ajax_upload_class {
 		die ();
 	}
 	//return three pic size:100*100,210*210,
-	
-
 	public function upload_and_resize_pic() {
 		global $_K;
 		$ext = 'jpg|jpeg|gif|png|bmp';
@@ -180,7 +161,7 @@ class keke_ajax_upload_class {
 		}
 		CHARSET == 'gbk' && $real_file = Keke::utftogbk ( $real_file );
 		//存放到数据库
-		$file_obj = new Keke_witkey_file_class ();
+		$file_obj = new Keke_witkey_file ();
 		$file_obj->setUid ( $this->_uid );
 		$file_obj->setUsername ( $this->_username );
 		$file_obj->setFile_name ( $real_file );
@@ -188,7 +169,7 @@ class keke_ajax_upload_class {
 		$file_obj->setObj_id ( intval ( $this->_obj_id ) );
 		$file_obj->setObj_type ( $this->_obj_type );
 		$file_obj->setOn_time ( time () );
-		$fid = $file_obj->create_keke_witkey_file ();
+		$fid = $file_obj->create();
 		
 		$size_a = array (100, 100 );
 		$size_b = array (210, 210 );

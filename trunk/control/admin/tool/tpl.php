@@ -87,6 +87,7 @@ class Control_admin_tool_tpl extends Controller{
 	 */
 	function action_save(){
 		global  $_K,$_lang;
+		$_POST = Keke_tpl::chars($_POST);
 		$rdo_is_selected = $_POST['rdo_is_selected'];
 		$tpl_obj  = new Keke_witkey_template();
 		$tpl_obj->setWhere ( 'tpl_id=' . $rdo_is_selected );
@@ -186,6 +187,7 @@ class Control_admin_tool_tpl extends Controller{
 		global  $_K,$_lang;
 		//write
 		if ($_POST) {
+			$_POST = Keke_tpl::chars($_POST);
 			$filename =$_POST['filename'];
 			$tplname = $_POST['tplname'];
 			$tname =$_POST['tname'];

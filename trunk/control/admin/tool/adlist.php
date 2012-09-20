@@ -78,6 +78,7 @@ class Control_admin_tool_adlist extends Controller{
 		 *
 		 */
 		function action_save(){
+			$_POST = Keke_tpl::chars($_POST);
 			//防止跨域提交，你懂的
 			Keke::formcheck($_POST['formhash']);
 			//类型flash/text/imag/code

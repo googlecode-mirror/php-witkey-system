@@ -42,5 +42,6 @@ $lang  = array (
 		'please_input_right_email'=>'请填写正确的email，不填可留空',
 		'format_error'=>'格式错误',
 		'query'=>'查询',
+		
 
 );

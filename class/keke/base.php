@@ -29,7 +29,7 @@ class Keke_base {
 		return $string;
 	}
     /**
-     * 循环清理输入的变量 
+     * 循环清理输入的变量 ,主要是为了那个开了安全模式的二B
      * @param string $value
      * @return 干净的变量 
      */

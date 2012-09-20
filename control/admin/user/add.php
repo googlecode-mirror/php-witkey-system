@@ -3,7 +3,7 @@
  * 用户管理
  */
 
-Keke::admin_check_role ( 11 );
+/* Keke::admin_check_role ( 11 );
 $basic_config = $Keke->_sys_config;
 
 $reg_obj = new keke_register_class ();
@@ -49,4 +49,4 @@ if ($is_submit == 1) {
 	}
 }
 
-require $template_obj->template ( 'control/admin/tpl/admin_user_add' );
+require $template_obj->template ( 'control/admin/tpl/admin_user_add' ); */

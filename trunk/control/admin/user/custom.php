@@ -2,10 +2,24 @@
 /**
 *客服管理
 */
-class Control_admin_custom extends Controller{
+class Control_admin_user_custom extends Controller{
 	function action_index(){
 		global $_K,$_lang;
+		$fields = '`uid`,`username`,`group_id`,`phone`';
+		$query_fields = array('uid'=>$_lang['id'],'username'=>$_lang['name']);
+		$data_info = Model::factory('witkey_space')->get_grid($fields,$where);
+		$list_arr = $data_info['data'];
+		$grouplist_arr = keke_admin_class::get_user_group ();
 		require keke_tpl::template('control/admin/tpl/user/custom');
+	}
+	function action_add(){
+		require keke_tpl::template('control/admin/tpl/user/custom_add');
+	}
+	function action_del(){
+		if($_GET['uid']){
+			$where .= ' and uid ='.$_GET['uid'];
+		}
+		echo Model::factory('witkey_space')->setWhere($where)->del();
 	}
 }
 

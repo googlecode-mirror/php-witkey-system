@@ -11,7 +11,7 @@ class Control_admin_lock extends Controller{
 		global $_K,$_lang;
 		require keke_tpl::template('control/admin/tpl/lock');
 	}
-	function action_un(){
+	function action_unlock(){
 		$admin_obj = new keke_admin_class(); 
 		if($_GET['unlock_times']){
 		}

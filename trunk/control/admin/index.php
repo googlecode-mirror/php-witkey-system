@@ -58,7 +58,9 @@ class Control_admin_index extends Controller{
 		
 		$_K ['admin_tpl_path'] = S_ROOT . './control/admin/tpl/'; //后台模板目录
 	}
-	
+	/**
+	 * 可以不要
+	 */
 	function action_op(){
 		global $_K,$_lang;
 		$admin_obj=new keke_admin_class();

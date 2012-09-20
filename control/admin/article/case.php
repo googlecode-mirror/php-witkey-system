@@ -52,6 +52,7 @@ class Control_admin_article_case extends Controller {
 		require Keke_tpl::template('control/admin/tpl/article/case_add');
 	}
 	function action_save(){
+		$_POST = Keke_tpl::chars($_POST);
 		//·ÀÖ¹¿çÓòÌá½»£¬Äã¶®µÄ
 		Keke::formcheck($_POST['formhash']);
 		 

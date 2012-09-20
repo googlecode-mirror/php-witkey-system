@@ -1,6 +1,6 @@
 <?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
- * 用户管理
+ * 用户添加
  */
 
 /* Keke::admin_check_role ( 11 );

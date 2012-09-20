@@ -141,8 +141,9 @@ class Keke_cache_file extends Keke_cache {
 		throw new Keke_exception(__CLASS__.'/'.__FUNCTION__.'() is empty');
 	}
 	function del($id) {
-		if (is_file ( $id )) {
-			unlink ( $id );
+		$cache_file = $this->path.$id.EXT;
+		if (is_file ( $cache_file )) {
+			unlink ( $cache_file );
 		}
 		$this->reset ();
 	

@@ -20,12 +20,14 @@ class Control_admin_user_custom extends Controller{
 			$spaceinfo = $spaceinfo[0];
 			$member_group_arr = DB::select()->from('witkey_member_group')->where('1=1')->execute();
 		}
-		if ($_POST['guid']){
-			$keke_user_info = new Keke_core(); 
-			Keke::echojson(1,1,$keke_user_info->init_user($_POST['guid']));
+		
+		require keke_tpl::template('control/admin/tpl/user/custom_add');
+	}
+	function action_get_user(){
+		if ($_GET['guid']){
+			Keke::echojson(1,1,keke_user_class::get_user_info($_GET['guid']));
 			die;
 		}
-		require keke_tpl::template('control/admin/tpl/user/custom_add');
 	}
 	function action_del(){
 		if($_GET['uid']){

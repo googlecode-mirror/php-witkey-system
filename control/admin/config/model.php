@@ -4,7 +4,7 @@
  * @author michael
  *
  */
-class Control_admin_config_basic extends  Controller {
+class Control_admin_config_model extends  Controller {
     /**
      * 初始化加载页面，
      * @param string $type 确定加载那个配置模板文件
@@ -19,39 +19,40 @@ class Control_admin_config_basic extends  Controller {
 		$config_arr = Keke::$_sys_config;
 		//语言列表
 		$lang_arr = Keke::$_lang_list;
-		//默认为系统配置模板
-		if(isset($_GET['type'])){
-			$type = $_GET['type'];
-		}elseif(!isset($type)){
-			$type = 'web';
+		//默认为只显示任务相关的任务模型
+		if(!isset($type)){
+			$type = 'task';
 		}
+		//模型列表,已经初始化过，不用再查
+		$list = Keke::$_model_list;
+		$model_list = array();
+		//对模型进行筛选，原来是放在模板上的
+		foreach ($list as $k=>$v){
+			if($v['model_type']==$type){
+				$model_list[$k] = $v;
+			}
+		} 
 		
-		require Keke_tpl::template('control/admin/tpl/config/'.$type);
+		require Keke_tpl::template('control/admin/tpl/config/model');
 	}
 	/**
-	 * 基本配置
+	 * 显示商城的相关模型
 	 */
-	function action_basic(){
-		$this->action_index('basic');
+	function action_shop(){
+		$this->action_index('shop');
 	}
 	/**
-	 * seo配置 
+	 * 模型安装，并更新模型缓存
 	 */
-	function action_seo(){
-		$this->action_index('seo');
+	function action_install(){
+		 
 	}
 	/**
-	 * 邮件配置
+	 * 卸载任务模型
 	 */
-	function action_mail(){
-		$this->action_index('mail');
-	}
-	/**
-	 * 基本配置
-	 */
-	function action_sys(){
-		$this->action_index('basic');
-	}
+	function action_unstall(){
+		
+	} 
 	/**
 	 * 保存配置数据
 	 */

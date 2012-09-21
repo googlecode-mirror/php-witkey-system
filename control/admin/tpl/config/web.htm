@@ -12,6 +12,7 @@
 <div class="box post">
   <form name="frm_config_basic" id="frm_config_basic" action="{BASE_URL}/index.php/admin/config_basic/save" method="post" accept-charset="{$_K['charset']}" enctype='multipart/form-data'>
   	<input type="hidden" name="formhash" value="{FORMHASH}">
+	<input type="hidden" name="type" value="{$type}">
     <table width="100%"  class="detail" border="0" cellspacing="0" cellpadding="0">
 	  <tr>
         <th scope="row" width="130"> {$_lang['site_name']}{$_lang['zh_mh']}</th>

@@ -411,15 +411,17 @@ class Keke extends Keke_core {
 	 */
 	function init_config() {
 		global $i_model, $_lang, $_K;
-		
-		$basic_arr = DB::select('`k`,`v`')->from('witkey_config')->cached(60000,'keke_config')->execute();
-		Keke::$_sys_config = $basic_arr ;
-		
 		$config_arr = array ();
-		$size = sizeof ( $basic_arr );
-		for($i = 0; $i < $size; $i ++) {
-			$config_arr [$basic_arr [$i] ['k']] = $basic_arr [$i] ['v'];
+		if(($config_arr = Cache::instance()->get('keke_config'))==NULL){
+			$basic_arr = DB::select('`k`,`v`')->from('witkey_config')->execute();
+			$size = sizeof ( $basic_arr );
+			for($i = 0; $i < $size; $i ++) {
+				$config_arr [$basic_arr [$i] ['k']] = $basic_arr [$i] ['v'];
+			}
+			Cache::instance()->set('keke_config', $config_arr,60000);
 		}
+		Keke::$_sys_config = $config_arr ;
+		
 		$nav_list = DB::select('*')->from('witkey_nav')->cached(6000,'keke_nav')->execute();
 		$nav_list = Keke::get_arr_by_key($nav_list,'nav_id');
 		Keke::$_nav_list = $nav_list;

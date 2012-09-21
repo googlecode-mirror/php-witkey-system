@@ -77,6 +77,7 @@ class Control_admin_link extends Controller {
 	 * 
 	 */
 	function action_save(){
+		$_POST = Keke_tpl::chars($_POST);
 		//防止跨域提交，你懂的
 		Keke::formcheck($_POST['formhash']);
 		//这里是业务判断,连接是图片还有url地址

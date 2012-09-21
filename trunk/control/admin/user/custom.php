@@ -6,7 +6,7 @@ class Control_admin_user_custom extends Controller{
 	function action_index(){
 		global $_K,$_lang;
 		//选择要查询的字段，将在列表中显示
-		$fields = '`uid`,`username`,`group_id`,`phone`';
+		$fields = '`uid`,`username`,`group_id`,`phone`,`qq`';
 		//搜索中用到的字段
 		$query_fields = array('uid'=>$_lang['id'],'username'=>$_lang['name']);
 		//基本uri
@@ -39,8 +39,15 @@ class Control_admin_user_custom extends Controller{
 	}
 	function action_save(){
 		if($_POST){
-			Keke_tpl::chars($_POST);
+			$_POST = Keke_tpl::chars($_POST);
 		}
+		Keke::formcheck($_POST['formhash']);
+		$uid = $_POST['uid'];
+		$username = $_POST['username'];
+		$phone = $_POST['phone'];
+		$qq = $_POST['qq'];
+		$group_id = $_POST['group_id'];
+		
 	}
 	function action_get_user(){
 		if ($_GET['guid']){

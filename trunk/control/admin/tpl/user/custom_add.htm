@@ -80,7 +80,7 @@
  function get_info(){
  	uid  = document.getElementById("uid").value;
 	if(uid){
-		$.post("{BASE_URL}/index.php/admin/user_custom/add?guid="+uid,function(json){
+		$.post("{BASE_URL}/index.php/admin/user_custom/get_user?guid="+uid,function(json){
 			$("#username").val(json.data.username);
 			$("#phone").val(json.data.phone);
 			$("#qq").val(json.data.qq);

@@ -59,7 +59,7 @@
             	<td><input type="checkbox" name="ckb[]" class="checkbox" value="{$v['uid']}"></td>
                 <td>{$v['uid']}</td>
                 <td class="motif"><a href="javascript:void(0)">{$v['username']}</a></td>
-                <td>$grouplist_arr[$v['group_id']]['groupname']</td>
+                <td>{$grouplist_arr[$v['group_id']]['groupname']}</td>
                 <td>{$v['phone']}</td>
                 <td>{$v['qq']}</td>
                 <td>
@@ -73,20 +73,23 @@
                 </td>
             </tr>
             {/loop}
-            <tr>
-                <td colspan="9">
-                    <div class="clearfix">
-                    <label for="checkbox">{$_lang['select_all']}</label>
-					<input type="hidden" name="sbt_action" class="sbt_action">
-                    <button name="sbt_action" type="submit" value="{$_lang['mulit_delete']}" onclick="return batch_act(this,'frm_list');" class="pill negative">
-                        <span class="icon trash"></span>{$_lang['mulit_delete']}
-                    </button>
-                    <a name="sbt_action" value="{$_lang['add_new_kf']} " class="positive pill button" href="{BASE_URL}/index.php/admin/user_custom/add">
-					<span class="plus icon"></span>{$_lang['add_new_kf']}
-                    </a>
-                </div>
-                </td>
-            </tr>
+          <tfoot>	
+				<tr >
+					    <td colspan="9">
+					    <div class="page" >{$pages['page']}</div>
+					    <input type="checkbox" onclick="checkall(event);" id="checkbox" name="checkbox"/>
+		            	<label for="checkbox"> {$_lang['select_all']}</label>
+		            	<input type="hidden" name="sbt_action" class="sbt_action"/>
+						<button type="submit" name="sbt_action" onclick="return batch_act(this)" value="{$_lang['mulit_delete']}" class="pill negative" >
+							<span class="trash icon"></span>{$_lang['mulit_delete']}
+						</button>
+						<a   name="sbt_add" value={$_lang['links_add']} class="pill negative button"
+					 	 href="{$base_uri}/add"><span class="check icon"></span>{$_lang['links_add']} </a>
+						 <a name="sbt_action" value="{$_lang['add_new_kf']} " class="positive pill button" href="{BASE_URL}/index.php/admin/user_custom/add">
+						<span class="plus icon"></span>{$_lang['add_new_kf']}</a>
+		            	</td>
+		        </tr>
+		 </tfoot>
         </table>
 	</form>
 </div>
@@ -95,7 +98,6 @@
         $('#sbt_del').show();
         $('#slt_action').show();
     }
-	
 	function has_selecte(action){
 	var count = $("#frm_list input:checked:not([id=checkbox])");
 	var len = count.length;

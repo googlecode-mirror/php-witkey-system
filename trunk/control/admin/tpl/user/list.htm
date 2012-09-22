@@ -9,69 +9,39 @@
 	</div>
 </div>
 <!--页头结束--> 
-
-      <div class="box search p_relative">
-    	<div class="title"><h2>{$_lang['search']}</h2></div>
-        <div class="detail" id="detail">
-			<form action="#" method="post">
-        	<input type="hidden" name="do"   value="$do">
-			<input type="hidden" name="view" value="$view">
-			<input type="hidden" name="type" value="$type">
-			<input type="hidden" name="page" value="$page">
-			<table cellspacing="0" cellpadding="0">
+<div class="box search p_relative">
+		 <form method="get" action="{BASE_URL}/index.php/admin/user_custom"  id="frm_list">
+        	<table class="detail" cellspacing="0" cellpadding="0">
 			 <tbody>
 			 	<tr>
-			 		<th>{$_lang['user']}ID</th>
-					<td><input type="text" class="txt" name="space[uid]" value="{$space['uid']}" onkeyup="clearstr(this);"></td>
-					<th>{$_lang['username']}</th>
-					<td><input type="text" class="txt" name='space[username]' value="{$space['username']}" onkeyup="clearspecial(this);"></td>
-			 	</tr>
-
-				<tr>
-					<th>{$_lang['show_number']}</th>
-					<td>
-						<select name="slt_page_size" class="ps vm">
-						<option value="10" {if $slt_page_size=='10'}selected="selected"{/if}>{$_lang['page_size']}10</option>
-						<option value="20" {if $slt_page_size=='20'}selected="selected"{/if}>{$_lang['page_size']}20</option>
-						<option value="30" {if $slt_page_size=='30'}selected="selected"{/if}>{$_lang['page_size']}30</option>
-						</select>
-					</td>
-					<th>{$_lang['result_order']}</th>
-					<td>
-						
-						<select name="ord[]">
-                        <option value="uid" {if $ord['0']=='uid' or !isset($ord['0'])} selected="selected"{/if}>{$_lang['default_order']}</option>
-                        <option value="reg_time" {if $ord['0']=='reg_time' } selected="selected"{/if}>{$_lang['register_time']}</option>
-						<option value="uid" {if $ord['0']=='uid' } selected="selected"{/if} > {$_lang['user_uid']} </option>
-                        </select>
-                        <select name="ord[]">
-                        <option {if $ord['1']=='desc' or !isset($ord['1'])}selected="selected" {/if} value="desc">{$_lang['desc']}</option>
-                        <option {if $ord['1']=='asc'}selected="selected" {/if} value="asc">{$_lang['asc']}</option>
-                        </select>
-					</td>
-				</tr>
-				<tr>
-					<th>{$_lang['user_status']}</th>
-					<td>
-						<select name="slt_static" style="width:60px;">
-			      		<option value="0" {if !$slt_static}selected="selected"{/if}> {$_lang['all']} </option>
-						<option value="1" {if $slt_static=='1'}selected="selected"{/if}> {$_lang['normal']} </option>
-						<option value="2" {if $slt_static=='2'}selected="selected"{/if}> {$_lang['disable']} </option>
-						</select>
-						<button type="submit" name="sbt_search" value="$_lang['search']" class="pill" />
-							<span class=icon magnifier>&nbsp;</span>{$_lang['search']}</button>
-					</td>
-				</tr>
+		                <th>查询字段
+		                   <select name="slt_fields">
+		                   	<option></option>
+		                   	{loop $query_fields $k $v}
+		                   	 <option  value="$k" {if $k == $_GET['slt_fields']} selected="selected" {/if}>{$v}</option>
+							{/loop} 
+		                   </select>
+						 <select name="slt_cond">
+						 	<option value="=" {if $_GET['slt_cond']=='='}selected="selected"{/if}>=</option>
+							<option value=">" {if $_GET['slt_cond']=='>'}selected="selected"{/if}>></option>
+							<option value="<" {if $_GET['slt_cond']=='<'}selected="selected"{/if}><</option>
+							<option value="like" {if $_GET['slt_cond']=='like'}selected="selected"{/if}>Like</option>
+						 </select>
+		                 <input type="text" class="txt" name="txt_condition" id="txt_condition" value="{$_GET['txt_condition']}">
+						 <select name="page_size">
+                			<option value="10" {if $_GET['page_size']=='10'}selected="selected"{/if}>{$_lang['page_size']}10条</option>
+                			<option value="20" {if $_GET['page_size']=='20'}selected="selected"{/if}>{$_lang['page_size']}20条</option>
+                			<option value="30" {if $_GET['page_size']=='30'}selected="selected"{/if}>{$_lang['page_size']}30条</option>
+            			</select>
+						 <input type="submit" value="{$_lang['search']}">
+						 </td>
+	            </tr>
 			 </tbody>
 			</table>
-			</form>
-        </div>
-	 </div>
-
-    <div class="box list">
-    	<div class="title"><h2>{$_lang['user_list']}</h2></div>
-        <div class="detail">
-			<form method="post" action="#" id="frm_user_search">
+		</form>
+ </div>
+   <div class="box list">
+			<form class="detail" method="post" action="#" id="frm_user_search">
 				<div id="ajax_dom">
 					<input type="hidden" name="page" value="{$page}" />
 			  		<table cellpadding="0" cellspacing="0">
@@ -87,37 +57,35 @@
 						<th width="45">{$_lang['cash_coupon']}</th>
 						<th width="45">{$_lang['balance']}</th>
 						<th width="25%">{$_lang['operate']}</th>
-						 
 			         </tr>
 					 </thead>
 					 <tbody> 
-					{loop $userlist_arr $key $value}
+					{loop $list_arr $key $v}
 			        <tr class="item">
-			        	<td class="td25"><input type="checkbox" name="ckb[]" class="checkbox" value="{$value['uid']}"></td>
-			            <td class="td25">{$value['uid']}</td>
-			            <td class="td25 wraphide"><a href="javascript:void(0)" >{$value['username']}</a></td>
-			            <td class="wraphide">{if $grouplist_arr[$value['group_id']]['groupname']} $grouplist_arr[$value['group_id']]['groupname'] {else}{$_lang['normal']}{/if}</td>
-						<td class="wraphide">{if $value['status']!=2}{$_lang['normal']}{else}{$_lang['disable']}{/if}</td>
-						<td><!--{date('Y-m-d',$value['reg_time'])}--></td>
-			            <td><div class="ws_break" style="width:70%;">{$value['reg_ip']}</div></td>
-			            <td><div class="ws_break" style="width:70%;">{$value['credit']}</div></td>
-						<td><div class="ws_break" style="width:70%;">{c:$value['balance']}</div></td>
- 
+			        	<td class="td25"><input type="checkbox" name="ckb[]" class="checkbox" value="{$v['uid']}"></td>
+			            <td class="td25">{$v['uid']}</td>
+			            <td class="td25 wraphide"><a href="javascript:void(0)" >{$v['username']}</a></td>
+			            <td class="wraphide">{if $grouplist_arr[$v['group_id']]['groupname']} $grouplist_arr[$v['group_id']]['groupname'] {else}{$_lang['normal']}{/if}</td>
+						<td class="wraphide">{if $v['status']!=2}{$_lang['normal']}{else}{$_lang['disable']}{/if}</td>
+						<td> <!--{eval echo date('Y-m-d',$v['reg_time']);}--></td>
+			            <td><div class="ws_break" style="width:70%;">{$v['reg_ip']}</div></td>
+			            <td><div class="ws_break" style="width:70%;">{$v['credit']}</div></td>
+						<td><div class="ws_break" style="width:70%;">{c:$v['balance']}</div></td>
 						<td>
-							<a class="button dbl_target" href="index.php?do=user&view=add&edituid={$value['uid']}&page={$page}"><span class="pen icon"></span>{$_lang['edit']}</a>
+							<a class="button dbl_target" href="index.php?do=user&view=add&edituid={$v['uid']}&page={$page}"><span class="pen icon"></span>{$_lang['edit']}</a>
 							{if $shop_open[$v[uid]]}
-							{if !$value['recommend']}
-								<a class="button" href="{$url_str}&op=recommend&edituid={$value['uid']}&page={$page}" onclick="return cdel(this,'{$_lang[sure_to_recommend]}');">
+							{if !$v['recommend']}
+								<a class="button" href="{$url_str}&op=recommend&edituid={$v['uid']}&page={$page}" onclick="return cdel(this,'{$_lang[sure_to_recommend]}');">
 									<span class="uparrow icon"></span>{$_lang['recommend']}</a>
 							{else}
-								<a class="button" href="{$url_str}&op=move_recommend&edituid={$value['uid']}&page={$page}" onclick="return cdel(this,'{$_lang[sure_to_move_recommend]}');">
+								<a class="button" href="{$url_str}&op=move_recommend&edituid={$v['uid']}&page={$page}" onclick="return cdel(this,'{$_lang[sure_to_move_recommend]}');">
 									<span class="downarrow icon"></span>{$_lang['move_recommend']}</a>
 							{/if}
 							{/if}
-							<a class="button" href="index.php?do=user&view=custom_add&op=add&edituid={$value['uid']}&page={$page}"><span class="cog icon"></span>{$_lang['rights_set']}</a>
- 							{if $value['status']!=2}<a class="button" href="index.php?do=user&view=list&op=disable&edituid={$value['uid']}&page={$page}"><span class="lock icon"></span>{$_lang['disable']}</a>{else} 
-							<a class="button" href="index.php?do=user&view=list&op=able&edituid={$value['uid']}&page={$page}"><span class="unlock icon"></span>{$_lang['use']}</a>{/if} 
- 						<a class="button" href="index.php?do=user&view=list&op=del&edituid={$value['uid']}" onclick="return {if $basic_config['user_intergration']>1} cdel(this,'{$_lang['open_user_integration_confirm_notice']}'); {else}cdel(this);{/if}"><span class="trash icon"></span>{$_lang['delete']}</a>
+							<a class="button" href="index.php?do=user&view=custom_add&op=add&edituid={$v['uid']}&page={$page}"><span class="cog icon"></span>{$_lang['rights_set']}</a>
+ 							{if $v['status']!=2}<a class="button" href="index.php?do=user&view=list&op=disable&edituid={$v['uid']}&page={$page}"><span class="lock icon"></span>{$_lang['disable']}</a>{else} 
+							<a class="button" href="index.php?do=user&view=list&op=able&edituid={$v['uid']}&page={$page}"><span class="unlock icon"></span>{$_lang['use']}</a>{/if} 
+ 						<a class="button" href="index.php?do=user&view=list&op=del&edituid={$v['uid']}" onclick="return {if $basic_config['user_intergration']>1} cdel(this,'{$_lang['open_user_integration_confirm_notice']}'); {else}cdel(this);{/if}"><span class="trash icon"></span>{$_lang['delete']}</a>
 						</td>
  			        </tr>
 					{/loop}
@@ -125,19 +93,14 @@
 					 <tfoot>
 			          <tr>
 			           <td colspan="10">
-			          	
 						<div class="clearfix">
-			            
 						<label for="checkbox">{$_lang['select_all']}</label>　
 						<input type="hidden" name="sbt_action" class="sbt_action" />
 						<button type="submit" name="sbt_action" value="{$_lang['mulit_disable']}" class="pill negative" onclick="return batch_act(this,'frm_user_search');" ><span class="lock icon"></span>{$_lang['mulit_disable']}</button>
 						<button type="submit" name="sbt_action" value="{$_lang['mulit_use']}" class="pill positive" onclick="return batch_act(this,'frm_user_search');" ><span class="unlock icon"></span>{$_lang['mulit_use']}</button>
 						<button type="submit" name="sbt_action" value="{$_lang['mulit_delete']}" class="pill negative" onclick="return batch_act(this,'frm_user_search');" ><span class="icon trash"></span>{$_lang['mulit_delete']}</button>
- 
 						<button type="button" name="sbt_add"    value="{$_lang['add_new_user']}" class="positive primary pill button" onclick="document.location.href='index.php?do=user&view=add'"><span class="check icon"></span>{$_lang['add_new_user']}</button>
- 
 					    </div>
-						
 					   </td>
 					 </tr>
 					 </tfoot>
@@ -147,5 +110,4 @@
 			</form>
         </div>
 	</div>
-				
 <!--{include control/admin/tpl/admin_footer}-->

@@ -5,7 +5,19 @@
 class Control_admin_user_add extends Controller{
 	function action_index(){
 		global $_K,$_lang;
+		if ($_GET['uid']){
+			$where .= ' uid='.$_GET['uid'];
+			$edit_arr = db::select()->from('witkey_member')->where($where)->execute();
+			$edit_arr = $edit_arr['0'];
+		}
+		$member_arr = DB::select()->from('witkey_member_group')->where('1=1')->execute();
 		require keke_tpl::template('control/admin/tpl/user/add');
+	}
+	function action_save(){
+		$_POST = keke_tpl::chars($_POST);
+		//∑≈÷√øÁ”ÚÃ·Ωª
+		keke::formcheck($_POST['formhash']);
+		
 	}
 }
 /* Keke::admin_check_role ( 11 );

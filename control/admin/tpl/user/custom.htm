@@ -9,7 +9,6 @@
 <div class="box search p_relative">
 		 <form method="get" action="{BASE_URL}/index.php/admin/user_custom"  id="frm_list">
         	<table class="detail" cellspacing="0" cellpadding="0">
-        	<input type="hidden" name="formhash" value="{FORMHASH}">
 			 <tbody>
 			 	<tr>
 		                <th>查询字段
@@ -40,7 +39,7 @@
  </div>
 <!--搜索结束-->
 <div class="box list">
-    <form class="detail" name="frm_list" id="frm_list" action="{BASE_URL}/index.php/admin/user_custom" method="post" >
+    <form class="detail" name="frm_list" id="frm_list" action="{BASE_URL}/index.php/admin/user_custom/save" method="post" >
     	<div id="ajax_dom"><input type="hidden" name="page" value="{$page}" />
         <table cellpadding="0" cellspacing="0">
             <tr>
@@ -60,7 +59,7 @@
             	<td><input type="checkbox" name="ckb[]" class="checkbox" value="{$v['uid']}"></td>
                 <td>{$v['uid']}</td>
                 <td class="motif"><a href="javascript:void(0)">{$v['username']}</a></td>
-                <td>{$grouplist_arr[$v['group_id']]['groupname']}</td>
+                <td>{if $v['group_id']==0}普通用户组{else}{$grouplist_arr[$v['group_id']]['groupname']}{/if}</td>
                 <td>{$v['phone']}</td>
                 <td>{$v['qq']}</td>
                 <td>

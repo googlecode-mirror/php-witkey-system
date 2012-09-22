@@ -4,8 +4,8 @@
 	<h1>{$_lang['member_manage']}</h1>
      <div class="tool"> 
         <a href="{BASE_URL}/index.php/admin/user_list" class="here">{$_lang['member_manage']}</a>
-        <a href="index.php?do=$do&view=add">{$_lang['add_member']}</a>
-    	<a href="index.php?do=user&view=charge">{$_lang['charge']}</a>
+        <a href="{BASE_URL}/index.php/admin/user_add">{$_lang['add_member']}</a>
+    	<a href="{BASE_URL}/index.php/admin/user_add/charge">{$_lang['charge']}</a>
 	</div>
 </div>
 <!--Ò³Í·½áÊø--> 
@@ -72,7 +72,7 @@
 			            <td><div class="ws_break" style="width:70%;">{$v['credit']}</div></td>
 						<td><div class="ws_break" style="width:70%;">{c:$v['balance']}</div></td>
 						<td>
-							<a class="button dbl_target" href="index.php?do=user&view=add&edituid={$v['uid']}&page={$page}"><span class="pen icon"></span>{$_lang['edit']}</a>
+							<a class="button dbl_target" href="{BASE_URL}/index.php/admin/user_add?uid=$v['uid']"><span class="pen icon"></span>{$_lang['edit']}</a>
 							{if $shop_open[$v[uid]]}
 							{if !$v['recommend']}
 								<a class="button" href="{$url_str}&op=recommend&edituid={$v['uid']}&page={$page}" onclick="return cdel(this,'{$_lang[sure_to_recommend]}');">

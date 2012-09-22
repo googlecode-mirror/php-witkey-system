@@ -33,21 +33,29 @@ class Control_admin_user_custom extends Controller{
 			$where .= 'uid ='.$_GET['uid'];
 			$spaceinfo = DB::select()->from('witkey_space')->where($where)->execute();
 			$spaceinfo = $spaceinfo[0];
-			$member_group_arr = DB::select()->from('witkey_member_group')->where('1=1')->execute();
 		}
+		$member_group_arr = DB::select()->from('witkey_member_group')->where('1=1')->execute();
 		require keke_tpl::template('control/admin/tpl/user/custom_add');
 	}
-	function action_save(){
+	function action_update(){
 		if($_POST){
 			$_POST = Keke_tpl::chars($_POST);
 		}
 		Keke::formcheck($_POST['formhash']);
-		$uid = $_POST['uid'];
+		$uid = $_POST['euid'];
 		$username = $_POST['username'];
 		$phone = $_POST['phone'];
 		$qq = $_POST['qq'];
 		$group_id = $_POST['group_id'];
-		
+		$array = array( 'uid'=>$uid,
+				'username'=>$username,
+				'phone'=>$phone,
+				'qq'=>$qq,
+				'group_id'=>$group_id 
+				);
+			$data_info = DB::select('uid')->from('witkey_space')->execute();
+			Model::factory('witkey_space')->setData($array)->setWhere('uid = '.$_POST['euid'])->update();
+			keke::show_msg("系统提示","index.php/admin/user_custom/add?uid=$_POST[euid]","提交成功","success");
 	}
 	function action_get_user(){
 		if ($_GET['guid']){
@@ -62,7 +70,6 @@ class Control_admin_user_custom extends Controller{
 		echo Model::factory('witkey_space')->setWhere($where)->del();
 	}
 }
-
 /* Keke::admin_check_role ( 33 );
  
 $kf_obj = keke_table_class::get_instance ( "witkey_space" );

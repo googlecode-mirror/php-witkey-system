@@ -5,6 +5,24 @@
 class Control_admin_user_list extends Controller{
 	function action_index(){
 		global $_K,$_lang;
+		//需要在显示的字段
+		$fields = '`uid`,`username`,`group_id`,`user_type`,`reg_time`,`reg_ip`,`credit`,`balance`';
+		//搜索用用到的字段
+		$query_fields = array('uid'=>$_lang['id'],'username'=>$_lang['name'],'reg_time'=>$_lang['time']);
+		//基本uti
+		$base_uri = BASE_URL.'/index.php/admin/user_list';
+		//统计查询出来的总数
+		$count = intval($_GET['count']);
+		//默认查询字段
+		$this->_default_ord_field = 'reg_time';
+		//获取查询条件uri
+		extract($this->get_url($base_uri));
+		//分页查询的数据
+		$data_info = Model::factory('witkey_space')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
+		//列表数据
+		$list_arr = $data_info['data'];
+		//分页数据
+		$pages = $data_info['pages'];
 		require keke_tpl::template('control/admin/tpl/user/list');
 	}
 }
@@ -13,11 +31,9 @@ class Control_admin_user_list extends Controller{
 
 $view = (! empty ( $view ) && in_array ( $view, $views )) ? $view : 'add';
 
-require "admin_user_$view.php";$page_obj = $Keke->_page_obj;
-
-
+require "admin_user_$view.php";$page_obj = $Keke->_page_obj; */
 //list
-$edituid and $memberinfo_arr = Keke::get_user_info ( $edituid );
+/* $edituid and $memberinfo_arr = Keke::get_user_info ( $edituid );
 $table_class = new keke_table_class ( 'witkey_space' );
 $member_class = new keke_table_class ( 'witkey_member' );
 //查询
@@ -111,6 +127,7 @@ if ($sbt_action && is_array ( $ckb )) {
 	$ord and $where_str .= " order by {$ord['0']} {$ord['1']}" or $where_str .= " order by uid desc";	
 	$res = $table_class->get_grid ( $where_str, $url_str, $page, $slt_page_size, null,1,'ajax_dom');
 	$userlist_arr = $res ['data'];
+	var_dump('$userlist_arr');die();
 	$pages = $res ['pages'];
 	$uids = array();
 	foreach((array)$userlist_arr as $v){
@@ -118,7 +135,7 @@ if ($sbt_action && is_array ( $ckb )) {
 	}
 	$shop_open = Keke::get_table_data('shop_id,uid','witkey_shop','uid in ('.implode(',',$uids).')','','','','uid');
 }
+
+
+
  */
-
-
-

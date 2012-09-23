@@ -1,10 +1,10 @@
 <!--{include control/admin/tpl/admin_header}-->  
 <div class="page_title">
     	<h1>{$_lang['user_manage']}</h1>
-        <div class="tool">
+         <div class="tool">
             <a href="{BASE_URL}/index.php/admin/user_list" >{$_lang['user_manage']}</a>
-            <a href="{BASE_URL}/index.php/admin/user_add" class="here">{if $edituid}{$_lang['edit']}{else}{$_lang['add']}{/if}{$_lang['user']}</a>
-    	    <a href="{BASE_URL}/index.php/admin/user_add/charge">{$_lang['charge']}</a>
+            <a href="{BASE_URL}/index.php/admin/user_add" {if $_K['action'] != charge}class="here"{/if}>{if $edituid}{$_lang['edit']}{else}{$_lang['add']}{/if}{$_lang['user']}</a>
+    	    <a href="{BASE_URL}/index.php/admin/user_add/charge"{if $_K['action'] == charge}class="here"{/if}>{$_lang['charge']}</a>
     	</div>
     </div>
 		<div class="box post">

@@ -1,17 +1,14 @@
 <!--{include control/admin/tpl/admin_header}-->  
 <div class="page_title">
     	<h1>{$_lang['user_manage']}</h1>
-        <div class="tool">
+ 		<div class="tool">
             <a href="{BASE_URL}/index.php/admin/user_list" >{$_lang['user_manage']}</a>
-            <a href="{BASE_URL}/index.php/admin/user_add" class="here">{if $edituid}{$_lang['edit']}{else}{$_lang['add']}{/if}{$_lang['user']}</a>
-    	    <a href="{BASE_URL}/index.php/admin/user_add/charge">{$_lang['charge']}</a>
+            <a href="{BASE_URL}/index.php/admin/user_add" >{if $edituid}{$_lang['edit']}{else}{$_lang['add']}{/if}{$_lang['user']}</a>
+    	    <a href="{BASE_URL}/index.php/admin/user_add/charge" class="here" >{$_lang['charge']}</a>
     	</div>
     </div>
 		<div class="box post">
-        <div class="tabcon">
-        	<div class="title"><h2>{$_lang['charge']}</h2></div>
-            <div class="detail">
-               <form action="#" method="post" name="frm_cash" id="frm_cash">
+               <form class="detail" action="#" method="post" name="frm_cash" id="frm_cash">
                     <input type="hidden" name="view" value="{$view}">
 					<input type="hidden" name="valid" id="valid">
 					<input type="hidden" name="maxCash" id="maxCash">
@@ -91,9 +88,6 @@
 					  </tbody>
                     </table>
                 </form>
-        </div>
-        
-        
     </div>
  <script type="text/javascript">
  	function validUser(){
@@ -103,7 +97,7 @@
 			$("#man_tips").hide('slow');
 			$("#valid").val(0);
 		}else{
-			var url = "index.php?do=user&view=charge";
+			var url = "{BASE_URL}/index.php/admin/user_add/charge";
 			$.getJSON(url,{check_uid:v},function(json){
 				if(json.status==1){
 					$("#ucash").html("{$_lang['usefull_balance']}"+json.data.balance+"{$_lang['yuan']}");

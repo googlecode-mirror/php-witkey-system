@@ -2,11 +2,11 @@
 
 <div class="page_title">
 	<h1>{$_lang['member_manage']}</h1>
-     <div class="tool"> 
-        <a href="{BASE_URL}/index.php/admin/user_list" class="here">{$_lang['member_manage']}</a>
-        <a href="{BASE_URL}/index.php/admin/user_add">{$_lang['add_member']}</a>
-    	<a href="{BASE_URL}/index.php/admin/user_add/charge">{$_lang['charge']}</a>
-	</div>
+<div class="tool">
+            <a href="{BASE_URL}/index.php/admin/user_list" class="here">{$_lang['user_manage']}</a>
+            <a href="{BASE_URL}/index.php/admin/user_add" >{if $edituid}{$_lang['edit']}{else}{$_lang['add']}{/if}{$_lang['user']}</a>
+    	    <a href="{BASE_URL}/index.php/admin/user_add/charge">{$_lang['charge']}</a>
+    	</div>
 </div>
 <!--Ò³Í·½áÊø--> 
 <div class="box search p_relative">

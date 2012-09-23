@@ -19,6 +19,10 @@ class Control_admin_user_add extends Controller{
 		keke::formcheck($_POST['formhash']);
 		
 	}
+	function action_charge(){
+		global $_K,$_lang;
+		require keke_tpl::template('control/admin/tpl/user/add_charge');
+	}
 }
 /* Keke::admin_check_role ( 11 );
 $basic_config = $Keke->_sys_config;

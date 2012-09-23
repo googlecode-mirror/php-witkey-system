@@ -5,18 +5,31 @@
 class Control_admin_user_add extends Controller{
 	function action_index(){
 		global $_K,$_lang;
-		if ($_GET['uid']){
-			$where .= ' uid='.$_GET['uid'];
-			$edit_arr = db::select()->from('witkey_member')->where($where)->execute();
-			$edit_arr = $edit_arr['0'];
+		$uid = $_GET['uid'];
+		if ($uid){
+			$where .= ' uid='.$uid;
+			$edit_arr = keke_user_class::get_user_info($uid);
+			$shop_open = DB::select('shop_id')->from('witkey_shop')->where($where)->execute();
+			$shop_open = $shop_open['0'];
 		}
 		$member_arr = DB::select()->from('witkey_member_group')->where('1=1')->execute();
 		require keke_tpl::template('control/admin/tpl/user/add');
 	}
 	function action_save(){
 		$_POST = keke_tpl::chars($_POST);
-		//放置跨域提交
+		//防止跨域提交
 		keke::formcheck($_POST['formhash']);
+		$password = md5($_POST['password']);
+		$array = array('username'=>'$_POST[username]',
+				'password'=>'$password',
+				'email'=>'$_POST[email]',
+				'group_id'=>'$_POST[group_id]',
+				);
+		if($_GET['hid_uid']){
+			Model::factory('witkey_member')->setData($array)->update();
+			Model::factory('witkey_space')->setData($array)->update();
+			keke::show_msg("系统提交","{BASE_URL}/index.php/admin/user_add?uid=".$_GET['hid_uid'],"提交成功","success");
+		}
 		
 	}
 	function action_charge(){

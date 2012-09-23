@@ -2,10 +2,10 @@
 <div class="page_title">
     	<h1>{$_lang['user_manage']}</h1>
         <div class="tool">
-            <a href="index.php?do=user&view=list" >{$_lang['user_manage']}</a>
-            <a href="index.php?do=user&view=add">{if $edituid}{$_lang['edit']}{else}{$_lang['add']}{/if}{$_lang['user']}</a>
-    		<a href="index.php?do=user&view=charge" class="here">{$_lang['charge']}</a>
-		</div>
+            <a href="{BASE_URL}/index.php/admin/user_list" >{$_lang['user_manage']}</a>
+            <a href="{BASE_URL}/index.php/admin/user_add" class="here">{if $edituid}{$_lang['edit']}{else}{$_lang['add']}{/if}{$_lang['user']}</a>
+    	    <a href="{BASE_URL}/index.php/admin/user_add/charge">{$_lang['charge']}</a>
+    	</div>
     </div>
 		<div class="box post">
         <div class="tabcon">

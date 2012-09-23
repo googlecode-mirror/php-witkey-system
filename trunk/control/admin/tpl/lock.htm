@@ -61,7 +61,6 @@ document.getElementById("unlock_pwd").onkeydown = function(event){
 					$.post(
 					"{BASE_URL}/index.php/admin/lock/unlock?unlock_pwd="+unlock_pwd+"&unlock_num="+unlock_num,
 						function(json){
-							alert('1111');
 							if (json.status == 2) {
 								success(win);
 								return false;

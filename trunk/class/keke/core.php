@@ -629,7 +629,21 @@ class Keke extends Keke_core {
 			self::$_inited = false;
 		}
 	}
-	
+	/**
+	 * 检验用户名
+	 * 
+	 */
+	public static function check_user_by_name($user, $isusername = 0) {
+		global $_K;
+		$member_obj = new keke_witkey_member();
+		if ($isusername) {
+			$member_obj->setWhere ( "username='{$user}'" );
+		} else {
+			$member_obj->setWhere ( "uid='{$user}'" );
+		}
+		$user_count = $member_obj->count();
+		return $user_count;
+	}
 	/**
 	 * 删除全局变量
 	 * @return void();

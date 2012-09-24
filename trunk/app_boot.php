@@ -12,7 +12,7 @@ ini_set('unserialize_callback_func', 'spl_autoload_call');
 require (S_ROOT . 'class/keke/core.php');
 
 
-
+$basic_config  = keke::$_sys_config;
 $exec_time_traver = Keke::exec_js('get');
 (!isset($exec_time_traver)||$exec_time_traver<time()) and $exec_time_traver = true or $exec_time_traver = false;
 

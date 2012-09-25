@@ -18,33 +18,41 @@ class Control_admin_user_add extends Controller{
 		$member_arr = DB::select()->from('witkey_member_group')->where('1=1')->execute();
 		require keke_tpl::template('control/admin/tpl/user/add');
 	}
+	function action_checkusername(){
+		$check_username = $_GET['check_username'];
+		if (isset ( $check_username ) && ! empty ( $check_username )) {
+			$res =  keke_user_class::check_username ( $check_username );
+			echo  $res;
+// 			die ();
+		}
+	}
 	function action_save(){
 		$_POST = keke_tpl::chars($_POST);
 		//防止跨域提交
 		keke::formcheck($_POST['formhash']);
+		
 		//密码md5加密
 		$password = md5($_POST['password']);
 		//需要插入数据库的字段
-		$array = array('username'=>'$_POST[username]',
-				'password'=>'$password',
-				'email'=>'$_POST[email]',
-				'group_id'=>'$_POST[group_id]',
+		$array = array('username'=>$_POST[username],
+				'password'=>$password,
+				'email'=>$_POST['email'],
 				);
+		$array1 = array('username'=>$_POST['username'],
+				'email'=>$_POST['email'],
+				'group_id'=>$_POST['group_id'],
+		);
 		//存在uid更新表数据，没有则插入数据
 		if($_GET['hid_uid']){
 			Model::factory('witkey_member')->setData($array)->update();
-			Model::factory('witkey_space')->setData($array)->update();
-			keke::show_msg("系统提交","{BASE_URL}/index.php/admin/user_add?uid=".$_GET['hid_uid'],"提交成功","success");
+			keke::show_msg("系统提交","index.php/admin/user_add?uid=".$_GET['hid_uid'],"提交成功","success");
 		}else {
 			Model::factory('witkey_member')->setData($array)->create();
-			Model::factory('witkey_space')->setData($array)->create();
-			keke::show_msg("系统提交","{BASE_URL}/index.php/admin/user_add".$_GET['hid_uid'],"提交成功","success");
+			keke::show_msg("系统提交","index.php/admin/user_add".$_GET['hid_uid'],"提交成功","success");
 		}
-		
 	}
 	function action_charge(){
 		global $_K,$_lang;
-		
 		require keke_tpl::template('control/admin/tpl/user/add_charge');
 	}
 }

@@ -16,7 +16,7 @@
                       <tr>
                         <th scope="row" width="130">{$_lang['username']}{$_lang['zh_mh']}</th>
                         <td>
-                       <input type="text" class="txt" style=" width:260px;" {if $uid}disabled="disabled" ignore="true"{/if} value="{$edit_arr['username']}" name="username" id="txt_username" maxlength="50" title="{$_lang['please_input_limit_char_username']}" limit="required:true;len:2-20" msg="{$_lang['please_input_limit_char_username']}" ajax="{BASE_URL}/index.php/register?check_username=" msgArea="txt_username_msg" valid="1"/><b style="color:red"> *</b><span id="txt_username_msg"></span>
+                       <input type="text" class="txt" style=" width:260px;" {if $uid}disabled="disabled" ignore="true"{/if} value="{$edit_arr['username']}" name="username" id="txt_username" maxlength="50" title="{$_lang['please_input_limit_char_username']}" limit="required:true;len:2-20" msg="{$_lang['please_input_limit_char_username']}" ajax="{BASE_URL}/index.php/admin/user_add/checkusername?check_username=" msgArea="txt_username_msg" valid="1"/><b style="color:red"> *</b><span id="txt_username_msg"></span>
 					  </td>
                       </tr>
                       <tr>

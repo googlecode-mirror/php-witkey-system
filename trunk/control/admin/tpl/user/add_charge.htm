@@ -8,11 +8,11 @@
     	</div>
     </div>
 		<div class="box post">
-               <form class="detail" action="#" method="post" name="frm_cash" id="frm_cash">
-                    <input type="hidden" name="view" value="{$view}">
+               <form class="detail" action="{BASE_URL}/index.php/admin/user_add/charge" method="post" name="frm_cash" id="frm_cash">
 					<input type="hidden" name="valid" id="valid">
 					<input type="hidden" name="maxCash" id="maxCash">
 					<input type="hidden" name="maxCredit" id="maxCredit">
+					<input type="hidden" name="formhash" value="{FORMHASH}">
 					<table width="100%" border="0" cellspacing="0" cellpadding="0">
 					<tbody>
                       <tr>
@@ -39,7 +39,7 @@
                       <tr>
                         <th scope="row">{$_lang['exisits_cash']}{$_lang['zh_mh']}</th>
                         <td>
-                        	<select name="cash_type">
+                        	<select name="cash_type" id="cash_type">
                         		<option value="1">$_lang['recharge']</option>
                         		<option value="0">$_lang['deduct']</option>
                         	</select>
@@ -55,7 +55,7 @@
                       <tr>
                         <th scope="row">{$_lang['cash_coupon']}{$_lang['zh_mh']}</th>
                         <td>
-                        	<select name="credit_type">
+                        	<select name="credit_type" id="credit_type">
                         		<option value="1">$_lang['recharge']</option>
                         		<option value="0">$_lang['deduct']</option>
                         	</select>
@@ -67,7 +67,6 @@
 						      msgArea="credit_msg"  class="input_t"/>
 							<span id="credit_msg"></span>
 						</td>
-
                       </tr>
                       <tr>
                       	<th>$_lang['charge_reason']</th>
@@ -79,7 +78,6 @@
                         <th scope="row">&nbsp;</th>
                         <td>
                             <div class="clearfix padt10">
-                            	<input type="hidden" name="is_submit" value="1">
                                 <button class="positive primary pill button" type="button" value="{$_lang['submit']}" onclick="frm_check();"><span class="check icon"></span>{$_lang['submit']}</button>
                                 <button class="pill button" type="button" onclick="history.go(-1);" value="{$_lang['return']}"><span class="uparrow icon"></span>{$_lang['return']}</button>
                             </div>
@@ -97,7 +95,7 @@
 			$("#man_tips").hide('slow');
 			$("#valid").val(0);
 		}else{
-			var url = "{BASE_URL}/index.php/admin/user_add/charge";
+			var url = "{BASE_URL}/index.php/admin/user_add/check";
 			$.getJSON(url,{check_uid:v},function(json){
 				if(json.status==1){
 					$("#ucash").html("{$_lang['usefull_balance']}"+json.data.balance+"{$_lang['yuan']}");
@@ -126,24 +124,19 @@
 						isNaN(ca)?ca=0:'';
 					var cr = parseFloat($("#credit").val()).toFixed(2);
 						isNaN(cr)?cr=0:'';
-						if(ca<-maxCash){
-							art.dialog.alert("$_lang['user_deduct_limit'] "+maxCash+" {$_lang['yuan']}");
-							t=false;
-						}else if(cr<-maxCredit){
-							art.dialog.alert("$_lang['user_deduct_limit'] "+maxCredit+" {CREDIT_NAME}");
-							t=false;
-						}
+					var cm = $('#cash_type').val();
+					var cn = $('#credit_type').val();
 						if(t===true){
-							var content = '';
-							if(ca>=0){
-								content+="$_lang['will_recharge']"+ca+"{$_lang['yuan']};</br>";
+							var content = '您确定要</br>';
+							if(cm==1&&ca>=0){
+								content+="添加"+ca+"{$_lang['yuan']};</br>";
 							}else{
-								content+="$_lang['will_deduct']"+Math.abs(ca)+"{$_lang['yuan']};</br>";
+								content+="扣除"+Math.abs(ca)+"{$_lang['yuan']};</br>";
 							}
-							if(cr>=0){
-								content+="{$_lamg['recharge']}"+cr+" {CREDIT_NAME}。";
+							if(cn==1&&cr>=0){
+								content+="添加 "+cr+" {CREDIT_NAME}。";
 							}else{
-								content+="{$_lang['deduct']} "+Math.abs(cr)+" {CREDIT_NAME}。";
+								content+="扣除 "+Math.abs(cr)+" {CREDIT_NAME}。";
 							}
 							art.dialog({
 								title: "{$_lang['operate_tips']}",

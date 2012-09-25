@@ -6,7 +6,7 @@ class Control_admin_user_list extends Controller{
 	function action_index(){
 		global $_K,$_lang;
 		//需要在显示的字段
-		$fields = '`uid`,`username`,`group_id`,`user_type`,`reg_time`,`reg_ip`,`credit`,`balance`';
+		$fields = '`uid`,`username`,`group_id`,`user_type`,`reg_time`,`reg_ip`,`credit`,`balance`,`recommend` ';
 		//搜索用用到的字段
 		$query_fields = array('uid'=>$_lang['id'],'username'=>$_lang['name'],'reg_time'=>$_lang['time']);
 		//基本uti
@@ -23,7 +23,28 @@ class Control_admin_user_list extends Controller{
 		$list_arr = $data_info['data'];
 		//分页数据
 		$pages = $data_info['pages'];
+		//验证用户有没有开店铺，推荐与否
+		$shop_open = DB::select('shop_id')->from('witkey_shop')->where('1=1')->execute();
+		$shop_open = $shop_open['0'];
 		require keke_tpl::template('control/admin/tpl/user/list');
+	}
+	//926 page查看是否需要
+	function action_recommend(){
+		$uid = $_GET['uid'];
+		$where .= ' uid='.$uid;
+		$page = $_GET['page'];
+		Dbfactory::update('update keke_witkey_space set recommend=1 where '.$where); 
+		keke::show_msg("系统提示","index.php/admin/user_list?page=$page","推荐成功","success");
+	}
+	function action_moverecommend(){
+		$uid = $_GET['uid'];
+		$where .= ' uid='.$uid;
+		$page = $_GET['page'];
+		Dbfactory::update('update keke_witkey_space set recommend=0 where '.$where);
+		keke::show_msg("系统提示","index.php/admin/user_list?page=$page","推荐成功","success");
+	}
+	function action_disable(){
+		
 	}
 }
 

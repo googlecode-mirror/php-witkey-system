@@ -35,4 +35,6 @@ $lang=array(
       'open_user_integration_confirm_notice'=>'您开启了用户整合，该操作会同时删除您在其它应用中的数据，确认？',
       'add_new_user'=>'添加新用户',
       'normal'=>'普通',
+      'recommend'=>'推荐',
+      'move_recommend'=>'取消推荐'
 );

@@ -29,6 +29,7 @@ class Control_admin_user_list extends Controller{
 		require keke_tpl::template('control/admin/tpl/user/list');
 	}
 	//926 page查看是否需要
+	//list custom add 注释
 	function action_recommend(){
 		$uid = $_GET['uid'];
 		$where .= ' uid='.$uid;

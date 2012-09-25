@@ -70,7 +70,7 @@ class Keke_finance {
 		$res = false;
 		$sys_config = self::$_basic_config;
 		$user_info = self::$_userinfo;
-		$fo = new Keke_witkey_finance_class ();
+		$fo = new Keke_finance_class ();
 		$fo->setFina_action ( $action );
 		$fo->setFina_type ( "out" );
 		$fo->setObj_type ( $obj_type );

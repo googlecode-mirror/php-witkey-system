@@ -30,8 +30,9 @@ class Control_admin_user_list extends Controller{
 		$shop_open = $shop_open['0'];
 		require keke_tpl::template('control/admin/tpl/user/list');
 	}
-	//926 page查看是否需要
-	//list custom add 注释
+	/**
+	 * 推荐用户
+	 */
 	function action_recommend(){
 		$uid = $_GET['uid'];
 		$where .= ' uid='.$uid;
@@ -70,7 +71,7 @@ class Control_admin_user_list extends Controller{
 		keke::show_msg("系统提示","index.php/admin/user_list?page=$page","启用成功","success");
 	}
 	/**
-	 * 删除用户
+	 * 单个和批量删除用户
 	 */
 	function action_del(){
 		$uid = $_GET['uid'];

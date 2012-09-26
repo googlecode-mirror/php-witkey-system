@@ -41,7 +41,7 @@
 		</form>
  </div>
    <div class="box list">
-			<form class="detail" method="post" action="#" id="frm_user_search">
+			<form class="detail" method="post" action="{BASE_URL}/index.php/admin/user_list" id="frm_user_search">
 				<div id="ajax_dom">
 					<input type="hidden" name="page" value="{$page}" />
 			  		<table cellpadding="0" cellspacing="0">
@@ -83,9 +83,10 @@
 							{/if}
 							{/if}
 							<a class="button" href="{BASE_URL}/index.php/admin/user_custom/add?uid={$v['uid']}"><span class="cog icon"></span>{$_lang['rights_set']}</a>
- 							{if $v['status']!=2}<a class="button" href="{BASE_UEL}/index.php/admin/user_list/disable?uid={$v['uid']}&page={$page}"><span class="lock icon"></span>{$_lang['disable']}</a>{else} 
-							<a class="button" href="index.php?do=user&view=list&op=able&edituid={$v['uid']}&page={$page}"><span class="unlock icon"></span>{$_lang['use']}</a>{/if} 
- 						<a class="button" href="index.php?do=user&view=list&op=del&edituid={$v['uid']}" onclick="return {if $basic_config['user_intergration']>1} cdel(this,'{$_lang['open_user_integration_confirm_notice']}'); {else}cdel(this);{/if}"><span class="trash icon"></span>{$_lang['delete']}</a>
+ 							{if $v['status']!=2}<a class="button" href="{BASE_URL}/index.php/admin/user_list/disable?uid={$v['uid']}&page={$page}"><span class="lock icon"></span>{$_lang['disable']}</a>
+ 							{else} 
+							<a class="button" href="{BASE_URL}/index.php/admin/user_list/able?uid={$v['uid']}&page={$page}"><span class="unlock icon"></span>{$_lang['use']}</a>{/if} 
+ 						<a class="button" href="{BASE_URL}/index.php/admin/user_list/del?uid={$v['uid']}" onclick="return {if $basic_config['user_intergration']>1} cdel(this,'{$_lang['open_user_integration_confirm_notice']}'); {else}cdel(this);{/if}"><span class="trash icon"></span>{$_lang['delete']}</a>
 						</td>
  			        </tr>
 					{/loop}
@@ -94,20 +95,18 @@
 			          <tr>
 			           <td colspan="10">
 						<div class="clearfix">
+						<div class="page">{$pages['page']}</div>
 						<label for="checkbox">{$_lang['select_all']}</label>¡¡
 						<input type="hidden" name="sbt_action" class="sbt_action" />
-						<button type="submit" name="sbt_action" value="{$_lang['mulit_disable']}" class="pill negative" onclick="return batch_act(this,'frm_user_search');" ><span class="lock icon"></span>{$_lang['mulit_disable']}</button>
-						<button type="submit" name="sbt_action" value="{$_lang['mulit_use']}" class="pill positive" onclick="return batch_act(this,'frm_user_search');" ><span class="unlock icon"></span>{$_lang['mulit_use']}</button>
-						<button type="submit" name="sbt_action" value="{$_lang['mulit_delete']}" class="pill negative" onclick="return batch_act(this,'frm_user_search');" ><span class="icon trash"></span>{$_lang['mulit_delete']}</button>
+						<button type="submit" name="sbt_action" onclick="return batch_act(this)" value="{$_lang['mulit_delete']}" class="pill negative" ><span class="trash icon"></span>{$_lang['mulit_delete']}</button>
 						<button type="button" name="sbt_add"    value="{$_lang['add_new_user']}" class="positive primary pill button" onclick="document.location.href='{BASE_URL}/index.php/admin/user_add'"><span class="check icon"></span>{$_lang['add_new_user']}</button>
 					    </div>
 					   </td>
 					 </tr>
 					 </tfoot>
 			        </table>
-					<div class="page">{$pages['page']}</div>
 					</div>
 			</form>
         </div>
-	</div>
+
 <!--{include control/admin/tpl/admin_footer}-->

@@ -100,7 +100,7 @@ class keke_admin_class {
 	function screen_unlock($unlock_num, $unlock_pwd) {
 		global $kekezu;
 		global $_lang;
-		//($_SESSION ['uid'] && $_SESSION ['auid']) or keke::show_msg ( $_lang['you_not_login'], 'index.php/admin/login' ,'','success');
+		($_SESSION ['uid'] && $_SESSION ['auid']) or keke::show_msg ( $_lang['you_not_login'], 'index.php/admin/login' ,'','success');
 		if ($unlock_num > 0) { //解锁判断
 			/**获取当前登录用户密码**/
 			$admin_pwd = dbfactory::get_count ( " select password from " . TABLEPRE . "witkey_member where uid = '" . $_SESSION ['uid'] . "'" );

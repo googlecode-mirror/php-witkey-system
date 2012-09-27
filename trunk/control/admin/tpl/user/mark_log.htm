@@ -2,7 +2,7 @@
 <div class="page_title">
 	<h1>{$_lang['mutual_evaluation_record_manage']}</h1>
      <div class="tool"> 
-        <a href="index.php?do=$do&view=$view" class="here">{$_lang['mutual_evaluation_record_manage']}</a>
+        <a href="{BASE_URL}/index.php/admin/user_marklog" class="here">{$_lang['mutual_evaluation_record_manage']}</a>
 	</div>
 </div>
 <div class="box search p_relative">
@@ -64,13 +64,13 @@
 							<a href="{$_K['siteurl']}/index.php?do=service&sid={$v['origin_id']}&page={$page}" target="_blank">{$_lang['view_service']}</a>
 						{/if}
 					</td>
-					<td>$form[$v['mark_type']] {$v['by_username']}</td>
+					<td>{if $v['mark_type']==1}Íþ¿Í{else}¹ÍÖ÷{/if} {$v['by_username']}</td>
 		            <td>{$v["username"]}</td>
-					<td>{$status[$v["mark_status"]]}</td>
+					<td>{if $v["mark_status"]==0}$_lang['to_be_evaluated']{elseif  $v["mark_status"]==1}$_lang['good_value']{elseif  $v["mark_status"]==2}$_lang['middle_value']{else}$_lang['bad_value']{/if}</td>
 					<td>{$v['mark_value']}</td>
-					<td>{if $v['mark_time']}<!--{date('Y-m-d',$v['mark_time'])}-->{/if}</td>
+					<td>{if $v['mark_time']}<!--{eval echo date('Y-m-d',$v['mark_time']);}-->{/if}</td>
 					<td>
-						<a class="button" href="{$url}&ac=del&mark_id={$v['mark_id']}&page={$page}" onclick="return cdel(this);"><span class="trash icon"></span>{$_lang['delete']}</a>
+						<a class="button" href="{BASE_URL}/index.php/admin/user_marklog/del?mark_id={$v['mark_id']}" onclick="return cdel(this);"><span class="trash icon"></span>{$_lang['delete']}</a>
 					</td>
 		          </tr>
 				 {/loop}

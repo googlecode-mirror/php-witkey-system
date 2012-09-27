@@ -48,11 +48,11 @@
 			  		<thead>
 			          <tr>
 			          	<th width="15"><input type="checkbox" id="checkbox" onclick="checkall()"></th>
-			            <th width="20" >UID</th>
+			            <th width="20" ><a href="javascript:;" onclick="submitSort('{$uri}','uid',{$ord_tag})">UID{if $_GET['f']=='uid'}{$ord_char}{/if}</a></th>
 			            <th width="15" >{$_lang['username']}</th>
 						<th width="45"  class="wraphide">{$_lang['user_group']}</th>
 						<th width="60"  class="wraphide" >{$_lang['user_status']}</th>
-						<th width="90">{$_lang['register_time']}</th>
+						<th width="90"><a href="javascript:;" onclick="submitSort('{$uri}','reg_time',{$ord_tag})">{$_lang['register_time']}{if $_GET['f']=='reg_time'}{$ord_char}{/if}</a></th>
 						<th width="45" >{$_lang['register']}ip</th>
 						<th width="45">{$_lang['cash_coupon']}</th>
 						<th width="45">{$_lang['balance']}</th>

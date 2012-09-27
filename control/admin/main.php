@@ -58,7 +58,8 @@ class Control_admin_main extends Controller {
 		);
 		
 		$data = http_build_query ( $pars );
-		include S_ROOT.'config/lic.php';
+		$filename= S_ROOT.'config/lic.php';
+		is_file($filename) and include $filename;
 		$lic = $_K ['ci'];
 		$str_lic = Keke::set_star ( $lic, 5, 5, '3', '*' );
 		$verify = md5 ( $data . $lic );

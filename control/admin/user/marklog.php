@@ -11,7 +11,8 @@ class Control_admin_user_marklog extends Controller{
 		global $_K,$_lang;
 		$fields = '`mark_id`,`model_code`,`mark_type`,`by_username`,`username`,`mark_status`,`mark_value`,`mark_time`';
 		$query_fields = array('mark_id'=>$_lang['id'],'username'=>$_lang['name'],'mark_time'=>$_lang['time']);
-		$base_uri=BASE_URL.'/index.php/admin/user_mark/log';
+		$base_uri=BASE_URL.'/index.php/admin/user_marklog';
+		$del_uri=$base_uri.'/del';
 		$this->_default_ord_field = 'mark_time';
 		$count = intval($_GET['count']);
 		extract($this->get_url($base_uri));
@@ -19,7 +20,17 @@ class Control_admin_user_marklog extends Controller{
 		$list_arr = $data_info['data'];
 		$pages = $data_info['pages'];
 		$model_type_arr = keke_global_class::get_model_type ();
+		$model_list = db::select()->from('witkey_model')->where('1=1')->execute();
+		$model_list = $model_list[0];
 		require keke_tpl::template('control/admin/tpl/user/mark_log');
+	}
+	function action_del(){
+		if($_GET['mark_id']){
+			$where .= 'mark_id = '.$_GET['mark_id'];
+		}elseif($_GET['ids']){
+			$where .= 'mark_id in'.'('.$_GET['ids'].')';
+		}
+		echo Model::factory('witkey_mark')->setWhere($where)->del();
 	}
 }
 /* Keke::admin_check_role ( 79 );

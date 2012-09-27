@@ -45,9 +45,9 @@
             	<th width="15">
             		<input type="checkbox" onclick="checkall();" id="checkbox" name="checkbox"/>
             	</th>
-                <th>UID</th>
+                <th><a href="javascript:;" onclick="submitSort('{$uri}','uid',{$ord_tag})">UID{if $_GET['f']=='uid'}{$ord_char}{/if}</a></th>
                 <th width="100" class="motif">{$_lang['username']}</th>
-                <th>{$_lang['users']}</th>
+                <th><a href="javascript:;" onclick="submitSort('{$uri}','group_id',{$ord_tag})">{$_lang['users']}{if $_GET['f']=='group_id'}{$ord_char}{/if}</a></th>
                 <th>{$_lang['contact_tel']}</th>
                 <th>QQ</th>
                 <th>{$_lang['edit']}</th>

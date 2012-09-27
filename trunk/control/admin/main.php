@@ -62,13 +62,13 @@ class Control_admin_main extends Controller {
 		$lic = $_K ['ci'];
 		$str_lic = Keke::set_star ( $lic, 5, 5, '3', '*' );
 		$verify = md5 ( $data . $lic );
-		$notice = "http://www.Keke.com/update.php?" . $data . "&lic=" . urlencode ( $lic ) . "&verify=" . $verify;
+		$notice = "http://www.Kekezu.com/update.php?" . $data . "&lic=" . urlencode ( $lic ) . "&verify=" . $verify;
 		$sys = array (
 				"ac" => "sysinfo",
 				'charset' => $_K ['charset'],
 				'p_name' => P_NAME
 		);
-		$sysinfo = "http://www.Keke.com/news.php?" . http_build_query ( $sys );
+		$sysinfo = "http://www.Kekezu.com/news.php?" . http_build_query ( $sys );
 		
 		require Keke_tpl::template ( 'control/admin/tpl/main' );
 	}

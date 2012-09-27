@@ -50,7 +50,7 @@
 					<th width="15%">{$_lang['location']}</th>
                     <th width="15%">{$_lang['start_time']}</th>
                     <th width="15%">{$_lang['end_time']}</th>
-					<th width="15%">编辑时间</th>
+					<th width="15%"><a href="javascript:;" onclick="submitSort('{$uri}','on_time',{$ord_tag})">编辑时间{if $_GET['f']=='on_time'}{$ord_char}{/if}</a></th>
 					<th width="10%">是否可用</th>
                     <th>{$_lang['operate']}</th>
                   </tr>

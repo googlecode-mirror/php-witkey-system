@@ -28,7 +28,7 @@ class Control_admin_main extends Controller {
 		$sys_info ['file_uploads'] = ini_get ( 'file_uploads' );
 		
 		/* 新增用户留言 */
-		$news_count = intval ( Dbfactory::get_count ( sprintf ( " select count(msg_id) from %switkey_msg where to_uid='%d' and  uid>0 ", TABLEPRE, $admin_info [uid] ) ) );
+		$news_count = intval ( Dbfactory::get_count ( sprintf ( " select count(msg_id) from %switkey_msg where to_uid='%d' and  uid>0 ", TABLEPRE, $_SESSION ['admin_uid'] ) ) );
 		/* 新增发布任务 */
 		$task_count = intval ( Dbfactory::get_count ( sprintf ( " select count(task_id) from %switkey_task where DATE(from_unixtime(start_time))=DATE('%s') ", TABLEPRE, date ( 'Y-m-d', time () ) ) ) );
 		/* 新增注册会员 */
@@ -43,8 +43,8 @@ class Control_admin_main extends Controller {
 		
 		$pars = array (
 				'ac' => 'run',
-				'sitename' => urlencode ( $basic_config ['website_name'] ),
-				'siteurl' => htmlentities ( $basic_config ['website_url'] ),
+				'sitename' => urlencode ( $_K ['website_name'] ),
+				'siteurl' => htmlentities ( $_K ['website_url'] ),
 				'charset' => $_K ['charset'],
 				'version' => KEKE_VERSION,
 				'release' => KEKE_RELEASE,
@@ -53,7 +53,7 @@ class Control_admin_main extends Controller {
 				'mysql' => $mysql_ver,
 				'browser' => urlencode ( $_SERVER ['HTTP_USER_AGENT'] ),
 				'username' => urlencode ( $_SESSION ['username'] ),
-				'email' => $basic_config ['email'] ? $basic_config ['email'] : 'noemail',
+				'email' => $_K ['email'] ? $_K ['email'] : 'noemail',
 				'p_name' => P_NAME
 		);
 		

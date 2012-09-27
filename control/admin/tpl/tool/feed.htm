@@ -54,7 +54,7 @@
             <td >{$v['username']}:<!--{eval $title = unserialize($v[title]);echo $title['action']['content'];echo $title['event']['content'];}--></td>
             <td>{if $feed_type[$v['feedtype']]}{$feed_type[$v['feedtype']]}{else}$v['feedtype']{/if}</td>
 		    <td ><a href="../../$v['username']" target="_blank" >{$v['username']}</a></td>
-            <td><!--{date('Y-m-d',$v['feed_time'])}--></td>
+            <td><!--{eval echo date('Y-m-d',$v['feed_time']);}--></td>
             <td>
               <a href="{$del_uri}?feed_id={$v['feed_id']}" onclick="return cdel(this);" class="button"> 
 			   <span class="trash icon"></span>{$_lang['delete']}</a>

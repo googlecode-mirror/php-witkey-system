@@ -7,7 +7,7 @@
  * 2010-08-29 14:37:34
  */
 
-Keke::admin_check_role ( 33 );
+/* Keke::admin_check_role ( 33 );
 $url = "index.php?do=$do&view=$view&mark_rule_id=$mark_rule_id";
 
 $mark_rule_obj = new Keke_witkey_mark_rule_class ();
@@ -74,4 +74,4 @@ if (isset ( $op )) {
 	 
 	$mark_rule = $mark_rule_obj->query_keke_witkey_mark_rule ();
 	require $Keke->_tpl_obj->template ( "control/admin/tpl/admin_{$do}_{$view}" );
-}
+ } */

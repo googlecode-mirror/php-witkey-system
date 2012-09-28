@@ -12,17 +12,34 @@ class Control_admin_user_markconfig extends Controller{
 		$list_arr = db::select()->from('witkey_mark_config')->execute();
 		$model_arr = Keke::$_model_list; 
 		$model_arr = Keke::get_arr_by_key($model_arr,'model_code');
-
 		require keke_tpl::template('control/admin/tpl/user/mark_config');
 	}
 	function action_edit(){
 		global $_K,$_lang;
-		
+		$mark_config_id = $_GET['mark_config_id'];
+		$where .='mark_config_id='.$mark_config_id;
+		$list_arr = db::select()->from('witkey_mark_config')->where($where)->execute();
+		$list_arr = $list_arr[0];
+		$model_arr = Keke::$_model_list;
+		$model_arr = Keke::get_arr_by_key($model_arr,'model_code');
 		require keke_tpl::template('control/admin/tpl/user/markconfig_edit');
 	}
-	function action_del(){
-		
+	function action_save(){
+		$_POST = Keke_tpl::chars($_POST);
+		Keke::formcheck($_POST['formhash']);
+		$array = array('mark_config_id'=>$_POST['hdn_mark_config_id'],
+				'good'=>$_POST['good'],
+				'normal'=>$_POST['normal'],
+				'bad'=>$_POST['bad'],
+				);
+		Model::factory('witkey_mark_config')->setData($array)->update();
+		Keke::show_msg("提交成功","index.php/admin/user_markconfig","success");
 	}
+	function action_del(){
+		$mark_config_id = $_GET['mark_config_id'];
+		$where .='mark_config_id='.$mark_config_id;
+		echo Model::factory('witkey_mark_config')->setWhere($where)->del();
+	}	
 }
 /* Keke::admin_check_role ( 78 );
 

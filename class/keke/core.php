@@ -27,16 +27,22 @@ class Keke_core extends Keke_base {
 	}
 	/**
 	 * 用于页面跳转提示
-	 *
+	 *@param $content 提示信息 $_lang['submit_success']提交成功,$_lang['submit_fail']提交失败
+	 *@param $url 跳转url 
 	 * @param $type string
 	 *        	inajax
 	 *        	{'alert_info'=>'提示','alert_right'=>'成功','confirm_info'=>'确认','alert_error'=>'错误'}
 	 *        	非ajax {'info'=>默认,'success'=>'成功','warning'=>'警告'}
+	 *@param $title 标题，默认为“系统提示”
+	 *@param $time 跳转页显示时间，默认为3秒        
 	 */
-	static function show_msg($title = "", $url = "",  $content = "", $type = 'info',$time = 3) {
+	static function show_msg( $content = "", $url = "",  $type = 'info',$title = NULL,$time = 3) {
 		global $_K, $basic_config, $username, $uid, $nav_list, $_lang;
 		$r = $_REQUEST;
 		$msgtype = $type;
+		if($title===NULL){
+			$title = $_lang['sys_tips'];
+		}
 		require Keke_tpl::template ( 'show_msg' );
 		die ();
 	}

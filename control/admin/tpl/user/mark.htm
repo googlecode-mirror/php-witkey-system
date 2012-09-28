@@ -15,8 +15,6 @@
             </ul>
         </div>
 </div>
-
-
 <div class="box list">
     	<div class="title"><h2>{$_lang['credit_rules_list']}</h2></div>
         <div class="detail">
@@ -33,27 +31,22 @@
 					<th>{$_lang['seller_icon']}</th>
 					<th>{$_lang['operate']}</th>
 		          </tr>
-				{loop $mark_rule $key $value}
+				{loop $mark_rule $v}
 		        <tr class="item">
-		            <td>{$value['mark_rule_id']}</td>
-		            <td>{$value['g_value']}</td>
-					<td>{$value['m_value']}</td>
-		            <td>{$value["g_title"]}</td>
-					<td>{$value["m_title"]}</td>
-					<td>{if $value["g_ico"]}<a href="../../{$value["g_ico"]}" target="_blank"><img src="../../{$value["g_ico"]}" /></a>{else}{$_lang['picture_not_upload']}{/if}</td>
-					<td>{if $value["m_ico"]}<a href="../../{$value["m_ico"]}" target="_blank"><img src="../../{$value["m_ico"]}" /></a>{else}{$_lang['picture_not_upload']}{/if}</td>
+		            <td>{$v['mark_rule_id']}</td>
+		            <td>{$v['g_value']}</td>
+					<td>{$v['m_value']}</td>
+		            <td>{$v["g_title"]}</td>
+					<td>{$v["m_title"]}</td>
+					<td>{if $v["g_ico"]}<a href="../../{$v["g_ico"]}" target="_blank"><img src="../../{$v["g_ico"]}" /></a>{else}{$_lang['picture_not_upload']}{/if}</td>
+					<td>{if $v["m_ico"]}<a href="../../{$v["m_ico"]}" target="_blank"><img src="../../{$v["m_ico"]}" /></a>{else}{$_lang['picture_not_upload']}{/if}</td>
 					<td>
-						<a class="button dbl_target" href="index.php?do={$do}&view={$view}&op=edit&mark_rule_id={$value['mark_rule_id']}"><span class="pen icon"></span>{$_lang['edit']}</a>
-						<a class="button" href="index.php?do={$do}&view={$view}&op=del&mark_rule_id={$value['mark_rule_id']}" onclick="return cdel(this);"><span class="trash icon"></span>{$_lang['delete']}</a>
+						<a class="button dbl_target" href="{BASE_URL}/index.php/admin/user_mark/add?mark_rule_id={$v['mark_rule_id']}"><span class="pen icon"></span>{$_lang['edit']}</a>
+						<a class="button" href="{BASE_URL}/index.php/admin/user_mark/del?mark_rule_id={$v['mark_rule_id']}" onclick="return cdel(this);"><span class="trash icon"></span>{$_lang['delete']}</a>
 					</td>
 		          </tr>
 				 {/loop}
 		          <tr>
-		          	<td colspan="8">
-		          		<a class="button" name="sbt_add" value={$_lang['credit_rules']} class="positive pill" 
-						href="index.php?do=$do&view=$view&op=edit"/>
-						<span class="check icon"></span>{$_lang['submit']}</a>	
-		          	</td>
 		          </tr>
 				  </tbody>
 		        </table>

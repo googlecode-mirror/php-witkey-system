@@ -170,9 +170,12 @@ class Keke_base {
 	static public function get_arr_by_key($arr = array(), $key) {
 		$size = sizeof ( $arr );
 		$tmp = array ();
+		
 		for($i = 0; $i < $size; $i ++) {
 			$tmp [$arr [$i] [$key]] = $arr [$i];
 		}
+		//È¥µô¿ÕÖµ
+		$tmp =  array_filter($tmp,array('Model','remove_null')); 
 		return $tmp;
 	}
 	static function escape($string) {

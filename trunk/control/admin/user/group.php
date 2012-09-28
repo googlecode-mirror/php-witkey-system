@@ -54,7 +54,7 @@ class Control_admin_user_group extends Controller{
 		if($_POST['txt_groupname']){
 			$txt_groupname = $_POST['txt_groupname'];
 		}else{
-			keke::show_msg('系统提示','index.php/admin/user_group/add','组名不能为空！！','warning');
+			Keke::show_msg('系统提示','index.php/admin/user_group/add','组名不能为空！！','warning');
 		}
 		//需要进行存储的字段
 		$array = array('group_id'=>$_POST['group_id'],
@@ -65,11 +65,11 @@ class Control_admin_user_group extends Controller{
 		if ($_POST['is_submit']){
 			//编辑情况下提交，更新
 			Model::factory('witkey_member_group')->setData($array)->setWhere('group_id = '.$_POST['is_submit'])->update();
-			keke::show_msg('系统提交','/index.php/admin/user_group/add?group_id='.$_POST['is_submit'],'编辑成功','success');
+			Keke::show_msg('系统提交','/index.php/admin/user_group/add?group_id='.$_POST['is_submit'],'编辑成功','success');
 		}else{
 			//添加情况下提交，直接插入
 			Model::factory('witkey_member_group')->setData($array)->create();
-			keke::show_msg('系统提交','index.php/admin/user_group/add','提交成功','success');
+			Keke::show_msg('系统提交','index.php/admin/user_group/add','提交成功','success');
 		}
 	}
 	/*

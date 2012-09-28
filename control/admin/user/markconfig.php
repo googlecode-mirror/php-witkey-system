@@ -6,7 +6,12 @@
  * @charset:GBK  last-modify 2011-10-22-ÏÂÎç04:10:03
  * @version V2.0
  */
-
+class Control_admin_user_markconfig extends Controller{
+	function action_index(){
+		global $_K,$_lang;
+		require keke_tpl::template('control/admin/tpl/user/mark_config');
+	}
+}
 /* Keke::admin_check_role ( 78 );
 
 $juese = array ("1" => $_lang['witkey'], "2" => $_lang['employer'] );

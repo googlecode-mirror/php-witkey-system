@@ -9,8 +9,11 @@
 class Control_admin_user_markconfig extends Controller{
 	function action_index(){
 		global $_K,$_lang;
+		//读取mark_config表的数据
 		$list_arr = db::select()->from('witkey_mark_config')->execute();
-		$model_arr = Keke::$_model_list; 
+		//读取model表的数据，直接模板读取，
+		$model_arr = Keke::$_model_list;
+		//model_arr数组重组 
 		$model_arr = Keke::get_arr_by_key($model_arr,'model_code');
 		require keke_tpl::template('control/admin/tpl/user/mark_config');
 	}
@@ -18,20 +21,24 @@ class Control_admin_user_markconfig extends Controller{
 		global $_K,$_lang;
 		$mark_config_id = $_GET['mark_config_id'];
 		$where .='mark_config_id='.$mark_config_id;
+		//读取mark_config指定mark_config_id表的数据
 		$list_arr = db::select()->from('witkey_mark_config')->where($where)->execute();
 		$list_arr = $list_arr[0];
+		//读取model表的数据，直接模板读取，
 		$model_arr = Keke::$_model_list;
+		//model_arr数组重组
 		$model_arr = Keke::get_arr_by_key($model_arr,'model_code');
 		require keke_tpl::template('control/admin/tpl/user/mark_config_edit');
 	}
 	function action_save(){
 		$_POST = Keke_tpl::chars($_POST);
 		Keke::formcheck($_POST['formhash']);
-		$array = array('mark_config_id'=>$_POST['hdn_mark_config_id'],
-				'good'=>$_POST['good'],
+		//需要更新的数据
+		$array = array('good'=>$_POST['good'],
 				'normal'=>$_POST['normal'],
 				'bad'=>$_POST['bad'],
 				);
+		//更新mark_config表的数据
 		Model::factory('witkey_mark_config')->setData($array)->update();
 		Keke::show_msg("提交成功","index.php/admin/user_markconfig","success");
 	}

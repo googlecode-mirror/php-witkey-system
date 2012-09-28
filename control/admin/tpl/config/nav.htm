@@ -32,7 +32,7 @@
   			<input type="text" value="{$v['nav_title']}" name="nav[$k][nav_title]" class='txt' size='12'>
 		</td>
     {/if}
-    <td><!--{eval $readonly = $this->url_analysis($v['nav_url']);}-->
+    <td><!--{eval  $readonly = $this->url_analysis($v['nav_url']);}-->
     	{if $readonly}
 			$v['nav_url']
 		{else}
@@ -52,19 +52,19 @@
     	<label>{if !$v['ishide']}{$_lang['show']}{else}{$_lang['hide']}{/if}</label>
     </td>
     <td>
-        <a href="$url&nav_id=$v['nav_id']&ac=edit" class="button dbl_target"><span class="pen icon"></span>{$_lang['edit']}</a>
-        <a href="$url&nav_id=$v['nav_id']&ac=del"  onclick="return cdel(this);" class="button"><span class="trash icon"></span>{$_lang['delete']}</a>
-    	<a href="$url&nav_style=$v['nav_style']&ac=set_index" class="button"><span class="check icon"></span>{$_lang['set_index']}</a>
+        <a href="{BASE_URL}/index.php/admin/config_nav/add?nav_id=$v['nav_id']" class="button dbl_target"><span class="pen icon"></span>{$_lang['edit']}</a>
+        <a href="{BASE_URL}/index.php/admin/config_nav/del?nav_id=$v['nav_id']"  onclick="return cdel(this);" class="button"><span class="trash icon"></span>{$_lang['delete']}</a>
+    	<a href="{BASE_URL}/index.php/admin/config_nav/set_index?nav_style=$v['nav_style']" class="button"><span class="check icon"></span>{$_lang['set_index']}</a>
     </td>
 </tr>
 {/loop}
-<tbody id='newitemlist'></tbody>
-
+<tfoot>
 <tr>
-	<td colspan="6"> 
+	<td colspan="9"> 
     <button onclick="modify();" class="positive pill negative" type="button"><span class="check icon"></span>{$_lang['submit']}</button>
 	</td>
 </tr>
+</tfoot>
 </table>
 </form>
  

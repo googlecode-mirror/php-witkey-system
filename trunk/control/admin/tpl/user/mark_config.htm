@@ -11,12 +11,9 @@
             </ul>
         </div>
 </div>
-
 <div class="box list">
-    	<div class="title"><h2>{$_lang['credit_rules_list']}</h2></div>
-        <div class="detail">
 			<form method="get" action="{$url}" id="frm_user_search">
-		  		<table cellpadding="0" cellspacing="0">
+		  		<table class="detail" cellpadding="0" cellspacing="0">
 		  		  <tbody>
 		          <tr>
 		            <th>{$_lang['id']}</th>
@@ -27,16 +24,16 @@
 					<th>{$_lang['role']}</th>
 					<th>{$_lang['operate']}</th>
 		          </tr>
-				{loop $mark_config_arr $k $v}
+				{loop $list_arr $k $v}
 		        <tr class="item">
 		            <td>{$v['mark_config_id']}</td>
-		            <td>{$model_list2[$v['obj']]}</td>
+		            <td>{$model_arr_two[$v['obj']]}</td>
 					<td>{$v['good']}%</td>
 		            <td>{$v["normal"]}%</td>
 					<td>{$v["bad"]}%</td>
-					<td>{$juese[$v["type"]]}</td>
+					<td>{if $v["type"]==1}$_lang['witkey']{else}$_lang['employer']{/if}</td>
 					<td>
-						<a class="button dbl_target" href="index.php?do={$do}&view={$view}&op=config_add&mark_config_id={$v['mark_config_id']}"><span class="pen icon"></span>{$_lang['edit']}</a>
+						<a class="button dbl_target" href="{BASE_URL}/index.php/admin/user_markconfig/edit"><span class="pen icon"></span>{$_lang['edit']}</a>
 						<a class="button" href="index.php?do={$do}&view={$view}&op={$op}&ac=del&mark_config_id={$v['mark_config_id']}" onclick="return cdel(this);"><span class="trash icon"></span>{$_lang['delete']}</a>
 					</td>
 		          </tr>
@@ -54,7 +51,4 @@
 	})
 </script>
 <!--Ö÷Ìå½áÊø-->
-
 <!--{include control/admin/tpl/admin_footer}-->
-
-

@@ -7,7 +7,7 @@
  * @version V2.0
  */
 
-Keke::admin_check_role ( 78 );
+/* Keke::admin_check_role ( 78 );
 
 $juese = array ("1" => $_lang['witkey'], "2" => $_lang['employer'] );
 
@@ -28,4 +28,4 @@ $mark_config_arr = $mark_config_obj->get_grid ( '1=1', $url, '', 14 );
 
 $mark_config_arr = $mark_config_arr ['data'];
 
-require $Keke->_tpl_obj->template ( "control/admin/tpl/admin_" . $do . "_" . $view . "_" . $op );
+require $Keke->_tpl_obj->template ( "control/admin/tpl/admin_" . $do . "_" . $view . "_" . $op ); */

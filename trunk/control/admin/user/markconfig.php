@@ -22,7 +22,7 @@ class Control_admin_user_markconfig extends Controller{
 		$list_arr = $list_arr[0];
 		$model_arr = Keke::$_model_list;
 		$model_arr = Keke::get_arr_by_key($model_arr,'model_code');
-		require keke_tpl::template('control/admin/tpl/user/markconfig_edit');
+		require keke_tpl::template('control/admin/tpl/user/mark_config_edit');
 	}
 	function action_save(){
 		$_POST = Keke_tpl::chars($_POST);

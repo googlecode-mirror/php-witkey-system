@@ -9,15 +9,16 @@
 class Control_admin_user_markconfig extends Controller{
 	function action_index(){
 		global $_K,$_lang;
-		$list_arr = db::select()->from('witkey_mark_config')->where('1=1')->execute();
+		$list_arr = db::select()->from('witkey_mark_config')->execute();
 		$model_arr = Keke::$_model_list; 
-		foreach ( $model_arr as $k => $v ) {
-			$model_arr_two [$v ['model_code']] = $v ['model_name'];
-		}
+		$model_arr = Keke::get_arr_by_key($model_arr,'model_code');
+
 		require keke_tpl::template('control/admin/tpl/user/mark_config');
 	}
 	function action_edit(){
-		require '';
+		global $_K,$_lang;
+		
+		require keke_tpl::template('control/admin/tpl/user/markconfig_edit');
 	}
 	function action_del(){
 		

@@ -6,7 +6,12 @@
  * @version v 2.0
  * 2010-08-29 14:37:34
  */
-
+class Control_admin_user_mark extends Controller{
+	function action_index(){
+		global $_K,$_lang;
+		require Keke_tpl::template('control/admin/tpl/user/mark');
+	}
+}
 /* Keke::admin_check_role ( 33 );
 $url = "index.php?do=$do&view=$view&mark_rule_id=$mark_rule_id";
 

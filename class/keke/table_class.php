@@ -20,7 +20,7 @@ class keke_table_class {
 		global $kekezu;
 		$this->_page_obj = Keke::$_page_obj;
 		$this->_table_name = $table_name;
-		$table_class = ucfirst($this->_pre).$table_name . "_class";
+		$table_class = ucfirst($this->_pre).$table_name ;
 		$this->_table_obj = new $table_class (); 
 	}
 	

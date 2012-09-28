@@ -63,9 +63,9 @@ $lang = array(
 
 
 //提示
-	'system prompt'=>'系统提示',
-'submit success'=>'提交成功',
-'submit failure'=>'提交失败',
+	'sys_tips'=>'系统提示',
+    'submit_success'=>'提交成功',
+    'submit_fail'=>'提交失败',
 	'param_error'=>'参数错误',
     'operate_notice'=>'操作提示!',
     'operate_success'=>'操作成功',

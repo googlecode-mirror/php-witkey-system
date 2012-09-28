@@ -21,7 +21,7 @@
 		        <tr class="item">
 		            <td >$v['group_id']</td>
 		            <td class="motif">$v['groupname']</td>
-		            <td><!--{date('Y-m-d H:i:s',$v['on_time'])}--></td>
+		            <td>{date('Y-m-d',$v['on_time'])}</td>
 					<td>
 						<a href="{BASE_URL}/index.php/admin/user_group/add?group_id=$v[group_id]" class="button dbl_target"><span class="pen icon"></span>{$_lang['edit']}</a>
 						<a href="{BASE_URL}/index.php/admin/user_group/del?group_id=$v[group_id]" onclick="return cdel(this);"class="button"><span class="trash icon"></span>{$_lang['delete']}</a>

@@ -20,7 +20,7 @@ class Control_admin_user_marklog extends Controller{
 		$list_arr = $data_info['data'];
 		$pages = $data_info['pages'];
 		$model_type_arr = keke_global_class::get_model_type ();
-		$model_list = db::select()->from('witkey_model')->where('1=1')->execute();
+		$model_list = keke::$_model_list;
 		$model_list = $model_list[0];
 		require keke_tpl::template('control/admin/tpl/user/mark_log');
 	}

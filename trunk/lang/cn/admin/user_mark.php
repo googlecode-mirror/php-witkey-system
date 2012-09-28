@@ -1,26 +1,28 @@
 <?php
-$lang=array(
-    'to_be_evaluated'=>'待评',
-	'manuscript'=>'稿件',
-	//htm
-	'mutual_evaluation_record_manage'=>'互评记录管理',
-	'view_task'=>'查看任务',
-	'view_shop'=>'查看商品',
-	'mutual_evaluation_id'=>'互评ID',
-	'from'=>'来自',
-	'display_number'=>'显示条数',
-	'mutual_evaluation_time'=>'互评时间',
-	'mutual_evaluation_status'=>'互评状态',
-	'mutual_evaluation_value'=>'互评值',
-	'mutual_evaluation_record'=>'互评记录',
-	'belong_model'=>'所属模型',
-	'view_task'=>'查看任务',
-	'view_service'=>'查看商品',
-	'to_user'=>'对用户',
-	'evaluation'=>'评价',
-	'ability_credit'=>'能力/信誉值',
-	'you_comfirm_want_to'=>'你确定要',
+$lang = array(
+	'parameter_error_fail_to_delete'=>'错误参数，删除失败',
+	'delete_credit_rules'=>'删除信誉规则',
+	'success_delete_a_credit_rules'=>'成功删除一条信誉规则',
+	'create_mark_rule'=>'创建互评规则',
+	'edit_mark_rule'=>'编辑互评规则',
+	'submit_success'=>'提交成功',
+	'submit_fail'=>'提交失败',
 
+	//htm
+	'rule_manage'=>'规则管理',
+	'credit_rules_manage'=>'信誉规则管理',
+	'add_credit_rules'=>'增加信誉规则',
+	'role_relationship_notice'=>'角色雇主与买家等同，角色威客与卖家等同,前端显示会根据不同的角色显示对应的头衔与图片',
+	'credit_rules_list'=>'信誉规则列表',
+
+	'credit_value'=>'信誉值',
+    'ability_value'=>'能力值'
+	,
+	'buyers_title'=>'买家头衔',
+	'seller_title'=>'卖家头衔',
+	'buyers_icon'=>'买家图标',
+	'seller_icon'=>'卖家图标',
+
+	'picture_not_upload'=>'图片未上传',
+	'credit_rules'=>'信誉规则',
 	);
-	
- 

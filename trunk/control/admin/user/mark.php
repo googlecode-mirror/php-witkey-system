@@ -9,7 +9,42 @@
 class Control_admin_user_mark extends Controller{
 	function action_index(){
 		global $_K,$_lang;
+		$mark_rule = Db::select()->from('witkey_mark_rule')->execute();
+// 		var_dump($mark_rule);die;
 		require Keke_tpl::template('control/admin/tpl/user/mark');
+	}
+	function action_add(){
+		global $_K,$_lang;
+		$mark_rule_id = $_GET['mark_rule_id'];
+		if ($mark_rule_id){
+			$where .= 'mark_rule_id='.$mark_rule_id;
+			$mark_rule_arr = Db::select()->from('witkey_mark_rule')->where($where)->execute();
+			$mark_rule_arr = $mark_rule_arr[0];
+		}
+		require Keke_tpl::template('control/admin/tpl/user/mark_add');
+	}
+	function action_save(){
+		$_POST = Keke_tpl::chars($_POST);
+		Keke::formcheck($_POST['formhash']);
+		$array = array('g_value'=>$_POST['txt_g_value'],
+				'm_value'=>$_POST['txt_m_value'],
+				'g_title'=>$_POST['txt_g_title'],
+				'm_title'=>$_POST['txt_m_title'],
+				'g_ico'=>$_POST['hdn_g_ico'],
+				'm_ico'=>$_POST['hdn_m_ico'],
+				);
+		if ($_GET['hdn_mark_rule_id']){
+			Model::factory('witkey_mark_rule')->setData($array)->setWhere('mark_rule_id='.$_GET['hdn_mark_rule_id'])->update();
+			Keke::show_msg("编辑成功","index.php/admin/user_mark/add？mark_rule_id=".$_GET['hdn_mark_rule_id'],"success");
+		}else{
+			Model::factory('witkey_mark_rule')->setData($array)->create();
+			Keke::show_msg("添加成功","index.php/admin/user_mark/add","success");
+		}
+	}
+	function action_del(){
+		$mark_rule_id = $_GET['mark_rule_id'];
+		$where .='mark_rule_id='.$mark_rule_id;
+		echo Model::factory('witkey_mark_rule')->setWhere($where)->del();
 	}
 }
 /* Keke::admin_check_role ( 33 );

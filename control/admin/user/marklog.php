@@ -34,9 +34,7 @@ class Control_admin_user_marklog extends Controller{
 		//model表数据
 		$model_list = keke::$_model_list;
 		//通过model_code获取model_type的值
-		foreach ($model_list as $v){
-			$model_list2[$v[model_code]]= $v;
-		}
+		$model_list2 = Keke::get_arr_by_key($model_list,'model_code');
 		require keke_tpl::template('control/admin/tpl/user/mark_log');
 	}
 	/**

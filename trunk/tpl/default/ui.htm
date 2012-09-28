@@ -1,23 +1,23 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<meta charset="utf-8">
+<meta charset="gbk">
 <title>box--style皮肤演示</title>
-<link href="tpl/default/css/base.css" rel="stylesheet">
-<link href="tpl/default/css/ui.css" rel="stylesheet" >
-<link href="tpl/default/css/boxs.css" rel="stylesheet" >
-<link href="tpl/default/css/theme.css" rel="stylesheet" >
-<link href="resource/css/layout/layout.css" rel="stylesheet" >
+<link href="{BASE_URL}/{SKIN_PATH}/css/base.css" rel="stylesheet">
+<link href="{BASE_URL}/{SKIN_PATH}/css/ui.css" rel="stylesheet" >
+<link href="{BASE_URL}/{SKIN_PATH}/css/boxs.css" rel="stylesheet" >
+<link href="{BASE_URL}/{SKIN_PATH}/css/theme.css" rel="stylesheet" >
+<link href="{BASE_URL}/resource/css/layout/layout.css" rel="stylesheet" >
 <!--[if lte IE 8]>
-<link href="resource/css/layout/960.min.css" rel="stylesheet">
+<link href="{BASE_URL}/resource/css/layout/960.min.css" rel="stylesheet">
 <![endif]-->
-<link href="style/button/stylesheets/css3buttons.css" rel="stylesheet">
-<script src="resource/js/system/html5.js"></script>
+<link href="{BASE_URL}/resource/button/stylesheets/css3buttons.css" rel="stylesheet">
+<script src="plugin/html5.js"></script>
 <!--jQuery1.4.4库-->
-<script src="resource/js/jquery.js"></script>
-<script src="resource/js/system/keke.js"></script>
+<script src="{BASE_URL}/resource/js/jquery.js"></script>
+<script src="{BASE_URL}/resource/js/system/keke.js"></script>
 <!--滑动导航效果-->
-<script src="resource/js/jqplugins/lavalamp/jquery.lavalamp-1.3.5.min.js"></script>
+<script src="{BASE_URL}/resource/js/jqplugins/lavalamp/jquery.lavalamp-1.3.5.min.js"></script>
 
 <script >
 /*jQuery*/
@@ -190,9 +190,15 @@
 
                 <div class="box_detail">
                     <div id="div_nav_1" class="detail ">
-                      <img class="pic_small fl_l mr_10" src="images/s_avatar.png" alt="avatar">
-                      <img class="pic_middle fl_l mr_10" src="images/avatar.png" alt="avatar">
-                      <img class="pic_larger fl_l mr_10" src="images/l_avatar.png" alt="avatar"> 
+                      <div class="fl_l mr_10">
+                      <!--{userpic($v['uid'],'small')}-->
+					  </div>
+					  <div class="fl_l mr_10">
+                      <!--{userpic($v['uid'],'middle')}-->
+					  </div>
+					  <div class="fl_l mr_10">
+                      <!--{userpic($v['uid'],'small')}-->
+					  </div>
                       <p>
                         段落文字样式演示
                           1234567890_+-=:";'|\.,/`~!@#$%^&amp;*()[]{}&lt;&gt;  
@@ -2202,7 +2208,314 @@
                        
 
 
+<!--
 
+        <div class="box rigo_light mb_30">
+            <div class="inner clearfix">
+                <div class="box_header">
+                    <div class="box_title">
+                        <h2 class="title" title="这里是标题说明">.box.rigo_light rigo_光</h2>
+                    </div>
+                </div>
+                <div class="box_detail">
+                    <div class="detail clearfix">
+                      <img class="fl_l mr_10" src="images/avatar.png" alt="avatar">  
+                      <p>
+                        段落文字样式演示
+                          1234567890_+-=:";'|\.,/`~!@#$%^&amp;*()[]{}&lt;&gt;  
+                      </p>
+                      <p>
+                        <a href="#">互联网</a>已经过十多年的发展，各种新型应用层出不穷，2005年7月威客（witkey）理论创始者刘
+                        锋第一次提出 ，人的知识，智慧，经 验，技能通过互联网转换成实际收益的互联网新模式。主要应用
+                        包括解决科学，技术，工作，生活，学习等领域的问题。经中央电视 台新闻报道后，国内威客模式商
+                        业网站蓬勃发展，借着威客热浪涌现出了一批优秀的威客站点，而威客理论也经历了实践的考验。同时
+                        随着互联网的普及，“一招鲜”的威客模式面临着威客流程控制和人际交互的应用瓶颈，威客需要回归
+                        “人机结合，以人为本”的传统理念来。 
+                        </p>
+                        <p>客客出品专业威客系统英文名称<a href="#">KPPW</a>，也是keke produced 
+                        professional witkey的缩写。KPPW是一款基于PHP+MYSQL技术构架的威客系统 ，积客客团队多年实
+                        践和对威客模式商业化运作的大量调查分析而精心策划研发，是您轻松搭建威客网站的首选利器。
+                        KPPW针对威客 任务模型进行了细致的分析，提供完善威客任务流程控制解决方案，并将逐步分享威
+                        客系统专业化应用作为我们的发展目标。 
+                        </p>
+                        <p>
+                         欢迎体验KPPW，提供您的宝贵意见！
+                        </p>
+                    </div>
+                </div>
+                <div class="box_footer">
+                   LESS 将 CSS 赋予了动态语言的特性，如 变量， 继承， 运算， 函数. LESS 既可以在 客户端 上运行 (支持IE 6+, Webkit, Firefox)，也可以借助Node.js或者Rhino在服务端运行。
+                </div>
+             </div>
+        </div>
+
+
+
+
+        <div class="box blue_a_white mb_30">
+            <div class="inner clearfix">
+                <div class="box_header">
+                    <div class="box_title">
+                        <h2 class="title" title="这里是标题说明">.box.blue_a_white 青花</h2>
+                    </div>
+                </div>
+                <div class="box_detail">
+                    <div class="detail clearfix">
+                      <img class="fl_l mr_10" src="images/avatar.png" alt="avatar">  
+                      <p>
+                        段落文字样式演示
+                          1234567890_+-=:";'|\.,/`~!@#$%^&amp;*()[]{}&lt;&gt;  
+                      </p>
+                      <p>
+                        <a href="#">互联网</a>已经过十多年的发展，各种新型应用层出不穷，2005年7月威客（witkey）理论创始者刘
+                        锋第一次提出 ，人的知识，智慧，经 验，技能通过互联网转换成实际收益的互联网新模式。主要应用
+                        包括解决科学，技术，工作，生活，学习等领域的问题。经中央电视 台新闻报道后，国内威客模式商
+                        业网站蓬勃发展，借着威客热浪涌现出了一批优秀的威客站点，而威客理论也经历了实践的考验。同时
+                        随着互联网的普及，“一招鲜”的威客模式面临着威客流程控制和人际交互的应用瓶颈，威客需要回归
+                        “人机结合，以人为本”的传统理念来。 
+                        </p>
+                        <p>客客出品专业威客系统英文名称<a href="#">KPPW</a>，也是keke produced 
+                        professional witkey的缩写。KPPW是一款基于PHP+MYSQL技术构架的威客系统 ，积客客团队多年实
+                        践和对威客模式商业化运作的大量调查分析而精心策划研发，是您轻松搭建威客网站的首选利器。
+                        KPPW针对威客 任务模型进行了细致的分析，提供完善威客任务流程控制解决方案，并将逐步分享威
+                        客系统专业化应用作为我们的发展目标。 
+                        </p>
+                        <p>
+                         欢迎体验KPPW，提供您的宝贵意见！
+                        </p>
+                    </div>
+                </div>
+                <div class="box_footer">
+                   LESS 将 CSS 赋予了动态语言的特性，如 变量， 继承， 运算， 函数. LESS 既可以在 客户端 上运行 (支持IE 6+, Webkit, Firefox)，也可以借助Node.js或者Rhino在服务端运行。
+                </div>
+             </div>
+        </div>
+
+
+
+        
+        <div class="box skins_factory mb_30">
+            <div class="inner clearfix">
+                <div class="box_header">
+                    <div class="box_title">
+                        <h2 class="title" title="这里是标题说明">.box.skins_factory 皮肤工厂</h2>
+                    </div>
+                </div>
+                <div class="box_detail">
+                    <div class="detail">
+                      <img class="fl_l mr_10" src="images/avatar.png" alt="avatar">    
+                      <p>
+                        段落文字样式演示
+                          1234567890_+-=:";'|\.,/`~!@#$%^&amp;*()[]{}&lt;&gt;  
+                      </p>
+                      <p>
+                        <a href="#">互联网</a>已经过十多年的发展，各种新型应用层出不穷，2005年7月威客（witkey）理论创始者刘
+                        锋第一次提出 ，人的知识，智慧，经 验，技能通过互联网转换成实际收益的互联网新模式。主要应用
+                        包括解决科学，技术，工作，生活，学习等领域的问题。经中央电视 台新闻报道后，国内威客模式商
+                        业网站蓬勃发展，借着威客热浪涌现出了一批优秀的威客站点，而威客理论也经历了实践的考验。同时
+                        随着互联网的普及，“一招鲜”的威客模式面临着威客流程控制和人际交互的应用瓶颈，威客需要回归
+                        “人机结合，以人为本”的传统理念来。 
+                        </p>
+                        <p>客客出品专业威客系统英文名称<a href="#">KPPW</a>，也是keke produced 
+                        professional witkey的缩写。KPPW是一款基于PHP+MYSQL技术构架的威客系统 ，积客客团队多年实
+                        践和对威客模式商业化运作的大量调查分析而精心策划研发，是您轻松搭建威客网站的首选利器。
+                        KPPW针对威客 任务模型进行了细致的分析，提供完善威客任务流程控制解决方案，并将逐步分享威
+                        客系统专业化应用作为我们的发展目标。 
+                        </p>
+                        <p>
+                         欢迎体验KPPW，提供您的宝贵意见！
+                        </p>
+                    </div>
+                </div>
+                <div class="box_footer">
+                   LESS 将 CSS 赋予了动态语言的特性，如 变量， 继承， 运算， 函数. LESS 既可以在 客户端 上运行 (支持IE 6+, Webkit, Firefox)，也可以借助Node.js或者Rhino在服务端运行。
+                </div>
+             </div>
+        </div>
+
+
+        <div class="box star_craft2 mb_30">
+            <div class="inner clearfix">
+                <div class="box_header">
+                    <div class="box_title">
+                        <h2 class="title" title="这里是标题说明">.box.star_craft2 星际2</h2>
+                    </div>
+                </div>
+                <div class="box_detail">
+                    <div class="detail">
+                       <img class="fl_l mr_10" src="images/avatar.png" alt="avatar">  
+                      <p>
+                        段落文字样式演示
+                          1234567890_+-=:";'|\.,/`~!@#$%^&amp;*()[]{}&lt;&gt;  
+                      </p>
+                      <p>
+                        <a href="#">互联网</a>已经过十多年的发展，各种新型应用层出不穷，2005年7月威客（witkey）理论创始者刘
+                        锋第一次提出 ，人的知识，智慧，经 验，技能通过互联网转换成实际收益的互联网新模式。主要应用
+                        包括解决科学，技术，工作，生活，学习等领域的问题。经中央电视 台新闻报道后，国内威客模式商
+                        业网站蓬勃发展，借着威客热浪涌现出了一批优秀的威客站点，而威客理论也经历了实践的考验。同时
+                        随着互联网的普及，“一招鲜”的威客模式面临着威客流程控制和人际交互的应用瓶颈，威客需要回归
+                        “人机结合，以人为本”的传统理念来。 
+                        </p>
+                        <p>客客出品专业威客系统英文名称<a href="#">KPPW</a>，也是keke produced 
+                        professional witkey的缩写。KPPW是一款基于PHP+MYSQL技术构架的威客系统 ，积客客团队多年实
+                        践和对威客模式商业化运作的大量调查分析而精心策划研发，是您轻松搭建威客网站的首选利器。
+                        KPPW针对威客 任务模型进行了细致的分析，提供完善威客任务流程控制解决方案，并将逐步分享威
+                        客系统专业化应用作为我们的发展目标。 
+                        </p>
+                        <p>
+                         欢迎体验KPPW，提供您的宝贵意见！
+                        </p>
+                    </div>
+                </div>
+                <div class="box_footer">
+                   LESS 将 CSS 赋予了动态语言的特性，如 变量， 继承， 运算， 函数. LESS 既可以在 客户端 上运行 (支持IE 6+, Webkit, Firefox)，也可以借助Node.js或者Rhino在服务端运行。
+                </div>
+             </div>
+        </div>
+
+
+        <div class="box aero_style mb_30">
+            <div class="inner clearfix">
+                <div class="box_header">
+                    <div class="box_title">
+                        <h2 class="title" title="这里是标题说明">.box.aero_style win7 Aero</h2>
+                    </div>
+                </div>
+                <div class="box_detail">
+                    <div class="detail">
+                     <img class="fl_l mr_10" src="images/avatar.png" alt="avatar">  
+                      <p>
+                        段落文字样式演示
+                          1234567890_+-=:";'|\.,/`~!@#$%^&amp;*()[]{}&lt;&gt;  
+                      </p>
+                      <p>
+                        <a href="#">互联网</a>已经过十多年的发展，各种新型应用层出不穷，2005年7月威客（witkey）理论创始者刘
+                        锋第一次提出 ，人的知识，智慧，经 验，技能通过互联网转换成实际收益的互联网新模式。主要应用
+                        包括解决科学，技术，工作，生活，学习等领域的问题。经中央电视 台新闻报道后，国内威客模式商
+                        业网站蓬勃发展，借着威客热浪涌现出了一批优秀的威客站点，而威客理论也经历了实践的考验。同时
+                        随着互联网的普及，“一招鲜”的威客模式面临着威客流程控制和人际交互的应用瓶颈，威客需要回归
+                        “人机结合，以人为本”的传统理念来。 
+                        </p>
+                        <p>客客出品专业威客系统英文名称<a href="#">KPPW</a>，也是keke produced 
+                        professional witkey的缩写。KPPW是一款基于PHP+MYSQL技术构架的威客系统 ，积客客团队多年实
+                        践和对威客模式商业化运作的大量调查分析而精心策划研发，是您轻松搭建威客网站的首选利器。
+                        KPPW针对威客 任务模型进行了细致的分析，提供完善威客任务流程控制解决方案，并将逐步分享威
+                        客系统专业化应用作为我们的发展目标。 
+                        </p>
+                        <p>
+                         欢迎体验KPPW，提供您的宝贵意见！
+                        </p>
+                    </div>
+                </div>
+                <div class="box_footer">
+                   LESS 将 CSS 赋予了动态语言的特性，如 变量， 继承， 运算， 函数. LESS 既可以在 客户端 上运行 (支持IE 6+, Webkit, Firefox)，也可以借助Node.js或者Rhino在服务端运行。
+                </div>
+             </div>
+        </div>
+
+
+        <div class="box apple_style mb_30">
+        	<div class="inner clearfix">
+                <div class="box_header">
+                    <div class="box_title">
+                        <h2 class="title" title="这里是标题说明">.box.apple_style 苹果</h2>
+                    </div>
+                </div>
+                <div class="box_detail">
+                    <div class="detail">
+                     <img class="fl_l mr_10" src="images/avatar.png" alt="avatar">  
+                      <p>
+                        段落文字样式演示
+                          1234567890_+-=:";'|\.,/`~!@#$%^&amp;*()[]{}&lt;&gt;  
+                      </p>
+                      <p>
+                        <a href="#">互联网</a>已经过十多年的发展，各种新型应用层出不穷，2005年7月威客（witkey）理论创始者刘
+                        锋第一次提出 ，人的知识，智慧，经 验，技能通过互联网转换成实际收益的互联网新模式。主要应用
+                        包括解决科学，技术，工作，生活，学习等领域的问题。经中央电视 台新闻报道后，国内威客模式商
+                        业网站蓬勃发展，借着威客热浪涌现出了一批优秀的威客站点，而威客理论也经历了实践的考验。同时
+                        随着互联网的普及，“一招鲜”的威客模式面临着威客流程控制和人际交互的应用瓶颈，威客需要回归
+                        “人机结合，以人为本”的传统理念来。 
+                        </p>
+                        <p>客客出品专业威客系统英文名称<a href="#">KPPW</a>，也是keke produced 
+                        professional witkey的缩写。KPPW是一款基于PHP+MYSQL技术构架的威客系统 ，积客客团队多年实
+                        践和对威客模式商业化运作的大量调查分析而精心策划研发，是您轻松搭建威客网站的首选利器。
+                        KPPW针对威客 任务模型进行了细致的分析，提供完善威客任务流程控制解决方案，并将逐步分享威
+                        客系统专业化应用作为我们的发展目标。 
+                        </p>
+                        <p>
+                         欢迎体验KPPW，提供您的宝贵意见！
+                        </p>
+                    </div>
+                </div>
+                <div class="box_footer">
+                    页脚
+                </div>
+             </div>
+        </div>
+
+        <div class="box apple_style black mb_30">
+            <div class="inner clearfix">
+                <div class="box_header">
+                    <div class="box_title">
+                        <h2 class="title" title="这里是标题说明">.box.apple_style.black 苹果</h2>
+                    </div>
+                </div>
+                <div class="box_detail">
+                    <div class="detail">
+                     <img class="fl_l mr_10" src="images/avatar.png" alt="avatar">  
+                      <p>
+                        段落文字样式演示
+                          1234567890_+-=:";'|\.,/`~!@#$%^&amp;*()[]{}&lt;&gt;  
+                      </p>
+                      <p>
+                        <a href="#">互联网</a>已经过十多年的发展，各种新型应用层出不穷，2005年7月威客（witkey）理论创始者刘
+                        锋第一次提出 ，人的知识，智慧，经 验，技能通过互联网转换成实际收益的互联网新模式。主要应用
+                        包括解决科学，技术，工作，生活，学习等领域的问题。经中央电视 台新闻报道后，国内威客模式商
+                        业网站蓬勃发展，借着威客热浪涌现出了一批优秀的威客站点，而威客理论也经历了实践的考验。同时
+                        随着互联网的普及，“一招鲜”的威客模式面临着威客流程控制和人际交互的应用瓶颈，威客需要回归
+                        “人机结合，以人为本”的传统理念来。 
+                        </p>
+                        <p>客客出品专业威客系统英文名称<a href="#">KPPW</a>，也是keke produced 
+                        professional witkey的缩写。KPPW是一款基于PHP+MYSQL技术构架的威客系统 ，积客客团队多年实
+                        践和对威客模式商业化运作的大量调查分析而精心策划研发，是您轻松搭建威客网站的首选利器。
+                        KPPW针对威客 任务模型进行了细致的分析，提供完善威客任务流程控制解决方案，并将逐步分享威
+                        客系统专业化应用作为我们的发展目标。 
+                        </p>
+                        <p>
+                         欢迎体验KPPW，提供您的宝贵意见！
+                        </p>
+                    </div>
+                </div>
+                <div class="box_footer">
+                    页脚
+                </div>
+             </div>
+        </div>
+
+
+        <div class="box normal">
+            <div class="inner clearfix">
+                <div class="box_header">
+                    <div class="box_title">
+                        <h2 title="这里是标题说明" class="title">.box.normal 普通</h2>
+                    </div>
+                </div>
+                <div class="box_detail">
+                    <div class="detail">
+                       <img class="fl_l mr_10" src="images/avatar.png" alt="avatar">  
+                      
+                      <p>
+                        段落文字样式演示
+                          1234567890_+-=:";'|\.,/`~!@#$%^&amp;*()[]{}&lt;&gt;  
+                      </p>
+                    </div>
+                </div>
+                <div class="box_footer">
+                    页脚
+                </div>
+             </div>
+        </div>
+-->
     </div>
     
 
@@ -2214,5 +2527,3 @@
 </div>
 </body>
 </html>
-
-

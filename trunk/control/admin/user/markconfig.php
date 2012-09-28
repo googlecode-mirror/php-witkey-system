@@ -18,7 +18,6 @@ class Control_admin_user_markconfig extends Controller{
 		require keke_tpl::template('control/admin/tpl/user/mark_config');
 	}
 	function action_edit(){
-		global $_K,$_lang;
 		$mark_config_id = $_GET['mark_config_id'];
 		$where .='mark_config_id='.$mark_config_id;
 		//读取mark_config指定mark_config_id表的数据

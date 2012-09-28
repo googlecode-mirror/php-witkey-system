@@ -100,14 +100,18 @@ class keke_admin_class {
 	function screen_unlock($unlock_num, $unlock_pwd) {
 		global $kekezu;
 		global $_lang;
-		($_SESSION ['uid'] && $_SESSION ['auid']) or keke::show_msg ( $_lang['you_not_login'], 'index.php/admin/login' ,'','success');
+		
+		/* if(empty($_SESSION ['admin_uid'])){
+			 //keke::show_msg ( $_lang['you_not_login'], 'index.php/admin/login', 'success');
+			 Keke::echojson('0',$_lang['you_not_login']);
+		} */
 		if ($unlock_num > 0) { //解锁判断
 			/**获取当前登录用户密码**/
-			$admin_pwd = dbfactory::get_count ( " select password from " . TABLEPRE . "witkey_member where uid = '" . $_SESSION ['uid'] . "'" );
+			$admin_pwd = Dbfactory::get_count ( " select password from " . TABLEPRE . "witkey_member where uid = '" . $_SESSION ['uid'] . "'" );
 			$unlock_pwd = md5 ( $unlock_pwd ); //解锁密码
 			if ($admin_pwd == $unlock_pwd) {
 				$_SESSION ['lock_screen'] = '0';
-				keke::echojson ( '', '2' );
+				Keke::echojson ( '', '2' );
 				die (); //解锁成功
 			} else {
 				if ($unlock_num > 1) {

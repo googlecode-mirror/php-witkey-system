@@ -45,10 +45,25 @@ class Control_admin_config_currencies extends Controller{
 		
 		require Keke_tpl::template('control/admin/tpl/config/currencies');
 	}
+	/**
+	 * 添加汇率
+	 */
 	function action_add(){
 		global $_K,$_lang;
+		
+		if($_GET['cid']){
+			$cid = intval($_GET['cid']);
+			$where = " currencies_id = '$cid' ";
+			$currency_config = Model::factory('witkey_currencies')->setWhere($where)->query();
+			$currency_config = $currency_config[0];
+		}
+		//定义默认的的默认货币符号
+		$default_currency = $_K['currency'];
 		require Keke_tpl::template('control/admin/tpl/config/currencies_add');
 	}
+	/**
+	 * 通过goole更新汇率
+	 */
 	function action_update(){
 		global $_K,$_lang;
 		$code = $_GET['code'];
@@ -57,14 +72,50 @@ class Control_admin_config_currencies extends Controller{
 			//更新指定的汇率
 			$cur->update(FALSE,$code);
 		}else{
-			//更
+			//批量更新
 			$cur->update(TRUE);
 		}
-		Keke::show_msg ( $_lang['update_mi_success'], $this->_base_uri,'success' );
+		Keke::show_msg ( $_lang['update_mi_success'], 'index.php/admin/config_currencies','success' );
 	}
+	/**
+	 * 保存汇率配置
+	 */
 	function action_save(){
-		
+		global $_lang;
+		//form检查
+		Keke::formcheck($_POST['formhash']);
+		//数据
+		$array = array('title'=>$_POST['title'],
+				'code'=>$_POST['code'],
+				'symbol_left'=>$_POST['symbol_left'],
+				'symbol_right'=>$_POST['symbol_right'],
+				'decimal_point'=>$_POST['decimal_point'],
+				'thousands_point'=>$_POST['thousands_point'],
+				'decimal_places'=>$_POST['decimal_places'],
+				'value'=>$_POST['value']);
+		if($_POST['default_cur']){
+			DB::update('witkey_config')->set(array('v'))->value(array($_POST['default_cur']))->where("k='currency'")->execute();
+			//更改默认币种、附带更改当前选择币种
+			$_SESSION['currency'] = $_POST['default_cur'];
+			Cache::instance()->del('keke_config');
+		}
+		if($_POST['hdn_cid']){
+			//条件
+			$where = "currencies_id = '{$_POST['hdn_cid']}'";
+			//更新
+			Model::factory('witkey_currencies')->setData($array)->setWhere($where)->update();
+			//show_msg 跳转的地址
+			$url = "?cid=".$_POST['hdn_cid'];
+		}else{
+			//添加
+			Model::factory('witkey_currencies')->setData($array)->create();
+			$url = NULL;
+		}
+		Keke::show_msg($_lang['submit_success'],'index.php/admin/config_currencies/add'.$url,'success');
 	}
+	/**
+	 * 删除指定的汇率
+	 */
 	function action_del(){
 		$cid = intval($_GET['cid']);
 		echo DB::delete('witkey_currencies')->where('currencies_id='.$cid)->execute();

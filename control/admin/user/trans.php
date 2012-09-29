@@ -6,12 +6,12 @@
  * 2010-10-31 下午13：30
  */
 
-Keke::admin_check_role(80);
+/* Keke::admin_check_role(80);
 $views = array ("rights", "report", "complaint", "process" );
 in_array ( $view, $views ) or $view = "rights";
 
-$action_arr    = keke_report_class::get_transrights_type();/**交易维权类型**/
-$trans_status = keke_report_class::get_transrights_status(); //交易维权状态
+$action_arr    = keke_report_class::get_transrights_type(); *//**交易维权类型**/
+/* $trans_status = keke_report_class::get_transrights_status(); //交易维权状态
 $trans_object = keke_report_class::get_transrights_obj(); //交易维权对象
 $page and $page=intval ( $page ) or $page = '1';
 $page_size and $page_size=intval ( $page_size ) or $page_size = "10";
@@ -68,5 +68,5 @@ if ($view != 'process') {
 
 	//var_dump(ADMIN_ROOT . 'admin_' . $do . '_' . $view . '.php');die();
 	require ADMIN_ROOT . 'admin_' . $do . '_' . $view . '.php';
-}
+} */
 

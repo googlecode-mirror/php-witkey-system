@@ -40,7 +40,7 @@
 				  <td> 
 					<a href="{$add_uri}?cid=$v['currencies_id']" class="button dbl_target"><span class="cog icon"></span>{$_lang['config']}</a>
 					<a href="{$update_uri}?code=$v['code']" class="button"><span class="uparrow icon"></span>$_lang['update']</a>
-					<a href="{$del_uri}?cid=$v['currencies_id']"  class="button"><span class="negative icon"></span>{$_lang['delete']}</a>
+					<a href="{$del_uri}?cid=$v['currencies_id']" onclick="return cdel(this);"  class="button"><span class="negative icon"></span>{$_lang['delete']}</a>
 				  </td>
              </tr>
           {/loop}

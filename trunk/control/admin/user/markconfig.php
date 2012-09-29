@@ -26,7 +26,7 @@ class Control_admin_user_markconfig extends Controller{
 		$list_arr = $list_arr[0];
 		//读取model表的数据，直接模板读取，
 		$model_arr = Keke::$_model_list;
-		//model_arr数组重组
+		//model_arr数组重构
 		$model_arr = Keke::get_arr_by_key($model_arr,'model_code');
 		require keke_tpl::template('control/admin/tpl/user/mark_config_edit');
 	}

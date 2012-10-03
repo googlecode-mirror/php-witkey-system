@@ -47,6 +47,12 @@ class Control_admin_config_basic extends  Controller {
 		$this->action_index('mail');
 	}
 	/**
+	 * µØÍ¼ÅäÖÃ 
+	 */
+	function action_map(){
+		$this->action_index('map');
+	}
+	/**
 	 * »ù±¾ÅäÖÃ
 	 */
 	function action_sys(){

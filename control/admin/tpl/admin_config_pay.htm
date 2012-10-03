@@ -5,12 +5,9 @@
             <a href="index.php?do=config&view=pay&op=config" {if $op=='config' || !isset($op)}class="here"{/if}>{$_lang['pay_config']}</a>
             <a href="index.php?do=config&view=pay&op=online" {if $op=='online'}class="here"{/if}>{$_lang['online_pay_interface']}</a>
 			<a href="index.php?do=config&view=pay&op=offline" {if $op=='offline'}class="here"{/if}>{$_lang['line_pay_interface']}</a>
-			<!--
-				<a href="index.php?do=config&view=pay&op=trust" {if $op=='trust'}class="here"{/if}>{$_lang['trust_pay_interface']}</a>
-    		-->
 		</div>
     </div>
-{if $op == 'online'||$op=='trust'}
+{if $op == 'online'}
 <div class="box tip clearfix p_relative">
     	<div class="control"><a href="javascript:void(0);" onclick="$(this).parent().parent().fadeOut();" title={$_lang['close']}><b>&times;</b></a></div>
         <div class="title"><h2>{$_lang['tips']}</h2></div>

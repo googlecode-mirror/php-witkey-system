@@ -11,7 +11,7 @@ class Keke_db {
 	}
 	/**
 	 * 对象化查询
-	 * @param $columns array       	
+	 * @param $columns string ',' 隔开       	
 	 * @return keke_db_select
 	 */
 	public static function select($columns = NULL) {

@@ -7,15 +7,7 @@
 	<a href="{BASE_URL}/index.php/admin/config_pay/offline" >{$_lang['line_pay_interface']}</a>
 	</div>
 </div>
-<div class="box tip clearfix p_relative">
-    	<div class="control"><a href="javascript:void(0);" onclick="$(this).parent().parent().fadeOut();" title={$_lang['close']}><b>&times;</b></a></div>
-        <div class="title"><h2>{$_lang['tips']}</h2></div>
-        <div class="detail pad10">
-            <ul>
-                	<li>{$_lang['open_pay_info']}</li>
-            </ul>
-        </div>
-	</div>
+
 <div class="box list">
       <table class="detail" cellpadding="0" cellspacing="0">
         <tbody>
@@ -29,7 +21,7 @@
           </tr>
 		  {loop $payment_list $v}
               <tr class="item">
-                <td><a href="index.php?do=config&view=editpay&payname={$v['pay_dir']}">$v['pay_name']</a></td>
+                <td><a href="{BASE_URL}/index.php/admin/config_pay/add?pay_id={$v['pay_id']}">$v['pay_name']</a></td>
                 <td>$v['payment']</td>
                 <td>wuhankeke </td>
                 <td>即时到账接口</td>

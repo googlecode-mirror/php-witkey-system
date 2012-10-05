@@ -43,6 +43,10 @@ class Keke_core extends Keke_base {
 		if($title===NULL){
 			$title = $_lang['sys_tips'];
 		}
+		//没有http加上base_url
+		if(strpos($url, 'http')===FALSE){
+			$url = BASE_URL."/$url";
+		}
 		require Keke_tpl::template ( 'show_msg' );
 		die ();
 	}

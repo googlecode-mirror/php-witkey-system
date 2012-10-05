@@ -75,7 +75,6 @@ class Control_admin_finance_withdraw extends Controller{
 	function action_update(){
 		if($_GET['withdraw_id']){
 			$where = 'withdraw_id = '.$_GET['withdraw_id'];
-			//更新单条,这里的file_id 是在模板上的请求连接中有的
 		}
 	}
 

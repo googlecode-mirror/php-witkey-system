@@ -25,7 +25,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset={$_K['charset']}">
-<meta http-equiv="refresh" content="{$time};url={BASE_URL}/{$url}">
+<meta http-equiv="refresh" content="{$time};url={$url}">
 <title>{$_lang['jump_notice']}</title>
 <link href="{BASE_URL}/resource/css/base.css" rel="stylesheet" type="text/css" />
 <link href="{BASE_URL}/resource/css/buttons.css" rel="stylesheet" type="text/css" />
@@ -39,7 +39,7 @@
                 <div class="tip_title">{$title} {$_lang['page_jumping']}</div>
                 <div class="tip_messages">{$content}<span id="time">{$time}</span> {$_lang['seconds_auto_jump']}</div>
                 <div class="tip_help">{$_lang['no_jump_please_click']}
-				<a href="{BASE_URL}/{$url}" class="button"><span class="icon rightarrow">&nbsp;</span>{$_lang['here']}</a></div>
+				<a href="{$url}" class="button"><span class="icon rightarrow">&nbsp;</span>{$_lang['here']}</a></div>
             
         </div>
     </div>

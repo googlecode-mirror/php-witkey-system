@@ -74,23 +74,22 @@
                     <td>{$status_arr[$v['order_status']]}</td>
                     <td>
                     	{if $v['order_status']=='wait'&&$offline_pay[$v['pay_type']]}
-                    		<a href="{$update_uri}?&order_id={$v['order_id']}" onclick="return cdel(this,'<div style=width:300px;word-wrap:break-word;word-break:normal>{if $v[pay_info]}{$_lang[user_recharge_att_info]}£º$v[pay_info]{else}{$_lang[user_does_not_charge_info]}{/if}</div>{$_lang[confirm_cashin]}£¿');" class="button"><span class="cog icon"></span>{$_lang['confirm_of_payment']}£¿</a>
+                    		<a href="{BASE_URL}/index.php/admin/finance_recharge/update?&order_id={$v['order_id']}" onclick="return cdel(this,'<div style=width:300px;word-wrap:break-word;word-break:normal>{if $v[pay_info]}{$_lang[user_recharge_att_info]}£º$v[pay_info]{else}{$_lang[user_does_not_charge_info]}{/if}</div>{$_lang[confirm_cashin]}£¿');" class="button"><span class="cog icon"></span>{$_lang['confirm_of_payment']}£¿</a>
                        		<a href="{$del_uri}?&order_id={$v['order_id']}" onclick="return cdel(this);" class="button"><span class="trash icon"></span>{$_lang['delete']}</a>
                     	{/if}
 					</td>
                 </tr>
                 {/loop}
                 <tfoot>	
-					<tr >
-					    <td colspan="9">
-					    <div class="page" >{$pages['page']}</div>
-					    <input type="checkbox" onclick="checkall(event);" id="checkbox" name="checkbox"/>
-			        	<label for="checkbox"> {$_lang['select_all']}</label>
-			        	<input type="hidden" name="sbt_action" class="sbt_action"/>
-						<button type="submit" name="sbt_action" onclick="return batch_act(this)" value="{$_lang['mulit_delete']}" class="pill negative" >
-							<span class="trash icon"></span>{$_lang['mulit_delete']}
-						</button>
-			        	</td>
+                	<tr >
+	                	<td colspan="9">
+	                   	<div class="page" >{$pages['page']}</div>
+						<label for="checkbox">{$_lang['select_all']}</label>¡¡
+							<input type="hidden" name="sbt_action" class="sbt_action"/>   
+	                  		<button name="sbt_action" type="submit" value="{$_lang['mulit_delete']}" onclick="return batch_act(this,'frm_art_action');" class="pill negative">
+	                             <span class="icon trash"></span>{$_lang['mulit_delete']}
+	                        </button>
+	                    </td>
 			        </tr>
 			   </tfoot>
               </table>

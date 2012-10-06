@@ -78,6 +78,7 @@ class Control_admin_finance_withdraw extends Controller{
 		}
 	}
 	
+	//提现浏览
 	function action_info(){
 		global $_K,$_lang;
 		if($_GET['withdraw_id']){
@@ -86,11 +87,25 @@ class Control_admin_finance_withdraw extends Controller{
 			$withdraw_info = $withdraw_info[0];
 			$bank_arr = keke_global_class::get_bank();
 			$k_arr   = array_keys($bank_arr);
-			
 			require Keke_tpl::template('control/admin/tpl/finance/withdraw_info');
 		}
 	}
-
+	
+	//提现审核通过
+	function action_pass(){
+				$array = array(
+					'withdraw_status'=>'3',
+					'process_uid'=>'1',
+					'process_username'=>'admin',
+					'process_time'=>time(),
+				);
+		if ($_POST['is_submit']) {
+			
+			echo 1;
+		}
+		Keke::show_msg('系统提示','index.php/admin/finance_withdraw','提交成功','success');
+	}
+	
 }
 
 

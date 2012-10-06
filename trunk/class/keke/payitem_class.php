@@ -13,7 +13,7 @@ keke_lang_class::load_lang_class('keke_payitem_class');
 class keke_payitem_class {
 	
 	public static function get_table_obj($table = 'witkey_payitem') {
-		return keke_table_class::get_instance ( $table );
+		return Model::factory( $table );
 	}
 	
 	/**
@@ -26,9 +26,7 @@ class keke_payitem_class {
 		global $kekezu;
 		$is_open==1 and $where = " and is_open=$is_open";
 		$pk         or $pk = "item_code";
-
-		$payitem_list = Keke::get_table_data ( "*", "witkey_payitem", "1=1 $where ", "", "", "", $pk,3600 );
-	 
+		$payitem_list = Keke::get_table_data ( "*", "witkey_payitem", "1=1 $where ", "", "", "", $pk,0 );
 		if ($user_type) {
 			foreach ( $payitem_list as $k => $v ) {
 				if ($v ['user_type'] != $user_type)
@@ -66,7 +64,7 @@ class keke_payitem_class {
 	 */
 	public static function get_payitem_record($w = array(), $order = null, $p = array()) {
 		global $kekezu;
-		$record_obj = new Keke_witkey_payitem_record_class ();
+		$record_obj = new Keke_witkey_payitem_record ();
 		$record_arr = array ();
 		$where = " 1 = 1 ";
 		
@@ -84,12 +82,12 @@ class keke_payitem_class {
 			$p ['url'] and $url = $p ['url'] or $url = $_SERVER ['HTTP_REFERER'];
 			$p ['anchor'] and $anchor = $p ['anchor'];
 			$record_obj->setWhere ( $where );
-			$count = intval ( $record_obj->count_keke_witkey_payitem_record () );
+			$count = intval ( $record_obj->count () );
 			$pages = $page_obj->getPages ( $count, $page_size, $page, $url, "#" . $anchor );
 			$where .= $pages ['where'];
 		}
 		$record_obj->setWhere ( $where );
-		$record_list = $record_obj->query_keke_witkey_payitem_record ();
+		$record_list = $record_obj->query ();
 		
 		$record_arr ['page'] = $pages ['page'];
 		$record_arr ['list'] = $record_list;
@@ -101,15 +99,17 @@ class keke_payitem_class {
 	 * @return boolen
 	 */
 	public static function payitem_install($item_code) {
-	
+	    global $_lang;
 		$obj = self::get_table_obj ();
-		$info = $obj->get_table_info ( "item_code", $item_code );
+		$where  = "item_code = '$item_code'";
+		$info = $obj->setWhere($where)->query();
+		$info = $info[0];
 		if ($info) { //此服务已存在
 			return false;
 		} else { //添加服务
 			if(file_exists(S_ROOT . "./control/payitem/$item_code/control/init_config.php")){
-				require_once S_ROOT . "./control/payitem/$item_code/control/init_config.php";
-				return $obj->save ( $init_info );
+				require S_ROOT . "./control/payitem/$item_code/control/init_config.php";
+				return  $obj->setData($init_info)->setWhere($where)->create();
 			}else{
 				return false;
 			}
@@ -122,7 +122,8 @@ class keke_payitem_class {
 	 */
 	public static function payitem_edit($item_id, $item_info = array()) {
 		$obj = self::get_table_obj ();
-		return $obj->save ( $item_info, array ("item_id" => $item_id ) );
+		return $obj->setData($item_info)->setWhere("item_id = '$item_id'")->update();
+		 
 	}
 	/**
 	 * 增值项卸载
@@ -130,7 +131,7 @@ class keke_payitem_class {
 	 */
 	public static function payitem_uninstall($item_id) {
 		$obj = self::get_table_obj ();
-		return $obj->del ( "item_id", $item_id );
+		return $obj->setWhere("item_id='$item_id'")->del ();
 	}
 	/**
 	 * 增值服务花费、购买记录产生
@@ -157,8 +158,7 @@ class keke_payitem_class {
 			 
 			$fid_cash or Keke::show_msg($_lang['friendly_notice'],'index.php?do=user&view=finance&op=recharge',3,$_lang['your_balance_not_enough']);
 		}
-		$record_obj = new Keke_witkey_payitem_record_class ();
-		$record_obj->_record_id = null;
+		$record_obj = new Keke_witkey_payitem_record();
 		$record_obj->setItem_code ( $item_code );
 		$record_obj->setUid ( $uid );
 		$record_obj->setUsername ( $username );
@@ -169,7 +169,7 @@ class keke_payitem_class {
 		$record_obj->setObj_id ( $obj_id );
 		$record_obj->setOrigin_id ( $origin_id );
 		$record_obj->setOn_time ( time () );
-		$record_id = $record_obj->create_keke_witkey_payitem_record ();
+		$record_id = $record_obj->create();
 		return $record_id;
 	}
 	/**
@@ -177,7 +177,7 @@ class keke_payitem_class {
 	 * @param int $record_id
 	 */
 	public static function payitem_del($record_id) {
-		return dbfactory::execute ( sprintf ( " delete frm %switkey_payitem_record where record_id='%d'", TABLEPRE, $record_id ) );
+		return Dbfactory::execute ( sprintf ( " delete frm %switkey_payitem_record where record_id='%d'", TABLEPRE, $record_id ) );
 	}
 	/**
 	 * 收费标准
@@ -197,15 +197,15 @@ class keke_payitem_class {
 		if($payitem_arr){ 
 			
 			foreach ($payitem_arr as $k=>$v) { 
-				$buy_count = dbfactory::get_count ( sprintf ( " select sum(use_num) from %switkey_payitem_record where uid = '%d'  and item_code = '%s' and use_type = 'buy'", TABLEPRE, $uid,  $v[item_code] ) );
-				$use_count = dbfactory::get_count ( sprintf ( " select sum(use_num) from %switkey_payitem_record where uid = '%d'  and item_code = '%s' and use_type = 'spend'", TABLEPRE, $uid,  $v[item_code] ) );
+				$buy_count = Dbfactory::get_count ( sprintf ( " select sum(use_num) from %switkey_payitem_record where uid = '%d'  and item_code = '%s' and use_type = 'buy'", TABLEPRE, $uid,  $v[item_code] ) );
+				$use_count = Dbfactory::get_count ( sprintf ( " select sum(use_num) from %switkey_payitem_record where uid = '%d'  and item_code = '%s' and use_type = 'spend'", TABLEPRE, $uid,  $v[item_code] ) );
 				$payitem_info [$v[item_code]]  = intval($buy_count - $use_count); 
 	
 			} 
 			
 		}else{ 
-		$buy_count = dbfactory::get_count ( sprintf ( " select sum(use_num) from %switkey_payitem_record where uid = '%d' and item_code = '%s' and use_type = 'buy'", TABLEPRE, $uid, $item_code ) );
-		$use_count = dbfactory::get_count ( sprintf ( " select sum(use_num) from %switkey_payitem_record where uid = '%d'  and item_code = '%s' and use_type = 'spend'", TABLEPRE, $uid, $item_code ) );
+		$buy_count = Dbfactory::get_count ( sprintf ( " select sum(use_num) from %switkey_payitem_record where uid = '%d' and item_code = '%s' and use_type = 'buy'", TABLEPRE, $uid, $item_code ) );
+		$use_count = Dbfactory::get_count ( sprintf ( " select sum(use_num) from %switkey_payitem_record where uid = '%d'  and item_code = '%s' and use_type = 'spend'", TABLEPRE, $uid, $item_code ) );
 
 		$payitem_info = intval($buy_count - $use_count);
 		} 
@@ -225,7 +225,7 @@ class keke_payitem_class {
 		$obj_type and $sql .= " and a.obj_type = '$obj_type' ";
 		$obj_id and $sql .= " and a.obj_id = '$obj_id' ";
 		
-		return dbfactory::query ( $sql );
+		return Dbfactory::query ( $sql );
 	}
 
 	
@@ -248,9 +248,9 @@ class keke_payitem_class {
 	 */
 	public static function update_service_payitem_time($payitem_time,$add_time,$service_id){
 			$service_payitem_arr = unserialize($payitem_time);	//改变增值服务的时间 
-			$service_payitem_arr[top] = $add_time+$service_payitem_arr[top];
+			$service_payitem_arr['top'] = $add_time+$service_payitem_arr['top'];
 			$new_payitem_time = serialize($service_payitem_arr);
-			$res = dbfactory::execute(sprintf("update %switkey_service set payitem_time='%s' where service_id=%d",TABLEPRE,$new_payitem_time,$service_id)); 
+			$res = Dbfactory::execute(sprintf("update %switkey_service set payitem_time='%s' where service_id=%d",TABLEPRE,$new_payitem_time,$service_id)); 
 			return $res;
 	}
 	
@@ -272,7 +272,7 @@ class keke_payitem_class {
 				$sql = sprintf("update %switkey_service set payitem_time='%s' where service_id=%d",TABLEPRE,$payitem_end_time,$obj_id);
 				break; 
 		}   
-		$res = dbfactory::execute($sql); 
+		$res = Dbfactory::execute($sql); 
 		return $res;
 	}
 	

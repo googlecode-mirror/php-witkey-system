@@ -62,7 +62,7 @@
 								{/if}
 								<button class="positive primary button" id="submit_save" type="submit" value={$_lang['pass']} onclick="return confirm('{$_lang['confirm']}{$_lang['pass']}{$_lang['me']}?');">
 									<span class="icon check"></span>{$_lang['pass']}</button>
-                       		    <button class="button" type="button" value="{$_lang['nopass']}" onclick="location.href='index.php?do=finance&view=withdraw&ac=nopass&withdraw_id=$withdraw_id'"><span class="icon trash"></span>{$_lang['nopass']}</button>
+                       		    <button class="button" type="button" value="{$_lang['nopass']}" onclick="location.href='{BASE_URL}/index.php/admin/finance_withdraw/nopass?withdraw_id=$withdraw_id'"><span class="icon trash"></span>{$_lang['nopass']}</button>
                               {/if}
 							  <button class="pill button" type="button" value="{$_lang['return']}" onclick="javascript:history.go(-1);" ><span class="icon uparrow"></span>{$_lang['return']}</button>
                        </td>

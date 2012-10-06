@@ -77,6 +77,21 @@ class Control_admin_finance_withdraw extends Controller{
 			$where = 'withdraw_id = '.$_GET['withdraw_id'];
 		}
 	}
+	
+	function action_info(){
+		global $_K,$_lang;
+		if($_GET['withdraw_id']){
+			$where = 'withdraw_id = '.$_GET['withdraw_id'];
+			//$sql = "select * from ".TABLEPRE."witkey_withdraw where ";
+			$withdraw_info = db::select('*')->from("witkey_withdraw")->where($where)->execute();
+			$withdraw_info = $withdraw_info[0];
+			//var_dump($withdraw_info);die;
+			$bank_arr = keke_global_class::get_bank();
+			$k_arr   = array_keys($bank_arr);
+			
+			require Keke_tpl::template('control/admin/tpl/finance/withdraw_info');
+		}
+	}
 
 }
 

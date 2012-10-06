@@ -93,12 +93,12 @@
                      <td>
                     	{if $v['withdraw_status']==1}
 							{if $v['pay_type'] =='alipayjs'}
-							   	 <a href="###" onclick="batch_pay({$v['withdraw_id']})" class="button">
+							   	 <a href="javascript::void(0);" onclick="batch_pay({$v['withdraw_id']})" class="button">
 							   	 	<span class="loop   icon"></span>{$_lang['alipay']}</a>
 							{/if}
                        			 <a href="{BASE_URL}/index.php/admin/finance_withdraw/pass?withdraw_id={$v['withdraw_id']}" class="button">
                        			<span class="check  icon"></span>{$_lang['confirm_cash']}</a>
-                        <a href="{BASE_URL}/index.php/admin/finance_withdraw/nopass?withdraw_id={$v['withdraw_id']}&page={$page}" onclick="return cdel(this);" class="button"><span class="trash icon"></span>{$_lang['nopass']}</a>
+                        <a href="{BASE_URL}/index.php/admin/finance_withdraw/nopass?withdraw_id={$v['withdraw_id']}" onclick="return cdel(this);" class="button"><span class="trash icon"></span>{$_lang['nopass']}</a>
                     	 {/if}
 					  </td>
 					   <td>

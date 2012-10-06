@@ -93,19 +93,35 @@ class Control_admin_finance_withdraw extends Controller{
 	
 	//提现审核通过
 	function action_pass(){
-				$array = array(
+		$array = array(
+					'withdraw_status'=>'2',
+					'process_uid'=>'1',
+					'process_username'=>'admin',
+					'process_time'=>time(),
+				);
+		$where = 'withdraw_id = '.$_GET['withdraw_id'];
+		if ($_POST['is_submit']) {
+			
+			echo 1;
+		}else{
+			Model::factory("witkey_withdraw")->setData($array)->setWhere($where)->update();
+		}
+		Keke::show_msg('系统提示','index.php/admin/finance_withdraw','提交成功','success');
+	}
+	
+	//不通过审核
+	function action_nopass(){
+		
+		//var_dump($where);
+		$array = array(
 					'withdraw_status'=>'3',
 					'process_uid'=>'1',
 					'process_username'=>'admin',
 					'process_time'=>time(),
 				);
-		if ($_POST['is_submit']) {
-			
-			echo 1;
-		}
+		Model::factory("witkey_withdraw")->setData($array)->setWhere($where)->update();
 		Keke::show_msg('系统提示','index.php/admin/finance_withdraw','提交成功','success');
 	}
-	
 }
 
 

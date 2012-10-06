@@ -369,11 +369,10 @@ function uploadify(paramReg,contrReg){
  * @param {Object}
  * 			showTarget 消息插入容器ID  。当ac_type=1时有效
  */
-function upload(fileName,fileType,mode,task_id,obj_id,obj_type,width,height,msgType,showTarget){
+function upload(fileName,fileType,task_id,obj_id,obj_type,width,height,msgType,showTarget){
 	var fileObj=document.getElementById(fileName);
 		if(isExtName(fileObj,1,msgType,showTarget)){
-			mode=='back'?pre = "../../":pre='';
-			var url=pre+"index.php?do=ajax&view=upload&task_id="+task_id+"&file_type="+fileType+"&obj_type="+obj_type+"&obj_id="+obj_id+"&file_name="+fileName;
+			var url=BASE_URL+"/index.php/ajax/upload?task_id="+task_id+"&file_type="+fileType+"&obj_type="+obj_type+"&obj_id="+obj_id+"&file_name="+fileName;
 			$.ajaxFileUpload({
 				url:url,
 				fileElementId:fileName,

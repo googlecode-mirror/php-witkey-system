@@ -8,7 +8,14 @@
 
 
 class Control_ajax_upload extends Controller{
-	
+	/**
+	 * 文件上传
+	 * @example sys，表示系统文件，如 'ad','auth','mark','tools' 这几个
+	 * 目录是对sys的扩展，ad 表示广告图片,auth 表示认证图片,mark 表示互评文件,tools 表示增值工具图片  这几个参数由
+	 * task_id 为来表示
+	 * @see keke_ajax_upload_class::file_info_init()
+	 * 
+	 */
 	function action_index(){
 		$upload_obj=keke_ajax_upload_class::get_instance($_SERVER['QUERY_STRING']);
 		switch ($upload_obj->_file_type){
@@ -24,5 +31,20 @@ class Control_ajax_upload extends Controller{
 				$upload_obj -> upload_and_resize_pic();
 				break;
 		}
+	}
+	/**
+	 * 删除指定的文件,必须要用fid,filepath,防止被注
+	 */
+	function action_del(){
+		//文件的fid
+		$_GET = Keke_tpl::chars($_GET);
+		$fid = intval($_GET['fid']);
+		//一般用在同一个图片有多种尺寸时，需要带上这个参数，属于可选参数
+		$size = $_GET['size'];
+		//文件路径
+		$filepath = $_GET['fielpath'];
+		//执行删除 
+		$res = keke_file_class::del_att_file($fid,$filepath,$size);
+		$res and Keke::echojson ( '', 1 ) or Keke::echojson ( '', '0' );
 	}
 }

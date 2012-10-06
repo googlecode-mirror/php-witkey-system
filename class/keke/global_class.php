@@ -38,7 +38,7 @@ class keke_global_class {
 	}
 	public static function get_payitem_type(){
 		global $_lang;
-		return array("task"=>$_lang['task_pub'],"work"=>$_lang['witkey_submit'],"task_service"=>Keke::lang(task_pub_goods_pub));
+		return array("task"=>$_lang['task_pub'],"work"=>$_lang['witkey_submit'],"task_service"=>$_lang['task_pub_goods_pub']);
 	}
 	public static function withdraw_status(){
 		global $_lang;

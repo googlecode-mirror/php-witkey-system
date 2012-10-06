@@ -25,6 +25,12 @@ class Control_admin_config_basic extends  Controller {
 		}elseif(!isset($type)){
 			$type = 'web';
 		}
+		if($type=='weibo'){
+			//微博接口的中文名称 
+			$oauth_type_list = keke_global_class::get_open_api();
+			$api_open  = unserialize($config_arr['oauth_api_open']);
+		}
+		
 		
 		require Keke_tpl::template('control/admin/tpl/config/'.$type);
 	}
@@ -59,6 +65,18 @@ class Control_admin_config_basic extends  Controller {
 		$this->action_index('basic');
 	}
 	/**
+	 * 微博
+	 */
+	function action_weibo(){
+		$this->action_index('weibo');
+	}
+	/**
+	 * 加关注
+	 */
+	function action_focus(){
+		$this->action_index('focus');
+	}
+	/**
 	 * 保存配置数据
 	 */
 	function action_save(){
@@ -75,6 +93,12 @@ class Control_admin_config_basic extends  Controller {
 		if(isset($values['account_pwd'])){
 			$values['account_pwd'] = base64_encode($_POST['account_pwd']);
 		}
+		
+		//weibo oauth接口，是否开启
+		if(isset($values['oauth_api_open'])){
+			$values['oauth_api_open']  = serialize($_POST['api']);
+		}
+		
 		foreach ($values as $k=>$v) {
 			$where = "k = '$k'";
 			DB::update('witkey_config')->set(array('v'))->value(array($v))->where($where)->execute();

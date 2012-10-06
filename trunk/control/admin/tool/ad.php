@@ -8,6 +8,7 @@ defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
  * @date 2011-12-21 下午05:58:43
  * @encoding GBK
  */
+
 class Control_admin_tool_ad extends Controller{
 	function action_index(){
 		//加载全局变量，语言包

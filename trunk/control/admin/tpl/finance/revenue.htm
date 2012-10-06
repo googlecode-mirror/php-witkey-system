@@ -1,0 +1,108 @@
+<!--{include control/admin/tpl/admin_header}-->
+<!--{include control/admin/tpl/finance/finance_head}-->
+	<div class="tabcon">
+		<table id='tb_cont_1' class='t_sub clear_l clear_b'>
+						<thead align="center">
+							<th> {$_lang['category']} </th>
+							<th> {$_lang['detail']} </th>
+							<th> {$_lang['cash']} </th>
+							<th> {$_lang['total']} </th>
+						</thead>
+						<tbody>
+							<tr>
+								<td>{$_lang['reward_host']}</td>
+								<td>
+									{if $task}
+									  <ul>
+										{loop $task $v}
+											<li>{$model_list[$v['model_id']]['model_name']}({$v['count']}{$_lang['ci']})</li>
+										{/loop}
+									  </ul>
+									{else}
+										{$_lang['no_data']}
+									{/if}
+								</td>
+								<td>
+									{if $task}
+									  <ul>
+										<!--{eval $t = 0;}-->
+										{loop $task $v}
+										<!--{eval $tc = $v['cash']+$v['credit'];}-->
+											<!--{eval $t+=$tc;}-->
+											<li>{c:$tc}</li>
+										{/loop}
+									  </ul>
+									{else}
+										{$_lang['no_data']}
+									{/if}
+								</td>
+								<td>{c:$t}</td>
+							</tr>
+							<tr>
+								<td>{$_lang['payitem']}</td>
+								<td>
+									<!--{eval $p = $payitem['cash']+$payitem['credit'];}-->
+									{if $p}
+										{$p}{$_lang['ci']}
+									{else}
+										{$_lang['no_data']}
+									{/if}
+								</td>
+								<td>
+									{if $p}
+										{c:$p}
+									{else}
+										{$_lang['no_data']}
+									{/if}
+								</td>
+								<td>{c:$p}</td>
+							</tr>
+							<tr>
+								<td>{$_lang['sal_service']}</td>
+								<td>
+									{if $service}
+									  <ul>
+										{loop $service $v}
+											
+											<li>{$model_list[$v['model_id']]['model_name']}({$v['count']}{$_lang['ci']})</li>
+										{/loop}
+									  </ul>
+									{else}
+										{$_lang['no_data']}
+									{/if}
+								</td>
+								<td>
+									{if $service}
+									  <ul>
+										<!--{eval $s = 0;}-->
+										{loop $service $v}
+											<!--{eval $sc = $v['cash']+$v['credit'];}-->
+											<!--{eval $s+=$sc;}-->
+											<li>{c:$sc}</li>
+										{/loop}
+									  </ul>
+									{else}
+										{$_lang['no_data']}
+									{/if}
+								</td>
+								<td>{c:$s}</td>
+							</tr>
+							
+						</tbody>
+					
+					</table>
+			<div class='tip'><div class='title'>{$desc}{$_lang['in_description']}</div></div>
+					
+			<table id='tb_cont_2' class='t_sub hidden clear_l clear_b'></table>
+			<div class='tip hidden'><div class='title'>{$desc}{$_lang['profit_description']}</div></div>
+			
+			<table id='tb_cont_3' class='t_sub hidden clear_l clear_b'></table>
+			<div class='tip hidden'><div class='title'>{$desc}{$_lang['withdraw_description']}</div></div>	
+			<table id='tb_cont_4' class='t_sub hidden clear_l clear_b'></table>
+			<div class='tip hidden'><div class='title'>{$desc}{$_lang['charge_description']}</div></div>	
+					
+	</div>
+        
+    </div>
+
+  <!--{include control/admin/tpl/admin_footer}-->

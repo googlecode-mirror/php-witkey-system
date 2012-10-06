@@ -1,0 +1,43 @@
+<!--{include control/admin/tpl/admin_header}-->
+<!--{include control/admin/tpl/finance/finance_head}-->
+	<div class="tabcon">
+		<table id='tb_cont_1' class='t_sub clear_l clear_b'>
+		<thead align="center">
+			<th> {$_lang['from']} </th>
+			<th> {$_lang['cash']} </th>
+		</thead>
+		<tbody>
+			<tr>
+				<td >{$_lang['task_cash']}</td>
+				<td >{c:$task}</td>
+			</tr>
+			<tr>
+				<td >{$_lang['shop_profit']}</td>				
+				<td>{c:$service}</td>
+			</tr>
+			<tr>
+				<td >{$_lang['payitem']}</td>
+				<td>{c:$payitem}</td>
+			</tr>
+			<tr>
+				<td >{$_lang['user_auth']}</td>
+				<td>{c:$auth}</td>
+			</tr>
+			<tr>
+				<td >{$_lang['user_withdraw']}</td>
+				<td>{c:$withdraw}</td>
+			</tr>			
+		</tbody>
+	<tfoot>
+			<tr>
+				<td></td>
+				<td ><strong>{$_lang['total']}</strong> <strong style="color:red"> {c:$p_all}</strong></td>
+			</tr>
+		</tfoot>	
+			<table id='tb_cont_4' class='t_sub clear_l clear_b'></table>
+			<div class='tip'><div class='title'>{$desc}{$_lang['profit_description']}</div></div>						
+	</div>       
+    </div>
+
+    <!--{include control/admin/tpl/admin_footer}-->
+

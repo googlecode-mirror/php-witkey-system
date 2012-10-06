@@ -4,6 +4,7 @@
  * @author michael
  *
  */
+
 class Control_admin_link extends Controller {
 	
 	/**

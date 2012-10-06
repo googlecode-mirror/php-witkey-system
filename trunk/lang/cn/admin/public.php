@@ -165,6 +165,7 @@ $lang = array (
 		'financial_model'=>'财务模块',
 		'statistical_info'=>'统计信息',
 		'flow_record'=>'财务明细',
+		'financial_summary'=>'财务概况',
 		'graphic_report'=>'财务分析',
 		'withdraw_audit'=>'提现审核',
 		'recharge_audit'=>'充值审核',

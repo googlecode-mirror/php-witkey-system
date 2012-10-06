@@ -8,7 +8,7 @@
 class Control_admin_finance_revenue extends Controller {
 	
 	/**
-	 * 友链管理初始化页面
+	 * 财务管理初始化页面
 	 * index 是必须的，否则路由找不到index，程序就挂了啊
 	 * 坑爹的注释啊,这是必须要写的(*_*)!
 	 */

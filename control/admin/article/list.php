@@ -5,6 +5,7 @@
  * @author Administrator
  *
  */
+
 class Control_admin_article_list extends Controller {
  
 	function action_index($type=null) {

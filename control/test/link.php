@@ -1,5 +1,6 @@
 <?php defined ( 'IN_KEKE' ) or exit('Access Denied');
 
+
 class Control_test_link extends Controller{
 	
 	 protected  $_uri = 'index.php/test_link';

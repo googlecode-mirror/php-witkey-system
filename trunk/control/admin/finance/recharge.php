@@ -74,22 +74,30 @@ class Control_admin_finance_recharge extends Controller{
 	function action_update(){
 		
 		$array = array(
-					'order_status'=>'ok',
+					'order_status'=>'ok'
 				);
 		$page = $_GET['page'];
 		if($_GET['order_id']){
-			
 			$where = 'order_id = '.$_GET['order_id'];
+			//获取充值信息
 			$order_info = Model::factory("witkey_order_charge")->setData($array)->setWhere($where)->query();
 			$order_info = $order_info[0];
-	
-			//充值审核通过
+			
+			if ($order_info [order_status] == 'ok'){
+				Keke::admin_show_msg($_lang['payment_has_been_success_no_need_repeat'], BASE_URL.'index.php/admin/finance_recharge',3,'','warning');
+			}
+			//用户信息
+			$user_info = keke_user_class::get_user_info($order_info ['uid']);
+			//充值状态
 			Model::factory("witkey_order_charge")->setData($array)->setWhere($where)->update();
-				/*新增财务记录*/
+			//充值
 			keke_finance_class::cash_in($order_info['uid'], $order_info['pay_money'],0,'offline_charge','','offline_charge');
-			//Keke_finance::cash_in($uid, $cash, $action)
+			//发送站内信给用户
+			keke_msg_class::send_private_message('充值成功', '您充值了'.$order_info['pay_money'], $order_info['uid'], $order_info['username']);
+			//充值日志
 			Keke::admin_system_log ( $_lang['confirm_payment_recharge'].$order_id);
-			Keke::show_msg('付款成功',BASE_URL.'index.php/admin/finance_recharge','系统提示','success',3);
+			//成功跳转提示
+			Keke::show_msg('付款成功',BASE_URL.'index.php/admin/finance_recharge?page='.$page,'系统提示','success',3);
 		}
 	}
 

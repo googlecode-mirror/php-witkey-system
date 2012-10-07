@@ -86,6 +86,7 @@ class Control_admin_finance_withdraw extends Controller{
 			$withdraw_info = db::select('*')->from("witkey_withdraw")->where($where)->execute();
 			$withdraw_info = $withdraw_info[0];
 			$bank_arr = keke_global_class::get_bank();
+			$status_arr = keke_global_class::withdraw_status();
 			$k_arr   = array_keys($bank_arr);
 			require Keke_tpl::template('control/admin/tpl/finance/withdraw_info');
 		}

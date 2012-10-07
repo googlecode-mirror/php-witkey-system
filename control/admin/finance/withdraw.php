@@ -59,26 +59,92 @@ class Control_admin_finance_withdraw extends Controller{
 		//删除单条,这里的file_id 是在模板上的请求连接中有的
 		if($_GET['withdraw_id']){
 			$where = 'withdraw_id = '.$_GET['withdraw_id'];
-			//删除多条,这里的条件统一为ids哟，亲
-		}elseif($_GET['ids']){
-			$where = 'withdraw_id in ('.$_GET['ids'].')';
+			echo  Model::factory('witkey_withdraw')->setWhere($where)->del();
+			
 		}
-		//输出执行删除后的影响行数，模板上的js 根据这个值来判断是否移聊tr标签到
-		//注释中不能打单引，否则去注释的工具失效,蛋痛的工具啊!
-		echo  Model::factory('witkey_withdraw')->setWhere($where)->del();
+		if($_GET['ids']){
+			$ids = $_GET['ids'];
+			if (count ( $_GET['ids'] )) {
+						//待审核的提出记录
+						//$nodraw_arr = Model::factory("witkey_withdraw")->setWhere(" withdraw_id in ('$ids') and withdraw_status =1 ")->query();
+						$nodraw_arr = db::select('*')->from("witkey_withdraw")->where("withdraw_id in ('$ids') and withdraw_status =1")->execute();
+						$nodraw_arr = $nodraw_arr[0];
+						//var_dump($nodraw_arr);die;
+						switch ($sbt_action) {
+							case $_lang['mulit_nopass']: //批量退款
+								//待审核的退款处理后，
+								
+								foreach ( $nodraw_arr as $v ) {
+									$withdraw_id = $v ['withdraw_id'];
+									$where = "withdraw_id = '$withdraw_id' ";
+									$withdraw_info = db::select('*')->from("witkey_withdraw")->where($where)->execute();
+									$withdraw_info = $withdraw_info[0];
+									$withdraw_cash = $withdraw_info ['withdraw_cash'];
+									$uid = $withdraw_info ['uid'];
+									$username = $withdraw_info ['username'];
+									$pay_way = array_merge(keke_global_class::get_bank(),keke_global_class::get_online_pay());
+					
+									$data = array(':pay_way'=>$pay_way[$withdraw_info['pay_type']],':pay_account'=>$withdraw_info['pay_account'],':pay_name'=>$withdraw_info['pay_name']);
+									keke_finance_class::init_mem('withdraw_fail', $data);
+									keke_finance_class::cash_in ( $uid, $withdraw_cash, 0, 'withdraw_fail' );
+								}
+								//审核通过的批量退款
+								Model::factory("witkey_withdraw")->setData(array('withdraw_status'=>'3'))->setWhere('withdraw_id in ('.$_GET['ids'].')')->update();
+								Keke::admin_system_log ( $_lang['delete_audit_withdraw'] . $ids );
+								break;
+							case $_lang['mulit_review']: //批量审核
+								//字段数组
+								$array = array(
+											'withdraw_status'=>'2',
+											'process_uid'=>$admin_info ['uid'],
+										'process_username'=>$admin_info ['username'],
+										'process_uid'=>$admin_info ['uid'],
+										'process_time'=>time(),
+										);
+								//更新操作状态
+								Model::factory("witkey_withdraw")->setData($array)->setWhere(' withdraw_id in (' . $ids . ') ')->update();
+								$withdraw_arr = db::select('*')->from("witkey_withdraw")->where("withdraw_id in ('$ids') and withdraw_status =1")->execute();
+								$withdraw_arr = $withdraw_arr[0];
+								foreach ( $withdraw_arr as $withdraw_info ) {
+									$withdraw_id = $withdraw_info ['withdraw_id'];
+									/*更新手续费*/
+									if(in_array($withdraw_id,$ids)){
+										$fee = $withdraw_info['withdraw_cash'] - keke_finance_class::get_to_cash($withdraw_info['withdraw_cash']);
+										Dbfactory::execute(sprintf(' update %switkey_withdraw set fee=%.2f where withdraw_id=%d',TABLEPRE,$fee,$withdraw_id));
+									}
+									if ($withdraw_info ['withdraw_status'] != 1) {
+										continue;
+									}
+					
+// 									$v_arr = array('网站名称'=>$_K['sitename'],'提现方式'=>$pay_way[$withdraw_info['pay_type']],'帐户'=>$withdraw_info['pay_account'],'提现金额'=>$withdraw_cash);
+// 									keke_msg_class::notify_user($withdraw_info ['uid'],$withdraw_info ['username'],'draw_success',$_lang['withdraw_success'],$v_arr);
+					
+// 									$feed_arr = array ("feed_username" => array ("content" => $withdraw_info ['username'], "url" => "index.php?do=space&member_id=".$space_info['uid']), "action" => array ("content" => $_lang['withdraw'], "url" => "" ), "event" => array ("content" =>$_lang['withdraw_le'].$withdraw_info['withdraw_cash']. $_lang['yuan'],"url" => "" ) );
+// 									Keke::save_feed ( $feed_arr, $user_space_info ['uid'], $user_space_info ['username'], 'withdraw' );
+			
+								}
+			
+								Keke::admin_system_log ( $_lang['audit_withdraw_apply'] . $ids );
+								break;
+			
+						}
+			
+						if ($res) {
+							Keke::admin_show_msg ( $_lang['mulit_operate_success'], BASE_URL."/index.php/admin/finance_withdraw/index",3,'','success');
+						} else {
+							Keke::admin_show_msg ( $_lang['mulit_operate_fail'], BASE_URL."/index.php/admin/finance_withdraw/index",3,'','warning');
+						}
+			
+					} else {
+						Keke::admin_show_msg ( $_lang['choose_operate_item'], BASE_URL."/index.php/admin/finance_withdraw/index",3,'','warning' );
+					}
+		}
+		
+		
 
 	}
 
-	/**
-	 * 审核充值订单
-	 */
-	function action_update(){
-		if($_GET['withdraw_id']){
-			$where = 'withdraw_id = '.$_GET['withdraw_id'];
-		}
-	}
-	
-	//提现浏览
+	//提现信息浏览
 	function action_info(){
 		global $_K,$_lang;
 		if($_GET['withdraw_id']){
@@ -94,21 +160,36 @@ class Control_admin_finance_withdraw extends Controller{
 	
 	//提现审核通过
 	function action_pass(){
-		$array = array(
+		
+		
+		if ($_GET['withdraw_id']) {
+			$where = 'withdraw_id = '.$_GET['withdraw_id'];
+			//获取提现信息
+			$withdraw_info = db::select('*')->from("witkey_withdraw")->where($where)->execute();
+			$withdraw_info = $withdraw_info[0];
+		
+			//提现金额
+			$w_cash = $withdraw_info['withdraw_cash'];
+			//实际得到金额
+			$e_cash = Keke_finance::get_to_cash($w_cash);
+			//提现手续费
+			$site_in = $w_cash - $e_cash;
+			//操作字段数组
+			$array = array(
 					'withdraw_status'=>'2',
 					'process_uid'=>'1',
 					'process_username'=>'admin',
 					'process_time'=>time(),
-				);
-		
-		if ($_GET['withdraw_id']) {
-			$where = 'withdraw_id = '.$_GET['withdraw_id'];
-			//获取对应的信息
-			$withdraw_info = db::select('*')->from("witkey_withdraw")->where($where)->execute();
-			$withdraw_info = $withdraw_info[0];
+					'fee'=>$site_in
+			);
+			//更新审核通过的状态
 			$res = Model::factory("witkey_withdraw")->setData($array)->setWhere($where)->update();
+			//提现金额
 			
+			//::cash_in($uid, $cash, $action);
+			Keke_finance::cash_out($withdraw_info['uid'], $withdraw_info[''], 'withdraw');
 			$tar_content = "帐户:".$withdraw_info['pay_account']." 提现成功！提现金额为：".$withdraw_info['withdraw_cash'].",实际获得：".keke_finance_class::get_to_cash($withdraw_info['withdraw_cash']); //提现内容
+			//站内信
 			//keke_msg_class::send_private_message($_lang['fail_and_check_you_account'], $tar_content, $uid, $username);
 			Keke::admin_system_log ( $_lang['audit_withdraw_apply'] . $withdraw_id );
 			$res and Keke::admin_show_msg('系统提示',BASE_URL."/index.php/admin/finance_withdraw/index",3,'提交成功','success');

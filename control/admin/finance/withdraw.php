@@ -99,28 +99,50 @@ class Control_admin_finance_withdraw extends Controller{
 					'process_username'=>'admin',
 					'process_time'=>time(),
 				);
-		$where = 'withdraw_id = '.$_GET['withdraw_id'];
-		if ($_POST['is_submit']) {
+		
+		if ($_GET['withdraw_id']) {
+			$where = 'withdraw_id = '.$_GET['withdraw_id'];
+			//获取对应的信息
+			$withdraw_info = db::select('*')->from("witkey_withdraw")->where($where)->execute();
+			$withdraw_info = $withdraw_info[0];
+			$res = Model::factory("witkey_withdraw")->setData($array)->setWhere($where)->update();
 			
-			echo 1;
-		}else{
-			Model::factory("witkey_withdraw")->setData($array)->setWhere($where)->update();
+			$tar_content = "帐户:".$withdraw_info['pay_account']." 提现成功！提现金额为：".$withdraw_info['withdraw_cash'].",实际获得：".keke_finance_class::get_to_cash($withdraw_info['withdraw_cash']); //提现内容
+			//keke_msg_class::send_private_message($_lang['fail_and_check_you_account'], $tar_content, $uid, $username);
+			Keke::admin_system_log ( $_lang['audit_withdraw_apply'] . $withdraw_id );
+			$res and Keke::admin_show_msg('系统提示',BASE_URL."/index.php/admin/finance_withdraw/index",3,'提交成功','success');
 		}
-		Keke::show_msg('系统提示','index.php/admin/finance_withdraw','提交成功','success');
+		
 	}
 	
 	//不通过审核
 	function action_nopass(){
-		
-		//var_dump($where);
 		$array = array(
-					'withdraw_status'=>'3',
-					'process_uid'=>'1',
-					'process_username'=>'admin',
-					'process_time'=>time(),
-				);
-		Model::factory("witkey_withdraw")->setData($array)->setWhere($where)->update();
-		Keke::show_msg('系统提示','index.php/admin/finance_withdraw','提交成功','success');
+				'withdraw_status'=>'3',
+				'process_uid'=>'1',
+				'process_username'=>'admin',
+				'process_time'=>time(),
+		);
+		if($_GET['withdraw_id']){
+			
+			$where = 'withdraw_id = '.$_GET['withdraw_id'];
+			
+			Model::factory("witkey_withdraw")->setData($array)->setWhere($where)->update();//审核状态更新操作
+			//提现金额
+			$withdraw_cash = $withdraw_info ['withdraw_cash'];
+			$uid = $withdraw_info  ['uid']; //提现uid
+			$username = $withdraw_info  ['username'];//提现用户名
+			$pay_way = array_merge(keke_global_class::get_bank(),keke_global_class::get_online_pay());
+			$data = array(':pay_way'=>$pay_way[$withdraw_info['pay_type']],':pay_account'=>$withdraw_info['pay_account'],':pay_name'=>$withdraw_info['pay_name']);
+			keke_finance_class::init_mem('withdraw_fail', $data);
+			keke_finance_class::cash_in ( $uid, $withdraw_cash, 0, 'withdraw_fail' );
+			$tar_content  = "帐户:".$withdraw_info['pay_account']." 提现失败！"; //提现内容
+			keke_msg_class::send_private_message($_lang['fail_and_check_you_account'], $tar_content, $uid, $username);
+			Keke::admin_system_log ( $_lang['delete_audit_withdraw'] . $withdraw_id );
+			Keke::admin_show_msg ( $_lang['delete_audit_withdraw_success'], BASE_URL.'index.php/admin/finance_withdraw',3,'','success' );
+		}else{
+			Keke::admin_show_msg('系统提示',BASE_URL.'index.php/admin/finance_withdraw',3,'记录不存在','warning');
+		}
 	}
 }
 

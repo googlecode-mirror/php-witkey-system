@@ -9,17 +9,17 @@
 
 <div class="box post">
    
- <form name="frm_config_basic" id="frm_config_basic" action="index.php?do=msg&view=weibo" method="post" accept-charset="{$_K['charset']}">
-    <table class="detail" width="100%" border="0" cellspacing="0" cellpadding="0">
+ <form name="frm_config_basic" id="frm_config_basic" action="{BASE_URL}/index.php/admin/config_basic/save" method="post" accept-charset="{$_K['charset']}">
+    <input type="hidden" name="formhash" value="{FORMHASH}">
+	<input type="hidden" name="type" value="{$type}">
+	<table class="detail" width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
           <th scope="row" width="130">{$_lang['open_which_api']}{$_lang['zh_mh']}</th>
           <td>
             {loop $oauth_type_list $k $v}
-				{if !isset($weibo_api[$k.'_is_open'])}
 				<label for="{$k}_api_open">
 					<input type="checkbox" name="api[{$k}]" rel="{$k}" value="1" id="{$k}_api_open" {if $api_open[$k]=='1'}checked="checked"{/if}>{$v['name']}
 			    </label>
-				{/if}
 		    {/loop}
           </td>
         </tr>

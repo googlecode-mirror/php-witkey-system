@@ -25,11 +25,19 @@ class Control_admin_config_basic extends  Controller {
 		}elseif(!isset($type)){
 			$type = 'web';
 		}
+		//微博接口的中文名称
+		$oauth_type_list = keke_global_class::get_open_api();
 		if($type=='weibo'){
-			//微博接口的中文名称 
-			$oauth_type_list = keke_global_class::get_open_api();
 			$api_open  = unserialize($config_arr['oauth_api_open']);
 		}
+		if($type=='focus'){
+			$api_open  = unserialize($config_arr['attent_api_open']);
+			//关注中不需要的接口
+			unset($oauth_type_list['qq']);
+			unset($oauth_type_list['taobao']);
+			unset($oauth_type_list['alipay']);
+		}
+		//var_dump($oauth_type_list,$api_open);
 		
 		
 		require Keke_tpl::template('control/admin/tpl/config/'.$type);
@@ -89,20 +97,25 @@ class Control_admin_config_basic extends  Controller {
 		$values = $_POST;
 		unset($values['formhash']);
 		unset($values['type']);
+		unset($values['api']);
 		//邮件账号简单加密一下
 		if(isset($values['account_pwd'])){
 			$values['account_pwd'] = base64_encode($_POST['account_pwd']);
 		}
-		
 		//weibo oauth接口，是否开启
-		if(isset($values['oauth_api_open'])){
+		if($_POST['type']==='weibo'){
 			$values['oauth_api_open']  = serialize($_POST['api']);
 		}
-		
+		//weibo关注接口
+		if($_POST['type']==='focus'){
+			$values['attent_api_open'] = serialize($_POST['api']);
+		}
+	
 		foreach ($values as $k=>$v) {
 			$where = "k = '$k'";
 			DB::update('witkey_config')->set(array('v'))->value(array($v))->where($where)->execute();
 		}
+		
 		Cache::instance()->del('keke_config');
 		//执行完了，要给一个提示，这里没有对执行的结果做判断，是想偷下懒，如果执行失败的话，肯定给会报红的。亲!
 		Keke::show_msg($_lang['submit_success'],'index.php/admin/config_basic/index?type='.$type,'success');

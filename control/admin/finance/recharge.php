@@ -80,16 +80,17 @@ class Control_admin_finance_recharge extends Controller{
 		if($_GET['order_id']){
 			
 			$where = 'order_id = '.$_GET['order_id'];
+			$order_info = Model::factory("witkey_order_charge")->setData($array)->setWhere($where)->query();
+			$order_info = $order_info[0];
 	
 			//充值审核通过
 			Model::factory("witkey_order_charge")->setData($array)->setWhere($where)->update();
 				/*新增财务记录*/
-			keke_finance_class::cash_in($user_info['uid'], $order_info['pay_money'],0,'offline_charge','','offline_charge');
+			keke_finance_class::cash_in($order_info['uid'], $order_info['pay_money'],0,'offline_charge','','offline_charge');
 			//Keke_finance::cash_in($uid, $cash, $action)
 			Keke::admin_system_log ( $_lang['confirm_payment_recharge'].$order_id);
-			
+			Keke::show_msg('付款成功',BASE_URL.'index.php/admin/finance_recharge','系统提示','success',3);
 		}
-		Keke::show_msg('付款成功','index.php/admin/finance_recharge?page=$page','系统提示','success',3);
 	}
 
 }

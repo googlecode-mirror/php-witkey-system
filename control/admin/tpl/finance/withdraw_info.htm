@@ -3,7 +3,6 @@
     	<h1>{$_lang['withdraw_audit']}</h1>
         <div class="tool">
             <a href="{BASE_URL}/index.php/admin/finance_withdraw" >{$_lang['withdraw_list']}</a>
-            <a href="{BASE_URL}/index.php/admin/finance_withdraw&withdraw_id={$withdraw_id}" class="here">{$_lang['withdraw_audit']}</a>
     	</div>
     </div>
  <div class="box post">
@@ -30,7 +29,7 @@
                       </tr>
 					  <tr>
                         <th scope="row" width="130">{$_lang['application_time']}</th>
-                        <td><!--{date('Y-m-d H:i:s',$withdraw_info['applic_time'])}--></td>
+                        <td><!--{eval echo date('Y-m-d H:i:s',$withdraw_info['applic_time'])}--></td>
                       </tr>
 					  <tr>
                         <th scope="row" width="130">{$_lang['accepts_state']}</th>

@@ -1,8 +1,8 @@
 <?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
- * @link http://www.anychart.com/products/anychart/docs
+ * @all ×÷Õß£ºdengkang 
  * @version v 2.0
- * @date 2012-2-29 ÉÏÎç11:11:16
+ * @date 2012-10-7 
  */
 class Control_admin_finance_report extends Controller {	
 	/**

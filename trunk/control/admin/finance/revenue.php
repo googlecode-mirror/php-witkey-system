@@ -1,8 +1,8 @@
 <?php defined ( "IN_KEKE" ) or die ( "Access Denied" );
 /**
- * 后台财务管理的控制器
- * @author michael
- *
+ * @all 作者：dengkang 
+ * @version v 2.0
+ * @date 2012-10-7 
  */
 
 class Control_admin_finance_revenue extends Controller {

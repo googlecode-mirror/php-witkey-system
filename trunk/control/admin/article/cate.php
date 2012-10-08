@@ -2,8 +2,8 @@
 
 /**
  * 后台资讯分类管理控制层
- * @author Administrator
- *
+ * @author Michael	
+ * 2012-09-26
  */
 class Control_admin_article_cate extends Controller {
 

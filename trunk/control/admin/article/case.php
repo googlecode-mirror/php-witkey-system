@@ -2,8 +2,8 @@
 
 /**
  * 后台案例管理控制层
- * @author Administrator
- *
+ * @author Michael	
+ * 2012-09-26
  */
 class Control_admin_article_case extends Controller {
 	function before(){

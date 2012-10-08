@@ -45,9 +45,11 @@ class Control_admin_user_add extends Controller{
 		//存在uid更新表数据，没有则插入数据
 		if($_GET['hid_uid']){
 			Model::factory('witkey_member')->setData($array)->update();
+			Model::factory('witkey_space')->setData($array1)->update();
 			keke::show_msg("系统提交","index.php/admin/user_add?uid=".$_GET['hid_uid'],"提交成功","success");
 		}else {
 			Model::factory('witkey_member')->setData($array)->create();
+			Model::factory('witkey_space')->setData($array1)->create();
 			keke::show_msg("系统提交","index.php/admin/user_add".$_GET['hid_uid'],"提交成功","success");
 		}
 	}

@@ -1,8 +1,8 @@
 <?php  defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * 全局配置管理控制层
- * @author michael
- *
+ * @author Michael
+ * 2012-10-06
  */
 class Control_admin_config_basic extends  Controller {
     /**

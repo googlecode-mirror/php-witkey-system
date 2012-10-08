@@ -3,7 +3,7 @@
 /**
  * »ãÂÊÅäÖÃ
  * @author Michael
- *
+ * 2012-10-01
  */
 
 class Control_admin_config_currencies extends Controller{

@@ -17,7 +17,7 @@ class Control_admin_user_trans extends Controller{
 		$data_info = Model::factory('witkey_report')->get_grid($fields,$fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
 		$list_arr = $data_info['data'];
 		$pages = $data_info['pages'];
-		var_dump($data_info);die;
+// 		var_dump($data_info);die;
 	}
 }
 /* Keke::admin_check_role(80);

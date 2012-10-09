@@ -10,14 +10,8 @@
 
 
       <div class="box search p_relative">
-    	<div class="title"><h2>{$_lang['search']}</h2></div>
-        <div class="detail" id="detail">
 			<form action="index.php?do={$do}&view={$view}" method="post" id="frm_list">
-        	<input type="hidden" name="do"   value="$do">
-			<input type="hidden" name="view" value="$view">
-			<input type="hidden" name="type" value="$type">
-			<input type="hidden" name="page" value="$page">
-			<table cellspacing="0" cellpadding="0">
+			<table class="detail" cellspacing="0" cellpadding="0">
 			 <tbody>
 			 	<tr>
 			 		<th>{$_lang['log']}ID</th>
@@ -55,7 +49,6 @@
 			 </tbody>
 			</table>
 			
-        </div>
 	 </div>
 
 

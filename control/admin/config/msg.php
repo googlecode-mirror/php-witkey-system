@@ -86,11 +86,79 @@ class Control_admin_config_msg extends Controller{
     	}
     }
     /**
-     * 短信模板
+     * 短信模板列表
      */
     function action_tpl(){
     	global $_K,$_lang;
-    	 
+    	if($_POST['hdn']){
+    		//批量保成提交的数据
+    		//列表的上的主键数组
+    		foreach ($_POST['hdn'] as $k1=>$v1){
+    			//判断当前行是否有checked
+    			if($_POST['ckb'][$k1]){
+    				//循环checked的值，没有checked的赋零
+    				foreach ($_POST['ckb'] as $k=>$v ){
+    					$v['send_msg'] = intval($v['send_msg'])+0;
+    					$v['send_mail'] = intval($v['send_mail'])+0;
+    					$v['send_sms'] = intval($v['send_sms'])+0;
+    				}
+    			}else{
+    				//一个都没有选set 0
+    				$v['send_msg'] = 0;
+    				$v['send_mail'] = 0;
+    				$v['send_sms'] = 0;
+    			}
+    			//字段
+    			$columns = array('send_msg','send_mail','send_sms');
+    			//值
+    			$values = array($v['send_msg'],$v['send_mail'],$v['send_sms']);
+    			//条件为每一行
+    			$where = "tpl_id = '$k1'";
+    			//执行更新
+    			DB::update('witkey_msg_tpl')->set($columns)->value($values)->where($where)->execute();
+    		}
+    		$obj = $_POST['hdn_obj'];
+    		if($obj){
+    			$uri = "?obj=$obj";
+    		}
+    		Keke::show_msg($_lang['submit_success'],'index.php/admin/config_msg/tpl'.$uri,'success');
+    	}
+    	//手机，邮件，站内信
+    	$message_send_type = keke_global_class::get_message_send_type ();
+    	
+    	//短信对象 eg (task,service)
+		$message_send_obj  = keke_global_class::get_message_send_obj();
+		//字段
+ 		$fields = ' `tpl_id`,`k`,`obj`,`desc`,`on_time`,`send_sms`,`send_mail`,`send_msg`';
+		//要查询的字段,在模板中显示用的
+		$query_fields = array('tpl_id'=>$_lang['id'],'desc'=>$_lang['name'],'on_time'=>$_lang['time']);
+		//总记录数,分页用的，你不定义，数据库就是多查一次的。为了少个Sql语句，你必须要写的，亲!
+		$count = intval($_GET['count']);
+		//基本uri,当前请求的uri ,本来是能通过Rotu类可以得出这个uri,为了程序灵活点，自己手写好了
+		$base_uri = BASE_URL."/index.php/admin/config_msg/tpl";
+		//添加编辑的uri,add这个action 是固定的
+		$add_uri =  $base_uri.'/add';
+		//删除uri,del也是一个固定的，写成其它的，你死定了
+		$del_uri = $base_uri.'/del';
+		//默认排序字段，这里按时间降序
+		$this->_default_ord_field = 'on_time';
+		//这里要口水一下，get_url就是处理查询的条件
+		extract($this->get_url($base_uri));
+		//查指定类型的文章
+		if(isset($_GET['obj'])){
+			$obj = $_GET['obj'];
+			$where .= " and  obj = '$obj' ";
+			$uri .= "&obj=$obj";
+		}
+		
+		
+		//获取列表分页的相关数据,参数$where,$uri,$order,$page来自于get_url方法
+		$data_info = Model::factory('witkey_msg_tpl')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
+		//列表数据
+		$list_arr = $data_info['data'];
+		//分页数据
+		$pages = $data_info['pages'];
+		
     	require Keke_tpl::template('control/admin/tpl/config/msg_tpl');
     }
     /**

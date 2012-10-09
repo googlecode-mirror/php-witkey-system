@@ -14,7 +14,7 @@ class Control_admin_user_trans extends Controller{
 		$count = intval($_GET['count']);
 		$this->_default_ord_field = 'on_time';
 		extract($this->get_url($base_uri));
-		$data_info = Model::factory('witkey_report')->get_grid($fields,$fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
+		$data_info = Model::factory('witkey_report')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
 		$list_arr = $data_info['data'];
 		$pages = $data_info['pages'];
 // 		var_dump($data_info);die;

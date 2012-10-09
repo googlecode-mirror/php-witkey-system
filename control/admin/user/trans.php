@@ -5,7 +5,13 @@
  * @version v 2.0
  * 2010-10-31 ÏÂÎç13£º30
  */
-
+class Control_admin_user_trans extends Controller{
+	function action_index(){
+		global $_K,$_lang;
+		
+		require Keke_tpl::template('control/admin/tpl/user_trans');
+	}
+}
 /* Keke::admin_check_role(80);
 $views = array ("rights", "report", "complaint", "process" );
 in_array ( $view, $views ) or $view = "rights";

@@ -109,9 +109,9 @@ class keke_msg_class {
 		global $_cache_obj;
 		$tpl = $_cache_obj->get ( "msg_tpl_" . $this->_k . "_cache" );
 		if (! $tpl) {
-			$msg_obj = new Keke_witkey_msg_tpl_class ();
+			$msg_obj = new Keke_witkey_msg_tpl ();
 			$msg_obj->setWhere ( "tpl_code='$this->_k'" );
-			$tpl = $msg_obj->query_keke_witkey_msg_tpl ();
+			$tpl = $msg_obj->query ();
 			$_cache_obj->set ( "msg_tpl_" . $this->_k . "_cache", $tpl );
 		}
 		return $tpl;
@@ -153,13 +153,13 @@ class keke_msg_class {
 		return $cont;
 	}
 	private function sendmessage() {
-		$message_obj = new Keke_witkey_msg_class ();
+		$message_obj = new Keke_witkey_msg ();
 		$message_obj->setTitle ( $this->_title );
 		$message_obj->setContent ( $this->_normal_content );
 		$message_obj->setTo_uid ( $this->_uid );
 		$message_obj->setTo_username ( $this->_username );
 		$message_obj->setOn_time ( time ( 'now()' ) );
-		$message_obj->create_keke_witkey_msg ();
+		$message_obj->create ();
 	}
 	
 	public function sendmail() {
@@ -249,7 +249,7 @@ class keke_msg_class {
 			$tar_content = Keke::utftogbk ( $tar_content );
 			$to_username = Keke::utftogbk ( $to_username );
 		}
-		$msg_obj = new Keke_witkey_msg_class ();
+		$msg_obj = new Keke_witkey_msg ();
 		$msg_obj->_msg_id = null;
 		$msg_obj->setUid ( $uid );
 		$msg_obj->setUsername ( $username );
@@ -258,14 +258,9 @@ class keke_msg_class {
 		$msg_obj->setTo_username ( $to_username );
 		$msg_obj->setContent ( $tar_content );
 		$msg_obj->setOn_time ( time () );
-		$msg_id = $msg_obj->create_keke_witkey_msg ();
+		$msg_id = $msg_obj->create ();
 		
 		$msg_id and Keke::keke_show_msg ( $url, $_lang['sms_send_success'], "", $output ) or Keke::keke_show_msg ( $_lang['operate_notice'], $url, $_lang['sms_send_fail'], "error", $output );
 	}
-	
- 
-	
-	
-	
 	
 }

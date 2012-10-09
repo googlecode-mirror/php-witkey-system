@@ -572,7 +572,8 @@ class Keke extends Keke_core {
 	}
 	 
 	function init_session() {
-		keke_session::get_instance ();
+		$session = Keke_session::instance();
+		$_SESSION = & $session->as_array();
 		
 	}
 	function init_out_put() {

@@ -41,6 +41,21 @@ class Control_admin_user_mark extends Controller{
 			Keke::show_msg("添加成功","index.php/admin/user_mark/add","success");
 		}
 	}
+	static function action_del_img(){
+		//如果pk有值，则删除文件表中的art_pic
+		if($_GET['pk']){
+			Dbfactory::execute(" update ".TABLEPRE."witkey_article set art_pic ='' where art_id = ".intval($_GET['pk']));
+		}
+		//没有fid就查下fid,没有fid不能删除文件,出于安全考量
+		if(!intval($_GET['fid'])){
+			$fid = Dbfactory::get_count(" select file_id from ".TABLEPRE."witkey_file where save_name = '.{$_GET['filepath']}.'");
+		}else{
+			$fid = $_GET['fid'];
+		}
+		//删除文件
+		keke_file_class::del_att_file($fid, $_GET['filepath']);
+		Keke::echojson ( '', '1' );
+	}
 	function action_del(){
 		$mark_rule_id = $_GET['mark_rule_id'];
 		$where .='mark_rule_id='.$mark_rule_id;

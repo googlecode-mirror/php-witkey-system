@@ -55,10 +55,6 @@ $lang=array(
 		'commission_allocation_is_not_complete'=>'佣金分配不完全,请仔细确认',
 		'do_not_choose_if_not_deducted'=>'如不扣除请勿选择此项',
 		'do_not_choose_if_not_freeze'=>'如不冻结请勿选择此项',
-		'trans_rights'=>'维权',
-		'trans_report'=>'举报',
-		'trans_complaint'=>'投诉',
-		'trans_suggest'=>'建议',		
 		'submit_time_desc'=>'提交时间递减',
 		'submit_time_asc'=>'提交时间递增',
 );

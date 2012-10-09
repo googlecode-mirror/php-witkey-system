@@ -39,7 +39,6 @@ class Control_admin_user_add extends Controller{
 				'email'=>$_POST['email'],
 				);
 		$array1 = array('username'=>$_POST['username'],
-				'email'=>$_POST['email'],
 				'group_id'=>$_POST['group_id'],
 		);
 		//存在uid更新表数据，没有则插入数据

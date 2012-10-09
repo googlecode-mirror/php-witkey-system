@@ -18,7 +18,7 @@ class Control_admin_finance_recharge extends Controller{
 		$query_fields = array('order_id'=>$_lang['id'],'username'=>$_lang['username'],'order_type'=>$_lang['order_type']);
 		//总记录数,分页用的，你不定义，数据库就是多查一次的。为了少个Sql语句，你必须要写的，亲!
 		$count = intval($_GET['count']);
-		//tool本来是一个目录，由于没有定义tool为目录的路由,所以这个控制层的文件来too_file So这里不能写为tool/file
+		//finance本来是一个目录，由于没有定义tool为目录的路由,所以这个控制层的文件来finance_recharge So这里不能写为finance/recharge
 		$base_uri = BASE_URL."/index.php/admin/finance_recharge";
 
 		//添加编辑的uri,add这个action 是固定的
@@ -46,7 +46,9 @@ class Control_admin_finance_recharge extends Controller{
 		//充值订单状态
 		$status_arr = keke_order_class::get_order_status();
 		//线下支付方式
-		$offline_pay=Keke::get_table_data ( "*", "witkey_pay_api", " type='offline'", '', '', '', 'payment' ); 
+		//$offline_pay=Keke::get_table_data ( "*", "witkey_pay_api", " type='offline'", '', '', '', 'payment' );
+		$offline_pay=DB::select()->from('witkey_pay_api')->where("type='offline'")->execute(); 
+		$offline_pay= Keke::get_arr_by_key($offline_pay,'payment');
 		//var_dump($list_arr);die;
 		require Keke_tpl::template('control/admin/tpl/finance/recharge');
 
@@ -72,7 +74,7 @@ class Control_admin_finance_recharge extends Controller{
 	 * 审核充值订单
 	 */
 	function action_update(){
-		
+		global $_lang;
 		$array = array(
 					'order_status'=>'ok'
 				);
@@ -80,24 +82,27 @@ class Control_admin_finance_recharge extends Controller{
 		if($_GET['order_id']){
 			$where = 'order_id = '.$_GET['order_id'];
 			//获取充值信息
-			$order_info = Model::factory("witkey_order_charge")->setData($array)->setWhere($where)->query();
+// 			$order_info = Model::factory("witkey_order_charge")->setData($array)->setWhere($where)->query();
+			
+			//DB::update('witkey_order_charge')->set($columns)->value($values)->where($where)->execute();
+			$order_info = DB::select()->from('witkey_order_charge')->where($where)->execute();
 			$order_info = $order_info[0];
 			
 			if ($order_info [order_status] == 'ok'){
 				Keke::admin_show_msg($_lang['payment_has_been_success_no_need_repeat'], BASE_URL.'index.php/admin/finance_recharge',3,'','warning');
 			}
 			//用户信息
-			$user_info = keke_user_class::get_user_info($order_info ['uid']);
+			//$user_info = keke_user_class::get_user_info($order_info ['uid']);
 			//充值状态
-			Model::factory("witkey_order_charge")->setData($array)->setWhere($where)->update();
+			//Model::factory("witkey_order_charge")->setData($array)->setWhere($where)->update();
 			//充值
 			keke_finance_class::cash_in($order_info['uid'], $order_info['pay_money'],0,'offline_charge','','offline_charge');
 			//发送站内信给用户
-			keke_msg_class::send_private_message('充值成功', '您充值了'.$order_info['pay_money'], $order_info['uid'], $order_info['username']);
+			//keke_msg_class::send_private_message('充值成功', '您充值了'.$order_info['pay_money'], $order_info['uid'], $order_info['username']);
 			//充值日志
-			Keke::admin_system_log ( $_lang['confirm_payment_recharge'].$order_id);
+			Keke::admin_system_log ( $_lang['confirm_payment_recharge'].$_GET['order_id']);
 			//成功跳转提示
-			Keke::show_msg('付款成功',BASE_URL.'index.php/admin/finance_recharge?page='.$page,'系统提示','success',3);
+			Keke::show_msg('付款成功',BASE_URL.'/index.php/admin/finance_recharge','success');
 		}
 	}
 

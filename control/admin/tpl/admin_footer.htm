@@ -35,6 +35,17 @@ function cdel(o,s){
 	}).follow(o);
 	return false;	
 }
+function kconfirm(o,s){
+	d = art.dialog;
+	var c = "{$_lang['you_comfirm_operate']}";
+	if(s){
+		c=s;
+	}
+	d.confirm(c, function(){
+		location.href = o.href;
+	}).follow(o);
+	return false;
+}
 $(function(){
  
 })

@@ -2,9 +2,9 @@
 /**
  * 财务--提现审核
  * @copyright keke-tech
- * @author Chen
- * @version v 20
- * 2011-09-03 15:18:30
+ * @author fu
+ * @version v 22
+ * 2012-10-9 15:18:30
  */
 class Control_admin_finance_withdraw extends Controller{
 

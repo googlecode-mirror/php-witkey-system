@@ -8,7 +8,7 @@
 		</div>
     </div>
 		<div class="box post">
-               <form action="{$url}" method="post" name="frm1" id="frm1" enctype="multipart/form-data">
+               <form action="{BASE_URL}/index.php/admin/user_mark/save" method="post" name="frm1" id="frm1" enctype="multipart/form-data">
                	   <input type="hidden" id="hdn_mark_rule_id" name="hdn_mark_rule_id" value="{$mark_rule_arr['mark_rule_id']}">
                	   <input type="hidden" name="formhash" value="{FORMHASH}"> 
                     <table class="detail" width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -40,7 +40,7 @@
 						<button type="button"  onclick="upload('g_ico');" class="pill">{$_lang['upload']}</button>
 						<span id="span_g_ico">
 							{if $mark_rule_arr['g_ico']}
-							<img src="../../{$mark_rule_arr['g_ico']}" onload="resize(this)" />
+							<img src="{BASE_URL}/{$mark_rule_arr['g_ico']}" onload="resize(this)" />
 							{/if}
 						</span>
 						</td>
@@ -54,7 +54,7 @@
 						<button type="button"  onclick="upload('m_ico');" class="pill">{$_lang['upload']}</button>
 						<span id="span_m_ico">
 							{if $mark_rule_arr['m_ico']}
-							<img src="../../{$mark_rule_arr['m_ico']}" onload="resize(this)" />
+							<img src="{BASE_URL}/{$mark_rule_arr['m_ico']}" onload="resize(this)" />
 							{/if}
 						</span>
 						</td>

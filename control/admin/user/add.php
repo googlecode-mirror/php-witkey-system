@@ -74,11 +74,11 @@ class Control_admin_user_add extends Controller{
 			}elseif($_POST['cash_type']==1){
 				$info['balance']+=$_POST['cash'];
 				$array = array('balance'=>$info['balance']);
-				Model::factory('witkey_space')->setData($array)->setWhere('uid='.$user.' or username='.$user)->update();
+				Model::factory('witkey_space')->setData($array)->setWhere('uid= '.$info['uid'])->update();
 			}else{
 				$info['balance']-=$_POST['cash'];
 				$array = array('balance'=>$info['balance']);
-				Model::factory('witkey_space')->setData($array)->setWhere('uid='.$user.' or username='.$user)->update();
+				Model::factory('witkey_space')->setData($array)->setWhere('uid= '.$info['uid'])->update();
 			}
 			//元宝的充值和扣除
 			if ($_POST['credit_type']==0&&$_POST['credit']>$info['credit']){
@@ -86,11 +86,11 @@ class Control_admin_user_add extends Controller{
 			}elseif ($_POST['credit_type']==1){
 				$info['credit']+=$_POST['credit'];
 				$array = array('credit'=>$info['credit']);
-				Model::factory('witkey_space')->setData($array)->setWhere('uid='.$user.' or username='.$user)->update();
+				Model::factory('witkey_space')->setData($array)->setWhere('uid= '.$info['uid'])->update();
 			}else{
 				$info['credit']-=$_POST['credit'];
 				$array = array('credit'=>$info['credit']);
-				Model::factory('witkey_space')->setData($array)->setWhere('uid='.$user.' or username='.$user)->update();
+				Model::factory('witkey_space')->setData($array)->setWhere('uid= '.$info['uid'])->update();
 			}
 			//充值的金额和元宝都为0或者空的时候提醒
 			if(!$_POST['cash']&&!$_POST['credit']){

@@ -12,6 +12,10 @@ class Control_admin_user_mark extends Controller{
 		$mark_rule = Db::select()->from('witkey_mark_rule')->execute();
 		require Keke_tpl::template('control/admin/tpl/user/mark');
 	}
+	/**
+	 * 添加页面初始化
+	 * 如果存在mark_rule_id则为编辑
+	 */
 	function action_add(){
 		global $_K,$_lang;
 		$mark_rule_id = $_GET['mark_rule_id'];
@@ -22,6 +26,9 @@ class Control_admin_user_mark extends Controller{
 		}
 		require Keke_tpl::template('control/admin/tpl/user/mark_add');
 	}
+	/**
+	 * 保存添加或者编辑后的数据
+	 */
 	function action_save(){
 		$_POST = Keke_tpl::chars($_POST);
 		Keke::formcheck($_POST['formhash']);
@@ -40,6 +47,9 @@ class Control_admin_user_mark extends Controller{
 			Keke::show_msg("添加成功","index.php/admin/user_mark/add","success");
 		}
 	}
+	/**
+	 * 删除上传后的图片
+	 */
 	static function action_del_img(){
 		//如果pk有值，则删除文件表中的art_pic
 		if($_GET['pk']){
@@ -55,6 +65,9 @@ class Control_admin_user_mark extends Controller{
 		keke_file_class::del_att_file($fid, $_GET['filepath']);
 		Keke::echojson ( '', '1' );
 	}
+	/**
+	 * 单条删除信誉规则
+	 */
 	function action_del(){
 		$mark_rule_id = $_GET['mark_rule_id'];
 		$where .='mark_rule_id='.$mark_rule_id;

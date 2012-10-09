@@ -128,25 +128,31 @@
 
       function display_window(){
         window.onresize 	= null;
+		var win 			= $("#win");
         var windowbody 		= $("html body");
         var windowdetail 	= $("#win .box_detail");
         var windowloading 	= $("#win .loading_bar");
-		$("#win .mask").height(windowbody.height());
-		resitexy();
-
-		setTimeout(function(){
-			windowloading.slideUp();
-	        windowdetail.slideDown();
-	        resitexy();
-		},3000);
-
-        windowbody.css({"overflow":"hidden"});
-
+		win.fadeIn(function(){
+			$("#win .mask").height(windowbody.height());
+			resitexy();
+	
+			var sd = setTimeout(function(){
+				windowloading.slideUp();
+		        windowdetail.slideDown();
+		        resitexy();
+				clearTimeout(sd);
+			},2000);
+	
+	        windowbody.css({"overflow":"hidden"});
+		});
+		
+		
+		
         setTimeout(monitor,500);
 	    }
 	  function monitor()
 	    {
-	        window.onresize = display_window;
+	        window.onresize = resitexy;
 	    } 
 
 	  function resitexy(){
@@ -155,7 +161,25 @@
         var ws 			= boxwindow.width();
         boxwindow.css({"left":($(window).width()-ws)/2+"px","top":($(window).height()-hs)/2+"px"});
       }
+	  
+	  
+	  function close_window(){
+	  	var win =	$("#win");
+		var windowbody 		= $("html body");
+	  	var windowdetail 	= $("#win .box_detail");
+		windowbody.css({"overflow":"auto"});
+		windowdetail.slideUp(function(){
+			resitexy();
+			win.fadeOut();
+		});
+	  }
+	  
 	  display_window();
+	  
+	  $("#win .box_footer").click(function(){
+	  	close_window();
+	  });
+	  
 	});
 </script>
 

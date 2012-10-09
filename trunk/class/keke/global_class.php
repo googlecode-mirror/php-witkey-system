@@ -50,13 +50,13 @@ class keke_global_class {
 	public static function get_message_send_type(){
 		global $_lang;
 		return array(
-			   array("1"=>"send_sms",
-		             "2"=>"send_email",
-		             "3"=>"send_mobile_sms"
+			   array("1"=>"send_msg",
+		             "2"=>"send_mail",
+		             "3"=>"send_sms"
 		             ),
-				array("send_sms"=>$_lang['site_msg'],
-		             "send_email"=>$_lang['send_email'],
-		             "send_mobile_sms"=>$_lang['send_mobile_sms']
+				array("send_msg"=>$_lang['site_msg'],
+		             "send_mail"=>$_lang['send_email'],
+		             "send_sms"=>$_lang['send_mobile_sms']
 		             )
 		       
 		);

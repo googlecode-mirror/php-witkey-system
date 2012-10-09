@@ -10,7 +10,6 @@ class Control_admin_user_mark extends Controller{
 	function action_index(){
 		global $_K,$_lang;
 		$mark_rule = Db::select()->from('witkey_mark_rule')->execute();
-// 		var_dump($mark_rule);die;
 		require Keke_tpl::template('control/admin/tpl/user/mark');
 	}
 	function action_add(){

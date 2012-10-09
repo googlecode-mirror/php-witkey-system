@@ -46,7 +46,7 @@ class ten_oauth_client_class extends base_client_class{
 		$last_key = $o->getAccessToken($oauth_verifier) ;
 		
 		if (!$last_key['name']){
-			kekezu::error_handler(001,'access_token不存在或者已过期');
+			Keke::error_handler(001,'access_token不存在或者已过期');
 			return false;
 		}
 		

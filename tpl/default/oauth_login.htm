@@ -1,4 +1,4 @@
-<!--{template header}-->
+<!--{include header}-->
 <div class="wrapper">
 	<div class="container_24 ">
 		<section class="section clearfix">
@@ -86,9 +86,9 @@
                         <div class="pl_20">
                         	<span>{$_lang['use_friend_web_login']}</span>
 							{loop $api_open $k $v}
-								{if $weibo_list[$k.'_app_id']}
+								{if $_K[$k.'_app_id']}
 		                            <div class="mt_10">
-		                                <a href="index.php?do=oauth_login&type=$k"><img src="resource/img/ico/{$k}_t.gif" alt="{$api_name[$k]['name']}" title="{{$api_name[$k]['name']}"></a><a href="index.php?do=oauth_login&type=$k" class="ml_5">$api_name[$k]['name']{$_lang['login']}</a>
+		                                <a href="{BASE_URL}/index.php/ologin/login?type=$k"><img src="resource/img/ico/{$k}_t.gif"  title="{$api_name[$k]['name']}">$api_name[$k]['name']{$_lang['login']}</a>
 		                            </div>
 								{/if}
 							{/loop}
@@ -140,4 +140,4 @@ function hideSecode(){
 	return false;
 }*/
  </script>
-<!--{template footer}-->
+<!--{include footer}-->

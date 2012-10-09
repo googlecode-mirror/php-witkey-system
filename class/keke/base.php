@@ -853,7 +853,7 @@ class Keke_base {
 		}
 		$response = curl_exec ( $ci );
 		if (curl_errno ( $ci )) {
-			throw new Exception ( curl_error ( $ci ), 0 );
+			throw new Exception( curl_error ( $ci ), 0 );
 		} else {
 			$httpStatusCode = curl_getinfo ( $ci, CURLINFO_HTTP_CODE );
 			if (200 !== $httpStatusCode) {

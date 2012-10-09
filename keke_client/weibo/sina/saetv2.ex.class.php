@@ -198,6 +198,7 @@ class SaeTOAuthV2 {
 			$this->access_token = $token['access_token'];
 			$this->refresh_token = $token['refresh_token'];
 		} else {
+			var_dump($token);die;
 			throw new OAuthException("get access token failed." . $token['error']);
 		}
 		return $token;
@@ -465,6 +466,7 @@ class SaeTOAuthV2 {
  */
 class SaeTClientV2
 {
+	public $oauth;
 	/**
 	 * 构造函数
 	 * 
@@ -473,7 +475,7 @@ class SaeTClientV2
 	 * @param mixed $skey 微博开放平台应用APP SECRET
 	 * @param mixed $access_token OAuth认证返回的token
 	 * @param mixed $refresh_token OAuth认证返回的token secret
-	 * @return void
+	 * @return SaeTClientV2
 	 */
 	function __construct( $akey, $skey, $access_token, $refresh_token = NULL)
 	{

@@ -2,24 +2,26 @@
 <html>
 <head>
 <meta charset="gbk">
-<title>box--style皮肤演示</title>
-<link href="{BASE_URL}/{SKIN_PATH}/css/base.css" rel="stylesheet">
-<link href="{BASE_URL}/{SKIN_PATH}/css/ui.css" rel="stylesheet" >
-<link href="{BASE_URL}/{SKIN_PATH}/css/boxs.css" rel="stylesheet" >
-<link href="{BASE_URL}/{SKIN_PATH}/css/theme.css" rel="stylesheet" >
-<link href="{BASE_URL}/resource/css/layout/layout.css" rel="stylesheet" >
-<!--[if lte IE 8]>
-<link href="{BASE_URL}/resource/css/layout/960.min.css" rel="stylesheet">
+<title>box</title>
+<!--<link href="style/base.css" rel="stylesheet">
+<link href="style/typo.css" rel="stylesheet">-->
+<link href="{BASE_URL}/{SKIN_PATH}/style/ui.css" rel="stylesheet" >
+<!--<link href="style/boxs.css" rel="stylesheet" >-->
+<link href="{BASE_URL}/{SKIN_PATH}/style/theme.less" rel="stylesheet/less" type="text/css" >
+<!--<link href="style/layout/layout.css" rel="stylesheet" >
+[if lte IE 8]>
+<link href="style/layout/960.min.css" rel="stylesheet">
 <![endif]-->
-<link href="{BASE_URL}/resource/button/stylesheets/css3buttons.css" rel="stylesheet">
-<script src="plugin/html5.js"></script>
+
+
 <!--jQuery1.4.4库-->
 <script src="{BASE_URL}/resource/js/jquery.js"></script>
 <script src="{BASE_URL}/resource/js/system/keke.js"></script>
-<!--滑动导航效果-->
-<script src="{BASE_URL}/resource/js/jqplugins/lavalamp/jquery.lavalamp-1.3.5.min.js"></script>
+<!--滑动导航效果--
+<script src="plugin/lavalamp/jquery.lavalamp-1.3.5.min.js"></script>-->
 
-<script >
+<script src="{BASE_URL}/resource/js/less-1.3.0.min.js" type="text/javascript"></script>
+<script type="text/javascript">
 /*jQuery*/
 		$(function(){
 
@@ -33,15 +35,15 @@
           //alert(style_have);
           //("box " +style_name != style_have);
           if("box " +style_name != style_have){
-            $(".box").removeClass().addClass("box " +style_name);
-            $(".box_title .title").html(".box." +style_name + " " +style_title);
+            $("#main .box").removeClass().addClass("box " +style_name);
+            $("#main .box_title .title").html(".box." +style_name + " " +style_title);
             $(this).addClass("selected").siblings().removeClass();
          }
 
          setcookie("style_class",style_name+","+style_title);
       });
 
-      $("#test_ul li").each(function(i){
+      /*$("#test_ul li").each(function(i){
         $(this).click(function (){
           setcookie('sss',i+1);
         });
@@ -49,6 +51,11 @@
       });
 
 
+       $(".icon16,.icon32,.icon48").hover(function(){
+
+       },function(){
+        
+       });
     
 
 			/*$('a').not('nav.box_nav li a').click(function(){
@@ -78,26 +85,26 @@
         var style_have = $(".box").attr("class");
 
         if("box " +style_name != style_have){
-              $(".box").removeClass().addClass("box " +style_name);
-              $(".box_title .title").html(".box." +style_name + " " +style_title);
+              $("#main .box").removeClass().addClass("box " +style_name);
+              $("#main .box_title .title").html(".box." +style_name + " " +style_title);
               $("#styles a[title="+style_title+"]").addClass("selected").siblings().removeClass();
         }
         //滑动菜单效果
-       /* $("nav.box_nav ul").lavaLamp({
+        /*$("nav.box_nav ul").lavaLamp({
           speed: 200,
           startItem: show_cookie-1
-        }); */
+        }); 
       }
-      /*else{
+      else{
         $("nav.box_nav ul").lavaLamp({
           speed: 200
-        }); 
-      }*/
-
+        }); */
+      }
+/*
       $("nav.box_nav ul").lavaLamp({
           speed: 200
         }); 
-      /*var show_cookie = getcookie('sss');
+      var show_cookie = getcookie('sss');
       $("#tab_nav_"+show_cookie).addClass("selectedLava").siblings().removeClass("selectedLava");
       $("#div_nav_"+show_cookie).removeClass("hidden").siblings().addClass("hidden");*/
 
@@ -113,15 +120,45 @@
               }).css("opacity","0");
       });
 
-		});
+      
+
+
+      
+
+
+      function display_window(){
+        window.onresize 	= null;
+        var windowbody 		= $("html body");
+        var windowdetail 	= $("#win .box_detail");
+        var windowloading 	= $("#win .loading_bar");
+		$("#win .mask").height(windowbody.height());
+		resitexy();
+
+		setTimeout(function(){
+			windowloading.slideUp();
+	        windowdetail.slideDown();
+	        resitexy();
+		},3000);
+
+        windowbody.css({"overflow":"hidden"});
+
+        setTimeout(monitor,500);
+	    }
+	  function monitor()
+	    {
+	        window.onresize = display_window;
+	    } 
+
+	  function resitexy(){
+      	var boxwindow 	= $("#win .box");
+      	var hs 			= boxwindow.height();
+        var ws 			= boxwindow.width();
+        boxwindow.css({"left":($(window).width()-ws)/2+"px","top":($(window).height()-hs)/2+"px"});
+      }
+	  display_window();
+	});
 </script>
-<style type="text/css">
-.dragDiv{background-color: #000;}
-.dragDiv a{ display: inline-block; padding: 0 5px; cursor:pointer; color: #fff; text-decoration: none;border-top: 3px solid #000;}
-.dragDiv a:hover{ background-color: #4c4c4c;border-top-color: #4c4c4c; }
-.dragDiv a.selected{ border-top-color: #DD4B39;}
-.icontable td{ padding: 10px; text-align: center;}
-</style>
+
 </head>
 
 <body>
@@ -129,7 +166,7 @@
 
 <nav class="nav ">
         <div  class="container_24">
-          <div class="menu grid_24 clearfix">
+          <div class="menu clearfix">
                 <ul class="clearfix">
                       <li><a class="selected" href="#"><span>UI</span></a></li>
                       <li class="line"></li>
@@ -148,86 +185,528 @@
         </div>
 </nav>
 
-<div id="styles" class="dragDiv">
-<a href="###" class="selected" title="普通">normal</a>
-<a href="###" title="模型">model</a>
-<a href="###" title="苹果">apple_style</a>
-<a href="###" title="win7玻璃">aero_style</a>
-<a href="###" title="星际2">star_craft2</a>
-<a href="###" title="皮肤工厂">skins_factory</a>
-<a href="###" title="青花">blue_a_white</a>
-<a href="###" title="光">rigo_light</a>
-<a href="###" title="海滩">beach</a>
 
-</div>
-
-
+<header id="top">
+  <div  class="container_24">
+    <hgrounp class="logo  clearfix">
+      <h1>BoxUI</h1>
+      <h2>统一代码 设计无限</h2>
+    </hgrounp>
+  </div>
+</header>
 
 
 <div class="container_24 mt_30">
 
-	<div class="grid_24 mb_30">
 
-        <div class="box normal">
+
+	<article id="main" class="">
+
+        <div class="box normal typo">
             <div class="inner clearfix">
                 <header class="box_header">
                     <div class="box_title">
                         <h2 class="title" title="这里是标题说明">.box.normal 普通</h2>
                     </div>
-                    <nav class="box_nav">
-                      <ul class="clearfix" id="test_ul">
-                          <li id="tab_nav_1" class="selectedLava" onclick="swaptab('nav','selectedLava','',8,1)"><a href="#">段落文字</a></li>
-                          <li id="tab_nav_2" onclick="swaptab('nav','selectedLava','',8,2)"><a href="#">星星</a></li>
-                          <li id="tab_nav_3" onclick="swaptab('nav','selectedLava','',8,3)"><a href="#">选项卡</a></li>
-                          <li id="tab_nav_4" onclick="swaptab('nav','selectedLava','',8,4)"><a href="#">相册</a></li>
-                          <li id="tab_nav_5" onclick="swaptab('nav','selectedLava','',8,5)"><a href="#">按钮</a></li>
-                          <li id="tab_nav_6" onclick="swaptab('nav','selectedLava','',8,6)"><a href="#">导航</a></li>
-                          <li id="tab_nav_7" onclick="swaptab('nav','selectedLava','',8,7)"><a href="#">加载条</a></li>
-                          <li id="tab_nav_7" onclick="swaptab('nav','selectedLava','',8,8)"><a href="#">图标</a></li>
-                      </ul>
-                    </nav>
+                    
                 </header>
-
+                <nav class="box_nav">
+                      
+                </nav>
                 <div class="box_detail">
                     <div id="div_nav_1" class="detail ">
-                      <div class="fl_l mr_10">
-                      {userpic($v['uid'],'small')}
-					  </div>
-					  <div class="fl_l mr_10">
+                      
+                      <h2>示例说明</h2>
+                      <p>
+                        本示例是boxUI的演示页面，用于展示box的不同样式对UI元素的影响，以及自身的展示效果。使用HTML5代码编写。
+                      </p>
+                      
+                      <h2>头像</h2>
+
+                      <div class="clearfix">
+                        {userpic($v['uid'],'small')}
                       {userpic($v['uid'],'middle')}
-					  </div>
-					  <div class="fl_l mr_10">
                       {userpic($v['uid'],'larger')}
-					  </div>
-                      <p>
-                        段落文字样式演示
-                          1234567890_+-=:";'|\.,/`~!@#$%^&amp;*()[]{}&lt;&gt;  
-                      </p>
-                      <p>对文字格式化 <em>斜体-强调的内容</em> <strong>粗体-语气更强的强调的内容</strong>   <sub>上标</sub> <sup>下标</sup> <del>删除线</del> <ins>下划线</ins>
-                        <del>删除</del> <ins cite="rarara.html" >插入</ins>
-                      </p>
-                      <p>
-                        <a href="#">互联网</a>已经过十多年的发展，各种新型应用层出不穷，2005年7月威客（witkey）理论创始者刘
-                        锋第一次提出 ，人的知识，智慧，经 验，技能通过互联网转换成实际收益的互联网新模式。主要应用
-                        包括解决科学，技术，工作，生活，学习等领域的问题。经中央电视 台新闻报道后，国内威客模式商
-                        业网站蓬勃发展，借着威客热浪涌现出了一批优秀的威客站点，而威客理论也经历了实践的考验。同时
-                        随着互联网的普及，“一招鲜”的威客模式面临着威客流程控制和人际交互的应用瓶颈，威客需要回归
-                        “人机结合，以人为本”的传统理念来。 
-                        </p>
-                        <p>客客出品专业威客系统英文名称<abbr title="客客专业威客系统 keke produced 
-                        professional witkey">KPPW</abbr>，是一款基于PHP+MYSQL技术构架的威客系统 ，积客客团队多年实
-                        践和对威客模式商业化运作的大量调查分析而精心策划研发，是您轻松搭建威客网站的首选利器。
-                        KPPW针对威客 任务模型进行了细致的分析，提供完善威客任务流程控制解决方案，并将逐步分享威
-                        客系统专业化应用作为我们的发展目标。 
-                        </p>
-                        <p>
-                         欢迎体验KPPW，提供您的宝贵意见！
-                         
-                        </p>
-                        <address>
-                          公司地址：武汉市洪山区雄楚大街御景名门3号楼1005室
-                         </address>
-                    </div>
+                      </div>
+
+			              <!--定义标题 Define Title-->
+			              <h1 class="title">标题1</h1>
+			              <h2 class="title">标题2</h2>
+			              <h3 class="title">标题3</h3>
+			              <h4 class="title">标题4</h4>
+			              <h5 class="title">标题5</h5>
+			              <h6 class="title">标题6</h6>
+			              
+			             
+				              	<h2 class="title">段落</h2>	
+				                  <p>
+				                    段落文字样式演示
+				                      1234567890_+-=:";'|\.,/`~!@#$%^&amp;*()[]{}&lt;&gt;  
+				                  </p>
+				               <h2 class="title">链接</h2>	
+				                <p><a href="#" title="链接">链接</a></p>
+				                
+				               <h2 class="title">文字格式化</h2>	 
+				                <p>对文字格式化 <em>斜体-强调的内容</em> <strong>粗体-语气更强的强调的内容</strong>   <sub>上标</sub> <sup>下标</sup> <del>删除线</del> <ins>下划线</ins></p>
+				                
+				                <h2 class="title">缩写</h2>
+				                  <p>缩写<abbr title="中华人民共和国 People's Republic of China">PRC</abbr></p>
+				                 
+				                <h2 class="title">地址</h2> 
+				                  <address>
+				                  
+				                    公司地址：武汉市洪山区雄楚大街御景名门3号楼1005室<br>
+				                    咨询热线：027 87733922<br>
+				                    客服QQ：1278454916<br>
+				                    固定电话:18971533922<br>
+				                  </address>
+				                  
+				                 <h2 class="title">删除和插入</h2> 
+				                  <p>It really was <del>not</del> <ins cite="rarara.html" >very</ins> good.</p>
+				                  
+				                 <h2 class="title">样本文本</h2>  
+				                <p><samp>定义样本文本</samp></p>
+				                
+				                <h2 class="title">计算机代码</h2>  
+<code>
+&lt;div class="box"&gt;
+    &lt;h2 class="title"&gt;title&lt;/h2&gt;
+    &lt;div class="detail"&gt;detail&lt;/div&gt;
+&lt;/div&gt;
+
+</code>
+			               	<h2 class="title">时间</h2>
+			              
+			              
+			              	<h3 class="title">指定时间</h3>
+			              	<time datetime="2008-02-14">情人节</time>
+			                <h3 class="title">发布时间</h3>
+			                <time pubdate="2012-02-5">2012-02-5</time>
+			              
+			              <h2 class="title">引用</h2>
+			              
+			                  <p><cite>定义引用</cite></p>
+			                  <p><cite>孔子</cite>曰：<q>学而不思则罔，思而不学则殆</q>.</p>
+			            
+			                    <blockquote>
+			                    <p>大篇幅引用</p>
+			                    <p>“我们大部分人都有深刻体验，每当主流浏览器版本的升级，我们刚建立的网站就可能变得过时，
+			                    我们就需要升级或者重新建造一遍网站。例如1996-1999年典型的"浏览器大战"，
+			                    为了兼容 Netscape 和 IE，网站不得不为这两种浏览器写不同的代码。同样的，
+			                    每当新的网络技术和交互设备的出现，我们也需要制作一个新版本来支持这种新技术或新设备，
+			                    例如支持手机上网的 WAP 技术。类似的问题举不胜举：网站代码臃肿、繁杂浪费了我们大量的带宽；
+			                    针对某种浏览器的 DHTML 特效，屏蔽了部分潜在的客户；不易用的代码，残障人士无法浏览网站等等。
+			                    这是一种恶性循环，是一种巨大的浪费。”</p>
+			                    </blockquote>
+			        	 
+			              
+			              <h2 class="title">项目列表</h2>
+			              
+			              
+			                  <ul class="disc">
+			                    <li>li项目列表</li>
+			                    <li>li项目</li>
+			                    <li>li项目</li>
+			                    <li>li项目</li>
+			                  </ul>
+			                  
+			                  
+			                  <ul class="square">
+			                    <li>li项目列表</li>
+			                    <li>li项目</li>
+			                    <li>li项目</li>
+			                    <li>li项目</li>
+			                  </ul>
+			                  
+			                  <ul class="circle">
+			                    <li>li项目列表</li>
+			                    <li>li项目</li>
+			                    <li>li项目</li>
+			                    <li>li项目</li>
+			                  </ul>
+			                  
+			                 
+			                  
+			                  <ol>
+			                    <li>有序列表</li>
+			                    <li>li项目</li>
+			                    <li>li项目</li>
+			                    <li>li项目</li>
+			                  </ol>
+			              
+			              
+			              <h2 class="title">定义列表</h2>
+			              
+			              
+				              <dl>
+				                <dt>定义</dt>
+				                <dd>解释“定义”</dd>
+				                <dt>上海滩</dt>
+				                <dd>这部拍摄于1980年的《上海滩》堪称是香港电视史上最成功、最经典的剧集。
+				                  当年在香港播出以后，产生了巨大的轰动效应。</dd>
+				                <dt>周润发</dt>
+				                <dd>和所有伟大的影星一样，周润发印证了一个时代，一个香港电影的黄金时代。
+				                  风衣墨镜、冷血双枪、阳光微笑，都封存胶片之中，当我们回首寻望的时候，发哥已被刻为一个时代的坐标。</dd>
+				              </dl>
+			           
+			             
+			             <h2 class="title">表格</h2>
+			             
+				             <form action="#" method="get">
+				              <table>
+				                <caption>表格标题</caption>
+				                <tr>
+				                  <th scope="col"><h2>行表头1</h2></th>
+				                  <th scope="col"><h2>行表头2</h2></th>
+				                  <th scope="col"><h2>行表头3</h2></th>
+				                  <th scope="col"><h2>行表头4</h2></th>
+				                </tr>
+				                <tr>
+				                  <th scope="row"><h2>列表头1</h2></th>
+				                  <td>内容2-1</td>
+				                  <td>内容2-2</td>
+				                  <td>内容2-3</td>
+				                </tr>
+				                <tr>
+				                  <th scope="row"><h2>列表头2</h2></th>
+				                  <td>内容3-1</td>
+				                  <td>内容3-2</td>
+				                  <td>内容3-3</td>
+				                </tr>
+				                <tr>
+				                  <th scope="row"><h2>列表头3</h2></th>
+				                  <td>内容4-1</td>
+				                  <td>内容4-2</td>
+				                  <td>内容4-3</td>
+				                </tr>
+				                <tr>
+				                  <th scope="row"><h2>列表头4</h2></th>
+				                  <td>内容5-1</td>
+				                  <td>内容5-2</td>
+				                  <td>内容5-3</td>
+				                </tr>
+				              </table>
+				        
+				              </form>
+			              
+			              
+			              
+			                        
+	                    <h2 class="title">selecter 选项</h2>
+	                    
+	                        <!--selecter 选项 start-->
+	                        <div class="selecter">
+	                            <ul>
+	                              <li>
+	                                <a href="#">选项1</a>
+	                              </li>
+	                              <li>
+	                                <a href="#">选项2</a>
+	                            </li>
+	                          </ul>
+	                        </div>
+	                        <!--selecter 选项 end-->
+						
+			                        
+			                         
+			         			
+			            
+			            
+			            <h2 class="title">step步骤</h2>
+			            
+			                <!--step步骤 start-->
+			                <div class="step_progress clearfix">
+			                    <div class="step step1 passed">
+			                        <span class="icon32">step1</span>
+			                        <strong>第一步</strong>
+			                        选择第一步内容
+			                    </div>
+			                    <div class="step step2 selected">
+			                        <span class="icon32">step2</span>
+			                        <strong>第二步</strong>
+			                        <em>选择第二步内容</em>
+			                    </div>
+			                    <div class="step step3">
+			                        <span class="icon32">step3</span>
+			                        <strong>第三步</strong>
+			                        <em>选择第三步内容</em>
+			                    </div>
+			                    <div class="step step4">
+			                        <span class="icon32">step4</span>
+			                        <strong>第四步</strong>
+			                        <em>选择第四步内容</em>
+			                    </div>
+			                    <div class="step step5">
+			                        <span class="icon32">step5</span>
+			                        <strong>第五步</strong>
+			                        <em>选择第五步内容</em>
+			                    </div>
+			                </div>
+			                <!--step步骤 end-->
+			            
+			            
+			                <div class="step_button">
+			                <button type="button" value="下一步" onClick="$('.messages.red').show();">下一步</button>
+			                </div>
+			            
+			            
+			            
+			            
+			            
+			            
+			            
+			            
+			            <h2 class="title">list列表[dl\dt\dd](适用小于10列数据)</h2>
+			            <div class="list">
+			                <dl>
+			                  <dt>悬赏任务</dt>
+			                  <dd class="tags">
+			                    <ul>
+			                        <li>悬赏金额</li>
+			                        <li class="w5">任务名称</li>
+			                        <li>浏览|投稿</li>
+			                        <li>任务类型</li>
+			                        <li>结束时间</li>
+			                        <li>任务状态</li>
+			                    </ul>
+			                  </dd>
+			                  <dd class="clearfix">
+			                    <ul>
+			                        <li>￥101.00</li>
+			                        <li class="w5"><a href="#" title="微博任务发布测试111111111111111111111">微博任务发布测试111111111111111111111...</a></li>
+			                        <li>4|1</li>
+			                        <li>微博任务</li>
+			                        <li>2天7小时</li>
+			                        <li>已结束</li>
+			                    </ul>
+			                  </dd>
+			                  <dd class="clearfix">
+			                    <ul>
+			                        <li>￥101.00</li>
+			                        <li class="w5"><a href="#" title="微博任务发布测试111111111111111111111">微博任务发布测试111111111111111111111...</a></li>
+			                        <li>4|1</li>
+			                        <li>微博任务</li>
+			                        <li>2天7小时</li>
+			                        <li>已结束</li>
+			                    </ul>
+			                  </dd>
+			                  <dd class="clearfix">
+			                    <ul>
+			                        <li>￥101.00</li>
+			                        <li class="w5"><a href="#" title="微博任务发布测试111111111111111111111">微博任务发布测试111111111111111111111...</a></li>
+			                        <li>4|1</li>
+			                        <li>微博任务</li>
+			                        <li>2天7小时</li>
+			                        <li>已结束</li>
+			                    </ul>
+			                  </dd>
+			                  <dd class="clearfix">
+			                    <ul>
+			                        <li>￥101.00</li>
+			                        <li class="w5"><a href="#" title="微博任务发布测试111111111111111111111">微博任务发布测试111111111111111111111...</a></li>
+			                        <li>4|1</li>
+			                        <li>微博任务</li>
+			                        <li>2天7小时</li>
+			                        <li>已结束</li>
+			                    </ul>
+			                  </dd>
+			                  <dd class="clearfix">
+			                    <ul>
+			                        <li>￥101.00</li>
+			                        <li class="w5"><a href="#" title="微博任务发布测试111111111111111111111">微博任务发布测试111111111111111111111...</a></li>
+			                        <li>4|1</li>
+			                        <li>微博任务</li>
+			                        <li>2天7小时</li>
+			                        <li>已结束</li>
+			                    </ul>
+			                  </dd>
+			                  <dd class="clearfix">
+			                    <ul>
+			                        <li>￥101.00</li>
+			                        <li class="w5"><a href="#" title="微博任务发布测试111111111111111111111">微博任务发布测试111111111111111111111...</a></li>
+			                        <li>4|1</li>
+			                        <li>微博任务</li>
+			                        <li>2天7小时</li>
+			                        <li>已结束</li>
+			                    </ul>
+			                  </dd>
+			                </dl>
+			            </div>
+			            
+
+			            <h2 class="title">数据列表(适用所有类型数据)</h2>
+		            	<!--date_table数据表格 start-->
+	                    <div class="data_list">
+	                        <table  class="data_table">
+	                            <thead>
+	                            <tr>
+	                              <th scope="col">财务编号</th>
+	                              <th scope="col">创建时间</th>
+	                              <th scope="col">用途</th>
+	                              <th scope="col">收入(金额/金币)</th>
+	                              <th scope="col">支出(金额/金币)</th>
+	                              <th scope="col">余额(金额/金币)</th>
+	                              <th scope="col">支付方式</th>
+	                            </tr>
+	                            </thead>
+	                            <tbody>
+	                            <tr>
+	                              <td>8800002974</td>
+	                              <td>2011-08-25 14:00:10</td>
+	                              <td>增值服务</td>
+	                              <td>--/--</td>
+	                              <td>30.00/--</td>
+	                              <td>308.00/--</td>
+	                              <td>本站账户</td>
+	                            </tr>
+	                            <tr>
+	                              <td>8800002974</td>
+	                              <td>2011-08-25 14:00:10</td>
+	                              <td>任务失败退款</td>
+	                              <td>--/8.00</td>
+	                              <td>--/--</td>
+	                              <td>308.00/8.00</td>
+	                              <td>本站账户</td>
+	                            </tr>
+	                            <tr>
+	                              <td>8800002974</td>
+	                              <td>2011-08-25 14:00:10</td>
+	                              <td>增值服务</td>
+	                              <td>--/--</td>
+	                              <td>30.00/--</td>
+	                              <td>308.00/8.00</td>
+	                              <td>支付宝</td>
+	                            </tr>
+	                            </tbody>
+	                            <tfoot>
+	                            <tr>
+	                              <td>&nbsp;</td>
+	                              <td>总计</td>
+	                              <td>3项</td>
+	                              <td>--/8.00</td>
+	                              <td>60.00/--</td>
+	                              <td>&nbsp;</td>
+	                              <td>308.00/8.00</td>
+	                            </tr>
+	                            </tfoot>
+	                          </table>
+	                    </div>
+		               	<!--data_table数据表格 end-->
+ 
+
+			            <h2 class="title">翻页</h2>
+			            <div class="page clearfix">
+			                <p>
+			                    <span class="stats">5/10</span>
+			                    <a href="###">首　页</a>
+			                    <a href="###">上一页</a>
+			                    <a href="###" class="selected">1</a>
+			                    <a href="###">2</a>
+			                    <a href="###">3</a>
+			                    <a href="###">4</a>
+			                    <a href="###">5</a>
+			                    <a href="###">6</a>
+			                    <a href="###">7</a>
+			                    <a href="###">8</a>
+			                    <span>...</span>
+			                    <a href="###">10</a>
+			                    <a href="###">下一页</a>
+			                    <a href="###">尾　页</a>
+			                </p>
+			            </div>
+			        	
+			            
+			            <h2 class="title">状态描述</h2>
+			            
+			            <div class="state_desc">
+			            	<dl class="state_container green">
+			                	<dt class="state_title">描述标题</dt>
+			                    <dd class="state_detail">描述内容</dd>
+			                </dl>
+			                <dl class="state_container">
+			                	<dt class="state_title">描述标题</dt>
+			                    <dd class="state_detail">描述内容</dd>
+			                </dl>
+			                <dl class="state_container">
+			                	<dt class="state_title">描述标题</dt>
+			                    <dd class="state_detail">描述内容</dd>
+			                </dl>
+			            </div>
+			            
+			        
+			        	
+			        
+			        	
+			            <h2 class="title">条件筛选</h2>
+			            
+			            <div class="filter">
+			                <!--条件列表-->
+			                <div class="condition_list">
+			                    <!--分类-->
+			                    <dl class="condition clearfix">
+			                        <dt>
+			                            任务分类
+			                        </dt>
+			                        <dd>
+			                            <a class="selected" href="#">全部 </a>
+			                            <a href="#">品牌设计 </a>
+			                            <a href="#">网站开发 </a>
+			                            <a href="#">软件开发 </a>
+			                            <a href="#">翻译服务 </a>
+			                            <a href="#">多媒体设计 </a>
+			                            <a href="#">创意祝福 </a>
+			                            <a href="#">网游服务 </a>
+			                            <a href="#">文案写作 </a>
+			                            <a href="#">建筑/装修 </a>
+			                            <a href="#">头脑风暴 </a>
+			                            <a href="#">法律服务 </a>
+			                            <a href="#">起名取名 </a>
+			                            <a href="#">生活服务 </a>
+			                            <a href="#">移动应用 </a>
+			                            <a href="#">网络营销 </a>
+			                            <a href="#">招聘找人 </a>
+			                        </dd>
+			                    </dl>
+			                    <!--end 分类--><!--条件1-->
+			                    <dl class="condition clearfix">
+			                        <dt>
+			                            任务模式
+			                        </dt>
+			                        <dd >
+			                            <a class="selected" href="#">全部 </a>
+			                            <a href="#">单人悬赏 </a>
+			                            <a href="#">多人悬赏 </a>
+			                            <a href="#">计件悬赏 </a>
+			                            <a href="#">普通招标 </a>
+			                            <a href="#">订金招标 </a>
+			                            <a href="#">微博转发 </a>
+			                            <a href="#">微博点击 </a>
+			                        </dd>
+			                        </dl>
+			                            <!--end 条件1-->
+			                </div>
+			                        <!--end 条件列表-->
+			        
+			        
+			        				<!--已选条件-->
+			                        <div class="select_condition clearfix">
+			                            <dl>
+			                                <dt>
+			                                    <h3 class="title">已选条件</h3>
+			                                </dt>
+			                                <dd>
+			                                    <!--当无选择条件时显示span标记--><span>您暂无选择筛选条件</span>
+			                                    <a class="selected" href="#">选中条件 <span class="close">×</span></a>
+			                                 </dd>
+			                            </dl>
+			                        </div>
+			                        
+			        				<!--end 已选条件-->	  
+			        	</div>
+			                        
+			            </div>
+
+
                     <div id="div_nav_2" class="detail clearfix hidden">
                       <div class="grid_4 alpha">
                         <h3>3星</h3>
@@ -342,11 +821,12 @@
                       
                       <div class="grid_23 alpha omega">
                         <h3>代码</h3>
-                        <code>
-  &lt;span class="stars sred a10 s0d5"&gt;
-    &lt;span class="star_selected"&gt;&lt;/span&gt;
-  &lt;/span&gt;
-                        </code>
+<code>
+&lt;span class="stars sred a10 s0d5"&gt;
+	&lt;span class="star_selected"&gt;&lt;/span&gt;
+&lt;/span&gt;
+
+</code>
                       
                         <h3>说明</h3>
                         <dl>
@@ -361,8 +841,8 @@
                         </dl>
                        
                       </div>
-                        
                     </div>
+
                     <div id="div_nav_3" class="detail hidden">
                       <div class="tab">
                           <a href="###" id="tab_tab_1" class="selected" onclick="swaptab('tab','selected','',2,1)">选项卡1<b class="arrow arrow_b"></b></a>
@@ -374,6 +854,7 @@
                               <div id="div_tab_2" class="tabdetail hidden">选项卡2内容</div>
                       </div>
                     </div>
+
                     <div id="div_nav_4" class="detail hidden">
                       <div class="albums ab_col5 clearfix">
                         <dl class="album_item">
@@ -494,14 +975,7 @@
                           <dd class="ab_info ws_break">
                             <span class="ab_time" title="最后更新时间:2004-10-15 12:15:10"><time>2004-10-15 12:15:10</time></span>
                             <em class="ab_count" title="相片数量:10张">10P</em>
-                            <p class="ab_des">我是头戴皇冠身披紫色战袍的小王子
-住在大观园的牡丹王国里
-与那些蜂啊蝶啊相比
-我实在不算勇敢
-不能劈荆斩棘不能所向无敌
-但是在你的面前
-我就能变身成超人
-一切无所畏惧</p>
+                            <p class="ab_des">我是头戴皇冠身披紫色战袍的小王子住在大观园的牡丹王国里与那些蜂啊蝶啊相比我实在不算勇敢不能劈荆斩棘不能所向无敌但是在你的面前我就能变身成超人一切无所畏惧</p>
                           </dd>
                         </dl>
 
@@ -513,234 +987,7 @@
 
 
                     <div id="div_nav_5" class="detail hidden">
-                      <table border="0" cellspacing="0" style="margin:0 auto;">
-                        <tr class="white_bg">
-                          <td class="t_c" colspan="7">
-                            <b class="font16">a标签按钮</b>
-                          </td>
-                        </tr>
-                        <tr class="white_bg">
-                          <td class="t_c">
-                            <a href="#" class="button"><span><<span>a<span>><span>标签按钮</a>
-                          </td>
-                          <td class="t_c">
-                            <a href="#" class="primary button">Publish Post</a><br>
-                            字体加粗
-                          </td>
-                          <td class="t_c">
-                            <a href="#" class="negative button">Divide by Zero</a><br>
-                            鼠标移上红色背景
-                          </td>
-                          <td class="t_c">
-                            <a href="#" class="positive button">Save the World</a> <br>
-                            鼠标移上绿色背景
-                          </td>
-                          <td class="t_c" colspan="2">
-                            <a href="#" class="big button">Create Project</a><br>
-                            大按钮
-                          </td>
-                          
-                          <td class="t_c">
-                            <a href="#" class="pill button">This is a Pill Button</a><br>
-                            圆角
-                          </td>
-                         
-                        </tr>
-                        <tr class="white_bg">
-                          <td class="t_c" colspan="4">
-                            <a href="#" class="left primary button">Archive</a><a href="#" class="middle button">Report Spam</a><a href="#" class="right negative button">Delete</a><br>
-                            三合一
-                          </td>
-                          <td class="t_c" colspan="3">
-                            <a href="#" class="left primary pill button">Archive</a><a href="#" class="middle pill button">Report Spam</a><a href="#" class="right negative pill button">Delete</a><br>
-                            三合一圆角
-                          </td>
-                        </tr>
-
-                        <tr class="white_bg">
-                          <td class="t_c" colspan="7">
-                            <b class="font16">button标签按钮</b>
-                          </td>
-                        </tr>
-                        <tr class="white_bg">
-                          <td class="t_c" >
-                            <button class="button"><span><<span>button<span>><span>标签按钮</button><br>
-                          </td>
-                          <td class="t_c">
-                            <button class="primary button">Publish Post</button><br>
-                            字体加粗
-                          </td>
-                          <td class="t_c">
-                            <button class="negative button">Divide by Zero</button><br>
-                            鼠标移上红色背景
-                          </td>
-                          <td class="t_c">
-                            <button class="positive button">Save the World</button><br>
-                            鼠标移上绿色背景
-                          </td>
-                          <td class="t_c" colspan="2">
-                            <button class="big button">Create Project</button><br>
-                            大按钮
-                          </td>
-                          
-                          <td class="t_c">
-                            <button class="pill button">This is a pill Button</button><br>
-                            圆角
-                          </td> 
-                          
-                        </tr>
-                        <tr class="white_bg">
-                          <td class="t_c" colspan="4">
-                            <button class="left primary button">Archive</button><button class="middle button">Report Spam</button><button class="right negative button">Delete</button><br>
-                            三合一
-                          </td>
-                          <td class="t_c" colspan="3">
-                            <button class="left primary pill button">Archive</button><button class="middle pill button">Report Spam</button><button class="right negative pill button">Delete</button><br>
-                            三合一圆角
-                          </td>
-                        </tr> 
-                        
-                        <tr class="white_bg">
-                          <td class="t_c" colspan="7">
-                            <b class="font16">图标按钮</b>
-                          </td>
-                        </tr>
-                        <tr class="white_bg">
-                          <td class="t_c">
-                            <a class="button" href="javascript:void(false)"><span class="magnifier icon"></span>Search</a></br>
-                            .magnifier
-                          </td>
-                          <td class="t_c">
-                            <a class="button" href="javascript:void(false)"><span class="book icon"></span>View Log</a></br>
-                            .book
-                          </td>
-                          <td class="t_c">
-                            <a class="button" href="javascript:void(false)"><span class="chat icon"></span>Start Chat</a></br>
-                            .chat
-                          </td>
-                          <td class="t_c">
-                            <a class="button" href="javascript:void(false)"><span class="check icon"></span>Approve Registration</a></br>
-                            .check
-                          </td>
-                          <td class="t_c">
-                            <a class="button" href="javascript:void(false)"><span class="clock icon"></span>Register Work Time</a></br>
-                            .clock
-                          </td>
-                          <td class="t_c">
-                            <a class="button" href="javascript:void(false)"><span class="cog icon"></span>Settings</a></br>
-                            .cog
-                          </td>
-                          <td class="t_c">
-                            <a class="negative button" href="javascript:void(false)"><span class="cross icon"></span>Remove Item</a></br>
-                            .cross
-                          </td>
-                          
-                        </tr>
-                        <tr class="white_bg">
-                          <td class="t_c">
-                            <a class="button" href="javascript:void(false)"><span class="fork icon"></span>Create Branch</a></br>
-                            .fork
-                          </td>
-                          <td class="t_c">
-                            <a class="button" href="javascript:void(false)"><span class="heart icon"></span>Add to Favorites</a></br>
-                            .heart
-                          </td>
-                          <td class="t_c">
-                            <a class="button" href="javascript:void(false)"><span class="home icon"></span>Back to Frontpage</a></br>
-                           .home
-                          </td>
-                          <td class="t_c">
-                            <a class="button" href="javascript:void(false)"><span class="key icon"></span>Password Protect</a></br>
-                            .key
-                          </td>
-                          <td class="t_c">
-                            <a class="button" href="javascript:void(false)"><span class="leftarrow icon"></span>Move Left</a></br>
-                            .leftarrow
-                          </td>
-                          <td class="t_c">
-                            <a class="button" href="javascript:void(false)"><span class="lock icon"></span>Lock Article</a></br>
-                            .lock
-                          </td>
-                          <td class="t_c">
-                            <a class="button" href="javascript:void(false)"><span class="loop icon"></span>Resend Message</a></br>
-                            .loop
-                          </td>
-                          
-                        </tr> 
-                        <tr class="white_bg">
-                          
-                          <td class="t_c">
-                            <a class="button" href="javascript:void(false)"><span class="move icon"></span>Move</a></br>
-                            .move
-                          </td>
-                          <td class="t_c">
-                            <a class="button" href="javascript:void(false)"><span class="pen icon"></span>Edit Post</a></br>
-                            .pen
-                          </td>
-                          <td class="t_c">
-                            <a class="button" href="javascript:void(false)"><span class="pin icon"></span>Pin to Map</a></br>
-                            .pin
-                          </td>
-                          <td class="t_c">
-                            <a class="button" href="javascript:void(false)"><span class="plus icon"></span>Add Post</a></br>
-                            .plus
-                          </td>
-                          <td class="t_c">
-                            <a class="button" href="javascript:void(false)"><span class="reload icon"></span>Reload Page</a></br>
-                            .reload
-                          </td>
-                          <td class="t_c">
-                            <a class="button" href="javascript:void(false)"><span class="rightarrow icon"></span>Move Right</a></br>
-                            .rightarrow
-                          </td>
-                          <td class="t_c">
-                            <a class="button" href="javascript:void(false)"><span class="rss icon"></span>Subscribe to RSS Feed</a></br>
-                            .rss
-                          </td>
-                        </tr>
-                        <tr class="white_bg">
-                          <td class="t_c">
-                            <a class="button" href="javascript:void(false)"><span class="tag icon"></span>Add Tag</a></br>
-                            .tag
-                          </td>
-                          <td class="t_c">
-                            <a class="negative button" href="javascript:void(false)"><span class="trash icon"></span>Delete Post</a></br>
-                            .trash
-                          </td>
-                          <td class="t_c">
-                            <a class="button" href="javascript:void(false)"><span class="unlock icon"></span>Unlock Article</a></br>
-                            .unlock
-                          </td>
-                          
-                          <td class="t_c" >
-                            <a class="button" href="javascript:void(false)"><span class="user icon"></span>Add New User</a></br>
-                            .user
-                          </td>
-                          <td class="t_c">
-                            <a class="button" href="javascript:void(false)"><span class="calendar icon"></span>Add to Calendar</a></br>
-                            .calendar
-                          </td>
-                          <td class="t_c">
-                            <a class="button" href="javascript:void(false)"><span class="comment icon"></span>Add Comment</a></br>
-                            .comment
-                          </td>
-                          <td class="t_c">
-                            <a class="button" href="javascript:void(false)"><span class="downarrow icon"></span>Move Down</a></br>
-                            .downarrow
-                          </td>
-                        </tr>
-                        <tr class="white_bg">
-                          
-                          <td class="t_c" colspan="4">
-                            <a class="button" href="javascript:void(false)"><span class="mail icon"></span>Send Newsletter</a></br>
-                            .mail
-                          </td>
-                          <td class="t_c" colspan="3">
-                            <a class="button" href="javascript:void(false)"><span class="uparrow icon"></span>Move Up</a></br>
-                            .uparrow
-                          </td>
-                        </tr> 
-                      </table>
+                      <iframe id="buttonframe" src="css3buttons/demo.html" frameborder="0"></iframe>
                     </div>
 
                     <div id="div_nav_6" class="detail hidden">
@@ -749,7 +996,7 @@
                           <ul>
                               <li><a href="#"><span class="icon32 meter">Main panel</span><em>管理面板</em></a></li>
                               <li><a class="selected" href="#"><span class="icon32 cog">Personal Settings</span><em>个人设置</em></a></li>
-                              <li><a href="#"><span class="icon32 chart-line-2">Financial Management</span><em>财务管理</em></a></li>
+                              <li><a href="#"><span class="icon32 chart-line2">Financial Management</span><em>财务管理</em></a></li>
                               <li><a href="#"><span class="icon32 buyer">Employers | Buyers</span><em>雇主|买家</em></a></li>
                               <li><a href="#"><span class="icon32 seller">Witkey | Sellers</span><em>威客|卖家</em></a></li>
                               <li><a href="#"><span class="icon32 shield">Security Settings</span><em>安全设置</em></a></li>
@@ -852,7 +1099,7 @@
                             <td><span class="icon16 bell"></span><p>bell</p></td>
                             <td><span class="icon16 bookmark-1"></span><p>bookmark-1</p></td>
                             <td><span class="icon16 bookmark-2"></span><p>bookmark-2</p></td>
-                            <td><span class="icon16 box"></span><p>box</p></td>
+                            <td><span class="icon16 boxs"></span><p>box</p></td>
                             <td><span class="icon16 br-down"></span><p>br-down</p></td>
                             <td><span class="icon16 br-next"></span><p>br-next</p></td> 
                           </tr>
@@ -1323,7 +1570,7 @@
                             <td><span class="icon32 bell"></span><p>bell</p></td>
                             <td><span class="icon32 bookmark-1"></span><p>bookmark-1</p></td>
                             <td><span class="icon32 bookmark-2"></span><p>bookmark-2</p></td>
-                            <td><span class="icon32 box"></span><p>box</p></td>
+                            <td><span class="icon32 boxs"></span><p>box</p></td>
                             <td><span class="icon32 br-down"></span><p>br-down</p></td>
                             <td><span class="icon32 br-next"></span><p>br-next</p></td> 
                           </tr>
@@ -1794,7 +2041,7 @@
                             <td><span class="icon48 bell"></span><p>bell</p></td>
                             <td><span class="icon48 bookmark-1"></span><p>bookmark-1</p></td>
                             <td><span class="icon48 bookmark-2"></span><p>bookmark-2</p></td>
-                            <td><span class="icon48 box"></span><p>box</p></td>
+                            <td><span class="icon48 boxs"></span><p>box</p></td>
                             <td><span class="icon48 br-down"></span><p>br-down</p></td>
                             <td><span class="icon48 br-next"></span><p>br-next</p></td> 
                           </tr>
@@ -2193,330 +2440,273 @@
                           </tr>
                         </tbody>
                       </table>
-
-
-
-
-
                     </div>
-                </div>
+
+                    <div id="div_nav_9" class="detail hidden">
+                    	<h2 class="title">表单</h2>
+			              <div class="detail">
+			              <form action="#" method="get">
+			                <div class="rowElem"><label>输入框：</label><input class="txt_input" type="text" name="inputtext" value="输入框"/></div>
+			                <div class="rowElem"><label>输入框(禁用)：</label><input class="txt_input" type="text" name="inputtext" disabled="disabled" value="输入框"/></div>
+			                <div class="rowElem"><label>密码框：</label><input class="txt_input" type="password"  value="密码框"/></div>
+			                <div class="rowElem"><label>复选框： </label><input type="checkbox" name="chbox" id="/"></div>
+			                <div class="rowElem"><label>单选框：</label> 
+			                    <input type="radio" name="question" value="oui" checked /><label>oui</label>
+			                    <input type="radio" name="question" value="non" /><label>non</label>
+			                </div>
+			                <div class="rowElem"><label>文本区域：</label> <textarea cols="40" rows="12" name="mytext"></textarea></div>
+			        
+			                <div class="rowElem">
+			                    <label>下拉菜单：</label>
+			                    <select name="select">
+			                        <option value="">1&nbsp;</option>
+			                        <option value="opt1">2&nbsp;</option>
+			                    </select>
+			                </div>
+			                <div class="rowElem">
+			                    <label>下拉菜单选中提示 ：</label>
+			                    <select name="select2" style="width:180px;" >
+			                        <option value="opt1">多文字多选项下拉列表菜单</option>
+			                        <option value="opt2">选项2</option>
+			                        <option value="opt3">选项3</option>
+			                        <option value="opt4">选项4</option>
+			                        <option value="opt5">选项5</option>
+			                        <option value="opt6">选项6</option>
+			                        <option value="opt7">选项7</option>
+			                        <option value="opt8">选项8</option>
+			                    </select>
+			                </div>
+			                
+			                
+			                
+			                
+			                <div class="rowElem"><label>提交按钮：</label><input type="submit" value="提交" /></div>
+			                <div class="rowElem"><label>重置按钮：</label><input type="reset" value="重置" /></div>
+			                <div class="rowElem"><label>普通按钮：</label><input type="button" value="按钮" /></div>
+			                <div class="rowElem"><label>普通按钮：</label><button type="button" value="按钮">按钮</button></div>
+			              </form>
+			            </div>
+			            
+			            
+			            
+			            
+			            <h2 class="title">字段集</h2>
+			            <div class="detail">
+			                <!--字段集 start-->
+			                <fieldset>
+			                    <legend>标题</legend>
+			                    <div>sssssssss</div>
+			                </fieldset>
+			                <!--字段集 end-->
+			            </div>
+			            
+			            <h2 class="title">form_box表单</h2>
+			            <div class="detail">
+			            	<!--from表单 start-->
+			                    <div class="form_box clearfix">
+			                    
+			                    <div class="form_tip">表单提示</div>
+			                    
+			                    <h2 class="title">基本表单</h2>
+			                    <div class="detail">
+			                    <form action="user_center.html" method="get">
+			                    
+			                    	
+			                        <div class="rowElem clearfix po_re">
+			                        <label>输入框：</label>
+			                        <input name="inputtext" type="text" value="输入框"  title="用户提示信息文本提示"/>
+			                        <span>说明文字</span>
+			                        </div>
+			                        <div class="rowElem clearfix">
+			                        <label>输入框(禁用)：</label>
+
+			                        <input type="text" name="inputtext" disabled="disabled" value="输入框"/>
+
+			                        <span>说明文字</span>
+			                        </div>
+			                        <div class="rowElem clearfix">
+			                            <label>密码框：</label>
+			                            <input type="password"  value="密码框"/>
+			                            <span>说明文字</span>
+			                        </div>
+			                        <div class="rowElem clearfix">
+			                            <label>复选框： </label>
+			                            <input type="checkbox" name="chbox" id="/">
+			                            <span>说明文字</span>
+			                        </div>
+			                        <div class="rowElem clearfix">
+			                        	<label>单选框：</label> 
+			                            <input type="radio" name="question" value="oui" checked /><label>oui</label>
+			                            <input type="radio" name="question" value="non" /><label>non</label>
+			                        </div>
+			                        <div class="rowElem clearfix">
+			                        <label>文本区域：</label>
+			                        <textarea cols="30" rows="12" name="mytext" title="文本提示"></textarea>
+			                        <span>说明文字</span></div>
+			                
+			                        <div class="rowElem clearfix">
+			                            <label>下拉菜单：</label>
+			                            <select name="select">
+			                                <option value="">1&nbsp;</option>
+			                                <option value="opt1">2&nbsp;</option>
+			                            </select>
+			                        </div>
+			                        <div class="rowElem clearfix">
+			                            <label>下拉菜单选中提示：</label>
+			                            <select name="select2" style="width:180px;" >
+			                                <option value="opt1">多文字多选项下拉列表菜单</option>
+			                                <option value="opt2">选项2</option>
+			                                <option value="opt3">选项3</option>
+			                                <option value="opt4">选项4</option>
+			                                <option value="opt5">选项5</option>
+			                                <option value="opt6">选项6</option>
+			                                <option value="opt7">选项7</option>
+			                                <option value="opt8">选项8</option>
+			                            </select>
+			                        </div>
+			                        </form>
+			                     </div>
+
+
+		                    </div>
+		                </div>
+
+
+		                <h2 class="title">lit_form 小型表单</h2>
+			                    <div class="detail"> 
+			                        
+			                            <div class="form_tip">
+			                                <p>平台还未向以下账户转款，请耐心等待。操作完成后会第一时间通知您！</p>
+			                                <p><a href="#">进入收件箱&gt;&gt;</a></p>
+			                            </div>
+			                            
+			                            <!--lit_form 小型表单 start-->
+			                            <form action="user_center.html" method="get">
+			                            <div class="lit_form">
+			                                <div class="info">
+			                                    <p>请上传银行汇款单，以便客服核对信息</p>
+			                                </div>
+			                                
+			                                <div class="upfile">
+			                                    <button class="button" type="button" value="上传文件" >上传文件</button>
+			                                    <span>(上传文件大小不超过30kb，格式jpg,png,gif,bmp)</span>
+			                                </div>
+			                                <div class="file_list">
+			                                    <ul>
+			                                        <li class="items"><span>1.bmp</span><a href="javascript:;" class="close">&times;</a></li>
+			                                        <li class="items"><span>2.bmp</span><a href="javascript:;" class="close">&times;</a></li>
+			                                    </ul>
+			                                </div>
+			                            </div>
+			                            </form>
+			                            <!--lit_form 小型表单 end-->
+			     				
+			                        
+			                        
+
+			                        
+			                        
+			                            <div class="form_tip">请输入平台向以下账户转入的金额</div>
+			                            
+			                            <!--lit_form 小型表单2 start-->
+			                            <form action="user_center.html" method="get">
+			                            <div class="lit_form">
+			                                <div class="info t_l">
+			                                    <p>工商银行<a href="#"><strong>账户名</strong></a></p>
+			                                    <p>账户：244414488414714</p>
+			                                </div>
+			                                <div class="clearfix pad10">
+			                                    <label class="grid_4">请输入金额：</label>
+			                                    <input type="text" name="inputtext" value="输入框" size="30"  title="人民币(元)" />
+			                                </div>
+			                                <div class="clearfix pad10">
+			                                    <label class="grid_4">请输入金额：</label>
+			                                    <input type="text" name="inputtext" value="输入框" size="30" title="人民币(元)" />
+			                                </div>
+			                            </div>
+			                            
+			                            
+			                            </form>
+			                            <!--lit_form 小型表单2 end-->
+
+			                        </div>
+			                      
+			                        
+			                        <div class="rowElem clearfix from_button">
+			                            <button type="submit" value="提交" >提交</button>
+			                            <button type="reset" value="重置" >重置</button>
+			                            <button type="button" value="按钮" >按钮</button>
+			                        </div>
+			                        
+			                      
+			                      
+			                      
+			                    </div>
+			                    <!--from表单 end-->
+		            
+		        </div>
                 <div class="box_footer">
-                   LESS 将 CSS 赋予了动态语言的特性，如 变量， 继承， 运算， 函数. LESS 既可以在 客户端 上运行 (支持IE 6+, Webkit, Firefox)，也可以借助Node.js或者Rhino在服务端运行。
+                   
+                   
                 </div>
              </div>
-        </div>
+        </article>
                        
 
 
-<!--
 
-        <div class="box rigo_light mb_30">
+<section id="sidebar">
+
+        <div id="styles" class="box ">
+          <div class="inner clearfix">
+              <header class="box_header">
+                <h2 class="box_title" title="BOX皮肤">BOX皮肤</h2>
+              </header>
+              <nav class="box_nav">
+                <a href="###" class="selected" title="普通">normal</a>
+                <a href="###" title="模型">model</a>
+                <a href="###" title="苹果">apple_style</a>
+                <a href="###" title="win7玻璃">aero_style</a>
+                <a href="###" title="星际2">star_craft2</a>
+                <a href="###" title="皮肤工厂">skins_factory</a>
+                <a href="###" title="青花">blue_a_white</a>
+                <a href="###" title="光">rigo_light</a>
+                <a href="###" title="海滩">beach</a>
+              </nav>
+          </div>
+        </div>
+
+        <div class="box ">
             <div class="inner clearfix">
-                <div class="box_header">
+                <header class="box_header">
                     <div class="box_title">
-                        <h2 class="title" title="这里是标题说明">.box.rigo_light rigo_光</h2>
+                        <h2 class="title" title="UI元素">UI元素</h2>
                     </div>
-                </div>
+                </header>
                 <div class="box_detail">
                     <div class="detail clearfix">
-                      <img class="fl_l mr_10" src="images/avatar.png" alt="avatar">  
-                      <p>
-                        段落文字样式演示
-                          1234567890_+-=:";'|\.,/`~!@#$%^&amp;*()[]{}&lt;&gt;  
-                      </p>
-                      <p>
-                        <a href="#">互联网</a>已经过十多年的发展，各种新型应用层出不穷，2005年7月威客（witkey）理论创始者刘
-                        锋第一次提出 ，人的知识，智慧，经 验，技能通过互联网转换成实际收益的互联网新模式。主要应用
-                        包括解决科学，技术，工作，生活，学习等领域的问题。经中央电视 台新闻报道后，国内威客模式商
-                        业网站蓬勃发展，借着威客热浪涌现出了一批优秀的威客站点，而威客理论也经历了实践的考验。同时
-                        随着互联网的普及，“一招鲜”的威客模式面临着威客流程控制和人际交互的应用瓶颈，威客需要回归
-                        “人机结合，以人为本”的传统理念来。 
-                        </p>
-                        <p>客客出品专业威客系统英文名称<a href="#">KPPW</a>，也是keke produced 
-                        professional witkey的缩写。KPPW是一款基于PHP+MYSQL技术构架的威客系统 ，积客客团队多年实
-                        践和对威客模式商业化运作的大量调查分析而精心策划研发，是您轻松搭建威客网站的首选利器。
-                        KPPW针对威客 任务模型进行了细致的分析，提供完善威客任务流程控制解决方案，并将逐步分享威
-                        客系统专业化应用作为我们的发展目标。 
-                        </p>
-                        <p>
-                         欢迎体验KPPW，提供您的宝贵意见！
-                        </p>
+                     <ul class="clearfix" id="test_ul">
+                          <li id="tab_nav_1" class="selectedLava" onclick="swaptab('nav','selectedLava','',9,1)"><a href="#">HTML标记</a></li>
+                          <li id="tab_nav_2" onclick="swaptab('nav','selectedLava','',9,2)"><a href="#">星星</a></li>
+                          <li id="tab_nav_3" onclick="swaptab('nav','selectedLava','',9,3)"><a href="#">选项卡</a></li>
+                          <li id="tab_nav_4" onclick="swaptab('nav','selectedLava','',9,4)"><a href="#">相册</a></li>
+                          <li id="tab_nav_5" onclick="swaptab('nav','selectedLava','',9,5)"><a href="#">按钮</a></li>
+                          <li id="tab_nav_6" onclick="swaptab('nav','selectedLava','',9,6)"><a href="#">导航</a></li>
+                          <li id="tab_nav_7" onclick="swaptab('nav','selectedLava','',9,7)"><a href="#">加载条</a></li>
+                          <li id="tab_nav_8" onclick="swaptab('nav','selectedLava','',9,8)"><a href="#">图标</a></li>
+                          <li id="tab_nav_9" onclick="swaptab('nav','selectedLava','',9,9)"><a href="#">表单</a></li>
+                      </ul>
                     </div>
                 </div>
-                <div class="box_footer">
-                   LESS 将 CSS 赋予了动态语言的特性，如 变量， 继承， 运算， 函数. LESS 既可以在 客户端 上运行 (支持IE 6+, Webkit, Firefox)，也可以借助Node.js或者Rhino在服务端运行。
-                </div>
+                <footer class="box_footer">
+                   
+                </footer>
              </div>
         </div>
 
+</section>
 
-
-
-        <div class="box blue_a_white mb_30">
-            <div class="inner clearfix">
-                <div class="box_header">
-                    <div class="box_title">
-                        <h2 class="title" title="这里是标题说明">.box.blue_a_white 青花</h2>
-                    </div>
-                </div>
-                <div class="box_detail">
-                    <div class="detail clearfix">
-                      <img class="fl_l mr_10" src="images/avatar.png" alt="avatar">  
-                      <p>
-                        段落文字样式演示
-                          1234567890_+-=:";'|\.,/`~!@#$%^&amp;*()[]{}&lt;&gt;  
-                      </p>
-                      <p>
-                        <a href="#">互联网</a>已经过十多年的发展，各种新型应用层出不穷，2005年7月威客（witkey）理论创始者刘
-                        锋第一次提出 ，人的知识，智慧，经 验，技能通过互联网转换成实际收益的互联网新模式。主要应用
-                        包括解决科学，技术，工作，生活，学习等领域的问题。经中央电视 台新闻报道后，国内威客模式商
-                        业网站蓬勃发展，借着威客热浪涌现出了一批优秀的威客站点，而威客理论也经历了实践的考验。同时
-                        随着互联网的普及，“一招鲜”的威客模式面临着威客流程控制和人际交互的应用瓶颈，威客需要回归
-                        “人机结合，以人为本”的传统理念来。 
-                        </p>
-                        <p>客客出品专业威客系统英文名称<a href="#">KPPW</a>，也是keke produced 
-                        professional witkey的缩写。KPPW是一款基于PHP+MYSQL技术构架的威客系统 ，积客客团队多年实
-                        践和对威客模式商业化运作的大量调查分析而精心策划研发，是您轻松搭建威客网站的首选利器。
-                        KPPW针对威客 任务模型进行了细致的分析，提供完善威客任务流程控制解决方案，并将逐步分享威
-                        客系统专业化应用作为我们的发展目标。 
-                        </p>
-                        <p>
-                         欢迎体验KPPW，提供您的宝贵意见！
-                        </p>
-                    </div>
-                </div>
-                <div class="box_footer">
-                   LESS 将 CSS 赋予了动态语言的特性，如 变量， 继承， 运算， 函数. LESS 既可以在 客户端 上运行 (支持IE 6+, Webkit, Firefox)，也可以借助Node.js或者Rhino在服务端运行。
-                </div>
-             </div>
-        </div>
-
-
-
-        
-        <div class="box skins_factory mb_30">
-            <div class="inner clearfix">
-                <div class="box_header">
-                    <div class="box_title">
-                        <h2 class="title" title="这里是标题说明">.box.skins_factory 皮肤工厂</h2>
-                    </div>
-                </div>
-                <div class="box_detail">
-                    <div class="detail">
-                      <img class="fl_l mr_10" src="images/avatar.png" alt="avatar">    
-                      <p>
-                        段落文字样式演示
-                          1234567890_+-=:";'|\.,/`~!@#$%^&amp;*()[]{}&lt;&gt;  
-                      </p>
-                      <p>
-                        <a href="#">互联网</a>已经过十多年的发展，各种新型应用层出不穷，2005年7月威客（witkey）理论创始者刘
-                        锋第一次提出 ，人的知识，智慧，经 验，技能通过互联网转换成实际收益的互联网新模式。主要应用
-                        包括解决科学，技术，工作，生活，学习等领域的问题。经中央电视 台新闻报道后，国内威客模式商
-                        业网站蓬勃发展，借着威客热浪涌现出了一批优秀的威客站点，而威客理论也经历了实践的考验。同时
-                        随着互联网的普及，“一招鲜”的威客模式面临着威客流程控制和人际交互的应用瓶颈，威客需要回归
-                        “人机结合，以人为本”的传统理念来。 
-                        </p>
-                        <p>客客出品专业威客系统英文名称<a href="#">KPPW</a>，也是keke produced 
-                        professional witkey的缩写。KPPW是一款基于PHP+MYSQL技术构架的威客系统 ，积客客团队多年实
-                        践和对威客模式商业化运作的大量调查分析而精心策划研发，是您轻松搭建威客网站的首选利器。
-                        KPPW针对威客 任务模型进行了细致的分析，提供完善威客任务流程控制解决方案，并将逐步分享威
-                        客系统专业化应用作为我们的发展目标。 
-                        </p>
-                        <p>
-                         欢迎体验KPPW，提供您的宝贵意见！
-                        </p>
-                    </div>
-                </div>
-                <div class="box_footer">
-                   LESS 将 CSS 赋予了动态语言的特性，如 变量， 继承， 运算， 函数. LESS 既可以在 客户端 上运行 (支持IE 6+, Webkit, Firefox)，也可以借助Node.js或者Rhino在服务端运行。
-                </div>
-             </div>
-        </div>
-
-
-        <div class="box star_craft2 mb_30">
-            <div class="inner clearfix">
-                <div class="box_header">
-                    <div class="box_title">
-                        <h2 class="title" title="这里是标题说明">.box.star_craft2 星际2</h2>
-                    </div>
-                </div>
-                <div class="box_detail">
-                    <div class="detail">
-                       <img class="fl_l mr_10" src="images/avatar.png" alt="avatar">  
-                      <p>
-                        段落文字样式演示
-                          1234567890_+-=:";'|\.,/`~!@#$%^&amp;*()[]{}&lt;&gt;  
-                      </p>
-                      <p>
-                        <a href="#">互联网</a>已经过十多年的发展，各种新型应用层出不穷，2005年7月威客（witkey）理论创始者刘
-                        锋第一次提出 ，人的知识，智慧，经 验，技能通过互联网转换成实际收益的互联网新模式。主要应用
-                        包括解决科学，技术，工作，生活，学习等领域的问题。经中央电视 台新闻报道后，国内威客模式商
-                        业网站蓬勃发展，借着威客热浪涌现出了一批优秀的威客站点，而威客理论也经历了实践的考验。同时
-                        随着互联网的普及，“一招鲜”的威客模式面临着威客流程控制和人际交互的应用瓶颈，威客需要回归
-                        “人机结合，以人为本”的传统理念来。 
-                        </p>
-                        <p>客客出品专业威客系统英文名称<a href="#">KPPW</a>，也是keke produced 
-                        professional witkey的缩写。KPPW是一款基于PHP+MYSQL技术构架的威客系统 ，积客客团队多年实
-                        践和对威客模式商业化运作的大量调查分析而精心策划研发，是您轻松搭建威客网站的首选利器。
-                        KPPW针对威客 任务模型进行了细致的分析，提供完善威客任务流程控制解决方案，并将逐步分享威
-                        客系统专业化应用作为我们的发展目标。 
-                        </p>
-                        <p>
-                         欢迎体验KPPW，提供您的宝贵意见！
-                        </p>
-                    </div>
-                </div>
-                <div class="box_footer">
-                   LESS 将 CSS 赋予了动态语言的特性，如 变量， 继承， 运算， 函数. LESS 既可以在 客户端 上运行 (支持IE 6+, Webkit, Firefox)，也可以借助Node.js或者Rhino在服务端运行。
-                </div>
-             </div>
-        </div>
-
-
-        <div class="box aero_style mb_30">
-            <div class="inner clearfix">
-                <div class="box_header">
-                    <div class="box_title">
-                        <h2 class="title" title="这里是标题说明">.box.aero_style win7 Aero</h2>
-                    </div>
-                </div>
-                <div class="box_detail">
-                    <div class="detail">
-                     <img class="fl_l mr_10" src="images/avatar.png" alt="avatar">  
-                      <p>
-                        段落文字样式演示
-                          1234567890_+-=:";'|\.,/`~!@#$%^&amp;*()[]{}&lt;&gt;  
-                      </p>
-                      <p>
-                        <a href="#">互联网</a>已经过十多年的发展，各种新型应用层出不穷，2005年7月威客（witkey）理论创始者刘
-                        锋第一次提出 ，人的知识，智慧，经 验，技能通过互联网转换成实际收益的互联网新模式。主要应用
-                        包括解决科学，技术，工作，生活，学习等领域的问题。经中央电视 台新闻报道后，国内威客模式商
-                        业网站蓬勃发展，借着威客热浪涌现出了一批优秀的威客站点，而威客理论也经历了实践的考验。同时
-                        随着互联网的普及，“一招鲜”的威客模式面临着威客流程控制和人际交互的应用瓶颈，威客需要回归
-                        “人机结合，以人为本”的传统理念来。 
-                        </p>
-                        <p>客客出品专业威客系统英文名称<a href="#">KPPW</a>，也是keke produced 
-                        professional witkey的缩写。KPPW是一款基于PHP+MYSQL技术构架的威客系统 ，积客客团队多年实
-                        践和对威客模式商业化运作的大量调查分析而精心策划研发，是您轻松搭建威客网站的首选利器。
-                        KPPW针对威客 任务模型进行了细致的分析，提供完善威客任务流程控制解决方案，并将逐步分享威
-                        客系统专业化应用作为我们的发展目标。 
-                        </p>
-                        <p>
-                         欢迎体验KPPW，提供您的宝贵意见！
-                        </p>
-                    </div>
-                </div>
-                <div class="box_footer">
-                   LESS 将 CSS 赋予了动态语言的特性，如 变量， 继承， 运算， 函数. LESS 既可以在 客户端 上运行 (支持IE 6+, Webkit, Firefox)，也可以借助Node.js或者Rhino在服务端运行。
-                </div>
-             </div>
-        </div>
-
-
-        <div class="box apple_style mb_30">
-        	<div class="inner clearfix">
-                <div class="box_header">
-                    <div class="box_title">
-                        <h2 class="title" title="这里是标题说明">.box.apple_style 苹果</h2>
-                    </div>
-                </div>
-                <div class="box_detail">
-                    <div class="detail">
-                     <img class="fl_l mr_10" src="images/avatar.png" alt="avatar">  
-                      <p>
-                        段落文字样式演示
-                          1234567890_+-=:";'|\.,/`~!@#$%^&amp;*()[]{}&lt;&gt;  
-                      </p>
-                      <p>
-                        <a href="#">互联网</a>已经过十多年的发展，各种新型应用层出不穷，2005年7月威客（witkey）理论创始者刘
-                        锋第一次提出 ，人的知识，智慧，经 验，技能通过互联网转换成实际收益的互联网新模式。主要应用
-                        包括解决科学，技术，工作，生活，学习等领域的问题。经中央电视 台新闻报道后，国内威客模式商
-                        业网站蓬勃发展，借着威客热浪涌现出了一批优秀的威客站点，而威客理论也经历了实践的考验。同时
-                        随着互联网的普及，“一招鲜”的威客模式面临着威客流程控制和人际交互的应用瓶颈，威客需要回归
-                        “人机结合，以人为本”的传统理念来。 
-                        </p>
-                        <p>客客出品专业威客系统英文名称<a href="#">KPPW</a>，也是keke produced 
-                        professional witkey的缩写。KPPW是一款基于PHP+MYSQL技术构架的威客系统 ，积客客团队多年实
-                        践和对威客模式商业化运作的大量调查分析而精心策划研发，是您轻松搭建威客网站的首选利器。
-                        KPPW针对威客 任务模型进行了细致的分析，提供完善威客任务流程控制解决方案，并将逐步分享威
-                        客系统专业化应用作为我们的发展目标。 
-                        </p>
-                        <p>
-                         欢迎体验KPPW，提供您的宝贵意见！
-                        </p>
-                    </div>
-                </div>
-                <div class="box_footer">
-                    页脚
-                </div>
-             </div>
-        </div>
-
-        <div class="box apple_style black mb_30">
-            <div class="inner clearfix">
-                <div class="box_header">
-                    <div class="box_title">
-                        <h2 class="title" title="这里是标题说明">.box.apple_style.black 苹果</h2>
-                    </div>
-                </div>
-                <div class="box_detail">
-                    <div class="detail">
-                     <img class="fl_l mr_10" src="images/avatar.png" alt="avatar">  
-                      <p>
-                        段落文字样式演示
-                          1234567890_+-=:";'|\.,/`~!@#$%^&amp;*()[]{}&lt;&gt;  
-                      </p>
-                      <p>
-                        <a href="#">互联网</a>已经过十多年的发展，各种新型应用层出不穷，2005年7月威客（witkey）理论创始者刘
-                        锋第一次提出 ，人的知识，智慧，经 验，技能通过互联网转换成实际收益的互联网新模式。主要应用
-                        包括解决科学，技术，工作，生活，学习等领域的问题。经中央电视 台新闻报道后，国内威客模式商
-                        业网站蓬勃发展，借着威客热浪涌现出了一批优秀的威客站点，而威客理论也经历了实践的考验。同时
-                        随着互联网的普及，“一招鲜”的威客模式面临着威客流程控制和人际交互的应用瓶颈，威客需要回归
-                        “人机结合，以人为本”的传统理念来。 
-                        </p>
-                        <p>客客出品专业威客系统英文名称<a href="#">KPPW</a>，也是keke produced 
-                        professional witkey的缩写。KPPW是一款基于PHP+MYSQL技术构架的威客系统 ，积客客团队多年实
-                        践和对威客模式商业化运作的大量调查分析而精心策划研发，是您轻松搭建威客网站的首选利器。
-                        KPPW针对威客 任务模型进行了细致的分析，提供完善威客任务流程控制解决方案，并将逐步分享威
-                        客系统专业化应用作为我们的发展目标。 
-                        </p>
-                        <p>
-                         欢迎体验KPPW，提供您的宝贵意见！
-                        </p>
-                    </div>
-                </div>
-                <div class="box_footer">
-                    页脚
-                </div>
-             </div>
-        </div>
-
-
-        <div class="box normal">
-            <div class="inner clearfix">
-                <div class="box_header">
-                    <div class="box_title">
-                        <h2 title="这里是标题说明" class="title">.box.normal 普通</h2>
-                    </div>
-                </div>
-                <div class="box_detail">
-                    <div class="detail">
-                       <img class="fl_l mr_10" src="images/avatar.png" alt="avatar">  
-                      
-                      <p>
-                        段落文字样式演示
-                          1234567890_+-=:";'|\.,/`~!@#$%^&amp;*()[]{}&lt;&gt;  
-                      </p>
-                    </div>
-                </div>
-                <div class="box_footer">
-                    页脚
-                </div>
-             </div>
-        </div>
--->
-    </div>
+</div>
     
 
     
@@ -2524,6 +2714,31 @@
     
 	<div class="clear"></div>
 
+
+<div id="win" class="win">
+	<div class="box">
+		<div class="inner">
+			<header class="box_header">
+				<div class="box_title">
+					<h2 class="title">消息标题</h2>
+				</div>
+			</header>	
+			<article class="box_detail">
+				<div class="detail">消息内容</div>
+			</article>
+			<div class="loading_bar">
+                <div class="progress_bar stripes" style="width:100%;"></div>
+            </div>
+			<footer class="box_footer">
+				<button class="button">确定</button>
+				<button class="button">取消</button>
+			</footer>
+		</div>
+	</div>
+	<div class="mask"></div>
 </div>
+
+
+
 </body>
 </html>

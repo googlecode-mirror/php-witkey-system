@@ -91,7 +91,7 @@ abstract class Keke_Request_Client_External extends Keke_Request_Client {
 	public function execute_request(Keke_Request $request)
 	{
 		
-		var_dump('external');die;
+		//var_dump('external');die;
 		// Store the current active request and replace current with new request
 		$previous = Request::$current;
 		Request::$current = $request;

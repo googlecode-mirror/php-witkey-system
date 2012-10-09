@@ -9,7 +9,7 @@
     </div>
 		<div class="box post">
                <form action="{$url}" method="post" name="frm1" id="frm1" enctype="multipart/form-data">
-               	   <input type="hidden" name="hdn_mark_rule_id" value="{$mark_rule_id}">
+               	   <input type="hidden" id="hdn_mark_rule_id" name="hdn_mark_rule_id" value="{$mark_rule_arr['mark_rule_id']}">
                	   <input type="hidden" name="formhash" value="{FORMHASH}"> 
                     <table class="detail" width="100%" border="0" cellspacing="0" cellpadding="0">
                       <tr>
@@ -59,7 +59,6 @@
 						</span>
 						</td>
                       </tr>
-					   
                       <tr>
                         <th scope="row">&nbsp;</th>
                         <td>
@@ -75,7 +74,7 @@
                     </table>
                </form>
         	</div>
-<script type="text/javascript"  src="../../resource/js/system/ajaxfileupload.js"></script>	
+<script type="text/javascript" src="{BASE_URL}/resource/js/system/ajaxfileupload.js"></script>
 <script type="text/javascript">
     function upload(id){
 		var o  = document.getElementById(id);
@@ -83,8 +82,9 @@
 			art.dialog.alert("{$_lang['file_format_error']}");
 			return false;
 		}else{
+			var mark_rule_id = '$mark_rule_id';
         $.ajaxFileUpload({
-            url: '{BASE_URL}/index.php/ajax_upload?file_name='+id+'&file_type=sys&task_id=mark',
+            url: '{BASE_URL}/index.php/ajax/upload?file_name='+id+'&file_type=att&obj_id='+mark_rule_id,
             fileElementId: id,
             dataType: 'json',
             success: function(json){ 
@@ -93,10 +93,9 @@
                 }else {
                     var hf = $("#hdn_"+id);
                     var hf_fid = $("#hdn_"+id+"_fid");
-                    $(hf).val(json.msg.up_file+"?fid="+json.fid);
+                    $(hf).val(json.msg.up_file);
                     $(hf_fid).val(json.fid);
-					$("#span_"+id).html("<img src='../../"+json.msg.up_file+"' onload='resize(this)' />").append("<a href=';' onclick='return del(\"hdn_"+id+"\",\"span_"+id+"\")'>{$_lang['delete']}</a>");
-					
+					$("#span_"+id).html("<img src='{BASE_URL}/"+json.msg.up_file+"' onload='resize(this)' />").append("<a href=';' onclick='return del_file(\"hdn_"+id+"\",\"span_"+id+"\")'>{$_lang['delete']}</a>");
                 }
             },
             error: function(json, status, e){
@@ -116,16 +115,15 @@
     		img.width=80;
     	}
     }
-    function del(str,span){
-		var value = $("#"+str).val().split("?")['0'];
-		var fid=$("#"+str+"_fid").val();
-		var url  = '../../index.php?do=ajax&view=file&ajax=del&filepath='+value+"&fid="+fid;
+	function del_file(file_path,span){
+		var value = $("#"+file_path).val().split("?")['0'];
+		var fid=$("#"+file_path+"_fid").val();
+		var url  = '{BASE_URL}/index.php/admin/user_mark/del_img?filepath='+value+'&fid='+fid+'&pk='+$("#hdn_mark_rule_id").val();
 				$.post(url,function(json){
 					if(json.status==1){ 
-						 $("#"+str).val("");
+						 $("#"+span).val("");
 						 $("#"+span).children().remove();
 					}
-					
 				},'json');
 		return false;
 	}

@@ -17,8 +17,20 @@ class Control_admin_user_trans extends Controller{
 		$data_info = Model::factory('witkey_report')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
 		$list_arr = $data_info['data'];
 		$pages = $data_info['pages'];
-// 		var_dump($data_info);die;
+		$action_arr = keke_report_class::get_transrights_type();
+// 		var_dump($action_arr);die;
+		require keke_tpl::template('control/admin/tpl/user/trans');
+       
 	}
+	function action_report(){
+	 	$this->action_index('report');
+	}
+	function action_rights(){
+		$this->action_index('rights');
+	}
+	function action_complaint(){
+		$this->action_index('complaint');
+	} 
 }
 /* Keke::admin_check_role(80);
 $views = array ("rights", "report", "complaint", "process" );

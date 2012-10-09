@@ -2,14 +2,22 @@
 /**
  * @copyright keke-tech
  * @author Chen
- * @version v 2.0
- * 2010-10-31 ÏÂÎç13£º30
+ * @version v 2.1
+ * 2012-10-9 ÏÂÎç17£º30
  */
 class Control_admin_user_trans extends Controller{
 	function action_index(){
 		global $_K,$_lang;
-		
-		require Keke_tpl::template('control/admin/tpl/user_trans');
+		$fields = '`report_id`,`obj`,`username`,`to_username`,`report_file`,`on_time`,`report_status`,`op_username`';
+		$query_fields = array('report_id'=>$_lang['id'],'username'=>$_lang['name'],'on_time'=>$_lang['time']);
+		$base_uri = BASE_URL.'/index.php/admin/user_trans';
+		$count = intval($_GET['count']);
+		$this->_default_ord_field = 'on_time';
+		extract($this->get_url($base_uri));
+		$data_info = Model::factory('witkey_report')->get_grid($fields,$fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
+		$list_arr = $data_info['data'];
+		$pages = $data_info['pages'];
+		var_dump($data_info);die;
 	}
 }
 /* Keke::admin_check_role(80);

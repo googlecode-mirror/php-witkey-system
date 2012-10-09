@@ -30,7 +30,7 @@ class keke_finance_class {
 		self::$_basic_config =Keke::$_sys_config;
 		if ($uid) {
 			try{
-				self::$_userinfo = Keke::get_user_info ( $uid );
+				self::$_userinfo = keke_user_class::get_user_info($uid);
 			}catch (Exception $e){
 				Keke_exception::handler($e);
 			}
@@ -70,7 +70,7 @@ class keke_finance_class {
 		$res = false;
 		$sys_config = self::$_basic_config;
 		$user_info = self::$_userinfo;
-		$fo = new Keke_witkey_finance_class ();
+		$fo = new Keke_witkey_finance ();
 		$fo->setFina_action ( $action );
 		$fo->setFina_type ( "out" );
 		$fo->setObj_type ( $obj_type );
@@ -119,7 +119,7 @@ class keke_finance_class {
 				}
 			}
 			$fo->setFina_time ( time () );
-			$res = $fo->create_keke_witkey_finance ();
+			$res = $fo->create ();
 			}catch (Exception $e){
 				Keke_exception::handler($e);
 			}
@@ -157,7 +157,7 @@ class keke_finance_class {
 		self::init ( $uid );
 		$user_info = self::$_userinfo;
 		$sys_config = self::$_basic_config;
-		$fo = new Keke_witkey_finance_class ();
+		$fo = new Keke_witkey_finance ();
 		$fo->setFina_action ( $action );
 		$fo->setFina_type ( "in" );
 		$fo->setObj_type ( $obj_type );
@@ -175,7 +175,7 @@ class keke_finance_class {
 		$res = dbfactory::execute ( $sql );
 		if ($res) {
 			$fo->setFina_time ( time () );
-			$row = $fo->create_keke_witkey_finance ();
+			$row = $fo->create();
 			//unique_num 字段已经没有用了
 			/* $sql2 = "update " . TABLEPRE . "witkey_finance set  unique_num=CONCAT('88',LPAD(LAST_INSERT_ID(),8,'0')) where fina_id = last_insert_id()";
 			dbfactory::execute ( $sql2 );

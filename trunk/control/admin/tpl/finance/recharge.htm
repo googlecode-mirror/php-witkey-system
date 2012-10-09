@@ -74,7 +74,7 @@
                     <td>{$status_arr[$v['order_status']]}</td>
                     <td>
                     	{if $v['order_status']=='wait'&&$offline_pay[$v['pay_type']]}
-                    		<a href="{BASE_URL}/index.php/admin/finance_recharge/update?order_id={$v['order_id']}" onclick="return cdel(this,'<div style=width:300px;word-wrap:break-word;word-break:normal>{if $v[pay_info]}{$_lang[user_recharge_att_info]}£º$v[pay_info]{else}{$_lang[user_does_not_charge_info]}{/if}</div>{$_lang[confirm_cashin]}£¿');" class="button"><span class="cog icon"></span>{$_lang['confirm_of_payment']}£¿</a>
+                    		<a href="{BASE_URL}/index.php/admin/finance_recharge/update?order_id={$v['order_id']}" onclick="return kconfirm(this,'<div style=width:300px;word-wrap:break-word;word-break:normal>{if $v[pay_info]}{$_lang[user_recharge_att_info]}£º$v[pay_info]{else}{$_lang[user_does_not_charge_info]}{/if}</div>{$_lang[confirm_cashin]}£¿');" class="button"><span class="cog icon"></span>{$_lang['confirm_of_payment']}£¿</a>
                        		<a href="{$del_uri}?&order_id={$v['order_id']}" onclick="return cdel(this);" class="button"><span class="trash icon"></span>{$_lang['delete']}</a>
                     	{/if}
 					</td>

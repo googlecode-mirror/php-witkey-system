@@ -42,7 +42,7 @@ abstract class Model {
 	abstract public function setWhere($where);
 	
 	/**
-	 * 字段设值
+	 * 字段设值,只对添加，更新有效
 	 * 
 	 * @param $array 字段健值对数组        	
 	 * @return Model

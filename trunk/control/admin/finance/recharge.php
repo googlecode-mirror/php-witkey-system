@@ -2,9 +2,9 @@
 /**
  * ≥‰÷µ…Û∫À
  * @copyright keke-tech
- * @author Chen
- * @version v 20
- * 2012-10-05 09:18:30
+ * @author fu
+ * @version v 22
+ * 2012-10-9 15:18:30
  */
 class Control_admin_finance_recharge extends Controller{
 

@@ -65,14 +65,23 @@ class Control_admin_user_trans extends Controller{
 	} 
 	function action_process(){
 		global $_K,$_lang;
+		//获取穿过来的type,用户返回对应的类型列表，如举报列表
 		$type = $_GET['type'];
+		//查询举报，维权，投诉类型
 		$action_arr = keke_report_class::get_transrights_type();
+		//类型的汉字，举报，维权，投诉
 		$rep_type_chinese = $action_arr[$_GET['type']][1];
+		//获取传递过来的额report_id，用来查询对应的report表的信息
 		$report_id = $_GET['report_id'];
+		//对应的信息
 		$report_info = keke_report_class::get_report_info ( $report_id );
-		$user_info = keke_user_class::get_user_info ( $report_info ['uid'] ); //举报方信息
-		$to_userinfo = keke_user_class::get_user_info ( $report_info ['to_uid'] ); //对方信息
+		//举报方信息
+		$user_info = keke_user_class::get_user_info ( $report_info ['uid'] ); 
+		//对方信息
+		$to_userinfo = keke_user_class::get_user_info ( $report_info ['to_uid'] );
+		//获取process页面的信息
 		$obj_info = keke_report_class::obj_info_init ( $report_info,$user_info);
+		//所属的类别，商品，任务，稿件，订单
 		$trans_object = keke_report_class::get_transrights_obj();
 // 		var_dump($report_info['obj']);die;
 		require keke_tpl::template('control/admin/tpl/user/trans_process');

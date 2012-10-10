@@ -125,7 +125,7 @@
 			<a class="button" href="{BASE_URL}/index.php/admin/user_trans/process?type=$type&report_id={$v['report_id']}">{if $v['report_status']=='4'}{$_lang['view_scheme']}{else}<span class="check icon"></span>{$_lang['process']}{$action_arr[$_K['action']]['1']}{/if}</a>
 			{/if}
 			{if $v['report_status']=='3'}<!--Î´ÊÜÀí¡¢-->
-				<a class="button" href="{$url}&ac=del&report_id={$v['report_id']}" onclick="return cdel(this);"><span class="trash icon"></span>{$_lang['delete']}</a>
+				<a class="button" href="{BASE_URL}/index.php/admin/user_trans/del?report_id={$v['report_id']}" onclick="return cdel(this);"><span class="trash icon"></span>{$_lang['delete']}</a>
 			{/if}
 		 </td>
         </tr>

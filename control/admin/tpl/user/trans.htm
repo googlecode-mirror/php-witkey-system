@@ -3,7 +3,7 @@
     <h1>{$_lang['trans_rights']}</h1>
     <div class="tool">
     	{loop $action_arr $k $v}
-		  <a href="{BASE_URL}/index.php/admin/user_trans/$k"{if $_K['action']=$k} class="here"{/if}>{$v['1']}{$_lang['list']}</a>
+		  <a href="{BASE_URL}/index.php/admin/user_trans/$k" {if $_K['action']==$k} class="here"{/if}>{$v['1']}{$_lang['list']}</a>
 		{/loop}
     </div>
 </div>

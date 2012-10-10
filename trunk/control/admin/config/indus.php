@@ -12,17 +12,22 @@ class Control_admin_config_indus extends Controller{
      */    
 	function action_index(){
 		global $_K,$_lang;
+		//获取所有的行业数据
 		$indus_arr = DB::select()->from('witkey_industry')->execute();
-		//Keke::get_table_data ( "*", "witkey_industry", '', "", "", "", "", 0 );
+		//排序
 		sort ( $indus_arr );
+		//删除uri
 		$del_uri = BASE_URL.'/index.php/admin/config_indus/del';
+		//添加，编辑uri
 		$add_uri = BASE_URL.'/index.php/admin/config_indus/add';
 		$t_arr = array ();
+		//生成树开数组
 		Keke::get_tree ( $indus_arr, $t_arr, 'cat', NULL, 'indus_id', 'indus_pid', 'indus_name' );
 		$indus_tree_arr =$t_arr;
 		unset ( $t_arr );
-		//print_r($indus_tree_arr);die;
+		
 		$indus_index_arr = Sys_indus::get_indus_by_index ();
+		
 		require Keke_tpl::template("control/admin/tpl/config/indus");
 	}
 	
@@ -79,15 +84,61 @@ class Control_admin_config_indus extends Controller{
 	 * 删除行业数据
 	 */
 	function action_del(){
-		
+		//删除子行业
 		if($_GET['indus_id']){
 			$indus_id = $_GET['indus_id'];
 			echo DB::delete('witkey_industry')->where("indus_id = '$indus_id'")->execute();
 		}
+		//如果父行业,则 删除父下的子行业。
 		if($_GET['indus_pid']<=0){
 		    DB::delete('witkey_industry')->where("indus_pid = $indus_id")->execute();		
 		}
 		
 	}
-	
+	/**
+	 * 初始化行业添加页面
+	 */
+	function action_add(){
+		global $_K,$_lang;
+		
+		$indus_pid = $_GET['indus_pid'];
+		$indus_id = $_GET['indus_id'];
+		
+		$indus_arr = DB::select()->from('witkey_industry')->execute();
+		//排序
+		sort ( $indus_arr );
+	 
+		$temp_arr = array ();
+		//生成树开数组
+		Keke::get_tree ( $indus_arr, $temp_arr, 'option', $indus_pid, 'indus_id', 'indus_pid', 'indus_name' );
+		if($indus_id){
+        	$where = "indus_id = '$indus_id'";
+			$indus_info= DB::select()->from('witkey_industry')->where($where)->get_one()->execute();
+		}
+		require Keke_tpl::template("control/admin/tpl/config/indus_add");
+	}
+	/**
+	 * 单个行业的编辑，保存
+	 */
+	function action_add_save(){
+		global $_lang;
+		Keke::formcheck($_POST['formhash']);
+		//不允许添加三级分类
+		$check_pid = DB::select('indus_pid')->from('witkey_industry')->where("indus_id = {$_POST['slt_indus_pid']}")->get_count()->execute();
+		if($check_pid>0){
+			Keke::show_msg('只允计添加二级分类，系统不支持三级分类','index.php/admin/config_indus/add','warning');
+		}
+		$columns = array('indus_pid','indus_name','is_recommend','listorder');
+		$values = array($_POST['slt_indus_pid'],$_POST['indus_name'],$_POST['is_recommend'],$_POST['listorder']);
+		//编辑数据
+		if($_POST['hdn_indus_id']){
+			$where = "indus_id = '{$_POST['hdn_indus_id']}'";
+			DB::update('witkey_industry')->set($columns)->value($values)->where($where)->execute();
+			$uri  = "?indus_id={$_POST['hdn_indus_id']}&indus_pid={$_POST['slt_indus_pid']}";
+		}else{
+		//添加数据
+			DB::insert('witkey_industry')->set($columns)->value($values)->execute();
+		}
+		Keke::show_msg($_lang['submit_success'],'index.php/admin/config_indus/add'.$uri,'success');
+	}
 }

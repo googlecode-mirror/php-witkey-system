@@ -18,6 +18,9 @@ class Control_admin_user_add extends Controller{
 		$member_arr = DB::select()->from('witkey_member_group')->where('1=1')->execute();
 		require keke_tpl::template('control/admin/tpl/user/add');
 	}
+	/**
+	 * 验证用户名
+	 */
 	function action_checkusername(){
 		$check_username = $_GET['check_username'];
 		if (isset ( $check_username ) && ! empty ( $check_username )) {

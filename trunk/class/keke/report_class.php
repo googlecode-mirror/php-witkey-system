@@ -104,7 +104,7 @@ abstract class keke_report_class {
 				break;
 			case "work" : //稿件 
 				$model_id = dbfactory::get_count ( sprintf ( " select model_id from %switkey_task where task_id='%d'", TABLEPRE, $report_info ['origin_id'] ) );
-				$model_id or Keke::show_msg ($_lang ['this_task_has_delete'], 'index.php?do=trans&view=rights','success'  );
+// 				$model_id or Keke::show_msg ($_lang ['this_task_has_delete'], 'index.php?do=trans&view=rights','success'  );
 				$model_info = Keke::$_model_list [$model_id];
 				$sql = " select a.task_id origin_id,a.task_title origin_title,a.uid origin_uid,a.model_id,a.task_status origin_status,a.real_cash cash,a.is_trust,a.trust_type ";
 				if ($model_info ['model_code'] == 'dtender' || $model_info ['model_code'] == 'tender') { //招标
@@ -116,7 +116,6 @@ abstract class keke_report_class {
 					//获取中标稿件数量
 					$bid_count = dbfactory::get_count ( sprintf ( " select count(work_id) from %switkey_task_work where task_id='%d' and work_status not in(0,5,7,8) ", TABLEPRE, $report_info ['origin_id'] ) );
 				}
-				
 				$obj_info = dbfactory::get_one ( sprintf ( $sql, TABLEPRE, TABLEPRE, $report_info ['obj_id'] ) );
 				$obj_info ['bid_count'] = $bid_count;
 				$re_obj = "<a href=\"" . $_K ['siteurl'] . "/index.php?do=task&task_id=" . $obj_info ['origin_id'] . "&view=list_work&work_id=" . $obj_info ['obj_id'] . "\">" . $obj_info ['origin_title'] . "</a>";

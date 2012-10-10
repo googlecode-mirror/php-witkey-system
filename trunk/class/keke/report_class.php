@@ -107,29 +107,21 @@ abstract class keke_report_class {
 				$model_id or Keke::show_msg ($_lang ['this_task_has_delete'], 'index.php?do=trans&view=rights','success'  );
 				$model_info = Keke::$_model_list [$model_id];
 				$sql = " select a.task_id origin_id,a.task_title origin_title,a.uid origin_uid,a.model_id,a.task_status origin_status,a.real_cash cash,a.is_trust,a.trust_type ";
-				
 				if ($model_info ['model_code'] == 'dtender' || $model_info ['model_code'] == 'tender') { //招标
-					
-
 					$sql .= ",b.bid_id obj_id,b.uid obj_uid,b.bid_status obj_status from %switkey_task a left join %switkey_task_bid b on a.task_id=b.task_id where b.bid_id='%d'";
 					//获取中标稿件数量
 					$bid_count = dbfactory::get_count ( sprintf ( " select count(bid_id) from %switkey_task_bid where task_id='%d' and bid_status='4'", TABLEPRE, $report_info ['origin_id'] ) );
 				} else { //悬赏
-					
-
 					$sql .= ",b.work_id obj_id,b.uid obj_uid,b.work_status obj_status from %switkey_task a left join %switkey_task_work b on a.task_id=b.task_id where b.work_id='%d'";
 					//获取中标稿件数量
 					$bid_count = dbfactory::get_count ( sprintf ( " select count(work_id) from %switkey_task_work where task_id='%d' and work_status not in(0,5,7,8) ", TABLEPRE, $report_info ['origin_id'] ) );
 				}
 				
 				$obj_info = dbfactory::get_one ( sprintf ( $sql, TABLEPRE, TABLEPRE, $report_info ['obj_id'] ) );
-				
 				$obj_info ['bid_count'] = $bid_count;
 				$re_obj = "<a href=\"" . $_K ['siteurl'] . "/index.php?do=task&task_id=" . $obj_info ['origin_id'] . "&view=list_work&work_id=" . $obj_info ['obj_id'] . "\">" . $obj_info ['origin_title'] . "</a>";
 				break;
 			case "product" : //商品
-				
-
 				$obj_info = dbfactory::get_one ( sprintf ( " select service_id origin_id,uid origin_uid,model_id,title origin_title from %switkey_service where service_id='%d'", TABLEPRE, $report_info ['obj_id'] ) );
 				$re_obj = "<a href=\"" . $_K ['siteurl'] . "/shop.php?do=service&service_id=" . $obj_info ['origin_id'] . "\">" . $obj_info ['origin_title'] . "</a>";
 				break;
@@ -145,7 +137,6 @@ abstract class keke_report_class {
 			/*受理消息通知用户*/
 			self::accept_notify ( $report_info, $user_info, $re_obj );
 		}
-		
 		return $obj_info;
 	}
 	/**
@@ -159,8 +150,6 @@ abstract class keke_report_class {
 		$msg_obj = new keke_msg_class ();
 		$trans_name = self::get_transrights_name ( $report_info ['report_type'] ); //交易维权中文
 		$re_type = self::get_transrights_obj ( $report_info ['obj'] ); //交易维权对象中文
-		
-
 		$result = array ($_lang ['order_rights_id'] => $report_info ['report_id'], $_lang ['order_rights_name'] => $trans_name, $_lang ['order_rights_type'] => $re_type, $_lang ['order_rights_object'] => $re_obj, $_lang ['action'] => $_lang ['attention_follow'] );
 		$msg_obj->send_message ( $user_info ['uid'], $user_info ['username'], 'transrights_accept', $trans_name . '受理通知', $result, $user_info ['email'] );
 	}

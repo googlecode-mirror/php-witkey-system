@@ -37,13 +37,19 @@ class Keke_oauth_sina_client extends Keke_oauth_weibo{
 	 		return TRUE;
 	 	}
 	 }
+	 /**
+	  * 返回新浪微博用户信息
+	  * @see Keke_oauth_weibo::get_login_info()
+	  */
 	 public function get_login_info(){
 	 	if($this->check_login()){
 	 	    $uid = $_SESSION['sina_token']['uid'];
-	 	     
 	 	    $uinfo = self::$_weibo_obj->show_user_by_id($uid);
 	 	}
-	 	var_dump(Keke::utftogbk($uinfo));
+	 	if(CHARSET == 'gbk'){
+	 		$uinfo = Keke::utftogbk($uinfo);
+	 	}
+	 	return $uinfo;
 	 }
 	
 }

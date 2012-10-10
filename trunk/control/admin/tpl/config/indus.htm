@@ -53,7 +53,7 @@
         <td align="left">{date('Y-m-d',$v['on_time'])}</td>
         <td align="left">
 			<a href="{$add_uri}?indus_id={$v['indus_id']}&indus_pid=$v['indus_pid']" class="button"><span class="pen icon"></span>{$_lang['edit']}</a>
-			<a href="{$del_uri}?indus_id=$v['indus_id']"  onclick="return cdel(this);" class="button"><span class="trash icon"></span>{$_lang['delete']}</a>
+			<a href="{$del_uri}?indus_id=$v['indus_id']&indus_pid=$v['indus_pid']"  onclick="return acdel(this,{if $indus_index_arr[$v['indus_id']]}0{else}1{/if},$v['indus_id']);" class="button"><span class="trash icon"></span>{$_lang['delete']}</a>
 		</td>
       </tr>
 	  </tbody>
@@ -77,7 +77,33 @@
 	</form>
 </div>
 <script type="text/javascript">
-
+function acdel(o,pid,id){
+	var c = "{$_lang['you_comfirm_delete_operate']}";
+	d = art.dialog;
+	d.confirm(c, function(){
+		$.ajax({
+			url:o.href,
+			dataType:'text',
+			beforeSend:function(){
+	 	        $(tips).children().html('删除中... 已经删除成功!').addClass('tips_info'); 
+			},
+			success: function(data){
+			   if(data >0){
+				   	if(pid==0){
+						eval("showids_"+id+"('hide');");
+					}
+			   	  $(o).parent().parent().remove();
+				}
+			},
+			complete:function(){
+				$(tips).children().html('').removeClass('tips_info');
+			}
+			
+		});
+ 
+	});
+	return false;	
+}
 var newindus_c = 0;
 function addchild(pid,ext){
 	newindus_c++;

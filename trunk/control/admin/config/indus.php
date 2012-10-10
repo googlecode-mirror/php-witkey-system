@@ -80,6 +80,14 @@ class Control_admin_config_indus extends Controller{
 	 */
 	function action_del(){
 		
+		if($_GET['indus_id']){
+			$indus_id = $_GET['indus_id'];
+			echo DB::delete('witkey_industry')->where("indus_id = '$indus_id'")->execute();
+		}
+		if($_GET['indus_pid']<=0){
+		    DB::delete('witkey_industry')->where("indus_pid = $indus_id")->execute();		
+		}
+		
 	}
 	
 }

@@ -2,13 +2,13 @@
 <div class="page_title">
     <h1>{$action_arr[$type]['1']}{$_lang['manage']}</h1>
     <div class="tool">
-        <a href="index.php?do={$do}&view={$type}">{$action_arr[$type]['1']}{$_lang['list']}</a>
-		<a href="javascript:void(0);" class="here">{$action_arr[$type]['1']}{$_lang['manage']}</a>
+        <a href="{BASE_URL}/index.php/admin/user_trans/$type">{$rep_type_chinese}{$_lang['list']}</a>
+		<a href="javascript:void(0);" class="here">{$rep_type_chinese}{$_lang['manage']}</a>
     </div>
 </div>
  <div class="box post">
   <div class="tabcon">
-   <div class="title"><h2>{$trans_object[$report_info['obj']]}{$action_arr[$type]['1']}#{$report_id}</h2></div>
+   <div class="title"><h2>{$trans_object[$report_info['obj']]}{$rep_type_chinese}#{$report_id}</h2></div>
     <div class="detail">
      <form action="index.php?do={$do}&view={$view}&type={$type}&report_id={$report_id}" method="post" name="frm" id="frm">
       <table width="100%" border="0" cellspacing="0" cellpadding="0">

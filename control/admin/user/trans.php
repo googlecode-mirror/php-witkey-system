@@ -83,6 +83,8 @@ class Control_admin_user_trans extends Controller{
 		$obj_info = keke_report_class::obj_info_init ( $report_info,$user_info);
 		//所属的类别，商品，任务，稿件，订单
 		$trans_object = keke_report_class::get_transrights_obj();
+		//处理的情况
+		$trans_status = keke_report_class::get_transrights_status();
 // 		var_dump($report_info['obj']);die;
 		require keke_tpl::template('control/admin/tpl/user/trans_process');
 	}

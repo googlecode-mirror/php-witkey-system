@@ -52,6 +52,9 @@ class Control_admin_user_trans extends Controller{
 // 		var_dump($trans_object);die;
 		require keke_tpl::template('control/admin/tpl/user/trans');
 	}
+	/**
+	 * 一下三个分别是举报的三类
+	 */
 	function action_report(){
 		$report_status = $_GET['report_status'];
 	 	$this->action_index('report',$report_status);
@@ -64,6 +67,9 @@ class Control_admin_user_trans extends Controller{
 		$report_status = $_GET['report_status'];
 		$this->action_index('complaint',$report_status);
 	} 
+	/**
+	 * 处理举报和查看处理方案
+	 */
 	function action_process(){
 		global $_K,$_lang;
 		//获取穿过来的type,用户返回对应的类型列表，如举报列表
@@ -89,6 +95,9 @@ class Control_admin_user_trans extends Controller{
 // 		var_dump($report_info['obj']);die;
 		require keke_tpl::template('control/admin/tpl/user/trans_process');
 	}
+	/**
+	 * 删除单条举报信息
+	 */
 	function action_del(){
 		$report_id = $_GET['report_id'];
 		if ($report_id){

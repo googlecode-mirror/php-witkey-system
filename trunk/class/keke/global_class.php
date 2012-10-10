@@ -54,7 +54,7 @@ class keke_global_class {
 		             "2"=>"send_mail",
 		             "3"=>"send_sms"
 		             ),
-				array("send_msg"=>$_lang['site_msg'],
+				array("send_msg"=>$_lang['send_msg'],
 		             "send_mail"=>$_lang['send_email'],
 		             "send_sms"=>$_lang['send_mobile_sms']
 		             )

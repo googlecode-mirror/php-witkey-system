@@ -54,7 +54,7 @@ class Keke_sms_d9 extends Keke_sms {
 		$e = trim($e);
 		//if($e =='ERROR:eBalance'){
 		if(strpos($e, 'ERROR')!==FALSE){
-			throw new Keke_exception('¶ÌĞÅÓà¶î²»×ã£¬Çë³äÖµ,´íÎó´úÂë: :err',array(':err'=>$e));
+			throw new Keke_exception('¶ÌĞÅ·¢ËÍ´íÎó´úÂë: :err',array(':err'=>$e));
 		}
 		$num = ltrim($e,'OK:');
 		/* if($num<0){

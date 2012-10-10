@@ -40,9 +40,7 @@
 					 
 			</td>
 			<td>
-				<button type="button" class="button" value="{$_lang['edit_tpl']}" onclick="window.location.href='index.php?do=msg&view=intertpl&slt_tpl_code=$v[k]'"/>
-				<span class="pen icon"></span>{$_lang['edit_tpl']}
-					</button>
+				<a href="{$add_uri}?tpl_id={$v['tpl_id']}">{$_lang['edit_tpl']}</a>
             </td>
         </tr>
 		{/loop}

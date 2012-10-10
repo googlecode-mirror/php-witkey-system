@@ -2,6 +2,13 @@
 define ( 'IN_KEKE', TRUE );
 include 'app_boot.php';
 
+$arr=  array(2,3,4);
+$arr2 = array('a2','a3','a4');
+
+$res = array(2=>'a2',3=>'a3',4=>'a4');
+$mar= array_combine($arr, $arr2);
+var_dump($mar);
+die;
 // Create the context
 /* $options = array(
 		'http' => array(

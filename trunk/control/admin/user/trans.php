@@ -14,6 +14,7 @@ class Control_admin_user_trans extends Controller{
 		$query_fields = array('report_id'=>$_lang['id'],'report_status'=>'当前状态','on_time'=>$_lang['time']);
 		//基本uri
 		$base_uri = BASE_URL.'/index.php/admin/user_trans';
+		$del_uri = $base_uri.'/del';
 		//统计的总数，这里写出避免再查询一次
 		$count = intval($_GET['count']);
 		//默认排序字段
@@ -87,6 +88,13 @@ class Control_admin_user_trans extends Controller{
 		$trans_status = keke_report_class::get_transrights_status();
 // 		var_dump($report_info['obj']);die;
 		require keke_tpl::template('control/admin/tpl/user/trans_process');
+	}
+	function action_del(){
+		$report_id = $_GET['report_id'];
+		if ($report_id){
+			$where .=' report_id ='.$report_id;
+		}
+		echo Model::factory('witkey_report')->setWhere($where)->del();
 	}
 }
 /* Keke::admin_check_role(80);

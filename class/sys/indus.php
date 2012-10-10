@@ -71,6 +71,34 @@ class Sys_indus {
 		}
 		return $indus_arr;
 	}
+	/**
+	 * 行业数据重构，主要用在后台行业数据管理列表
+	 * @param int $pid  父行业id
+	 * @return array
+	 */
+	public static function get_indus_by_index( $pid = NULL) {
+		 
+		//指定的行业,这里NULl为顶级父行业
+		$indus_arr = self::get_industry ( $pid );
+		$indus_index_arr = array ();
+		//重构行业数组,以父ID为索引
+		foreach ( $indus_arr as $v ) {
+			$indus_index_arr [$v ['indus_pid']] [$v ['indus_id']] = $v;
+		}
+		return $indus_index_arr;
+	}
+	/**
+	 * 获取指定的父行业,默认反回所有的行业数据
+	 * @param int $pid
+	 * @param bool $cache
+	 * @return array
+	 */
+	public static function get_industry($pid = NULL, $cache = 0) {
+		! is_null ( $pid ) and $where = " indus_pid = '" . intval ( $pid ) . "'";
+		$indus_arr = Keke::get_table_data ( '*', "witkey_industry", $where, "listorder", '', '', 'indus_id', $cache );
+		return $indus_arr;
+	
+	}
 }
 
  

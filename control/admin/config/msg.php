@@ -52,7 +52,7 @@ class Control_admin_config_msg extends Controller{
     	}
     	//发送短信
     	$m = Keke_sms::instance()->send($txt_tel,$tar_content);
-    	var_dump($m);die;
+    	
     	if($m>0){
     	 	Keke::show_msg($_lang['sms_send_success'],"index.php/admin/config_msg/send",'success');
     	}else{
@@ -137,7 +137,7 @@ class Control_admin_config_msg extends Controller{
 		//基本uri,当前请求的uri ,本来是能通过Rotu类可以得出这个uri,为了程序灵活点，自己手写好了
 		$base_uri = BASE_URL."/index.php/admin/config_msg/tpl";
 		//添加编辑的uri,add这个action 是固定的
-		$add_uri =  $base_uri.'/add';
+		$add_uri =  $base_uri.'_add';
 		//删除uri,del也是一个固定的，写成其它的，你死定了
 		$del_uri = $base_uri.'/del';
 		//默认排序字段，这里按时间降序
@@ -150,8 +150,6 @@ class Control_admin_config_msg extends Controller{
 			$where .= " and  obj = '$obj' ";
 			$uri .= "&obj=$obj";
 		}
-		
-		
 		//获取列表分页的相关数据,参数$where,$uri,$order,$page来自于get_url方法
 		$data_info = Model::factory('witkey_msg_tpl')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
 		//列表数据
@@ -166,14 +164,53 @@ class Control_admin_config_msg extends Controller{
      */
     function action_tpl_add(){
     	global $_K,$_lang;
-    	 
+    	$tpl_id = $_GET['tpl_id'];
+    	//模板ID判断
+    	if($tpl_id){
+    		//模板的数组,下接列表用
+    		$msg_tpl_arr = DB::select('tpl_id,k,desc')->from('witkey_msg_tpl')->cached(3600,'keke_msg_tpl')->execute();
+    		//模板内容
+    		$msg_tpl_info = DB::select('msg_tpl,sms_tpl,send_sms,send_mail,send_msg')->from('witkey_msg_tpl')->where("tpl_id='$tpl_id'")->execute();
+    		$msg_tpl_info = $msg_tpl_info[0];
+    		//短信类型
+    		$message_send_type = keke_global_class::get_message_send_type ();
+    	}
     	require Keke_tpl::template('control/admin/tpl/config/msg_tpl_add');
     }
     /**
      * 短信模板信息保存
      */
     function action_tpl_save(){
+    	global $_lang;
+    	Keke::formcheck($_POST['formhash']);
+    	if(!$_POST['hdn_tpl_id']){
+    		Keke::show_msg($_lang['submit_fail'],'index.php/admin/config_msg/tpl_add?tpl_id='.$_POST['hdn_tpl_id'],'warning');
+    	} 
+    	$_POST = Keke_tpl::chars($_POST);
+    	//是否有发类型
+    	if($_POST['ckb']){
+    		$send_sms = $_POST['ckb']['send_sms'];
+    		$send_msg = $_POST['ckb']['send_msg'];
+    		$send_mail = $_POST['ckb']['send_mail'];
+    	}else{
+    		//没有，set 0
+    		$send_sms =  $send_mail = $send_msg = 0;
+    	}
+    	//邮件模板
+    	$msg_tpl = $_POST['txt_msg'];
+    	//手机短信模板
     	
+    	$sms_tpl = $_POST['txt_sms'];
+        $array = array('send_sms'=>$send_sms,
+        		'send_mail'=>$send_mail,
+        		'send_msg'=>$send_msg,
+        		'msg_tpl'=>$msg_tpl,
+        		'sms_tpl'=>$sms_tpl);
+    	//条件
+    	$where = "tpl_id ='{$_POST['hdn_tpl_id']}'";
+    	//更新
+    	Model::factory('witkey_msg_tpl')->setData($array)->setWhere($where)->update();
+    	Keke::show_msg($_lang['submit_succes'],'index.php/admin/config_msg/tpl_add?tpl_id='.$_POST['hdn_tpl_id'],'success');
     }
     	
 }

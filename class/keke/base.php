@@ -211,8 +211,7 @@ class Keke_base {
 	 *
 	 * @param 输入 $array        	
 	 * @param 输出 $temp_arr        	
-	 * @param 显示方式 $out
-	 * option=>下拉列表  !option=>array()数组
+	 * @param 显示方式 $out  (option,cat,list);
 	 * @param 选中项索引 $index
 	 * selected=selected
 	 */
@@ -257,9 +256,7 @@ class Keke_base {
 	}
 	
 	static function draw_tree($arr, $tree, $level, &$temp_arr, $out, $index, $id, $pid, $name) {
-		
 		$level ++;
-		
 		$prefix = str_pad ( " |", $level + 2, '---', STR_PAD_RIGHT );
 		$n = str_pad ( '', $level + 2, '--', STR_PAD_RIGHT );
 		$n = str_replace ( "-", "&nbsp;", $n );
@@ -277,12 +274,9 @@ class Keke_base {
 				$temp_arr [] = $v2;
 			} else {
 				// ┗
-				
-
 				isset ( $v2 [$name] ) and $v2 ['ext'] = $n . "┣" . $v2 [$name];
 				$v2 ['level'] = $level;
 				$temp_arr [] = $v2;
-			
 			}
 			if (isset ( $tree [$v2 [$id]] )) {
 				self::draw_tree ( $tree [$v2 [$id]], $tree, $level, $temp_arr, $out, $index, $id, $pid, $name );

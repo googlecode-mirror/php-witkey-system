@@ -72,6 +72,7 @@ class Sys_indus {
 		return $indus_arr;
 	}
 	/**
+	 * 用[indus_pid][indus_id] 生成索引数组
 	 * 行业数据重构，主要用在后台行业数据管理列表
 	 * @param int $pid  父行业id
 	 * @return array

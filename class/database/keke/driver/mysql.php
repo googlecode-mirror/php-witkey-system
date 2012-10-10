@@ -81,11 +81,15 @@ final class Keke_driver_mysql extends Keke_database {
 	 * @param $row int       	
 	 * @return int
 	 */
-	public function get_count($sql, $row = 0, $field = null) {
+	public function get_count($sql, $row = 0, $field = 0) {
 		$query = $this->execute ( $sql );
-		(is_resource ( $query ) and mysql_num_rows ( $query )) and $result = mysql_result ( $query, $row, $field ) or $result = 0;
+		//(is_resource ( $query ) and mysql_num_rows ( $query )) and $result = mysql_result ( $query, $row, $field ) or $result = 0;
+		if(mysql_num_rows($query)){
+			//官方文档，建议不用mysql_result 而是用性能更好的mysql_fetch_* 代替
+			$result = mysql_fetch_row($query);//mysql_result ( $query, $row, $field );
+		}
 		$this->free_result ();
-		return $result;
+		return $result[0];
 	
 	}
 	public function begin() {

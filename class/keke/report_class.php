@@ -104,7 +104,7 @@ abstract class keke_report_class {
 				break;
 			case "work" : //¸å¼þ 
 				$model_id = dbfactory::get_count ( sprintf ( " select model_id from %switkey_task where task_id='%d'", TABLEPRE, $report_info ['origin_id'] ) );
-				$model_id or Keke::admin_show_msg ( $_lang ['friendly_notice'], 'index.php?do=trans&view=rights', 2, $_lang ['this_task_has_delete'] );
+				$model_id or Keke::show_msg ($_lang ['this_task_has_delete'], 'index.php?do=trans&view=rights','success'  );
 				$model_info = Keke::$_model_list [$model_id];
 				$sql = " select a.task_id origin_id,a.task_title origin_title,a.uid origin_uid,a.model_id,a.task_status origin_status,a.real_cash cash,a.is_trust,a.trust_type ";
 				

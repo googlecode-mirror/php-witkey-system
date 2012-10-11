@@ -99,11 +99,11 @@ class Control_admin_link extends Controller {
 		if($_POST['hdn_link_id']){
 			Model::factory('witkey_link')->setData($array)->setWhere("link_id = '{$_POST['hdn_link_id']}'")->update();
 			//执行完了，要给一个提示，这里没有对执行的结果做判断，是想偷下懒，如果执行失败的话，肯定给会报红的。亲!
-			Keke::show_msg('系统提示','index.php/admin/link/add?link_id='.$_POST['hdn_link_id'],'提交成功','success');
+			Keke::show_msg('提交成功','index.php/admin/link/add?link_id='.$_POST['hdn_link_id'],'success');
 		}else{
 		 //这也当然就是添加(insert)到数据库中	
 			Model::factory('witkey_link')->setData($array)->create();
-			Keke::show_msg('系统提示','index.php/admin/link/add','提交成功','success');
+			Keke::show_msg('提交成功','index.php/admin/link/add','success');
 		}
 		
 		

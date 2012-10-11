@@ -28,5 +28,15 @@ $lang=array(
 		'write_industry_order'=>'请填写行业排序!',
 		'choose_class'=>'请选择分类',
 		'class_has_choose'=>'分类已经选择',
-		'indus_has'=>'该行业已存在'
+		'indus_has'=>'该行业已存在',
+		/*indus.php*/
+		'industry_union_success'=>'行业合并成功',
+		'target_industry_not_top'=>'目标行业不能为顶级分类',
+		/*indus_merge.htm*/
+		'industry_list'=>'行业列表',
+		'industry_union'=>'行业合并',
+		'choose_industry'=>'选择行业',
+		'industry_will_be_save'=>'该行业是合并后的行业，将会被保留',
+		'target_industry'=>'目标行业',
+		'after_union_will_be_delete'=>'该行业是合并后将会自动被删除',
 );

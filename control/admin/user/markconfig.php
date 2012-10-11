@@ -12,6 +12,7 @@ class Control_admin_user_markconfig extends Controller{
 		//读取mark_config表的数据
 		$list_arr = db::select()->from('witkey_mark_config')->execute();
 		//读取model表的数据，直接模板读取，
+		Keke::init_model();
 		$model_arr = Keke::$_model_list;
 		//model_arr数组重组 
 		$model_arr = Keke::get_arr_by_key($model_arr,'model_code');
@@ -25,6 +26,7 @@ class Control_admin_user_markconfig extends Controller{
 		$list_arr = db::select()->from('witkey_mark_config')->where($where)->execute();
 		$list_arr = $list_arr[0];
 		//读取model表的数据，直接模板读取，
+		Keke::init_model();
 		$model_arr = Keke::$_model_list;
 		//model_arr数组重构
 		$model_arr = Keke::get_arr_by_key($model_arr,'model_code');

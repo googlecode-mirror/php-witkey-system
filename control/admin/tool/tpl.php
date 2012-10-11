@@ -2,9 +2,9 @@
 /**
  * 后台模板管理
  * @copyright keke-tech
- * @author yuan
- * @version v 2.0
- * 2010-6-28 18:17:13
+ * @author Michael
+ * @version v 2.2
+ * 2012-10-11
  */
 class Control_admin_tool_tpl extends Controller{
 	/**
@@ -96,11 +96,17 @@ class Control_admin_tool_tpl extends Controller{
 		
 		$skin = $_POST['skin'];
 		
+		
+		
 		if(is_array($skin)&&!empty($skin)){
 			//改变模板上皮肤设定
-			foreach($skin as $k=>$v){
-				Dbfactory::execute(sprintf(" update %switkey_template set tpl_pic ='%s' where tpl_title='%s'",TABLEPRE,$v,$k));
-			}
+			list($template,$theme) = each($skin);
+			//foreach($skin as $k=>$v){
+				Dbfactory::execute(sprintf(" update %switkey_template set tpl_pic ='%s' where tpl_title='%s'",TABLEPRE,$theme,$template));
+			//}
+			//更变config 的值 template,theme
+			DB::update('witkey_config')->set(array('v'))->value(array($template))->where("k='template'")->execute();
+			DB::update('witkey_config')->set(array('v'))->value(array($theme))->where("k='theme'")->execute();
 		}
 		//将非选定模板设为2
 		$tpl_obj->setWhere ( 'tpl_id!=' . $rdo_is_selected );
@@ -108,7 +114,9 @@ class Control_admin_tool_tpl extends Controller{
 		$res = $tpl_obj->update ();
 		//清除模板缓存
 		Cache::instance()->del('keke_template');
-		Keke::show_msg ( $_lang ['operate_notice'], $this->_uri,$_lang['tpl_config_set_success'], 'success' );
+		Cache::instance()->del('keke_config');
+		
+		Keke::show_msg ($_lang['tpl_config_set_success'], $this->_uri, 'success' );
 		
 	}
 	/**

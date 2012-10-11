@@ -53,6 +53,7 @@ class Control_admin_config_nav extends Controller{
 	function action_add(){
 		global $_K,$_lang;
 		//nav_list 系统初始化过了
+		Keke::init_nav();
 		$nav_list = Keke::$_nav_list;
         if(isset($_GET['nav_id'])){
         	$nav_arr = $nav_list[$_GET['nav_id']];

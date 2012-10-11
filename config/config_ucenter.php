@@ -1,2 +1,16 @@
 <?php
- define('UC_CONNECT', 'mysql'); define('UC_DBHOST', 'localhost'); define('UC_DBUSER', 'root'); define('UC_DBPW', '123456'); define('UC_DBNAME', 'ultrax'); define('UC_DBCHARSET', 'gbk'); define('UC_DBTABLEPRE', '`ultrax`.pre_ucenter_'); define('UC_DBCONNECT', '0'); define('UC_KEY', 'g6I9L7bejeT1ee41a1l0Gar5X0u43drcSbJ0L5B02093d5i1I0i874aaf1S004Ce'); define('UC_API', 'http://localhost/dx/uc_server'); define('UC_CHARSET', 'gbk'); define('UC_IP', ''); define('UC_APPID', '2'); define('UC_PPP', '20'); ?>
+ define('UC_CONNECT', '0');
+ define('UC_DBHOST', 'localhost');
+ define('UC_DBUSER', 'root');
+ define('UC_DBPW', '123456');
+ define('UC_DBNAME', 'ultrax');
+ define('UC_DBCHARSET', 'gbk');
+ define('UC_DBTABLEPRE', '`ultrax`.pre_ucenter_');
+ define('UC_DBCONNECT', '0');
+ define('UC_KEY', '123456');
+ define('UC_API', 'http://localhost/dx/uc_server');
+ define('UC_CHARSET', 'gbk');
+ define('UC_IP', '127.0.0.1');
+ define('UC_APPID', '2');
+ define('UC_PPP', '20');
+ ?>

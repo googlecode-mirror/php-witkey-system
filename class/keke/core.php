@@ -492,7 +492,7 @@ class Keke extends Keke_core {
 	function init_prom() {
 		Keke::$_prom_obj = keke_prom_class::get_instance ();
 	}
-	function init_industry() {
+	static function init_industry() {
 		
 		Keke::$_indus_p_arr =  Keke::get_table_data ( '*', "witkey_industry", "indus_type=1 and indus_pid = 0 ", "listorder asc ", '', '', 'indus_id', 3600 );
 		Keke::$_indus_c_arr = Keke::get_table_data ( '*', 'witkey_industry', 'indus_type=1 and indus_pid >0', 'listorder', '', '', 'indus_id', 3600 );

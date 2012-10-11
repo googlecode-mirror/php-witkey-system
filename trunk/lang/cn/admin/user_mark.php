@@ -10,9 +10,9 @@ $lang = array(
 
 	//htm
 	'rule_manage'=>'规则管理',
-	'credit_rules_manage'=>'信誉规则管理',
-	'add_credit_rules'=>'增加信誉规则',
-	'edit_credit_rules'=>'编辑信誉规则',
+	'credit_rules_manage'=>'信誉等级管理',
+	'add_credit_rules'=>'增加信誉等级',
+	'edit_credit_rules'=>'编辑信誉等级',
 	'role_relationship_notice'=>'角色雇主与买家等同，角色威客与卖家等同,前端显示会根据不同的角色显示对应的头衔与图片',
 	'credit_rules_list'=>'信誉规则列表',
 
@@ -29,8 +29,6 @@ $lang = array(
 	
 	'edit_rules'=>'编辑规则',
 	'add_rules'=>'添加规则',
-	'credit_value'=>'信誉值',
-	'ability_value'=>'能力值',
 	
 	'employer_name'=>'雇主头衔名称(买家)',
 	'witkey_name'=>'威客头衔名称(卖家)',

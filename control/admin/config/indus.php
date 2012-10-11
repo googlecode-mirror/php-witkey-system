@@ -141,4 +141,31 @@ class Control_admin_config_indus extends Controller{
 		}
 		Keke::show_msg($_lang['submit_success'],'index.php/admin/config_indus/add'.$uri,'success');
 	}
+	/**
+	 * 业务合并初始化页面
+	 */
+	function action_merge(){
+		global $_K,$_lang;
+		 //获取行业信息
+		$indus_p_arr =  Keke::get_table_data ( '*', "witkey_industry", "indus_type=1 and indus_pid = 0 ", "listorder asc ", '', '', 'indus_id', 0 );
+		//提交合并信息
+		if($_POST){
+			$url = 'index.php/admin/config_indus/merge';
+			//来源行业
+			$slt_indus_id = $_POST['slt_indus_id'];
+			//目标行业
+			$to_indus_id = $_POST['to_indus_id'];
+			//提交的参数不能为空!
+			($to_indus_id or $slt_indus_id) or Keke::show_msg($_lang['target_industry_not_top'],$url,'warning');
+			//相同的行业不能全并
+			($slt_indus_id != $to_indus_id) or Keke::show_msg('同一个行业不能合并',$url,'warning'); 
+			//更新原行业的子行业
+			DB::update('witkey_industry')->set(array('indus_pid'))->value(array($to_indus_id))->where("indus_pid='$slt_indus_id'")->execute();
+			//删除来源父行业
+			DB::delete('witkey_industry')->where("indus_id = '$slt_indus_id'")->execute();
+			Keke::show_msg($_lang['industry_union_success'],$url,'success');
+		}
+		
+		require Keke_tpl::template('control/admin/tpl/config/indus_merge');
+	}
 }

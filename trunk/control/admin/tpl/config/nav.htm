@@ -35,6 +35,7 @@
     <td><!--{eval  $readonly = $this->url_analysis($v['nav_url']);}-->
     	{if $readonly}
 			$v['nav_url']
+			<input type="hidden" value="{$v['nav_url']}" name="nav[$k][nav_url]">
 		{else}
 			<input type="text" value="{$v['nav_url']}" name="nav[$k][nav_url]" class='txt' size="30">
 		{/if}
@@ -61,7 +62,7 @@
 <tfoot>
 <tr>
 	<td colspan="9"> 
-    <button onclick="modify();" class="positive pill negative" type="button"><span class="check icon"></span>{$_lang['submit']}</button>
+    <button  class="positive pill negative" type="submit"><span class="check icon"></span>{$_lang['submit']}</button>
 	</td>
 </tr>
 </tfoot>

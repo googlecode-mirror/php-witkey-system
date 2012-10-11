@@ -6,6 +6,18 @@
  * 2012-10-9 下午17：30
  */
 class Control_admin_user_trans extends Controller{
+	private $_action_arr ;
+	private $_trans_status;
+	private $_trans_object;
+	
+	function __construct(){
+		//查询举报，维权，投诉类型
+		$this->_action_arr  = keke_report_class::get_transrights_type();
+		//处理的情况
+		$this->_trans_status =  keke_report_class::get_transrights_status();
+		$this->_trans_object = keke_report_class::get_transrights_obj();
+	}
+	
 	function action_index($type=NULL,$report_status=NULL){
 		global $_K,$_lang;
 		//需要在列表中显示的字段
@@ -22,9 +34,9 @@ class Control_admin_user_trans extends Controller{
 		//获取分页条件
 		extract($this->get_url($base_uri));
 		//查询举报，维权，投诉类型
-		$action_arr = keke_report_class::get_transrights_type();
+		$action_arr =  $this->_action_arr; //keke_report_class::get_transrights_type();
 		//处理的情况
-		$trans_status = keke_report_class::get_transrights_status();
+		$trans_status = $this->_trans_status; //keke_report_class::get_transrights_status();
 		//获取后面的参数type，包括report，rights，complaint
 		if(isset($_GET['type'])){
 			$type = $_GET['type'];
@@ -48,7 +60,7 @@ class Control_admin_user_trans extends Controller{
 		//显示分页的页数
 		$pages = $data_info['pages'];
 		//所属的类别，商品，任务，稿件，订单
-		$trans_object = keke_report_class::get_transrights_obj();
+		$trans_object = $this->_trans_object;
 // 		var_dump($trans_object);die;
 		require keke_tpl::template('control/admin/tpl/user/trans');
 	}
@@ -75,7 +87,7 @@ class Control_admin_user_trans extends Controller{
 		//获取穿过来的type,用户返回对应的类型列表，如举报列表
 		$type = $_GET['type'];
 		//查询举报，维权，投诉类型
-		$action_arr = keke_report_class::get_transrights_type();
+		$action_arr = $this->_action_arr;//keke_report_class::get_transrights_type();
 		//类型的汉字，举报，维权，投诉
 		$rep_type_chinese = $action_arr[$_GET['type']][1];
 		//获取传递过来的额report_id，用来查询对应的report表的信息
@@ -89,9 +101,9 @@ class Control_admin_user_trans extends Controller{
 		//获取process页面的信息
 		$obj_info = keke_report_class::obj_info_init ( $report_info,$user_info);
 		//所属的类别，商品，任务，稿件，订单
-		$trans_object = keke_report_class::get_transrights_obj();
+		$trans_object = $this->_trans_status;//keke_report_class::get_transrights_obj();
 		//处理的情况
-		$trans_status = keke_report_class::get_transrights_status();
+		$trans_status = $this->_trans_status;
 // 		var_dump($report_info['obj']);die;
 		require keke_tpl::template('control/admin/tpl/user/trans_process');
 	}

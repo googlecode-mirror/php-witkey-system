@@ -395,19 +395,19 @@ class Keke extends Keke_core {
 		$_POST = Keke::k_stripslashes($_POST);
 		$_COOKIE = Keke::k_stripslashes($_COOKIE);
 			// self::$_db = Database::instance ();
-		$this->init_session ();
+		Keke::init_session ();
 		$this->init_config ();
 		
 		$this->init_user ();
 		
 		Keke::$_cache_obj = Cache::instance ();
-		Keke::$_tpl_obj = new Keke_tpl();
-		Keke::$_page_obj = new keke_page_class ();
+		//Keke::$_tpl_obj = new Keke_tpl();
+		//Keke::$_page_obj = new keke_page_class ();
 
 		$this->init_out_put ();
 		$this->init_lang ();
 		$this->init_curr();
-		$this->init_model();
+		//$this->init_model();
 
 		self::$_log = log::instance()->attach(new keke_log_file());
 		if (!isset($_SESSION['auid']) and Keke::$_sys_config ['is_close'] == 1 && substr ( $_SERVER ['PHP_SELF'], - 24 ) != '/control/admin/index.php') {
@@ -431,18 +431,14 @@ class Keke extends Keke_core {
 			Cache::instance()->set('keke_config', $config_arr,60000);
 		}
 		Keke::$_sys_config = $config_arr ;
-		
-		$nav_list = DB::select('*')->from('witkey_nav')->cached(6000,'keke_nav')->execute();
-		$nav_list = Keke::get_arr_by_key($nav_list,'nav_id');
-		Keke::$_nav_list = $nav_list;
-		$template = Keke::get_tpl ();
-		Keke::$_template = $template ['tpl_title'];
+		//$template = Keke::get_tpl ();
+		Keke::$_template = $config_arr ['template'];
 		$map_config = unserialize ( $config_arr ['map_api_open'] );
 		$map_api = "baidu";
 		$_K ['timestamp'] = $_SERVER['REQUEST_TIME'];
 		$_K ['charset'] = CHARSET;
-		$_K ['template'] = $template ['tpl_title'];
-		$_K ['theme'] = $template ['tpl_pic'];
+		$_K ['template'] = $config_arr ['template'];
+		$_K ['theme'] = $config_arr ['theme'];
 		$_K ['sitename'] = $config_arr ['website_name'];
 		$_K ['siteurl'] = $config_arr ['website_url'];
 		$_K ['inajax'] = 0;
@@ -489,9 +485,15 @@ class Keke extends Keke_core {
 			unset ( $temp );
 		}
 	}
-	function init_prom() {
+	/**
+	 * 初始化推广实例，按需加载
+	 */
+	static function init_prom() {
 		Keke::$_prom_obj = keke_prom_class::get_instance ();
 	}
+	/**
+	 * 初始化行业,按需加载
+	 */
 	static function init_industry() {
 		
 		Keke::$_indus_p_arr =  Keke::get_table_data ( '*', "witkey_industry", "indus_type=1 and indus_pid = 0 ", "listorder asc ", '', '', 'indus_id', 3600 );
@@ -499,7 +501,18 @@ class Keke extends Keke_core {
 		Keke::$_indus_arr = Keke::get_table_data ( '*', 'witkey_industry', '', 'listorder', '', '', 'indus_id', 3600 );
 	
 	}
-	function init_oauth() {
+	/**
+	 * 初始化导航，按需要加载，不在core 里加载
+	 */
+	static function init_nav(){
+		$nav_list = DB::select('*')->from('witkey_nav')->cached(6000,'keke_nav')->execute();
+		$nav_list = Keke::get_arr_by_key($nav_list,'nav_id');
+		Keke::$_nav_list = $nav_list; 
+	}
+	/**
+	 * 初始化微博认证开关
+	 */
+	static public  function init_oauth() {
 		
 		foreach ( Keke::$_basic_arr as $k => $v ) {
 			($v ['type'] == 'weibo' || $v ['type'] == 'interface') and Keke::$_weibo_list [$v ['k']] = $v ['v'];
@@ -508,9 +521,9 @@ class Keke extends Keke_core {
 	
 	}
 	/**
-	 * 微博关注
+	 * 初始化,微博关注，按需要加载
 	 */
-	function init_weibo_attent() {
+	static public function init_weibo_attent() {
 		foreach ( Keke::$_basic_arr as $k => $v ) {
 			$v ['type'] == 'attention' and Keke::$_weibo_attent [$v ['k']] = $v ['v'];
 		}
@@ -531,7 +544,10 @@ class Keke extends Keke_core {
 		}
 		Keke::$_curr_list = keke_lang_class::get_curr_list ();
 	}
-	function init_model() {
+	/**
+	 * 初始化任务model,按需加载
+	 */
+	static public function init_model() {
 		$model_arr = db::select ( '*' )->from ( 'witkey_model' )->cached ()->execute ();
 		Keke::$_model_list = Keke::get_arr_by_key ( $model_arr, 'model_id' );
 		foreach ( Keke::$_model_list as $v ) {
@@ -541,13 +557,14 @@ class Keke extends Keke_core {
 				Keke::$_shop_open = (Keke::$_shop_open or $v ['model_status']);
 			}
 		}
-		$this->nav_filter ();
+		Keke::nav_filter ();
 	}
 	/**
 	 * 导航过滤
 	 */
-	public function nav_filter() {
+	public static function nav_filter() {
 		global $_K;
+		Keke::init_nav();
 		$nav_arr = Keke::$_nav_list;
 		if ((Keke::$_task_open and  Keke::$_shop_open) == FALSE) {
 			foreach ( $nav_arr as $k => $v ) {
@@ -571,7 +588,7 @@ class Keke extends Keke_core {
 		Keke::$_nav_list = $nav_arr;
 	}
 	 
-	function init_session() {
+	public static function init_session() {
 		$session = Keke_session::instance();
 		$_SESSION = & $session->as_array();
 		

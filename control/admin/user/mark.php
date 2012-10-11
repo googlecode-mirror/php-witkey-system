@@ -36,12 +36,12 @@ class Control_admin_user_mark extends Controller{
 				'm_value'=>$_POST['txt_m_value'],
 				'g_title'=>$_POST['txt_g_title'],
 				'm_title'=>$_POST['txt_m_title'],
-				'g_ico'=>$_POST['hdn_g_ico'],
-				'm_ico'=>$_POST['hdn_m_ico'],
+				'g_ico'=>$_POST['hdn_g_ico'].'?fid='.$_POST['hdn_g_ico_fid'],
+				'm_ico'=>$_POST['hdn_m_ico'].'?fid='.$_POST['hdn_m_ico_fid'],
 				);
 		if ($_GET['hdn_mark_rule_id']){
 			Model::factory('witkey_mark_rule')->setData($array)->setWhere('mark_rule_id='.$_GET['hdn_mark_rule_id'])->update();
-			Keke::show_msg("编辑成功","index.php/admin/user_mark/add？mark_rule_id=".$_GET['hdn_mark_rule_id'],"success");
+			Keke::show_msg("编辑成功","index.php/admin/user_mark/add?hdn_mark_rule_id=".$_GET['hdn_mark_rule_id'],"success");
 		}else{
 			Model::factory('witkey_mark_rule')->setData($array)->create();
 			Keke::show_msg("添加成功","index.php/admin/user_mark/add","success");

@@ -8,34 +8,29 @@
 </div>
 <div class="box post">
     <div class="tabcon">
-        <div class="title">
-            <h2>{$_lang['edit_auth']}</h2>
-        </div>
-        <div class="detail">
-            <form method="post" action="index.php?do={$do}&view={$view}&auth_code={$auth_code}"  enctype="multipart/form-data">
-                <input type="hidden" name="pk[auth_code]" value="{$auth_code}">
+            <form class="detail" method="post" action="{BASE_URL}/index.php/admin/user_auth/save"  enctype="multipart/form-data">
+                <input type="hidden" name="formhash" value="{FORMHASH}">
                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tr>
                         <th scope="row" width="130">
                             {$_lang['edit_auth_name']}
                         </th>
                         <td>
-                            <input type="text" value="{$auth_item['auth_title']}" name="fds[auth_title]" id="title" class="txt" style=" width:260px;" limit="required:true;len:1-50" title="{lang:edit_auth_name_ttitle" msg="{$_lang['edit_auth_name_limits']}" msgArea="item_title_msg"/><b style="color:red">*</b>
+                            <input type="text" value="{$auth_item['auth_title']}" name="auth_title" id="title" class="txt" style=" width:260px;" limit="required:true;len:1-50" title="{lang:edit_auth_name_ttitle" msg="{$_lang['edit_auth_name_limits']}" msgArea="item_title_msg"/><b style="color:red">*</b>
                             <span id="item_title_msg"></span>
                         </td>
                     </tr>
-					
                     <tr>
                         <th scope="row" width="130">{$_lang['workdays']}</th>
                         <td>
-                            <input type="text" value="{$auth_item['auth_day']}" name="fds[auth_day]" id="auth_day" class="txt" style=" width:260px;" limit="required:true;len:1-50" title="{$_lang['workday_tips']}" msg="{$_lang['workday_limits']}" msgArea="link_name_msg"/><b style="color:red">*</b>
+                            <input type="text" value="{$auth_item['auth_day']}" name="auth_day" id="auth_day" class="txt" style=" width:260px;" limit="required:true;len:1-50" title="{$_lang['workday_tips']}" msg="{$_lang['workday_limits']}" msgArea="link_name_msg"/><b style="color:red">*</b>
                             <span id="link_name_msg"></span><div class="padt10 direct"><p>（{$auth_item['auth_day']}{$_lang['workdays_complete']}）</p></div>
                         </td>
                     </tr>
 					{if $auth_code!='realname'&&$auth_code!='enterprise'}
                     <tr>
                         <th scope="row" width="130">{$_lang['auth_cash']}</th><td>
-                            <input type="text" value="{$auth_item['auth_cash']}" name="fds[auth_cash]" id="auth_cash" class="txt" style=" width:260px;">
+                            <input type="text" value="{$auth_item['auth_cash']}" name="auth_cash" id="auth_cash" class="txt" style=" width:260px;">
                             <div class="padt10 direct"> <p>（{$_lang['null_and_free']}）</p></div>
                         </td>
                     </tr>
@@ -43,7 +38,7 @@
                     <tr>
                         <th scope="row" width="130">{$_lang['auth_period']}</th>
                         <td>
-                            <input type="text" value="{$auth_item['auth_expir']}" name="fds[auth_expir]" id="auth_expir" class="txt" style=" width:260px;" limit="required:true;len:1-50" msg="{$_lang['auth_period_limits']}" msgArea="link_name_msg" /><b style="color:red">*</b>
+                            <input type="text" value="{$auth_item['auth_expir']}" name="auth_expir" id="auth_expir" class="txt" style=" width:260px;" limit="required:true;len:1-50" msg="{$_lang['auth_period_limits']}" msgArea="link_name_msg" /><b style="color:red">*</b>
                             <span id="link_name_msg"></span><div class="padt10 direct"><p>（{$_lang['auth_period_tips']}）</p></div>
                         </td>
                     </tr>
@@ -56,7 +51,7 @@
                             <button type="button"  onclick="upload('big_icon','sys','back','auth');">{$_lang['upload']}</button>
                             <span id="span_big_icon">
 								{if $auth_item['auth_big_ico']}
-									<img src="../../$auth_item['auth_big_ico']" height="60px" width="60px" />
+									<img src="{BASE_URL}/$auth_item['auth_big_ico']" height="60px" width="60px" />
 									<a href=";" onclick="return del('hdn_big_icon','span_big_icon')">{$_lang['delete']}</a>
 								{/if}
 							</span>
@@ -74,7 +69,7 @@
                             <button type="button"  onclick="upload('small_before_icon','sys','back','auth');">{$_lang['upload']}</button>({$_lang['before_auth']})
                             <span id="span_small_before_icon">
 								{if $auth_item['auth_small_n_ico']}
-									<img src="../../$auth_item['auth_small_n_ico']" height="30" />
+									<img src="{BASE_URL}/$auth_item['auth_small_n_ico']" height="30" />
 									<a href=";" onclick="return del('hdn_small_before_icon','span_small_before_icon')">{$_lang['delete']}</a>
 								{/if}
 							</span>
@@ -85,7 +80,7 @@
                             <button type="button"  onclick="upload('small_after_icon','sys','back','auth');">{$_lang['upload']}</button>({$_lang['after_auth']})
                             <span id="span_small_after_icon">
 								{if $auth_item['auth_small_ico']}
-									<img src="../../$auth_item['auth_small_ico']" height="30"/>
+									<img src="{BASE_URL}/$auth_item['auth_small_ico']" height="30"/>
 									<a href=";" onclick="return del('hdn_small_after_icon','span_small_after_icon')" >{$_lang['delete']}</a>
 								{/if}
 							</span>
@@ -94,7 +89,7 @@
                     </tr>
                     <tr>
                         <th scope="row">{$_lang['auth_description']}</th>
-                        <td><textarea rows="10" style="width:45%;" name="fds[auth_desc]">{$auth_item['auth_desc']}</textarea></td>
+                        <td><textarea rows="10" style="width:45%;" name="auth_desc">{$auth_item['auth_desc']}</textarea></td>
                     </tr>
                     <tr>
                         <th scope="row" width="130">
@@ -103,10 +98,10 @@
                         <td>
                             <p>
                                 <label for="rdo_auth_open_1">
-                                    <input type="radio" name="fds[auth_open]" value="1" id="rdo_auth_open_1" {if $auth_item['auth_open']}checked="checked"{/if}/> {$_lang['yes']}
+                                    <input type="radio" name="auth_open" value="1" id="rdo_auth_open_1" {if $auth_item['auth_open']}checked="checked"{/if}/> {$_lang['yes']}
                                 </label>
                                 <label for="rdo_auth_open_2">
-                                    <input name="fds[auth_open]" type="radio" id="rdo_auth_open_2" value="0" {if !$auth_item['auth_open']}checked="checked"{/if} /> {$_lang['no']}
+                                    <input name="auth_open" type="radio" id="rdo_auth_open_2" value="0" {if !$auth_item['auth_open']}checked="checked"{/if} /> {$_lang['no']}
                                 </label>
                             </p>
                         </td>
@@ -116,7 +111,7 @@
                            {$_lang['order']}
                         </th>
                         <td>
-                            <input type="text" value="{$auth_item['listorder']}" name="fds[listorder]" id="listorder" class="txt" style=" width:260px;" limit="required:true;type:int" title="{$_lang['input_serial_num']}" msg="{$_lang['serial_num_not_null']}" msgArea="link_listorder_msg"/>
+                            <input type="text" value="{$auth_item['listorder']}" name="listorder" id="listorder" class="txt" style=" width:260px;" limit="required:true;type:int" title="{$_lang['input_serial_num']}" msg="{$_lang['serial_num_not_null']}" msgArea="link_listorder_msg"/>
                             <span id="link_listorder_msg"></span>
                             <div class="padt10 direct">
                                 <p>
@@ -140,10 +135,9 @@
                     </tr>
                 </table>
             </form>
-        </div>
     </div>
 </div>
-<script type="text/javascript"  src="../../resource/js/system/ajaxfileupload.js"></script>	
+<script type="text/javascript"  src="{BASE_URL}/resource/js/system/ajaxfileupload.js"></script>	
 <script type="text/javascript">
 /**
  * 上传完成后的页面响应

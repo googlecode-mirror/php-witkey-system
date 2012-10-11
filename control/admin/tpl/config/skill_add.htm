@@ -2,9 +2,9 @@
 <div class="page_title">
     	<h1>{$_lang['skill_manage']}</h1>
         <div class="tool">
-       		 <a href="index.php?do=task&view=skill&op=list">{$_lang['skill_list']}</a>
-            <a href="index.php?do=task&view=skill_edit" class="here">{$_lang['add_skill']}</a>
-		</div>
+        	<a href="{BASE_URL}/index.php/admin/config_skill" >{$_lang['skill_list']}</a>
+            <a href="{BASE_URL}/index.php/admin/config_skill/add" class="here">{$_lang['skill']}{if $skill_id}{$_lang['edit']}{else}{$_lang['add']}{/if}</a>
+    	</div>
 </div>
 <div class="box post">
     <div class="tabcon">

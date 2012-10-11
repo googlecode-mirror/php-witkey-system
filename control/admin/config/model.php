@@ -24,6 +24,7 @@ class Control_admin_config_model extends  Controller {
 			$type = 'task';
 		}
 		//模型列表,已经初始化过，不用再查
+		Keke::init_model();
 		$list = Keke::$_model_list;
 		$model_list = array();
 		//对模型进行筛选，原来是放在模板上的

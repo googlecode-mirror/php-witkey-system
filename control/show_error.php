@@ -1,21 +1,25 @@
 <?php $error_id = uniqid('error'); ?>
 <style type="text/css">
-#keke_error { background: #ddd; font-size: 1em; font-family:sans-serif; text-align: left; color: #111; }
+body{margin:0; padding:0; font-family:Verdana,Arial,Helvetica,sans-serif; background:#AAA;}
+*{margin:0; padding:0}
+#keke_error { background: #eee; font-size: 1em;  text-align: left; color: #444; margin:40px auto 0; width:90%; box-shadow: 2px 5px 12px #555; border-radius: 5px; overflow:hidden; }
 #keke_error h1,
-#keke_error h2 { margin: 0; padding: 1em; font-size: 1em; font-weight: normal; background: #911; color: #fff; }
+#keke_error h2 { margin: 0; padding: 1em; font-size: 1em;  color: #911; background: #eee; }
 #keke_error h1 a,
-#keke_error h2 a { color: #fff; }
-#keke_error h2 { background: #222; }
+#keke_error h2 a { color: #06c; }
+#keke_error h2 {  }
 #keke_error h3 { margin: 0; padding: 0.4em 0 0; font-size: 1em; font-weight: normal; }
 #keke_error p { margin: 0; padding: 0.2em 0; }
-#keke_error a { color: #1b323b; }
-#keke_error pre { overflow: auto; white-space: pre-wrap; }
+#keke_error a { color: #06c; }
+#keke_error pre { overflow: auto; white-space: pre-wrap;  }
+#keke_error code{ font: 10pt/1.5em "Courier New", "Courier", monospace; color:#3F7F7F} 
 #keke_error table { width: 100%; display: block; margin: 0 0 0.4em; padding: 0; border-collapse: collapse; background: #fff; }
-#keke_error table td { border: solid 1px #ddd; text-align: left; vertical-align: top; padding: 0.4em; }
-#keke_error div.content { padding: 0.4em 1em 1em; overflow: hidden; }
-#keke_error pre.source { margin: 0 0 1em; padding: 0.4em; background: #fff; border: dotted 1px #b7c680; line-height: 1.2em; }
+#keke_error table td { border: solid 1px #ddd; text-align: left; vertical-align: top; padding: 0.4em;  }
+#keke_error div.content {margin: 0.5em; padding: 1em; overflow: hidden; font-size:0.8em; background:#fff; border:1px solid #ccc }
+#keke_error pre.source { margin: 0 0 1em;  background: #fff; border: solid 1px #eee; line-height: 1.2em; }
 #keke_error pre.source span.line { display: block; }
-#keke_error pre.source span.highlight { background: #f0eb96; }
+#keke_error pre.source span.line:nth-of-type(odd){ background-color:#FAFAFA}
+#keke_error pre.source span.highlight { background: #f0eb96; color:#911 }
 #keke_error pre.source span.line span.number { color: #666; }
 #keke_error ol.trace { display: block; margin: 0 0 0 2em; padding: 0; list-style: decimal; }
 #keke_error ol.trace li { margin: 0; padding: 0; }

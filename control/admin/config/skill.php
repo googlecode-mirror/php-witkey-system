@@ -6,12 +6,54 @@
    2012-10-10
  */
 
-class Control_admin_config_skill{
+class Control_admin_config_skill extends Controller{
     
 	function action_index(){
     	global $_K,$_lang;
-    	
-    	require Keke_tpl::template("control/admin/tpl/config/indus");
+    	//选择要查询的字段，将在列表中显示
+		$fields = '`skill_id`,`indus_id`,`skill_name`,`listorder`,`on_time`';
+		//搜索中用到的字段
+		$query_fields = array('indus_id'=>'行业','skill_name'=>'技能','on_time'=>$_lang['time']);
+		//基本uri
+		$base_uri = BASE_URL.'/index.php/admin/user_custom';
+		//统计查询出来的记录的总条数
+		$count = intval($_GET['count']);
+		//默认排序字段
+		$this->_default_ord_field = 'on_time';
+		//处理查询的条件
+		extract($this->get_url($base_uri));
+		//获取分页的相关参数
+		$data_info = Model::factory('witkey_skill')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
+		//列表数据
+		$skill_arr = $data_info['data'];
+		$pages = $data_info['pages'];
+
+		$indus_option_arr = DB::select()->from('witkey_industry')->execute();
+		$indus_show_arr = Keke::get_arr_by_key($indus_option_arr,'indus_id');
+		
+		
+/* 		
+ 		$temp_arr = array ();
+        foreach ($indus_option_arr as $v){
+			$indus_option_arr = $v;
+		}
+		Keke::get_tree ( $indus_option_arr, $temp_arr,"option",$indus_option_arr[indus_pid]);
+		var_dump($temp_arr);die;
+		$indus_option_arr = Keke::get_arr_by_key($indus_option_arr,'indus_name');
+		$indus_option_arr = $temp_arr;
+		$indus_option_arr = $indus_option_arr[0];
+		foreach ($indus_option_arr as $v){
+			var_dump($v[indus_name]);
+		}
+		die;
+		var_dump($indus_option_arr);die; */
+		
+		
+    	require Keke_tpl::template("control/admin/tpl/config/skill");
+    }
+    function action_add(){
+    	global $_K,$_lang;
+    	require Keke_tpl::template('control/admin/tpl/config/skill_add');
     }
 }
 

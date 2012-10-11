@@ -10,6 +10,7 @@ class Control_admin_config_nav extends Controller{
 	function action_index(){
 		global $_K,$_lang;
 		//nav_list 系统初始化过了
+		Keke::init_nav();
 		$nav_list = Keke::$_nav_list; 
 		if(!$_POST){
 			//没有提交时

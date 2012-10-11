@@ -20,23 +20,23 @@
 			<th>{$_lang['last_update']}</th>
 			<th>{$_lang['operate']}</th>
           </tr>
-		  {loop $auth_item_arr $key $value}
+		  {loop $auth_item_arr $v}
 		 <tr class="item">
-			<td>{$value['auth_code']}</td>
-			<td>{$value['auth_title']}</td>
-			<td>{$value['auth_day']}{$_lang['workdays']}</td>
-			<td><font color="#ff7700">{c:$value['auth_cash']}</font></td>
-			<td>{if $value['auth_expir']}{$value['auth_expir']}{$_lang['day']}{else}{$_lang['no_limit']}{/if}</td>
-			<td>{if $value['auth_open']==1}<font color="green">{$_lang['open']}</font>{else}<font color="gray">{$_lang['close']}</font>{/if}</td>
-			<td><!--{date('Y-m-d H:i:s',$value['update_time'])}--></td>
+			<td>{$v['auth_code']}</td>
+			<td>{$v['auth_title']}</td>
+			<td>{$v['auth_day']}{$_lang['workdays']}</td>
+			<td><font color="#ff7700">{c:$v['auth_cash']}</font></td>
+			<td>{if $v['auth_expir']}{$v['auth_expir']}{$_lang['day']}{else}{$_lang['no_limit']}{/if}</td>
+			<td>{if $v['auth_open']==1}<font color="green">{$_lang['open']}</font>{else}<font color="gray">{$_lang['close']}</font>{/if}</td>
+			<td>{date('Y-m-d H:i:s',$v['update_time'])}</td>
 			<td>
-				{if $value['auth_open']==1}
-					<a class="button" href="index.php?do=auth&view=item_edit&sbt_edit=1&auth_code={$value['auth_code']}&pk[auth_code]={$value['auth_code']}&fds[auth_open]=0"><span class="cross icon"></span>{$_lang['disable']}</a>
+				{if $v['auth_open']==1}
+					<a class="button" href="{BASE_URL}/index.php/admin/user_auth/disable?auth_code={$v['auth_code']}&auth_open={$v['auth_open']}"><span class="cross icon"></span>{$_lang['disable']}</a>
 				{else}
-					<a class="button" href="index.php?do=auth&view=item_edit&sbt_edit=1&auth_code={$value['auth_code']}&pk[auth_code]={$value['auth_code']}&fds[auth_open]=1"><span class="check icon"></span>{$_lang['use']}</a>
+					<a class="button" href="{BASE_URL}/index.php/admin/user_auth/disable?auth_code={$v['auth_code']}&auth_open={$v['auth_open']}"><span class="check icon"></span>{$_lang['use']}</a>
 				{/if}
-					<a class="button dbl_target" href="index.php?do={$do}&view=item_edit&auth_code={$value['auth_code']}"><span class="pen icon"></span>{$_lang['edit']}</a>
-					<a class="button" href="index.php?do={$do}&view={$view}&ac=del&auth_code={$value['auth_code']}" onclick="return cdel(this);"><span class="trash icon"></span>{$_lang['delete']}</a>
+					<a class="button dbl_target" href="{BASE_URL}/index.php/admin/user_auth/edit?auth_code={$v['auth_code']}"><span class="pen icon"></span>{$_lang['edit']}</a>
+					<a class="button" href="index.php?do={$do}&view={$view}&ac=del&auth_code={$v['auth_code']}" onclick="return cdel(this);"><span class="trash icon"></span>{$_lang['delete']}</a>
 			</td>
 		</tr>
 		{/loop}

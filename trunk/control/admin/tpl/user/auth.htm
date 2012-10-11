@@ -36,7 +36,7 @@
 					<a class="button" href="{BASE_URL}/index.php/admin/user_auth/disable?auth_code={$v['auth_code']}&auth_open={$v['auth_open']}"><span class="check icon"></span>{$_lang['use']}</a>
 				{/if}
 					<a class="button dbl_target" href="{BASE_URL}/index.php/admin/user_auth/edit?auth_code={$v['auth_code']}"><span class="pen icon"></span>{$_lang['edit']}</a>
-					<a class="button" href="index.php?do={$do}&view={$view}&ac=del&auth_code={$v['auth_code']}" onclick="return cdel(this);"><span class="trash icon"></span>{$_lang['delete']}</a>
+					<a class="button" href="{BASE_URL}/index.php/admin/user_auth/del?auth_code={$v['auth_code']}" onclick="return cdel(this);"><span class="trash icon"></span>{$_lang['delete']}</a>
 			</td>
 		</tr>
 		{/loop}

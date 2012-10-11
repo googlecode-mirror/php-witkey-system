@@ -37,7 +37,7 @@ class Control_admin_cache extends Controller{
 			Keke::echojson(1,1);
 		}else{
 		 //普通表单请求响应	
-			Keke::show_msg('系统提示','index.php/admin/cache',$msg,'success');
+			Keke::show_msg($msg,'index.php/admin/cache','success');
 		}
 		
 		

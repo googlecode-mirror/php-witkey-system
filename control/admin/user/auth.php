@@ -6,8 +6,13 @@
  * @todo 后台认证项目安装、删除
  * 2011-9-01 11:35:13
  */
-
-Keke::admin_check_role ( 38 );
+class Control_admin_user_auth extends Controller{
+	function action_index(){
+		global $_K,$_lang;
+		require keke_tpl::template('control/admin/tpl/user/auth');
+	}
+}
+/* Keke::admin_check_role ( 38 );
 
 $auth_item_obj = new Keke_witkey_auth_item_class ();
 $url = "index.php?do=$do&view=$view";
@@ -36,4 +41,4 @@ if ($ac === 'del') {
 	$auth_item_arr = $auth_item_obj->query_keke_witkey_auth_item ();
 }
 
-require $Keke->_tpl_obj->template ( 'control/admin/tpl/admin_' . $do . '_' . $view );
+require $Keke->_tpl_obj->template ( 'control/admin/tpl/admin_' . $do . '_' . $view ); */

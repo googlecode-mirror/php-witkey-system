@@ -38,7 +38,7 @@ class keke_admin_class {
 			
 			$resource_arr = $temp_arr2;
 			$menuset_arr = array ( 'menu' => $resource_arr, 'submenu' => $submenu_set_arr, 'resource' => $resource_set_arr );
-			
+			Keke::init_model();
 			$model_list = Keke::$_model_list;
 			$i = 0;
 			

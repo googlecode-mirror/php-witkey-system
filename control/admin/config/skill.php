@@ -13,7 +13,7 @@ class Control_admin_config_skill extends Controller{
     	//选择要查询的字段，将在列表中显示
 		$fields = '`skill_id`,`indus_id`,`skill_name`,`listorder`,`on_time`';
 		//搜索中用到的字段
-		$query_fields = array('indus_id'=>'行业','skill_name'=>'技能','on_time'=>$_lang['time']);
+		$query_fields = array('indus_id'=>'行业名称','skill_name'=>'技能名称','on_time'=>$_lang['time']);
 		//基本uri
 		$base_uri = BASE_URL.'/index.php/admin/user_custom';
 		//统计查询出来的记录的总条数

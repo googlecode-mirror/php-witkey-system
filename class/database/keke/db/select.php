@@ -72,7 +72,7 @@ class Keke_db_select extends Keke_db_query {
 		return $this;
 	}
 	public function on($c1, $op, $c2) {
-		$this->_query_list ['on'] = $c1 . $op . $c2;
+		$this->_query_list ['on'] = ' on '. $c1 . $op . $c2;
 		return $this;
 	}
 	public function group($group) {

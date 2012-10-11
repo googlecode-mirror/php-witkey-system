@@ -4,7 +4,7 @@ class Control_ui_test extends Controller {
 	function action_index(){
 		global $_K,$_lang;
 		
-		require Keke_tpl::template('ui');
+		require Keke_tpl::template(SKIN_PATH.'/ui/ui');
 	}
 }
 

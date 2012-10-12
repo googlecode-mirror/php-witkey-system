@@ -28,6 +28,7 @@ class Control_admin_config_payitem extends Controller{
 		$payitem = DB::select()->from('witkey_payitem')->where($where)->execute();
 		$payitem = $payitem[0];
 		//模型列表
+		Keke::init_model();
 		$model_list = Keke::$_model_list;
 		//模型代码数组
 		$code_arr=explode(",",$payitem['model_code']);
@@ -69,7 +70,7 @@ class Control_admin_config_payitem extends Controller{
 	 * @param  $path  e.g ...img.jpg?fid=1000
 	 * @return boolean| fid
 	 */
-	function get_fid($path){
+	static function get_fid($path){
 		if(!path){
 			return false;
 		}

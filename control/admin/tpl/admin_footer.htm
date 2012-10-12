@@ -99,6 +99,28 @@ function batch_act(obj){
 	}
 	return false;  
 }
+/**
+ * 删除提交
+ * @param {Object} obj buttion
+ * @param {string} frm form_id
+ */
+function batch_sub(obj,frm,action){ 
+	d = art.dialog;
+	var frm = frm; 
+	var c = $(obj).val(); 
+	var conf = $(":checkbox[name='ckb[]']:checked").length;
+	if (conf > 0) {
+		d.confirm("{$_lang['confirm']}" + c + '?', function(){
+			var uri = $("#"+frm).attr('action');
+			$("#"+frm).attr('action',uri+action);
+			//获取选中的值
+			$("#" + frm).submit();
+		}).follow(obj);
+	}else{
+		d.alert("{$_lang['has_none_being_choose']}");
+	}
+	return false;  
+}
 </script> 
 {if KEKE_DEBUG}
 <div style="background-color:green;color:#fff;text-align:center;">

@@ -41,8 +41,8 @@ class Control_ajax_upload extends Controller{
 		$fid = intval($_GET['fid']);
 		//一般用在同一个图片有多种尺寸时，需要带上这个参数，属于可选参数
 		$size = $_GET['size'];
-		//文件路径
-		$filepath = $_GET['fielpath'];
+		//文件路径 
+		$filepath = $_GET['filepath'];
 		//执行删除 
 		$res = keke_file_class::del_att_file($fid,$filepath,$size);
 		$res and Keke::echojson ( '', 1 ) or Keke::echojson ( '', '0' );

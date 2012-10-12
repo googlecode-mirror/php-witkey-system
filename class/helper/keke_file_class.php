@@ -461,7 +461,19 @@ class keke_file_class {
 			return unlink($filepath);
 		}
 	}
-	
+	/**
+	 * 删除图片时获取图片对应的fid
+	 * @param  $path  e.g ...img.jpg?fid=1000
+	 * @return boolean| fid
+	 */
+	static function get_fid($path){
+		if(!path){
+			return false;
+		}
+		parse_str($path, $query);
+		list($k,$v) = each($query);
+		return (int)$v;
+	}
 	/**
 	 * 删除上传的文件
 	 * <b>$fid,$filepath这2个参数应当为必须的</b>, 但是考虑到这个函数可能在其他地方用到,为保持兼容,将$filepath改为可选
@@ -476,15 +488,18 @@ class keke_file_class {
 	static function del_att_file($fid = 0, $filepath = '', $del_more = '') {
 		$file_obj = new Keke_witkey_file ();
 		if ($fid > 0) {
-			$where = 'file_id=' . $fid;
-			$filepath != '' && $where .= ' and save_name="' . $filepath . '"';
-			$file_obj->setWhere ( $where );
-			$file_info = $file_obj->query();
-			$file_obj->setWhere ( $where );
-			$res = $file_obj->del();
-			$filepath = $file_info [0] ['save_name'];
+			
+			$where = 'file_id=' . $fid." and save_name = '$filepath'";
+			$file_exists = DB::select('save_name')->from('witkey_file')->where($where)->get_count()->execute();
+			//文件不存在
+			if(!$file_exists){
+				return false;
+			}
+			DB::delete('witkey_file')->where($where)->execute();
 			if (is_file ( $filepath )) {
+				//如果只有一张删除
 				$unlink = unlink ( $filepath );
+				//如果有多张循环删除
 				if ($del_more != '') {
 					$more_name = array ();
 					$dirname = dirname ( $filepath );
@@ -496,9 +511,10 @@ class keke_file_class {
 					}
 				}
 			}
-			return $unlink ? $unlink : $res;
+			return $unlink ? $unlink : false;
 		}
 	}
+	
 	/**
 	 * 通用文件上传
 	 * $folder 自定义上传的文件夹名字 '/data/uploads/sys/'.$folder,这个参数在 后台广告添加页面用到

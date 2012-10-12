@@ -51,7 +51,7 @@
                                
                                      <label> {$_lang['currency']}{$_lang['zh_mh']}</label>
                                      <select  style="width:100px" onchange="setCurr(this.value,1);">
-									  {loop $_K['f_c_list'] $k $v}
+									  {loop Keke::$_curr_list $k $v}
 									    <option value="{$k}" id="{$k}" {if Keke::$_currency==$k}selected{/if}>{$v['title']}</option>
 									  {/loop}
                                      </select>

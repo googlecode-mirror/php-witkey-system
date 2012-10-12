@@ -123,7 +123,7 @@
              	<span id="span_small_pic">
 					{if $payitem['small_pic']}
 						<img src="{BASE_URL}/$payitem['small_pic']"  />
-						<a href=";" onclick="return del('hdn_small_pic','span_small_pic')">{$_lang['delete']}</a>
+						<a href=";" onclick="return del('hdn_small_pic','hdn_small_pic_fid','span_small_pic')">{$_lang['delete']}</a>
 					{/if}
 				</span>
 				<div class="padt10 direct">
@@ -146,8 +146,8 @@
 				<button type="button"  onclick="upload('big_pic','sys','tools');">{$_lang['upload']}</button>
              	<span id="span_big_pic">
 					{if $payitem['big_pic']}
-						<img src="{BASE_URL}/$payitem['big_pic']" height="60px" width="60px" />
-						<a href=";" onclick="return del('hdn_big_pic','span_big_pic')">{$_lang['delete']}</a>
+						<img src="{BASE_URL}/$payitem['big_pic']" height="60" />
+						<a href=";" onclick="return del('hdn_big_pic','hdn_big_pic_fid','span_big_pic')">{$_lang['delete']}</a>
 					{/if}
 				</span>
 				<div class="padt10 direct">
@@ -215,20 +215,21 @@ In('edit');
  */
 function uploadResponse(json){
 	var id = json.filename;
-	 var hf = $("#hdn_"+id);
-	 var hf_fid = $("#hdn_"+id+"_fid");
-          $(hf).val(json.msg.up_file+"?fid="+json.fid);
-          $(hf_fid).val(json.fid);
-		$("#span_"+id).html("<img src='{BASE_URL}/"+json.msg.up_file+"'width='80px' height='80px' />").append("<a href=';' onclick='return del(\"hdn_"+id+"\",\"span_"+id+"\")'>É¾³ý</a>");
+	var hf = $("#hdn_"+id);
+	var hf_fid = $("#hdn_"+id+"_fid");
+    $(hf).val(json.msg.up_file+"?fid="+json.fid);
+    $(hf_fid).val(json.fid);
+	$("#span_"+id).html("<img src='{BASE_URL}/"+json.msg.up_file+"'width='80px' height='80px' />").append("<a href=';' onclick='return del(\"hdn_"+id+"\",\"hdn_"+id+"_fid\",\"span_"+id+"\")'>É¾³ý</a>");
 }
-function del(str,span){
+function del(str,hfid,img){
 	var value = $("#"+str).val().split("?")['0'];
-	var fid=$("#"+str+"_fid").val();
+	var fid=$("#"+hfid).val();
 	var url  = '{BASE_URL}/index.php/ajax/upload/del?filepath='+value+"&fid="+fid;
 			$.post(url,function(json){
 				if(json.status==1){ 
 					 $("#"+str).val("");
-					 $("#"+span).children().remove();
+					 $("#"+hfid).val("");
+					 $("#"+img).children().remove();
 				}
 				
 			},'json');

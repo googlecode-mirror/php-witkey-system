@@ -88,7 +88,7 @@ class keke_auth_fac_class {
 	public static function del_auth($auth_code, $cash_name) {
 		global $kekezu;
 		global $_lang;
-		$auth_item_obj = new Keke_witkey_auth_item_class();
+		$auth_item_obj = new Keke_witkey_auth_item();
 		if (isset ( $auth_code )) {
 			switch (is_array ( $auth_code )) {
 				case "0" :
@@ -97,7 +97,7 @@ class keke_auth_fac_class {
 					$auth_item['auth_small_n_ico'] and keke_file_class::del_file($auth_item['auth_small_n_ico']); 
 					$auth_item['auth_big_ico']     and keke_file_class::del_file($auth_item['auth_big_ico']); 
 					$auth_item_obj->setWhere ("auth_code='$auth_code'" );
-					$res = $auth_item_obj->del_keke_witkey_auth_item ();
+					$res = $auth_item_obj->del ();
 					$res and Keke::$_cache_obj->del ( $cash_name );
 					$res and Keke::admin_system_log ( $_lang['delete_auth_item'] . $auth_item['auth_title'] );
 					
@@ -110,7 +110,7 @@ class keke_auth_fac_class {
 					$auth_code_str=implode(",",$auth_code);
 					if (sizeof ( $auth_code_str )) {
 						$auth_item_obj->setWhere ( " FIND_IN_SET(auth_code,'$auth_code_str')>0" );
-						$res = $auth_item_obj->del_keke_witkey_auth_item ();
+						$res = $auth_item_obj->del ();
 						$res and Keke::admin_system_log ( $_lang['delete_auth_item']."$auth_code_str" );
 						$res and Keke::admin_show_msg($_lang['auth_item_mulit_delete_success'],$_SERVER['HTTP_REFERER'],'3') or $res and Keke::admin_show_msg($_lang['auth_item_mulit_delete_fail'],$_SERVER['HTTP_REFERER'],'3','','error');
 					}

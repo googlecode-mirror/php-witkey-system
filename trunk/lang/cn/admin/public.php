@@ -35,7 +35,7 @@ $lang = array (
 		'recycle' => '回收站',   
 		'confirm_mulit_delete'=>'你确定要批量删除?',
 		'confirm_recycle' => '你确定要放入回收站?', 
-		'has_none_being_choose'=>'您没有选择任何操作项',
+		
 		'confirm_release' => '确认发布',
  
 		/**页面中的查询**/

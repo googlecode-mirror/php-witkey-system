@@ -72,7 +72,7 @@ abstract class keke_auth_base_class {
 	 */
 	public function add_auth_record($uid,$username, $auth_code,$end_time, $data = array(),$auth_status='0') {
 		
-		$record_obj  = new Keke_witkey_auth_record_class ();
+		$record_obj  = new Keke_witkey_auth_record ();
 		$record_info = dbfactory::get_one(sprintf(" select * from %switkey_auth_record where uid = '%d' and auth_code = '%s'",TABLEPRE,$uid,$auth_code));
 		
 		if ($record_info ['ext_data'] && $data) {//追加认证data记录
@@ -88,10 +88,10 @@ abstract class keke_auth_base_class {
 		
 		if ($record_info) {
 			$record_obj->setWhere ( 'record_id = ' . $record_info ['record_id'] );
-			return $record_obj->edit_keke_witkey_auth_record ();
+			return $record_obj->edit ();
 		} else {
 			$record_obj->setAuth_status ($auth_status);
-			return $record_obj->create_keke_witkey_auth_record ();
+			return $record_obj->create ();
 		}
 	}
 	/**

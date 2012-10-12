@@ -19,12 +19,12 @@ class Keke_core extends Keke_base {
 	 * @param $type string
 	 *        	{'info'=>默认,'success'=>'成功','warning'=>'警告'}
 	 */
-	static function admin_show_msg($title = "", $url = "", $time = 3, $content = "", $type = "info") {
+	/* static function admin_show_msg($title = "", $url = "", $time = 3, $content = "", $type = "info") {
 		global $_K, $_lang;
 		$url ? $url : $_K ['refer'];
 		require Keke_tpl::template ( 'control/admin/tpl/show_msg' );
 		die ();
-	}
+	} */
 	/**
 	 * 用于页面跳转提示
 	 *@param $content 提示信息 $_lang['submit_success']提交成功,$_lang['submit_fail']提交失败

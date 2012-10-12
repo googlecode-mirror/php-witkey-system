@@ -43,7 +43,7 @@ $lang=array(
       'view_detail'=>'查看详情',
       'operate_wait_do'=>'操作待做',
       'go_pay'=>'去付款',
-      'confirm_delete_order'=>'确认删除此订单',
+      //'confirm_delete_order'=>'确认删除此订单',
       'order_delete_fail'=>'订单删除失败',
    //扩展的
    	'buy_in'=>'买入的商品',

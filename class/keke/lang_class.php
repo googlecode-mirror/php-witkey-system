@@ -22,8 +22,10 @@ class keke_lang_class {
 		global $_lang;
 		$lang = self::load_lang_file($action,$package); 
 		if (!empty($lang)){
-		  self::$_init_lang_set = array_merge(self::$_init_lang_set,$lang);
-		  $_lang =  self::$_init_lang_set;
+		 foreach ($lang as $k=>$v){
+		  	self::$_init_lang_set[$k]=$v;
+		 }
+		 $_lang =  self::$_init_lang_set;
 		}
 	}
 	

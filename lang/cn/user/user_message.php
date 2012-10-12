@@ -27,7 +27,7 @@
 		'from' => '来自',
 		'unread' => '未读',
 		'already_read' => '已读',
-		'confirm_delete' => '确认要删除？',
+		//'confirm_delete' => '确认要删除？',
 		'del_success'=>'删除成功!',
 
 	/* user_message_view.htm */

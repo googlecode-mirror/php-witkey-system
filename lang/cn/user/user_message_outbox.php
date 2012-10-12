@@ -23,6 +23,6 @@
 		'sms_has_been_sent' => '已发短信',	
 		'send' => '发送',
 		'addressee' => '收件人',
-		'confirm_delete' => '确认要删除？',
+		//'confirm_delete' => '确认要删除？',
 
 	);

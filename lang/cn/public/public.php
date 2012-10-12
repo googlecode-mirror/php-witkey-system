@@ -80,6 +80,7 @@ $lang = array(
 	'choose_operate_item' => '请选择要操作的项！',
 	'no_data'=>'暂无数据',
     'contact_can_no_null'=>'联系方式不能为空',
+    'confirm_delete' => '确认删除?',
 	//批量
 	'mulit_delete_success'=>'批量删除成功',
 	'mulit_delete_fail'=>'批量删除失败',

@@ -12,6 +12,7 @@ class Control_auth_realname_admin_list extends Controller {
 	 */
 	function action_index(){
 	   global $_K,$_lang;
+	   //phpinfo();
 	   /* echo $_K['directory'];
 	   echo "<br>";
 	   echo $_K['control'];  */
@@ -37,6 +38,7 @@ class Control_auth_realname_admin_list extends Controller {
 	   $list_arr = $data_info['data'];
 	   //·ÖÒ³Êý¾Ý
 	   $pages = $data_info['pages'];
+	   //var_dump(get_included_files());
 	   
 	   require Keke_tpl::template ( 'control/auth/realname/tpl/admin_list' );
 	}
@@ -85,10 +87,11 @@ class Control_auth_realname_admin_list extends Controller {
 		if($_GET['u_id']){
 			$uid = $_GET['u_id'];
 		}else{
-			$uid = $_POST['ckb'];
+			$uid = explode(',', $_GET['ids']);
 		}
-		Keke_user_auth::no_pass($uid, $auth_code);
-		Keke::show_msg($_lang['submit_success'],'index.php/auth/realname_admin_list','success');
+		
+		echo Keke_user_auth::del($uid, $auth_code);
+		//Keke::show_msg($_lang['submit_success'],'index.php/auth/realname_admin_list','success');
 	}
 }
 

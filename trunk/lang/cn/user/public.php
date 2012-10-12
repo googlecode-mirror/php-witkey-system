@@ -20,7 +20,7 @@ $lang = array (
        'type'=>'类型',
 		'enter'=>'进入',
 		'page_size'=>'每页',
-		'confirm_delete' => '确认删除?',
+		 
 /**user.php**/
 		'user_center'=>'用户中心',
 		'manage_tpl'=>'管理面板',

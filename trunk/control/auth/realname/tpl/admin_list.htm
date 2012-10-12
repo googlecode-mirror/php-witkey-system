@@ -37,6 +37,7 @@
 <div class="box list">
 <form action="{$base_uri}/" id='frm_list' method="post">
 <input type="hidden" value="{FORMHASH}" name="formhash">
+<input type="hidden" value="{$_GET['page']}" name="page">
 <table cellspacing="0" cellpadding="0">
   <tr>
   	<th width="15"><input type="checkbox" id="checkbox"  onclick="checkall();"></th>
@@ -73,7 +74,7 @@
 			<a class="button dbl_target" href="{$base_uri}/pass?u_id=$v['uid']" onclick="return auth(this,'{$_lang[confirm_pass]}')"><span class="check icon"></span>{$_lang['pass']}</a>
 		{/if}
 		{if $v['auth_status']==0}
-			<a class="button" href="{$base_uri}/no_pass?&u_id=$v['uid']" onclick="return auth(this,'{$_lang[confirm_nopass]}')"><span class="cross icon"></span>{$_lang['nopass']}</a>
+			<a class="button" href="{$base_uri}/no_pass?u_id=$v['uid']" onclick="return auth(this,'{$_lang[confirm_nopass]}')"><span class="cross icon"></span>{$_lang['nopass']}</a>
 		{/if}
 		{if $v['auth_status']!=1}
 			<a class="button" href="{$base_uri}/del?u_id={$v['uid']}" onclick="return cdel(this);"><span class="trash icon"></span>{$_lang['delete']}</a>
@@ -89,7 +90,7 @@
   		<label for="checkbox">{$_lang['select_all']}</lable>
 		<button type="submit" name="sbt_action" value="{$_lang['mulit_pass']}"   class="pill positive button" onclick="return batch_sub(this,'frm_list','pass');"><span class="icon check"></span>{$_lang['pass']}</button>
 		<button type="submit" name="sbt_action" value="{$_lang['mulit_nopass']}" class="pill button" onclick="return batch_sub(this,'frm_list','no_pass');"><span class="cross icon"></span>{$_lang['nopass']}</button>
-		<button type="submit" name="sbt_action" value="{$_lang['mulit_delete']}"   class="pill negative" onclick="return batch_sub(this,'frm_list','del');"><span class="icon trash"></span>{$_lang['delete']}</button>
+		<button type="submit" name="sbt_action" value="{$_lang['mulit_delete']}"   class="pill negative" onclick="return batch_act(this);"><span class="icon trash"></span>{$_lang['delete']}</button>
   	</td>
   </tr>
 </tfoot>

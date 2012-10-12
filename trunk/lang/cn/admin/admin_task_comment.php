@@ -24,5 +24,5 @@
  	'task_miscellaneous'=>'任务杂项',	
 	'view_tack_comment'=>'查看任务留言',
 	'delete_task_comment'=>'任务留言删除',
-	'confirm_delete_comment'=>'确认删除此条留言吗?',
+	//'confirm_delete_comment'=>'确认删除此条留言吗?',
 );

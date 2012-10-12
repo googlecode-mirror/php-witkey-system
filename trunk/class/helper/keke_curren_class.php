@@ -29,7 +29,10 @@ class keke_curren_class {
 	 * 获取货币列表
 	 */
 	public static function get_curr_list($code='*'){
-		return self::$_currencies = Keke::get_table_data ($code, 'witkey_currencies', '', '', '', '', 'code', 3600 );
+		//return self::$_currencies = Keke::get_table_data ($code, 'witkey_currencies', '', '', '', '', 'code', 3600 );
+		$res = DB::select()->from('witkey_currencies')->cached(99999,'keke_currencies')->execute();
+		return Keke::get_arr_by_key($res,'code');
+		
 	}
 	/**
 	 * 货币显示

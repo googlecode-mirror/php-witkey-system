@@ -949,7 +949,7 @@ class Keke_Request  {
 		{
 			$response = $this->create_response();
 		}
-		 
+		//var_dump($code,$url,$referrer);die; 
 		echo $response->status($code)
 			->headers('Location', $url)
 			->headers('Referer', $referrer)

@@ -123,7 +123,7 @@ $lang = array (
 		'auto_location_later'=>'秒后将自动跳转',
 		'click_jump'=>'如您的浏览器不能跳转，请点击', 
 		/**auth_config_inc.php**/	
-		'bank_auth'=>'银行认证',
+		'bank_auth'=>'银行卡认证',
 		'email_auth'=>'邮箱认证',
 		'enterprise_auth'=>'企业认证',
 		'mobile_auth'=>'手机认证',

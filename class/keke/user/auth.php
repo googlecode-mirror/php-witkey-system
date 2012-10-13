@@ -142,14 +142,14 @@ class Keke_user_auth{
 	 */
 	public static function del($uid,$auth_code){
 		if(is_numeric($uid)){
-			  DB::delete('witkey_auth_'.$auth_code)->where("uid='$uid' and auth_status != 1")->execute();
+			$res= DB::delete('witkey_auth_'.$auth_code)->where("uid='$uid' and auth_status != 1")->execute();
 		}elseif(is_array($uid)){
 			$size = sizeof($uid);
 			for($i=0;$i<$size;$i++){
-				 DB::delete('witkey_auth_'.$auth_code)->where("uid='$uid[$i]' and auth_status != 1")->execute();
+				$res += DB::delete('witkey_auth_'.$auth_code)->where("uid='$uid[$i]' and auth_status != 1")->execute();
 			}
 		}
-		return TRUE;
+		return (bool)$res;
 	}
 	/**
 	 * 企业认证时更新用户角色

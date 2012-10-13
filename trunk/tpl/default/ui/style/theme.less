@@ -1,4 +1,5 @@
 @import 'base.less';
+@import 'ui.less';
 @import 'boxs.less';
 @import 'grid.less';
 @theme_bg:  #EAEAEA url(../images/os_x_lion_galaxy_hd.jpg) fixed center no-repeat;
@@ -80,7 +81,7 @@ iframe{ width: 100%; height: 500px;}
 	/* 段落
 		-----------------------------------------*/
 		p { 
-			margin-bottom: 18px; 
+			/*margin-bottom: 18px;*/ 
 			&.intro { 
 				color: #888; 
 				font-size: 16px; 
@@ -270,7 +271,7 @@ iframe{ width: 100%; height: 500px;}
 	left:0;
 	top:0;
 	z-index:9998;
-	display:none;
+	
 
 	.box{
 		.winbox;
@@ -278,10 +279,29 @@ iframe{ width: 100%; height: 500px;}
 		position:absolute;
 		left: 50%;
 		top: 50%;
-		width: 400px;
+		width: 450px;
 		
 		.box_detail{
-			display:none;
+		
+			
+			&.success{
+				.detail{padding-left:80px;}
+				.icon{.fl_l; width:48px; height:48px; margin:20px 10px; background:url(../img/succeed.png) no-repeat;}
+			}
+			&.warning{
+				.detail{padding-left:80px;}
+				.icon{.fl_l; width:48px; height:48px; margin:20px 10px;  background:url(../img/warning.png) no-repeat;}
+			}
+			&.error{
+				.detail{padding-left:80px;}
+				.icon{.fl_l; width:48px; height:48px; margin:20px 10px;  background:url(../img/error.png) no-repeat;}
+			}
+			&.confirm{
+				.detail{padding-left:80px;}
+				.icon{.fl_l; width:48px; height:48px; margin:20px 10px;  background:url(../img/question.png) no-repeat;}
+			}
+			
+			
 		}
 		
 	}

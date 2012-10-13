@@ -116,12 +116,7 @@ class Control_admin_finance_withdraw extends Controller{
 										continue;
 									}
 					
-// 									$v_arr = array('网站名称'=>$_K['sitename'],'提现方式'=>$pay_way[$withdraw_info['pay_type']],'帐户'=>$withdraw_info['pay_account'],'提现金额'=>$withdraw_cash);
-// 									keke_msg_class::notify_user($withdraw_info ['uid'],$withdraw_info ['username'],'draw_success',$_lang['withdraw_success'],$v_arr);
-					
-// 									$feed_arr = array ("feed_username" => array ("content" => $withdraw_info ['username'], "url" => "index.php?do=space&member_id=".$space_info['uid']), "action" => array ("content" => $_lang['withdraw'], "url" => "" ), "event" => array ("content" =>$_lang['withdraw_le'].$withdraw_info['withdraw_cash']. $_lang['yuan'],"url" => "" ) );
-// 									Keke::save_feed ( $feed_arr, $user_space_info ['uid'], $user_space_info ['username'], 'withdraw' );
-			
+	
 								}
 			
 								Keke::admin_system_log ( $_lang['audit_withdraw_apply'] . $ids );
@@ -160,8 +155,6 @@ class Control_admin_finance_withdraw extends Controller{
 	
 	//提现审核通过
 	function action_pass(){
-		
-		
 		if ($_GET['withdraw_id']) {
 			$where = 'withdraw_id = '.$_GET['withdraw_id'];
 			//获取提现信息
@@ -190,9 +183,9 @@ class Control_admin_finance_withdraw extends Controller{
 			Keke_finance::cash_out($withdraw_info['uid'], $withdraw_info[''], 'withdraw');
 			$tar_content = "帐户:".$withdraw_info['pay_account']." 提现成功！提现金额为：".$withdraw_info['withdraw_cash'].",实际获得：".keke_finance_class::get_to_cash($withdraw_info['withdraw_cash']); //提现内容
 			//站内信
-			//keke_msg_class::send_private_message($_lang['fail_and_check_you_account'], $tar_content, $uid, $username);
+			
 			Keke::admin_system_log ( $_lang['audit_withdraw_apply'] . $withdraw_id );
-			$res and Keke::admin_show_msg('系统提示',BASE_URL."/index.php/admin/finance_withdraw/index",3,'提交成功','success');
+			$res and Keke::show_msg('系统提示',"admin/finance_withdraw/index",3,'提交成功','success');
 		}
 		
 	}
@@ -221,9 +214,9 @@ class Control_admin_finance_withdraw extends Controller{
 			$tar_content  = "帐户:".$withdraw_info['pay_account']." 提现失败！"; //提现内容
 			keke_msg_class::send_private_message($_lang['fail_and_check_you_account'], $tar_content, $uid, $username);
 			Keke::admin_system_log ( $_lang['delete_audit_withdraw'] . $withdraw_id );
-			Keke::admin_show_msg ( $_lang['delete_audit_withdraw_success'], BASE_URL.'index.php/admin/finance_withdraw',3,'','success' );
+			Keke::show_msg ( $_lang['delete_audit_withdraw_success'], 'admin/finance_withdraw','success' );
 		}else{
-			Keke::admin_show_msg('系统提示',BASE_URL.'index.php/admin/finance_withdraw',3,'记录不存在','warning');
+			Keke::show_msg('记录不存在','admin/finance_withdraw','warning');
 		}
 	}
 }

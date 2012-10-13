@@ -32,23 +32,6 @@ class Control_admin_config_skill extends Controller{
 		$indus_show_arr = Keke::get_arr_by_key($indus_option_arr,'indus_id');
 		
 		
-/* 		
- 		$temp_arr = array ();
-        foreach ($indus_option_arr as $v){
-			$indus_option_arr = $v;
-		}
-		Keke::get_tree ( $indus_option_arr, $temp_arr,"option",$indus_option_arr[indus_pid]);
-		var_dump($temp_arr);die;
-		$indus_option_arr = Keke::get_arr_by_key($indus_option_arr,'indus_name');
-		$indus_option_arr = $temp_arr;
-		$indus_option_arr = $indus_option_arr[0];
-		foreach ($indus_option_arr as $v){
-			var_dump($v[indus_name]);
-		}
-		die;
-		var_dump($indus_option_arr);die; */
-		
-		
     	require Keke_tpl::template("control/admin/tpl/config/skill");
     }
     function action_add(){

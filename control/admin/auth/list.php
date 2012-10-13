@@ -27,7 +27,7 @@ class Control_admin_auth_list extends Controller{
 		global $_lang;
 		$auth_dir = $_POST['auth_dir'];
 		if ($auth_dir) {
-			$base_uri = 'index.php/admin/auth_list';
+			$base_uri = 'admin/auth_list';
 			$file_path = S_ROOT . "control/auth/" . $auth_dir . "/init_config.php";
 			if(file_exists ( $file_path )){
 				$menu_arr = array();
@@ -76,7 +76,7 @@ class Control_admin_auth_list extends Controller{
 		$value = array($auth_open);
 		//改变auth_open状态
 		DB::update('witkey_auth_item')->set($columns)->value($value)->where($where)->execute();
-		keke::show_msg($_lang['submit_success'],"index.php/admin/auth_list","success");
+		keke::show_msg($_lang['submit_success'],"admin/auth_list","success");
 		
 	}
 	/**
@@ -112,7 +112,7 @@ class Control_admin_auth_list extends Controller{
 		$auth_code = $_POST['auth_code'];
 		$where = " auth_code = '{$_POST['auth_code']}'";
 		Model::factory('witkey_auth_item')->setData($array)->setWhere($where)->update();
-		Keke::show_msg($_lang['submit_success'],'index.php/admin/auth_list/edit?auth_code='.$auth_code,'success');
+		Keke::show_msg($_lang['submit_success'],'admin/auth_list/edit?auth_code='.$auth_code,'success');
 	}
 	/**
 	 * 删除认证项

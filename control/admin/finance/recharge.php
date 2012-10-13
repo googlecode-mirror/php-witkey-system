@@ -89,7 +89,7 @@ class Control_admin_finance_recharge extends Controller{
 			$order_info = $order_info[0];
 			
 			if ($order_info [order_status] == 'ok'){
-				Keke::admin_show_msg($_lang['payment_has_been_success_no_need_repeat'], BASE_URL.'index.php/admin/finance_recharge',3,'','warning');
+				Keke::admin_show_msg($_lang['payment_has_been_success_no_need_repeat'], 'admin/finance_recharge',3,'','warning');
 			}
 			//用户信息
 			//$user_info = keke_user_class::get_user_info($order_info ['uid']);
@@ -102,7 +102,7 @@ class Control_admin_finance_recharge extends Controller{
 			//充值日志
 			Keke::admin_system_log ( $_lang['confirm_payment_recharge'].$_GET['order_id']);
 			//成功跳转提示
-			Keke::show_msg('付款成功',BASE_URL.'/index.php/admin/finance_recharge','success');
+			Keke::show_msg('付款成功','admin/finance_recharge','success');
 		}
 	}
 

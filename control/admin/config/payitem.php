@@ -63,7 +63,7 @@ class Control_admin_config_payitem extends Controller{
 			//更新数据库
 			Model::factory('witkey_payitem')->setData($array)->setWhere($where)->update();
 		}
-		Keke::show_msg($_lang['submit_success'],'index.php/admin/config_payitem/add?item_code='.$item_code,'success');		
+		Keke::show_msg($_lang['submit_success'],'admin/config_payitem/add?item_code='.$item_code,'success');		
 	}
 	/**
 	 * 删除图片时获取图片对应的fid
@@ -96,7 +96,7 @@ class Control_admin_config_payitem extends Controller{
 		//改变状态
 		keke_payitem_class::payitem_edit ( $item_id, array ('is_open' => $status ) );
 		
-		Keke::show_msg($_lang['submit_success'],'index.php/admin/config_payitem?type='.$type,'success');
+		Keke::show_msg($_lang['submit_success'],'admin/config_payitem?type='.$type,'success');
 	}
 	/**
 	 * 安装增值项
@@ -104,7 +104,7 @@ class Control_admin_config_payitem extends Controller{
 	function action_install(){
 		global $_lang;
 		$res = keke_payitem_class::payitem_install ( $_POST['txt_item_code'] );
-		$url = "index.php/admin/config_payitem";
+		$url = "admin/config_payitem";
 		$res and Keke::show_msg ($_lang['payitem_install_success'], $url,'success' ) ;
 	}
 	/**

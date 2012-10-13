@@ -17,7 +17,7 @@ class Control_admin_user_group extends Controller{
 		global $_K,$_lang;
 		//一级标题
 		$menus_arr = keke_admin_class::get_admin_menu();
-// 		var_dump($menus_arr['menu']);die;
+ 
 		//权限中加黑部分语言包
 		$menu_arr = array (
 				'config' => $_lang['global_config'],
@@ -54,7 +54,7 @@ class Control_admin_user_group extends Controller{
 		if($_POST['txt_groupname']){
 			$txt_groupname = $_POST['txt_groupname'];
 		}else{
-			Keke::show_msg('系统提示','index.php/admin/user_group/add','组名不能为空！！','warning');
+			Keke::show_msg('组名不能为空！！','admin/user_group/add','warning');
 		}
 		//需要进行存储的字段
 		$array = array('group_id'=>$_POST['group_id'],
@@ -65,11 +65,11 @@ class Control_admin_user_group extends Controller{
 		if ($_POST['is_submit']){
 			//编辑情况下提交，更新
 			Model::factory('witkey_member_group')->setData($array)->setWhere('group_id = '.$_POST['is_submit'])->update();
-			Keke::show_msg('系统提交','/index.php/admin/user_group/add?group_id='.$_POST['is_submit'],'编辑成功','success');
+			Keke::show_msg('编辑成功','admin/user_group/add?group_id='.$_POST['is_submit'],'success');
 		}else{
 			//添加情况下提交，直接插入
 			Model::factory('witkey_member_group')->setData($array)->create();
-			Keke::show_msg('系统提交','index.php/admin/user_group/add','提交成功','success');
+			Keke::show_msg('提交成功','admin/user_group/add','success');
 		}
 	}
 	/*
@@ -84,25 +84,3 @@ class Control_admin_user_group extends Controller{
 	}
 }
 
-
-/* Keke::admin_check_role ( 13 );
-
-$menuset_arr = keke_admin_class::get_admin_menu ();
-$membergroup_obj = new Keke_witkey_member_group_class ();
-
-//列表模式
-$grouplist_arr = $membergroup_obj->query_keke_witkey_member_group ();
-//添加-编辑模式
-
-if ($op == 'del') {
-	$editgid = $editgid ? $editgid : Keke::admin_show_msg ( $_lang['param_error'], "index.php?do=user&view=back&type=group",3,'','warning');
-	$membergroup_obj->setWhere ( "group_id='{$editgid}'" );
-	$membergroup_obj->del_keke_witkey_member_group ();
-	Keke::admin_system_log ( $_lang['delete_user_group']."$groupinfo_arr[groupname]" );
-	Keke::admin_show_msg ( $_lang['operate_success'], "index.php?do=user&view=group_list", 3 ,'','success');
-}
-
-
-require $template_obj->template ( 'control/admin/tpl/admin_user_group_list' );
- */
- 

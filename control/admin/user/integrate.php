@@ -66,7 +66,7 @@ class Control_admin_user_integrate extends Controller{
 	    //如果非ok就是通讯失败
 		if($status != 'UC_STATUS_OK') {
 			//uc通讯失败
-			Keke::show_msg('系统提示','index.php/admin/user_integrate/uc',$_lang['uc_communication_fail'],'warning');
+			Keke::show_msg($_lang['uc_communication_fail'],'admin/user_integrate/uc','warning');
 		} else {
 	        //通讯成功
 	        //数据库编码
@@ -74,10 +74,10 @@ class Control_admin_user_integrate extends Controller{
 			$ucdbcharset = strtolower($settingnew['UC_DBCHARSET'] ? str_replace('-', '', $settingnew['UC_DBCHARSET']) : $settingnew['UC_DBCHARSET']);
 			//uc客户端版本与服务端版本比较不一致，错误提示
 			if(UC_CLIENT_VERSION > $ucversion) {
-				Keke::show_msg('系统提示','index.php/admin/user_integrate/uc',$_lang['uc_different_version'],'warning');
+				Keke::show_msg($_lang['uc_different_version'],'admin/user_integrate/uc','warning');
 			//比较ucenter的数据库编码与本地的数据库编码
 			} elseif($ucdbcharset != $dbcharset) {
-				Keke::show_msg('系统提示','index.php/admin/user_integrate/uc',$_lang['uc_different_coding'],'warning');
+				Keke::show_msg($_lang['uc_different_coding'],'admin/user_integrate/uc','warning');
 			}
 		    //构造app添加的请求参数
 			$postdata = "m=app&a=add
@@ -93,15 +93,15 @@ class Control_admin_user_integrate extends Controller{
 			$ucconfig = uc_fopen($ucapi.'/index.php', 500, $postdata, '', 1, $ucip);
 	        //返回的值为空，则添加失败
 			if(empty($ucconfig)) {
-				Keke::show_msg('系统提示','index.php/admin/user_integrate/uc',$_lang['uc_app_fail_to_add'],'warning');
+				Keke::show_msg($_lang['uc_app_fail_to_add'],'admin/user_integrate/uc','warning');
 			} elseif($ucconfig == '-1') {
 				//负1为管理密码错误
-				Keke::show_msg('系统提示','index.php/admin/user_integrate/uc',$_lang['uc_error_author_password'],'warning');
+				Keke::show_msg($_lang['uc_error_author_password'],'admin/user_integrate/uc','warning');
 			} else {
 				list($appauthkey, $appid) = explode('|', $ucconfig);
 				if(empty($appauthkey) || empty($appid)) {
 					//添加无效
-					Keke::show_msg('系统提示','index.php/admin/user_integrate/uc',$_lang['uc_app_invalid_to_add'],'success');
+					Keke::show_msg('系统提示','admin/user_integrate/uc',$_lang['uc_app_invalid_to_add'],'success');
 				}
 			}
 		}
@@ -119,7 +119,7 @@ class Control_admin_user_integrate extends Controller{
 		Cache::instance()->del('keke_config');
 		//系统日志
 		Keke::admin_system_log($_lang['uc_integrate_log']);
-		Keke::show_msg('系统提示',"index.php/admin/user_integrate/uc",$_lang['uc_integrate_success'],'success');
+		Keke::show_msg($_lang['uc_integrate_success'],"admin/user_integrate/uc",'success');
 		
 	}
 	/**
@@ -145,7 +145,7 @@ class Control_admin_user_integrate extends Controller{
 		Keke::admin_system_log($_lang['pw_integrate_log']);
 		//更新缓存
 		Cache::instance()->del('keke_config');
-		Keke::show_msg('系统提示',"index.php/admin/user_integrate/pw",$_lang['phpwind_integrate_success'],'success');
+		Keke::show_msg($_lang['phpwind_integrate_success'],"admin/user_integrate/pw",'success');
 		
 	 		
 		 
@@ -159,7 +159,7 @@ class Control_admin_user_integrate extends Controller{
 		->execute();
 		//更新系统缓存
 		Cache::instance()->del('keke_config');
-		Keke::show_msg('系统提示',"index.php/admin/user_integrate",$_lang['success_uninstall'],'success');
+		Keke::show_msg($_lang['success_uninstall'],"admin/user_integrate",'success');
 	}
 	
 }

@@ -13,7 +13,7 @@ class Control_admin_tool_tpl extends Controller{
 	private  $_uri;
 	
 	function before(){
-		$this->_uri = "index.php/admin/tool_tpl";
+		$this->_uri = "admin/tool_tpl";
 	}
 	function action_index(){
 		global $_K,$_lang;
@@ -43,7 +43,7 @@ class Control_admin_tool_tpl extends Controller{
 		global  $_K,$_lang;
 		//上传路径为空
 		if (! $txt_newtplpath=$_POST['txt_newtplpath']) {
-			Keke::show_msg ( $_lang ['operate_notice'], $this->_uri,$_lang['not_enter_dir'],'warning' );
+			Keke::show_msg ( $_lang['not_enter_dir'], $this->_uri,'warning' );
 		}
 		//模板配置文件存在
 		if (file_exists ( S_ROOT . "./tpl/$txt_newtplpath/modinfo.txt" )) {
@@ -59,14 +59,14 @@ class Control_admin_tool_tpl extends Controller{
 			}
 			//上传的路径要与modfino的路径一至，否则退出
 			if($txt_newtplpath!=$modinfo['tpl_path']){
-			 Keke::show_msg($_lang ['operate_notice'],$this->_uri,$_lang['tpl_path_do_not_match']."tpl/$txt_newtplpath/modinfo.txt",'warning');
+			 Keke::show_msg($_lang['tpl_path_do_not_match']."tpl/$txt_newtplpath/modinfo.txt",$this->_uri,'warning');
 			}
 		
 // 			$config_tpl_obj->setWhere ( "tpl_path ='$txt_newtplpath'" );
 			$tpl_obj = Model::factory('witkey_template');
 			//判断当前模板是否有安装过,否则退出
 			if ($tpl_obj->setData("tpl_path ='$txt_newtplpath'")->count()) {
-				Keke::show_msg ( $_lang ['operate_notice'], $this->_uri ,$_lang['tpl_alerady_install'],'warning' );
+				Keke::show_msg ( $_lang['tpl_alerady_install'], $this->_uri ,'warning' );
 			}
 		    $array = array('develop'=>$modinfo ['develop'],
 		    		    'on_time'=>time(),
@@ -77,9 +77,9 @@ class Control_admin_tool_tpl extends Controller{
 		    		);
 		    //保存提交的数据
 			$tpl_obj->setData($array)->create();
-			Keke::admin_show_msg ( $_lang ['operate_notice'], $this->_uri,$_lang['tpl_install_success'],'success' );
+			Keke::show_msg ( $_lang['tpl_install_success'], $this->_uri,'success' );
 		} else {
-			Keke::admin_show_msg ($_lang ['operate_notice'], $this->_uri,$_lang['tpl_not_exists_or_configinfo_err'],'warning' );
+			Keke::show_msg ($_lang['tpl_not_exists_or_configinfo_err'], $this->_uri,'warning' );
 		}
 	}
 	/**
@@ -129,7 +129,7 @@ class Control_admin_tool_tpl extends Controller{
 		$res = Model::factory('witkey_template')->setWhere('tpl_id=' . intval ( $delid ))->del();
 		if ($res) {
 			Cache::instance()->del("keke_template" );
-			Keke::show_msg ( $_lang ['operate_notice'], $this->_uri,$_lang['tpl_config_unloading_success'], 'success' );
+			Keke::show_msg ( $_lang['tpl_config_unloading_success'],$this->_uri, 'success' );
 		}
 	}
 	/**
@@ -155,9 +155,9 @@ class Control_admin_tool_tpl extends Controller{
 		$file_path =  "/data/backup/$filename";
 		//zip文件存在则备分成功，否则备份失败
 		if(file_exists(S_ROOT.$file_path)){
-			Keke::show_msg($_lang['operate_notice'],$this->_uri,$_lang['tpl_backup_success'],'success');
+			Keke::show_msg($_lang['tpl_backup_success'],$this->_uri,'success');
 		}else{
-			Keke::show_msg($_lang['operate_notice'],$this->_uri,$_lang['tpl_backup_fail'],'warning');
+			Keke::show_msg($_lang['tpl_backup_fail'],$this->_uri,'warning');
 		}
 	}
 	
@@ -200,150 +200,11 @@ class Control_admin_tool_tpl extends Controller{
 			$tplname = $_POST['tplname'];
 			$tname =$_POST['tname'];
 			if (! is_writable ( $filename )) {
-				Keke::show_msg ($_lang ['operate_notice'],"index.php/admin/tool_tpl/eidt?tplname=$tplname&tname=$tname",$_lang['file'] . $filename . $_lang['can_not_write_please_check'], 'warning' );
+				Keke::show_msg ($_lang['file'] . $filename . $_lang['can_not_write_please_check'],"admin/tool_tpl/eidt?tplname=$tplname&tname=$tname", 'warning' );
 			}
 			Keke_tpl::swritefile ( $filename, htmlspecialchars_decode ( Keke::k_stripslashes ( $_POST['txt_code_content'] ) ) );
 			Keke::admin_system_log ( $_lang['edit_template'] . $tplname . '/' . $tname );
-			Keke::show_msg ($_lang ['operate_notice'],"index.php/admin/tool_tpl/edit?tplname=$tplname&tname=$tname", $_lang['tpl_edit_success'],'success',2 );
+			Keke::show_msg ($_lang['tpl_edit_success'],"admin/tool_tpl/edit?tplname=$tplname&tname=$tname", 'success' );
 		}
-	}
-		
-	
-}
-
-/* Keke::admin_check_role ( 28 );
-
-$config_tpl_obj = new Keke_witkey_template_class ();
-
-$tpl_arr = $config_tpl_obj->query_keke_witkey_template ();
-$skins    = get_skin_type();
-function get_skin_type(){
-	$skins = array();
-	if($fp = opendir(S_ROOT.SKIN_PATH.'/theme')){
-		while($skin=readdir($fp)){
-			$skin = trim($skin,'.|svn');
-			$skin&&$skins[$skin] = $skin.'_skin';
-		}
-	}
-	return array_filter($skins);
-}
-
-if ($sbt_edit) {
-	if ($sbt_edit == $_lang['use']) {
-		$config_tpl_obj->setWhere ( 'tpl_id=' . $rdo_is_selected );
-		$config_tpl_obj->setIs_selected ( 1 );
-		$res = $config_tpl_obj->edit_keke_witkey_template ();
-
-		if(is_array($skin)&&!empty($skin)){
-			foreach($skin as $k=>$v){
-				Dbfactory::execute(sprintf(" update %switkey_template set tpl_pic ='%s' where tpl_title='%s'",TABLEPRE,$v,$k));
-				//$_SESSION['theme']=$v;
-			}
-		}
-		$config_tpl_obj = new Keke_witkey_template_class ();
-		$config_tpl_obj->setWhere ( 'tpl_id!=' . $rdo_is_selected );
-		$config_tpl_obj->setIs_selected ( 2 );
-		$res = $config_tpl_obj->edit_keke_witkey_template ();
-		$config_tpl_obj->setWhere ( " is_selected =1 limit 1 " );
-		$config_tpl_arr = $config_tpl_obj->query_keke_witkey_template ();
-		if ($res) {
-			$Keke->_cache_obj->del ( "keke_witkey_template" );
-			$Keke->_cache_obj->set ( "keke_witkey_template", $config_tpl_arr );
-			Keke::admin_show_msg ( $_lang['tpl_config_set_success'], 'index.php?do=config&view=tpl',3,'','success' );
-		}
-	}
-	if ($sbt_edit == $_lang['from_dir_install'] || $sbt_edit == 'uploadreturn') {
-		if (! $txt_newtplpath) {
-			Keke::admin_show_msg ( $_lang['not_enter_dir'], 'index.php?do=config&view=tpl',3,'','warning' );
-		}
-
-		if (file_exists ( S_ROOT . "./tpl/$txt_newtplpath/modinfo.txt" )) {
-			$file_obj = new keke_file_class ();
-			$modinfo = $file_obj->read_file ( S_ROOT . "./tpl/$txt_newtplpath/modinfo.txt" );
-			$mods = explode ( ';', $modinfo );
-			$modinfo = array ();
-			foreach ( $mods as $m ) {
-				if (! $m)
-					continue;
-				$m1 = explode ( '=', trim ( $m ) );
-				$modinfo [$m1 ['0']] = $m1 ['1'];
-			}
-			$txt_newtplpath!=$modinfo['tpl_path'] and Keke::admin_show_msg($_lang['tpl_path_do_not_match']."tpl/$txt_newtplpath/modinfo.txt",'index.php?do=config&view=tpl',3,'','warning');
-				
-			$config_tpl_obj->setWhere ( "tpl_path ='$txt_newtplpath'" );
-			if ($config_tpl_obj->count_keke_witkey_template ()) {
-				Keke::admin_show_msg ( $_lang['tpl_alerady_install'], 'index.php?do=config&view=tpl',3,'','warning' );
-			}
-				
-			$config_tpl_obj->setDevelop ( $modinfo ['develop'] );
-			$config_tpl_obj->setOn_time ( time () );
-			$config_tpl_obj->setTpl_path ( $txt_newtplpath );
-			$config_tpl_obj->setTpl_title ( $modinfo ['tpl_title'] );
-			$config_tpl_obj->setTpl_desc ( $modinfo ['tpl_desc'] );
-			$config_tpl_obj->setIs_selected(1);
-			$config_tpl_obj->create_keke_witkey_template ();
-			Keke::admin_show_msg ( $_lang['tpl_install_success'], 'index.php?do=config&view=tpl',3,'','success' );
-		} else {
-			Keke::admin_show_msg ( $_lang['tpl_not_exists_or_configinfo_err'], 'index.php?do=config&view=tpl',3,'','warning' );
-		}
-	}
-
-	if ($sbt_edit == $_lang['local_upload']) {
-		$upload_obj = new keke_upload_class ( UPLOAD_ROOT, array ("zip" ), UPLOAD_MAXSIZE );
-		$files = $upload_obj->run ( 'uploadtplfile', 1 ); //上传文件
-		if ($files != 'The uploaded file is Unallowable!') {
-			//获得文件名
-			$mod_file = $files ['0'] ['saveName'];
-			if ($mod_file) {
-				$mod_file = "data/uploads/" . UPLOAD_RULE . $mod_file;
-			}
-		}
-
-		$file_obj = new keke_file_class ();
-		$dirs = array ();
-		$fso = opendir ( "../../tpl" );
-		while ( $flist = readdir ( $fso ) ) {
-			if (is_dir ( "../../tpl/" . $flist )) {
-				$dirs [$flist] = $flist;
-			}
-		}
-		closedir ( $fso );
-
-		include '../../lib/helper/keke_zip_class.php';
-		$zip_obj = new zip_file ( "../../" . $mod_file );
-		$zip_obj->set_options ( array ('inmemory' => 1 ) );
-		$zip_obj->extractZip ( "../../" . $mod_file, '../../' );
-		unlink ( "../../" . $mod_file );
-
-		$fso = opendir ( "../../tpl" );
-		while ( $flist = readdir ( $fso ) ) {
-			if (is_dir ( "../../tpl/" . $flist )) {
-				if (! $dirs [$flist]) {
-					$newaddfile = $flist;
-					break;
-				}
-			}
-		}
-	}
-
-	if (! $newaddfile) {
-		Keke::admin_show_msg ( $_lang['tpl_upload_success'], 'index.php?do=config&view=tpl',3,'','success' );
-	} else {
-		Keke::admin_show_msg ( $_lang['tpl_upload_success_install'], 'index.php?do=config&view=tpl&sbt_edit=uploadreturn&txt_newtplpath=' . $newaddfile,3,'','success' );
-	}
-
-}
-
-if ($delid) {
-	$config_tpl_obj->setWhere ( 'tpl_id=' . intval ( $delid ) );
-	$res = $config_tpl_obj->del_keke_witkey_template ();
-	if ($res) {
-
-		$Keke->_cache_obj->del ( "keke_witkey_template" );
-		Keke::admin_show_msg ( $_lang['tpl_config_unloading_success'], 'index.php?do=config&view=tpl',3,'','warning' );
 	}
 }
-
-require $template_obj->template ( 'control/admin/tpl/admin_config_' . $view ); */
-
-

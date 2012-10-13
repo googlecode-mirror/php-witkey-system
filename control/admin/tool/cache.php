@@ -6,13 +6,13 @@
  * @version v 2.0
  * 2010-5-19下午09:25:13
  */
-class Control_admin_cache extends Controller{
+class Control_admin_tool_cache extends Controller{
     
 	//初始化页面 
 	function action_index(){
 		global $_K,$_lang;
 		
-		require Keke_tpl::template('control/admin/tpl/cache');
+		require Keke_tpl::template('control/admin/tpl/tool/cache');
 	}
 	//清除缓存
 	function action_del(){
@@ -37,7 +37,7 @@ class Control_admin_cache extends Controller{
 			Keke::echojson(1,1);
 		}else{
 		 //普通表单请求响应	
-			Keke::show_msg($msg,'index.php/admin/cache','success');
+			Keke::show_msg($msg,'admin/tool_cache','success');
 		}
 		
 		

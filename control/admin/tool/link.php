@@ -5,7 +5,7 @@
  *
  */
 
-class Control_admin_link extends Controller {
+class Control_admin_tool_link extends Controller {
 	
 	/**
 	 * 友链管理初始化页面
@@ -23,7 +23,7 @@ class Control_admin_link extends Controller {
 		//总记录数,分页用的，你不定义，数据库就是多查一次的。为了少个Sql语句，你必须要写的，亲!
 		$count = intval($_GET['count']);
 		//基本uri,当前请求的uri ,本来是能通过Rotu类可以得出这个uri,为了程序灵活点，自己手写好了
-		$base_uri = BASE_URL."/index.php/admin/link";
+		$base_uri = BASE_URL."/index.php/admin/too_link";
 		
 		//添加编辑的uri,add这个action 是固定的
 		$add_uri =  $base_uri.'/add';
@@ -40,14 +40,8 @@ class Control_admin_link extends Controller {
 		//分页数据
 		$pages = $data_info['pages'];
 		
-		//查询当前的Sql
-		//var_dump(Database::instance()->get_query_list());
-		//查询当的sql数量
-		//echo Database::instance()->get_query_num();
-		//$querys = Keke::utftogbk( Database::instance()->get_query_list());
-// 		var_dump($querys);die;
-		
-		require Keke_tpl::template('control/admin/tpl/link');
+ 		
+		require Keke_tpl::template('control/admin/tpl/tool/link');
 	}
 	
 	//添加与编辑初始化
@@ -70,7 +64,7 @@ class Control_admin_link extends Controller {
 			$mode = 2;
 		}
 		//加载模板，这有点费J8话,地球人都懂的
-		require Keke_tpl::template('control/admin/tpl/link_add');
+		require Keke_tpl::template('control/admin/tpl/tool/link_add');
 	}
 	/**
 	 * 保存模板上提交到的数据到数据库中
@@ -99,11 +93,11 @@ class Control_admin_link extends Controller {
 		if($_POST['hdn_link_id']){
 			Model::factory('witkey_link')->setData($array)->setWhere("link_id = '{$_POST['hdn_link_id']}'")->update();
 			//执行完了，要给一个提示，这里没有对执行的结果做判断，是想偷下懒，如果执行失败的话，肯定给会报红的。亲!
-			Keke::show_msg('提交成功','index.php/admin/link/add?link_id='.$_POST['hdn_link_id'],'success');
+			Keke::show_msg('提交成功','admin/tool_link/add?link_id='.$_POST['hdn_link_id'],'success');
 		}else{
 		 //这也当然就是添加(insert)到数据库中	
 			Model::factory('witkey_link')->setData($array)->create();
-			Keke::show_msg('提交成功','index.php/admin/link/add','success');
+			Keke::show_msg('提交成功','admin/tool_link/add','success');
 		}
 		
 		

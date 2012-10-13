@@ -1,8 +1,8 @@
 <!--{include control/admin/tpl/admin_header}-->
-<div class="page_title"><h1>{$_lang['realname_auth_list']}</h1></div>
+<div class="page_title"><h1>{$_lang['enterprise_auth_list']}</h1></div>
 <!--页头结束-->
  <div class="box search p_relative" id="detail">
-<form action="{BASE_URL}/index.php/auth/realname_admin_list" method="get">
+<form action="{BASE_URL}/index.php/auth/enterprise_admin_list" method="get">
 <table class="detail"  cellspacing="0" cellpadding="0">    		
 	<tbody>
 		<tr>
@@ -42,22 +42,25 @@
   <tr>
   	<th width="15"><input type="checkbox" id="checkbox"  onclick="checkall();"></th>
     <th>{$_lang['username']}</th>
-	<th>{$_lang['realname']}</th>
-	<th>{$_lang['id_card']}</th>
-	<th>{$_lang['id_card_copy']}</th>
+	<th>{$_lang['company']}</th>
+ 	<th>{$_lang['register_num']}</th>
+	<th>{$_lang['licence_pic']}</th>
+	
 	<th>{$_lang['auth_cash']}</th>
 	<th>{$_lang['validity']}</th>
 	<th>{$_lang['auth_status']}</th>
 	<th>{$_lang['operate']}</th>
+ 
   </tr>
 <tbody>
 {loop $list_arr $key $v}
 <tr class="item">
 	<td><input type="checkbox" name="ckb[]" id="cbk_selected" value="{$v['uid']}"></td>
 	<td>{$v['username']}</td>
-	<td>{$v['realname']}</td>
-	<td>{$v['id_card']}</td>
-	<td><img src="{BASE_URL}/{$v['id_pic']}" width="40" height="40" onclick="art.dialog.open(this.src).title('看图')"></td>
+	<td><a href="$v['url']" target="_blank">{$v['company']}</a></td>
+	<td>{$v['licen_num']}</td>
+	<td><img src="{BASE_URL}/{$v['licen_pic']}" onclick="art.dialog.open(this.src).title('看图')" width="40" height="40"></td>
+ 
 	<td class="wraphide">{if $v['cash']>0}<font color="#ff7700">{c:$v['cash']}</font>{else}{$_lang['free']}{/if}</td>
 	<td>{if $v['start_time']==$v['end_time']}{$_lang['lifetime_validity']}{else}{date('Y-m-d',$v['start_time'])}{$_lang['to']}{date('Y-m-d',$v['end_time'])}{/if}</td>
 	<td>

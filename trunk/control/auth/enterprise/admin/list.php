@@ -5,12 +5,12 @@
  * @version 2.2
    2012-10-11
  */
-class Control_auth_realname_admin_list extends Controller {
+class Control_auth_enterprise_admin_list extends Controller {
 	protected  $_page;
 	protected  $_uri ;
 	function before(){
 		$this->_page = $_GET['page'];
-		$this->_uri = 'auth/realname_admin_list?page='.$this->_page;
+		$this->_uri = 'auth/enterprise_admin_list?page='.$this->_page;
 	}
 	/**
 	 * 初始化后台列表页
@@ -19,13 +19,13 @@ class Control_auth_realname_admin_list extends Controller {
 	function action_index(){
 	   global $_K,$_lang;
  
-	   $fields = ' `r_id`,`uid`,`username`,`realname`,`id_card`,`id_pic`,`cash`,`start_time`,`auth_status`,`end_time`';
+	   $fields = ' `r_id`,`uid`,`username`,`company`,`licen_num`,`licen_pic`,`run_years`,`url`,`cash`,`staff_num`,`start_time`,`auth_status`,`end_time`';
 	   //要查询的字段,在模板中显示用的
-	   $query_fields = array('r_id'=>$_lang['id'],'realname'=>$_lang['name'],'start_time'=>$_lang['time']);
+	   $query_fields = array('r_id'=>$_lang['id'],'company'=>$_lang['name'],'start_time'=>$_lang['time']);
 	   //总记录数,分页用的，你不定义，数据库就是多查一次的。为了少个Sql语句，你必须要写的，亲!
 	   $count = intval($_GET['count']);
 	   //基本uri,当前请求的uri ,本来是能通过Rotu类可以得出这个uri,为了程序灵活点，自己手写好了
-	   $base_uri = BASE_URL."/index.php/auth/realname_admin_list";
+	   $base_uri = BASE_URL."/index.php/auth/enterprise_admin_list";
 	   //添加编辑的uri,add这个action 是固定的
 	   $add_uri =  $base_uri.'/add';
 	   //删除uri,del也是一个固定的，写成其它的，你死定了
@@ -36,27 +36,20 @@ class Control_auth_realname_admin_list extends Controller {
 	   extract($this->get_url($base_uri));
 	 
 	   //获取列表分页的相关数据,参数$where,$uri,$order,$page来自于get_url方法
-	   $data_info = Model::factory('witkey_auth_realname')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
+	   $data_info = Model::factory('witkey_auth_enterprise')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
 	   //列表数据
 	   $list_arr = $data_info['data'];
 	   //分页数据
 	   $pages = $data_info['pages'];
-	   require Keke_tpl::template ( 'control/auth/realname/tpl/admin_list' );
+	   
+	   require Keke_tpl::template ( 'control/auth/enterprise/tpl/admin_list' );
 	}
-	/**
-	 * 初始化认证信息页面
-	 */
-	function action_add(){
-		global $_K,$_lang;
-		
-		require Keke_tpl::template ( 'control/auth/realname/tpl/admin_info' );
-	}
-	/**
+ 	/**
 	 * 认证通过
 	 */
 	function action_pass(){
 		 global $_lang;
-		 $auth_code = 'realname';
+		 $auth_code = 'enterprise';
 		 if($_GET['u_id']){
 		 	$uid = $_GET['u_id'];
 		 }else{
@@ -70,7 +63,7 @@ class Control_auth_realname_admin_list extends Controller {
 	 */
 	function action_no_pass(){
 		global $_lang;
-		$auth_code = 'realname';
+		$auth_code = 'enterprise';
 		if($_GET['u_id']){
 			$uid = $_GET['u_id'];
 		}else{
@@ -84,12 +77,15 @@ class Control_auth_realname_admin_list extends Controller {
 	 */
 	function action_del(){
 		global $_lang;
-		$auth_code = 'realname';
+		$auth_code = 'enterprise';
 		if($_GET['u_id']){
 			$uid = $_GET['u_id'];
 		}else{
 			$uid = explode(',', $_GET['ids']);
 		}
+		
 		echo Keke_user_auth::del($uid, $auth_code);
+		
 	}
-} 
+}
+

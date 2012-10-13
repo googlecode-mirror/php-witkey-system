@@ -1,8 +1,8 @@
 <!--{include control/admin/tpl/admin_header}-->
-<div class="page_title"><h1>{$_lang['realname_auth_list']}</h1></div>
+<div class="page_title"><h1>{$_lang['bank_auth_list']}</h1></div>
 <!--页头结束-->
  <div class="box search p_relative" id="detail">
-<form action="{BASE_URL}/index.php/auth/realname_admin_list" method="get">
+<form action="{BASE_URL}/index.php/auth/bank_admin_list" method="get">
 <table class="detail"  cellspacing="0" cellpadding="0">    		
 	<tbody>
 		<tr>
@@ -42,9 +42,10 @@
   <tr>
   	<th width="15"><input type="checkbox" id="checkbox"  onclick="checkall();"></th>
     <th>{$_lang['username']}</th>
-	<th>{$_lang['realname']}</th>
-	<th>{$_lang['id_card']}</th>
-	<th>{$_lang['id_card_copy']}</th>
+	<th>银行名称</th>
+	<th>银行卡号</th>
+	<th>收款人</th>
+	<th>打款金额</th>
 	<th>{$_lang['auth_cash']}</th>
 	<th>{$_lang['validity']}</th>
 	<th>{$_lang['auth_status']}</th>
@@ -55,10 +56,11 @@
 <tr class="item">
 	<td><input type="checkbox" name="ckb[]" id="cbk_selected" value="{$v['uid']}"></td>
 	<td>{$v['username']}</td>
-	<td>{$v['realname']}</td>
-	<td>{$v['id_card']}</td>
-	<td><img src="{BASE_URL}/{$v['id_pic']}" width="40" height="40" onclick="art.dialog.open(this.src).title('看图')"></td>
-	<td class="wraphide">{if $v['cash']>0}<font color="#ff7700">{c:$v['cash']}</font>{else}{$_lang['free']}{/if}</td>
+	<td>{$bank_name[$v['bank_name']]}</td>
+	<td>{$v['bank_account']}</td>
+	<td>{$v['bank_sname']}</td>
+	<td>{$v['pay_to_user_cash']}</td>
+	<td class="wraphide">{if $v['cash']}<font color="#ff7700">{c:$v['cash']}</font>{else}{$_lang['free']}{/if}</td>
 	<td>{if $v['start_time']==$v['end_time']}{$_lang['lifetime_validity']}{else}{date('Y-m-d',$v['start_time'])}{$_lang['to']}{date('Y-m-d',$v['end_time'])}{/if}</td>
 	<td>
 		{if $v['auth_status']==1}
@@ -75,9 +77,14 @@
 		{/if}
 		{if $v['auth_status']==0}
 			<a class="button" href="{$base_uri}/no_pass?u_id=$v['uid']&page=$page" onclick="return auth(this,'{$_lang[confirm_nopass]}')"><span class="cross icon"></span>{$_lang['nopass']}</a>
+			
+		{/if}
+		{if $v['pay_to_user_cash']<=0}
+			<a href="javascript:void(0);" onclick="art.dialog.open('{$base_uri}/add?u_id={$v[uid]}&page=$page'); return false;">打款</a>
 		{/if}
 		{if $v['auth_status']!=1}
 			<a class="button" href="{$base_uri}/del?u_id={$v['uid']}" onclick="return cdel(this);"><span class="trash icon"></span>{$_lang['delete']}</a>
+			
 		{/if}
 	</td>
 </tr>

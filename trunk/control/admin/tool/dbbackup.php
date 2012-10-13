@@ -22,20 +22,11 @@ class Control_admin_tool_dbbackup extends Controller{
 			keke_backup_class::run_backup ();
 		}else{
 			if($_GET['t']==1){
-				Keke::show_msg ($_lang ['operate_notice'],  "index.php/admin/tool_dbrestore",$_lang ['operate_success'],'success' );
+				Keke::show_msg ($_lang ['operate_success'], "admin/tool_dbrestore",'success' );
 			}else{
-				Keke::show_msg ( $_lang ['operate_notice'], "index.php/admin/tool_backup", $_lang ['operate_fialed'],'warning' );
+				Keke::show_msg ( $_lang ['operate_fialed'], "admin/tool_backup", 'warning' );
 			}
 		}
 		
 	}
 }
-
-/* Keke::admin_check_role ( 17 );
-if ($sbt_edit) {
-	keke_backup_class::run_backup ();
-}
-if(isset($t)){
-	$t == 1 and Keke::admin_show_msg ( $_lang['backup_success'], "index.php?do=tool&view=dbrestore", 3,'','success' ) or Keke::admin_show_msg ( $_lang['backup_fail'], "index.php?do=tool&view=backup", 3,'','warning' );
-}
-require keke_tpl_class::template('control/admin/tpl/admin_'. $do .'_'. $view); */

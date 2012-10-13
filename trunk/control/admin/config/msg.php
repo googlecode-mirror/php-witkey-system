@@ -24,7 +24,7 @@ class Control_admin_config_msg extends Controller{
     	}
     	Cache::instance()->del('keke_config');
     	//执行完了，要给一个提示，这里没有对执行的结果做判断，是想偷下懒，如果执行失败的话，肯定给会报红的。亲!
-    	Keke::show_msg($_lang['submit_success'],'index.php/admin/config_msg','success');
+    	Keke::show_msg($_lang['submit_success'],'admin/config_msg','success');
     }
     /**
      * 短信发送
@@ -54,9 +54,9 @@ class Control_admin_config_msg extends Controller{
     	$m = Keke_sms::instance()->send($txt_tel,$tar_content);
     	
     	if($m>0){
-    	 	Keke::show_msg($_lang['sms_send_success'],"index.php/admin/config_msg/send",'success');
+    	 	Keke::show_msg($_lang['sms_send_success'],"admin/config_msg/send",'success');
     	}else{
-    		Keke::show_msg($_lang['sms_send_fail'],"index.php/admin/config_msg/send",'warning');
+    		Keke::show_msg($_lang['sms_send_fail'],"admin/config_msg/send",'warning');
     			
     	}
     	
@@ -121,7 +121,7 @@ class Control_admin_config_msg extends Controller{
     		if($obj){
     			$uri = "?obj=$obj";
     		}
-    		Keke::show_msg($_lang['submit_success'],'index.php/admin/config_msg/tpl'.$uri,'success');
+    		Keke::show_msg($_lang['submit_success'],'admin/config_msg/tpl'.$uri,'success');
     	}
     	//手机，邮件，站内信
     	$message_send_type = keke_global_class::get_message_send_type ();
@@ -184,7 +184,7 @@ class Control_admin_config_msg extends Controller{
     	global $_lang;
     	Keke::formcheck($_POST['formhash']);
     	if(!$_POST['hdn_tpl_id']){
-    		Keke::show_msg($_lang['submit_fail'],'index.php/admin/config_msg/tpl_add?tpl_id='.$_POST['hdn_tpl_id'],'warning');
+    		Keke::show_msg($_lang['submit_fail'],'admin/config_msg/tpl_add?tpl_id='.$_POST['hdn_tpl_id'],'warning');
     	} 
     	$_POST = Keke_tpl::chars($_POST);
     	//是否有发类型
@@ -210,66 +210,7 @@ class Control_admin_config_msg extends Controller{
     	$where = "tpl_id ='{$_POST['hdn_tpl_id']}'";
     	//更新
     	Model::factory('witkey_msg_tpl')->setData($array)->setWhere($where)->update();
-    	Keke::show_msg($_lang['submit_succes'],'index.php/admin/config_msg/tpl_add?tpl_id='.$_POST['hdn_tpl_id'],'success');
+    	Keke::show_msg($_lang['submit_succes'],'admin/config_msg/tpl_add?tpl_id='.$_POST['hdn_tpl_id'],'success');
     }
     	
 }
-
-
-/* Keke::admin_check_role(66);
-require '../../keke_client/sms/sms.php';
-$account_info = $Keke->_sys_config; //手机账号信息
-$mobile_u = $account_info ['mobile_username'];
-$mobile_p = $account_info ['mobile_password'];
-$op and $op = $op or $op = 'config';
-
-$url = "index.php?do=$do&view=$view&op=$op";
-switch ($op) {
-	case "config" :
-		if (! isset ( $sbt_edit )) {
-			$bind_info = check_bind ( 'mobile_username' );
-		} else { //添加、编辑\
-			 
-			foreach ( $conf as $k => $v ) {
-				if (check_bind ( $k )) {
-					
-					$res .= Dbfactory::execute ( " update " . TABLEPRE . "witkey_basic_config set v='$v' where k='$k'" );
-				} else {
-				//	Keke::admin_system_log('创建了手机平台');
-					$res .= Dbfactory::execute ( " insert into " . TABLEPRE . "witkey_basic_config values('','$k','$v','mobile','','')" );
-				}
-			}
-			$Keke->_cache_obj->gc();
-			Keke::admin_system_log($_lang['edit_mobile_log']);
-			if ($res)
-				Keke::admin_show_msg ( $_lang['binding_cellphone_account_successfully'], "index.php?do=$do&view=$view&op=config",3,'','success' );
-			else
-				Keke::admin_show_msg ( $_lang['binding_cellphone_account_fail'], "index.php?do=$do&view=$view&op=config",3,'','warning' );
-		
-		}
-		break;
-	case "manage" :
-		if ($remain_fee) {
-			if ($mobile_p && $mobile_u) {
-				$sms = new sms('','','getbalance');
-				$m   = $sms->send();
-				if (! $m) {
-					Keke::echojson ( $_lang['get_user_info_fail'], "2" );
-					die ();
-				} else {
-					Keke::echojson ($m, "1" );
-					die ();
-				}
-			} else {
-				Keke::admin_show_msg ( $_lang['not_bind_cellphone_account'], "index.php?do=$do&view=$view&op=config",3,'','warning' );
-			}
-		
-		}
-		break;
-}
- 检测绑定账号是否存在 
- 
-function check_bind($k) {
-	return Dbfactory::get_count ( " select k from " . TABLEPRE . "witkey_basic_config where k='$k'" );
-}
-require $template_obj->template ( 'control/admin/tpl/admin_' . $do . '_' . $view ); */

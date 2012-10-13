@@ -76,7 +76,7 @@ class Control_admin_config_model extends  Controller {
 		}
 		Cache::instance()->del('keke_config');
 		//执行完了，要给一个提示，这里没有对执行的结果做判断，是想偷下懒，如果执行失败的话，肯定给会报红的。亲!
-		Keke::show_msg('系统提示','index.php/admin/config_basic/index?type='.$type,'提交成功','success');
+		Keke::show_msg('系统提示','admin/config_basic/index?type='.$type,'提交成功','success');
 		
 	}
 	/**

@@ -67,20 +67,20 @@
 			            <td class="td25 wraphide"><a href="javascript:void(0)" >{$v['username']}</a></td>
 			            <td class="wraphide">{if $grouplist_arr[$v['group_id']]['groupname']} $grouplist_arr[$v['group_id']]['groupname'] {else}{$_lang['normal']}{/if}</td>
 						<td class="wraphide">{if $v['status']!=2}{$_lang['normal']}{else}{$_lang['disable']}{/if}</td>
-						<td> <!--{eval echo date('Y-m-d',$v['reg_time']);}--></td>
+						<td>{date('Y-m-d',$v['reg_time'])}</td>
 			            <td><div class="ws_break" style="width:70%;">{$v['reg_ip']}</div></td>
 			            <td><div class="ws_break" style="width:70%;">{$v['credit']}</div></td>
 						<td><div class="ws_break" style="width:70%;">{c:$v['balance']}</div></td>
 						<td>
 							<a class="button dbl_target" href="{BASE_URL}/index.php/admin/user_add?uid=$v['uid']"><span class="pen icon"></span>{$_lang['edit']}</a>
-							{if $shop_open}
-							{if $v['recommend']==0}
-								<a class="button" href="{BASE_URL}/index.php/admin/user_list/recommend?uid={$v['uid']}&page={$page}">
-									<span class="uparrow icon"></span>{$_lang['recommend']}</a>
-							{else}
-								<a class="button" href="{BASE_URL}/index.php/admin/user_list/moverecommend?uid={$v['uid']}&page={$page}"">
-									<span class="downarrow icon"></span>{$_lang['move_recommend']}</a>
-							{/if}
+							{if $shop_open[$v['uid']]}
+								{if $v['recommend']==0}
+									<a class="button" href="{BASE_URL}/index.php/admin/user_list/recommend?uid={$v['uid']}&page={$page}">
+										<span class="uparrow icon"></span>{$_lang['recommend']}</a>
+								{else}
+									<a class="button" href="{BASE_URL}/index.php/admin/user_list/moverecommend?uid={$v['uid']}&page={$page}"">
+										<span class="downarrow icon"></span>{$_lang['move_recommend']}</a>
+								{/if}
 							{/if}
 							<a class="button" href="{BASE_URL}/index.php/admin/user_custom/add?uid={$v['uid']}"><span class="cog icon"></span>{$_lang['rights_set']}</a>
  							{if $v['status']!=2}<a class="button" href="{BASE_URL}/index.php/admin/user_list/disable?uid={$v['uid']}&page={$page}"><span class="lock icon"></span>{$_lang['disable']}</a>

@@ -33,7 +33,7 @@ class Control_admin_config_nav extends Controller{
 		}
 		//更新导航菜单的缓存
 		Cache::instance()->del('keke_nav');
-		Keke::show_msg ($_lang['submit_success'], "index.php/admin/config_nav",'success' );
+		Keke::show_msg ($_lang['submit_success'], "admin/config_nav",'success' );
 	}
 	/**
 	 * 判断外网地址，内网址
@@ -95,7 +95,7 @@ class Control_admin_config_nav extends Controller{
 			$this->action_set_index('index');
 		}
 		Cache::instance()->del('keke_nav');
-		Keke::show_msg($_lang['submit_success'],'index.php/admin/config_nav/add'.$url,'success');
+		Keke::show_msg($_lang['submit_success'],'admin/config_nav/add'.$url,'success');
 	}
 	/**
 	 * 删除导航菜单
@@ -122,7 +122,7 @@ class Control_admin_config_nav extends Controller{
 		Cache::instance()->del('keke_config');
 		
 		if($_GET['nav_style']){
-			Keke::show_msg ( $_lang['set_index_success'], "index.php/admin/config_nav",'success' );
+			Keke::show_msg ( $_lang['set_index_success'], "admin/config_nav",'success' );
 		}else{
 			return (bool)$res;
 		}

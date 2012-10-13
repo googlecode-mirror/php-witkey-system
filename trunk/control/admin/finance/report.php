@@ -28,9 +28,9 @@ class Control_admin_finance_report extends Controller {
 	    Keke::admin_system_log ( $_lang['generation_finance_report'] );
       	//成功则跳转
 	    if ($res) {		
-		Keke::admin_show_msg ( $_lang['report_generation_success'], "{$_K['siteurl']}/index.php/admin/finance_report/index", 3, '', 'success' ); // die();
+		Keke::admin_show_msg ( $_lang['report_generation_success'], "admin/finance_report/index", 3, '', 'success' ); // die();
 	    }
-	    Keke::admin_show_msg ( $_lang['report_generation_success'], "{$_K['siteurl']}/index.php/admin/finance_report/index", 3, '', 'warning' );
+	    Keke::admin_show_msg ( $_lang['report_generation_success'], "admin/finance_report/index", 3, '', 'warning' );
        }
 		//调用哪个模板
 		require Keke_tpl::template('control/admin/tpl/finance/report');

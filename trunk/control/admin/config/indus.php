@@ -78,7 +78,7 @@ class Control_admin_config_indus extends Controller{
 				}
 			}
 		}
-		Keke::show_msg($_lang['submit_success'],'index.php/admin/config_indus','success');
+		Keke::show_msg($_lang['submit_success'],'admin/config_indus','success');
 	}
 	/**
 	 * 删除行业数据
@@ -126,7 +126,7 @@ class Control_admin_config_indus extends Controller{
 		//不允许添加三级分类
 		$check_pid = DB::select('indus_pid')->from('witkey_industry')->where("indus_id = {$_POST['slt_indus_pid']}")->get_count()->execute();
 		if($check_pid>0){
-			Keke::show_msg('只允计添加二级分类，系统不支持三级分类','index.php/admin/config_indus/add','warning');
+			Keke::show_msg('只允计添加二级分类，系统不支持三级分类','admin/config_indus/add','warning');
 		}
 		$columns = array('indus_pid','indus_name','is_recommend','listorder');
 		$values = array($_POST['slt_indus_pid'],$_POST['indus_name'],$_POST['is_recommend'],$_POST['listorder']);
@@ -139,7 +139,7 @@ class Control_admin_config_indus extends Controller{
 		//添加数据
 			DB::insert('witkey_industry')->set($columns)->value($values)->execute();
 		}
-		Keke::show_msg($_lang['submit_success'],'index.php/admin/config_indus/add'.$uri,'success');
+		Keke::show_msg($_lang['submit_success'],'admin/config_indus/add'.$uri,'success');
 	}
 	/**
 	 * 业务合并初始化页面
@@ -150,7 +150,7 @@ class Control_admin_config_indus extends Controller{
 		$indus_p_arr =  Keke::get_table_data ( '*', "witkey_industry", "indus_type=1 and indus_pid = 0 ", "listorder asc ", '', '', 'indus_id', 0 );
 		//提交合并信息
 		if($_POST){
-			$url = 'index.php/admin/config_indus/merge';
+			$url = 'admin/config_indus/merge';
 			//来源行业
 			$slt_indus_id = $_POST['slt_indus_id'];
 			//目标行业

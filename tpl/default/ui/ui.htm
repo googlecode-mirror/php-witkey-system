@@ -5,9 +5,10 @@
 <title>box</title>
 <!--<link href="style/base.css" rel="stylesheet">
 <link href="style/typo.css" rel="stylesheet">-->
-<link href="{BASE_URL}/{SKIN_PATH}/default/ui/style/ui.css" rel="stylesheet" >
+<link href="{BASE_URL}/{SKIN_PATH}/ui/style/ui.css" rel="stylesheet" >
 <!--<link href="style/boxs.css" rel="stylesheet" >-->
-<link href="{BASE_URL}/{SKIN_PATH}/default/ui/style/theme.less" rel="stylesheet/less" type="text/css" >
+<link href="{BASE_URL}/{SKIN_PATH}/ui/style/theme.css" rel="stylesheet" >
+<!--<link href="{BASE_URL}/{SKIN_PATH}/ui/style/theme.less" rel="stylesheet/less" type="text/css" >
 <!--<link href="style/layout/layout.css" rel="stylesheet" >
 [if lte IE 8]>
 <link href="style/layout/960.min.css" rel="stylesheet">
@@ -143,8 +144,10 @@
 	
 			var sd = setTimeout(function(){
 				windowloading.slideUp();
-		        windowdetail.slideDown();
-		        resitexy();
+		        windowdetail.slideDown(function(){
+					resitexy();
+				});
+		        
 				clearTimeout(sd);
 			},2000);
 	
@@ -171,12 +174,10 @@
 	  function close_window(){
 	  	var win =	$("#win");
 		var windowbody 		= $("html body");
-	  	var windowdetail 	= $("#win .box_detail");
+	  	
 		windowbody.css({"overflow":"auto"});
-		windowdetail.slideUp(function(){
-			resitexy();
-			win.fadeOut();
-		});
+		win.fadeOut();
+		
 	  }
 	  
 	  display_window();
@@ -2746,7 +2747,7 @@
 		<div class="inner">
 			<header class="box_header">
 				<div class="box_title">
-					<h2 class="title">示例说明</h2>
+					<h1 class="title">示例说明</h1>
 				</div>
 			</header>	
 			<article class="box_detail">

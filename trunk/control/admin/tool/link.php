@@ -23,7 +23,7 @@ class Control_admin_tool_link extends Controller {
 		//总记录数,分页用的，你不定义，数据库就是多查一次的。为了少个Sql语句，你必须要写的，亲!
 		$count = intval($_GET['count']);
 		//基本uri,当前请求的uri ,本来是能通过Rotu类可以得出这个uri,为了程序灵活点，自己手写好了
-		$base_uri = BASE_URL."/index.php/admin/too_link";
+		$base_uri = BASE_URL."/index.php/admin/tool_link";
 		
 		//添加编辑的uri,add这个action 是固定的
 		$add_uri =  $base_uri.'/add';

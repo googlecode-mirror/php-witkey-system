@@ -124,13 +124,13 @@ class Control_admin_article_cate extends Controller {
 		if($_POST['hdn_art_cat_id']){
 			Model::factory('witkey_article_category')->setData($array)->setWhere("art_cat_id = '{$_POST['hdn_art_cat_id']}'")->update();
 			//执行完了，要给一个提示，这里没有对执行的结果做判断，是想偷下懒，如果执行失败的话，肯定给会报红的。亲!
-			Keke::show_msg('系统提示','admin/article_cate/add?art_cat_id='.$_POST['hdn_art_cat_id'].'&type='.$cat_type,'提交成功','success');
+			Keke::show_msg('提交成功','admin/article_cate/add?art_cat_id='.$_POST['hdn_art_cat_id'].'&type='.$cat_type,'success');
 		}else{
 			//这也当然就是添加(insert)到数据库中
 			$cate_id = Model::factory('witkey_article_category')->setData($array)->create();
 			//更新art_index
 			//$this->update_art_index($cate_id);
-			Keke::show_msg('系统提示','admin/article_cate/add?type='.$cat_type,'提交成功','success');
+			Keke::show_msg('提交成功','admin/article_cate/add?type='.$cat_type,'success');
 		}
 	}
 	/**

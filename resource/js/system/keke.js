@@ -149,9 +149,9 @@ function favor(pk,type,model_code,obj_uid,obj_id,obj_name,origin_id) {
 		var url='index.php?do=ajax&view=ajax&ac=favor';
 		$.post(url,{pk:pk,keep_type:type,obj_id:obj_id,obj_id:obj_id,model_code:model_code,obj_uid:obj_uid,obj_name:obj_name,origin_id:origin_id},function(json){
 			if(json.status==1){
-				showDialog(json.data,'notice',json.msg);return false;
+				showDialog(json.data,'info',json.msg);return false;
 			}else{
-				showDialog(json.data,'alert',json.msg);return false;
+				showDialog(json.data,'error',json.msg);return false;
 			}
 		},'json')
 	}
@@ -224,7 +224,7 @@ function ifOut(obj,max,msgType,showTarget){
 		if(msgType==1){
 			tipsAppend(showTarget,L.file_upload_exceeds_limit_the_maximum+max+L.a,'warning','orange');
 		}else{
-			showDialog(L.file_upload_exceeds_limit_the_maximum+max+L.a,"alert",L.operate_notice);
+			showDialog(L.file_upload_exceeds_limit_the_maximum+max+L.a,"error",L.operate_notice);
 		}return false;
 	}else{
 		return true;
@@ -335,7 +335,7 @@ function uploadify(paramReg,contrReg){
 				if(msgType==1){
 					tipsAppend(showTarget,json.err,'error','red');
 				}else{
-					showDialog(decodeURI(json.err), 'alert', L.error_tips,'',0);
+					showDialog(decodeURI(json.err), 'error', L.error_tips,'',0);
 				}
 				return false;
 			}else{
@@ -411,7 +411,7 @@ function upload(fileName,fileType,task_id,obj_id,obj_type,width,height,msgType,s
 function sendMessage(to_uid,to_username) {
 if(check_user_login()){
 	if (uid == to_uid) {
-		showDialog(L.can_not_give_yourself_send_message, 'alert', L.operate_notice);
+		showDialog(L.can_not_give_yourself_send_message, 'error', L.operate_notice);
 				return false;
 		}
 	var url = 'index.php?do=ajax&view=message&op=send&to_uid='+ to_uid+'&to_username='+to_username;
@@ -440,7 +440,7 @@ function report( obj, type,obj_id,to_uid,to_username) {
 			showWindow("report",'index.php?do=index&op=report_3&type='+type+'&obj='+obj,'get','0');			
 		}else{ 
 			if(uid==to_uid){
-				showDialog(L.can_not_be_initiated+s,"alert",L.operate_notice);return false;
+				showDialog(L.can_not_be_initiated+s,"error",L.operate_notice);return false;
 			}else{
 				showWindow("report",basic_url+'&op=report&type='+type+'&obj='+obj+'&obj_id='+obj_id+'&to_uid='+to_uid+'&to_username='+to_username,'get','0');
 			}
@@ -1192,7 +1192,7 @@ function hideMenu(attr, mtype) {
 
 function showDialog(msg, mode, t, func, cover, funccancel) {
 	cover = isUndefined(cover) ? (mode == 'info' ? 0 : 1) : cover;
-	mode = in_array(mode, ['confirm', 'success', 'content','error']) ? mode : 'info';
+	mode = in_array(mode, ['confirm', 'success', 'info','error']) ? mode : 'content';
 	var menuid = 'fwin_dialog';
 	var menuObj = document.getElementById(menuid);
 
@@ -1271,7 +1271,7 @@ function showWindow(k, url, mode, cache, menuv,recall) {
 			menuObj.act = document.getElementById(url).action;
 			ajaxpost(url, 'fwin_content_' + k, '', '', '', function() {initMenu();show();func();});
 		}
-		loadingst = setTimeout(function() {showDialog('', 'info', '<img src="' + IMGDIR + '/loading.gif"> '+ L.loading)}, 500);
+		loadingst = setTimeout(function() {showDialog('', 'content', '<img src="' + IMGDIR + '/loading.gif"> '+ L.loading)}, 500);
 	};
 	
 	var initMenu = function() {
@@ -2165,7 +2165,7 @@ function setCopy(text, msg,type){
 	if(BROWSER.ie) {
 		clipboardData.setData('Text', text);
 		if(msg) {
-			showDialog(msg, 'notice');
+			showDialog(msg, 'info');
 		}
 	} else {
 		var flash  = 'resource/img/keke/clipboard.swf';

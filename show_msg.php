@@ -15,8 +15,9 @@ if($_GET['type']){
 	$type = $_GET['type'];
 }
 if($type){
-	Keke::show_msg('content','show_msg.php',$type);
+	Keke::show_msg('content','http://localhost/kppw_google/show_msg.php',$type,'test',99999);
 }
+
 //弹出框测试
 require Keke_tpl::template('show_msg_ui');
 //show_msg('成功提示的,内容','show_msg.php',$type);

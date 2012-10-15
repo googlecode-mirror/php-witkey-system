@@ -7,7 +7,7 @@ class OAuthException extends Exception {
 }
 
 /**
- * OAuth consumer¶ÔÏó£¬Ò²¶ÔÓ¦ÓÚapp¡£
+ * OAuth consumerå¯¹è±¡ï¼Œä¹Ÿå¯¹åº”äºŽappã€‚
  */
 class OAuthConsumer {
 	public $key;
@@ -25,7 +25,7 @@ class OAuthConsumer {
 }
 
 /**
- *	OAuthµÄtoken¶Ô£¬¿ÉÒÔÓÃÓÚ±íÊ¾request tokenºÍaccess token
+ *	OAuthçš„tokenå¯¹ï¼Œå¯ä»¥ç”¨äºŽè¡¨ç¤ºrequest tokenå’Œaccess token
  *
  */
 class OAuthToken {
@@ -59,12 +59,12 @@ class OAuthToken {
 }
 
 /**
- * Ç©Ãû·½·¨Àà£¬ÓÃÓÚ¼ÆËãOAuthµÄÇ©Ãû
+ * ç­¾åæ–¹æ³•ç±»ï¼Œç”¨äºŽè®¡ç®—OAuthçš„ç­¾å
  * See section 9 ("Signing Requests") in the spec
  */
 abstract class OAuthSignatureMethod {
 	/**
-	 * ·µ»ØÇ©Ãû·½·¨ (±ÈÈç HMAC-SHA1)
+	 * è¿”å›žç­¾åæ–¹æ³• (æ¯”å¦‚ HMAC-SHA1)
 	 * @return string
 	 */
 	abstract public function get_name();
@@ -415,12 +415,9 @@ class OAuthRequest {
 	/**
 	 * builds the data one would send in a POST request
 	 */
-	 public function to_postdata( $multi = false ) {
-    if( $multi )
-    	return OAuthUtil::build_http_query_multi($this->parameters); 
-    else 
-        return OAuthUtil::build_http_query($this->parameters); 
-    } 
+	public function to_postdata() {
+		return OAuthUtil::build_http_query($this->parameters);
+	}
 
 	/**
 	 * builds the Authorization: header
@@ -851,6 +848,8 @@ class OAuthUtil {
 
 	public static function build_http_query($params) {
 		if (!$params) return '';
+
+		// Urlencode both keys and values
 		$keys = OAuthUtil::urlencode_rfc3986(array_keys($params));
 		$values = OAuthUtil::urlencode_rfc3986(array_values($params));
 		$params = array_combine($keys, $values);
@@ -876,98 +875,6 @@ class OAuthUtil {
 		// Each name-value pair is separated by an '&' character (ASCII code 38)
 		return implode('&', $pairs);
 	}
-	
-	 public static function build_http_query_multi($params) { 
-        if (!$params) return ''; 
-		
-		//print_r( $params );
-		//return null;
-        
-        // Urlencode both keys and values 
-        $keys = array_keys($params);
-        $values = array_values($params);
-        //$keys = OAuthUtil::urlencode_rfc3986(array_keys($params)); 
-        //$values = OAuthUtil::urlencode_rfc3986(array_values($params)); 
-        $params = array_combine($keys, $values); 
-
-        // Parameters are sorted by name, using lexicographical byte value ordering. 
-        // Ref: Spec: 9.1.1 (1) 
-        uksort($params, 'strcmp'); 
-
-        $pairs = array(); 
-        
-        $boundary = uniqid('------------------');
-		$MPboundary = '--'.$boundary;
-		$endMPboundary = $MPboundary. '--';
-		$multipartbody = '';
-
-        foreach ($params as $parameter => $value) { 
-            
-        //if( $parameter == 'pic' && $value{0} == '@' )
-        if( in_array($parameter,array("pic","image")) && $value{0} == '@' )
-        {
-        	$url = ltrim( $value , '@' );
-        	$content = file_get_contents( $url );
-        	$filename = reset( explode( '?' , basename( $url ) ));
-        	$mime = self::get_image_mime($url); 
-        	
-        	$multipartbody .= $MPboundary . "\r\n";
-			$multipartbody .= 'Content-Disposition: form-data; name="' . $parameter . '"; filename="' . $filename . '"'. "\r\n";
-			$multipartbody .= 'Content-Type: '. $mime . "\r\n\r\n";
-			$multipartbody .= $content. "\r\n";
-        }
-        else
-        {
-        	$multipartbody .= $MPboundary . "\r\n";
-			$multipartbody .= 'content-disposition: form-data; name="'.$parameter."\"\r\n\r\n";
-			$multipartbody .= $value."\r\n";
-			
-        }    
-            
-            
-           
-             
-        } 
-        
-        $multipartbody .=  $endMPboundary;
-        // For each parameter, the name is separated from the corresponding value by an '=' character (ASCII code 61) 
-        // Each name-value pair is separated by an '&' character (ASCII code 38) 
-        // echo $multipartbody;
-        return $multipartbody; 
-    } 
-    
-	public static function get_image_mime( $file )
-    {
-    	$ext = strtolower(pathinfo( $file , PATHINFO_EXTENSION ));
-    	switch( $ext )
-    	{
-    		case 'jpg':
-    		case 'jpeg':
-    			$mime = 'image/jpg';
-    			break;
-    		 	
-    		case 'png';
-    			$mime = 'image/png';
-    			break;
-    			
-    		case 'gif';
-    		default:
-    			$mime = 'image/gif';
-    			break;    		
-    	}
-    	return $mime;
-    }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
+?>

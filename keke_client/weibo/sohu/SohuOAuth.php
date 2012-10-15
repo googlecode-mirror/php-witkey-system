@@ -9,13 +9,13 @@
 /* Load OAuth lib. You can find it at http://oauth.net */
 
 /**
- * ËÑºü(SOHU)µÄphpÊ¾Àý´úÂëÊÇ »ùÓÚAbraham Williams·¢²¼µÄ¿ªÔ´twitteroauth¿âµÄ¡£
+ * æœç‹(SOHU)çš„phpç¤ºä¾‹ä»£ç æ˜¯ åŸºäºŽAbraham Williamså‘å¸ƒçš„å¼€æºtwitteroauthåº“çš„ã€‚
  * https://github.com/abraham/twitteroauth
  */
 require_once('OAuth.php');
 
 /**
- * ËÑºüOAuthÈÏÖ¤phpÀà
+ * æœç‹OAuthè®¤è¯phpç±»
  */
 class SohuOAuth {
 	/* Contains the last HTTP status code returned. */
@@ -40,7 +40,7 @@ class SohuOAuth {
 	public $useragent = 'SohuOAuth v0.0.1';
 
 	/**
-	 * ÉèÖÃOAuthÈÏÖ¤ÐèÒªµÄUrls
+	 * è®¾ç½®OAuthè®¤è¯éœ€è¦çš„Urls
 	 */
 	function accessTokenURL()  { return 'http://api.t.sohu.com/oauth/access_token'; }
 	function authenticateURL() { return 'http://api.t.sohu.com/oauth/authorize'; }
@@ -52,11 +52,11 @@ class SohuOAuth {
 
 	/**
 	 *
-	 * ´´½¨SohuOAuth¶ÔÏóÊµÀý
+	 * åˆ›å»ºSohuOAuthå¯¹è±¡å®žä¾‹
 	 * @param String $consumer_key
 	 * @param String $consumer_secret
-	 * @param String $oauth_token ÕâÊÇaccess key£¬Ã»ÓÐÉêÇëµ½µÄÊ±ºò¿ÉÒÔÊ¡ÂÔ
-	 * @param String $oauth_token_secret  ÕâÊÇaccess key¶ÔÓ¦µÄÃÜÔ¿£¬Ã»ÓÐÉêÇëµ½µÄÊ±ºò¿ÉÒÔÊ¡ÂÔ
+	 * @param String $oauth_token è¿™æ˜¯access keyï¼Œæ²¡æœ‰ç”³è¯·åˆ°çš„æ—¶å€™å¯ä»¥çœç•¥
+	 * @param String $oauth_token_secret  è¿™æ˜¯access keyå¯¹åº”çš„å¯†é’¥ï¼Œæ²¡æœ‰ç”³è¯·åˆ°çš„æ—¶å€™å¯ä»¥çœç•¥
 	 */
 	function __construct($consumer_key, $consumer_secret, $oauth_token = NULL, $oauth_token_secret = NULL) {
 		$this->sha1_method = new OAuthSignatureMethod_HMAC_SHA1();
@@ -70,7 +70,7 @@ class SohuOAuth {
 
 
 	/**
-	 * »ñÈ¡request_token
+	 * èŽ·å–request_token
 	 * @param $oauth_callback
 	 * @return a key/value array containing oauth_token and oauth_token_secret
 	 */
@@ -86,8 +86,8 @@ class SohuOAuth {
 	}
 
 	/**
-	 * »ñÈ¡ÓÃ»§ÈÏÖ¤µØÖ·£¨authorize url£©£¬´Ë¹ý³ÌÓÃ»§½«¶ÔAppµÄ·ÃÎÊ½øÐÐÊÚÈ¨¡£
-	 * @param string $token ÕâÊÇÖ®Ç°»ñÈ¡µÄrequest_token
+	 * èŽ·å–ç”¨æˆ·è®¤è¯åœ°å€ï¼ˆauthorize urlï¼‰ï¼Œæ­¤è¿‡ç¨‹ç”¨æˆ·å°†å¯¹Appçš„è®¿é—®è¿›è¡ŒæŽˆæƒã€‚
+	 * @param string $token è¿™æ˜¯ä¹‹å‰èŽ·å–çš„request_token
 	 * @param $sign_in_with_sohu
 	 */
 	function getAuthorizeURL($token, $sign_in_with_sohu = TRUE) {
@@ -109,13 +109,13 @@ class SohuOAuth {
         if (is_array($token)) {
             $token = $token['oauth_token'];
         }
-        return $this->authorizeURL() . "?oauth_token={$token}"."&oauth_callback=".urlencode($oauth_callback);
+        return $this->authorizeURL() . "?oauth_token={$token}"."&oauth_callback={$oauth_callback}";
     }
 
 	/**
 	 *
-	 * ÓÃ»§ÈÏÖ¤Íê±Ïºó»ñÈ¡access token
-	 * @param string $oauth_verifier ÓÃ»§ÊÚÈ¨ºó²úÉúµÄÈÏÖ¤Âë
+	 * ç”¨æˆ·è®¤è¯å®Œæ¯•åŽèŽ·å–access token
+	 * @param string $oauth_verifier ç”¨æˆ·æŽˆæƒåŽäº§ç”Ÿçš„è®¤è¯ç 
 	 * @returns array("oauth_token" => "the-access-token",
 	 *                "oauth_token_secret" => "the-access-secret",
 	 *                "user_id" => "9436992",
@@ -133,10 +133,10 @@ class SohuOAuth {
 	}
 
 	/**
-	 * XAuthµÄ»ñÈ¡access token·½·¨£¬ÐèÒª¶ÔÓ¦ÓÃÊÚÈ¨µÄÓÃ»§µÄÓÃ»§ÃûºÍÃÜÂë¡£
+	 * XAuthçš„èŽ·å–access tokenæ–¹æ³•ï¼Œéœ€è¦å¯¹åº”ç”¨æŽˆæƒçš„ç”¨æˆ·çš„ç”¨æˆ·åå’Œå¯†ç ã€‚
 	 *
-	 * @param string $username ÓÃ»§Ãû
-	 * @param string $password ÓÃ»§µÄÃØÃÜ
+	 * @param string $username ç”¨æˆ·å
+	 * @param string $password ç”¨æˆ·çš„ç§˜å¯†
 	 * @returns array("oauth_token" => "the-access-token",
 	 *                "oauth_token_secret" => "the-access-secret",
 	 *                "user_id" => "9436992",
@@ -155,29 +155,29 @@ class SohuOAuth {
 	}
 
 	/**
-	 * OAuthRequest GETÇëÇóµÄ°ü×°Àà
+	 * OAuthRequest GETè¯·æ±‚çš„åŒ…è£…ç±»
 	 */
 	function get($url, $parameters = array()) {
 		$response = $this->oAuthRequest($url, 'GET', $parameters);
 		if ($this->format === 'json' && $this->decode_json) {
-			return json_decode($response,true);
+			return json_decode($response);
 		}
 		return $response;
 	}
 
 	/**
-	 * OAuthRequest POSTÇëÇóµÄ°ü×°Àà
+	 * OAuthRequest POSTè¯·æ±‚çš„åŒ…è£…ç±»
 	 */
-	function post($url, $parameters = array(),$multi = false) {
-		$response = $this->oAuthRequest($url, 'POST', $parameters,$multi);
+	function post($url, $parameters = array()) {
+		$response = $this->oAuthRequest($url, 'POST', $parameters);
 		if ($this->format === 'json' && $this->decode_json) {
-			return json_decode($response,true);
+			return json_decode($response);
 		}
 		return $response;
 	}
 
 	/**
-	 * OAuthRequest DELETEÇëÇóµÄ°ü×°Àà
+	 * OAuthRequest DELETEè¯·æ±‚çš„åŒ…è£…ç±»
 	 */
 	function delete($url, $parameters = array()) {
 		$response = $this->oAuthRequest($url, 'DELETE', $parameters);
@@ -188,12 +188,12 @@ class SohuOAuth {
 	}
 
 	/**
-	 * Ç©Ãû·½·¨²¢·¢ËÍhttpÇëÇó
-	 * @param string $url api µØÖ·
-	 * @param string $method httpÇëÇó·½·¨£¬°üÀ¨ GET,POST,DELETE,TRACE,HEAD,OPTIONS,PUT
-	 * @param $parameters ÇëÇó²ÎÊý
+	 * ç­¾åæ–¹æ³•å¹¶å‘é€httpè¯·æ±‚
+	 * @param string $url api åœ°å€
+	 * @param string $method httpè¯·æ±‚æ–¹æ³•ï¼ŒåŒ…æ‹¬ GET,POST,DELETE,TRACE,HEAD,OPTIONS,PUT
+	 * @param $parameters è¯·æ±‚å‚æ•°
 	 */
-	function oAuthRequest($url, $method, $parameters,$multi=false) {
+	function oAuthRequest($url, $method, $parameters) {
 		if (strrpos($url, 'https://') !== 0 && strrpos($url, 'http://') !== 0) {
 			$url = "{$this->host}{$url}.{$this->format}";
 		}
@@ -203,16 +203,16 @@ class SohuOAuth {
 			case 'GET':
 				return $this->http($request->to_url(), 'GET');
 			default:
-				return $this->http($request->get_normalized_http_url(), $method, $request ->to_postdata($multi));
+				return $this->http($request->get_normalized_http_url(), $method, $request->to_postdata());
 		}
 	}
 
 	/**
-	 * ·¢ÆðHTTPÇëÇó
+	 * å‘èµ·HTTPè¯·æ±‚
 	 *
-	 * @return API·µ»Ø½á¹û
+	 * @return APIè¿”å›žç»“æžœ
 	 */
-	function http($url, $method, $postfields = NULL , $multi = false) {
+	function http($url, $method, $postfields = NULL) {
 		$this->http_info = array();
 		$ci = curl_init();
 		/* Curl settings */
@@ -238,16 +238,6 @@ class SohuOAuth {
 					$url = "{$url}?{$postfields}";
 				}
 		}
-		
-		$header_array = array(); 
-        $header_array2=array(); 
-        if( $multi ) 
-        	$header_array2 = array("Content-Type: multipart/form-data; boundary=" . OAuthUtil::$boundary , "Expect: ");
-        foreach($header_array as $k => $v) 
-            array_push($header_array2,$k.': '.$v); 
-
-        curl_setopt($ci, CURLOPT_HTTPHEADER, $header_array2 ); 
-        curl_setopt($ci, CURLINFO_HEADER_OUT, TRUE ); 
 
 		curl_setopt($ci, CURLOPT_URL, $url);
 		$response = curl_exec($ci);
@@ -264,7 +254,6 @@ class SohuOAuth {
 	function getHeader($ch, $header) {
 		$i = strpos($header, ':');
 		if (!empty($i)) {
-			
 			$key = str_replace('-', '_', strtolower(substr($header, 0, $i)));
 			$value = trim(substr($header, $i + 2));
 			$this->http_header[$key] = $value;
@@ -272,12 +261,3 @@ class SohuOAuth {
 		return strlen($header);
 	}
 }
-
-
-
-
-
-
-
-
-

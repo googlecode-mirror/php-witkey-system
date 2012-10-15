@@ -9,13 +9,13 @@
 /* Load OAuth lib. You can find it at http://oauth.net */
 
 /**
- * æœç‹(SOHU)çš„phpç¤ºä¾‹ä»£ç æ˜¯ åŸºäºŽAbraham Williamså‘å¸ƒçš„å¼€æºtwitteroauthåº“çš„ã€‚
+ * ËÑºü(SOHU)µÄphpÊ¾Àý´úÂëÊÇ »ùÓÚAbraham Williams·¢²¼µÄ¿ªÔ´twitteroauth¿âµÄ¡£
  * https://github.com/abraham/twitteroauth
  */
 require_once('OAuth.php');
 
 /**
- * æœç‹OAuthè®¤è¯phpç±»
+ * ËÑºüOAuthÈÏÖ¤phpÀà
  */
 class SohuOAuth {
 	/* Contains the last HTTP status code returned. */
@@ -40,7 +40,7 @@ class SohuOAuth {
 	public $useragent = 'SohuOAuth v0.0.1';
 
 	/**
-	 * è®¾ç½®OAuthè®¤è¯éœ€è¦çš„Urls
+	 * ÉèÖÃOAuthÈÏÖ¤ÐèÒªµÄUrls
 	 */
 	function accessTokenURL()  { return 'http://api.t.sohu.com/oauth/access_token'; }
 	function authenticateURL() { return 'http://api.t.sohu.com/oauth/authorize'; }
@@ -52,11 +52,11 @@ class SohuOAuth {
 
 	/**
 	 *
-	 * åˆ›å»ºSohuOAuthå¯¹è±¡å®žä¾‹
+	 * ´´½¨SohuOAuth¶ÔÏóÊµÀý
 	 * @param String $consumer_key
 	 * @param String $consumer_secret
-	 * @param String $oauth_token è¿™æ˜¯access keyï¼Œæ²¡æœ‰ç”³è¯·åˆ°çš„æ—¶å€™å¯ä»¥çœç•¥
-	 * @param String $oauth_token_secret  è¿™æ˜¯access keyå¯¹åº”çš„å¯†é’¥ï¼Œæ²¡æœ‰ç”³è¯·åˆ°çš„æ—¶å€™å¯ä»¥çœç•¥
+	 * @param String $oauth_token ÕâÊÇaccess key£¬Ã»ÓÐÉêÇëµ½µÄÊ±ºò¿ÉÒÔÊ¡ÂÔ
+	 * @param String $oauth_token_secret  ÕâÊÇaccess key¶ÔÓ¦µÄÃÜÔ¿£¬Ã»ÓÐÉêÇëµ½µÄÊ±ºò¿ÉÒÔÊ¡ÂÔ
 	 */
 	function __construct($consumer_key, $consumer_secret, $oauth_token = NULL, $oauth_token_secret = NULL) {
 		$this->sha1_method = new OAuthSignatureMethod_HMAC_SHA1();
@@ -70,7 +70,7 @@ class SohuOAuth {
 
 
 	/**
-	 * èŽ·å–request_token
+	 * »ñÈ¡request_token
 	 * @param $oauth_callback
 	 * @return a key/value array containing oauth_token and oauth_token_secret
 	 */
@@ -86,8 +86,8 @@ class SohuOAuth {
 	}
 
 	/**
-	 * èŽ·å–ç”¨æˆ·è®¤è¯åœ°å€ï¼ˆauthorize urlï¼‰ï¼Œæ­¤è¿‡ç¨‹ç”¨æˆ·å°†å¯¹Appçš„è®¿é—®è¿›è¡ŒæŽˆæƒã€‚
-	 * @param string $token è¿™æ˜¯ä¹‹å‰èŽ·å–çš„request_token
+	 * »ñÈ¡ÓÃ»§ÈÏÖ¤µØÖ·£¨authorize url£©£¬´Ë¹ý³ÌÓÃ»§½«¶ÔAppµÄ·ÃÎÊ½øÐÐÊÚÈ¨¡£
+	 * @param string $token ÕâÊÇÖ®Ç°»ñÈ¡µÄrequest_token
 	 * @param $sign_in_with_sohu
 	 */
 	function getAuthorizeURL($token, $sign_in_with_sohu = TRUE) {
@@ -114,8 +114,8 @@ class SohuOAuth {
 
 	/**
 	 *
-	 * ç”¨æˆ·è®¤è¯å®Œæ¯•åŽèŽ·å–access token
-	 * @param string $oauth_verifier ç”¨æˆ·æŽˆæƒåŽäº§ç”Ÿçš„è®¤è¯ç 
+	 * ÓÃ»§ÈÏÖ¤Íê±Ïºó»ñÈ¡access token
+	 * @param string $oauth_verifier ÓÃ»§ÊÚÈ¨ºó²úÉúµÄÈÏÖ¤Âë
 	 * @returns array("oauth_token" => "the-access-token",
 	 *                "oauth_token_secret" => "the-access-secret",
 	 *                "user_id" => "9436992",
@@ -133,10 +133,10 @@ class SohuOAuth {
 	}
 
 	/**
-	 * XAuthçš„èŽ·å–access tokenæ–¹æ³•ï¼Œéœ€è¦å¯¹åº”ç”¨æŽˆæƒçš„ç”¨æˆ·çš„ç”¨æˆ·åå’Œå¯†ç ã€‚
+	 * XAuthµÄ»ñÈ¡access token·½·¨£¬ÐèÒª¶ÔÓ¦ÓÃÊÚÈ¨µÄÓÃ»§µÄÓÃ»§ÃûºÍÃÜÂë¡£
 	 *
-	 * @param string $username ç”¨æˆ·å
-	 * @param string $password ç”¨æˆ·çš„ç§˜å¯†
+	 * @param string $username ÓÃ»§Ãû
+	 * @param string $password ÓÃ»§µÄÃØÃÜ
 	 * @returns array("oauth_token" => "the-access-token",
 	 *                "oauth_token_secret" => "the-access-secret",
 	 *                "user_id" => "9436992",
@@ -155,7 +155,7 @@ class SohuOAuth {
 	}
 
 	/**
-	 * OAuthRequest GETè¯·æ±‚çš„åŒ…è£…ç±»
+	 * OAuthRequest GETÇëÇóµÄ°ü×°Àà
 	 */
 	function get($url, $parameters = array()) {
 		$response = $this->oAuthRequest($url, 'GET', $parameters);
@@ -166,7 +166,7 @@ class SohuOAuth {
 	}
 
 	/**
-	 * OAuthRequest POSTè¯·æ±‚çš„åŒ…è£…ç±»
+	 * OAuthRequest POSTÇëÇóµÄ°ü×°Àà
 	 */
 	function post($url, $parameters = array()) {
 		$response = $this->oAuthRequest($url, 'POST', $parameters);
@@ -177,7 +177,7 @@ class SohuOAuth {
 	}
 
 	/**
-	 * OAuthRequest DELETEè¯·æ±‚çš„åŒ…è£…ç±»
+	 * OAuthRequest DELETEÇëÇóµÄ°ü×°Àà
 	 */
 	function delete($url, $parameters = array()) {
 		$response = $this->oAuthRequest($url, 'DELETE', $parameters);
@@ -188,10 +188,10 @@ class SohuOAuth {
 	}
 
 	/**
-	 * ç­¾åæ–¹æ³•å¹¶å‘é€httpè¯·æ±‚
-	 * @param string $url api åœ°å€
-	 * @param string $method httpè¯·æ±‚æ–¹æ³•ï¼ŒåŒ…æ‹¬ GET,POST,DELETE,TRACE,HEAD,OPTIONS,PUT
-	 * @param $parameters è¯·æ±‚å‚æ•°
+	 * Ç©Ãû·½·¨²¢·¢ËÍhttpÇëÇó
+	 * @param string $url api µØÖ·
+	 * @param string $method httpÇëÇó·½·¨£¬°üÀ¨ GET,POST,DELETE,TRACE,HEAD,OPTIONS,PUT
+	 * @param $parameters ÇëÇó²ÎÊý
 	 */
 	function oAuthRequest($url, $method, $parameters) {
 		if (strrpos($url, 'https://') !== 0 && strrpos($url, 'http://') !== 0) {
@@ -208,9 +208,9 @@ class SohuOAuth {
 	}
 
 	/**
-	 * å‘èµ·HTTPè¯·æ±‚
+	 * ·¢ÆðHTTPÇëÇó
 	 *
-	 * @return APIè¿”å›žç»“æžœ
+	 * @return API·µ»Ø½á¹û
 	 */
 	function http($url, $method, $postfields = NULL) {
 		$this->http_info = array();

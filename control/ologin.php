@@ -13,7 +13,8 @@ class Control_ologin extends Controller{
 		$api_name = keke_global_class::get_open_api();
 		$type = $_GET['type'];
 		if($type){
-			Keke_oauth_weibo::instance($type)->get_login_info();
+			$u = Keke_oauth_weibo::instance($type)->get_login_info();
+			var_dump($u);die;
 		}
 		require Keke_tpl::template("oauth_login");
 	}
@@ -21,7 +22,13 @@ class Control_ologin extends Controller{
 	function action_login(){
 		 global $_K,$ouri,$code;
 	     $type = $_GET['type'];
+	     //如果access_token 有值,返回到index
+	     if($_SESSION[$type.'_token']['access_token']){
+	     	$this->request->redirect('ologin?type='.$type);
+	     }
+	     //回调页面
 	     $ouri = $_K['website_url'].'/index.php/ologin/login?back=1&type='.$type;
+	     // echo  $ouri = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'].'?back=1&type='.$type;
 	     if($_GET['back']){
  	     	$code = $_GET['code'];
 	     	Keke_oauth_weibo::instance($type)->get_access_token();

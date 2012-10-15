@@ -33,13 +33,14 @@ class Keke_core extends Keke_base {
 	 *        	inajax
 	 *        	{'alert_info'=>'提示','alert_right'=>'成功','confirm_info'=>'确认','alert_error'=>'错误'}
 	 *        	非ajax {'info'=>默认,'success'=>'成功','warning'=>'警告'}
+	 *        success 成功  error 错误 warning 警告/请示  confirm 确认
 	 *@param $title 标题，默认为“系统提示”
 	 *@param $time 跳转页显示时间，默认为3秒        
 	 */
 	static function show_msg( $content = "", $url = "",  $type = 'info',$title = NULL,$time = 3) {
 		global $_K, $basic_config, $username, $uid, $nav_list, $_lang;
-		$r = $_REQUEST;
-		$msgtype = $type;
+		$r = $_GET;
+		//$msgtype = $type;
 		if($title===NULL){
 			$title = $_lang['sys_tips'];
 		}

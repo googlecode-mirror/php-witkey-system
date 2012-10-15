@@ -10,25 +10,6 @@
 <script src="{BASE_URL}/resource/js/jquery.js"></script>
 </head>
 <body>
-    <h1>
-    	<a href="{$base_uri}?type=success">success</a>
-	    <a href="{$base_uri}?type=warning">error</a>
-		<a href="{$base_uri}?type=info">info</a>
-	</h1>
-	
-    <div class="systips">
-        <div class="systips_detail {$type}">
-            	<div class="tip_icon">&nbsp;</div>
-                <div class="tip_title">{$title} {$_lang['page_jumping']}</div>
-                <div class="tip_messages">(我要的效果与altDialog 的效果差不多，'info'=>'提示','success'=>'成功','confirm'=>'确认','error'=>'错误',
-				可以用art.dialog 的效果图片,现在的这个，只能将就用下)
-				 </div>
-                <div class="tip_help"><span id="time">{$time}</span>{$_lang['seconds_auto_jump']}{$_lang['no_jump_please_click']}
-				<a href="{$url}" class="button"><span class="icon rightarrow">&nbsp;</span>{$_lang['here']}</a></div>
-            
-        </div>
-    </div>
-	
 	<div id="win" class="win">
 		<div class="box">
 			<div class="inner">
@@ -52,7 +33,7 @@
 					</div>
 				</article>
 				<div class="loading_bar">
-	                <div class="progress_bar stripes" style="width:100%;"></div>
+	                <div class=" stripes" style="width:100%;"></div>
 	            </div>
 				<footer class="box_footer">
 					<p class="fl_l"><strong id="time" class="cc00">{$time}</strong> {$_lang['seconds_auto_jump']}{$_lang['no_jump_please_click']}</small></p>
@@ -64,31 +45,21 @@
 		</div>
 		<div class="mask"></div>
 	</div> 
- 	
-	
 	<script type='text/javascript'>
 		window.onload=function(){
-			//setInterval(show_time, 0);
-			//setTimeout(monitor,0);
-			resitexy();
+			setInterval(show_time, 1000);
 		}
-		function monitor()
-	    {
-	        window.onresize = resitexy;
-	    } 
 		function show_time(){
 			var time = document.getElementById("time").innerHTML;
 			time = parseInt(time);
 			if (time > 0){
 				time -= 1; 
-			}document.getElementById("time").innerHTML = time;
+			}
+			document.getElementById("time").innerHTML = time;
+			if(time ==0){
+				window.location.href="{$url}";
+			}
 		}
-		function resitexy(){
-	      	var boxwindow 	= $("#win .box");
-	      	var hs 			= boxwindow.height();
-	        var ws 			= boxwindow.width();
-	        boxwindow.css({"left":($(window).width()-ws)/2+"px","top":($(window).height()-hs)/2+"px"});
-	      }
 	</script>
 </body>
 </html>

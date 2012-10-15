@@ -1192,7 +1192,7 @@ function hideMenu(attr, mtype) {
 
 function showDialog(msg, mode, t, func, cover, funccancel) {
 	cover = isUndefined(cover) ? (mode == 'info' ? 0 : 1) : cover;
-	mode = in_array(mode, ['confirm', 'notice', 'info','right','sigh']) ? mode : 'alert';
+	mode = in_array(mode, ['confirm', 'success', 'content','error']) ? mode : 'info';
 	var menuid = 'fwin_dialog';
 	var menuObj = document.getElementById(menuid);
 
@@ -1205,10 +1205,10 @@ function showDialog(msg, mode, t, func, cover, funccancel) {
 	var s = '<table cellpadding="0" cellspacing="0" class="fwin"><tr><td class="tt_l"></td><td class="tt_c"></td><td class="tt_r"></td></tr><tr><td class="m_l"></td><td class="m_c"><h3 class="flb"><em>';
 	s += t ? t : L.operate_notice;
 	s += '</em><span><a href="javascript:;" id="fwin_dialog_close" class="flbc" onclick="hideMenu(\'' + menuid + '\', \'dialog\')" title="'+L.close+'">'+L.close+'</a></span></h3>';
-	if(mode == 'info') {
+	if(mode == 'content') {
 		s += msg ? msg : '';
 	} else {
-		s += '<div class="c' + (mode == 'info' ? '' : ' altw') + '"><div class="' + (mode == 'alert' ? 'alert_error' :mode=='confirm'?'confirm_info':mode=='right'?'alert_right':'alert_info') + '"><p>' + msg + '</p></div></div>';
+		s += '<div class="c altw"><div class="' + (mode == 'error' ? 'error' :mode=='confirm'?'confirm':mode=='success'?'success':'info') + '"><p>' + msg + '</p></div></div>';
 		s += '<p class="o pns"><button id="fwin_dialog_submit" value="true" class="pn pnc"><strong>'+L.submit+'</strong></button>';
 		s += mode == 'confirm' ? '<button id="fwin_dialog_cancel" value="true" class="pn" onclick="hideMenu(\'' + menuid + '\', \'dialog\')"><strong>'+L.cancel+'</strong></button>' : '';
 		s += '</p>';

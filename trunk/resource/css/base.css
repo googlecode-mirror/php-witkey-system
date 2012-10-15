@@ -361,11 +361,11 @@ a.top em{display:block; font-size:40px; height:10px; overflow:hidden; *margin-le
 .altw .fltc{margin-bottom: 0;padding: 8px;}
 
 /*alert提示框的效果*/
-.alert_right,.alert_error,.alert_info,.confirm_info{padding: 15px 0 6px 58px;min-height: 40px;height: auto !important;height: 40px;line-height: 160%;background: url(../img/keke/right.gif) no-repeat 8px 8px;font-size: 14px;}
-.alert_error{background-image: url(../img/keke/error.gif);}   /*错误的提示*/
-.alert_info,.alert_sigh{background-image: url(../img/keke/info.gif);}   /* info提示*/
-.alert_right{background-image: url(../img/keke/right.gif);}  /* right提示*/
-.confirm_info{background-image:url(../img/keke/confirm.png);} /*确认提示*/
+.success,.error,.info,.confirm{padding: 15px 0 6px 58px;min-height: 40px;height: auto !important;height: 40px;line-height: 160%;background: url(../img/keke/right.gif) no-repeat 8px 8px;font-size: 14px;}
+.error{background-image: url(../img/keke/error.gif);}   /*错误的提示*/
+.info{background-image: url(../img/keke/info.gif);}   /* info提示*/
+.success{background-image: url(../img/keke/right.gif);}  /* right提示*/
+.confirm{background-image:url(../img/keke/confirm.png);} /*确认提示*/
 
 /*pop窗口的样式*/
 .p_pop,.p_pof{/*padding: 5px 0;*/border: 1px solid;border-color: #DDD #AAA #888 #DDD;background: #FFF;}

@@ -3,11 +3,11 @@
 @import 'boxs.less';
 @import 'grid.less';
 @theme_bg:  #EAEAEA url(../images/os_x_lion_galaxy_hd.jpg) fixed center no-repeat;
-@theme_bg1: #fff url(../images/01.jpg) top right repeat ;
+@theme_bg1: #fff ;
 @theme_bg2: #fff url(../images/bg_hp.png) center top repeat-x;
 @theme_bg3:  url(../images/bg.png) fixed center top no-repeat ;
 body{
-	background:@theme_bg2 ;
+	background:@theme_bg1 ;
 	font: 12px/25px  Arial,sans-serif;
 	color:#6d6d6d;
 }
@@ -270,37 +270,53 @@ iframe{ width: 100%; height: 500px;}
 	height:100%;
 	left:0;
 	top:0;
-	z-index:9998;
+	z-index:1;
 	
-
-	.box{
-		.winbox;
+	.win_table{
 		z-index: 9999;
 		position:absolute;
 		left: 50%;
 		top: 50%;
-		margin-left:-225px;
+		margin-left:-190px;
 		margin-top:-116px;
-		width: 450px;
+		width: 380px;
+		border:none;
+		
+		
+		td{ border:none;
+			&.tt_l,&.tt_c,&.tt_r,&.m_l,&.m_r,&.b_l,&.b_c,&.b_r{
+				
+			}
+			&.tt_l,&.tt_r,&.b_l,&.b_r{}
+			&.tt_c,&.b_c{}
+			&.m_l,&.m_r{}
+		}
+	
+	}
+	
+	
+	.box{
+		.winbox;
+		
 		
 		.box_detail{
 			
-			height:140px;
+			min-height:80px;
 			
 			&.success{
-				.detail{padding-left:80px;}
+				.detail{padding-left:70px;}
 				.icon{.fl_l; width:48px; height:48px; margin:10px 0 0 15px; background:url(../img/succeed.png) no-repeat;}
 			}
 			&.info{
-				.detail{padding-left:80px;}
+				.detail{padding-left:70px;}
 				.icon{.fl_l; width:48px; height:48px; margin:10px 0 0 15px;  background:url(../img/warning.png) no-repeat;}
 			}
 			&.error{
-				.detail{padding-left:80px;}
+				.detail{padding-left:70px;}
 				.icon{.fl_l; width:48px; height:48px; margin:10px 0 0 15px;  background:url(../img/error.png) no-repeat;}
 			}
 			&.confirm{
-				.detail{padding-left:80px;}
+				.detail{padding-left:70px;}
 				.icon{.fl_l; width:48px; height:48px; margin:10px 0 0 15px;  background:url(../img/question.png) no-repeat;}
 			}
 			
@@ -312,9 +328,12 @@ iframe{ width: 100%; height: 500px;}
 	/* 遮罩
 		-------------------------*/
 	.mask{
+		position:absolute;
 		width:100%;
 		height:100%;
-		position:absolute;
+		left:0;
+		top:0;
+		z-index:1998;
 		background:#000;
 		filter:alpha(opacity=30);
 		-moz-opacity:0.3;opacity:0.3;
@@ -322,8 +341,7 @@ iframe{ width: 100%; height: 500px;}
 		display:table-cell!important; 
 		vertical-align:middle!important;
 		display:block;
-		z-index:1998
-		left:0;
-		top:0;
+
+
 	}
 }

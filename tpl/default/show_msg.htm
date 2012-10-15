@@ -1,15 +1,40 @@
 <!--{if $_K['inajax']==1}-->
+<link href="{BASE_URL}/{SKIN_PATH}/ui/style/theme.css" rel="stylesheet" >
+<!--[if lt IE 9]>
+<script src="{BASE_URL}/resource/js/system/html5.js"></script>
+<![endif]-->
 <script src="{BASE_URL}/resource/js/jquery.js"></script>
 <script src="{BASE_URL}/resource/js/system/keke.js"></script>
-		<h3 class="flb"><em>{$title}</em><span><a href="javascript:;" class="flbc" onClick="hideWindow('$r['handlekey']');" title="close">{$_lang['close']}</a></span></h3>
-     	<div class="c altw"><div class="{$type}"><p>$content</p></div></div>
-		<p class="o pns">
+
+		<div class="box">
+			<div class="inner">
+				<header class="box_header">
+					<div class="box_title">
+						<h1 class="title">{$title}</h1>
+					</div>
+					<p class="win_close"><a href="javascript:;" onClick="hideWindow('$r['handlekey']');">X</a></p>
+				</header>	
+
+
+     			<article class="box_detail {$type}">
+					<div class="icon"></div>
+					<div class="detail ">
+						<p>
+							{$content}
+						</p>
+					</div>
+				</article>
+	
+		<footer class="box_footer">
+			<p class="btn_box">
 			{if $time<1}
 			<button class="pn pnc" value="true" onclick="{if $url}window.location.href ='$url';return false;{else}hideWindow('$r['handlekey']');{/if}" id="fwin_dialog_submit"><strong>{$_lang['confirm']}</strong></button>
 			{else}
 			<button class="pn" onclick="hideWindow('$r['handlekey']');" id="fwin_dialog_submit"><strong>{$_lang['jumping']}</strong></button>
 			{/if}
-		</p>
+			</p>
+		</footer>
+
 <script type="text/javascript">
 	var t = parseInt("$time")*1000;
 	var u =encodeURI("$url");
@@ -31,13 +56,15 @@
 <script src="{BASE_URL}/resource/js/jquery.js"></script>
 </head>
 <body>
-<div id="win" class="win">
+<div id="win" class="win ">
+	<table cellspacing="0" cellpadding="0" class="win_table"><tbody><tr><td class="tt_l"></td><td class="tt_c"></td><td class="tt_r"></td></tr><tr><td class="m_l"></td><td class="m_c">
 		<div class="box">
 			<div class="inner">
 				<header class="box_header">
 					<div class="box_title">
 						<h1 class="title">{$title}</h1>
 					</div>
+					<p class="win_close"><a href="#">X</a></p>
 				</header>	
 				<article class="box_detail {$type}">
 					<div class="icon"></div>
@@ -47,20 +74,24 @@
 						</p>
 					</div>
 				</article>
-				<div class="loading_bar">
-	                <div class=" stripes" style="width:100%;"></div>
-	            </div>
+				
 				<footer class="box_footer">
-					<p class="fl_l"><strong id="time" class="cc00">{$time}</strong> {$_lang['seconds_auto_jump']}{$_lang['no_jump_please_click']}</small></p>
+					<p class="msg">
+							<strong id="time" class="cc00">{$time}</strong> <small>{$_lang['seconds_auto_jump']}{$_lang['no_jump_please_click']}</small>
+					</p>
 					
+					<p class="btn_box">
+						
 					<button class="submit" onclick='window.location.href="{$url}"'>{$_lang['submit']}</button>
 					{if $type =='confirm'}
 					<button class="button" onclick="window.history.back(-1);">{$_lang['cancel']}</button>
+					</p>
 					{/if}
 				</footer>
 			</div>
 		</div>
-		<div class="mask"></div>
+	</td><td class="m_r"></td></tr><tr><td class="b_l"></td><td class="b_c"></td><td class="b_r"></td></tr></tbody></table>	
+	<div class="mask"></div>
 	</div> 
 	<script type='text/javascript'>
 		window.onload=function(){

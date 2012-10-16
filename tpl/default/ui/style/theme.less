@@ -235,7 +235,81 @@ iframe{ width: 100%; height: 500px;}
 				border-radius:8px; 
 			}
 		}
+/* 按钮
+-------------------------------*/
+	button.button,a.button{
+		padding: 4px 10px;
+		font:bold 14px/20px "微软雅黑"; 
+		text-align: center; 
+		text-decoration: none;
+		white-space:nowrap; 
+		border: 1px solid #cacaca;
+		border-bottom-color: #bbb;
+		color: #3C3C3D;
+		text-shadow: 0 -1px 0 rgba(255,255,255,.3);
+		background: #F6F6F6; 
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(.2, #F6F6F6), color-stop(1, #E3E3E3)); 
+		background: -moz-linear-gradient(center top, #F6F6F6 20%, #E3E3E3 100%); 
+		-webkit-border-radius: 4px; 
+		-moz-border-radius: 4px; 
+		khtml-border-radius: 4px; 
+		border-radius: 4px;
+		&:hover{
+			color: #fff;
+			border-color:#388AD4;
+			background: #75A9E2; 
+			background: -webkit-gradient(linear, left top, left bottom, color-stop(.2, #75A9E2), color-stop(1, #4C83BF)); 
+			background: -moz-linear-gradient(center top, #75A9E2 20%, #4C83BF 100%);
+			text-shadow: 0 1px 0 rgba(0,0,0,.3);
+			-webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 2px rgba(255,255,255,.3), 0 1px 2px rgba(0,0,0,.29); 
+			-moz-box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 2px rgba(255,255,255,.3), 0 1px 2px rgba(0,0,0,.29); 
+			box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 2px rgba(255,255,255,.3), 0 1px 2px rgba(0,0,0,.29);
+			background-position:0 0;
+		}
+		&:active{
+			border-color: #20559a;
+			background-position:0 0;
+			-webkit-box-shadow: inset 0 0 7px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,1);
+			-moz-box-shadow: inset 0 0 7px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,1);
+			box-shadow: inset 0 0 7px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,1);
+		}
+	}
+	button.submit,a.submit{
+			border: 1px solid #4081af; 
+			border-bottom-color: #20559a; 
+			background: #0090D2; 
+			background: -webkit-gradient(linear, left top, left bottom, color-stop(.2, #52a8e8), color-stop(1, #2e76cf)); 
+			background: -moz-linear-gradient(center top, #52a8e8 20%, #2e76cf 100%); 
+			font:bold 14px/20px "微软雅黑"; 
+			display:inline-block;
+			color:#fff; 
+			padding: 4px 10px;
+			text-align: center; 
+			text-shadow: 0 -1px 0 rgba(0,0,0,.3); 
+			text-decoration: none; 
+			-webkit-border-radius: 4px; 
+			-moz-border-radius: 4px; 
+			khtml-border-radius: 4px; 
+			border-radius: 4px;
+			-webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 2px rgba(255,255,255,.3), 0 1px 2px rgba(0,0,0,.29); 
+			-moz-box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 2px rgba(255,255,255,.3), 0 1px 2px rgba(0,0,0,.29); 
+			box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 2px rgba(255,255,255,.3), 0 1px 2px rgba(0,0,0,.29);
+		
+			&:hover{
+				background: #0073d2; 
+				background: -webkit-gradient(linear, left top, left bottom, color-stop(.2, #3e9ee5), color-stop(1, #1666ca)); 
+				background: -moz-linear-gradient(center top, #3e9ee5 20%, #1666ca 100%);
+			}
 
+			&:active{
+				-webkit-box-shadow: inset 0 0 7px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,1);
+				-moz-box-shadow: inset 0 0 7px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,1);
+				box-shadow: inset 0 0 7px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,1);
+				border-color: #20559a;
+			}
+	
+	}
+	
 
 .nav{
 		background:#537bcc url(../img/nav_bg.jpg) no-repeat center top;  border-top:1px solid #7296d8; border-bottom:1px solid #7296d8;
@@ -301,7 +375,7 @@ iframe{ width: 100%; height: 500px;}
 		
 		.box_detail{
 			
-			min-height:80px;
+			min-height:40px;
 			
 			&.success{
 				.detail{padding-left:70px;}
@@ -335,8 +409,8 @@ iframe{ width: 100%; height: 500px;}
 		top:0;
 		z-index:1998;
 		background:#000;
-		filter:alpha(opacity=30);
-		-moz-opacity:0.3;opacity:0.3;
+		filter:alpha(opacity=50);
+		-moz-opacity:0.5;opacity:0.5;
 		text-align:center;
 		display:table-cell!important; 
 		vertical-align:middle!important;
@@ -344,4 +418,65 @@ iframe{ width: 100%; height: 500px;}
 
 
 	}
+}
+
+.fwin{ box-shadow: 0 0 20px rgba(0,0,0,.2);border:1px solid #b7b7b7; border-radius:5px;
+
+	.success,.error,.info,.confirm{padding: 15px 0 6px 58px;min-height: 40px;height: auto !important;height: 40px;line-height: 160%;background: url(../img/keke/right.gif) no-repeat 8px 8px;font-size: 14px;}
+	.error{background-image: url(../img/error.png);}  
+	.info{background-image: url(../img/warning.png);}   
+	.success{background-image: url(../img/succeed.png);} 
+	.confirm{background-image:url(../img/question.png);}
+	
+	.tt_l,.tt_c,.tt_r,.m_l,.m_r,.b_l,.b_c,.b_r{overflow: hidden; border:none; /*background:#bbbbbb; filter:alpha(opacity=70); background:rgba(187, 187, 187, .7) !important;*/}
+	.tt_l,.tt_r,.b_l,.b_r{/*width: 8px;height: 8px;*/}
+	.tt_c,.b_c{/*height: 8px;*/}
+	.m_l,.m_r{/*width: 8px;*/}
+	.tt_l{}
+	.tt_r{}
+	.b_l{}
+	.b_r{}
+	
+	.m_c{background: #FFF; position:relative;  border: 1px solid #fff;
+		.c{padding: 10px;background:#f7f7f7; border-top:1px solid #eee; border-bottom: 1px solid #eee;}
+		.o{ padding: 10px; margin-bottom:0; height: 31px;text-align: right;  }
+	}
+	
+	.altw{width: 350px; }
+	
+	.flb { 
+		height:28px; line-height:28px;  font-weight:bold;text-align: center; color:#333;  background-color:#fff;
+		em{
+			font-size: 14px;font-weight: 700;color: #333;  font-style:normal;
+			a{text-decoration: none;} 
+		}
+	 	span{
+	 		color: #999; position: absolute;right:5px; top:0; font:bold 12px/15px 'Comic Sans MS';
+	 		a{
+	 			color:#666;border:1px solid #b7b7b7; display:block;padding:2px 10px; background:#fff;text-decoration:none;border-radius:0 0 5px 5px;
+	 			&:hover{background:#c00; border-color:#900; color:#fff;box-shadow:0 0 5px rgba(204, 0, 0,.5);}
+	 		}
+	 		
+	 	}
+	}
+
+	.pns{
+		 button { margin-left:10px ; padding: 6px 8px !important; cursor: pointer; display: inline-block; text-align: center; line-height: 1;   width:auto; overflow:visible; color: #333; border: solid 1px #999 !important; border-radius: 5px; background: #DDD; filter:~"progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFFFF', endColorstr='#DDDDDD')"; background: linear-gradient(top, #FFF, #DDD); background: -moz-linear-gradient(top, #FFF, #DDD); background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFF), to(#DDD)); text-shadow: 0px 1px 1px rgba(255, 255, 255, 1); box-shadow: 0 1px 0 rgba(255, 255, 255, .7),  0 -1px 0 rgba(0, 0, 0, .09); -moz-transition:-moz-box-shadow linear .2s; -webkit-transition: -webkit-box-shadow linear .2s; transition: box-shadow linear .2s; 
+			&:-moz-focus-inner{ border:0; padding:0; margin:0; }
+			&:focus { outline:none 0 !important; border-color:#333; box-shadow:0 0 8px rgba(0, 0, 0, .5); }
+			&:hover { color:#000 !important; border-color:#666 !important; }
+			&:active { border-color:#666 !important; filter:~"progid:DXImageTransform.Microsoft.gradient(startColorstr='#DDDDDD', endColorstr='#FFFFFF')"; background: linear-gradient(top, #DDD, #FFF); background: -moz-linear-gradient(top, #DDD, #FFF); background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#DDD), to(#FFF)); box-shadow:inset 0 1px 1em rgba(0, 0, 0, .3); }
+			&[disabled] { cursor:default; color:#666; background:#DDD; border: solid 1px #999; filter:alpha(opacity=50); opacity:.5; box-shadow:none; }
+			&.pnc { 
+				color: #FFF ; border: solid 1px #1c6a9e !important; background: #2288cc;  text-shadow: -1px -1px 1px #1c6a9e;
+				filter:~"progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bbee', endColorstr='#2288cc')"; background: linear-gradient(top, #33bbee, #2288cc); background: -moz-linear-gradient(top, #33bbee, #2288cc); background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#33bbee), to(#2288cc));
+				strong{color: #FFF ; }
+				&:focus {border-color:#426DC9; box-shadow:0 0 8px rgba(66, 109, 201, .9); }
+				&:hover { color:#FFF !important; border-color:#0F3A56 !important; } 
+				&:active { border-color:#1c6a9e !important; filter:~"progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bbee', endColorstr='#2288cc')"; background: linear-gradient(top, #33bbee, #2288cc); background: -moz-linear-gradient(top, #33bbee, #2288cc); background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#33bbee), to(#2288cc)); box-shadow:inset 0 1px 1em rgba(0, 0, 0, .3);}
+			}
+				
+		}
+	}
+		
 }

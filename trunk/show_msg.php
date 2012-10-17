@@ -15,7 +15,7 @@ if($_GET['type']){
 	$type = $_GET['type'];
 }
 if($type){
-	Keke::show_msg('content','http://localhost/kppw_google/show_msg.php',$type,'test',99999);
+	Keke::show_msg('content','http://localhost/kppw_google/show_msg.php',$type,'test',9);
 }
 
 //µ¯³ö¿ò²âÊÔ

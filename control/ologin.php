@@ -12,10 +12,9 @@ class Control_ologin extends Controller{
 		$api_open = unserialize($_K['oauth_api_open']);
 		$api_name = keke_global_class::get_open_api();
 		$type = $_GET['type'];
-		
 		if($type){
 			$u = Keke_oauth_weibo::instance($type)->get_login_info();
-			var_dump($u);
+			//var_dump($_SESSION);
 		}
 		require Keke_tpl::template("oauth_login");
 	}
@@ -28,15 +27,11 @@ class Control_ologin extends Controller{
 	     	$this->request->redirect('ologin?type='.$type);
 	     }
 	     //回调页面
-	    // $ouri = $_K['website_url'].'/index.php/ologin/login?back=1&type='.$type;
 	     $ouri = $_K['website_url'].'/index.php/ologin/call/'.$type;
 	     //url 地址编码
 	     $ouri = urlencode($ouri);
-	     // echo  $ouri = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'].'?back=1&type='.$type;
+	  
 	     if($_GET['back']){
- 	     	//$code = $_GET['code'];
- 	     	/* var_dump($_GET);
-	     	die; */
  	     	Keke_oauth_weibo::instance($type)->get_access_token();
  	     	header('Location:'.$_K['website_url'].'/index.php/ologin?type='.$type);
  	     	die;
@@ -44,7 +39,6 @@ class Control_ologin extends Controller{
  	     	$to_url =  Keke_oauth_weibo::instance($type)->get_auth_url($ouri);
  	     	$to_url = urldecode($to_url);
  	     	header("Location:".$to_url);
- 	     	//die;
  	     }
 	}
 	function action_call(){
@@ -59,50 +53,3 @@ class Control_ologin extends Controller{
 	}
 	
 }
-
-/* $type or exit(Keke::show_msg($_lang['oprerate_notice'],"index.php?do=login",2,$_lang['type_no_empty'],"warning"));
-$page_title=$_lang['login'].'- '.$_K['html_title'];
-// 初始化信息
-$oa = new keke_oauth_login_class ( $type );
-$api_name = keke_global_class::get_open_api();
-$login_obj = new keke_user_login_class ();
-$oauth_obj = new Keke_witkey_member_oauth_class ();
-$oauth_url = Keke::$_sys_config ['website_url'] . "/index.php?do=$do&type=$type";
-//获取登录平台
-$oauth_type_arr = keke_global_class::get_oauth_type ();
-
-//oauth登录
-if ($type && ! $_SESSION ['auth_' . $type] ['last_key']) {
-	if ($type=='sina' && $error_code=='21330'){//当用户在sina平台上拒绝oauth登陆时,给出提示
-		Keke::show_msg($_lang['notice_message'], Keke::$_sys_config ['website_url'].'/index.php?do=login',1,$_lang['login_in_fail'],"alert_right");
-	}
-	$oauth_vericode = $oauth_vericode;
-	$oa->login ( $call_back, $oauth_url );
-} else {
-	$oauth_user_info = $oa->get_login_user_info ();
-}
-//var_dump($oauth_user_info);
-//echo var_dump(Keke::submitcheck ($formhash ));die();
-//oauth 绑定判断
-$bind_info = keke_register_class::is_oauth_bind ( $type, $oauth_user_info ['account'] );
-if ($oauth_user_info && $bind_info = keke_register_class::is_oauth_bind ( $type, $oauth_user_info ['account'] )) {
-	$user_info = Keke::get_user_info ( $bind_info ['uid'] );
-	$login_user_info = $login_obj->user_login ( $user_info ['username'], $user_info ['password'], null, 1 );
-	$login_obj->save_user_info ( $login_user_info, 1 );
-
-}
-if (Keke::submitcheck($formhash)) {
-	$login_user_info = $login_obj->user_login ( $txt_account,md5($pwd_password) , $txt_code, 1 );
-	keke_register_class::register_binding ( $oauth_user_info, $login_user_info, $type );
-	$login_obj->save_user_info ( $login_user_info, 1 );
-
-	//联盟
-/*	if ($unit) {
-		$unit_obj = new kk_client ( $app_key, $app_secret );
-		$task_url = $unit_obj->clientlogin ( $login_user_info ['uid'] );
-		keke_function_class::curl_request ( $task_url, "get", null );
-	}*/
-
-// }
-
-// require Keke_tpl::template ( $do ); 

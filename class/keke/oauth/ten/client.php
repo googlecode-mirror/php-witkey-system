@@ -20,7 +20,7 @@ class Keke_oauth_ten_client extends Keke_oauth_weibo{
 	 	return  OAuth::getAuthorizeURL($url); // self::$_oauth_obj->getAuthorizeURL($url);
 	 }
 	 public function get_access_token(){
-	 	global $code,$ouri;
+	 	global $ouri;
 	 	$code = $_GET['code'];
 	 	$openid = $_GET['openid'];
 	 	$openkey = $_GET['openkey'];

@@ -22,7 +22,9 @@ class Keke_oauth_sina_client extends Keke_oauth_weibo{
 	 	return self::$_oauth_obj->getAuthorizeURL($url);
 	 }
 	 public function get_access_token(){
-	 	global $ouri,$code;
+	 	global $ouri;
+	 	$code = $_GET['code'];
+	 	$ouri = urldecode($ouri);
 	 	$keys =   array('code'=>$code,'redirect_uri'=>$ouri);
 	 	$token = self::$_oauth_obj->getAccessToken('code',$keys);
 	 	$_SESSION['sina_token'] = $token;

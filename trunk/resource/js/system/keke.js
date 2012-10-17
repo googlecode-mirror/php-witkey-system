@@ -1204,7 +1204,7 @@ function showDialog(msg, mode, t, func, cover, funccancel) {
 	document.getElementById('append_parent').appendChild(menuObj);
 	var s = '<table cellpadding="0" cellspacing="0" class="fwin"><tr><td class="tt_l"></td><td class="tt_c"></td><td class="tt_r"></td></tr><tr><td class="m_l"></td><td class="m_c"><h3 class="flb"><em>';
 	s += t ? t : L.operate_notice;
-	s += '</em><span><a href="javascript:;" id="fwin_dialog_close" class="flbc" onclick="hideMenu(\'' + menuid + '\', \'dialog\')" title="'+L.close+'">'+L.close+'</a></span></h3>';
+	s += '</em><span><a href="javascript:;" id="fwin_dialog_close" class="flbc" onclick="hideMenu(\'' + menuid + '\', \'dialog\')" title="'+L.close+'">X</a></span></h3>';
 	if(mode == 'content') {
 		s += msg ? msg : '';
 	} else {

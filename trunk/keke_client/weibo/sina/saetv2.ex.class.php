@@ -191,14 +191,14 @@ class SaeTOAuthV2 {
 		} else {
 			throw new OAuthException("wrong auth type");
 		}
-
+       
 		$response = $this->oAuthRequest($this->accessTokenURL(), 'POST', $params);
 		$token = json_decode($response, true);
 		if ( is_array($token) && !isset($token['error']) ) {
 			$this->access_token = $token['access_token'];
 			$this->refresh_token = $token['refresh_token'];
 		} else {
-			var_dump($token);die;
+			var_dump($this->accessTokenURL(),$token);die;
 			throw new OAuthException("get access token failed." . $token['error']);
 		}
 		return $token;

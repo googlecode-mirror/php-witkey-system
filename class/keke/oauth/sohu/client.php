@@ -44,9 +44,6 @@ class Keke_oauth_sohu_client extends Keke_oauth_login{
 	 		return TRUE;
 	 	}
 	 }
-	 public function format_user_info(){
-	 	
-	 }
  
 	 /**
 	  * 返回搜狐微博用户信息
@@ -60,27 +57,7 @@ class Keke_oauth_sohu_client extends Keke_oauth_login{
   'url' => string '' (length=0)
   'gender' => string '1' (length=1)
   'profile_image_url' => string 'http://s4.cr.itc.cn/i/3/avt48.png' (length=33)
-  'protected' => string '1' (length=1)
-  'followers_count' => string '2' (length=1)
-  'profile_background_color' => string '' (length=0)
-  'profile_text_color' => string '' (length=0)
-  'profile_link_color' => string '' (length=0)
-  'profile_sidebar_fill_color' => string '' (length=0)
-  'profile_sidebar_border_color' => string '' (length=0)
-  'friends_count' => string '46' (length=2)
-  'created_at' => string 'Thu Oct 20 10:39:04 +0800 2011' (length=30)
-  'favourites_count' => int 0
-  'utc_offset' => string '' (length=0)
-  'time_zone' => string '' (length=0)
-  'profile_background_image_url' => string '' (length=0)
-  'notifications' => string '' (length=0)
-  'geo_enabled' => boolean false
-  'statuses_count' => int 0
-  'following' => string '1' (length=1)
-  'verified' => boolean false
-  'lang' => string 'zh_cn' (length=5)
-  'contributors_enabled' => boolean false
-	  */
+ 	*/
 	 public function get_login_info(){
 	 	if($this->check_login()){
 	 		//获取当前的用户信息
@@ -91,8 +68,11 @@ class Keke_oauth_sohu_client extends Keke_oauth_login{
 	 	if(CHARSET == 'gbk'){
 	 		$uinfo = Keke::utftogbk($uinfo);
 	 	}
-	 	
+	 	$uinfo = $this->format_user_info($uinfo);
 	 	return $uinfo;
+	 }
+	 public function format_user_info($uinfo){
+	 	return array('uid'=>$uinfo['id'],'username'=>$uinfo['screen_name'],'nick'=>$uinfo['name'],'email'=>'','avatar'=>$uinfo['profile_image_url']);
 	 }
 	
 }

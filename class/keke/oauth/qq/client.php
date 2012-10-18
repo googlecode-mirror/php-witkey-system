@@ -29,9 +29,8 @@ class Keke_oauth_qq_client extends Keke_oauth_login{
 	 	//csrf
 	 	if($_GET['state'] == FORMHASH){
 	 		$token_url = sprintf(self::REQUEST_TOKEN_URL,self::$_key,$ouri,self::$_secret,$code);
-	 		$response = file_get_contents($token_url);
-	 		//var_dump($response);die;
-	 		//return cotent has callback
+	 		 
+	 		$response = Keke::curl_request($token_url,true);
 	 		if (strpos($response, "callback") !== false){
 	 			$lpos = strpos($response, "(");
 	 			$rpos = strrpos($response, ")");
@@ -63,7 +62,7 @@ class Keke_oauth_qq_client extends Keke_oauth_login{
 	 }
 	 public function get_open_id(){
 	 	$graph_url = sprintf(self::OPEN_ID_URL,$_SESSION['qq_token']['access_token']);
-	 	$str  = file_get_contents($graph_url);
+	 	$str  = Keke::curl_request($graph_url);
 	 	if (strpos($str, "callback") !== false)
 	 	{
 	 		$lpos = strpos($str, "(");
@@ -99,23 +98,25 @@ class Keke_oauth_qq_client extends Keke_oauth_login{
 	  */
 	 public function get_login_info(){
 	 	if($this->check_login()){
-	 		echo $get_user_info = "https://graph.qq.com/user/get_user_info?"
+	 		$get_user_info = "https://graph.qq.com/user/get_user_info?"
 	 				. "access_token=" . $_SESSION['qq_token']['access_token']
 	 				. "&oauth_consumer_key=" . self::$_key
 	 				. "&openid=" . $_SESSION['qq_token']["openid"]
 	 				. "&format=json";
 	 		
-	 		$info = file_get_contents($get_user_info);
+	 		$info = Keke::curl_request($get_user_info);
 	 		$uinfo = json_decode($info, true);
+	 		
 	 	}
 	 	if(CHARSET == 'gbk'){
 	 		$uinfo = Keke::utftogbk($uinfo);
 	 	}
+	 	$uinfo = $this->format_user_info($uinfo);
 	 	return $uinfo;
 	 }
-	public function format_user_info(){
-		
-	}
+ 	public function format_user_info($uinfo){
+ 		return array('uid'=>'','username'=>$uinfo['nickname'],'nick'=>'','email'=>'','avatar'=>$uinfo['figureurl']);
+	 }
 	public function do_post($url, $data){
 	    $ch = curl_init();
 	    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE); 

@@ -42,8 +42,7 @@ abstract  class Keke_oauth_login {
 	abstract  public  function get_login_info();
 	/**
 	 * 格式化oauth 登录 的用户信息
-	 * @return array
-	 * @example uid,username,nick,email,avatar
+	 * @return array  uid,username,nick,email,avatar
 	 */
 	abstract public function format_user_info($uinfo);
 	

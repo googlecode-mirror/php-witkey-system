@@ -61,11 +61,13 @@ class Keke_oauth_taobao_client extends Keke_oauth_login{
 	 	if(CHARSET == 'gbk'){
 	 		$uinfo = Keke::utftogbk($uinfo);
 	 	}
+
 	 	return $uinfo;
 	 }
-	 public function format_user_info(){
-	 	
+ 		public function format_user_info($uinfo){
+	 	return array('uid'=>'','username'=>$uinfo['name'],'nick'=>$uinfo['nick'],'email'=>$uinfo['email'],'avatar'=>$uinfo['head']);
 	 }
+	
  	 function curl($url, $postFields = null)
 	 {
 	 	$ch = curl_init();

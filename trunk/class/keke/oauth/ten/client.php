@@ -51,6 +51,10 @@ class Keke_oauth_ten_client extends Keke_oauth_login{
 	 /**
 	  * 返回腾讯微博用户信息
 	  * @see Keke_oauth_weibo::get_login_info()
+	  *  'head' => string 'http://app.qlogo.cn/mbloghead/93373da53594fed9410c' (length=50)
+         'name' => string 'michaeltsui98' (length=13)
+         'nick' => string '徐九江' (length=6)
+         'email' => string '' (length=0)
 	  */
 	 public function get_login_info(){
 	 	if($this->check_login()){
@@ -61,14 +65,15 @@ class Keke_oauth_ten_client extends Keke_oauth_login{
 	 	if(CHARSET == 'gbk'){
 	 		$uinfo = Keke::utftogbk($uinfo);
 	 	}
-	 	$uinfo = $this->format_user_info($uinfo);
+	 
+	 	$uinfo = $this->format_user_info($uinfo['data']);
 	 	return $uinfo;
 	 }
 	 /**
 	  * 用户信息格式化
 	  */
 	 public function format_user_info($uinfo){
-	 	
+	 	return array('uid'=>'','username'=>$uinfo['name'],'nick'=>$uinfo['nick'],'email'=>$uinfo['email'],'avatar'=>$uinfo['head'].'/100');
 	 }
 	
 }

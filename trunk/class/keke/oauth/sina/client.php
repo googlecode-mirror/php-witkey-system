@@ -39,9 +39,7 @@ class Keke_oauth_sina_client extends Keke_oauth_login{
 	 		return TRUE;
 	 	}
 	 }
-	 public function format_user_info(){
-	 	
-	 }
+	 
 	 /**
 	  * 返回新浪微博用户信息
 	  * @see Keke_oauth_weibo::get_login_info()
@@ -54,7 +52,11 @@ class Keke_oauth_sina_client extends Keke_oauth_login{
 	 	if(CHARSET == 'gbk'){
 	 		$uinfo = Keke::utftogbk($uinfo);
 	 	}
+	 	
 	 	return $uinfo;
+	 }
+	 public function format_user_info($uinfo){
+	 	return array('uid'=>$uinfo['id'],'username'=>$uinfo['screen_name'],'nick'=>$uinfo['name'],'email'=>'','avatar'=>$uinfo['profile_image_url']);
 	 }
 	
 }

@@ -4,7 +4,7 @@
 <meta charset="gbk">
 <title>box</title>
 <!--<link href="style/base.css" rel="stylesheet">
-<link href="style/typo.css" rel="stylesheet">-->
+<link href="{BASE_URL}/{SKIN_PATH}/ui/style/typo.css" rel="stylesheet">-->
 <link href="{BASE_URL}/{SKIN_PATH}/ui/style/ui.css" rel="stylesheet" >
 <!--<link href="style/boxs.css" rel="stylesheet" >-->
 <link href="{BASE_URL}/{SKIN_PATH}/ui/style/theme.css" rel="stylesheet" >
@@ -142,12 +142,12 @@
         var windowloading 	= $("#win .loading_bar");
 		win.fadeIn(function(){
 			$("#win .mask").height(windowbody.height());
-			resitexy();
+			//resitexy();
 	
 			var sd = setTimeout(function(){
 				windowloading.slideUp();
 		        windowdetail.slideDown(function(){
-					resitexy();
+					//resitexy();
 				});
 		        
 				clearTimeout(sd);
@@ -158,7 +158,7 @@
 		
 		
 		
-        setTimeout(monitor,500);
+        //setTimeout(monitor,500);
 	    }
 	  function monitor()
 	    {
@@ -182,7 +182,7 @@
 		
 	  }
 	  
-	  display_window();
+	  //display_window();
 	  
 	  $("#win .box_footer").click(function(){
 	  	close_window();
@@ -248,85 +248,9 @@
                 <div class="box_detail">
                     <div id="div_nav_1" class="detail ">
                       
-                     
+                     <!--{include ui/typography}-->
                       
-                      <h2>头像</h2>
-
-                      <div class="clearfix">
-                        {userpic($v['uid'],'small')}
-                      {userpic($v['uid'],'middle')}
-                      {userpic($v['uid'],'larger')}
-                      </div>
-
-			              <!--定义标题 Define Title-->
-			              <h1 class="title">标题1</h1>
-			              <h2 class="title">标题2</h2>
-			              <h3 class="title">标题3</h3>
-			              <h4 class="title">标题4</h4>
-			              <h5 class="title">标题5</h5>
-			              <h6 class="title">标题6</h6>
-			              
-			             
-				              	<h2 class="title">段落</h2>	
-				                  <p>
-				                    段落文字样式演示
-				                      1234567890_+-=:";'|\.,/`~!@#$%^&amp;*()[]{}&lt;&gt;  
-				                  </p>
-				               <h2 class="title">链接</h2>	
-				                <p><a href="#" title="链接">链接</a></p>
-				                
-				               <h2 class="title">文字格式化</h2>	 
-				                <p>对文字格式化 <em>斜体-强调的内容</em> <strong>粗体-语气更强的强调的内容</strong>   <sub>上标</sub> <sup>下标</sup> <del>删除线</del> <ins>下划线</ins></p>
-				                
-				                <h2 class="title">缩写</h2>
-				                  <p>缩写<abbr title="中华人民共和国 People's Republic of China">PRC</abbr></p>
-				                 
-				                <h2 class="title">地址</h2> 
-				                  <address>
-				                  
-				                    公司地址：武汉市洪山区雄楚大街御景名门3号楼1005室<br>
-				                    咨询热线：027 87733922<br>
-				                    客服QQ：1278454916<br>
-				                    固定电话:18971533922<br>
-				                  </address>
-				                  
-				                 <h2 class="title">删除和插入</h2> 
-				                  <p>It really was <del>not</del> <ins cite="rarara.html" >very</ins> good.</p>
-				                  
-				                 <h2 class="title">样本文本</h2>  
-				                <p><samp>定义样本文本</samp></p>
-				                
-				                <h2 class="title">计算机代码</h2>  
-<code>
-&lt;div class="box"&gt;
-    &lt;h2 class="title"&gt;title&lt;/h2&gt;
-    &lt;div class="detail"&gt;detail&lt;/div&gt;
-&lt;/div&gt;
-
-</code>
-			               	<h2 class="title">时间</h2>
-			              
-			              
-			              	<h3 class="title">指定时间</h3>
-			              	<time datetime="2008-02-14">情人节</time>
-			                <h3 class="title">发布时间</h3>
-			                <time pubdate="2012-02-5">2012-02-5</time>
-			              
-			              <h2 class="title">引用</h2>
-			              
-			                  <p><cite>定义引用</cite></p>
-			                  <p><cite>孔子</cite>曰：<q>学而不思则罔，思而不学则殆</q>.</p>
-			            
-			                    <blockquote>
-			                    <p>大篇幅引用</p>
-			                    <p>“我们大部分人都有深刻体验，每当主流浏览器版本的升级，我们刚建立的网站就可能变得过时，
-			                    我们就需要升级或者重新建造一遍网站。例如1996-1999年典型的"浏览器大战"，
-			                    为了兼容 Netscape 和 IE，网站不得不为这两种浏览器写不同的代码。同样的，
-			                    每当新的网络技术和交互设备的出现，我们也需要制作一个新版本来支持这种新技术或新设备，
-			                    例如支持手机上网的 WAP 技术。类似的问题举不胜举：网站代码臃肿、繁杂浪费了我们大量的带宽；
-			                    针对某种浏览器的 DHTML 特效，屏蔽了部分潜在的客户；不易用的代码，残障人士无法浏览网站等等。
-			                    这是一种恶性循环，是一种巨大的浪费。”</p>
-			                    </blockquote>
+                      
 			        	 
 			              
 			              <h2 class="title">项目列表</h2>
@@ -2744,7 +2668,8 @@
 	<div class="clear"></div>
 
 
-<div id="win" class="win">
+<div id="win" class="win hidden">
+	<table cellspacing="0" cellpadding="0" class="win_table"><tbody><tr><td class="tt_l"></td><td class="tt_c"></td><td class="tt_r"></td></tr><tr><td class="m_l"></td><td class="m_c">
 	<div class="box">
 		<div class="inner">
 			<header class="box_header">
@@ -2764,6 +2689,7 @@
 			</footer>
 		</div>
 	</div>
+	</td><td class="m_r"></td></tr><tr><td class="b_l"></td><td class="b_c"></td><td class="b_r"></td></tr></tbody></table>
 	<div class="mask"></div>
 </div>
 

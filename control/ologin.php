@@ -13,8 +13,8 @@ class Control_ologin extends Controller{
 		$api_name = keke_global_class::get_open_api();
 		$type = $_GET['type'];
 		if($type){
-			$u = Keke_oauth_weibo::instance($type)->get_login_info();
-			//var_dump($_SESSION);
+			$u = Keke_oauth_login::instance($type)->get_login_info();
+			var_dump($u);
 		}
 		require Keke_tpl::template("oauth_login");
 	}
@@ -32,11 +32,11 @@ class Control_ologin extends Controller{
 	     $ouri = urlencode($ouri);
 	  
 	     if($_GET['back']){
- 	     	Keke_oauth_weibo::instance($type)->get_access_token();
+ 	     	Keke_oauth_login::instance($type)->get_access_token();
  	     	header('Location:'.$_K['website_url'].'/index.php/ologin?type='.$type);
  	     	die;
  	     }else{
- 	     	$to_url =  Keke_oauth_weibo::instance($type)->get_auth_url($ouri);
+ 	     	$to_url =  Keke_oauth_login::instance($type)->get_auth_url($ouri);
  	     	$to_url = urldecode($to_url);
  	     	header("Location:".$to_url);
  	     }

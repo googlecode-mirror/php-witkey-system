@@ -5,7 +5,7 @@
  * @version 2.2
    2012-10-9
  */ 
-class Keke_oauth_taobao_client extends Keke_oauth_weibo{
+class Keke_oauth_taobao_client extends Keke_oauth_login{
      private static $_oauth_obj;
      private static $_weibo_obj;
      private static $_access_token;
@@ -54,15 +54,18 @@ class Keke_oauth_taobao_client extends Keke_oauth_weibo{
 	  */
 	 public function get_login_info(){
 	 	if($this->check_login()){
-	 	    $uinfo = array('username'=>$_SESSION['tabao_token']['username']);
-	 	    var_dump($uinfo);die;
+	 	    $uinfo = array('username'=>$_SESSION['tabao_token']['username'],
+	 	    		'uid'=>$_SESSION['tabao_token']['uid']);
+	 	    
 	 	}
 	 	if(CHARSET == 'gbk'){
 	 		$uinfo = Keke::utftogbk($uinfo);
 	 	}
 	 	return $uinfo;
 	 }
-	 
+	 public function format_user_info(){
+	 	
+	 }
  	 function curl($url, $postFields = null)
 	 {
 	 	$ch = curl_init();

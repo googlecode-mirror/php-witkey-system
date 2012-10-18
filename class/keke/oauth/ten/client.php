@@ -8,7 +8,7 @@
 require_once S_ROOT.'keke_client/weibo/ten/Tencent.php';
 
 
-class Keke_oauth_ten_client extends Keke_oauth_weibo{
+class Keke_oauth_ten_client extends Keke_oauth_login{
      private static $_oauth_obj;
      private static $_weibo_obj;
      private static $_access_token;
@@ -49,7 +49,7 @@ class Keke_oauth_ten_client extends Keke_oauth_weibo{
 	 	}
 	 }
 	 /**
-	  * 返回新浪微博用户信息
+	  * 返回腾讯微博用户信息
 	  * @see Keke_oauth_weibo::get_login_info()
 	  */
 	 public function get_login_info(){
@@ -61,7 +61,14 @@ class Keke_oauth_ten_client extends Keke_oauth_weibo{
 	 	if(CHARSET == 'gbk'){
 	 		$uinfo = Keke::utftogbk($uinfo);
 	 	}
+	 	$uinfo = $this->format_user_info($uinfo);
 	 	return $uinfo;
+	 }
+	 /**
+	  * 用户信息格式化
+	  */
+	 public function format_user_info($uinfo){
+	 	
 	 }
 	
 }

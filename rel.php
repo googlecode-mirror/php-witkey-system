@@ -2,12 +2,9 @@
 define ( 'IN_KEKE', TRUE );
 include 'app_boot.php';
 
-$arr=  array(2,3,4);
-$arr2 = array('a2','a3','a4');
-
-$res = array(2=>'a2',3=>'a3',4=>'a4');
-$mar= array_combine($arr, $arr2);
-var_dump($mar);
+echo $dir = S_ROOT.'000\00\00'; 
+is_dir($dir)==false and mkdir($dir,0777,TRUE); 
+ 
 die;
 // Create the context
 /* $options = array(

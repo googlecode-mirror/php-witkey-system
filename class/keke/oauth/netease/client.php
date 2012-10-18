@@ -7,8 +7,7 @@
  */
 require_once S_ROOT.'keke_client/weibo/netease/tblog.class.php';
 
-
-class Keke_oauth_netease_client extends Keke_oauth_weibo{
+class Keke_oauth_netease_client extends Keke_oauth_login{
      private static $_oauth_obj;
      private static $_weibo_obj;
      private static $_access_token;
@@ -61,13 +60,14 @@ class Keke_oauth_netease_client extends Keke_oauth_weibo{
 	 	if($this->check_login()){
 	 	    self::$_weibo_obj = new TBlog(self::$_key, self::$_secret, $_SESSION['netease_token']['access_token'], $_SESSION['netease_token']['access_token_secret']);
 	 	    $uinfo = self::$_weibo_obj->show_user_id('');
-	 	    
 	 	}
 	 	if(CHARSET == 'gbk'){
 	 		$uinfo = Keke::utftogbk($uinfo);
 	 	}
-	 	//var_dump($uinfo);die;
 	 	return $uinfo;
+	 }
+	 public function format_user_info(){
+	 	
 	 }
 	
 }

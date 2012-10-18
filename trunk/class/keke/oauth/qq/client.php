@@ -6,7 +6,7 @@
    2012-10-9
  */
 
-class Keke_oauth_qq_client extends Keke_oauth_weibo{
+class Keke_oauth_qq_client extends Keke_oauth_login{
      private static $_oauth_obj;
      private static $_weibo_obj;
      private static $_access_token;
@@ -113,7 +113,9 @@ class Keke_oauth_qq_client extends Keke_oauth_weibo{
 	 	}
 	 	return $uinfo;
 	 }
-	 
+	public function format_user_info(){
+		
+	}
 	public function do_post($url, $data){
 	    $ch = curl_init();
 	    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE); 

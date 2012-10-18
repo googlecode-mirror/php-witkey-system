@@ -8,7 +8,7 @@
 require_once S_ROOT.'keke_client/weibo/sina/saetv2.ex.class.php';
 
 
-class Keke_oauth_sina_client extends Keke_oauth_weibo{
+class Keke_oauth_sina_client extends Keke_oauth_login{
      private static $_oauth_obj;
      private static $_weibo_obj;
      private static $_access_token;
@@ -38,6 +38,9 @@ class Keke_oauth_sina_client extends Keke_oauth_weibo{
 	 		self::$_weibo_obj = new SaeTClientV2(self::$_key, self::$_secret,$_SESSION['sina_token']['access_token']);
 	 		return TRUE;
 	 	}
+	 }
+	 public function format_user_info(){
+	 	
 	 }
 	 /**
 	  * 返回新浪微博用户信息

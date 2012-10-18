@@ -8,7 +8,7 @@
 require_once S_ROOT.'keke_client/weibo/sohu/SohuOAuth.php';
 
 
-class Keke_oauth_sohu_client extends Keke_oauth_weibo{
+class Keke_oauth_sohu_client extends Keke_oauth_login{
      private static $_oauth_obj;
      private static $_weibo_obj;
      private static $_access_token;
@@ -43,6 +43,9 @@ class Keke_oauth_sohu_client extends Keke_oauth_weibo{
 	 	}else{
 	 		return TRUE;
 	 	}
+	 }
+	 public function format_user_info(){
+	 	
 	 }
  
 	 /**

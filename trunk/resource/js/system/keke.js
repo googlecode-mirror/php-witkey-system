@@ -1209,8 +1209,8 @@ function showDialog(msg, mode, t, func, cover, funccancel) {
 		s += msg ? msg : '';
 	} else {
 		s += '<div class="c altw"><div class="' + (mode == 'error' ? 'error' :mode=='confirm'?'confirm':mode=='success'?'success':'info') + '"><p>' + msg + '</p></div></div>';
-		s += '<p class="o pns"><button id="fwin_dialog_submit" value="true" class="pn pnc"><strong>'+L.submit+'</strong></button>';
-		s += mode == 'confirm' ? '<button id="fwin_dialog_cancel" value="true" class="pn" onclick="hideMenu(\'' + menuid + '\', \'dialog\')"><strong>'+L.cancel+'</strong></button>' : '';
+		s += '<p class="o pns"><button id="fwin_dialog_submit" value="true" class="submit">'+L.submit+'</button>';
+		s += mode == 'confirm' ? '<button id="fwin_dialog_cancel" value="true" class="button" onclick="hideMenu(\'' + menuid + '\', \'dialog\')">'+L.cancel+'</button>' : '';
 		s += '</p>';
 	}
 	s += '</td><td class="m_r"></td></tr><tr><td class="b_l"></td><td class="b_c"></td><td class="b_r"></td></tr></table>';

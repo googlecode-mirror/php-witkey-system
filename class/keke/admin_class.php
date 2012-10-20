@@ -38,7 +38,8 @@ class keke_admin_class {
 			
 			$resource_arr = $temp_arr2;
 			$menuset_arr = array ( 'menu' => $resource_arr, 'submenu' => $submenu_set_arr, 'resource' => $resource_set_arr );
-			Keke::init_model();
+			
+			/* Keke::init_model();
 			$model_list = Keke::$_model_list;
 			$i = 0;
 			
@@ -55,7 +56,7 @@ class keke_admin_class {
 				}
 				
 				$menuset_arr ['menu'] [$model ['model_type']] [] = array ('name' => $model ['model_name'], 'items' => $mulist_arr );
-			}
+			} */
             Cache::instance()->set('admin_menu', $menuset_arr,999999);
 		}
 		return $menuset_arr;

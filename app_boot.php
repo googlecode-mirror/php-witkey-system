@@ -31,10 +31,10 @@ array(
 'directory' => '(admin|ajax|auth|payitem|space|user|task|shop|test|ui)'
 		))
 		->defaults(array(
-		'controller' => 'login',
+		'controller' => 'index',
 		'action'     => 'index',
 		));
-		
+ 
  Route::set('default', '(<controller>(/<action>(/<id>(/<ids>))))',array
 ('ids'=>'.*'))
 ->defaults(array(

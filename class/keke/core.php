@@ -37,7 +37,7 @@ class Keke_core extends Keke_base {
 	 *@param $title 标题，默认为“系统提示”
 	 *@param $time 跳转页显示时间，默认为3秒        
 	 */
-	static function show_msg( $content = "", $url = "",  $type = 'info',$title = NULL,$time = 3) {
+	static function show_msg( $content = "", $url = "",  $type = 'success',$title = NULL,$time = 3) {
 		global $_K, $basic_config, $username, $uid, $nav_list, $_lang;
 		$r = $_GET;
 		//$msgtype = $type;
@@ -509,9 +509,11 @@ class Keke extends Keke_core {
 	 * 初始化导航，按需要加载，不在core 里加载
 	 */
 	static function init_nav(){
+		global $_K;
 		$nav_list = DB::select('*')->from('witkey_nav')->cached(6000,'keke_nav')->execute();
 		$nav_list = Keke::get_arr_by_key($nav_list,'nav_id');
 		Keke::$_nav_list = $nav_list; 
+		$_K['nav_arr'] = $nav_list;
 	}
 	/**
 	 * 初始化微博认证开关
@@ -552,7 +554,7 @@ class Keke extends Keke_core {
 	 * 初始化任务model,按需加载
 	 */
 	static public function init_model() {
-		$model_arr = db::select ( '*' )->from ( 'witkey_model' )->cached ()->execute ();
+		$model_arr = db::select ( '*' )->from ( 'witkey_model' )->cached (3600,'keke_model')->execute ();
 		Keke::$_model_list = Keke::get_arr_by_key ( $model_arr, 'model_id' );
 		foreach ( Keke::$_model_list as $v ) {
 			if ($v ['model_type'] == 'task') {

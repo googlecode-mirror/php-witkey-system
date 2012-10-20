@@ -29,20 +29,22 @@ $init_config = array(
 	'model_id'=>1,
 	'model_code'=>'sreward',
 	'model_name'=>'单人悬赏',
-	'model_dir'=>'sreward',
 	'model_type'=>'task',
 	'model_dev'=>'kekezu',
 	'model_status'=>1,
+	'on_time'=>'2012-10-20',
+	'listorder'=>'1',
+	//配置信息
+	'config'=>array(
 	'audit_cash'=>10,
 	'is_auto_adjourn'=>1,
 	'adjourn_day'=>2,
 	'deduct_scale'=>1,
 	'defeated_money'=>2,
-	'is_comment'=>1,
 	'task_min_cash'=>10,
 	'vote_limit_time'=>2,
 	'show_limit_time'=>1,
 	'reg_vote_limit_time'=>2,
 	'max_agree_time'=>10,
-	'auto_agree_time'=>5,
+	'auto_agree_time'=>5)
 );

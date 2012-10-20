@@ -50,15 +50,60 @@ class Control_admin_config_model extends  Controller {
 	 * 模型安装，并更新模型缓存
 	 */
 	function action_install(){
-		 
+		if(($model_name = $_POST['txt_model_name'])!=null){
+			//模板配置信息
+			$init_config = array();
+			//父菜单
+			$menu_arr = array();
+			//子菜单
+			$sub_menu_arr = array();
+			//加载初化配置文件,
+			include S_ROOT.'control/task/'.$model_name.'/init_config.php';
+			//添加模型配置
+			if($init_config){
+				$config = $init_config['config'];
+				unset($init_config['config']);
+				$init_config['config'] = serialize($config);
+				$init_config['on_time'] = strtotime($init_config['on_time']);
+				Model::factory('witkey_model')->setData($init_config)->create();
+			}
+			//添父菜单
+			if($menu_arr){
+				$where = "submenu_id = ".$menu_arr['submenu_id'];
+				if(DB::select('submenu_id')->from('witkey_resource_submenu')->where($where)->get_count()->execute()){
+					Model::factory('witkey_resource_submenu')->setData($menu_arr)->setWhere($where)->update();
+				}else{
+					Model::factory('witkey_resource_submenu')->setData($menu_arr)->create();
+				}
+			}
+			//添子菜单
+			if($sub_menu_arr){
+				foreach ($sub_menu_arr as $k=>$v){
+					$where = "resource_id = ".$v['resource_id'];
+					if(DB::select('resource_id')->from('witkey_resource')->where($where)->get_count()->execute()){
+						Model::factory('witkey_resource')->setData($v)->setWhere($where)->update();
+					}else{
+						Model::factory('witkey_resource')->setData($v)->create();
+					}
+				}
+			}
+			Cache::instance()->del('keke_model');
+			global $_lang;
+			Keke::show_msg($_lang['submit_success'],'admin/config_model');
+			
+			
+		}
 	}
 	/**
 	 * 卸载任务模型
 	 */
 	function action_uninstall(){
-		if(($model_name = $_POST['txt_model_name'])!=null){
-			
-		}
+		$model_id = $_GET['model_id'];
+	    if($model_id){
+	    	echo DB::delete('witkey_model')->where('model_id='.$model_id)->execute();
+	    }
+	    Cache::instance()->del('keke_model');
+	    
 	} 
 	/**
 	 * 模型禁用 改变模型的状态

@@ -6,6 +6,8 @@
    2012-10-19
  */
 
-class Contorl_task_sreward_admin_list extends Controller{
-    
+class Control_task_sreward_admin_list extends Controller{
+    function action_index(){
+    	
+    }
 }

@@ -103,6 +103,7 @@ class keke_ajax_upload_class {
 			if ($this->_file_type == 'link') {
 				$msg = array ('url' => $file_pic . ',' . $real_file, 'localname' => $real_file, 'id' => '1', 'up_file' => $file_pic );
 			} else if ($this->_file_type == 'att' || $this->_file_type == 'sys') {
+				//url 编辑器图片上传的参数
 				$msg = array ('url' => $file_pic, 'localname' => $real_file, 'id' => '1', 'up_file' => $file_pic );
 			} else {
 				$msg = array ('url' => '!' . $file_pic, 'localname' => $real_file, 'id' => '1', 'up_file' => $file_pic );

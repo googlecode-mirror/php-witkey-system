@@ -37,7 +37,11 @@
 			{/loop}
 			  </select>
 			 <br class="clear">
-			 <select name="p_indus_select" id="p_indus_select" multiple=multiple style="width:160px;float:left;height:200px;overflow-y:scroll;background:white;border:#ccc solid 1px" ></select>
+			 <select name="p_indus_select" id="p_indus_select" multiple=multiple style="width:160px;float:left;height:200px;overflow-y:scroll;background:white;border:#ccc solid 1px" >
+			 {loop $sub_indus $k $v}
+			   <option id="p_indus_select_op_{$v['indus_id']}" value="{$v['inuds_id']}">{$v['indus_name']}</option>
+			 {/loop}
+			 </select>
 			<div style="width:80px;float:left;height:160px;overflow:hidden;margin-left:20px; text-align:center;padding-top:40px;">
 				<button onclick = "moveitems()" type="button" class="input_but"><<</button><br><br>
 				<button onclick = "additems()" type="button" class="input_but">>></button><br>
@@ -55,7 +59,7 @@
 	 	 <tr>
 		    <th scope="row" width="200">{$_lang['model_description']}{$_lang['zh_mh']}</th>
 		      <td>
-		       <textarea cols=110 rows=12 name="fds[model_desc]"  style="width:75%;" id="tar_content"  class="xheditor {urlBase:'{BASE_URL}/',tools:'simple',skin:'nostyle',admin:'{BASE_URL}/',html5Upload:false,emotMark:false,upImgUrl:'../../ajax/upload?file_type=att'}" cols="70">$model_info['model_desc']</textarea>
+		       <textarea cols=110 rows=12 name="fds[model_desc]"  style="width:75%;" id="tar_content"  class="xheditor {urlBase:'{BASE_URL}/',tools:'simple',skin:'nostyle',admin:'{BASE_URL}/',html5Upload:false,emotMark:false,upImgUrl:'../../index.php/ajax/upload?file_type=att'}" cols="70">$model_info['model_desc']</textarea>
 			  </td>
          </tr>
 		 <tr>
@@ -103,11 +107,7 @@ function moveitems(){
 	if(mod!='')
 	$('#p_indus_select').append(mod);
 }
-$(function(){
-		if($("#hdn_indus_id").val()!=''){
-		p_indus_add($("#hdn_indus_id").val());
-	}
-	})
+
 function additems(){
 	vs = $('#p_indus_select').val()+'';
 	vs = vs.split(",");

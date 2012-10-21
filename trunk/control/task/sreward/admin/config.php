@@ -6,44 +6,39 @@
    2012-10-19
  */
 
-class Control_task_sreward_admin_config extends Controller{
-	/**
-	 * @var 模型代码
-	 */
-    protected $_model_code   = 'sreward';
+class Control_task_sreward_admin_config extends Control_task_config{
+	
+	public  $_model_code   = 'sreward';
     /**
      * 基本配置
      */
 	function action_index(){
     	global $_K,$_lang;
-        Keke::init_model();
-        $model_list = Keke::get_arr_by_key(Keke::$_model_list,'model_code');
-    	$model_info = $model_list[$this->_model_code];
-    	//模型信息
-    	$model_info += unserialize($model_info['config']);
+        
+    	$model_info = $this->_model_info;
+    	$indus_index = $this->_indus_index;
     	
-    	$indus_index = Sys_indus::get_indus_by_index();
+    	$milist = $this->_milist;
+    	$indus_arr = $this->_indus_arr;
+    	//能过子分类得到同类子分类
+    	$sub_indus = $this->_sub_indus;
     	
-    	$milist = explode(',',$model_info['indus_bid']);
-    	$indus_arr = Sys_indus::get_industry();
     	require Keke_tpl::template('control/task/'.$this->_model_code.'/tpl/admin/config');
     }
     /**
      * 流程配置
      */
     function action_control(){
+    	global $_K,$_lang;
     	
+    	require Keke_tpl::template('control/task/'.$this->_model_code.'/tpl/admin/control');
     }
     /**
      * 保存配置数据
      */
     function action_config_save(){
     	global $_lang;
-    	Keke::formcheck($_POST['formhash']);
-    	$_POST = Keke_tpl::chars($_POST);
-    	$_POST['fds']['indus_bid'] = implode(',', $_POST['fds']['indus_bid']);
-    	Model::factory('witkey_model')->setData($_POST['fds'])->setWhere('model_id = '.$_POST['fds']['model_id'])->update();
-    	Cache::instance()->del('keke_model');
+    	$this->config_save();
     	Keke::show_msg($_lang['submit_success'],'task/'.$this->_model_code.'_admin_config');
     }
     /**

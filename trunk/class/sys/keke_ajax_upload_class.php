@@ -101,9 +101,9 @@ class keke_ajax_upload_class {
 			$real_file = $savename [0] [name];
 			($this->_flash&&CHARSET == 'gbk') && $real_file = Keke::utftogbk ( $real_file );
 			if ($this->_file_type == 'link') {
-				$msg = array ('url' => '', 'localname' => $real_file, 'id' => '1', 'up_file' => $file_pic );
+				$msg = array ('url' => $file_pic . ',' . $real_file, 'localname' => $real_file, 'id' => '1', 'up_file' => $file_pic );
 			} else if ($this->_file_type == 'att' || $this->_file_type == 'sys') {
-				$msg = array ('url' => '', 'localname' => $real_file, 'id' => '1', 'up_file' => $file_pic );
+				$msg = array ('url' => $file_pic, 'localname' => $real_file, 'id' => '1', 'up_file' => $file_pic );
 			} else {
 				$msg = array ('url' => '!' . $file_pic, 'localname' => $real_file, 'id' => '1', 'up_file' => $file_pic );
 			}

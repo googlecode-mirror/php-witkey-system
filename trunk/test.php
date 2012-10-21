@@ -1,8 +1,10 @@
 <?php define ( "IN_KEKE", TRUE );
  
-include 'app_boot.php';
+ 
+$test = '±äÁ¿¼ÓÔØ²âÊÔ';
+require Keke_tpl::template('test');
 
-var_dump(Cache::instance()->del('keke_config')); 
+//var_dump(Cache::instance()->del('keke_config')); 
 //var_dump(class_exists('Control_admin_main'));
 // $sql = "select * from keke_witkey_space where uid =1 ";
 //$res = DB::query($sql)->cached(5000)->execute();

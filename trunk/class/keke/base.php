@@ -657,7 +657,11 @@ class Keke_base {
 		die ();
 		file_exists ( $lock_file ) == false or Keke::show_msg ( $_lang ['kppw_install_notice'], 'install/index.php', 3, $_lang ['you_not_install_kppw_notice'] );
 	}
-	// 时间计算
+	/**
+	 * 计处xx时间前
+	 * @param int $timestamp 时间
+	 * @return string  eg:xx天前,xx小时前
+	 */
 	static function get_gmdate($timestamp) {
 		global $_lang;
 		global $_K;
@@ -783,12 +787,12 @@ class Keke_base {
 		return $c;
 	}
 	
-	static function is_email($email) {
+	/* static function is_email($email) {
 		return strlen ( $email ) > 6 && preg_match ( '/^[\w\-\.]+@[\w\-\.]+(\.\w+)+$/', $email );
 	}
 	static function is_mobile($mobile) {
 		return preg_match ( "/^13[0-9]{1}[0-9]{8}$|15[0189]{1}[0-9]{8}$|18[0-9]{9}$/", $mobile );
-	}
+	} */
 	static function socket_request($url, $sim = true, $time_out = "60") {
 		$sim and $url .= "&sim_request=1";
 		$urlarr = parse_url ( $url );

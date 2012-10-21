@@ -44,7 +44,7 @@ $init_config = array(
 	'task_min_cash'=>10,
 	'vote_limit_time'=>2,
 	'show_limit_time'=>1,
-	'reg_vote_limit_time'=>2,
-	'max_agree_time'=>10,
-	'auto_agree_time'=>5)
+	'reg_vote_limit'=>2,
+	'agree_sign_time'=>10,
+	'agree_complete_time'=>5)
 );

@@ -111,7 +111,7 @@
 <script>
 function del_cache(){
 	var src = $("#display_frame").attr("src");
-	var url = '{BASE_URL}/index.php/admin/cache/del?ckb_obj_cache=1&ckb_tpl_cache=1&ajax=1';
+	var url = '{BASE_URL}/index.php/admin/tool_cache/del?ckb_obj_cache=1&ckb_tpl_cache=1&ajax=1';
 	$.post(url,function (json){
 		if(json.status==1){
 			artDialog.tips(L.clear_success,'1.5');

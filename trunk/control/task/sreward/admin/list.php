@@ -6,11 +6,12 @@
    2012-10-19
  */
 
-class Control_task_mreward_admin_list extends Control_task_list{
+class Control_task_sreward_admin_list extends Control_task_list{
 	/**
 	 * @var 模型代码
 	 */
-	public  $_model_code   = 'mreward';
+	public  $_model_code   = 'sreward';
+
 	/**
 	 * 任务列表页
 	 */
@@ -20,7 +21,7 @@ class Control_task_mreward_admin_list extends Control_task_list{
     	//要显示的字段,即SQl中SELECT要用到的字段
     	$fields = ' `task_id`,`task_title`,`username`,`task_cash`,`model_id`,`task_status`,`indus_id`,`work_num`,`contact`,`start_time`,`is_top`';
     	//要查询的字段,在模板中显示用的
-    	$query_fields = array('task'=>$_lang['id'],'task_title'=>$_lang['name'],'task_cash'=>$_lang['cash']);
+    	$query_fields = array('task_id'=>$_lang['id'],'task_title'=>$_lang['name'],'task_cash'=>$_lang['cash']);
     	//总记录数,分页用的，你不定义，数据库就是多查一次的。为了少个Sql语句，你必须要写的，亲!
     	$count = intval($_GET['count']);
     	//基本uri,当前请求的uri ,本来是能通过Rotu类可以得出这个uri,为了程序灵活点，自己手写好了
@@ -43,38 +44,76 @@ class Control_task_mreward_admin_list extends Control_task_list{
     	//分页数据
     	$pages = $data_info['pages'];
     	
-    	$task_status = Control_task_mreward_task::get_task_status();
+    	$task_status = Control_task_sreward_task::get_task_status();
      	require Keke_tpl::template('control/task/'.$this->_model_code.'/tpl/admin/list');
     }
     /**
      * 任务编辑
      */
     public function action_add(){
-    	
+    	global  $_K ,$_lang;
+    	 //获取任务信息
+        $task_info = $this->get_task_info();
+        $base_uri = BASE_URL."/index.php/task/".$this->_model_code; 
+    	require Keke_tpl::template('control/task/'.$this->_model_code.'/tpl/admin/task_edit');
     }
+    
     /**
      * 任务保存
      */
     public function action_save(){
     	
     }
+    
     /**
      * 任务推荐
      */
     public function action_recommend(){
-    	
+    	 $this->set_recommend();
+    }
+    /**
+     * 取消任务推荐
+     */
+    public function action_unrecommend(){
+    	//改变任务的is_top 为0
+    	$this->set_unrecommend();
     }
     /**
      * 任务冻结
+     * 冻结task,任务状态为!('6','7','8','10','11')
+	 * (2,3,4,5) 可以冻结 ,这里模板上判断
      */
     public function action_freeze(){
-    	
+    	$this->set_freeze();
     }
     /**
      * 任务解冻
      */
     public function action_unfreeze(){
-    	
+    	 $this->set_unfreeze();
     }
+    /**
+     * 通过审核，任务状态由1->2
+     */
+    public function action_pass(){
+    	$this->set_pass();
+    }
+    /**
+     * 不通过审核 
+     * 状态状态1->10 审核失败
+     */
+    public function action_no_pass(){
+    	 $this->set_no_pass();
+    }
+    /**
+     * 删除任务
+     */
+    public function  action_del(){
+    	//删除任务搞件
+    	$where = "task_id = $this->_task_id";
+    	DB::delete('witkey_task_work')->where($where)->execute();
+    	echo DB::delete('witkey_task')->where($where)->execute();
+    }
+
     
 }

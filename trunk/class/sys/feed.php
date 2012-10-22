@@ -19,10 +19,10 @@ class Sys_feed {
 	 * @param string $obj_link
 	 * @param string $icon
 	 */
-	static function save_feed($feed_arr, $uid, $username, $feedtype = "", $obj_id = 0, $obj_link = "", $icon = '') {
+	static function set_feed($feed_arr, $uid, $username, $feedtype = "", $obj_id = 0, $obj_link = "", $icon = '') {
 		$title = serialize ( $feed_arr );
-		$sql = " insert into %switkey_feed (feed_id,icon,feed_time,feedtype,obj_link,obj_id,title,uid,username)
-				values('','%s','%s','%s','%s','%d','%s','%d','%s')";
+		$sql = " insert into %switkey_feed (icon,feed_time,feedtype,obj_link,obj_id,title,uid,username)
+				values('%s','%s','%s','%s','%d','%s','%d','%s')";
 		return Dbfactory::execute ( sprintf ( $sql, TABLEPRE, $icon, time (), $feedtype, $obj_link, $obj_id, $title, $uid, $username ) );
 	}
 	

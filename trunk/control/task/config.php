@@ -6,7 +6,7 @@
    2012-10-19
  */
 
-abstract class Control_task_config extends Controller{
+abstract class Control_task_config extends Control_admin{
     
 	/**
 	 * @var 模型配置信息

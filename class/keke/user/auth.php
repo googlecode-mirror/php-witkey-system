@@ -1,6 +1,6 @@
 <?php  defined ( "IN_KEKE" ) or die ( "Access Denied" );
 /**
- * 用户认证处理
+ * 用户认证信息
  * @author Michael
  * @version 2.2
    2012-10-12

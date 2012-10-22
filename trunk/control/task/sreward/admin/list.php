@@ -6,11 +6,11 @@
    2012-10-19
  */
 
-class Control_task_sreward_admin_list extends Control_task_list{
+class Control_task_mreward_admin_list extends Control_task_list{
 	/**
 	 * @var 模型代码
 	 */
-	public  $_model_code   = 'sreward';
+	public  $_model_code   = 'mreward';
 	/**
 	 * 任务列表页
 	 */
@@ -43,7 +43,7 @@ class Control_task_sreward_admin_list extends Control_task_list{
     	//分页数据
     	$pages = $data_info['pages'];
     	
-    	$task_status = Control_task_sreward_task::get_task_status();
+    	$task_status = Control_task_mreward_task::get_task_status();
      	require Keke_tpl::template('control/task/'.$this->_model_code.'/tpl/admin/list');
     }
     /**

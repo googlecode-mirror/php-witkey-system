@@ -29,7 +29,7 @@
 @theme_bg2: #fff url(../images/bg_hp.png) center top repeat-x;
 @theme_bg3:  url(../images/bg.png) fixed center top no-repeat ;
 body{
-	background:@theme_bg ;
+	background:@theme_bg1 ;
 	font: 12px/25px  Lucida,Verdana,Hiragino Sans GB,WenQuanYi Micro Hei,sans-serif;
 	color:#6d6d6d;
 }
@@ -488,6 +488,7 @@ table {
 #user{
 	/* 颜色配置 */
 	@main_color			: #0090d2;
+	@main_bg			: #f6f6f6;
 	@second_color		: #444;
 
 	@topbar_bg			: #f5f5f5;
@@ -498,7 +499,7 @@ table {
 	@link_hover_bg 		: white;
 
 	@border_colors		: #e1e1e1;
-	@main_bg			: #f6f6f6;
+	
 
 	/* 基本配置 */
 	font-family: "微软雅黑";
@@ -507,6 +508,24 @@ table {
 		&:link,&:visited{ color: @main_color;}
 		&:hover,&:active{ text-decoration: underline;}
 	}
+
+	input[type=text],input[type=search]{
+		height: 30px;
+		line-height: 30px;
+		font-family: "微软雅黑";
+		border: 1px solid @border_colors;
+		padding: 0 5px;
+		vertical-align: middle;
+	}
+	input[type=button],button[type=button]{
+		height: 32px;
+		line-height: 32px;
+		font-family: "微软雅黑";
+		border: 1px solid @border_colors;
+		background: @main_bg;
+		vertical-align: middle;
+	}
+
 /* 头部 */
 	.header{
 		.clearfix;
@@ -543,7 +562,7 @@ table {
 				.border-radius(0);
 				border-width: 0;
 				margin: 0;
-				padding: 5px 10px;
+				padding: 5px 15px;
 				color: @second_color;
 				&:hover,&.selected{
 					background: @main_color;
@@ -710,55 +729,109 @@ table {
 					.fl_l;
 					.mr_10;
 					display: inline;
-				}
-				.page{
-					.clearfix;
-					.fl_r;
-					background: white;
-					border:1px solid @border_colors;
-					padding:0;
-					.stats{ border:none;}
 
-				    a,span{ display:inline-block; padding: 0 12px; line-height: 30px; height: 30px;}
-					a     {
-					    	&:hover 				   { background:lighten(@main_color, 50%); }
-					    	&.selected,&.selected:hover{ background:@main_color; color:white; text-decoration:none;}
-					    }
+				}
+				&.bottom{
+					.mt_10;
+				}
+				input[type=button],button[type=button]{
+					margin-left: -1px;
 				}
 			}
 			.box{
-				.normal;
-			}
-			.data_list{
-				border:1px solid @border_colors;
-				.data_table{ 
-					width:100%;border:none;
-					tr{
-						
-						td{border-left:none;}
-					}
-					
-					thead{ 
-						background:#f6f6f6; color:#333;
-						font-size: 1.2em;
-						th{ text-align: left; border-bottom:1px solid @border_colors;}
-						tr{
-							background:#f6f6f6;
-							&.hover,&:hover{ background:#f6f6f6;}
+				.whitebox;
+				.box_nav{
+					ul li{
+						a{
+							border-right-color:@border_colors;
 						}
-					}
-					
-					tbody{ 
-						background:#fff; color:#333;
-						tr{
-							&.odd,&:nth-child(odd){ background:white;}
-							&.even,&:nth-child(even){background:#f8f8f8;}
-							&.hover,&:hover{ background:#fffecf;}
+						&.selected{
+							border-bottom: 2px solid @main_color;
+							a{ 
+								font-weight:bold;
+								color:@main_color;
+								
+							}
+						}
+						&:last-child {
+							a{
+								border-right:none;
+							}
+						}
 
-							td{  border-bottom:1px solid @border_colors; }
+					}
+				}
+			}
+			
+		}
+	}
+	/* 翻页 */
+	.page{
+		.clearfix;
+		.fl_r;
+		background: white;
+		border:1px solid @border_colors;
+		padding:0;
+		.stats{ border:none;}
+
+	    a,span{ display:inline-block; padding: 0 12px; line-height: 30px; height: 30px;}
+		a     {
+		    	&:hover 				   { background:lighten(@main_color, 50%); }
+		    	&.selected,&.selected:hover{ background:@main_color; color:white; text-decoration:none;}
+		    }
+	}
+	/* 数据列表 */
+	.data_list{
+		border:1px solid @border_colors;
+		.data_table{ 
+			width:100%;border:none;
+			tr{
+				
+				td{border-left:none;}
+			}
+			
+			thead{ 
+				background:#f6f6f6; color:#333;
+				font-size: 1.2em;
+				th{ text-align: left; border-bottom:1px solid @border_colors;}
+				tr{
+					background:#f6f6f6;
+					&.hover,&:hover{ background:#f6f6f6;}
+				}
+			}
+			
+			tbody{ 
+				background:#fff; color:#333;
+				.item_action{
+					visibility: hidden;
+					a{ 
+						display: inline-block; border-right: 1px solid @border_colors; line-height: 1em; height: 1em;.pr_5;
+						&:last-child {
+							border-right:none;
 						}
 					}
 				}
+				tr{
+					td{  border-bottom:1px solid @border_colors;padding-bottom: 0; padding-top:0; vertical-align: top; color:lighten(@second_color,20%); }
+					.title{ font-size: 1.2em;}
+					&.odd,&:nth-child(odd){ background:white;}
+					&.even,&:nth-child(even){background:#f8f8f8;}
+					&.hover,&:hover{
+						background:#fffecf;
+						.item_action{
+							visibility: visible;
+						}
+						td{
+							color: @second_color;
+						}
+						.money{
+							color:spin(@main_color, 180);
+						}
+					}
+
+					
+				}
+
 			}
 		}
 	}

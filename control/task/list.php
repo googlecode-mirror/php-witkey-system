@@ -5,7 +5,7 @@
  * @version 2.2
    2012-10-21
  */
-
+keke_lang_class::loadlang ('list','task');
 abstract class Control_task_list extends Control_admin{
     
 	/**
@@ -13,9 +13,11 @@ abstract class Control_task_list extends Control_admin{
 	 * @var 任务id
 	 */
 	protected  $_task_id ;
+	protected  $_base_uri;
 	
 	function before(){
 		$this->_task_id = intval($_GET['task_id']);
+		$this->_base_uri  = BASE_URL."/index.php/task/".$this->_model_code."_admin_list";
 	}
     /**
      * 任务推荐
@@ -132,5 +134,39 @@ abstract class Control_task_list extends Control_admin{
     		$where = "task_id = '$task_id'";
     	}
     	return (bool)DB::update('witkey_task')->set(array('task_status'))->value(array($status))->where($where)->execute();
+    }
+    /**
+     * 后台任务编辑可以操作的项
+     * @param int $status 任务状态
+     * @return multitype:unknown Ambigous <>
+     */
+    public static function can_operate($status) {
+    	global $_lang;
+    	$operate = array ();
+    	switch ($status) {
+    		case "1" : //待审核
+    			$operate ['pass'] = $_lang['pass_audit'];
+    			$operate ['nopass'] = $_lang['pass_audit'];
+    			break;
+    		case "2" : //投稿
+    		case "3" : //选稿
+    		case "4" : //投票
+    		case "5" : //公示
+    		case "6" : //交付
+    			$operate ['freeze'] = $_lang['freeze_task'];
+    			break;
+    		case "7" : //冻结
+    			$operate ['unfreeze'] = $_lang['unfreeze_task'];
+    	}
+    	return $operate;
+    }
+    /**
+     * 获取任务的附件
+     * @param int $task_id
+     * @return Ambigous <string, unknown, Ambigous>
+     */
+    public static  function get_task_file($task_id){
+    	$where ="obj_type='task' and obj_id = '$task_id'";
+    	return DB::select()->from('witkey_file')->where($where)->execute();
     }
 }

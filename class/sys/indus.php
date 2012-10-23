@@ -100,6 +100,21 @@ class Sys_indus {
 		return $indus_arr;
 	
 	}
+	/**
+	 * 获取行业树
+	 * @param int $select_indus
+	 * @param string $type (option,cat,list)
+	 * @return array
+	 */
+	public static function get_indus_tree($select_indus,$type="option"){
+		$indus_arr = DB::select()->from('witkey_industry')->execute();
+		//排序
+		sort ( $indus_arr );
+		$temp_arr = array ();
+		//生成树开数组
+		Keke::get_tree ( $indus_arr, $temp_arr, $type, $select_indus, 'indus_id', 'indus_pid', 'indus_name' );
+		return $temp_arr;
+	}
 }
 
  

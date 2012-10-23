@@ -6,6 +6,6 @@
    2012-10-21
  */
 
-class Contorl_task_mreward_info extends Controller{
+class Control_task_mreward_info extends Controller{
     
 }

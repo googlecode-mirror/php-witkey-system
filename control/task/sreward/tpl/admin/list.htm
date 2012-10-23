@@ -104,15 +104,5 @@
 </table> 
 	</form>
 </div>       
-<script type="text/javascript">
-	//js提交解决页面参数刷新丢失的问题
-	function js_submit(o){
-		var url = o.href;
-		$.get(url,function(){
-			location.href = location.href;
-		})
-		return false;
-	}
-	
-</script>
+ 
 <!--{include control/admin/tpl/admin_footer}-->

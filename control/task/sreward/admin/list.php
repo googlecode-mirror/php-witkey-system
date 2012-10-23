@@ -11,7 +11,7 @@ class Control_task_sreward_admin_list extends Control_task_list{
 	 * @var 模型代码
 	 */
 	public  $_model_code   = 'sreward';
-
+ 
 	/**
 	 * 任务列表页
 	 */
@@ -25,7 +25,7 @@ class Control_task_sreward_admin_list extends Control_task_list{
     	//总记录数,分页用的，你不定义，数据库就是多查一次的。为了少个Sql语句，你必须要写的，亲!
     	$count = intval($_GET['count']);
     	//基本uri,当前请求的uri ,本来是能通过Rotu类可以得出这个uri,为了程序灵活点，自己手写好了
-    	$base_uri = BASE_URL."/index.php/task/".$this->_model_code."_admin_list";
+    	$base_uri = $this->_base_uri;
     	//添加编辑的uri,add这个action 是固定的
     	$add_uri =  $base_uri.'/add';
     	//删除uri,del也是一个固定的，写成其它的，你死定了
@@ -52,9 +52,20 @@ class Control_task_sreward_admin_list extends Control_task_list{
      */
     public function action_add(){
     	global  $_K ,$_lang;
+    	$task_id = $this->_task_id;
     	 //获取任务信息
         $task_info = $this->get_task_info();
-        $base_uri = BASE_URL."/index.php/task/".$this->_model_code; 
+         
+        $base_uri = $this->_base_uri;
+        $process_arr = Control_task_list::can_operate($task_info['task_status']);
+        $indus_option_arr = Sys_indus::get_indus_tree($task_info['indus_id']);
+        //单赏任务状态
+        $status_arr = Control_task_sreward_task::get_task_status();
+        //获取任务的增值项
+        $payitem_list = Sys_payitem::get_task_payitem($this->_task_id);
+        
+        $file_list = Control_task_list::get_task_file($this->_task_id);
+         
     	require Keke_tpl::template('control/task/'.$this->_model_code.'/tpl/admin/task_edit');
     }
     
@@ -62,6 +73,17 @@ class Control_task_sreward_admin_list extends Control_task_list{
      * 任务保存
      */
     public function action_save(){
+    	$task_id = $_POST['task_id'];
+    	if(!$task_id){
+    		return FALSE;
+    	}
+    	Keke::formcheck($_POST['formhash']);
+    	$array = array('task_title'=>$_POST['task_title'],
+    			'indus_id'=>$_POST['slt_indus_id'],
+    			'task_desc'=>$_POST['task_desc']);
+    	$where = "task_id = $task_id";
+    	Model::factory('witkey_task')->setData($array)->setWhere($where)->update();
+    	$this->request->redirect($this->request->referrer());
     	
     }
     
@@ -113,6 +135,55 @@ class Control_task_sreward_admin_list extends Control_task_list{
     	$where = "task_id = $this->_task_id";
     	DB::delete('witkey_task_work')->where($where)->execute();
     	echo DB::delete('witkey_task')->where($where)->execute();
+    }
+    /**
+     * 任务搞件列表页
+     */
+    public function action_work(){
+    	global  $_K ,$_lang;
+    	$task_id = $this->_task_id;
+    	//获取任务信息
+    	$task_info = $this->get_task_info();
+    	$base_uri = $this->_base_uri;
+
+    	
+    	 
+    	require Keke_tpl::template('control/task/'.$this->_model_code.'/tpl/admin/task_work');
+    }
+    /**
+     * 任务留言列表页
+     */
+    public function action_comment(){
+    	global  $_K ,$_lang;
+    	$task_id = $this->_task_id;
+    	$base_uri = $this->_base_uri;
+    	//获取任务信息
+    	$task_info = $this->get_task_info();
+    	require Keke_tpl::template('control/task/'.$this->_model_code.'/tpl/admin/task_comment');
+    }
+    /**
+     * 任务互评列表页
+     */
+    public function action_mark(){
+    	global  $_K ,$_lang;
+    	$task_id = $this->_task_id;
+    	$base_uri = $this->_base_uri;
+    	//获取任务信息
+    	$task_info = $this->get_task_info();
+    	
+    	require Keke_tpl::template('control/task/'.$this->_model_code.'/tpl/admin/task_mark');
+    }
+    /**
+     * 任务交付列表页
+     */
+    public function action_agree(){
+    	global  $_K ,$_lang;
+    	$task_id = $this->_task_id;
+    	$base_uri = $this->_base_uri;
+    	//获取任务信息
+    	$task_info = $this->get_task_info();
+    	
+    	require Keke_tpl::template('control/task/'.$this->_model_code.'/tpl/admin/task_agree');
     }
 
     

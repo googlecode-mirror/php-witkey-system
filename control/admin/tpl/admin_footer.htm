@@ -121,6 +121,17 @@ function batch_sub(obj,frm,action){
 	}
 	return false;  
 }
+/**
+ * 对<a>标签进行进行ajax请求
+ * @param {Object} o
+ */
+function js_submit(o){
+		var url = o.href;
+		$.get(url,function(){
+			location.href = location.href;
+		})
+		return false;
+}
 </script> 
 {if KEKE_DEBUG}
 <div style="background-color:green;color:#fff;text-align:center;">

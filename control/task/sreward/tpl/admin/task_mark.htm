@@ -1,12 +1,14 @@
 <!--{include control/admin/tpl/admin_header}-->
-<link href="{$_K['siteurl']}/resource/css/box.css" type="text/css" rel="stylesheet">
-<div class="page_title" id="taskScroll">
-    <h1>{$model_info['model_name']}{$_lang['manage']}</h1>
-    <div class="tool">
-        <a href="index.php?do=$do&model_id=$model_id&view=list">{$_lang['task_list']}</a>
-        {loop $ops $v}<a href="index.php?do=$do&model_id={$model_id}&view=edit&task_id={$task_id}&op={$v}" class="{if $op==$v}here{/if}">{$_lang['b_task_'.$v]}</a>
-        {/loop}
-    </div>
+<div class="page_title">
+    	<h1>{$model_info['model_name']}{$_lang['manage']}</h1>
+        <div class="tool">
+        	<a href="{$base_uri}">{$_lang['task_list']}</a>
+			<a href="{$base_uri}/add?task_id={$task_id}" >{$_lang['edit']}</a>
+			<a href="{$base_uri}/work?task_id={$task_id}"  >{$_lang['work']}</a>
+			<a href="{$base_uri}/comment?task_id={$task_id}" >{$_lang['comment']}</a>
+			<a href="{$base_uri}/mark?task_id={$task_id}" class="here">{$_lang['mark']}</a>
+			<a href="{$base_uri}/agree?task_id={$task_id}" >{$_lang['agree']}</a>
+        </div>
 </div>
 <!--Ò³Í·½áÊø-->
 <div class="box post">

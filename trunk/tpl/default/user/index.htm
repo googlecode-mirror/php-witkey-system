@@ -6,18 +6,40 @@
 <head>
 	<meta charset="UTF-8">
 	<title>用户中心</title>
+	<!--[if lt IE 9]>
+	<script src="{BASE_URL}/resource/js/system/html5.js"></script>
+	<![endif]-->
 	<link href="{BASE_URL}/{SKIN_PATH}/ui/style/theme.css" rel="stylesheet" charset="utf-8"  >
 </head>
 <body id="user">
 
+	<div class="header">
+		<div class="container">
+			<div class="logo">
+				<hgroup>
+				<h1>KPPW GOOGLE</h1>
+				<h2>用户中心</h2>
+				</hgroup>
+			</div>
+			<div class="search">搜索</div>
+			<div class="login">
+				<a href="#">注册</a>
+				<a href="#">登录</a>
+			</div>
+		</div>
+	</div>
+
+	<!--topbar start-->
 	<div class="topbar">
-		<div class="container_24">
+		<div class="container">
 			<div class="for_website">
 				<ul>
 					<li><a href="#">手机版</a></li>
 					<li><a href="#">安卓客户端</a></li>
 				</ul>
 			</div>
+
+
 			<div class="for_user">
 				<ul>
 					<li>
@@ -73,8 +95,126 @@
 					</li>
 				</ul>
 			</div>
+
+
 		</div>
 	</div>
+	<!--topbar end-->
 
+	<!--nav start-->
+	<div class="primary_nav">
+      <ul class="container">
+          <li><a href="#"><em>消息</em></a></li>
+          <li><a class="selected" href="#"><em>买家</em></a></li>
+          <li><a href="#"><em>服务商</em></a></li>
+          <li><a href="#"><em>收支明细</em></a></li>
+          <li><a href="#"><em>账号管理</em></a></li>
+          <li><a href="#"><em>客户服务</em></a></li>
+      </ul>
+    </div>
+    <!--nav end-->
+
+    <!--content start-->
+    <div class="wrapper">
+    	<article class="article container">
+    		<aside class="aside">
+    			<nav class="minor_nav">
+    			  <ul class="nav_group">
+                      <li><a href="#"  class="sp_link" title="发布任务"><strong>发布任务</strong></a></li>
+                  </ul>
+                  <ul class="nav_group">
+                      <li><a href="#"  class="selected" title="我的任务"><strong>我的任务</strong></a></li>
+                      <li><a href="#" title="购买的商品"><strong>购买的商品</strong></a></li>
+                  </ul>
+                  <ul class="nav_group">
+                      <li><a href="#" title="评价管理"><strong>评价管理</strong></a></li>
+                  </ul>
+                </nav>
+    		</aside>
+    		<div class="content">
+    			<div class="box">
+		            <div class="inner clearfix">
+		                <header class="box_header">
+		                    <div class="box_title">
+		                        <h2 title="我的任务" class="title">我的任务</h2>
+		                    </div>
+		                </header>
+		                <nav class="box_nav">
+								<ul id="test_ul" class="clearfix">
+									<li class="selected"><a href="#">待付款</a></li>
+									<li><a href="#">进行中</a></li>
+									<li><a href="#">待选稿</a></li>
+									<li><a href="#">待互评</a></li>
+									<li><a href="#">已结束</a></li>
+								</ul>
+		                </nav>
+		                <div class="box_detail">
+
+		                	<div class="toolbar">
+		                		<div class="actions">
+		                			<input type="search" placeholder="请输入标题关键字"><input type="button" value="搜索标题">
+		                		</div>
+		                		<div class="page">
+					                <p>
+					                    <a href="###" title="第一页">&#171;</a>
+					                    <a href="###" title="上一页">&#139;</a>
+					                    <a href="###" class="selected">1</a>
+					                    <a href="###">2</a>
+					                    <a href="###">3</a>
+					                    <a href="###">4</a>
+					                    <a href="###" title="下一页">&#155;</a>
+					                    <a href="###" title="最后一页">&#187;</a>
+					                    <span class="stats">1/10</span>
+					                </p>
+					            </div>
+		                	</div>
+
+		                	<!--date_table数据表格 start-->
+		                    <div class="data_list">
+		                        <table  class="data_table">
+		                            <thead>
+		                            <tr>
+		                              <th scope="col">任务标题</th>
+		                              <th scope="col">任务金额</th>
+		                              <th scope="col">状态</th>
+		                              <th scope="col">发布时间</th>
+		                            </tr>
+		                            </thead>
+		                            <tbody>
+		                            <tr>
+		                              <td>8800002974</td>
+		                              <td>2011-08-25 14:00:10</td>
+		                              <td>增值服务</td>
+		                              <td>--/--</td>
+
+		                            </tr>
+		                            <tr>
+		                              <td>8800002974</td>
+		                              <td>2011-08-25 14:00:10</td>
+		                              <td>任务失败退款</td>
+		                              <td>--/8.00</td>
+
+		                            </tr>
+		                            <tr>
+		                              <td>8800002974</td>
+		                              <td>2011-08-25 14:00:10</td>
+		                              <td>增值服务</td>
+		                              <td>--/--</td>
+		                            </tr>
+		                            </tbody>
+		                            
+		                          </table>
+		                    </div>
+			               	<!--data_table数据表格 end-->
+
+
+		                </div>
+		            </div>
+		        </div>
+    		</div>
+    	</article>
+    </div>
+    <!--content end-->
+	
 </body>
 </html>

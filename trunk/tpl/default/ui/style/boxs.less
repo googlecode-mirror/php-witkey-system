@@ -1693,7 +1693,57 @@
 		}
 	}
 
-
+/* whitebox
+------------------------------------------------*/
+	.whitebox{
+		background:#fff;
+		.inner{.clearfix;}
+		.box_header{
+			.fl_l;
+			.mr_20;
+			.mb_20;
+			.title{ color:#333; font:18px/25px "微软雅黑",Arial; margin-bottom:0;}
+		}
+		/* 导航
+		----------------------------------------*/
+		.box_nav{
+			.fl_l;
+			.mb_20;
+			position:relative; 
+			z-index:1;
+			ul li{ 
+				display:inline; 
+				float:left;
+				&.backLava {
+					display:block; 
+					float:none; 
+					border-bottom-width: 3px;
+					border-bottom-style: solid;
+					border-bottom-color: #2f549f;
+					margin:0;
+					z-index:1; 
+					bottom:0;
+				}
+				&.selected a{ 
+					font-weight:bold;
+					color:#2f549f;
+				}
+				a{
+					display:block; 
+					color:#333; 
+					margin: 5px 0; 
+					padding:0 10px; 
+					line-height:15px; 
+					border-right:1px solid #ccc; 
+					position:relative; 
+					z-index:2;
+					&:hover{
+						text-decoration:none;
+					}
+				}
+			}
+		}
+	}
 
 
 

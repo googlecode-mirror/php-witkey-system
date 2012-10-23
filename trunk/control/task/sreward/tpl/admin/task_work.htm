@@ -1,0 +1,112 @@
+<!--{include control/admin/tpl/admin_header}-->
+ <div class="page_title">
+    	<h1>{$model_info['model_name']}{$_lang['manage']}</h1>
+        <div class="tool">
+        	<a href="{$base_uri}">{$_lang['task_list']}</a>
+			<a href="{$base_uri}/add?task_id={$task_id}" >{$_lang['edit']}</a>
+			<a href="{$base_uri}/work?task_id={$task_id}" class="here" >{$_lang['work']}</a>
+			<a href="{$base_uri}/comment?task_id={$task_id}" >{$_lang['comment']}</a>
+			<a href="{$base_uri}/mark?task_id={$task_id}" >{$_lang['mark']}</a>
+			<a href="{$base_uri}/agree?task_id={$task_id}" >{$_lang['agree']}</a>
+        </div>
+</div>
+<!--Ò³Í·½áÊø-->
+<div class="box list">
+{if $list}
+<table width="100%" border="0" cellpadding="5">
+    {loop $list $v}
+    <tbody id="w_{$v['work_id']}">
+        <tr>
+            <td width="110">
+                <a href="{$_K['siteurl']}/index.php?do=space&member_id={$v['uid']}" target="_blank" title="{$v['username']}"><!--{userpic($v['uid'],'middle')}--></a>
+                <div class="t_c">
+                    <a href="{$_K['siteurl']}/index.php?do=space&member_id={$v['uid']}" target="_blank">{$v['username']}</a>
+                </div>
+            </td>
+            <td style="padding:0">
+                <table border="0" cellpadding="0">
+                    <tr>
+                    	<td>
+                    		{$_lang['work_id']}{$_lang['zh_mh']}#<b>{$v['work_id']}</b>
+                    	</td>
+                        <td>
+                            {$_lang['work_status']}{$_lang['zh_mh']}
+                            <font color="red">
+                                <i>{$satus_arr[$v['work_status']]}</i>
+                            </font>
+                        </td>
+                        <td width="200">
+                            {$_lang['hand_time']}{$_lang['zh_mh']}<!--{date('Y-m-d H:i:s',$v['work_time'])}-->
+                        </td>
+                        <td align="center" width='170' style="border:1px solid black">
+                            <a href="{$_K['siteurl']}/index.php?do=task&task_id={$task_id}&view=work&work_id={$v['work_id']}" target="_blank" class='button'><span class="book icon"></span>{$_lang['work_view']}</a>
+                            {if in_array($v['work_status'],array(0,7,8))}<a href='javascript:void(0);' onclick="wdel('{$v[work_id]}');" class='button'><span class="icon trash">&nbsp;</span>{$_lang['work_delete']}</a>
+                            {/if}
+                        </td>
+                    </tr>
+                    <tr height='100'>
+                        <td colspan=3>
+                            <div class="ws_break" style="height:70px">
+                                {$v['work_desc']}
+                            </div>
+							<div id="c_{$v['work_id']}" style="display:none;width:80%;border-top:1px solid black"></div>
+							<div id="f_{$v['work_id']}" style="display:none;width:80%;border-top:1px solid black"></div>
+                        </td>
+                        <td align="left" style="border:1px solid black">
+                            <ul>
+                                <li>
+                                    {$_lang['hide_work']}{$_lang['zh_mh']}
+                                    <font color="red">
+                                        {if $v['hide_work']!=1}
+                                        {$_lang['no']}
+                                        {else}
+                                        {$_lang['yes']} 
+                                        {/if} 
+                                    </font>
+                                </li>
+                                <li>
+                                    {$_lang['vote']}{$_lang['zh_mh']}{$v['vote_num']} {$_lang['piao']}
+                                </li>
+                                <li>
+                                    {$_lang['comment']}{$_lang['zh_mh']}
+									{if $v['comment_num']}
+										<a class="button" href="javascript:void(0);" onclick="loadComm('{$v[work_id]}');">
+											<span class="loop icon"></span>{$_lang['load_comm']}($v['comment_num'])
+										</a>
+										{else}
+											{$_lang['not_exists']}
+										{/if}
+                                </li>
+                                <li>
+                                    {$_lang['ext_file']}{$_lang['zh_mh']}
+									{if $v['work_file']}
+									<!--{eval $c = explode(',',$v['work_file']);$n = count($c);}-->
+									<a class="button" href="javascript:void(0)" onclick="loadFile('{$v[work_id]}');">
+										<span class="loop icon"></span>{$_lang['load_file']}({$n})
+									</a>
+                                    {else}{$_lang['not_exists']}
+                                    {/if}
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+    {/loop}
+    <tfoot>
+        <tr>
+            <td colspan="7">
+                <div class="page fl_right">
+                    {$pages['page']}
+                </div>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+{else}
+<div class='t_c'>{$_lang['no_data']}</div>
+{/if}
+</div>
+<!--{include control/admin/tpl/admin_footer}-->

@@ -6,7 +6,7 @@
  * 2011-10-08обнГ02:57:33
  */
 
-class Contorl_ajax extends Controller{
+class Control_ajax extends Controller{
 	
 	function action_index(){
 		

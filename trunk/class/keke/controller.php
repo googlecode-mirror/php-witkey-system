@@ -91,7 +91,12 @@ abstract class Keke_Controller {
 		$r = array();
 		//初始化where的值
 		$where = ' 1=1 ';
-		$query_uri = '?';
+		if(strpos($base_uri, '?')!==false){
+			$query_uri = '&';
+		}else{
+			$query_uri = '?';
+		}
+		
 		//字段与条件
 		if($_GET['slt_fields']  and $_GET['txt_condition']){
 			//时间的查询处理,时间字段须含有time，这里有点不严谨，不好判断这个字段是不是时间字段,蛋疼!

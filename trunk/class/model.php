@@ -118,9 +118,52 @@ abstract class Model {
 		$res_info = array();
 		$res_info ['data'] = $this->query($fields);
 		$res_info ['pages'] = $pages;
-		
 		return $res_info;
+	}
+	/**
+	 * 多表分页处理
+	 * @param string $sql
+	 * @param string $wh
+	 * @param string $uri
+	 * @param string $order
+	 * @param int $page
+	 * @param int $count
+	 * @param int $page_size
+	 * @param bool $ajax_dom
+	 * @return multitype:NULL Ambigous <array(page,where), string>
+	 */
+	public static function sql_grid($sql ,$wh = '1=1', $uri=NULL, $order = null,$group_by = null,$page=1, $count=NULL,$page_size = 10, $ajax_dom = null) {
+	
+		$page or $page = 1;
+		$page_size or $page_size = 10;
+		$page_obj = new keke_page_class();
+		if ($ajax_dom) {
+			$page_obj->setAjax ( '1' );
+			$page_obj->setAjaxDom ( $ajax_dom );
+		}
+		$where = ' where ';
+		if ( $wh ) {
+			//字符条件
+			$where .= $wh;
+		}else{
+			$where .= ' 1=1 ';
+		}
+		//统计表的总记录数,如果count有值不用再次查询，确保分页只有一次查询
+		if(!$count){
+			$res = Database::instance()->query($sql.$where.' '.$group_by);
+			$count = sizeof($res);
+		}
+		if(!$uri){
+			$uri = BASE_URL.'/'.Request::current()->url();
+		}
+		$pages = $page_obj->getPages ( $count, $page_size, $page, $uri );
+		$where .= ' '.$group_by .= $order  .= $pages ['where'];
 		
+		$res_info = array();
+		
+		$res_info ['data'] = DB::query($sql.$where)->execute();
+		$res_info ['pages'] = $pages;
+		return $res_info;
 	}
 	/**
 	 * 过滤掉NULL值

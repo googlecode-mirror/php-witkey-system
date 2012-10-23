@@ -11,94 +11,75 @@
         </div>
 </div>
 <!--页头结束-->
+<div class="box search p_relative" id="detail">
+<form action="{$base_uri}/work" method="get">
+<input type="hidden" name="type" value="{$type}"> 		
+<table class="detail"  cellspacing="0" cellpadding="0">    		
+	<tbody>
+		<tr>
+            <th>查询字段
+               <select name="slt_fields">
+               	<option></option>
+               	{loop $query_fields $k $v}
+               	 <option  value="$k" {if $k == $_GET['slt_fields']} selected="selected" {/if}>{$v}</option>
+				{/loop} 
+               </select>
+			 <select name="slt_cond">
+			 	<option value="=" {if $_GET['slt_cond']=='='}selected="selected"{/if}>=</option>
+				<option value=">" {if $_GET['slt_cond']=='>'}selected="selected"{/if}>></option>
+				<option value="<" {if $_GET['slt_cond']=='<'}selected="selected"{/if}><</option>
+				<option value="like" {if $_GET['slt_cond']=='like'}selected="selected"{/if}>Like</option>
+			 </select>
+             <input type="text" class="txt" name="txt_condition" id="txt_condition" value="{$_GET['txt_condition']}">
+			 <select name="page_size">
+    			<option value="10" {if $_GET['page_size']=='10'}selected="selected"{/if}>{$_lang['page_size']}10条</option>
+    			<option value="20" {if $_GET['page_size']=='20'}selected="selected"{/if}>{$_lang['page_size']}20条</option>
+    			<option value="30" {if $_GET['page_size']=='30'}selected="selected"{/if}>{$_lang['page_size']}30条</option>
+			</select>
+			 <input type="submit" value="{$_lang['search']}">
+			 </td>
+        </tr>  			
+		</tbody>
+</table>
+</form>    
+</div>
+<!--search end-->
 <div class="box list">
-{if $list}
-<table width="100%" border="0" cellpadding="5">
-    {loop $list $v}
-    <tbody id="w_{$v['work_id']}">
-        <tr>
-            <td width="110">
-                <a href="{$_K['siteurl']}/index.php?do=space&member_id={$v['uid']}" target="_blank" title="{$v['username']}"><!--{userpic($v['uid'],'middle')}--></a>
-                <div class="t_c">
-                    <a href="{$_K['siteurl']}/index.php?do=space&member_id={$v['uid']}" target="_blank">{$v['username']}</a>
-                </div>
-            </td>
-            <td style="padding:0">
-                <table border="0" cellpadding="0">
-                    <tr>
-                    	<td>
-                    		{$_lang['work_id']}{$_lang['zh_mh']}#<b>{$v['work_id']}</b>
-                    	</td>
-                        <td>
-                            {$_lang['work_status']}{$_lang['zh_mh']}
-                            <font color="red">
-                                <i>{$satus_arr[$v['work_status']]}</i>
-                            </font>
-                        </td>
-                        <td width="200">
-                            {$_lang['hand_time']}{$_lang['zh_mh']}<!--{date('Y-m-d H:i:s',$v['work_time'])}-->
-                        </td>
-                        <td align="center" width='170' style="border:1px solid black">
-                            <a href="{$_K['siteurl']}/index.php?do=task&task_id={$task_id}&view=work&work_id={$v['work_id']}" target="_blank" class='button'><span class="book icon"></span>{$_lang['work_view']}</a>
-                            {if in_array($v['work_status'],array(0,7,8))}<a href='javascript:void(0);' onclick="wdel('{$v[work_id]}');" class='button'><span class="icon trash">&nbsp;</span>{$_lang['work_delete']}</a>
-                            {/if}
-                        </td>
-                    </tr>
-                    <tr height='100'>
-                        <td colspan=3>
-                            <div class="ws_break" style="height:70px">
-                                {$v['work_desc']}
-                            </div>
-							<div id="c_{$v['work_id']}" style="display:none;width:80%;border-top:1px solid black"></div>
-							<div id="f_{$v['work_id']}" style="display:none;width:80%;border-top:1px solid black"></div>
-                        </td>
-                        <td align="left" style="border:1px solid black">
-                            <ul>
-                                <li>
-                                    {$_lang['hide_work']}{$_lang['zh_mh']}
-                                    <font color="red">
-                                        {if $v['hide_work']!=1}
-                                        {$_lang['no']}
-                                        {else}
-                                        {$_lang['yes']} 
-                                        {/if} 
-                                    </font>
-                                </li>
-                                <li>
-                                    {$_lang['vote']}{$_lang['zh_mh']}{$v['vote_num']} {$_lang['piao']}
-                                </li>
-                                <li>
-                                    {$_lang['comment']}{$_lang['zh_mh']}
-									{if $v['comment_num']}
-										<a class="button" href="javascript:void(0);" onclick="loadComm('{$v[work_id]}');">
-											<span class="loop icon"></span>{$_lang['load_comm']}($v['comment_num'])
-										</a>
-										{else}
-											{$_lang['not_exists']}
-										{/if}
-                                </li>
-                                <li>
-                                    {$_lang['ext_file']}{$_lang['zh_mh']}
-									{if $v['work_file']}
-									<!--{eval $c = explode(',',$v['work_file']);$n = count($c);}-->
-									<a class="button" href="javascript:void(0)" onclick="loadFile('{$v[work_id]}');">
-										<span class="loop icon"></span>{$_lang['load_file']}({$n})
-									</a>
-                                    {else}{$_lang['not_exists']}
-                                    {/if}
-                                </li>
-                            </ul>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </tbody>
+{if $list_arr}
+<table cellpadding="0" cellspacing="0">
+	<tr>
+    <th width="8%"><a href="javascript:;" onclick="submitSort('{$uri}','work_id','{$ord_tag}')">ID{if $_GET['f']=='work_id'}{$ord_char}{/if}</a></th>
+    <th width="27%">稿件内容</th>
+    <th width="10%">{$_lang['work_status']}</th>
+	<th width="5%">票数</th>
+	<th width="10%">交稿人</th>
+    <th width="15%">稿件留言</th>
+	<th width="15%">稿件附件</th>
+	<th width="8%">{$_lang['time']}</th>
+    <th width="15%">{$_lang['operate']}</th>
+  </tr>
+    <tbody>
+    {loop $list_arr $v}
+	  <tr class="item">
+ 		<td class="td25">{$v['work_id']}</td>
+    	<td class="td28">
+    	<!--{eval echo Keke::cutstr($v['work_desc'],40)}-->
+		{if $v['hide_work']==1}<font color="red">[隐]</font>{/if}
+		</td>
+		<td>{$satus_arr[$v['work_status']]}</td>
+		<td>{$v['vote_num']}</td>
+		<td>{$v['username']}</td>
+		<td>{$v['contents']}</td>
+		<td>{$v['files']}</td>
+		<td>{date('Y-m-d',$v['work_time'])}</td>
+		<td><a href="">{$_lang['delete']}</a></td>
+	  </tr>
     {/loop}
+	</tbody>
     <tfoot>
         <tr>
-            <td colspan="7">
-                <div class="page fl_right">
+            <td colspan="9">
+                <div class="page">
                     {$pages['page']}
                 </div>
             </td>

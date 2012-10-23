@@ -182,19 +182,11 @@
 	-------------------------------------------*/
 		.page{
 					padding:5px 10px;
-				  	background-color: #EDEDED;
-				 	background-image: -webkit-gradient(linear, left top, left bottom, from(#EDEDED), to(#D8D8D8)); 
-					background-image: -webkit-linear-gradient(top, #EDEDED, #D8D8D8); 
-					background-image:    -moz-linear-gradient(top, #EDEDED, #D8D8D8); 
-					background-image:     -ms-linear-gradient(top, #EDEDED, #D8D8D8); 
-					background-image:      -o-linear-gradient(top, #EDEDED, #D8D8D8); 
-					background-image:         linear-gradient(top, #EDEDED, #D8D8D8);
-				            filter: ~"progid:DXImageTransform.Microsoft.gradient(startColorStr='#EDEDED', EndColorStr='#D8D8D8')"; 
 
 		    p 	  { margin:0;}
-		    .stats{ background:#eee; border:1px solid #A1A1A1;}
+		    .stats{ border:1px solid #A1A1A1;}
 
-		    a,span{ display:inline-block; padding:0 1em;border-radius: 10px; color:#727272;}
+		    a,span{ display:inline-block; }
 			a     {
 			    	&:hover 				   { color:#2971a7;}
 			    	&.selected,&.selected:hover{ background:#A1A1A1; color:#fff; text-decoration:none;}
@@ -428,18 +420,11 @@
 
 		.primary_nav{border:1px solid #ccc; border-radius:10px;
   					background-color: #f5f5f5;
-  					background-image: -webkit-gradient(linear, left top, left bottom, from(#f5f5f5), to(#efefef)); 
-  					background-image: -webkit-linear-gradient(top, #f5f5f5, #efefef); 
-  					background-image:    -moz-linear-gradient(top, #f5f5f5, #efefef); 
-  					background-image:     -ms-linear-gradient(top, #f5f5f5, #efefef); 
-  					background-image:      -o-linear-gradient(top, #f5f5f5, #efefef); 
-  					background-image:         linear-gradient(top, #f5f5f5, #efefef);
-            		filter: ~"progid:DXImageTransform.Microsoft.gradient(startColorStr='#f5f5f5', EndColorStr='#efefef')"; 
 					ul li{ 
 						display:inline; 
 						float:left; 
 						text-align:center; 
-						width:83px;
+						
 
 							.icon32{ 
 								display:block; 
@@ -451,7 +436,7 @@
 							}
 							a{
 							 display:inline-block;
-							  _width:68px; 
+							  
 							   color:#333; 
 							   position:relative; 
 							   padding:0 10px; 
@@ -1454,6 +1439,63 @@ progress::-moz-progress-value {background: #aadd6a;}
 	.icon16{
 		.icon(16px,0,url(../img/icon16.png));
 	}
+
+
+/* 1.8.12.1 dl数据列表  */ 
+.list{ border:4px solid #eaeaea;/*min-height:580px;_height: expression( this.scrollHeight < 580 ? "580px" : "auto" );*/}
+	.list dt{ display:none; text-align:center; font-weight:bold; background:#DDE8F6; color:#2F549F; line-height:30px;border:1px solid #ccc;border-top:1px solid #fff;}
+	.list dd.tags{ height:25px; padding:0 10px; background:#2F549F; color:#fff;border-bottom:1px solid #fff;}
+		.list dd.tags a{ display:block; color:#fff;background:#3C69C5; margin:0 1px; }
+			.list dd.tags a:hover{ color:#2F549F; background:#B3C3E8; }
+		.list dd.tags li{ display:inline; float:left; width:10%;}
+	
+	.list dd{ clear:both; padding:10px;/* height:25px;*/border-top:1px solid #fff; border-bottom:1px solid #ccc; border-left:1px solid #ccc; border-right:1px solid #ccc;-o-transition: all 0.2s ease-out 0.1s; -webkit-transition: all 0.2s ease-out 0.1s; -moz-transition: all 0.2s ease-out 0.1s; -ms-transition: all 0.2s ease-out 0.1s; transition: all 0.2s ease-out 0.1s;   }
+		.list dd li{ display:inline; float:left; width:10%; text-align:center;}
+		/*.list dd li:nth-child(2){ width:50%;} */
+		.list dd li.w2{ width:20%; overflow:hidden;}
+		.list dd li.w3{ width:30%; overflow:hidden;}
+		.list dd li.w4{ width:40%; overflow:hidden;}
+		.list dd li.w5{ width:50%; overflow:hidden;}
+		.list dd li.w6{ width:60%; overflow:hidden;}
+		.list dd li.w7{ width:70%; overflow:hidden;}
+		.list dd li.w8{ width:80%; overflow:hidden;}
+		.list dd li.w9{ width:90%; overflow:hidden;}
+		.list dd li.w0{ width:100%; overflow:hidden;}
+	.list dd.odd{ background:#f2f2f2;}
+	.list dd.hover,
+	.list dd:hover{ background:#fffeb5;}
+
+/* 1.8.12.2 table数据列表 */
+.data_list{
+	border:4px solid #eaeaea;
+	.data_table{ 
+		width:100%;border:1px solid #ccc;
+		tr{
+			&.odd{ background:#f2f2f2;}
+			&.hover,&:hover{ background:#fffeb5;}
+		}
+		caption{ background:#ccc; font:14px/30px Arial, Helvetica, sans-serif; text-align:center; color:#fff;}
+		thead{ 
+			background:#2f549f; color:#fff;
+			th{ padding:0 10px;}
+			tr{
+				&.hover,&:hover{ background:#2f549f;}
+			}
+		}
+		tfoot{ 
+			background:#eafaea; color:#393;
+			td{ padding:0 10px;}
+			tr{
+				&.hover,&:hover{ background:#eafaea;}
+			}
+		}
+		tbody{ 
+			background:#f8f8f8; color:#333;
+			td{ padding:10px; padding-right:0px; border-top:1px solid #fff; border-bottom:1px solid #ccc;}
+
+		}
+	}
+}
 
 
 	

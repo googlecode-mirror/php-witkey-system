@@ -191,6 +191,7 @@ class keke_upload_class {
 			if ($fileArray ["size"] > $this->maxSize) {
 				$this->errno = 14;
 				return false;
+				exit;
 			}
 		}
 		// 文件上传

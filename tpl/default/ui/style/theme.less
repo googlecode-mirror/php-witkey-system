@@ -509,13 +509,27 @@ table {
 		&:hover,&:active{ text-decoration: underline;}
 	}
 
-	input[type=text],input[type=search]{
+	input[type=email], input[type=number], input[type=password], input[type=tel], input[type=text], input[type=url],input[type=search]{
+		.po_re;
+		.transition(all 0.2s ease-out 0.1s);
 		height: 30px;
 		line-height: 30px;
 		font-family: "微软雅黑";
 		border: 1px solid @border_colors;
 		padding: 0 5px;
 		vertical-align: middle;
+		background: white;
+		margin-right: -1px;
+		z-index: 1;
+		&:hover{
+			.box-shadow(inset 1px 1px 2px rgba(0,0,0,.1));
+			border-color:darken(@border_colors,10%);
+
+		}
+		&:focus{
+			.box-shadow(inset 1px 1px 2px rgba(0,0,0,.1));
+			border-color: @main_color;
+		}
 	}
 	input[type=button],button[type=button]{
 		height: 32px;
@@ -529,23 +543,46 @@ table {
 /* 头部 */
 	.header{
 		.clearfix;
-		padding-top: 50px;
-		padding-bottom: 20px;
+		.size(auto,50px);
+		padding-top: 40px;
 		background: rgba(255,255,255,.5);
 		.logo{
 			.column(8);
 			h1{
 				color: @second_color;
+				display: inline;
+				vertical-align: middle;
+				font-size: 30px;
+				line-height: 30px;
+				margin-bottom: 0;
 			}
 			h2{
+				.ml_20;
 				color: @main_color;
+				display: inline;
+				vertical-align: middle;
+				line-height: 30px;
+				font-weight: normal;
+				margin-bottom: 0;
 			}
 		}
 		.search{
 			.column(9);
+			input[type=search]{
+				.size(280px,30px);
+			}
 		}
 		.login{
 			.column(8);
+			.t_r;
+			a{
+				.size(auto,30px);
+				font-size: 14px;
+				display: inline-block;
+				padding: 0 10px;
+				line-height: 30px;
+			}
+			
 		}
 	}
 /* 主导航 */
@@ -555,19 +592,22 @@ table {
 		background: rgba(255,255,255,.5);
 		border:none;
 		border-bottom:5px solid @main_color;
-		font-size: 18px;
+		font-size: 14px;
 		ul li{
 			.mr_10;
 			a{
 				.border-radius(0);
 				border-width: 0;
 				margin: 0;
-				padding: 5px 15px;
+				padding: 4px 15px;
 				color: @second_color;
 				&:hover,&.selected{
 					background: @main_color;
 					color: white;
 					text-decoration: none;
+				}
+				&.selected{
+					font-weight: bold;
 				}
 			}
 		}
@@ -633,6 +673,7 @@ table {
 		.tp-menu{
 			.po_re;
 			z-index: 1;
+
 			.selected-item{
 				.ws_hide;
 			}
@@ -644,6 +685,7 @@ table {
 				top:30;
 				z-index: 500;
 				background: @topbar_bg;
+				border: 1px solid @topbar_border;
 				a{
 					.block;
 					.ws_hide;
@@ -680,7 +722,7 @@ table {
 
 /* 内容部分 */	
 	.wrapper{
-		.pt_20;
+		.pt_10;
 		.aside{
 			.column(5);
 			/* 页面副导航 */
@@ -707,14 +749,16 @@ table {
 							
 						}
 						&.sp_link{
-							background: @main_color;
-							color: white;
-							border-color: darken(@main_color,10%);
-							margin:-1px;
+							
+							&:hover{
+								background: @main_color;
+								color: white;
+								border-color: darken(@main_color,10%);
 
-							strong{
-				  				color:white; 
-				  			}
+								strong{
+					  				color:white; 
+					  			}
+					  		}
 						}
 					}
 				}
@@ -734,9 +778,7 @@ table {
 				&.bottom{
 					.mt_10;
 				}
-				input[type=button],button[type=button]{
-					margin-left: -1px;
-				}
+				
 			}
 			.box{
 				.whitebox;

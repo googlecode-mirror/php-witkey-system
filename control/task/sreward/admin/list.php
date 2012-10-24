@@ -145,19 +145,15 @@ class Control_task_sreward_admin_list extends Control_task_list{
     	//获取任务信息
     	$task_info = $this->get_task_info();
     	$base_uri = $this->_base_uri;
-        $sql = "SELECT b.work_id,b.work_desc,b.task_id ,b.username,b.work_status,
-        		b.work_time,b.hide_work,b.vote_num,
-        		GROUP_CONCAT(c.content) as contents, \n".
-				"GROUP_CONCAT(d.file_name) as files,GROUP_CONCAT(d.save_name) as save_names\n".
-				"from ".TABLEPRE."witkey_task as a \n".
-				"right join `".TABLEPRE."witkey_task_work` as b \n".
-				"on b.task_id = a.task_id \n".
-				"left join ".TABLEPRE."witkey_comment as c\n".
-				"on b.work_id = c.obj_id  and c.obj_type='work'\n".
-				"left join ".TABLEPRE."witkey_file as d\n".
-				"on b.work_id = d.obj_id and d.obj_type = 'work'\n";
-				//"where a.task_id=".$task_id."\n".
-				//"GROUP BY b.work_id";
+        $sql = "SELECT a.work_id,a.work_desc,a.task_id ,a.username,a.work_status,\n".
+				"a.work_time,a.hide_work,a.vote_num,a.comment_num,\n".
+				"count(distinct(c.file_id)) as file_num\n".
+				"from ".TABLEPRE."witkey_task_work as a \n".
+				"left join ".TABLEPRE."witkey_file as c \n".
+				"on  c.obj_id = a.work_id and c.obj_type = 'work'\n".
+				"left join ".TABLEPRE."witkey_task as d\n".
+				"on a.task_id = d.task_id\n";
+				 
         //要查询的字段,在模板中显示用的
         $query_fields = array('work_id'=>$_lang['id'],'work_desc'=>$_lang['name'],'username'=>$_lang['username']);
         //总记录数,分页用的，你不定义，数据库就是多查一次的。为了少个Sql语句，你必须要写的，亲!
@@ -173,13 +169,52 @@ class Control_task_sreward_admin_list extends Control_task_list{
         
         //获取列表分页的相关数据,参数$where,$uri,$order,$page来自于get_url方法
 //      $data_info = Model::factory('witkey_task')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
-        $data_info = Model::sql_grid($sql,"a.task_id=".$task_id,$uri,$order,"GROUP BY b.work_id",$page,$count,$_GET['page_size']);
+        $data_info = Model::sql_grid($sql,"d.task_id=".$task_id,$uri,$order,"GROUP BY a.work_id",$page,$count,$_GET['page_size']);
         //列表数据
         $list_arr = $data_info['data'];
         //分页数据
         $pages = $data_info['pages'];
+        $satus_arr = Control_task_sreward_task::get_work_status();
 	 
     	require Keke_tpl::template('control/task/'.$this->_model_code.'/tpl/admin/task_work');
+    }
+    /**
+     * 稿件详细页
+     */
+    public function action_work_detail(){
+    	global $_K,$_lang;
+    	$work_id = $_GET['work_id'];
+    	//稿件信息
+    	$work_info = DB::select()->from('witkey_task_work')->where("work_id = '$work_id'")->get_one()->execute();
+    	//稿件留言
+    	$comments = DB::select()->from('witkey_comment')->where("obj_id = '$work_id' and obj_type='work'")->execute();
+    	//稿件的附件
+    	$files = DB::select()->from('witkey_file')->where("obj_id = '$work_id' and obj_type='work'")->execute();
+    	
+    	require Keke_tpl::template('control/task/'.$this->_model_code.'/tpl/admin/work_detail');
+    }
+    /**
+     * 删除指定搞件
+     * 删除稿件的同时要删除稿件留言表，稿件附件表,附件
+     */
+    public function action_work_del(){
+    	$work_id = $_GET['work_id'];
+    	//删除对应的文件
+    	$files = DB::select('save_name')->from('witkey_file')->where("obj_id = '$work_id' and obj_type='work'");
+    	foreach ($files as $v){
+           $path = S_ROOT.$v['save_name'];
+           if(file_exists($path)){
+           	  unlink($path);
+           } 		
+    	}
+    	//删除关联的三张表
+    	$sql = "delete a,b,c from ".TABLEPRE."witkey_task_work as a \n".
+				"left join ".TABLEPRE."witkey_comment as b\n".
+				"on b.obj_id = a.work_id and b.obj_type='work'\n".
+				"left join ".TABLEPRE."witkey_file as c \n".
+				"on a.work_id = c.obj_id and c.obj_type='work'\n".
+				"where a.work_id = '$work_id'";
+		echo DB::query($sql,Database::DELETE);				
     }
     /**
      * 任务留言列表页
@@ -189,8 +224,15 @@ class Control_task_sreward_admin_list extends Control_task_list{
     	$task_id = $this->_task_id;
     	$base_uri = $this->_base_uri;
     	//获取任务信息
-    	$task_info = $this->get_task_info();
+    	$comments = DB::select()->from('witkey_comment')->where("obj_id = '$task_id' and obj_type='task' ")->execute(); 
     	require Keke_tpl::template('control/task/'.$this->_model_code.'/tpl/admin/task_comment');
+    }
+    /**
+     * 删除任务留言
+     */
+    public function action_comment_del(){
+    	$comment_id = $_GET['comment_id'];
+    	echo DB::delete('witkey_comment')->where("comment_id = '$comment_id'")->execute();
     }
     /**
      * 任务互评列表页

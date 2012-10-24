@@ -106,6 +106,7 @@ $lang = array (
 		'delay_rule_title'=>'任务延期比例为1-100',
 		'add_rule'=>'添加规则',
 		'set_deliver'=>'交付设定',
+		'agree'=>'交付',
 		'sign_default_agreement_time'=>'协议默认签署时间',
 		'confirm_default_agreement_time'=>'协议完成时间限制',
 		'default_agreement_time_notice'=>'进入交付期后、超过此期限系统将默认双方签署协议。',

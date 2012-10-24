@@ -43,7 +43,7 @@ class keke_user_mark_class {
 	 */
 	public static function create_mark_log($model_code,$user_type,$by_uid,$uid, $obj_id,$obj_cash,$origin_id = null, $by_username = null, $username = null) {
 		global $basic_config;
-		$mark_obj = new Keke_witkey_mark_class (); //互评对象
+		$mark_obj = new Keke_witkey_mark; //互评对象
 		! $by_username and $by_username = self::get_user_name ( $by_uid );
 		! $username and $username = self::get_user_name ( $uid );
 		/*判断此对象是否已生成过记录*/
@@ -93,7 +93,7 @@ class keke_user_mark_class {
 	}	
 	public static function exec_mark_process($mark_id, $content, $mark_status = '1', $aid = null, $aid_star = null){		
 		global $_lang;
-		$log_obj = new Keke_witkey_mark_class ();	
+		$log_obj = new Keke_witkey_mark;	
 		$mark_info = self::get_single_mark ( $mark_id );
 		$log_obj->setWhere ( "mark_id = '$mark_id'" );
 		//修改评论只能往好了改   否则无效
@@ -291,7 +291,7 @@ class keke_user_mark_class {
 	 * 则在内容模板上     $mark_log_arr[$work_id][$uid][mark_status]就可以得到用户是否已做过评价
 	 * */
 	public static function get_obj_mark_data($model_code, $obj_id, $pk = null) {
-		$mark_log_obj = new Keke_witkey_mark_class ();
+		$mark_log_obj = new Keke_witkey_mark;
 		
 		if (is_array ( $obj_id )) {
 			$mark_log_obj->setWhere ( "model_code = '$model_code' and obj_id in (" . implode ( ',', $obj_id ) . ") " );

@@ -242,10 +242,15 @@ class Control_task_sreward_admin_list extends Control_task_list{
     	$task_id = $this->_task_id;
     	$base_uri = $this->_base_uri;
     	//获取任务信息
-    	$task_info = $this->get_task_info();
-    	
+    	//$task_info = $this->get_task_info();
+    	$where = "model_code = '$this->_model_code' and origin_id = '$task_id'";
+    	$marks = DB::select()->from('witkey_mark')->where($where)->execute();
+    	//互评状态
+    	$mark_status = Keke_user_mark::get_mark_status();
+    	//互评项
     	require Keke_tpl::template('control/task/'.$this->_model_code.'/tpl/admin/task_mark');
     }
+    
     /**
      * 任务交付列表页
      */

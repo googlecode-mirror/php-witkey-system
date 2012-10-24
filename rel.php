@@ -1,9 +1,18 @@
 <?php 
 define ( 'IN_KEKE', TRUE );
 include 'app_boot.php';
-
-echo $dir = S_ROOT.'000\00\00'; 
-is_dir($dir)==false and mkdir($dir,0777,TRUE); 
+function f(&$v){
+	if(!$v){
+		$v = 0;
+	}
+	return $v;
+}
+$i = ',2.5';
+$a =explode(',', $i);
+var_dump($a);
+array_walk($a, 'f');
+var_dump($a);
+    	
  
 die;
 // Create the context

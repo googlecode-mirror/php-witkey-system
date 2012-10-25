@@ -6,7 +6,7 @@
    2012-10-19
  */
 
-class Control_user_index extends Controller{
+class Control_user_index extends Control_user{
     
 	function action_index(){
 		global $_K,$_lang;

@@ -215,7 +215,14 @@
 	-o-transform: rotate(@rotation);
 	transform: rotate(@rotation);
 }
-
+.placeholder(@color: #DDD) {
+	:-moz-placeholder {
+		color: @color;
+	}
+	::-webkit-input-placeholder {
+		color: @color;
+	}
+}
 #gradient {
 	.horizontal (@start-color, @end-color) when not (@disable-filters) {
 		background-color: @end-color;

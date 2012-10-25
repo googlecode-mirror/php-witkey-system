@@ -1,5 +1,4 @@
-/* base */
-/* base */
+/*global*/
 /*global*/
 .clear {
   clear: both;
@@ -677,6 +676,183 @@ button.pnc:active { border-color:#1c6a9e !important; filter:~'progid:DXImageTran
 }
 *//* ui元素定义--------------------------------------------------------------------------- 
 */
+/* 表单
+	-------------------------*/
+/* input 输入框 */
+input[type=email],
+input[type=number],
+input[type=password],
+input[type=tel],
+input[type=text],
+input[type=url],
+input[type=search] {
+  background: #FBFBFB;
+  color: #333;
+  border: 1px solid #D8D8D8;
+  border-left-color: #A8A8A8;
+  border-top-color: #A8A8A8;
+  border-radius: 2px;
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 6px 4px 6px 8px;
+  font: 12px Arial, Helvetica, sans-serif;
+}
+input[type=email]:focus,
+input[type=number]:focus,
+input[type=password]:focus,
+input[type=tel]:focus,
+input[type=text]:focus,
+input[type=url]:focus,
+input[type=search]:focus {
+  background: #fff;
+  border-color: #006DC2;
+  box-shadow: inset 1px 1px 3px #a6caea, 0 0 3px #6692db;
+}
+input[type=email]:disabled,
+input[type=number]:disabled,
+input[type=password]:disabled,
+input[type=tel]:disabled,
+input[type=text]:disabled,
+input[type=url]:disabled,
+input[type=search]:disabled,
+input[type=email][disabled],
+input[type=number][disabled],
+input[type=password][disabled],
+input[type=tel][disabled],
+input[type=text][disabled],
+input[type=url][disabled],
+input[type=search][disabled] {
+  border-color: #ccc;
+  color: #999;
+  background: #eee;
+  box-shadow: none;
+}
+/*  textarea 文本域 */textarea {
+  background: #FBFBFB;
+  color: #333;
+  border: 1px solid #D8D8D8 !important;
+  border-left-color: #A8A8A8 !important;
+  border-top-color: #A8A8A8 !important;
+  border-radius: 2px;
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 6px 0 0 8px;
+  font: 12px Arial, Helvetica, sans-serif;
+  resize: vertical;
+  vertical-align: top;
+}
+textarea:focus {
+  background: #fff;
+  border-color: #006DC2 !important;
+  box-shadow: inset 1px 1px 3px #a6caea, 0 0 3px #6692db;
+}
+textarea:disabled,
+textarea [disabled] {
+  border-color: #ccc;
+  color: #999;
+  background: #eee;
+  box-shadow: none;
+}
+/* button submit 按钮 */
+input[type="button"],
+button[type="button"],
+input[type="reset"],
+button[type="reset"] {
+  margin: 5px;
+  padding: 4px 15px;
+  border: 1px solid #cacaca;
+  border-bottom-color: #bbb;
+  color: #3C3C3D;
+  text-align: center;
+  text-shadow: 0 -1px 0 rgba(255, 255, 255, 0.3);
+  text-decoration: none;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  khtml-border-radius: 2px;
+  border-radius: 2px;
+  background: #F6F6F6;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.2, #f6f6f6), color-stop(1, #e3e3e3));
+  background: -moz-linear-gradient(center top, #f6f6f6 20%, #e3e3e3 100%);
+}
+input[type="button"]:hover,
+button[type="button"]:hover,
+input[type="reset"]:hover,
+button[type="reset"]:hover {
+  border-color: #388AD4;
+  color: #fff;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+  background: #75A9E2;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.2, #75a9e2), color-stop(1, #4c83bf));
+  background: -moz-linear-gradient(center top, #75a9e2 20%, #4c83bf 100%);
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 2px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.29);
+  -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 2px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.29);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 2px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.29);
+}
+input[type="button"]:active,
+button[type="button"]:active,
+input[type="reset"]:active,
+button[type="reset"]:active {
+  border-color: #20559a;
+  -webkit-box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.3), 0 1px 0 #ffffff;
+  -moz-box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.3), 0 1px 0 #ffffff;
+  box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.3), 0 1px 0 #ffffff;
+}
+input[type="button"]:disabled,
+button[type="button"]:disabled,
+input[type="reset"]:disabled,
+button[type="reset"]:disabled,
+input[type="button"].disabled,
+button[type="button"].disabled,
+input[type="reset"].disabled,
+button[type="reset"].disabled {
+  margin: 5px;
+  padding: 4px 15px;
+  border: 1px solid #ccc;
+  border-bottom-color: #bbb;
+  color: #888;
+  text-align: center;
+  text-shadow: 0 -1px 0 rgba(255, 255, 255, 0.3);
+  text-decoration: none;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  khtml-border-radius: 4px;
+  border-radius: 4px;
+  background: #E9E9E9;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.2, #e9e9e9), color-stop(1, #d1d1d1));
+  background: -moz-linear-gradient(center top, #e9e9e9 20%, #d1d1d1 100%);
+}
+input[type="submit"],
+button[type="submit"] {
+  margin: 5px;
+  padding: 4px 15px;
+  border: 1px solid #4081af;
+  border-bottom-color: #20559a;
+  color: white;
+  text-align: center;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
+  text-decoration: none;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  khtml-border-radius: 4px;
+  border-radius: 4px;
+  background: #0090D2;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.2, #52a8e8), color-stop(1, #2e76cf));
+  background: -moz-linear-gradient(center top, #52a8e8 20%, #2e76cf 100%);
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 2px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.29);
+  -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 2px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.29);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 2px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.29);
+}
+input[type="submit"]:hover,
+button[type="submit"]:hover {
+  background: #0073d2;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.2, #3e9ee5), color-stop(1, #1666ca));
+  background: -moz-linear-gradient(center top, #3e9ee5 20%, #1666ca 100%);
+}
+input[type="submit"]:active,
+button[type="submit"]:active {
+  border-color: #20559a;
+  -webkit-box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.3), 0 1px 0 #ffffff;
+  -moz-box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.3), 0 1px 0 #ffffff;
+  box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.3), 0 1px 0 #ffffff;
+}
 /* 星星 
 	-------------------------*/
 .stars {
@@ -5999,12 +6175,12 @@ progress::-moz-progress-value {
 .icon16.help {
   background-position: 0px -3968px;
 }
-/* 1.8.12.1 dl数据列表  */.list {
+/* dl 列表  */.list {
   border: 4px solid #eaeaea;
   /*min-height:580px;_height: expression( this.scrollHeight < 580 ? "580px" : "auto" );*/
+
 }
 .list dt {
-  display: none;
   text-align: center;
   font-weight: bold;
   background: #DDE8F6;
@@ -6012,6 +6188,20 @@ progress::-moz-progress-value {
   line-height: 30px;
   border: 1px solid #ccc;
   border-top: 1px solid #fff;
+}
+.list dd {
+  clear: both;
+  padding: 10px;
+  /* height:25px;*/
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  -o-transition: all 0.2s ease-out 0.1s;
+  -webkit-transition: all 0.2s ease-out 0.1s;
+  -moz-transition: all 0.2s ease-out 0.1s;
+  -ms-transition: all 0.2s ease-out 0.1s;
+  transition: all 0.2s ease-out 0.1s;
 }
 .list dd.tags {
   height: 25px;
@@ -6035,19 +6225,15 @@ progress::-moz-progress-value {
   float: left;
   width: 10%;
 }
-.list dd {
-  clear: both;
-  padding: 10px;
-  /* height:25px;*/
-  border-top: 1px solid #fff;
-  border-bottom: 1px solid #ccc;
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
-  -o-transition: all 0.2s ease-out 0.1s;
-  -webkit-transition: all 0.2s ease-out 0.1s;
-  -moz-transition: all 0.2s ease-out 0.1s;
-  -ms-transition: all 0.2s ease-out 0.1s;
-  transition: all 0.2s ease-out 0.1s;
+.list dd.tags:hover {
+  background: #2F549F;
+}
+.list dd.odd {
+  background: #f2f2f2;
+}
+.list dd.hover,
+.list dd:hover {
+  background: #fffeb5;
 }
 .list dd li {
   display: inline;
@@ -6055,7 +6241,10 @@ progress::-moz-progress-value {
   width: 10%;
   text-align: center;
 }
-/*.list dd li:nth-child(2){ width:50%;} */
+.list dd li.w1 {
+  width: 10%;
+  overflow: hidden;
+}
 .list dd li.w2 {
   width: 20%;
   overflow: hidden;
@@ -6092,27 +6281,13 @@ progress::-moz-progress-value {
   width: 100%;
   overflow: hidden;
 }
-.list dd.odd {
-  background: #f2f2f2;
-}
-.list dd.hover,
-.list dd:hover {
-  background: #fffeb5;
-}
-/* 1.8.12.2 table数据列表 */
+/*  table 列表 */
 .data_list {
   border: 4px solid #eaeaea;
 }
 .data_list .data_table {
   width: 100%;
   border: 1px solid #ccc;
-}
-.data_list .data_table tr.odd {
-  background: #f2f2f2;
-}
-.data_list .data_table tr.hover,
-.data_list .data_table tr:hover {
-  background: #fffeb5;
 }
 .data_list .data_table caption {
   background: #ccc;
@@ -6145,6 +6320,13 @@ progress::-moz-progress-value {
 .data_list .data_table tbody {
   background: #f8f8f8;
   color: #333;
+}
+.data_list .data_table tbody tr.odd {
+  background: #f2f2f2;
+}
+.data_list .data_table tbody tr.hover,
+.data_list .data_table tbody tr:hover {
+  background: #fffeb5;
 }
 .data_list .data_table tbody td {
   padding: 10px;
@@ -7976,7 +8158,7 @@ table {
 }
 /* 全局定义 */
 body {
-  background: #ffffff;
+  background: #eaeaea url(http://cn.bing.com/az/hprichbg?p=rb%2fKenting_ZH-CN7852586394_1366x768.jpg) fixed center repeat;
   font: 12px/25px Lucida, Verdana, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
   color: #6d6d6d;
 }
@@ -8727,6 +8909,7 @@ a.submit:active {
 
   font-family: "微软雅黑";
   color: #444444;
+  background: #ffffff;
   /* 头部 */
 
   /* 主导航 */
@@ -8758,6 +8941,7 @@ a.submit:active {
   -webkit-transition: all 0.2s ease-out 0.1s;
   -moz-transition: all 0.2s ease-out 0.1s;
   transition: all 0.2s ease-out 0.1s;
+  width: auto;
   height: 30px;
   line-height: 30px;
   font-family: "微软雅黑";

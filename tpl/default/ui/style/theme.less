@@ -513,6 +513,7 @@ table {
 		.po_re;
 		.transition(all 0.2s ease-out 0.1s);
 		.size(auto,30px);
+		.border-radius(0); 
 		line-height: 30px;
 		font-family: "微软雅黑";
 		border: 1px solid @border_colors;
@@ -533,17 +534,24 @@ table {
 	}
 	input[type=button],button[type=button]{
 		height: 32px;
-		line-height: 32px;
 		font-family: "微软雅黑";
 		border: 1px solid @border_colors;
 		background: @main_bg;
 		vertical-align: middle;
+		margin: 0;
+		padding: 0 10px;
+		&:hover{
+			color: white;
+			background: @main_color;
+			border-color: darken(@main_color,10%);
+		}
 	}
 
 /* 头部 */
 	.header{
 		.clearfix;
 		.size(auto,50px);
+		overflow: hidden;
 		padding-top: 40px;
 		background: rgba(255,255,255,.5);
 		.logo{

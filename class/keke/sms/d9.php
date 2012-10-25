@@ -7,20 +7,19 @@
  *
  */
 class Keke_sms_d9 extends Keke_sms {
-	const GATEWAY="http://GATEWAY.IEMS.NET.CN/GsmsHttp?";
-	static $charset = "gbk";
-	protected $_method='post';
-	private $_action ;
-	private $_params;
-	public $_error;
 	
-	private function init_params($mobiles,$content){
+   
+	private static $_params;
+	public static  $_error;
+	
+	private static function init_params($mobiles,$content){
 		global $_K;
-		strtolower(CHARSET)==self::$charset or $content = Keke::utftogbk($content);
-		$this->_params = array(
-				'username'=>"65974:".$_K['mobile_username'],//"65974:admin", //机构代码+账号
-				'password'=>$_K['mobile_password'],//'27804005',
-				'presendTime'=>date('Y-m-d H:i:s',time()),
+		if(CHARSET=='gbk'){
+			$content = Keke::gbktoutf($content);
+		}
+		self::$_params = array(
+				'username'=>$_K['mobile_username'].":admin", //机构代码+账号"65974:".$_K['mobile_username'],
+				'password'=>$_K['mobile_password'], 
 				'to'=>$mobiles,
 				'content'=>$content
 		);
@@ -30,51 +29,62 @@ class Keke_sms_d9 extends Keke_sms {
 	 * @see Keke_sms::send()
 	 */
 	public function send($mobiles,$content){
-		$this->init_params($mobiles,$content);
-		$url = self::GATEWAY;
-		//通过数组生成字符串
-		$q   = http_build_query($this->_params);
-		//判断curl_init 方式存在
-		if(function_exists("curl_init")){
-			//判断请求方式为get时连接$q
-			$this->_method=='get' and $url.=$q;
-			//提交请求
-			$m	 = Keke::curl_request($url,false,$this->_method,$this->_params);
-		//判断fscokeopen方法	
-		}elseif(function_exists('fsockopen')){
-			$url.=$q;
-			$m   = Keke::socket_request($url,false);
-		}else{
-			$url.=$q;
-			$m 	 = file_get_contents($url);
+		self::init_params($mobiles,$content);
+	    $client = new nusoap('http://ws.iems.net.cn/GeneralSMS/ws/SmsInterface?wsdl',true);
+		$client->soap_defencoding = 'utf-8';
+		$client->decode_utf8 = false;
+		$client->xml_encoding = 'utf-8';
+		$parameters	= array(self::$_params['username'],self::$_params['password'],'',self::$_params['to'],self::$_params['content'],'','0|0|0|0');
+		$str=$client->call('clusterSend',$parameters);
+		if (!($err=$client->getError())==null) {
+			die("sms send error:".$err);
 		}
-		return $this->error($m);
+		$obj = simplexml_load_string($str);
+		$code = (int)$obj->code;
+		if($code){
+			return $this->error($code);
+		}else{
+			throw new Keke_exception($str);
+		}
+		//通过数组生成字符串
+		 
+	}
+ 
+	public static function  get_userinfo(){
+		self::init_params('', '');
+		$client = new nusoap('http://ws.iems.net.cn/GeneralSMS/ws/SmsInterface?wsdl',true);
+		$client->soap_defencoding = 'utf-8';
+		$client->decode_utf8 = false;
+		$client->xml_encoding = 'utf-8';
+		
+		$parameters	= array(self::$_params['username'],self::$_params['password']);
+		$str=$client->call('getUserInfo',$parameters);
+		if (!($err=$client->getError())==null) {
+			throw new Keke_exception("sms api error:".$err);
+		}
+		$obj = simplexml_load_string($str);
+		$arr  =Keke::objtoarray($obj);
+		$user = array();
+		$user['balance'] = (float)$obj->balance;
+		$user['price'] =(float) $obj->smsPrice;
+		return $user;
 	}
 	public function error($e){
-		$e = trim($e);
-		//if($e =='ERROR:eBalance'){
-		if(strpos($e, 'ERROR')!==FALSE){
-			throw new Keke_exception('短信发送错误代码: :err',array(':err'=>$e));
-		}
-		$num = ltrim($e,'OK:');
-		/* if($num<0){
-			$err = array(
-				'-1'=>'用户名或密码错误',
-				'-2'=>'余额不足',
-				'-3'=>'号码太长，不能超过1000条一次提交',
-				'-4'=>'无合法号码',
-				'-5'=>'内容包含不合法文字',
-				'-6'=>'内容太长',
-				'-7'=>'内容为空',
-				'-8'=>'定时时间格式不对',
-				'-9'=>'修改密码失败',
-				'-10'=>'用户当前不能发送短信',
-				'-11'=>'Action参数不正确',
-				'-100'=>'系统错误'
-			);
-			$message = array(':e'=>$e,':err'=>$err[$e]);
-			Keke::$_log->add(Log::WARNING,"错误码::e,详细::err", $message)->write();
-		} */
-		return $num;
+		$err = array(
+				'1000'=>'操作成功',
+				'1001'=>'用户不存在或密码出错',
+				'1002'=>'用户被停用',
+				'1003'=>'余额不足',
+				'1004'=>'请求频繁',
+				'1005'=>'内容超长',
+				'1006'=>'非法手机号码',
+				'1007'=>'关键字过滤',
+				'1008'=>'接收号码数量过多',
+				'1009'=>'帐户过期',
+				'1010'=>'参数格式错误',
+				'1011'=>'其它错误',
+				'1012'=>'数据库繁忙',
+				'1013'=>'非法发送时间');
+		return $err[$e];
 	}
 }

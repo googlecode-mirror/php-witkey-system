@@ -1,19 +1,12 @@
 <?php 
 define ( 'IN_KEKE', TRUE );
 include 'app_boot.php';
-function f(&$v){
-	if(!$v){
-		$v = 0;
-	}
-	return $v;
-}
-$i = ',2.5';
-$a =explode(',', $i);
-var_dump($a);
-array_walk($a, 'f');
-var_dump($a);
-    	
+
+$user =  Keke_sms::instance()->get_userinfo();
  
+ var_dump($user);
+
+ keke_curren_class::currtags()
 die;
 // Create the context
 /* $options = array(

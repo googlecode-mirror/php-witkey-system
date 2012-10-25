@@ -52,13 +52,11 @@ class Control_admin_config_msg extends Controller{
     	}
     	//·¢ËÍ¶ÌÐÅ
     	$m = Keke_sms::instance()->send($txt_tel,$tar_content);
-    	
-    	if($m>0){
-    	 	Keke::show_msg($_lang['sms_send_success'],"admin/config_msg/send",'success');
-    	}else{
+    	Keke::show_msg($m,"admin/config_msg/send",'success');
+    	/* }else{
     		Keke::show_msg($_lang['sms_send_fail'],"admin/config_msg/send",'warning');
     			
-    	}
+    	} */
     	
     }
     /**

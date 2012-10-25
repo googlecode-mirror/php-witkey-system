@@ -44,6 +44,10 @@
 			  msgArea="span_mobile_password"><span id="span_mobile_password"></span>
       </td>
     </tr>
+  <tr>
+  	<th scope="row">短信用户信息：</th>
+	<td>用户余额：<!--{eval $user =  Keke_sms::instance()->get_userinfo(); echo  keke_curren_class::output($user['balance']); }--></td>
+  </tr>
    <tr>
 		<th scope="row">&nbsp;</th>
 		<td>
@@ -69,21 +73,5 @@
 			$("#frm_bind").submit();
 		}
 	})
- 
-  
-  $("#remainfee").ready(function(){
-		$.post("index.php?do=$do&view=$view&op=manage&remain_fee=1",function(json){
-			if(json.status==1){
-				var num = json.msg;
-				var s = num.indexOf('|');
-				num = num.substr(0,s);
-				var str="{$_lang['available_num']}:<span>"+num+"</span>{$_lang['tiao']}<br>";
-					$("#remainfee").html(str);
-			}else{
-				showDialog(json.msg,'alert',"{$_lang['error_notice']}");return false;
-			}
-		},'json')
-  })
- })
 </script>
 <!--{include control/admin/tpl/admin_footer}-->

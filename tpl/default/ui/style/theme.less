@@ -589,6 +589,7 @@ table {
 	.primary_nav{
 		.clearfix;
 		.border-radius(0);
+		background: white;
 		background: rgba(255,255,255,.5);
 		border:none;
 		border-bottom:5px solid @main_color;
@@ -627,13 +628,11 @@ table {
 		border-color: @topbar_border; 
 		a{
 			.size(auto,30px);
-			.po_re;
 			z-index: 1;
 			color:@topbar_link_color;
 			display: inline-block;
 			line-height: 30px;
 			vertical-align: middle;
-			padding-right: 10px;
 			.arrow{
 				.arrow_b;
 				.po_ab;
@@ -645,7 +644,9 @@ table {
 				margin: 0;
 			}
 
-			
+			&:hover{
+				color: @main_color;
+			}
 		}
 
 		ul li{ 
@@ -665,11 +666,18 @@ table {
 
 			.selected-item{
 				.ws_hide;
+				a{
+					.po_re;
+					.pl_5;
+					.pr_10;
+				}
+				
 			}
 			.hd-menu{
 				.po_ab;
 				.size(80px,auto);
 				.hidden;
+				.box-shadow(0 4px 10px rgba(0, 0, 0, 0.2));
 				left: 0;
 				top:30;
 				z-index: 500;
@@ -680,7 +688,7 @@ table {
 					.ws_hide;
 					.pl_10;
 					.pr_10;
-
+					
 					&:hover{
 						background: @link_hover_bg;
 					}
@@ -741,7 +749,7 @@ table {
 							text-decoration: none;
 						}
 						&.selected{
-							
+							padding-left: 7px;
 							margin:-1px -1px 0;
 							border-width: 1px 1px 1px 5px ;
 							border-style: solid;
@@ -750,7 +758,6 @@ table {
 							
 						}
 						&.sp_link{
-							
 							&:hover{
 								background: @main_color;
 								color: white;
@@ -787,13 +794,20 @@ table {
 					ul li{
 						a{
 							border-right-color:@border_colors;
+							color: @second_color;
+							&:hover{
+								color: @main_color;
+								text-decoration: underline;
+							}
 						}
 						&.selected{
 							border-bottom: 2px solid @main_color;
 							a{ 
 								font-weight:bold;
 								color:@main_color;
-								
+								&:hover{
+									text-decoration: none;
+								}
 							}
 						}
 						&:last-child {

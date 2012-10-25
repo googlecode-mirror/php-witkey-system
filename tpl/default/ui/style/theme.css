@@ -8871,6 +8871,7 @@ a.submit:active {
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   border-radius: 0;
+  background: white;
   background: rgba(255, 255, 255, 0.5);
   border: none;
   border-bottom: 5px solid #0090d2;
@@ -8936,13 +8937,11 @@ a.submit:active {
 #user .topbar a {
   width: auto;
   height: 30px;
-  position: relative;
   z-index: 1;
   color: #666666;
   display: inline-block;
   line-height: 30px;
   vertical-align: middle;
-  padding-right: 10px;
 }
 #user .topbar a .arrow {
   border: 4px solid #f90;
@@ -8964,6 +8963,9 @@ a.submit:active {
   border-width: 3px;
   margin: 0;
 }
+#user .topbar a:hover {
+  color: #0090d2;
+}
 #user .topbar ul li {
   float: left !important;
   display: inline;
@@ -8981,6 +8983,11 @@ a.submit:active {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+#user .topbar .tp-menu .selected-item a {
+  position: relative;
+  padding-left: 5px;
+  padding-right: 10px;
+}
 #user .topbar .tp-menu .hd-menu {
   position: absolute;
   width: 80px;
@@ -8988,6 +8995,9 @@ a.submit:active {
   display: none !important;
   display: none !important;
   visibility: hidden;
+  -webkit-box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   left: 0;
   top: 30;
   z-index: 500;
@@ -9092,6 +9102,7 @@ a.submit:active {
   text-decoration: none;
 }
 #user .wrapper .aside .minor_nav ul.nav_group li a.selected {
+  padding-left: 7px;
   margin: -1px -1px 0;
   border-width: 1px 1px 1px 5px ;
   border-style: solid;
@@ -9200,6 +9211,11 @@ a.submit:active {
 }
 #user .wrapper .content .box .box_nav ul li a {
   border-right-color: #e1e1e1;
+  color: #444444;
+}
+#user .wrapper .content .box .box_nav ul li a:hover {
+  color: #0090d2;
+  text-decoration: underline;
 }
 #user .wrapper .content .box .box_nav ul li.selected {
   border-bottom: 2px solid #0090d2;
@@ -9207,6 +9223,9 @@ a.submit:active {
 #user .wrapper .content .box .box_nav ul li.selected a {
   font-weight: bold;
   color: #0090d2;
+}
+#user .wrapper .content .box .box_nav ul li.selected a:hover {
+  text-decoration: none;
 }
 #user .wrapper .content .box .box_nav ul li:last-child a {
   border-right: none;

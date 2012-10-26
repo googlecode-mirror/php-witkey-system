@@ -8,7 +8,7 @@
  */
 class Keke_sms_d9 extends Keke_sms {
 	
-   
+    const GATE = 'http://ws.iems.net.cn/GeneralSMS/ws/SmsInterface?wsdl';
 	private static $_params;
 	public static  $_error;
 	
@@ -30,7 +30,7 @@ class Keke_sms_d9 extends Keke_sms {
 	 */
 	public function send($mobiles,$content){
 		self::init_params($mobiles,$content);
-	    $client = new nusoap('http://ws.iems.net.cn/GeneralSMS/ws/SmsInterface?wsdl',true);
+	    $client = new nusoap(self::GATE,true);
 		$client->soap_defencoding = 'utf-8';
 		$client->decode_utf8 = false;
 		$client->xml_encoding = 'utf-8';
@@ -39,6 +39,7 @@ class Keke_sms_d9 extends Keke_sms {
 		if (!($err=$client->getError())==null) {
 			die("sms send error:".$err);
 		}
+		
 		$obj = simplexml_load_string($str);
 		$code = (int)$obj->code;
 		if($code){
@@ -46,13 +47,11 @@ class Keke_sms_d9 extends Keke_sms {
 		}else{
 			throw new Keke_exception($str);
 		}
-		//通过数组生成字符串
-		 
 	}
  
 	public static function  get_userinfo(){
 		self::init_params('', '');
-		$client = new nusoap('http://ws.iems.net.cn/GeneralSMS/ws/SmsInterface?wsdl',true);
+		$client = new nusoap(self::GATE,true);
 		$client->soap_defencoding = 'utf-8';
 		$client->decode_utf8 = false;
 		$client->xml_encoding = 'utf-8';
@@ -61,6 +60,9 @@ class Keke_sms_d9 extends Keke_sms {
 		$str=$client->call('getUserInfo',$parameters);
 		if (!($err=$client->getError())==null) {
 			throw new Keke_exception("sms api error:".$err);
+		}
+		if(CHARSET == 'gbk'){
+			$str = Keke::utftogbk($str);
 		}
 		$obj = simplexml_load_string($str);
 		$arr  =Keke::objtoarray($obj);

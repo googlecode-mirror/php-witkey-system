@@ -17,7 +17,7 @@ abstract class  Keke_sms {
 	public static $instances = array ();
 	/**
 	 * 
-	 * @param string $name 短信接口名称，默认为三三得九
+	 * @param string $name 短信接口名称，默认为三三得九,e.g (d9,..)
 	 * @return Keke_sms_d9
 	 */
 	public static function instance($name = null ) {

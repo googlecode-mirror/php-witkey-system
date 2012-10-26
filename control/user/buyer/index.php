@@ -6,10 +6,14 @@
    2012-10-19
  */
 
-class Control_user_index extends Control_user{
+class Control_user_buyer_index extends Control_user{
     
 	function action_index(){
-       $this->request->redirect('user/buyer_index');		
+		global $_K,$_lang;
+		 
+		 
+		
+		require Keke_tpl::template('user/index');
 	}
 	
 }

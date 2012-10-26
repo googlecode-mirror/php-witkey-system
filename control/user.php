@@ -5,7 +5,7 @@
  * @version 2.2
    2012-10-25
  */
-
+define('USER_URL', BASE_URL.'/index.php/user');
 abstract  class Control_user extends Controller{
     /**
      * 一级导航菜单
@@ -26,7 +26,7 @@ abstract  class Control_user extends Controller{
     protected static $_msg_nav  = array(
     		'index'=>array('写短信','msg_index'),
     		'in'=>array('收件箱','msg_in'),
-    		'send'=>array('发件箱','msg_send'),
+    		'out'=>array('发件箱','msg_out'),
     		);
     
     /**
@@ -41,7 +41,7 @@ abstract  class Control_user extends Controller{
      * 卖家导航
      */
     protected static $_seller_nav =array(
-    		'index'=>array('参与的任务','seller_index'),
+    		'index'=>array('我参与的任务','seller_index'),
     		'goods'=>array('我发布的商品','seller_goods'),
     		'mark'=>array('评价管理','seller_mark'),
     		);
@@ -49,28 +49,29 @@ abstract  class Control_user extends Controller{
      * 账号导航
      */
     protected static $_account_nav = array(
-    		'index'=>array('基本资料','account_index'),
+    		'basic'=>array('基本资料','account_basic'),
     		'detail'=>array('详细资料','account_detail'),
     		'safe'=>array('账号安全','account_safe'),
     		'auth'=>array('账号认证','account_auth'),
+    		'prom'=>array('推广赚钱','account_prom'),
     		);
     /**
      * 收支导航
      */
-    protected static $_finanac_nav = array(
-    		'index'=>array('交易记录','seller_mark'),
-    		'index'=>array('我要充值','seller_mark'),
-    		'mark'=>array('我要提现','seller_mark'),
-    		'mark'=>array('收支明细','seller_mark'),
-    		'index'=>array('充值记录','seller_index'),
-    		'goods'=>array('提现记录','seller_goods'),
+    protected static $_finance_nav = array(
+    		'index'=>array('交易记录','finance_index'),
+    		'recharge'=>array('我要充值','finance_recharge'),
+    		'withdraw'=>array('我要提现','finance_withdraw'),
+    		'detail'=>array('收支明细','finance_detail'),
+    		'recharges'=>array('充值记录','finance_recharges'),
+    		'withdraws'=>array('提现记录','finance_withdraws'),
     		);
     /**
      * 客服导航
      */
     protected static $_custom_nav = array(
-    		
-    		
-    		);
-    
+    		'index'=>array('投诉','custom_index'),
+    		'report'=>array('举报','custom_report'),
+    		'steer'=>array('建议','custom_steer'),
+    );
 }

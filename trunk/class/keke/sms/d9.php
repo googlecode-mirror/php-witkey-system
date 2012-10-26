@@ -18,7 +18,7 @@ class Keke_sms_d9 extends Keke_sms {
 			$content = Keke::gbktoutf($content);
 		}
 		self::$_params = array(
-				'username'=>$_K['mobile_username'].":admin", //机构代码+账号"65974:".$_K['mobile_username'],
+				'username'=>$_K['mobile_username'].":admin", //机构代码+账号"
 				'password'=>$_K['mobile_password'], 
 				'to'=>$mobiles,
 				'content'=>$content

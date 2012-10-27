@@ -41,10 +41,10 @@
 		</td>
 	</tr>
 	<tr>
-		<th scope="row" width="200" class="t_r">{$_lang['task_automate_choose']}{$_lang['zh_mh']}</th> 
+		<th scope="row" width="200" class="t_r">{$_lang['task_overdue_operate_set']}{$_lang['zh_mh']}</th> 
 		 <td>
-			<label for="end_action_1"><input type="radio"  {if $model_info['end_action'] =='refund'||!$model_info['end_action']}checked{/if} name="conf[end_action]" id="end_action_1" value="refund">{$_lang['close']}</label>
-			<label for="end_action_3"><input type="radio" {if $model_info['end_action'] =='split' }checked{/if} name="conf[end_action]" id="end_action_2" value="split">{$_lang['open']}</label>
+			<label for="end_action_1"><input type="radio"  {if $model_info['end_action'] =='refund'||!$model_info['end_action']}checked{/if} name="conf[end_action]" id="end_action_1" value="refund">{$_lang['refund']}</label>
+			<label for="end_action_3"><input type="radio" {if $model_info['end_action'] =='split' }checked{/if} name="conf[end_action]" id="end_action_2" value="split">{$_lang['auto_choose']}</label>
 			<label id="slt" style="display:none"><input type="text" name="conf[witkey_num]" value="{$model_info['witkey_num']}" id="witkey_num" limit="type:int;between:1-" msg="{$_lang['task_automate_choose_msg']}" title="{$_lang['task_automate_choose_title']}" class="txt">{$_lang['task_automate_choose_notice']}</label>
 		 </td>
 	</tr>
@@ -93,20 +93,6 @@
 		 </td>
 	</tr>
 	<tr>
-		<th scope="row" width="200" class="t_r">{$_lang['task_vote_time']}{$_lang['zh_mh']}</th> 
-			<td>
-				<input type="text" size="10" id="vote_period" name="conf[vote_period]"  value="{$model_info['vote_period']}" limit="type:int;required:true;between:1-" msg="{$_lang['task_vote_time_msg']}" title="{$_lang['task_vote_time_title']}" msgArea="span_vote_period" class="txt">{$_lang['task_vote_time_notice']}<br>
-				<span id="span_vote_period"></span>
-			</td>
-	</tr>
-	<tr>
-		<th scope="row" width="200" class="t_r">{$_lang['limit_new_register_user_vote_time']}{$_lang['zh_mh']}</th> 
-		  <td>
-			 <input type="text" size="10" id="reg_vote_limit"  name="conf[reg_vote_limit]"  value="{$model_info['reg_vote_limit']}" limit="type:int;require:true" msg="{$_lang['new_register_user_vote_time_msg']}" title="{$_lang['new_register_user_vote_time_title']}" msgArea="reg_vote_limit_time_msg" class="txt">{$_lang['new_register_user_vote_time_notice']}
-			<br><span id="reg_vote_limit_time_msg"></span>
-		 </td>
-	</tr>
-	<tr>
 		<th scope="row" width="200" class="t_r">{$_lang['set_choose_time']}{$_lang['zh_mh']}</th> 
 		 <td>
 			<input type="text" size="10" name="conf[choose_time]" id="choose_time" value="{$model_info['choose_time']}"  limit="required:true;type:int;between:1-20" msg="{$_lang['choose_time_msg']}" title="{$_lang['choose_time_title']}"  msgArea="span_draft_time" class="txt">{$_lang['choose_time_notice']}<span id="span_draft_time"></span>
@@ -151,29 +137,7 @@
 		<a href="javascript:;" id="add_delay_rule">{$_lang['add_rule']}</a>
 		</td>
 	</tr>
-	<tr>
-		<th scope="row" width="200"><b>{$_lang['set_deliver']}</b>:<td>&nbsp;</td></th> 
-	</tr>
-	<tbody id="agree_is_open_tbody">
-		<tr>
-			<th scope="row" width="200" class="t_r">{$_lang['sign_default_agreement_time']}{$_lang['zh_mh']}</th> 
-			<td>
-				 <input type="text" class="txt" id="txt_agree_sign_time" name="conf[agree_sign_time]" value="$model_info['agree_sign_time']"
-				  limit="required:true;type:int;between:1-" msg="{$_lang['agree_time_more_than_1']}" title="{$_lang['agree_time_more_than_1']}"
-				  msgArea="span_agree_sign">{$_lang['day']} &nbsp;{$_lang['default_agreement_time_notice']}
-				  <span id="span_agree_sign"></span>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row" width="200" class="t_r">{$_lang['confirm_default_agreement_time']}{$_lang['zh_mh']}</th> 
-			<td>
-				 <input type="text" class="txt" id="txt_agree_complete_time" name="conf[agree_complete_time]" value="$model_info['agree_complete_time']"
-				   limit="required:true;type:int;between:2-;bigger:txt_agree_sign_time" msg="{$_lang['agree_complete_2']}" title="{$_lang['agree_complete_2']}"
-				  msgArea="span_agree_complete">{$_lang['day']} &nbsp;{$_lang['confrim_agreement_time_notice']}
-				 <span id="span_agree_complete"></span>
-			</td>
-		</tr>
-	</tbody>
+	
 	<tr>
 		<th scope="row" width="200">&nbsp;</th>
 		<td>

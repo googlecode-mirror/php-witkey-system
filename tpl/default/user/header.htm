@@ -107,7 +107,7 @@
 	<div class="primary_nav">
       <ul class="container">
       	  {loop self::$_nav $k $v}
-		  <li><a  {if self::$_default==$k} class="selected" {/if} href="$v[1]" ><em>$v[0]</em></a></li>
+		  <li><a  {if self::$_default==$k} class="selected" {/if} href="{USER_URL}/$v[1]" ><em>$v[0]</em></a></li>
 		  {/loop}
            
       </ul>

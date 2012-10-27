@@ -509,11 +509,12 @@ table {
 		&:hover,&:active{ text-decoration: underline;}
 	}
 
-	input[type=email], input[type=number], input[type=password], input[type=tel], input[type=text], input[type=url],input[type=search]{
+	input[type=email], input[type=number], input[type=password], input[type=tel], input[type=text], input[type=url],input[type=search],input[type=date]{
 		.po_re;
-		.transition(all 0.2s ease-out 0.1s);
+		.transition(box-shadow 0.2s ease-out 0.1s);
 		.size(auto,30px);
 		.border-radius(0); 
+		.box-shadow(none);
 		line-height: 30px;
 		font-family: "微软雅黑";
 		border: 1px solid @border_colors;
@@ -525,6 +526,26 @@ table {
 		&:hover{
 			.box-shadow(inset 1px 1px 2px rgba(0,0,0,.1));
 			border-color:darken(@border_colors,10%);
+		}
+		&:focus{
+			.box-shadow(inset 1px 1px 2px rgba(0,0,0,.1));
+			border-color: @main_color;
+		}
+		&:disabled,&[disabled]{
+			background: lighten(@border_colors,8%);
+		}
+	}
+
+	textarea{
+		.border-radius(0);
+		.box-shadow(none);
+		background: white;
+		line-height: 20px;
+		font-family: "微软雅黑";
+		border: 1px solid @border_colors;
+		&:hover{
+			.box-shadow(inset 1px 1px 2px rgba(0,0,0,.1));
+			border-color:darken(@border_colors,10%);
 
 		}
 		&:focus{
@@ -532,7 +553,10 @@ table {
 			border-color: @main_color;
 		}
 	}
-	input[type=button],button[type=button]{
+	input[type=button],
+	button[type=button],
+	input[type=reset],
+	button[type=reset]{
 		height: 32px;
 		font-family: "微软雅黑";
 		border: 1px solid @border_colors;
@@ -546,6 +570,37 @@ table {
 			border-color: darken(@main_color,10%);
 		}
 	}
+	input[type="submit"],
+	button[type="submit"]{
+		color: white;
+		font-weight: bold;
+		background: @main_color;
+		border-color: darken(@main_color,10%);
+		height: 32px;
+		font-family: "微软雅黑";
+		vertical-align: middle;
+		margin: 0;
+		padding: 0 15px;
+		.border-radius(3px);
+		&:hover{
+			background: lighten(@main_color,5%);
+		}
+	}
+	.form_line{
+		border-color: lighten(@border_colors,5%);
+	}
+
+	.pic_larger{
+		.size(150px);
+	}
+	.pic_middle{
+		.size(100px);
+	}
+	.pic_small{
+		.size(50px);
+	}
+
+
 
 /* 头部 */
 	.header{
@@ -829,7 +884,13 @@ table {
 					}
 				}
 			}
-			
+			/* 头像布局 */
+			.avatar_show{
+				.column(4);
+			}
+			.avatar_upload{
+				.column(15);
+			}
 		}
 	}
 	/* 翻页 */
@@ -902,4 +963,6 @@ table {
 			}
 		}
 	}
+
+
 }

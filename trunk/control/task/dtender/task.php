@@ -9,24 +9,31 @@
 class Control_task_dtender_task extends Control_task_task{
     
 	/**
-	 * @return 返回单人悬赏任务状态
+	 * @return 返回订金招标任务状态
 	 */
 	public static function get_task_status() {
 		global $_lang;
-		return array ("0" => $_lang ['task_no_pay'], "1" => $_lang ['task_wait_audit'], "2" => $_lang ['task_vote_choose'], "3" => $_lang ['task_choose_work'], "4" => $_lang ['task_vote'], "5" => $_lang ['task_gs'], "6" => "交付", "7" => $_lang ['freeze'], "8" => $_lang ['task_over'], "9" => $_lang ['fail'], "10" => $_lang ['task_audit_fail'], "11" => $_lang ['arbitrate'], '13' => $_lang ['agreement_frozen'] );
+		return array ("0" => $_lang ['task_no_pay'], "1" => $_lang ['task_wait_audit'], "2" => $_lang ['tendering'], "3" => $_lang ['choosing_tender'], "4" => $_lang ['wait_trust'], "6" => $_lang ['jfing'], "7" => $_lang ['freezing'], "8" => $_lang ['task_over'], "9" => $_lang ['haved_fail'], "10" => $_lang ['task_audit_fail'], "11" => $_lang ['arbitrating'] );
 	}
 	
 	/**
-	 * @return 返回单人悬赏稿件状态
+	 * @return 返回订金招标投标状态
+	 * 
 	 */
 	public static function get_work_status() {
 		global $_lang;
-		return array ('0' => $_lang ['wait_choose'], '4' => $_lang ['task_bid'], '5' => $_lang ['task_in'], '7' => $_lang ['task_out'], '8' => $_lang ['task_can_not_choose_bid'] );
+		return array ('4' => $_lang ['task_bid'], '7' => $_lang ['not_eligibility'], '8' => $_lang ['task_can_not_choose_bid'] );
 	}
+	
 	/**
-	 * @return 返回任务英文状态
+	 * @return返回计划状态
+	 * @see keke_task_class::work_hand()
 	 */
-	public static function get_task_union_status() {
-		return array ('0' => "wait", '1' => "audit", '2' => "sub", '3' => "choose", '4' => "vote", '5' => "notice", '6' => 'deliver', '7' => "freeze", '8' => "end", '9' => "failure", '10' => "audit_fail", '11' => "arbitrate" );
+	public static function get_plan_status() {
+		global $_lang;
+		return array ('0' => $_lang ['wait_complete'], '1' => $_lang ['wait_pay'], '2' => $_lang ['plan_complete'] );
 	}
+	public function work_hand($work_desc, $file_ids, $hidework = '2', $url = '', $output = 'normal') {
+	}
+	
 }

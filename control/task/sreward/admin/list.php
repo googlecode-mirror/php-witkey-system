@@ -251,18 +251,7 @@ class Control_task_sreward_admin_list extends Control_task_list{
     	require Keke_tpl::template('control/task/'.$this->_model_code.'/tpl/admin/task_mark');
     }
     
-    /**
-     * 任务交付列表页
-     */
-    public function action_agree(){
-    	global  $_K ,$_lang;
-    	$task_id = $this->_task_id;
-    	$base_uri = $this->_base_uri;
-    	//获取任务信息
-    	$task_info = $this->get_task_info();
-    	
-    	require Keke_tpl::template('control/task/'.$this->_model_code.'/tpl/admin/task_agree');
-    }
+  
 
     
 }

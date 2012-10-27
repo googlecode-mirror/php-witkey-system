@@ -164,7 +164,29 @@ $lang = array (
 		'pass_audit'=>'通过审核',
 		'no_pass_audit'=>'不通过审核',
 		'freeze_task'=>'冻结任务',
-		'unfreeze_task'=>'解冻任务'
+		'unfreeze_task'=>'解冻任务',
+		/************/
+		'tendering'=>'投标中',
+		'choose_tendering'=>'选标中',
+		'working'=>'工作中',
+		'jfing'=>'交付中',
+		'task_not_payment'=>'任务未付款',
+		'task_auditing'=>'任务审核中',
+		
+		//'tendering'=>'投标',
+		'choosing_tender'=>'选标',
+		'trust'=>'托管',
+		'wait_trust'=>'待托管',
+		'jfing'=>'交付中',
+		'freezing'=>'冻结中',
+		'haved_over'=>'已结束',
+		'haved_fail'=>'已失败',
+		'arbitrating'=>'仲裁中',
+		'not_eligibility'=>'不合格',
+		'wait_complete'=>'待完成',
+		'wait_pay'=>'待付款',
+		'plan_complete'=>'计划完成',
+		'order_pay_fail'=>'订单付款失败',
 )
 
 ?>

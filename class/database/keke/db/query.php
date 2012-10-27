@@ -20,6 +20,8 @@ class Keke_db_query {
 	
 	// Parameters for __construct when using object results
 	protected $_object_params = array ();
+	//表前缀
+	protected $_tablepre = array();
 	/**
 	 * Creates a new SQL query of the specified type.
 	 *
@@ -140,7 +142,15 @@ class Keke_db_query {
 		
 		return $this;
 	}
-	
+	/**
+	 * 表前缀定义，不需要加单引
+	 * @param string $param (:pre)
+	 * @param $value (表前缀)
+	 */
+	public function tablepre($param,$value=TABLEPRE){
+		$this->_tablepre[$param] = $value;
+		return $this;
+	}
 	/**
 	 * 编译SQL查询，并返回它。替换绑定的参数。
 	 * @param  object database instance
@@ -154,6 +164,9 @@ class Keke_db_query {
 			$values = array_map ( array ($db, 'quote_string' ), $this->_parameters );
 			// 替换sql中的值
 			$sql = strtr ( $sql, $values );
+		}
+		if(!empty($this->_tablepre)){
+			$sql = strtr($sql, $this->_tablepre);
 		}
 		
 		return $sql;
@@ -190,11 +203,10 @@ class Keke_db_query {
 				return $result;
 			}
 		}
-		
 		// Execute the query
 		$result = $db->query ( $sql,$this->_type );
 		
-		if (isset ( $cache_key ) and $this->_lifetime > 0) {
+		if (isset ( $cache_key ) and $this->_lifetime > 0 and $this->_type === Database::SELECT) {
 			// Cache the result array
 			Cache::instance()->set($cache_key, $result, $this->_lifetime );
 		}

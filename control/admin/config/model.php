@@ -50,7 +50,13 @@ class Control_admin_config_model extends  Controller {
 	 * 模型安装，并更新模型缓存
 	 */
 	function action_install(){
+		global $_lang;
 		if(($model_name = $_POST['txt_model_name'])!=null){
+			
+			//判断模型是否已安装
+			if(DB::select('model_id')->from('witkey_model')->where("model_code = '$model_name'")->get_count()->execute()){
+				Keke::show_msg($_lang['submit_fail'],'admin/config_model','error');
+			}
 			//模板配置信息
 			$init_config = array();
 			//父菜单
@@ -88,7 +94,7 @@ class Control_admin_config_model extends  Controller {
 				}
 			}
 			Cache::instance()->del('keke_model');
-			global $_lang;
+			
 			Keke::show_msg($_lang['submit_success'],'admin/config_model');
 			
 			

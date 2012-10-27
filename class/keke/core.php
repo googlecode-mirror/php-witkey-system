@@ -30,10 +30,7 @@ class Keke_core extends Keke_base {
 	 *@param $content 提示信息 $_lang['submit_success']提交成功,$_lang['submit_fail']提交失败
 	 *@param $url 跳转url 
 	 * @param $type string
-	 *        	inajax
-	 *        	{'alert_info'=>'提示','alert_right'=>'成功','confirm_info'=>'确认','alert_error'=>'错误'}
-	 *        	非ajax {'info'=>默认,'success'=>'成功','warning'=>'警告'}
-	 *        success 成功  error 错误 warning 警告/请示  confirm 确认
+	 *        success 成功  error 错误 info 警告/请示  confirm 确认
 	 *@param $title 标题，默认为“系统提示”
 	 *@param $time 跳转页显示时间，默认为3秒        
 	 */

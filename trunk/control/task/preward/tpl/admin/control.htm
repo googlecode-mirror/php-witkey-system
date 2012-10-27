@@ -40,14 +40,6 @@
 			<input type="text" size="10" name="conf[task_fail_rate]" id="task_fail_rate" value="{$model_info['task_fail_rate']}" limit="type:int;len:1-2;between:0-100" msg="{$_lang['fail_task_deduct_rate_msg']}" title="{$_lang['fail_task_deduct_rate_title']}" msgArea="fail_rate_msg" class="txt"/>%{$_lang['fail_task_deduct_rate_title']}<span id="fail_rate_msg"></span>
 		</td>
 	</tr>
-	<tr>
-		<th scope="row" width="200" class="t_r">{$_lang['task_automate_choose']}{$_lang['zh_mh']}</th> 
-		 <td>
-			<label for="end_action_1"><input type="radio"  {if $model_info['end_action'] =='refund'||!$model_info['end_action']}checked{/if} name="conf[end_action]" id="end_action_1" value="refund">{$_lang['close']}</label>
-			<label for="end_action_3"><input type="radio" {if $model_info['end_action'] =='split' }checked{/if} name="conf[end_action]" id="end_action_2" value="split">{$_lang['open']}</label>
-			<label id="slt" style="display:none"><input type="text" name="conf[witkey_num]" value="{$model_info['witkey_num']}" id="witkey_num" limit="type:int;between:1-" msg="{$_lang['task_automate_choose_msg']}" title="{$_lang['task_automate_choose_title']}" class="txt">{$_lang['task_automate_choose_notice']}</label>
-		 </td>
-	</tr>
     <tr>
 		<th scope="row" width="200" class="t_r">{$_lang['deal_fail_task']}{$_lang['zh_mh']}</th> 
 		<td>
@@ -79,40 +71,25 @@
 		</td>
 	</tr>
 	<tr>
-		<th scope="row" width="200" class="t_r">{$_lang['task_public_time']}{$_lang['zh_mh']}</th>
-		 <td>
-			<input type="text" size="10" id="notice_period"  name="conf[notice_period]"  value="{$model_info['notice_period']}" limit="type:int;require:true;between:0-" msg="{$_lang['task_public_time_msg']}" title="{$_lang['task_public_time_title']}" msgArea="span_notice_period" class="txt">{$_lang['task_public_time_notice']}
-			<span id="span_notice_period"></span>
-		 </td>
-	</tr>
-	<tr>
 		<th scope="row" width="200" class="t_r">{$_lang['task_min_day']}{$_lang['zh_mh']}</th>
 		 <td>
 			<input type="text" size="10" id="min_day"  name="conf[min_day]"  value="{$model_info['min_day']}" limit="type:int;require:true;between:1-" msg="{$_lang['task_min_day_msg']}" title="{$_lang['task_min_day_title']}" msgArea="span_min_day" class="txt">{$_lang['task_public_time_notice']}
 			<span id="span_min_day"></span>
 		 </td>
 	</tr>
-	<tr>
-		<th scope="row" width="200" class="t_r">{$_lang['task_vote_time']}{$_lang['zh_mh']}</th> 
-			<td>
-				<input type="text" size="10" id="vote_period" name="conf[vote_period]"  value="{$model_info['vote_period']}" limit="type:int;required:true;between:1-" msg="{$_lang['task_vote_time_msg']}" title="{$_lang['task_vote_time_title']}" msgArea="span_vote_period" class="txt">{$_lang['task_vote_time_notice']}<br>
-				<span id="span_vote_period"></span>
-			</td>
-	</tr>
-	<tr>
-		<th scope="row" width="200" class="t_r">{$_lang['limit_new_register_user_vote_time']}{$_lang['zh_mh']}</th> 
-		  <td>
-			 <input type="text" size="10" id="reg_vote_limit"  name="conf[reg_vote_limit]"  value="{$model_info['reg_vote_limit']}" limit="type:int;require:true" msg="{$_lang['new_register_user_vote_time_msg']}" title="{$_lang['new_register_user_vote_time_title']}" msgArea="reg_vote_limit_time_msg" class="txt">{$_lang['new_register_user_vote_time_notice']}
-			<br><span id="reg_vote_limit_time_msg"></span>
-		 </td>
-	</tr>
+	
 	<tr>
 		<th scope="row" width="200" class="t_r">{$_lang['set_choose_time']}{$_lang['zh_mh']}</th> 
 		 <td>
 			<input type="text" size="10" name="conf[choose_time]" id="choose_time" value="{$model_info['choose_time']}"  limit="required:true;type:int;between:1-20" msg="{$_lang['choose_time_msg']}" title="{$_lang['choose_time_title']}"  msgArea="span_draft_time" class="txt">{$_lang['choose_time_notice']}<span id="span_draft_time"></span>
 		</td>
 	</tr>
-	
+	<tr>
+		<th scope="row" width="200" class="t_r">{$_lang['largest_evaluation_delayed_days_set']}{$_lang['zh_mh']}</th> 
+		 <td>
+			<input type="text" size="10" name="conf[mark_day]" id="choose_time" value="{$model_info['mark_day']}"  limit="required:true;type:int;between:1-20" msg="{$_lang['auto_evaluation_not_correct']}" title="{$_lang['auto_evaluation_not_one_day']}"  msgArea="mark_day_delay" class="txt"><b style="color:red">*</b>{$_lang['day']}<span id="mark_day_delay"></span>
+		</td>
+	</tr>
 	<tr>
 		<th scope="row" width="200" class="t_r">{$_lang['choose_in_doing']}{$_lang['zh_mh']}</th> 
 		<td>
@@ -152,28 +129,27 @@
 		</td>
 	</tr>
 	<tr>
-		<th scope="row" width="200"><b>{$_lang['set_deliver']}</b>:<td>&nbsp;</td></th> 
+		<th scope="row" width="200"><b>{$_lang['task_set_manuscripts']}</b>{$_lang['zh_mh']}</th>
 	</tr>
-	<tbody id="agree_is_open_tbody">
-		<tr>
-			<th scope="row" width="200" class="t_r">{$_lang['sign_default_agreement_time']}{$_lang['zh_mh']}</th> 
-			<td>
-				 <input type="text" class="txt" id="txt_agree_sign_time" name="conf[agree_sign_time]" value="$model_info['agree_sign_time']"
-				  limit="required:true;type:int;between:1-" msg="{$_lang['agree_time_more_than_1']}" title="{$_lang['agree_time_more_than_1']}"
-				  msgArea="span_agree_sign">{$_lang['day']} &nbsp;{$_lang['default_agreement_time_notice']}
-				  <span id="span_agree_sign"></span>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row" width="200" class="t_r">{$_lang['confirm_default_agreement_time']}{$_lang['zh_mh']}</th> 
-			<td>
-				 <input type="text" class="txt" id="txt_agree_complete_time" name="conf[agree_complete_time]" value="$model_info['agree_complete_time']"
-				   limit="required:true;type:int;between:2-;bigger:txt_agree_sign_time" msg="{$_lang['agree_complete_2']}" title="{$_lang['agree_complete_2']}"
-				  msgArea="span_agree_complete">{$_lang['day']} &nbsp;{$_lang['confrim_agreement_time_notice']}
-				 <span id="span_agree_complete"></span>
-			</td>
-		</tr>
-	</tbody>
+	<tr>
+		<th scope="row" width="200" class="t_r">{$_lang['set_manuscripts']}{$_lang['zh_mh']}</th>
+		<td>
+			<input type="text" name="conf[work_percent]" value="{$work_percent}" limit="type:int;required:true;between:0-" msg={$_lang['ratio_number_incorrect_manuscripts']} tips={$_lang['input_manuscript_number_proportion']} msgArea="span_work_percent" class="txt"/><b style="color:red">*</b>% &nbsp;({$_lang['not_more_required_number_manuscripts']})<span id="span_work_percent"></span>
+		</td>		
+	</tr>
+	<tr>
+		<th scope="row" width="200" class="t_r">{$_lang['automatic_selection']}{$_lang['zh_mh']}</th> 
+		<td>
+			<label for="is_auto_adjourn_yes"><input type="radio" name="conf[is_auto_adjourn]"  {if $is_auto_adjourn =='1'} checked {/if} id="is_auto_adjourn_yes" value="1">{$_lang['open']}</label>
+			<label for="is_auto_adjourn_no"><input type="radio" name="conf[is_auto_adjourn]" {if !$is_auto_adjourn||$is_auto_adjourn =='2'} checked {/if} id="is_auto_adjourn_no" value="2">{$_lang['close']}</label>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row" width="200" class="t_r">{$_lang['automatic_selection_former_N']}{$_lang['zh_mh']}</th> 
+		<td>
+			<input type="text" name="conf[adjourn_num]" value="{$adjourn_num}" limit="type:int;required:true;between:0-" msg={$_lang['manuscript_number_input_not_correct']} tips={$_lang['enter_manuscript_number']} msgArea="span_adjourn_num" class="txt"/><b style="color:red">*</b>{$_lang['ge']} &nbsp;({$_lang['if_open_automatic_info']})<span id="span_adjourn_num"></span>
+		</td>
+	</tr>																											
 	<tr>
 		<th scope="row" width="200">&nbsp;</th>
 		<td>

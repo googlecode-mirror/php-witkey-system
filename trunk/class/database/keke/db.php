@@ -7,7 +7,7 @@ class Keke_db {
 	 * @return keke_db_query
 	 */
 	public static function query($sql, $type=null) {
-		return new Keke_db_query ( $sql, $type=null );
+		return new Keke_db_query ( $sql, $type);
 	}
 	/**
 	 * 对象化查询

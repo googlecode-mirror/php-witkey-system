@@ -145,17 +145,15 @@ class Control_task_dtender_admin_list extends Control_task_list{
     	//获取任务信息
     	$task_info = $this->get_task_info();
     	$base_uri = $this->_base_uri;
-        $sql = "SELECT a.work_id,a.work_desc,a.task_id ,a.username,a.work_status,\n".
-				"a.work_time,a.hide_work,a.vote_num,a.comment_num,\n".
-				"count(distinct(c.file_id)) as file_num\n".
-				"from ".TABLEPRE."witkey_task_work as a \n".
-				"left join ".TABLEPRE."witkey_file as c \n".
-				"on  c.obj_id = a.work_id and c.obj_type = 'work'\n".
+        $sql = "SELECT a.bid_id,a.message,a.task_id ,a.username,a.bid_status,\n".
+                "a.quote,a.cycle,a.bid_time,\n".
+				"a.hidden_status,a.comment_num\n".
+				"from ".TABLEPRE."witkey_task_bid as a \n".
 				"left join ".TABLEPRE."witkey_task as d\n".
 				"on a.task_id = d.task_id\n";
 				 
         //要查询的字段,在模板中显示用的
-        $query_fields = array('work_id'=>$_lang['id'],'work_desc'=>$_lang['name'],'username'=>$_lang['username']);
+        $query_fields = array('bid_id'=>$_lang['id'],'message'=>$_lang['name'],'username'=>$_lang['username']);
         //总记录数,分页用的，你不定义，数据库就是多查一次的。为了少个Sql语句，你必须要写的，亲!
         $count = intval($_GET['count']);
         //基本uri,当前请求的uri ,本来是能通过Rotu类可以得出这个uri,为了程序灵活点，自己手写好了
@@ -163,13 +161,13 @@ class Control_task_dtender_admin_list extends Control_task_list{
         //删除uri,del也是一个固定的，写成其它的，你死定了
         $del_uri = $base_uri.'/del';
         //默认排序字段，这里按时间降序
-        $this->_default_ord_field = 'work_id';
+        $this->_default_ord_field = 'bid_id';
         //这里要口水一下，get_url就是处理查询的条件
         extract($this->get_url($base_uri.'/work?task_id='.$this->_task_id));
         
         //获取列表分页的相关数据,参数$where,$uri,$order,$page来自于get_url方法
-//      $data_info = Model::factory('witkey_task')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
-        $data_info = Model::sql_grid($sql,"d.task_id=".$task_id,$uri,$order,"GROUP BY a.work_id",$page,$count,$_GET['page_size']);
+
+        $data_info = Model::sql_grid($sql,"d.task_id=".$task_id,$uri,$order,"GROUP BY a.bid_id",$page,$count,$_GET['page_size']);
         //列表数据
         $list_arr = $data_info['data'];
         //分页数据
@@ -185,11 +183,9 @@ class Control_task_dtender_admin_list extends Control_task_list{
     	global $_K,$_lang;
     	$work_id = $_GET['work_id'];
     	//稿件信息
-    	$work_info = DB::select()->from('witkey_task_work')->where("work_id = '$work_id'")->get_one()->execute();
+    	$work_info = DB::select()->from('witkey_task_bid')->where("bid_id = '$work_id'")->get_one()->execute();
     	//稿件留言
-    	$comments = DB::select()->from('witkey_comment')->where("obj_id = '$work_id' and obj_type='work'")->execute();
-    	//稿件的附件
-    	$files = DB::select()->from('witkey_file')->where("obj_id = '$work_id' and obj_type='work'")->execute();
+    	$comments = DB::select()->from('witkey_comment')->where("obj_id = '$work_id' and obj_type='bid'")->execute();
     	
     	require Keke_tpl::template('control/task/'.$this->_model_code.'/tpl/admin/work_detail');
     }
@@ -200,7 +196,7 @@ class Control_task_dtender_admin_list extends Control_task_list{
     public function action_work_del(){
     	$work_id = $_GET['work_id'];
     	//删除对应的文件
-    	$files = DB::select('save_name')->from('witkey_file')->where("obj_id = '$work_id' and obj_type='work'");
+    	$files = DB::select('save_name')->from('witkey_file')->where("obj_id = '$work_id' and obj_type='bid'");
     	foreach ($files as $v){
            $path = S_ROOT.$v['save_name'];
            if(file_exists($path)){
@@ -208,13 +204,13 @@ class Control_task_dtender_admin_list extends Control_task_list{
            } 		
     	}
     	//删除关联的三张表
-    	$sql = "delete a,b,c from ".TABLEPRE."witkey_task_work as a \n".
+    	$sql = "delete a,b,c from ".TABLEPRE."witkey_task_bid as a \n".
 				"left join ".TABLEPRE."witkey_comment as b\n".
-				"on b.obj_id = a.work_id and b.obj_type='work'\n".
+				"on b.obj_id = a.bid_id and b.obj_type='bid'\n".
 				"left join ".TABLEPRE."witkey_file as c \n".
-				"on a.work_id = c.obj_id and c.obj_type='work'\n".
-				"where a.work_id = '$work_id'";
-		echo DB::query($sql,Database::DELETE);				
+				"on a.bid_id = c.obj_id and c.obj_type='bid'\n".
+				"where a.bid_id = '$work_id'";
+		echo DB::query($sql,Database::DELETE)->execute();				
     }
     /**
      * 任务留言列表页

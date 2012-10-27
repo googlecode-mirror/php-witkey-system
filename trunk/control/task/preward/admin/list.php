@@ -131,10 +131,7 @@ class Control_task_preward_admin_list extends Control_task_list{
      * 删除任务
      */
     public function  action_del(){
-    	//删除任务搞件
-    	$where = "task_id = $this->_task_id";
-    	DB::delete('witkey_task_work')->where($where)->execute();
-    	echo DB::delete('witkey_task')->where($where)->execute();
+    	echo $this->del_task();
     }
     /**
      * 任务搞件列表页

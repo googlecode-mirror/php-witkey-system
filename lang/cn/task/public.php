@@ -286,9 +286,9 @@ $lang = array (
 		'task_refund_processing'=>'任务退款处理',
 		'largest_evaluation_delayed_days_set'=>'多少天自动互评',
 		'task_set_manuscripts'=>'',
-		''=>'',
-		''=>'',
-		''=>'',
+		'set_manuscripts'=>'',
+		'automatic_selection'=>'',
+		'automatic_selection_former_N'=>'',
 		''=>'', 
 		
 )

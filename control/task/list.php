@@ -169,4 +169,59 @@ abstract class Control_task_list extends Control_admin{
     	$where ="obj_type='task' and obj_id = '$task_id'";
     	return DB::select()->from('witkey_file')->where($where)->execute();
     }
+    /**
+     * 获取任务稿件的附件
+     * @param int $task_id
+     */
+    public static function get_work_file($task_id){
+    	$work_ids = DB::select('GROUP_CONCAT(work_id)')->from('witkey_task_work')
+    	->where("task_id ='$task_id'")
+    	->group("task_id")->get_count()
+    	->execute();
+    	if($work_ids){
+    		$where = " obj_type='work' and obj_id in($work_ids)";
+    		return DB::select()->from('witkey_file')->where($where)->execute();
+    	}else{
+    		return NULL;
+    	}
+    	
+    }
+    /**
+     * 删除指定任务,默认删除当前请求的任务
+     * @return number
+     */
+    public function del_task($task_id = NULL){
+    	if($task_id===NULL){
+    		$task_id = $this->_task_id;
+    	}
+    	$where = "task_id = '$task_id'";
+    	DB::delete('witkey_task_bid')->where($where)->execute();
+    	DB::delete('witkey_task_work')->where($where)->execute();
+    	DB::delete('witkey_comment')->where(" obj_id = '$task_id' and obj_type='task'")->execute();
+    	//任务的附件
+    	self::del_files_by_task($task_id);
+    	
+     	return (int)DB::delete('witkey_task')->where($where)->execute();
+    }
+    /**
+     * 删除任务+稿件的附件，+记录
+     * @param int $task_id
+     */
+    public static function del_files_by_task($task_id){
+    	$files = (array)self::get_task_file($task_id)+(array)self::get_work_file($task_id);
+    	$file_id = array();
+    	foreach ($files as $v){
+    		$path = S_ROOT.$v['save_name'];
+    		if(is_file($path)){
+    			unlink($path);
+    		}
+    		$file_id[] = $v['file_id'];
+    	}
+    	if(empty($file_id)){
+    		return TRUE;
+    	}
+    	$ids = implode(',', $file_id);
+    	$where = " file_id in($ids) ";
+    	return DB::delete('witkey_file')->where($where)->execute();
+    }
 }

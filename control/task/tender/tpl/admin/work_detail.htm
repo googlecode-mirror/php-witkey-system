@@ -4,9 +4,21 @@
 	    <tr>
 		   <th scope="row"  >稿件内容：</th>
 		    <td>
-		       {$work_info['work_desc']}
+		       {$work_info['message']}
 			   <br>
-			  $work_info['username']- {date('Y-m-d H:i:s',$work_info['work_time'])}
+			  $work_info['username']- {date('Y-m-d H:i:s',$work_info['bid_time'])}
+			</td>
+        </tr>
+		 <tr>
+		   <th scope="row"  >报价：</th>
+		    <td>
+		       {c:$work_info['quote']}
+			</td>
+        </tr>
+		 <tr>
+		   <th scope="row" >周期：</th>
+		    <td>
+		       {$work_info['cycle']}
 			</td>
         </tr>
 		<tr>
@@ -18,16 +30,6 @@
 			</td>
         </tr>
 		<tr>
-		 
-        </tr>
-		<tr>
-		  <th scope="row" >稿件附件：</th>
-		    <td>
-              {loop $files $v}
-			  <a href="{BASE_URL}/$v['save_name']">$v['file_name']</a>
-			  {/loop}
-			</td>
-         </tr>
 	 	  
         </table>
 </div>

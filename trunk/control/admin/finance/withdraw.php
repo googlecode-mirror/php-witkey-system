@@ -144,8 +144,10 @@ class Control_admin_finance_withdraw extends Controller{
 		global $_K,$_lang;
 		if($_GET['withdraw_id']){
 			$where = 'withdraw_id = '.$_GET['withdraw_id'];
-			$withdraw_info = db::select('*')->from("witkey_withdraw")->where($where)->execute();
-			$withdraw_info = $withdraw_info[0];
+			$withdraw_info = db::select()->from("witkey_withdraw")->where($where)
+			->get_one()
+			->execute();
+			
 			$bank_arr = keke_global_class::get_bank();
 			$status_arr = keke_global_class::withdraw_status();
 			$k_arr   = array_keys($bank_arr);

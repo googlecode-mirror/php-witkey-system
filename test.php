@@ -2,7 +2,9 @@
  
  
 $test = '±äÁ¿¼ÓÔØ²âÊÔ';
-require Keke_tpl::template('test');
+
+phpinfo();
+//require Keke_tpl::template('test');
 
 //var_dump(Cache::instance()->del('keke_config')); 
 //var_dump(class_exists('Control_admin_main'));

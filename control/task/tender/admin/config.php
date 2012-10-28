@@ -31,13 +31,6 @@ class Control_task_tender_admin_config extends Control_task_config{
     	global $_K,$_lang;
     	$model_info = $this->_model_info;
     	
-    	//时间规则与延期规则，需要就调用
-    	$time_rule = $this->get_tiem_rule();
-   	    $delay_rule = $this->get_delay_rule();
-   	    //删除时间的url
-   	    $del_time_url = BASE_URL.'/index.php/task/'.$this->_model_code.'_admin_config/del_time';
-   	    //删除延期的url
-   	    $del_delay_url = BASE_URL.'/index.php/task/'.$this->_model_code.'_admin_config/del_delay';
    	    
     	require Keke_tpl::template('control/task/'.$this->_model_code.'/tpl/admin/control');
     }

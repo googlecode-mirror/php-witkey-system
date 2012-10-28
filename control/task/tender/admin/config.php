@@ -21,7 +21,6 @@ class Control_task_tender_admin_config extends Control_task_config{
     	$indus_arr = $this->_indus_arr;
     	//能过子分类得到同类子分类
     	$sub_indus = $this->_sub_indus;
-    	
     	require Keke_tpl::template('control/task/'.$this->_model_code.'/tpl/admin/config');
     }
     /**
@@ -30,7 +29,6 @@ class Control_task_tender_admin_config extends Control_task_config{
     function action_control(){
     	global $_K,$_lang;
     	$model_info = $this->_model_info;
-    	
    	    
     	require Keke_tpl::template('control/task/'.$this->_model_code.'/tpl/admin/control');
     }

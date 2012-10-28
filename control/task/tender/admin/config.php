@@ -50,16 +50,5 @@ class Control_task_tender_admin_config extends Control_task_config{
     	$this->control_save();
     	Keke::show_msg($_lang['submit_success'],'task/'.$this->_model_code.'_admin_config/control');
     }
-    /**
-     * 删除时间规则
-     */
-    function action_del_time(){
-      $this->del_time_rule();    	
-    }
-    /**
-     * 删除延期规则
-     */
-    function action_del_delay(){
-    	$this->del_delay_rule();
-    }
+
 }

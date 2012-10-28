@@ -37,18 +37,28 @@ function cdel(o,s){
 }
 function kconfirm(o,s){
 	d = art.dialog;
-	var c = "{$_lang['you_comfirm_operate']}";
+	var c = "{$_lang['confirm']}";
 	if(s){
 		c=s;
 	}
 	d.confirm(c, function(){
-		location.href = o.href;
+		$.get(o.href,function(){
+			location.href = location.href;
+		})
 	}).follow(o);
 	return false;
 }
-$(function(){
- 
-})
+//交互性提交
+function kprom(o,s){
+	d = art.dialog;
+	var u = o.href;
+	d.prompt(s,function(data){
+		$.post(u,{'data':data},function(){
+			location.href = location.href;
+		})
+	}).follow(o);
+	return false;
+}
 //排序 
 function submitSort(uri,f,ord){
 	uri += (uri.indexOf('?')==-1)?"?":"&";

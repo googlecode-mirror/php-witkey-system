@@ -23,6 +23,12 @@ class Keke_db_query {
 	//表前缀
 	protected $_tablepre = array();
 	/**
+	 *
+	 * @var 查询方式 (query,get_count,get_one_row);
+	 */
+	protected $_query_type = 'query';
+	
+	/**
 	 * Creates a new SQL query of the specified type.
 	 *
 	 * @param   integer  query type: Database::SELECT, Database::INSERT, etc
@@ -67,6 +73,25 @@ class Keke_db_query {
 		$this->_lifetime = $lifetime;
 		
 		return $this;
+	}
+	/**
+	 * 返第一行的值
+	 * @example select id,name from table 返回的值为array('id'=>'xxx',name=>'xxxx');
+	 * @return Keke_db_select
+	 */
+	public function get_one(){
+		$this->_query_type = 'get_one_row';
+		return $this;
+	}
+	/**
+	 * 返回指定字段的值,一般用在一个字段的查询
+	 * @example select count(*) from ... 返回一count 的值 '222'
+	 * @return Keke_db_select
+	 */
+	public function get_count(){
+		$this->_query_type = 'get_count';
+		return $this;
+	
 	}
 	/**
 	 * 返回关联数组结果
@@ -204,7 +229,8 @@ class Keke_db_query {
 			}
 		}
 		// Execute the query
-		$result = $db->query ( $sql,$this->_type );
+		$query = $this->_query_type;
+		$result = $db->$query( $sql,$this->_type );
 		
 		if (isset ( $cache_key ) and $this->_lifetime > 0 and $this->_type === Database::SELECT) {
 			// Cache the result array

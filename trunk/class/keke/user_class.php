@@ -23,7 +23,7 @@ class keke_user_class {
 		}
 		$sql = "select  *  from " . TABLEPRE . "witkey_space a  where $where";
 		
-		return Database::instance()->get_one_row($sql);
+		return DB::query($sql)->get_one()->execute();
 	}
 	/**
 	 * ÓÃ»§×¢²á   xxxxx??????????

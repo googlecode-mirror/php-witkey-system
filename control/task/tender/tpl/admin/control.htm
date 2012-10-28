@@ -11,7 +11,7 @@
 <div class="tabcon">
  <div class="title"><h2>{$_lang['control_config']}</h2></div>
   <form name="frm_config_reward" action="{$ac_url}" method="post" id="frm_config_reward">
-  <input type="hidden" name="pk[model_id]" value="{$model_id}">
+  <input type="hidden" name="pk[model_id]" value="{$model_info['model_id']}">
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
   	
 	<tr>
@@ -87,7 +87,7 @@
 		<th scope="row" width="200">&nbsp;</th>
 		<td>
             <div class="clearfix padt10">
-			 <button type="submit" name="sbt_edit" class="positive primary  button" value="1" onclick="return checkForm(document.getElementById('frm_config_reward'))"><span class="check icon"></span>{$_lang['submit']}</button>
+			 <button type="submit" name="sbt_edit" class="positive primary  button"  onclick="return checkForm(document.getElementById('frm_config_reward'))"><span class="check icon"></span>{$_lang['submit']}</button>
 			</div>
 		</td>
 	</tr>

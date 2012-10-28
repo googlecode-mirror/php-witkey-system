@@ -158,7 +158,7 @@
                         {$_lang['last_edit_time']}{$_lang['zh_mh']}
                     </th>
                     <td>
-                        <!--{date('Y-m-d H:i:s',$on_time)}-->
+                         <!--{eval echo date("Y-m-d",$model_info['on_time'])}-->
 						<input type="hidden" name="conf[on_time]" value="<!--{eval echo(time());}-->">
                     </td>
                 </tr>

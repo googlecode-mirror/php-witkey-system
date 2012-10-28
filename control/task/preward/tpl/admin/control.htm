@@ -134,20 +134,20 @@
 	<tr>
 		<th scope="row" width="200" class="t_r">{$_lang['set_manuscripts']}{$_lang['zh_mh']}</th>
 		<td>
-			<input type="text" name="conf[work_percent]" value="{$work_percent}" limit="type:int;required:true;between:0-" msg={$_lang['ratio_number_incorrect_manuscripts']} tips={$_lang['input_manuscript_number_proportion']} msgArea="span_work_percent" class="txt"/><b style="color:red">*</b>% &nbsp;({$_lang['not_more_required_number_manuscripts']})<span id="span_work_percent"></span>
+			<input type="text" name="conf[work_percent]" value="{$model_info['work_percent']}" limit="type:int;required:true;between:0-" msg={$_lang['ratio_number_incorrect_manuscripts']} tips={$_lang['input_manuscript_number_proportion']} msgArea="span_work_percent" class="txt"/><b style="color:red">*</b>% &nbsp;({$_lang['not_more_required_number_manuscripts']})<span id="span_work_percent"></span>
 		</td>		
 	</tr>
 	<tr>
 		<th scope="row" width="200" class="t_r">{$_lang['automatic_selection']}{$_lang['zh_mh']}</th> 
 		<td>
-			<label for="is_auto_adjourn_yes"><input type="radio" name="conf[is_auto_adjourn]"  {if $is_auto_adjourn =='1'} checked {/if} id="is_auto_adjourn_yes" value="1">{$_lang['open']}</label>
-			<label for="is_auto_adjourn_no"><input type="radio" name="conf[is_auto_adjourn]" {if !$is_auto_adjourn||$is_auto_adjourn =='2'} checked {/if} id="is_auto_adjourn_no" value="2">{$_lang['close']}</label>
+			<label for="is_auto_adjourn_yes"><input type="radio" name="conf[is_auto_adjourn]"  {if $model_info['is_auto_adjourn'] =='1'} checked {/if} id="is_auto_adjourn_yes" value="1">{$_lang['open']}</label>
+			<label for="is_auto_adjourn_no"><input type="radio" name="conf[is_auto_adjourn]" {if !$model_info['is_auto_adjourn'] ||$model_info['is_auto_adjourn']  =='2'} checked {/if} id="is_auto_adjourn_no" value="2">{$_lang['close']}</label>
 		</td>
 	</tr>
 	<tr>
 		<th scope="row" width="200" class="t_r">{$_lang['automatic_selection_former_N']}{$_lang['zh_mh']}</th> 
 		<td>
-			<input type="text" name="conf[adjourn_num]" value="{$adjourn_num}" limit="type:int;required:true;between:0-" msg={$_lang['manuscript_number_input_not_correct']} tips={$_lang['enter_manuscript_number']} msgArea="span_adjourn_num" class="txt"/><b style="color:red">*</b>{$_lang['ge']} &nbsp;({$_lang['if_open_automatic_info']})<span id="span_adjourn_num"></span>
+			<input type="text" name="conf[adjourn_num]" value="{$model_info['adjourn_num']}" limit="type:int;required:true;between:0-" msg={$_lang['manuscript_number_input_not_correct']} tips={$_lang['enter_manuscript_number']} msgArea="span_adjourn_num" class="txt"/><b style="color:red">*</b>{$_lang['ge']} &nbsp;({$_lang['if_open_automatic_info']})<span id="span_adjourn_num"></span>
 		</td>
 	</tr>																											
 	<tr>

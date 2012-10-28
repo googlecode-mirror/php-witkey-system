@@ -42,7 +42,7 @@ class keke_global_class {
 	}
 	public static function withdraw_status(){
 		global $_lang;
-		return array("1"=>$_lang['wait_audit'],"2"=>$_lang['has_success'],"3"=>$_lang['has_fail']);
+		return array("0"=>$_lang['wait_audit'],"1"=>$_lang['has_success'],"2"=>$_lang['has_fail']);
 	}
 	/**
 	 * message_sendÀàÐÍ
@@ -144,8 +144,14 @@ class keke_global_class {
 		 'ccb' => $_lang['ccb'],
 		 'psbc' => $_lang['psbc'],
 		 'cib' => $_lang['cib'], 
-		 'huaxia_bank' => $_lang['huaxia_bank'],
-		 'boc'=>$_lang['boc'],	
+		 'hx' => $_lang['huaxia_bank'],
+		 'boc'=>$_lang['boc'],
+		 'tenpay'=>$_lang['tenpay'],
+	 	 'alipayjs'=>$_lang['alipayjs'],
+	 	 'yeepay'=>$_lang['yeepay'],
+		 'chinabank'=>$_lang['chinabank'],
+		 'paypal'=>$_lang['paypal'],
+		 'boc'=>$_lang['boc'],
 		 );
 	} 
 
@@ -212,7 +218,7 @@ class keke_global_class {
 	 */
 	public static function get_charge_type(){
 		global $_lang;
-		return array("online_charge"=>$_lang['online_recharge'],"offline_charge"=>$_lang['offline_recharge'],"task"=>$_lang['task_recharge'],"delay"=>$_lang['fare_delay']);
+		return array("online"=>$_lang['online_recharge'],"offline"=>$_lang['offline_recharge'],"task"=>$_lang['task_recharge'],"delay"=>$_lang['fare_delay']);
 		
 	}
 	/**

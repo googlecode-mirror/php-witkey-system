@@ -32,7 +32,8 @@ $lang = array (
 		'click' => '点击',
 		'null'=>'无',
 		
-		'recycle' => '回收站',   
+		'recycle' => '回收站', 
+		'confirm'=>'确认',  
 		'confirm_mulit_delete'=>'你确定要批量删除?',
 		'confirm_recycle' => '你确定要放入回收站?', 
 		

@@ -1,6 +1,9 @@
-<?php
+<?php defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+/**
+ * 订单处理
+ */
 keke_lang_class::load_lang_class ( 'keke_order_class' );
-class keke_order_class {
+class Sys_order {
 	
 	/**
 	 * 获取指定订单+详细信息
@@ -187,6 +190,8 @@ class keke_order_class {
 	
 	/**
 	 * 任务订单状态
+	 * 只针对任务的订单是否有附款
+	 * 商品订单的状态定义不一样
 	 * 
 	 */
 	public static function get_order_status() {

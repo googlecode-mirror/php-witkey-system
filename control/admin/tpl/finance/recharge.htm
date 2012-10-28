@@ -2,98 +2,84 @@
 <div class="page_title">
     <h1>{$_lang['financial_model']}</h1>
     <div class="tool">
-    	<a href="{BASE_URL}/index.php/admin/finance_revenue">财务概况</a>
-		<a href="{BASE_URL}/index.php/admin/finance_all">{$_lang['flow_record']}</a>
-	    <a href="{BASE_URL}/index.php/admin/finance_report">{$_lang['graphic_report']}</a>
-	    
-	    <a href="{BASE_URL}/index.php/admin/finance_recharge" class="here">{$_lang['recharge_audit']}</a>
-	   <a href="{BASE_URL}/index.php/admin/finance_withdraw">{$_lang['withdraw_audit']}</a>
+     <a href="{$base_uri}" class="here">{$_lang['recharge_audit']}</a>
     </div>
 </div>
 <div class="box search p_relative">
-		 <form method="get" action="{BASE_URL}/index.php/admin/finance_recharge"  id="frm_list">
-        	<table class="detail" cellspacing="0" cellpadding="0">
-			 <tbody>
-			 	<tr>
-		                <th>查询字段
-		                   <select name="slt_fields">
-		                   	<option></option>
-		                   	{loop $query_fields $k $v}
-		                   	 <option  value="$k" {if $k == $_GET['slt_fields']} selected="selected" {/if}>{$v}</option>
-							{/loop} 
-		                   </select>
-						 <select name="slt_cond">
-						 	<option value="=" {if $_GET['slt_cond']=='='}selected="selected"{/if}>=</option>
-							<option value=">" {if $_GET['slt_cond']=='>'}selected="selected"{/if}>></option>
-							<option value="<" {if $_GET['slt_cond']=='<'}selected="selected"{/if}><</option>
-							<option value="like" {if $_GET['slt_cond']=='like'}selected="selected"{/if}>Like</option>
-						 </select>
-		                 <input type="text" class="txt" name="txt_condition" id="txt_condition" value="{$_GET['txt_condition']}">
-						 <select name="page_size">
-                			<option value="10" {if $_GET['page_size']=='10'}selected="selected"{/if}>{$_lang['page_size']}10条</option>
-                			<option value="20" {if $_GET['page_size']=='20'}selected="selected"{/if}>{$_lang['page_size']}20条</option>
-                			<option value="30" {if $_GET['page_size']=='30'}selected="selected"{/if}>{$_lang['page_size']}30条</option>
-            			</select>
-						 <input type="submit" value="{$_lang['search']}">
-						 </td>
-	            </tr>
-			 </tbody>
-			</table>
-		</form>
+ <form method="get" action="{$base_uri}"  id="frm_list">
+	<table class="detail" cellspacing="0" cellpadding="0">
+	 <tbody>
+	 	<tr>
+                <th>查询字段
+                   <select name="slt_fields">
+                   	<option></option>
+                   	{loop $query_fields $k $v}
+                   	 <option  value="$k" {if $k == $_GET['slt_fields']} selected="selected" {/if}>{$v}</option>
+					{/loop} 
+                   </select>
+				 <select name="slt_cond">
+				 	<option value="=" {if $_GET['slt_cond']=='='}selected="selected"{/if}>=</option>
+					<option value=">" {if $_GET['slt_cond']=='>'}selected="selected"{/if}>></option>
+					<option value="<" {if $_GET['slt_cond']=='<'}selected="selected"{/if}><</option>
+					<option value="like" {if $_GET['slt_cond']=='like'}selected="selected"{/if}>Like</option>
+				 </select>
+                 <input type="text" class="txt" name="txt_condition" id="txt_condition" value="{$_GET['txt_condition']}">
+				 <select name="page_size">
+        			<option value="10" {if $_GET['page_size']=='10'}selected="selected"{/if}>{$_lang['page_size']}10条</option>
+        			<option value="20" {if $_GET['page_size']=='20'}selected="selected"{/if}>{$_lang['page_size']}20条</option>
+        			<option value="30" {if $_GET['page_size']=='30'}selected="selected"{/if}>{$_lang['page_size']}30条</option>
+    			</select>
+				 <input type="submit" value="{$_lang['search']}">
+				 </td>
+        </tr>
+	 </tbody>
+	</table>
+</form>
  </div>
 <!--搜索结束-->
 <div class="box list">
-        <form action="{BASE_URL}/index.php/admin/finance_recharge" method="post" id=frm_art_action>
-		  <table class="detail" cellpadding="0" cellspacing="0">
-               <tr>
-               		<th width="5%"><input type="checkbox" id="checkbox" onclick="checkall();" class="checkbox" ><a href="javascript:;" onclick="submitSort('{$uri}','order_id',{$ord_tag})">ID{if $_GET['f']=='order_id'}{$ord_char}{/if}</a></th>
-					<th>{$_lang['order_type']}</th>
-                    <th>{$_lang['collection_type']}</th>
-                    <th>{$_lang['recharge_er']}</th>
-                    <th width="15%"><a href="javascript:;" onclick="submitSort('{$uri}','pay_money',{$ord_tag})">{$_lang['recharge_cash']}{if $_GET['f']=='pay_money'}{$ord_char}{/if}</a></th>
-                    <th width="25%"><a href="javascript:;" onclick="submitSort('{$uri}','pay_time',{$ord_tag})">{$_lang['recharge_time']}{if $_GET['f']=='pay_time'}{$ord_char}{/if}</a></th>
-                    <th>{$_lang['recharge_status']}</th>
-                    <th>{$_lang['operate']}</th>
-                </tr>
-  				 {loop $list_arr $k $v}
-                <tr class='item'>
-                	<td><input type="checkbox" name="ckb[]" class="checkbox" value="{$v['order_id']}">{$v['order_id']}</td>
-                    <td>{$charge_type_arr[$v['order_type']]}</td>
-                    <td>
-                        <font color="red">
-                          {if $v['order_type']=='offline_charge'}
-							{$bank_arr[$v['pay_type']]}
-						  {else}
-							{$v['pay_type']}
-						  {/if}
-						</font>
-                    </td>
-                    <td>{$v['username']}</td>
-					<td><font color=red>{c:$v['pay_money']}</font></td>
-					<td><!--{eval echo date('Y-m-d H:i:s',$v['pay_time']);}--></td>
-                    <td>{$status_arr[$v['order_status']]}</td>
-                    <td>
-                    	{if $v['order_status']=='wait'&&$offline_pay[$v['pay_type']]}
-                    		<a href="{BASE_URL}/index.php/admin/finance_recharge/update?order_id={$v['order_id']}" onclick="return kconfirm(this,'<div style=width:300px;word-wrap:break-word;word-break:normal>{if $v[pay_info]}{$_lang[user_recharge_att_info]}：$v[pay_info]{else}{$_lang[user_does_not_charge_info]}{/if}</div>{$_lang[confirm_cashin]}？');" class="button"><span class="cog icon"></span>{$_lang['confirm_of_payment']}？</a>
-                       		<a href="{$del_uri}?&order_id={$v['order_id']}" onclick="return cdel(this);" class="button"><span class="trash icon"></span>{$_lang['delete']}</a>
-                    	{/if}
-					</td>
-                </tr>
-                {/loop}
-                <tfoot>	
-                	<tr >
-	                	<td colspan="9">
-	                   	<div class="page" >{$pages['page']}</div>
-						<label for="checkbox">{$_lang['select_all']}</label>　
-							<input type="hidden" name="sbt_action" class="sbt_action"/>   
-	                  		<button name="sbt_action" type="submit" value="{$_lang['mulit_delete']}" onclick="return batch_act(this,'frm_art_action');" class="pill negative">
-	                             <span class="icon trash"></span>{$_lang['mulit_delete']}
-	                        </button>
-	                    </td>
-			        </tr>
-			   </tfoot>
-              </table>
-        	</form>
-    </div>
+<table class="detail" cellpadding="0" cellspacing="0">
+   <tr>
+   		<th width="5%">
+		<a href="javascript:;" onclick="submitSort('{$uri}','rid',{$ord_tag})">ID{if $_GET['f']=='rid'}{$ord_char}{/if}</a></th>
+		<th width="10%">方式</th>
+        <th width="10%">银行</th>
+        <th width="10%">{$_lang['recharge_er']}</th>
+        <th width="15%"><a href="javascript:;" onclick="submitSort('{$uri}','cash',{$ord_tag})">{$_lang['recharge_cash']}{if $_GET['f']=='cash'}{$ord_char}{/if}</a></th>
+        <th width="15%"><a href="javascript:;" onclick="submitSort('{$uri}','pay_time',{$ord_tag})">{$_lang['recharge_time']}{if $_GET['f']=='pay_time'}{$ord_char}{/if}</a></th>
+        <th width="10%">{$_lang['recharge_status']}</th>
+        <th width="20%">{$_lang['operate']}</th>
+    </tr>
+		 {loop $list_arr $k $v}
+    <tr class='item'>
+    	<td><input type="checkbox" name="ckb[]" class="checkbox" value="{$v['rid']}">{$v['rid']}</td>
+        <td>{$charge_type_arr[$v['type']]}</td>
+        <td>
+            <font color="red">
+				{$bank_arr[$v['bank']]}
+			</font>
+        </td>
+        <td>{$v['username']}</td>
+		<td><font color=red>{c:$v['cash']}</font></td>
+		<td>{date('Y-m-d H:i:s',$v['pay_time'])}</td>
+        <td>{$status_arr[$v['status']]}</td>
+        <td>
+        	{if $v['status']=='wait'}
+			 {if $v['type']=='offline'}
+        		<a href="{$base_uri}/update?rid={$v['rid']}" onclick="return kconfirm(this,'<div style=width:300px;word-wrap:break-word;word-break:normal>{if $v[pay_info]}{$_lang[user_recharge_att_info]}：$v[pay_info]{else}{$_lang[user_does_not_charge_info]}{/if}</div>{$_lang[confirm_cashin]}？');" class="button"><span class="cog icon"></span>{$_lang['confirm_of_payment']}？</a>
+			 {/if}
+           		<a href="{$del_uri}?&rid={$v['rid']}" onclick="return cdel(this);" class="button"><span class="trash icon"></span>{$_lang['delete']}</a>
+        	{/if}
+		</td>
+    </tr>
+    {/loop}
+    <tfoot>	
+    	<tr >
+        	<td colspan="9">
+           	<div class="page" >{$pages['page']}</div>
+        </tr>
+   </tfoot>
+  </table>
+       
+</div>
 <!--{include control/admin/tpl/admin_footer}-->
-   

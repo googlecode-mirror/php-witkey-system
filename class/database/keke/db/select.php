@@ -12,11 +12,6 @@ class Keke_db_select extends Keke_db_query {
 	protected $_query_list = array ();
 	protected $_lifetime;
 	protected $_cached_id;
-	/**
-	 * 
-	 * @var 查询方式 (query,get_count,get_one_row);
-	 */
-	protected $_query_type = 'query';
 	
 	public function __construct($fields){
 		if($fields===NULL){
@@ -83,25 +78,7 @@ class Keke_db_select extends Keke_db_query {
 		$this->_query_list ['having'] = $having;
 		return $this;
 	}
-	/**
-	 * 返第一行的值
-	 * @example select id,name from table 返回的值为array('id'=>'xxx',name=>'xxxx');
-	 * @return Keke_db_select
-	 */
-	public function get_one(){
-		$this->_query_type = 'get_one_row';
-		return $this;
-	}
-	/**
-	 * 返回指定字段的值,一般用在一个字段的查询
-	 * @example select count(*) from ... 返回一count 的值 '222'
-	 * @return Keke_db_select
-	 */
-	public function get_count(){
-		$this->_query_type = 'get_count';
-		return $this;
-		
-	}
+
 	public function cached($lifetime = NULL, $cached_id = NULL) {
 		if ($lifetime === NULL) {
 			// 默认缓存时间
@@ -163,7 +140,10 @@ class Keke_db_select extends Keke_db_query {
 		if(isset($this->_query_list['limit'])){
 			$query .=  $this->_query_list['limit'];
 		}
-		return  $this->cache_data($query,$db);
+		$this->_sql = $query;
+		$db = Database::instance($db);
+		$sql = $this->compile($db);
+		return  $this->cache_data($sql,$db);
 	}
 	
 	public function reset() {
@@ -181,8 +161,11 @@ class Keke_db_select extends Keke_db_query {
 	 * @return unknown|Ambigous <number, multitype:multitype: >
 	 */
 	public function cache_data($sql,$db=null, $default = 'null') {
+		if (! is_object ( $db )) {
+			$db = Database::instance ( $db );
+		}
 		if($this->_cached_id === NULL){
-			$key = Cache::instance ()->generate_id ( $sql )->get_id();
+			$key = Cache::instance ()->generate_id ( $sql)->get_id();
 		}else{
 			$key = $this->_cached_id;
 		}
@@ -191,8 +174,10 @@ class Keke_db_select extends Keke_db_query {
 		} elseif ($this->_lifetime <= 0) {
 			Cache::instance ()->del ( $key );
 		}
+		 
 		$query = $this->_query_type;
-		$datalist = $data =  Database::instance($db)->$query($sql,Database::SELECT);
+	 
+		$datalist = $data =  $db->$query($sql,Database::SELECT);
 		if(isset($key) and $this->_lifetime>0){
 			empty ( $data ) and $data = $default;
 			Cache::instance()->set($key,$data,$this->_lifetime);

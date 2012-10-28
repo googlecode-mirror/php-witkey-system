@@ -10,7 +10,7 @@
 <div class="box post">
 <div class="tabcon">
  <div class="title"><h2>{$_lang['control_config']}</h2></div>
-  <form name="frm_config" action="{$ac_url}" method="post" id="frm_config">
+  <form name="frm_config" action="{BASE_URL}/index.php/task/{$model_info['model_code']}_admin_config/control_save" method="post" id="frm_config">
   
     <input type="hidden" name="formhash" value="{FORMHASH}">
   <input type="hidden" name="model_id" value="{$model_info['model_id']}">

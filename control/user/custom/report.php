@@ -5,8 +5,7 @@
  * @version 2.2
    2012-10-25
  */
-
-class Control_user_custom_index extends Control_user{
+class Control_user_custom_report extends Control_user{
     
 	/**
 	 * @var 一级菜单选中项
@@ -16,12 +15,12 @@ class Control_user_custom_index extends Control_user{
      * 
      * @var 二级菜单选中项,空值不做选择
      */
-	protected static $_left = 'index';
+	protected static $_left = 'report';
 	
 	function action_index(){
 		
 		
 		
-		require Keke_tpl::template('user/custom/index');
+		require Keke_tpl::template('user/custom/report');
 	}
 }

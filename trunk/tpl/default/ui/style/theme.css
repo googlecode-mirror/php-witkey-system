@@ -860,7 +860,7 @@ select {
 .form_row {
   zoom: 1;
   *zoom: 1;
-  font-size: 14px;
+  font-size: 1.2em;
   line-height: 30px;
   vertical-align: top;
   padding-top: 5px;
@@ -875,7 +875,7 @@ select {
   clear: both;
 }
 .form_row .form_label {
-  width: 100px;
+  width: 130px;
   height: 30px;
   display: inline-block;
 }
@@ -910,6 +910,40 @@ select {
 }
 .form_footer:after {
   clear: both;
+}
+.form_tip {
+  margin-top: 20px;
+  font-size: 1.2em;
+}
+.form_tip.success .detail {
+  padding-left: 70px;
+}
+.form_tip.success .icon {
+  float: left !important;
+  width: 48px;
+  height: 48px;
+  margin: 10px 0 0 15px;
+  background: url(../img/succeed.png) no-repeat;
+}
+.form_tip.error .detail {
+  padding-left: 70px;
+}
+.form_tip.error .icon {
+  float: left !important;
+  width: 48px;
+  height: 48px;
+  margin: 10px 0 0 15px;
+  background: url(../img/error.png) no-repeat;
+}
+.form_tip.info .detail {
+  padding-left: 70px;
+}
+.form_tip.info .icon {
+  float: left !important;
+  width: 48px;
+  height: 48px;
+  margin: 10px 0 0 15px;
+  background: url(../img/warning.png) no-repeat;
 }
 /* 星星 
 	-------------------------*/
@@ -9722,788 +9756,43 @@ a.submit:active {
 #user .data_list .data_table tbody tr:hover .money {
   color: #d24200;
 }
-#user .bind .ico {
+#user .bind .form_label {
+  display: inline;
+  float: left;
+}
+#user .bind .bind_list {
+  display: inline;
+  float: left;
+}
+#user .bind .icon {
   width: 16px;
   height: 16px;
   display: inline-block;
-  overflow: hidden;
   vertical-align: middle;
-  font-size: 12px;
-  line-height: 16px;
-  text-indent: -999em;
-  background-image: url(../img/icon16.png);
-  background-repeat: no-repeat;
   background: url(../img/share_ico.png) no-repeat;
 }
-#user .bind .ico.four-case {
-  background-position: 0px 0px;
-}
-#user .bind .ico.nine-case {
-  background-position: 0px -16px;
-}
-#user .bind .ico.nine-case-two {
-  background-position: 0px -32px;
-}
-#user .bind .ico.air-signal {
-  background-position: 0px -48px;
-}
-#user .bind .ico.align-center {
-  background-position: 0px -64px;
-}
-#user .bind .ico.align-just {
-  background-position: 0px -80px;
-}
-#user .bind .ico.align-left {
-  background-position: 0px -96px;
-}
-#user .bind .ico.align-right {
-  background-position: 0px -112px;
-}
-#user .bind .ico.app-window {
-  background-position: 0px -128px;
-}
-#user .bind .ico.arrow-bottom {
-  background-position: 0px -144px;
-}
-#user .bind .ico.arrow-bottom-left {
-  background-position: 0px -160px;
-}
-#user .bind .ico.arrow-bottom-rigth {
-  background-position: 0px -176px;
-}
-#user .bind .ico.arrow-l {
-  background-position: 0px -192px;
-}
-#user .bind .ico.arrow-left {
-  background-position: 0px -208px;
-}
-#user .bind .ico.arrow-r {
-  background-position: 0px -224px;
-}
-#user .bind .ico.arrow-right {
-  background-position: 0px -240px;
-}
-#user .bind .ico.arrow-top {
-  background-position: 0px -256px;
-}
-#user .bind .ico.arrow-top-left {
-  background-position: 0px -272px;
-}
-#user .bind .ico.arrow-top-right {
-  background-position: 0px -288px;
-}
-#user .bind .ico.arrow-two-head {
-  background-position: 0px -304px;
-}
-#user .bind .ico.arrow-two-head-2 {
-  background-position: 0px -320px;
-}
-#user .bind .ico.attention {
-  background-position: 0px -336px;
-}
-#user .bind .ico.battery {
-  background-position: 0px -352px;
-}
-#user .bind .ico.book {
-  background-position: 0px -368px;
-}
-#user .bind .ico.bell {
-  background-position: 0px -384px;
-}
-#user .bind .ico.bookmark-1 {
-  background-position: 0px -400px;
-}
-#user .bind .ico.bookmark-2 {
-  background-position: 0px -416px;
-}
-#user .bind .ico.boxs {
-  background-position: 0px -432px;
-}
-#user .bind .ico.br-down {
-  background-position: 0px -448px;
-}
-#user .bind .ico.br-next {
-  background-position: 0px -464px;
-}
-#user .bind .ico.br-prev {
-  background-position: 0px -480px;
-}
-#user .bind .ico.br-up {
-  background-position: 0px -496px;
-}
-#user .bind .ico.brackets {
-  background-position: 0px -512px;
-}
-#user .bind .ico.browser {
-  background-position: 0px -528px;
-}
-#user .bind .ico.brush {
-  background-position: 0px -544px;
-}
-#user .bind .ico.bug {
-  background-position: 0px -560px;
-}
-#user .bind .ico.burst {
-  background-position: 0px -576px;
-}
-#user .bind .ico.calc {
-  background-position: 0px -592px;
-}
-#user .bind .ico.calendar-1 {
-  background-position: 0px -608px;
-}
-#user .bind .ico.calendar-2 {
-  background-position: 0px -624px;
-}
-#user .bind .ico.cancel {
-  background-position: 0px -640px;
-}
-#user .bind .ico.case {
-  background-position: 0px -656px;
-}
-#user .bind .ico.cc {
-  background-position: 0px -672px;
-}
-#user .bind .ico.cert {
-  background-position: 0px -688px;
-}
-#user .bind .ico.chart-bar {
-  background-position: 0px -704px;
-}
-#user .bind .ico.chart-line {
-  background-position: 0px -720px;
-}
-#user .bind .ico.chart-line2 {
-  background-position: 0px -736px;
-}
-#user .bind .ico.chart-pie {
-  background-position: 0px -752px;
-}
-#user .bind .ico.checkbox-checked {
-  background-position: 0px -768px;
-}
-#user .bind .ico.checkbox-unchecked {
-  background-position: 0px -784px;
-}
-#user .bind .ico.checkmark {
-  background-position: 0px -800px;
-}
-#user .bind .ico.clip {
-  background-position: 0px -816px;
-}
-#user .bind .ico.clipboard-copy {
-  background-position: 0px -832px;
-}
-#user .bind .ico.clipboard-cut {
-  background-position: 0px -848px;
-}
-#user .bind .ico.clipboard-past {
-  background-position: 0px -864px;
-}
-#user .bind .ico.clock {
-  background-position: 0px -880px;
-}
-#user .bind .ico.contact-card {
-  background-position: 0px -896px;
-}
-#user .bind .ico.cloud {
-  background-position: 0px -912px;
-}
-#user .bind .ico.cloud-rain {
-  background-position: 0px -928px;
-}
-#user .bind .ico.cog {
-  background-position: 0px -944px;
-}
-#user .bind .ico.comp {
-  background-position: 0px -960px;
-}
-#user .bind .ico.compass {
-  background-position: 0px -976px;
-}
-#user .bind .ico.cube {
-  background-position: 0px -992px;
-}
-#user .bind .ico.cur-bp {
-  background-position: 0px -1008px;
-}
-#user .bind .ico.cur-dollar {
-  background-position: 0px -1024px;
-}
-#user .bind .ico.cur-euro {
-  background-position: 0px -1040px;
-}
-#user .bind .ico.cur-yen {
-  background-position: 0px -1056px;
-}
-#user .bind .ico.cursor-arrow {
-  background-position: 0px -1072px;
-}
-#user .bind .ico.cursor-drag-arrow {
-  background-position: 0px -1088px;
-}
-#user .bind .ico.cursor-drag-arrow-2 {
-  background-position: 0px -1104px;
-}
-#user .bind .ico.cursor-drag-hand {
-  background-position: 0px -1120px;
-}
-#user .bind .ico.cursor-H-split {
-  background-position: 0px -1136px;
-}
-#user .bind .ico.cursor-hand {
-  background-position: 0px -1152px;
-}
-#user .bind .ico.cursor-V-split {
-  background-position: 0px -1168px;
-}
-#user .bind .ico.db {
-  background-position: 0px -1184px;
-}
-#user .bind .ico.delete {
-  background-position: 0px -1200px;
-}
-#user .bind .ico.doc-delete {
-  background-position: 0px -1216px;
-}
-#user .bind .ico.doc-edit {
-  background-position: 0px -1232px;
-}
-#user .bind .ico.doc-empty {
-  background-position: 0px -1248px;
-}
-#user .bind .ico.doc-export {
-  background-position: 0px -1264px;
-}
-#user .bind .ico.doc-import {
-  background-position: 0px -1280px;
-}
-#user .bind .ico.doc-lines {
-  background-position: 0px -1296px;
-}
-#user .bind .ico.doc-lines-stright {
-  background-position: 0px -1312px;
-}
-#user .bind .ico.doc-minus {
-  background-position: 0px -1328px;
-}
-#user .bind .ico.doc-new {
-  background-position: 0px -1344px;
-}
-#user .bind .ico.doc-plus {
-  background-position: 0px -1360px;
-}
-#user .bind .ico.document {
-  background-position: 0px -1376px;
-}
-#user .bind .ico.download {
-  background-position: 0px -1392px;
-}
-#user .bind .ico.emotion-sad {
-  background-position: 0px -1408px;
-}
-#user .bind .ico.emotion-smile {
-  background-position: 0px -1424px;
-}
-#user .bind .ico.expand {
-  background-position: 0px -1440px;
-}
-#user .bind .ico.eye {
-  background-position: 0px -1456px;
-}
-#user .bind .ico.eye-inv {
-  background-position: 0px -1472px;
-}
-#user .bind .ico.facebook {
-  background-position: 0px -1488px;
-}
-#user .bind .ico.filter {
-  background-position: 0px -1504px;
-}
-#user .bind .ico.fire {
-  background-position: 0px -1520px;
-}
-#user .bind .ico.flag {
-  background-position: 0px -1536px;
-}
-#user .bind .ico.folder {
-  background-position: 0px -1552px;
-}
-#user .bind .ico.folder-arrow {
-  background-position: 0px -1568px;
-}
-#user .bind .ico.folder-delete {
-  background-position: 0px -1584px;
-}
-#user .bind .ico.folder-minus {
-  background-position: 0px -1600px;
-}
-#user .bind .ico.folder-open {
-  background-position: 0px -1616px;
-}
-#user .bind .ico.folder-plus {
-  background-position: 0px -1632px;
-}
-#user .bind .ico.font-bold {
-  background-position: 0px -1648px;
-}
-#user .bind .ico.font-italic {
-  background-position: 0px -1664px;
-}
-#user .bind .ico.font-size {
-  background-position: 0px -1680px;
-}
-#user .bind .ico.font-strokethrough {
-  background-position: 0px -1696px;
-}
-#user .bind .ico.font-underline {
-  background-position: 0px -1712px;
-}
-#user .bind .ico.game-pad {
-  background-position: 0px -1728px;
-}
-#user .bind .ico.globe-1 {
-  background-position: 0px -1744px;
-}
-#user .bind .ico.globe-2 {
-  background-position: 0px -1760px;
-}
-#user .bind .ico.globe-3 {
-  background-position: 0px -1776px;
-}
-#user .bind .ico.google {
-  background-position: 0px -1792px;
-}
-#user .bind .ico.hand-1 {
-  background-position: 0px -1808px;
-}
-#user .bind .ico.hand-2 {
-  background-position: 0px -1824px;
-}
-#user .bind .ico.hand-contra {
-  background-position: 0px -1840px;
-}
-#user .bind .ico.hand-pro {
-  background-position: 0px -1856px;
-}
-#user .bind .ico.headphones {
-  background-position: 0px -1872px;
-}
-#user .bind .ico.heart {
-  background-position: 0px -1888px;
-}
-#user .bind .ico.heart-empty {
-  background-position: 0px -1904px;
-}
-#user .bind .ico.home {
-  background-position: 0px -1920px;
-}
-#user .bind .ico.image-text {
-  background-position: 0px -1936px;
-}
-#user .bind .ico.inbox {
-  background-position: 0px -1952px;
-}
-#user .bind .ico.indent-decrease {
-  background-position: 0px -1968px;
-}
-#user .bind .ico.indent-increase {
-  background-position: 0px -1984px;
-}
-#user .bind .ico.info {
-  background-position: 0px -2000px;
-}
-#user .bind .ico.iphone {
-  background-position: 0px -2016px;
-}
-#user .bind .ico.key {
-  background-position: 0px -2032px;
-}
-#user .bind .ico.layers-1 {
-  background-position: 0px -2048px;
-}
-#user .bind .ico.layers-2 {
-  background-position: 0px -2064px;
-}
-#user .bind .ico.lightbulb {
-  background-position: 0px -2080px;
-}
-#user .bind .ico.lighting {
-  background-position: 0px -2096px;
-}
-#user .bind .ico.link {
-  background-position: 0px -2112px;
-}
-#user .bind .ico.list-bullets {
-  background-position: 0px -2128px;
-}
-#user .bind .ico.list-num {
-  background-position: 0px -2144px;
-}
-#user .bind .ico.magic-wand {
-  background-position: 0px -2160px;
-}
-#user .bind .ico.mail {
-  background-position: 0px -2176px;
-}
-#user .bind .ico.mail-2 {
-  background-position: 0px -2192px;
-}
-#user .bind .ico.mic {
-  background-position: 0px -2208px;
-}
-#user .bind .ico.monitor {
-  background-position: 0px -2224px;
-}
-#user .bind .ico.movie {
-  background-position: 0px -2240px;
-}
-#user .bind .ico.music {
-  background-position: 0px -2256px;
-}
-#user .bind .ico.net-comp {
-  background-position: 0px -2272px;
-}
-#user .bind .ico.network {
-  background-position: 0px -2288px;
-}
-#user .bind .ico.notepad {
-  background-position: 0px -2304px;
-}
-#user .bind .ico.notepad-2 {
-  background-position: 0px -2320px;
-}
-#user .bind .ico.on-off {
-  background-position: 0px -2336px;
-}
-#user .bind .ico.openid {
-  background-position: 0px -2352px;
-}
-#user .bind .ico.padlock-closed {
-  background-position: 0px -2368px;
-}
-#user .bind .ico.padlock-open {
-  background-position: 0px -2384px;
-}
-#user .bind .ico.page-layout {
-  background-position: 0px -2400px;
-}
-#user .bind .ico.paragraph {
-  background-position: 0px -2416px;
-}
-#user .bind .ico.pencil {
-  background-position: 0px -2432px;
-}
-#user .bind .ico.phone {
-  background-position: 0px -2448px;
-}
-#user .bind .ico.phone-1 {
-  background-position: 0px -2464px;
-}
-#user .bind .ico.phone-2 {
-  background-position: 0px -2480px;
-}
-#user .bind .ico.left-arrow {
-  background-position: 0px -2496px;
-}
-#user .bind .ico.photo {
-  background-position: 0px -2512px;
-}
-#user .bind .ico.picture {
-  background-position: 0px -2528px;
-}
-#user .bind .ico.pin {
-  background-position: 0px -2544px;
-}
-#user .bind .ico.pin-2 {
-  background-position: 0px -2560px;
-}
-#user .bind .ico.pin-map {
-  background-position: 0px -2576px;
-}
-#user .bind .ico.pin-map-down {
-  background-position: 0px -2592px;
-}
-#user .bind .ico.pin-map-left {
-  background-position: 0px -2608px;
-}
-#user .bind .ico.pin-map-right {
-  background-position: 0px -2624px;
-}
-#user .bind .ico.pin-map-top {
-  background-position: 0px -2640px;
-}
-#user .bind .ico.pin-sq-down {
-  background-position: 0px -2656px;
-}
-#user .bind .ico.pin-sq-left {
-  background-position: 0px -2672px;
-}
-#user .bind .ico.pin-sq-right {
-  background-position: 0px -2688px;
-}
-#user .bind .ico.pin-sq-top {
-  background-position: 0px -2704px;
-}
-#user .bind .ico.playback-ff {
-  background-position: 0px -2720px;
-}
-#user .bind .ico.playback-next {
-  background-position: 0px -2736px;
-}
-#user .bind .ico.playback-pause {
-  background-position: 0px -2752px;
-}
-#user .bind .ico.playback-play {
-  background-position: 0px -2768px;
-}
-#user .bind .ico.playback-prev {
-  background-position: 0px -2784px;
-}
-#user .bind .ico.playback-rec {
-  background-position: 0px -2800px;
-}
-#user .bind .ico.playback-reload {
-  background-position: 0px -2816px;
-}
-#user .bind .ico.playback-rew {
-  background-position: 0px -2832px;
-}
-#user .bind .ico.playback-stop {
-  background-position: 0px -2848px;
-}
-#user .bind .ico.preso {
-  background-position: 0px -2864px;
-}
-#user .bind .ico.print {
-  background-position: 0px -2880px;
-}
-#user .bind .ico.redo {
-  background-position: 0px -2896px;
-}
-#user .bind .ico.rnd-br-down {
-  background-position: 0px -2912px;
-}
-#user .bind .ico.rnd-br-first {
-  background-position: 0px -3088px;
-}
-#user .bind .ico.rnd-br-last {
-  background-position: 0px -2944px;
-}
-#user .bind .ico.rnd-br-next {
-  background-position: 0px -2960px;
-}
-#user .bind .ico.rnd-br-prev {
-  background-position: 0px -2976px;
-}
-#user .bind .ico.rnd-br-up {
-  background-position: 0px -2992px;
-}
-#user .bind .ico.round {
-  background-position: 0px -3008px;
-}
-#user .bind .ico.round-and-up {
-  background-position: 0px -3024px;
-}
-#user .bind .ico.round-arrow-left {
-  background-position: 0px -3040px;
-}
-#user .bind .ico.round-arrow-right {
-  background-position: 0px -3056px;
-}
-#user .bind .ico.round-checkmark {
-  background-position: 0px -3072px;
-}
-#user .bind .ico.round-delete {
-  background-position: 0px -3088px;
-}
-#user .bind .ico.round-minus {
-  background-position: 0px -3104px;
-}
-#user .bind .ico.round-plus {
-  background-position: 0px -3120px;
-}
-#user .bind .ico.rss {
-  background-position: 0px -3136px;
-}
-#user .bind .ico.rss-sq {
-  background-position: 0px -3152px;
-}
-#user .bind .ico.sand {
-  background-position: 0px -3168px;
-}
-#user .bind .ico.sat-dish {
-  background-position: 0px -3184px;
-}
-#user .bind .ico.save {
-  background-position: 0px -3200px;
-}
-#user .bind .ico.server {
-  background-position: 0px -3216px;
-}
-#user .bind .ico.share {
-  background-position: 0px -3232px;
-}
-#user .bind .ico.shop-cart {
-  background-position: 0px -3248px;
-}
-#user .bind .ico.sound-high {
-  background-position: 0px -3264px;
-}
-#user .bind .ico.sound-low {
-  background-position: 0px -3280px;
-}
-#user .bind .ico.sound-mute {
-  background-position: 0px -3296px;
-}
-#user .bind .ico.spechbubble {
-  background-position: 0px -3312px;
-}
-#user .bind .ico.spechbubble-2 {
-  background-position: 0px -3328px;
-}
-#user .bind .ico.spechbubble-sq {
-  background-position: 0px -3344px;
-}
-#user .bind .ico.spechbubble-sq-line {
-  background-position: 0px -3360px;
-}
-#user .bind .ico.sq-br-down {
-  background-position: 0px -3376px;
-}
-#user .bind .ico.sq-br-first {
-  background-position: 0px -3392px;
-}
-#user .bind .ico.sq-br-last {
-  background-position: 0px -3408px;
-}
-#user .bind .ico.sq-br-next {
-  background-position: 0px -3424px;
-}
-#user .bind .ico.sq-br-prevshare {
-  background-position: 0px -3440px;
-}
-#user .bind .ico.sq-br-up {
-  background-position: 0px -3456px;
-}
-#user .bind .ico.sq-down {
-  background-position: 0px -3472px;
-}
-#user .bind .ico.sq-minus {
-  background-position: 0px -3488px;
-}
-#user .bind .ico.sq-next {
-  background-position: 0px -3504px;
-}
-#user .bind .ico.sq-plus {
-  background-position: 0px -3520px;
-}
-#user .bind .ico.sq-prev {
-  background-position: 0px -3536px;
-}
-#user .bind .ico.sq-up {
-  background-position: 0px -3552px;
-}
-#user .bind .ico.square-shape {
-  background-position: 0px -3568px;
-}
-#user .bind .ico.star {
-  background-position: 0px -3584px;
-}
-#user .bind .ico.star-fav {
-  background-position: 0px -3600px;
-}
-#user .bind .ico.star-fav-empty {
-  background-position: 0px -3616px;
-}
-#user .bind .ico.sun {
-  background-position: 0px -3632px;
-}
-#user .bind .ico.tag {
-  background-position: 0px -3648px;
-}
-#user .bind .ico.tape {
-  background-position: 0px -3664px;
-}
-#user .bind .ico.target {
-  background-position: 0px -3680px;
-}
-#user .bind .ico.text-curstor {
-  background-position: 0px -3696px;
-}
-#user .bind .ico.text-letter-t {
-  background-position: 0px -3712px;
-}
-#user .bind .ico.top-right-expand {
-  background-position: 0px -3728px;
-}
-#user .bind .ico.trash {
-  background-position: 0px -3744px;
-}
-#user .bind .ico.twitter {
-  background-position: 0px -3760px;
-}
-#user .bind .ico.twitter-2 {
-  background-position: 0px -3776px;
-}
-#user .bind .ico.undo {
-  background-position: 0px -3792px;
-}
-#user .bind .ico.user {
-  background-position: 0px -3808px;
-}
-#user .bind .ico.users {
-  background-position: 0px -3824px;
-}
-#user .bind .ico.wrench {
-  background-position: 0px -3840px;
-}
-#user .bind .ico.wrench-plus {
-  background-position: 0px -3856px;
-}
-#user .bind .ico.wrench-plus-2 {
-  background-position: 0px -3872px;
-}
-#user .bind .ico.zoom {
-  background-position: 0px -3888px;
-}
-#user .bind .ico.meter {
-  background-position: 0px -3904px;
-}
-#user .bind .ico.buyer {
-  background-position: 0px -3920px;
-}
-#user .bind .ico.seller {
-  background-position: 0px -3936px;
-}
-#user .bind .ico.shield {
-  background-position: 0px -3952px;
-}
-#user .bind .ico.help {
-  background-position: 0px -3968px;
-}
-#user .bind .sina .ico {
+#user .bind .sina .icon {
   background-position: 0 -96px;
 }
-#user .bind .qq .ico {
+#user .bind .qq .icon {
   background-position: 0 -144px;
 }
-#user .bind .douban .ico {
+#user .bind .douban .icon {
   background-position: 0 -560px;
 }
-#user .bind .renren .ico {
+#user .bind .renren .icon {
   background-position: 0 -160px;
 }
-#user .bind .qzone .ico {
+#user .bind .qzone .icon {
   background-position: 0 -64px;
 }
-#user .bind .taobao .ico {
+#user .bind .taobao .icon {
   background-position: 0 -208px;
 }
-#user .bind .t163 .ico {
+#user .bind .t163 .icon {
   background-position: 0 -128px;
 }
-#user .bind .souhu .ico {
+#user .bind .souhu .icon {
   background-position: 0 -112px;
 }
 #user .bind a {

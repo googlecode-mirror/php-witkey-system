@@ -28,18 +28,18 @@ class Control_admin_main extends Controller {
 		$sys_info ['file_uploads'] = ini_get ( 'file_uploads' );
 		
 		/* 新增用户留言 */
-		$news_count = intval ( Dbfactory::get_count ( sprintf ( " select count(msg_id) from %switkey_msg where to_uid='%d' and  uid>0 ", TABLEPRE, $_SESSION ['admin_uid'] ) ) );
+		$news_count = intval ( Dbfactory::get_count ( sprintf ( " select count(*) from %switkey_msg where to_uid='%d' and  uid>0 ", TABLEPRE, $_SESSION ['admin_uid'] ) ) );
 		/* 新增发布任务 */
-		$task_count = intval ( Dbfactory::get_count ( sprintf ( " select count(task_id) from %switkey_task where DATE(from_unixtime(start_time))=DATE('%s') ", TABLEPRE, date ( 'Y-m-d', time () ) ) ) );
+		$task_count = intval ( Dbfactory::get_count ( sprintf ( " select count(*) from %switkey_task where DATE(from_unixtime(start_time))=DATE('%s') ", TABLEPRE, date ( 'Y-m-d', time () ) ) ) );
 		/* 新增注册会员 */
-		$user_count = intval ( Dbfactory::get_count ( sprintf ( " select count(uid) from %switkey_space where DATE(from_unixtime(reg_time))=DATE('%s')", TABLEPRE, date ( 'Y-m-d', time () ) ) ) );
+		$user_count = intval ( Dbfactory::get_count ( sprintf ( " select count(*) from %switkey_space where DATE(from_unixtime(reg_time))=DATE('%s')", TABLEPRE, date ( 'Y-m-d', time () ) ) ) );
 		/* 新增提现申请 */
-		$withdraw_count = intval ( Dbfactory::get_count ( sprintf ( " select count(withdraw_id) from %switkey_withdraw where DATE(from_unixtime(applic_time))=DATE('%s')", TABLEPRE, date ( 'Y-m-d', time () ) ) ) );
+		$withdraw_count = intval ( Dbfactory::get_count ( sprintf ( " select count(*) from %switkey_withdraw where DATE(from_unixtime(on_time))=DATE('%s')", TABLEPRE, date ( 'Y-m-d', time () ) ) ) );
 		/* 新增用户充值 */
-		$charge_count = intval ( Dbfactory::get_count ( sprintf ( " select count(order_id) from %switkey_order_charge where DATE(from_unixtime(pay_time))=DATE('%s') ", TABLEPRE, date ( 'Y-m-d', time () ) ) ) );
+		$charge_count = intval ( Dbfactory::get_count ( sprintf ( " select count(*) from %switkey_recharge where DATE(from_unixtime(pay_time))=DATE('%s') ", TABLEPRE, date ( 'Y-m-d', time () ) ) ) );
 		
 		/* 新增交易维权 */
-		$report_count = intval ( Dbfactory::get_count ( sprintf ( " select count(report_id) from %switkey_report where DATE(from_unixtime(on_time))=DATE('%s')", TABLEPRE, date ( 'Y-m-d', time () ) ) ) );
+		$report_count = intval ( Dbfactory::get_count ( sprintf ( " select count(*) from %switkey_report where DATE(from_unixtime(on_time))=DATE('%s')", TABLEPRE, date ( 'Y-m-d', time () ) ) ) );
 		
 		$pars = array (
 				'ac' => 'run',

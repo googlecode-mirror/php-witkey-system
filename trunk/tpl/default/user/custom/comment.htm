@@ -12,18 +12,20 @@
 	<link href="{BASE_URL}/{SKIN_PATH}/ui/style/theme.css" rel="stylesheet" charset="utf-8"  >
 </head>
 <body id="user">
-	<form action="">
+	<form action="{BASE_URL}/index.php/user/custom_steer/comment" method="post" target="_top">
+		<input type="hidden" name="formhash" value="{FORMHASH}">
 		<div class="pad20">
 			<label class="form_label">内容：</label>
-			<textarea cols="50" rows="6"></textarea>
+			<textarea name="content" cols="50" rows="6"></textarea>
 		</div>
-		
     	<div class="form_footer">
 			<div class="fl_r pl_20 pr_20">
 				<input type="submit" value="提交">
-				<input type="reset" value="重置">
+				<input type="reset" onclick="art.dialog.close();" value="重置">
 			</div>
     	</div>
 	</form>
 </body>
+<script src="{BASE_URL}/resource/js/artdialog/artDialog.js?skin=default"></script>
+<script src="{BASE_URL}/resource/js/artdialog/plugins/iframeTools.js"></script>
 </html>

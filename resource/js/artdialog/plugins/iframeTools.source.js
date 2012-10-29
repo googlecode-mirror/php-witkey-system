@@ -20,24 +20,24 @@ var _topDialog, _proxyDialog, _zIndex,
 
 $(function () {
 	!window.jQuery && document.compatMode === 'BackCompat'
-	// ä¸æ”¯æŒæ€ªå¼‚æ¨¡å¼ï¼Œè¯·ç”¨ä¸»æµçš„XHTML1.0æˆ–è€…HTML5çš„DOCTYPEç”³æ˜
+	// ²»Ö§³Ö¹ÖÒìÄ£Ê½£¬ÇëÓÃÖ÷Á÷µÄXHTML1.0»òÕßHTML5µÄDOCTYPEÉêÃ÷
 	&& alert('artDialog Error: document.compatMode === "BackCompat"');
 });
 	
 	
-/** è·å– artDialog å¯è·¨çº§è°ƒç”¨çš„æœ€é«˜å±‚çš„ window å¯¹è±¡ */
+/** »ñÈ¡ artDialog ¿É¿ç¼¶µ÷ÓÃµÄ×î¸ß²ãµÄ window ¶ÔÏó */
 var _top = artDialog.top = function () {
 	var top = window,
 	test = function (name) {
 		try {
-			var doc = window[name].document;	// è·¨åŸŸ|æ— æƒé™
-			doc.getElementsByTagName; 			// chrome æœ¬åœ°å®‰å…¨é™åˆ¶
+			var doc = window[name].document;	// ¿çÓò|ÎŞÈ¨ÏŞ
+			doc.getElementsByTagName; 			// chrome ±¾µØ°²È«ÏŞÖÆ
 		} catch (e) {
 			return false;
 		};
 		
 		return window[name].artDialog
-		// æ¡†æ¶é›†æ— æ³•æ˜¾ç¤ºç¬¬ä¸‰æ–¹å…ƒç´ 
+		// ¿ò¼Ü¼¯ÎŞ·¨ÏÔÊ¾µÚÈı·½ÔªËØ
 		&& doc.getElementsByTagName('frameset').length === 0;
 	};
 	
@@ -49,13 +49,13 @@ var _top = artDialog.top = function () {
 	
 	return top;
 }();
-artDialog.parent = _top; // å…¼å®¹v4.1ä¹‹å‰ç‰ˆæœ¬ï¼Œæœªæ¥ç‰ˆæœ¬å°†åˆ é™¤æ­¤
+artDialog.parent = _top; // ¼æÈİv4.1Ö®Ç°°æ±¾£¬Î´À´°æ±¾½«É¾³ı´Ë
 
 
 _topDialog = _top.artDialog;
 
 
-// è·å–é¡¶å±‚é¡µé¢å¯¹è¯æ¡†å åŠ å€¼
+// »ñÈ¡¶¥²ãÒ³Ãæ¶Ô»°¿òµş¼ÓÖµ
 _zIndex = function () {
 	return _topDialog.defaults.zIndex;
 };
@@ -63,10 +63,10 @@ _zIndex = function () {
 
 
 /**
- * è·¨æ¡†æ¶æ•°æ®å…±äº«æ¥å£
+ * ¿ç¿ò¼ÜÊı¾İ¹²Ïí½Ó¿Ú
  * @see		http://www.planeart.cn/?p=1554
- * @param	{String}	å­˜å‚¨çš„æ•°æ®å
- * @param	{Any}		å°†è¦å­˜å‚¨çš„ä»»æ„æ•°æ®(æ— æ­¤é¡¹åˆ™è¿”å›è¢«æŸ¥è¯¢çš„æ•°æ®)
+ * @param	{String}	´æ´¢µÄÊı¾İÃû
+ * @param	{Any}		½«Òª´æ´¢µÄÈÎÒâÊı¾İ(ÎŞ´ËÏîÔò·µ»Ø±»²éÑ¯µÄÊı¾İ)
  */
 artDialog.data = function (name, value) {
 	var top = artDialog.top,
@@ -83,8 +83,8 @@ artDialog.data = function (name, value) {
 
 
 /**
- * æ•°æ®å…±äº«åˆ é™¤æ¥å£
- * @param	{String}	åˆ é™¤çš„æ•°æ®å
+ * Êı¾İ¹²ÏíÉ¾³ı½Ó¿Ú
+ * @param	{String}	É¾³ıµÄÊı¾İÃû
  */
 artDialog.removeData = function (name) {
 	var cache = artDialog.top[_data];
@@ -92,24 +92,24 @@ artDialog.removeData = function (name) {
 };
 
 
-/** è·¨æ¡†æ¶æ™®é€šå¯¹è¯æ¡† */
+/** ¿ç¿ò¼ÜÆÕÍ¨¶Ô»°¿ò */
 artDialog.through = _proxyDialog = function () {
 	var api = _topDialog.apply(this, arguments);
 		
-	// ç¼“å­˜ä»å½“å‰ windowï¼ˆå¯èƒ½ä¸ºiframeï¼‰è°ƒå‡ºæ‰€æœ‰è·¨æ¡†æ¶å¯¹è¯æ¡†ï¼Œ
-	// ä»¥ä¾¿è®©å½“å‰ window å¸è½½å‰å»å…³é—­è¿™äº›å¯¹è¯æ¡†ã€‚
-	// å› ä¸ºiframeæ³¨é”€åä¹Ÿä¼šä»å†…å­˜ä¸­åˆ é™¤å…¶åˆ›å»ºçš„å¯¹è±¡ï¼Œè¿™æ ·å¯ä»¥é˜²æ­¢å›è°ƒå‡½æ•°æŠ¥é”™
+	// »º´æ´Óµ±Ç° window£¨¿ÉÄÜÎªiframe£©µ÷³öËùÓĞ¿ç¿ò¼Ü¶Ô»°¿ò£¬
+	// ÒÔ±ãÈÃµ±Ç° window Ğ¶ÔØÇ°È¥¹Ø±ÕÕâĞ©¶Ô»°¿ò¡£
+	// ÒòÎªiframe×¢ÏúºóÒ²»á´ÓÄÚ´æÖĞÉ¾³ıÆä´´½¨µÄ¶ÔÏó£¬ÕâÑù¿ÉÒÔ·ÀÖ¹»Øµ÷º¯Êı±¨´í
 	if (_top !== window) artDialog.list[api.config.id] = api;
 	return api;
 };
 
-// æ¡†æ¶é¡µé¢å¸è½½å‰å…³é—­æ‰€æœ‰ç©¿è¶Šçš„å¯¹è¯æ¡†
+// ¿ò¼ÜÒ³ÃæĞ¶ÔØÇ°¹Ø±ÕËùÓĞ´©Ô½µÄ¶Ô»°¿ò
 _top !== window && $(window).bind('unload', function () {
 	var list = artDialog.list, config;
 	for (var i in list) {
 		if (list[i]) {
 			config = list[i].config;
-			if (config) config.duration = 0; // å–æ¶ˆåŠ¨ç”»
+			if (config) config.duration = 0; // È¡Ïû¶¯»­
 			list[i].close();
 			//delete list[i];
 		};
@@ -118,10 +118,10 @@ _top !== window && $(window).bind('unload', function () {
 
 
 /**
- * å¼¹çª— (iframe)
- * @param	{String}	åœ°å€
- * @param	{Object}	é…ç½®å‚æ•°. è¿™é‡Œä¼ å…¥çš„å›è°ƒå‡½æ•°æ¥æ”¶çš„ç¬¬1ä¸ªå‚æ•°ä¸ºiframeå†…éƒ¨windowå¯¹è±¡
- * @param	{Boolean}	æ˜¯å¦å…è®¸ç¼“å­˜. é»˜è®¤true
+ * µ¯´° (iframe)
+ * @param	{String}	µØÖ·
+ * @param	{Object}	ÅäÖÃ²ÎÊı. ÕâÀï´«ÈëµÄ»Øµ÷º¯Êı½ÓÊÕµÄµÚ1¸ö²ÎÊıÎªiframeÄÚ²¿window¶ÔÏó
+ * @param	{Boolean}	ÊÇ·ñÔÊĞí»º´æ. Ä¬ÈÏtrue
  */
 artDialog.open = function (url, options, cache) {
 	options = options || {};
@@ -151,7 +151,7 @@ artDialog.open = function (url, options, cache) {
 			iwin = iframe.contentWindow;
 			$idoc = $(iwin.document);
 			ibody = iwin.document.body;
-		} catch (e) {// è·¨åŸŸ
+		} catch (e) {// ¿çÓò
 			iframe.style.cssText = loadCss;
 			
 			aConfig.follow
@@ -163,7 +163,7 @@ artDialog.open = function (url, options, cache) {
 			return;
 		};
 		
-		// è·å–iframeå†…éƒ¨å°ºå¯¸
+		// »ñÈ¡iframeÄÚ²¿³ß´ç
 		iWidth = aConfig.width === 'auto'
 		? $idoc.width() + (_isIE6 ? 0 : parseInt($(ibody).css('marginLeft')))
 		: aConfig.width;
@@ -172,13 +172,13 @@ artDialog.open = function (url, options, cache) {
 		? $idoc.height()
 		: aConfig.height;
 		
-		// é€‚åº”iframeå°ºå¯¸
+		// ÊÊÓ¦iframe³ß´ç
 		setTimeout(function () {
 			iframe.style.cssText = loadCss;
-		}, 0);// setTimeout: é˜²æ­¢IE6~7å¯¹è¯æ¡†æ ·å¼æ¸²æŸ“å¼‚å¸¸
+		}, 0);// setTimeout: ·ÀÖ¹IE6~7¶Ô»°¿òÑùÊ½äÖÈ¾Òì³£
 		api.size(iWidth, iHeight);
 		
-		// è°ƒæ•´å¯¹è¯æ¡†ä½ç½®
+		// µ÷Õû¶Ô»°¿òÎ»ÖÃ
 		aConfig.follow
 		? api.follow(aConfig.follow)
 		: api.position(aConfig.left, aConfig.top);
@@ -222,8 +222,8 @@ artDialog.open = function (url, options, cache) {
 			};
 			$content.removeClass('aui_state_full');
 			
-			// é‡è¦ï¼éœ€è¦é‡ç½®iframeåœ°å€ï¼Œå¦åˆ™ä¸‹æ¬¡å‡ºç°çš„å¯¹è¯æ¡†åœ¨IE6ã€7æ— æ³•èšç„¦input
-			// IEåˆ é™¤iframeåï¼Œiframeä»ç„¶ä¼šç•™åœ¨å†…å­˜ä¸­å‡ºç°ä¸Šè¿°é—®é¢˜ï¼Œç½®æ¢srcæ˜¯æœ€å®¹æ˜“è§£å†³çš„æ–¹æ³•
+			// ÖØÒª£¡ĞèÒªÖØÖÃiframeµØÖ·£¬·ñÔòÏÂ´Î³öÏÖµÄ¶Ô»°¿òÔÚIE6¡¢7ÎŞ·¨¾Û½¹input
+			// IEÉ¾³ıiframeºó£¬iframeÈÔÈ»»áÁôÔÚÄÚ´æÖĞ³öÏÖÉÏÊöÎÊÌâ£¬ÖÃ»»srcÊÇ×îÈİÒ×½â¾öµÄ·½·¨
 			$iframe[0].src = 'about:blank';
 			$iframe.remove();
 			
@@ -234,7 +234,7 @@ artDialog.open = function (url, options, cache) {
 		}
 	};
 	
-	// å›è°ƒå‡½æ•°ç¬¬ä¸€ä¸ªå‚æ•°æŒ‡å‘iframeå†…éƒ¨windowå¯¹è±¡
+	// »Øµ÷º¯ÊıµÚÒ»¸ö²ÎÊıÖ¸ÏòiframeÄÚ²¿window¶ÔÏó
 	if (typeof options.ok === 'function') config.ok = function () {
 		return options.ok.call(api, iframe.contentWindow, top);
 	};
@@ -252,22 +252,22 @@ artDialog.open = function (url, options, cache) {
 };
 
 
-/** å¼•ç”¨openæ–¹æ³•æ‰©å±•æ–¹æ³•(åœ¨openæ‰“å¼€çš„iframeå†…éƒ¨ç§æœ‰æ–¹æ³•) */
+/** ÒıÓÃopen·½·¨À©Õ¹·½·¨(ÔÚopen´ò¿ªµÄiframeÄÚ²¿Ë½ÓĞ·½·¨) */
 artDialog.open.api = artDialog.data(_winName + _open);
 
 
-/** å¼•ç”¨openæ–¹æ³•è§¦å‘æ¥æºé¡µé¢window(åœ¨openæ‰“å¼€çš„iframeå†…éƒ¨ç§æœ‰æ–¹æ³•) */
+/** ÒıÓÃopen·½·¨´¥·¢À´Ô´Ò³Ãæwindow(ÔÚopen´ò¿ªµÄiframeÄÚ²¿Ë½ÓĞ·½·¨) */
 artDialog.opener = artDialog.data(_winName + _opener) || window;
-artDialog.open.origin = artDialog.opener; // å…¼å®¹v4.1ä¹‹å‰ç‰ˆæœ¬ï¼Œæœªæ¥ç‰ˆæœ¬å°†åˆ é™¤æ­¤
+artDialog.open.origin = artDialog.opener; // ¼æÈİv4.1Ö®Ç°°æ±¾£¬Î´À´°æ±¾½«É¾³ı´Ë
 
-/** artDialog.open æ‰“å¼€çš„iframeé¡µé¢é‡Œå…³é—­å¯¹è¯æ¡†å¿«æ·æ–¹æ³• */
+/** artDialog.open ´ò¿ªµÄiframeÒ³ÃæÀï¹Ø±Õ¶Ô»°¿ò¿ì½İ·½·¨ */
 artDialog.close = function () {
 	var api = artDialog.data(_winName + _open);
 	api && api.close();
 	return false;
 };
 
-// ç‚¹å‡»iframeå†…å®¹åˆ‡æ¢å åŠ é«˜åº¦
+// µã»÷iframeÄÚÈİÇĞ»»µş¼Ó¸ß¶È
 _top != window && $(document).bind('mousedown', function () {
 	var api = artDialog.open.api;
 	api && api.zIndex();
@@ -275,10 +275,10 @@ _top != window && $(document).bind('mousedown', function () {
 
 
 /**
- * Ajaxå¡«å……å†…å®¹
- * @param	{String}			åœ°å€
- * @param	{Object}			é…ç½®å‚æ•°
- * @param	{Boolean}			æ˜¯å¦å…è®¸ç¼“å­˜. é»˜è®¤true
+ * AjaxÌî³äÄÚÈİ
+ * @param	{String}			µØÖ·
+ * @param	{Object}			ÅäÖÃ²ÎÊı
+ * @param	{Boolean}			ÊÇ·ñÔÊĞí»º´æ. Ä¬ÈÏtrue
  */
 artDialog.load = function(url, options, cache){
 	cache = cache || false;
@@ -313,8 +313,8 @@ artDialog.load = function(url, options, cache){
 
 
 /**
- * è­¦å‘Š
- * @param	{String}	æ¶ˆæ¯å†…å®¹
+ * ¾¯¸æ
+ * @param	{String}	ÏûÏ¢ÄÚÈİ
  */
 artDialog.alert = function (content, callback) {
 	return _proxyDialog({
@@ -331,10 +331,10 @@ artDialog.alert = function (content, callback) {
 
 
 /**
- * ç¡®è®¤
- * @param	{String}	æ¶ˆæ¯å†…å®¹
- * @param	{Function}	ç¡®å®šæŒ‰é’®å›è°ƒå‡½æ•°
- * @param	{Function}	å–æ¶ˆæŒ‰é’®å›è°ƒå‡½æ•°
+ * È·ÈÏ
+ * @param	{String}	ÏûÏ¢ÄÚÈİ
+ * @param	{Function}	È·¶¨°´Å¥»Øµ÷º¯Êı
+ * @param	{Function}	È¡Ïû°´Å¥»Øµ÷º¯Êı
  */
 artDialog.confirm = function (content, yes, no) {
 	return _proxyDialog({
@@ -356,10 +356,10 @@ artDialog.confirm = function (content, yes, no) {
 
 
 /**
- * æé—®
- * @param	{String}	æé—®å†…å®¹
- * @param	{Function}	å›è°ƒå‡½æ•°. æ¥æ”¶å‚æ•°ï¼šè¾“å…¥å€¼
- * @param	{String}	é»˜è®¤å€¼
+ * ÌáÎÊ
+ * @param	{String}	ÌáÎÊÄÚÈİ
+ * @param	{Function}	»Øµ÷º¯Êı. ½ÓÊÕ²ÎÊı£ºÊäÈëÖµ
+ * @param	{String}	Ä¬ÈÏÖµ
  */
 artDialog.prompt = function (content, yes, value) {
 	value = value || '';
@@ -396,9 +396,9 @@ artDialog.prompt = function (content, yes, value) {
 
 
 /**
- * çŸ­æš‚æç¤º
- * @param	{String}	æç¤ºå†…å®¹
- * @param	{Number}	æ˜¾ç¤ºæ—¶é—´ (é»˜è®¤1.5ç§’)
+ * ¶ÌÔİÌáÊ¾
+ * @param	{String}	ÌáÊ¾ÄÚÈİ
+ * @param	{Number}	ÏÔÊ¾Ê±¼ä (Ä¬ÈÏ1.5Ãë)
  */
 artDialog.tips = function (content, time) {
 	return _proxyDialog({
@@ -414,9 +414,9 @@ artDialog.tips = function (content, time) {
 };
 
 
-// å¢å¼ºartDialogæ‹–æ‹½ä½“éªŒ
-// - é˜²æ­¢é¼ æ ‡è½å…¥iframeå¯¼è‡´ä¸æµç•…
-// - å¯¹è¶…å¤§å¯¹è¯æ¡†æ‹–åŠ¨ä¼˜åŒ–
+// ÔöÇ¿artDialogÍÏ×§ÌåÑé
+// - ·ÀÖ¹Êó±êÂäÈëiframeµ¼ÖÂ²»Á÷³©
+// - ¶Ô³¬´ó¶Ô»°¿òÍÏ¶¯ÓÅ»¯
 $(function () {
 	var event = artDialog.dragEvent;
 	if (!event) return;

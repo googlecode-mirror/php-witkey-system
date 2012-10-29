@@ -71,8 +71,7 @@ abstract  class Control_user extends Controller{
      * 客服导航
      */
     protected static $_custom_nav = array(
-    		'index'=>array('投诉','custom_index'),
-    		'report'=>array('举报','custom_report'),
+    		'index'=>array('举报','custom_index'),
     		'steer'=>array('建议','custom_steer'),
     );
 }

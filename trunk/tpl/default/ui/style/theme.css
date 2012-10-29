@@ -8557,6 +8557,9 @@ table td {
   border-top: 1px solid #bfbfbf;
   vertical-align: middle;
 }
+.aui_outer table td {
+  border: none;
+}
 table .configure {
   margin-bottom: 0;
   color: #666;

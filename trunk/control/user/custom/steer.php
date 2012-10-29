@@ -21,7 +21,11 @@ class Control_user_custom_steer extends Control_user{
 	function action_index(){
 		
 		
-		
+		$open_url = BASE_URL.'/index.php/user/custom_steer/comment';
 		require Keke_tpl::template('user/custom/steer');
+	}
+	function action_comment(){
+		
+		require Keke_tpl::template('user/custom/comment');
 	}
 }

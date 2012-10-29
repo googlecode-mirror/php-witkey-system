@@ -21,7 +21,7 @@ function cdel(o,s){
 	 	        $(tips).children().html('删除中... 已经删除成功!').addClass('tips_info'); 
 			},
 			success: function(data){
-			   if(data >0){
+			   if(data >=0){
 					$(o).parent().parent().remove();
 				}
 			},

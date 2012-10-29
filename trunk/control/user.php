@@ -53,6 +53,7 @@ abstract  class Control_user extends Controller{
     		'detail'=>array('详细资料','account_detail'),
     		'safe'=>array('账号安全','account_safe'),
     		'auth'=>array('账号认证','account_auth'),
+    		'bind'=>array('账号绑定','account_bind'),
     		'prom'=>array('推广赚钱','account_prom'),
     		);
     /**

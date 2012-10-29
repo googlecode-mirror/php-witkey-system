@@ -7972,7 +7972,7 @@ progress::-moz-progress-value {
   position: absolute;
   right: 5px;
   top: -2px;
-  font: 12px/15px '微软雅黑';
+  font: bold 12px/15px '微软雅黑';
 }
 .winbox .box_header .win_close a {
   color: #666;
@@ -8753,7 +8753,7 @@ a.submit:active {
   position: absolute;
   right: 5px;
   top: -2px;
-  font: 12px/15px '微软雅黑';
+  font: bold 12px/15px '微软雅黑';
 }
 .win .box .box_header .win_close a {
   color: #666;
@@ -8992,7 +8992,7 @@ a.submit:active {
   position: absolute;
   right: 5px;
   top: -2px;
-  font: 12px/15px '微软雅黑';
+  font: bold 12px/15px '微软雅黑';
 }
 .fwin .flb span a {
   color: #666;

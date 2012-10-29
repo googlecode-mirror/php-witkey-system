@@ -16,7 +16,7 @@ abstract  class Control_user extends Controller{
     		  'seller'=>array('服务商','seller_index'),
     	 	  'finance'=>array('收支明细','finance_index'),
     		  'account'=>array('账号管理','account_index'),
-    		  'custom'=>array('客户服务','custom_index')
+    		  'custom'=>array('客户服务','custom_report')
     		);
     protected static $_default = 'buyer';
     
@@ -71,7 +71,7 @@ abstract  class Control_user extends Controller{
      * 客服导航
      */
     protected static $_custom_nav = array(
-    		'index'=>array('举报','custom_index'),
+    		'report'=>array('举报','custom_report'),
     		'steer'=>array('建议','custom_steer'),
     );
 }

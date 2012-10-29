@@ -21,7 +21,7 @@ class Control_admin_index extends Controller{
 				'user' => $_lang['user_manage'],
 				'tool' => $_lang['system_tool'],
 				//'keke'=>$_lang['witkey_union'],
-				'demo'=>'MVCÑİÊ¾',
+				 
 		
 		);
 		$grouplist_arr = $admin_obj->get_user_group();

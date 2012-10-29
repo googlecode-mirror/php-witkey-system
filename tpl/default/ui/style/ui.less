@@ -134,13 +134,13 @@ select{
 }
 .form_row{
 	.clearfix();
-	font-size:14px;
+	font-size:1.2em;
 	line-height:30px;
 	vertical-align:top;
 	.pt_5;
 	.pb_5;
 	.form_label{
-		.size(100px,30px);
+		.size(130px,30px);
 		display:inline-block;
 	}
 
@@ -159,6 +159,22 @@ select{
 .form_footer{
 	.clearfix();
 	margin:0 0px 2em;
+}
+.form_tip{
+	 .mt_20;
+	 font-size:1.2em;
+	 &.success{
+		.detail{padding-left:70px;}
+		.icon{.fl_l; .size(48px); margin:10px 0 0 15px; background:url(../img/succeed.png) no-repeat;}
+	}
+	&.error{
+		.detail{padding-left:70px;}
+		.icon{.fl_l; .size(48px); margin:10px 0 0 15px;  background:url(../img/error.png) no-repeat;}
+	}
+	&.info{
+		.detail{padding-left:70px;}
+		.icon{.fl_l; .size(48px); margin:10px 0 0 15px;  background:url(../img/warning.png) no-repeat;}
+	}
 }
 
 

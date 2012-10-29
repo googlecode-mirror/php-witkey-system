@@ -51,6 +51,7 @@ class Control_admin_config_model extends  Controller {
 	 */
 	function action_install(){
 		global $_lang;
+		$type = $_POST['type']?$_POST['type']:'task';
 		if(($model_name = $_POST['txt_model_name'])!=null){
 			
 			//判断模型是否已安装
@@ -64,7 +65,7 @@ class Control_admin_config_model extends  Controller {
 			//子菜单
 			$sub_menu_arr = array();
 			//加载初化配置文件,
-			include S_ROOT.'control/task/'.$model_name.'/init_config.php';
+			include S_ROOT.'control/'.$type.'/'.$model_name.'/init_config.php';
 			//添加模型配置
 			if($init_config){
 				$config = $init_config['config'];

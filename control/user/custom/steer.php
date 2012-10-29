@@ -25,7 +25,12 @@ class Control_user_custom_steer extends Control_user{
 		require Keke_tpl::template('user/custom/steer');
 	}
 	function action_comment(){
-		
+	    
+		if($_POST){
+	    	var_dump($_POST); 
+	    	$this->request->redirect('user/custom_steer');
+	    }	
 		require Keke_tpl::template('user/custom/comment');
 	}
+	
 }

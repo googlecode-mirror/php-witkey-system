@@ -666,86 +666,36 @@ button.pnc:active { border-color:#1c6a9e !important; filter:~'progid:DXImageTran
 /* 表单
 	-------------------------*/
 /* input 输入框 */
-input[type=email],
+/*input[type=email],
 input[type=number],
 input[type=password],
 input[type=tel],
 input[type=text],
 input[type=url],
 input[type=search],
-input[type=date] {
-  background: #FBFBFB;
-  color: #333;
-  border: 1px solid #D8D8D8;
-  border-left-color: #A8A8A8;
-  border-top-color: #A8A8A8;
-  border-radius: 2px;
-  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1);
-  padding: 6px 4px 6px 8px;
-  font: 12px Arial, Helvetica, sans-serif;
-}
-input[type=email]:focus,
-input[type=number]:focus,
-input[type=password]:focus,
-input[type=tel]:focus,
-input[type=text]:focus,
-input[type=url]:focus,
-input[type=search]:focus,
-input[type=date]:focus {
-  background: #fff;
-  border-color: #006DC2;
-  box-shadow: inset 1px 1px 3px #a6caea, 0 0 3px #6692db;
-}
-input[type=email]:disabled,
-input[type=number]:disabled,
-input[type=password]:disabled,
-input[type=tel]:disabled,
-input[type=text]:disabled,
-input[type=url]:disabled,
-input[type=search]:disabled,
-input[type=date]:disabled,
-input[type=email][disabled],
-input[type=number][disabled],
-input[type=password][disabled],
-input[type=tel][disabled],
-input[type=text][disabled],
-input[type=url][disabled],
-input[type=search][disabled],
-input[type=date][disabled] {
-  border-color: #ccc;
-  color: #999;
-  background: #eee;
-  box-shadow: none;
-}
+input[type=date]{ 
+	background:#FBFBFB; color:#333; border:1px solid #D8D8D8; border-left-color:#A8A8A8; border-top-color:#A8A8A8; border-radius:2px; box-shadow:inset 2px 2px 5px rgba(0,0,0,.1); padding:6px 4px 6px 8px; font:12px Arial, Helvetica, sans-serif;
+	&:focus{
+		background:#fff; border-color:#006DC2;  box-shadow:inset 1px 1px 3px #A6CAEA, 0 0 3px rgba(102, 146, 219,1);
+	}
+	&:disabled,&[disabled]{
+		border-color:#ccc; color:#999; background:#eee; box-shadow:none;
+	}
+}*/
 input[type=radio],
 input[type=checkbox] {
   vertical-align: middle;
 }
-/*  textarea 文本域 */textarea {
-  background: #FBFBFB;
-  color: #333;
-  border: 1px solid #D8D8D8 ;
-  border-left-color: #A8A8A8;
-  border-top-color: #A8A8A8;
-  border-radius: 2px;
-  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1);
-  padding: 6px 0 0 8px;
-  font: 12px Arial, Helvetica, sans-serif;
-  resize: vertical;
-  vertical-align: top;
-}
-textarea:focus {
-  background: #fff;
-  border-color: #006DC2;
-  box-shadow: inset 1px 1px 3px #a6caea, 0 0 3px #6692db;
-}
-textarea:disabled,
-textarea [disabled] {
-  border-color: #ccc;
-  color: #999;
-  background: #eee;
-  box-shadow: none;
-}
+/*  textarea 文本域 	
+textarea{
+	background:#FBFBFB; color:#333; border:1px solid #D8D8D8 ; border-left-color:#A8A8A8; border-top-color:#A8A8A8; border-radius:2px; box-shadow:inset 2px 2px 5px rgba(0,0,0,.1); padding:6px 0 0 8px; font:12px Arial, Helvetica, sans-serif; resize:vertical; vertical-align:top;
+	&:focus{
+		background:#fff; border-color:#006DC2;  box-shadow:inset 1px 1px 3px #A6CAEA, 0 0 3px rgba(102, 146, 219,1);
+	}
+	&:disabled,[disabled]{
+		border-color:#ccc; color:#999; background:#eee; box-shadow:none;
+	}
+}*/
 /* button submit 按钮 */
 input[type="button"],
 button[type="button"],
@@ -9066,20 +9016,37 @@ a.submit:active {
   transition: box-shadow 0.2s ease-out 0.1s;
   width: auto;
   height: 30px;
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  border-radius: 0;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
+  color: #333333;
+  background: #ffffff;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #e1e1e1;
   line-height: 30px;
   font-family: "微软雅黑";
-  border: 1px solid #e1e1e1;
   padding: 0 5px;
   vertical-align: middle;
-  background: white;
   margin-right: -1px;
   z-index: 1;
+}
+#user input[type=email] :-moz-placeholder,
+#user input[type=number] :-moz-placeholder,
+#user input[type=password] :-moz-placeholder,
+#user input[type=tel] :-moz-placeholder,
+#user input[type=text] :-moz-placeholder,
+#user input[type=url] :-moz-placeholder,
+#user input[type=search] :-moz-placeholder,
+#user input[type=date] :-moz-placeholder {
+  color: #cccccc;
+}
+#user input[type=email] ::-webkit-input-placeholder,
+#user input[type=number] ::-webkit-input-placeholder,
+#user input[type=password] ::-webkit-input-placeholder,
+#user input[type=tel] ::-webkit-input-placeholder,
+#user input[type=text] ::-webkit-input-placeholder,
+#user input[type=url] ::-webkit-input-placeholder,
+#user input[type=search] ::-webkit-input-placeholder,
+#user input[type=date] ::-webkit-input-placeholder {
+  color: #cccccc;
 }
 #user input[type=email]:hover,
 #user input[type=number]:hover,
@@ -9129,16 +9096,15 @@ a.submit:active {
   font-family: "微软雅黑";
 }
 #user textarea {
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  border-radius: 0;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
-  background: white;
-  line-height: 20px;
-  font-family: "微软雅黑";
-  border: 1px solid #e1e1e1;
+  color: #333333;
+  background: #ffffff;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #e1e1e1;
+  font: 12px/20px "微软雅黑", Arial, Helvetica, sans-serif;
+  resize: vertical;
+  vertical-align: top;
+  padding: 5px 0 0 5px;
 }
 #user textarea:hover {
   -webkit-box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.1);
@@ -9151,6 +9117,10 @@ a.submit:active {
   -moz-box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.1);
   box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.1);
   border-color: #0090d2;
+}
+#user textarea:disabled,
+#user textarea[disabled] {
+  background: #f5f5f5;
 }
 #user input[type=button],
 #user button[type=button],
@@ -9501,7 +9471,7 @@ a.submit:active {
 #user .wrapper .aside .minor_nav ul.nav_group li a {
   background: #f6f6f6;
   padding: 8px 10px;
-  border-color: white;
+  border-color: #ffffff #ffffff #e1e1e1;
 }
 #user .wrapper .aside .minor_nav ul.nav_group li a:hover {
   background: #ffffff;

@@ -53,45 +53,8 @@ abstract class Control_shop_list extends Control_admin{
     	return (bool)!in_array($status,$status_arr);
      
     }
-    /**
-     * 任务解冻
-     */
-    public function set_unfreeze(){
-    	//改变任务状态，加上任务的结束时间
-    	$where = "sid = $this->_sid";
-    	$frost_info = DB::select()->from('witkey_service_frost')->where($where)->get_one()->execute();
-    	$task_info = $this->get_task_info();
-    	//新的任务结束时间
-    	$end_time = (time () - $frost_info ['frost_time']) + $task_info['end_time'];
-    	//新的交稿结束时间,当前时间减冻结时间的差值加在原来的时间上
-    	$sub_time = (time () - $frost_info ['frost_time']) +$task_info['sub_time'];
-    	$columns = array('sub_time','end_time','task_status');
-    	$values = array($sub_time,$end_time,$frost_info['frost_status']);
-    	DB::update('witkey_service')->set($columns)->value($values)->where($where)->execute();
-    	//删除冻结记录
-    	DB::delete('witkey_service_frost')->where($where)->execute();
-    	 
-    }
-    /**
-     * 通过审核，任务状态由1->2
-     */
-    public function set_pass(){
-    	global $_lang;
-    	//获取任务住处
-    	$task_info =  $this->get_task_info();
-    	//改变任务状态，及任务的产发布时间与结束时间
-    	$end_time = $task_info['end_time'] + (time()-$task_info['start_time']);
-    	$where = "sid = $this->_sid ";
-    	DB::update('witkey_service')->set(array('task_status','start_time','end_time'))->value(array(2,time(),$end_time))->where($where)->execute();
-    	//更新任务增值服务的结束时间
-    	DB::update('witkey_payitem_record')
-    	->set(array('end_time'))
-    	->value(array('use_num*24*3600+'.time()))
-    	->where("obj_type='task' and obj_id = '$this->_sid'")->execute();
-    	//生成推送feed
-    	$feed_arr = array ("feed_username" => array ("content" =>$task_info['username'], "url" => "index.php?do=space&member_id={$task_info['uid']}" ), "action" => array ("content" => $_lang['pub_task'], "url" => "" ), "event" => array ("content" => "{$task_info['task_title']}", "url" => "index.php/task/{$task_info['sid']}" ) );
-    	Sys_feed::set_feed($feed_arr, $task_info['uid'], $task_info['username'],'pub_task',$this->_sid);
-    }
+     
+    
     /**
      * 不通过审核
      * 状态状态1->10 审核失败
@@ -115,8 +78,8 @@ abstract class Control_shop_list extends Control_admin{
      * @param int $sid
      * @return Ambigous <string, unknown, Ambigous>
      */
-    public function get_service_info($id = NUll){
-    	if($id == NULL){
+    public function get_service_info($sid = NUll){
+    	if($sid == NULL){
     		$where = "sid = '$this->_sid'";
     	}else{
     		$where = "sid = '$sid'";
@@ -166,7 +129,7 @@ abstract class Control_shop_list extends Control_admin{
      * @param int $sid
      * @return Ambigous <string, unknown, Ambigous>
      */
-    public static  function get_task_file($sid){
+    public static  function get_service_file($sid){
     	$where ="obj_type='service' and obj_id = '$sid'";
     	return DB::select()->from('witkey_file')->where($where)->execute();
     }

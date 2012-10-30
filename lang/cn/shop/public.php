@@ -36,7 +36,7 @@ $lang = array (
 		'do_not_have_access' => '您无权删除用户留言',
 		'b_shop_basic' => '作品信息',
 		'b_shop_comm' => '作品留言',
-		'b_shop_mark' => '作品互评',
+		'mark' => '互评',
 		'b_shop_order' => '作品订单',
 		'b_service_basic' => '服务信息',
 		'b_service_comm' => '服务留言',
@@ -65,5 +65,8 @@ $lang = array (
 		'goods_royalty_rate'=>'作品提成比例',
 		'on_shelf'=>'上架',
 		'down_shelf'=>'下架',
+		'goods_desc'=>'商品描述',
+		'is_top'=>'是否置顶',
+		'goods_quotation'=>'作品报价',
 )
 ;

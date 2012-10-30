@@ -109,7 +109,7 @@ abstract class Keke_Controller {
 			}else{
 				//非时间的条件
 				$c = $_GET['txt_condition'];
-				$f = "`{$_GET['slt_fields']}`";
+				$f = "{$_GET['slt_fields']}";
 			}
 			//如果是like 条件的值要加%
 			if($_GET['slt_cond']=='like'){

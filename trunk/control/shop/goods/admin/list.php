@@ -21,7 +21,7 @@ class Control_shop_goods_admin_list extends Control_shop_list{
     	//要显示的字段,即SQl中SELECT要用到的字段
     	$fields = ' `sid`,`title`,`username`,`price`,`unite_price`,`service_time`,`unit_time`,`sale_num`,`status`,`on_time`,`is_top`';
     	//要查询的字段,在模板中显示用的
-    	$query_fields = array('sid'=>$_lang['id'],'title'=>$_lang['name'],'price'=>$_lang['cash']);
+    	$query_fields = array('sid'=>$_lang['id'],'title'=>$_lang['title'],'price'=>$_lang['cash']);
     	//总记录数,分页用的，你不定义，数据库就是多查一次的。为了少个Sql语句，你必须要写的，亲!
     	$count = intval($_GET['count']);
     	//基本uri,当前请求的uri ,本来是能通过Rotu类可以得出这个uri,为了程序灵活点，自己手写好了
@@ -131,23 +131,25 @@ class Control_shop_goods_admin_list extends Control_shop_list{
     	$sid = $this->_sid;
     	$base_uri = $this->_base_uri;
     	
-    	$query_fields = array('sid'=>$_lang['id'],'title'=>$_lang['title']);
+    	$query_fields = array('b.order_id'=>$_lang['id'],'order_name'=>$_lang['title']);
     	
     	$this->_default_ord_field = 'order_time';
     	
     	$buri = $base_uri.'/order';
     	
-    	$sql = "SELECT b.* FROM `:Pwitkey_order_detail` as a \n".
+    	$sql = "SELECT b.*,b.order_id as order_id,a.num FROM `:Pwitkey_order_detail` as a \n".
 				"left join  :Pwitkey_order as b on a.order_id = b.order_id and a.obj_type = 'service'\n";
     	$sql  = DB::query($sql)->tablepre(':P')->__toString();
     	extract($this->get_url($buri));
     	$where .= " and a.obj_id = '$sid'";
     	$group = " GROUP BY b.order_id";
     	$count = intval($_GET['count']);
-    	//$uri,$order,$page,$count,$_GET['page_size']
+    
     	$data = Model::sql_grid($sql,$where,$uri,$order,$group,$page,$count,$_GET['page_size']);
     	$list_arr = $data['data'];
     	$pages = $data['pages'];
+    	$order_status = Control_shop_goods_base::get_order_status();
+     
     	require Keke_tpl::template('control/shop/'.$this->_model_code.'/tpl/admin/s_order');
     }
     /**

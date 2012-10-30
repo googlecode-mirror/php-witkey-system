@@ -12,7 +12,7 @@ class Control_admin_finance_recharge extends Control_admin {
 		// 定义全局变量与语言包，只要加载模板，这个是必须要定义.操
 		global $_K, $_lang;
 		// 要显示的字段,即SQl中SELECT要用到的字段
-		$fields = ' `rid`,`type`,`bank`,`username`,`cash`,`pay_time`,`status` ';
+		$fields = ' `rid`,`type`,`bank`,`username`,`cash`,`pay_time`,`status`,`mem` ';
 		// 要查询的字段,在模板中显示用的
 		$query_fields = array ('rid' => $_lang ['id'], 'username' => $_lang ['username'], 'bank' => '银行' );
 		// 总记录数,分页用的，你不定义，数据库就是多查一次的。为了少个Sql语句，你必须要写的，亲!
@@ -42,7 +42,7 @@ class Control_admin_finance_recharge extends Control_admin {
 		$bank_arr = keke_global_class::get_bank ();
 		
 		// 充值订单状态
-		$status_arr = Sys_order::get_order_status ();
+		$status_arr = Sys_order::get_recharge_status ();
 		// 线下支付方式
 		$offline_pay = DB::select ()->from ( 'witkey_pay_api' )->where ( "type='offline'" )->execute ();
 		$offline_pay = Keke::get_arr_by_key ( $offline_pay, 'payment' );
@@ -82,5 +82,20 @@ class Control_admin_finance_recharge extends Control_admin {
 		->where ( "rid=:rid" )->param ( ":rid", $rid )->execute ();
 		// 充值日志
 		Keke::admin_system_log ( $_lang ['confirm_payment_recharge'] . $rid );
+	}
+	function action_nopass(){
+		if (($rid = $_GET ['rid']) == NULL) {
+			return false;
+		}
+		if (CHARSET == 'gbk') {
+			$_POST ['data'] = Keke::utftogbk ( $_POST ['data'] );
+		}
+		
+		$data = $_POST ['data'];
+		$columns = array ('status', 'mem' );
+		$values = array ('fail', $data );
+		$where = "rid = '$rid'";
+		DB::update ( 'witkey_recharge' )->set ( $columns )->value ( $values )->where ( $where )->execute ();
+		 
 	}
 }

@@ -194,7 +194,7 @@ class Sys_order {
 	 * 商品订单的状态定义不一样
 	 * 
 	 */
-	public static function get_order_status() {
+	public static function get_recharge_status() {
 		global $_lang;
 		return array ("wait" => $_lang['wait_confirm'], "ok" => $_lang['has_pay'], 'fail' => $_lang['pay_fail'], "close" => $_lang['trans_close'] );
 	}

@@ -2,7 +2,7 @@
 <style type="text/css">
 body{margin:0; padding:0; font-family:Verdana,Arial,Helvetica,sans-serif; background:#AAA;}
 *{margin:0; padding:0}
-#keke_error { background: #eee; font-size: 1em;  text-align: left; color: #444; margin:40px auto 0; width:90%; box-shadow: 2px 5px 12px #555; border-radius: 5px; overflow:hidden; }
+#keke_error { background: #eee; font-size: 1em;  text-align: left; color: #444; margin:40px 5% 0; box-shadow: 2px 5px 12px #555; border-radius: 5px; overflow:hidden; }
 #keke_error h1,
 #keke_error h2 { margin: 0; padding: 1em; font-size: 1em;  color: #911; background: #eee; }
 #keke_error h1 a,

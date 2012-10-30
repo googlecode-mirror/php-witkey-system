@@ -68,5 +68,12 @@ $lang = array (
 		'goods_desc'=>'商品描述',
 		'is_top'=>'是否置顶',
 		'goods_quotation'=>'作品报价',
+		
+		'wait_buyer_pay'=>'等待买家付款',
+		'buyer_haved_pay'=>'买家已付款',
+		'seller_haved_service'=>'卖家已服务',
+		'trade_complete'=>'交易完成',
+		'trade_close'=>'交易关闭',
+		'order_arbitrate'=>'订单仲裁',
 )
 ;

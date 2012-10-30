@@ -46,8 +46,8 @@
         <th width="10%">银行</th>
         <th width="10%">{$_lang['recharge_er']}</th>
         <th width="15%"><a href="javascript:;" onclick="submitSort('{$uri}','cash',{$ord_tag})">{$_lang['recharge_cash']}{if $_GET['f']=='cash'}{$ord_char}{/if}</a></th>
-        <th width="15%"><a href="javascript:;" onclick="submitSort('{$uri}','pay_time',{$ord_tag})">{$_lang['recharge_time']}{if $_GET['f']=='pay_time'}{$ord_char}{/if}</a></th>
-        <th width="10%">{$_lang['recharge_status']}</th>
+        <th width="10%"><a href="javascript:;" onclick="submitSort('{$uri}','pay_time',{$ord_tag})">{$_lang['recharge_time']}{if $_GET['f']=='pay_time'}{$ord_char}{/if}</a></th>
+        <th width="15%">{$_lang['recharge_status']}</th>
         <th width="20%">{$_lang['operate']}</th>
     </tr>
 		 {loop $list_arr $k $v}
@@ -61,14 +61,19 @@
         </td>
         <td>{$v['username']}</td>
 		<td><font color=red>{c:$v['cash']}</font></td>
-		<td>{date('Y-m-d H:i:s',$v['pay_time'])}</td>
-        <td>{$status_arr[$v['status']]}</td>
+		<td>{date('Y-m-d',$v['pay_time'])}</td>
+        <td>{$status_arr[$v['status']]}
+		{if $v['status']=='fail'}:$v['mem']{/if}
+		</td>
         <td>
         	{if $v['status']=='wait'}
 			 {if $v['type']=='offline'}
         		<a href="{$base_uri}/update?rid={$v['rid']}" onclick="return kconfirm(this,'<div style=width:300px;word-wrap:break-word;word-break:normal>{if $v[pay_info]}{$_lang[user_recharge_att_info]}：$v[pay_info]{else}{$_lang[user_does_not_charge_info]}{/if}</div>{$_lang[confirm_cashin]}？');" class="button"><span class="cog icon"></span>{$_lang['confirm_of_payment']}？</a>
+			 
+			    <a href="{$base_uri}/nopass?rid={$v['rid']}" onclick="return kprom(this,'不通过的理由？');" class="button">{$_lang['nopass']}</a>	
 			 {/if}
            		<a href="{$del_uri}?&rid={$v['rid']}" onclick="return cdel(this);" class="button"><span class="trash icon"></span>{$_lang['delete']}</a>
+				
         	{/if}
 		</td>
     </tr>

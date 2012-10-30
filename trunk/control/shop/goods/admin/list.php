@@ -44,7 +44,7 @@ class Control_shop_goods_admin_list extends Control_shop_list{
     	//分页数据
     	$pages = $data_info['pages'];
     	
-    	$shop_status = Control_shop_goods_base::get_shop_status();
+    	$shop_status = Control_shop_goods_base::get_goods_status();
     
      	require Keke_tpl::template('control/shop/'.$this->_model_code.'/tpl/admin/list');
     }
@@ -53,19 +53,21 @@ class Control_shop_goods_admin_list extends Control_shop_list{
      */
     public function action_add(){
     	global  $_K ,$_lang;
-    	$shop_id = $this->_shop_id;
+    	$sid = $this->_sid;
     	 //获取商品信息
-        $shop_info = $this->get_shop_info();
-         
-        $base_uri = $this->_base_uri;
-        $process_arr = Control_shop_list::can_operate($shop_info['shop_status']);
-        $indus_option_arr = Sys_indus::get_indus_tree($shop_info['indus_id']);
-        //单赏商品状态
-        $status_arr = Control_shop_goods_base::get_shop_status();
-        //获取商品的增值项
-        $payitem_list = Sys_payitem::get_shop_payitem($this->_shop_id);
+        $service_info = $this->get_service_info();
         
-        $file_list = Control_shop_list::get_shop_file($this->_shop_id);
+        $base_uri = $this->_base_uri;
+        
+        $process_arr = Control_shop_list::can_operate($service_info['shop_status']);
+        
+        $indus_option_arr = Sys_indus::get_indus_tree($service_info['indus_id']);
+        //单赏商品状态
+        $status_arr = Control_shop_goods_base::get_goods_status();
+        //获取商品的增值项
+        $payitem_list = Sys_payitem::get_service_payitem($this->_sid);
+        
+        $file_list = Control_shop_list::get_service_file($this->_sid);
          
     	require Keke_tpl::template('control/shop/'.$this->_model_code.'/tpl/admin/edit');
     }
@@ -74,16 +76,16 @@ class Control_shop_goods_admin_list extends Control_shop_list{
      * 商品保存
      */
     public function action_save(){
-    	$shop_id = $_POST['shop_id'];
-    	if(!$shop_id){
+    	$sid = $_POST['sid'];
+    	if(!$sid){
     		return FALSE;
     	}
     	Keke::formcheck($_POST['formhash']);
-    	$array = array('shop_title'=>$_POST['shop_title'],
-    			'indus_id'=>$_POST['slt_indus_id'],
-    			'shop_desc'=>$_POST['shop_desc']);
-    	$where = "shop_id = $shop_id";
-    	Model::factory('witkey_shop')->setData($array)->setWhere($where)->update();
+        $_POST = Keke_tpl::chars($_POST);
+        $fds = $_POST['fds'];
+        $fds['is_top'] = $fds['is_top']?'1':0;
+    	$where = "sid = $sid";
+    	Model::factory('witkey_service')->setData($fds)->setWhere($where)->update();
     	$this->request->redirect($this->request->referrer());
     	
     }
@@ -109,39 +111,44 @@ class Control_shop_goods_admin_list extends Control_shop_list{
     	echo $this->del_service();
     }
      
-    /**
-     * 删除指定搞件
-     * 删除稿件的同时要删除稿件留言表，稿件附件表,附件
-     */
-    public function action_work_del(){
-    	$work_id = $_GET['work_id'];
-    	//删除对应的文件
-    	$files = DB::select('save_name')->from('witkey_file')->where("obj_id = '$work_id' and obj_type='work'");
-    	foreach ($files as $v){
-           $path = S_ROOT.$v['save_name'];
-           if(file_exists($path)){
-           	  unlink($path);
-           } 		
-    	}
-    	//删除关联的三张表
-    	$sql = "delete a,b,c from ".TABLEPRE."witkey_shop_work as a \n".
-				"left join ".TABLEPRE."witkey_comment as b\n".
-				"on b.obj_id = a.work_id and b.obj_type='work'\n".
-				"left join ".TABLEPRE."witkey_file as c \n".
-				"on a.work_id = c.obj_id and c.obj_type='work'\n".
-				"where a.work_id = '$work_id'";
-		echo DB::query($sql,Database::DELETE);				
-    }
+   
     /**
      * 商品留言列表页
      */
     public function action_comment(){
     	global  $_K ,$_lang;
-    	$shop_id = $this->_shop_id;
+    	$sid = $this->_sid;
     	$base_uri = $this->_base_uri;
     	//获取商品信息
-    	$comments = DB::select()->from('witkey_comment')->where("obj_id = '$shop_id' and obj_type='shop' ")->execute(); 
-    	require Keke_tpl::template('control/shop/'.$this->_model_code.'/tpl/admin/shop_comment');
+    	$comments = DB::select()->from('witkey_comment')->where("obj_id = '$sid' and obj_type='shop' ")->execute(); 
+    	require Keke_tpl::template('control/shop/'.$this->_model_code.'/tpl/admin/s_comment');
+    }
+    /**
+     * 商品订单列表页
+     */
+    public function action_order(){
+    	global  $_K ,$_lang;
+    	$sid = $this->_sid;
+    	$base_uri = $this->_base_uri;
+    	
+    	$query_fields = array('sid'=>$_lang['id'],'title'=>$_lang['title']);
+    	
+    	$this->_default_ord_field = 'order_time';
+    	
+    	$buri = $base_uri.'/order';
+    	
+    	$sql = "SELECT b.* FROM `:Pwitkey_order_detail` as a \n".
+				"left join  :Pwitkey_order as b on a.order_id = b.order_id and a.obj_type = 'service'\n";
+    	$sql  = DB::query($sql)->tablepre(':P')->__toString();
+    	extract($this->get_url($buri));
+    	$where .= " and a.obj_id = '$sid'";
+    	$group = " GROUP BY b.order_id";
+    	$count = intval($_GET['count']);
+    	//$uri,$order,$page,$count,$_GET['page_size']
+    	$data = Model::sql_grid($sql,$where,$uri,$order,$group,$page,$count,$_GET['page_size']);
+    	$list_arr = $data['data'];
+    	$pages = $data['pages'];
+    	require Keke_tpl::template('control/shop/'.$this->_model_code.'/tpl/admin/s_order');
     }
     /**
      * 删除商品留言
@@ -155,16 +162,16 @@ class Control_shop_goods_admin_list extends Control_shop_list{
      */
     public function action_mark(){
     	global  $_K ,$_lang;
-    	$shop_id = $this->_shop_id;
+    	$sid = $this->_sid;
     	$base_uri = $this->_base_uri;
     	//获取商品信息
-    	//$shop_info = $this->get_shop_info();
-    	$where = "model_code = '$this->_model_code' and origin_id = '$shop_id'";
+    	 
+    	$where = "model_code = '$this->_model_code' and origin_id = '$sid'";
     	$marks = DB::select()->from('witkey_mark')->where($where)->execute();
     	//互评状态
     	$mark_status = Keke_user_mark::get_mark_status();
     	//互评项
-    	require Keke_tpl::template('control/shop/'.$this->_model_code.'/tpl/admin/shop_mark');
+    	require Keke_tpl::template('control/shop/'.$this->_model_code.'/tpl/admin/s_mark');
     }
     
   

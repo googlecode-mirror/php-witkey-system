@@ -12,7 +12,7 @@ class Control_shop_goods_base extends Control_shop_base{
 	 * 商品状态
 	 * 上架和下架状态是对发布者而言，禁用和启用是针对管理员而言
 	 */
-	public static function get_shop_status() {
+	public static function get_goods_status() {
 		global $_lang;
 		return array ("2" => $_lang ['on_shelf'], "3" => $_lang ['down_shelf']);
 	}

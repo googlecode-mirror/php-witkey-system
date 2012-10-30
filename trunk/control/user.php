@@ -14,7 +14,7 @@ abstract  class Control_user extends Controller{
     		  'msg'=>array('消息','msg_index'),
     		  'buyer'=>array('买家','buyer_index'),
     		  'seller'=>array('服务商','seller_index'),
-    	 	  'finance'=>array('收支明细','finance_index'),
+    	 	  'finance'=>array('收支明细','finance_recharge'),
     		  'account'=>array('账号管理','account_index'),
     		  'custom'=>array('客户服务','custom_report')
     		);
@@ -60,7 +60,6 @@ abstract  class Control_user extends Controller{
      * 收支导航
      */
     protected static $_finance_nav = array(
-    		'index'=>array('交易记录','finance_index'),
     		'recharge'=>array('我要充值','finance_recharge'),
     		'withdraw'=>array('我要提现','finance_withdraw'),
     		'detail'=>array('收支明细','finance_detail'),

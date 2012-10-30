@@ -290,8 +290,19 @@ class Sys_payitem {
 				"and a.obj_id = '$task_id'";
 		return DB::query($sql)->execute();
 	}
-	
-	
+	/**
+	 * 获取服务的值值服务表列
+	 * @param int $sid
+	 */
+	public static function get_service_payitem($sid){
+		$sql = "SELECT a.use_cash,a.use_num,a.obj_id,b.item_name,b.small_pic,b.big_pic from ".TABLEPRE."witkey_payitem_record as a ".
+				"left join ".TABLEPRE."witkey_payitem as b ".
+				"on a.item_code = b.item_code ".
+				"where  a.obj_type='service' and a.use_type='spend' ".
+				"and a.obj_id = '$sid'";
+		return DB::query($sql)->execute();
+		
+	}
 	
 	
 }

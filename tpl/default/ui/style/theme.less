@@ -489,9 +489,6 @@ table {
 	@main_color			: #0090d2;
 	@text_color			: #444;
 	@main_bg			: #f6f6f6;
-
-	
-
 	@border_colors		: #e1e1e1;
 	
 	/* 基本配置 */
@@ -511,7 +508,6 @@ table {
 	input[type=url],
 	input[type=search],
 	input[type=date]{
-		.po_re;
 		.transition(box-shadow 0.2s ease-out 0.1s);
 		.size(auto,30px);
 		.txt_input(#333,white,1px,solid,@border_colors);
@@ -521,14 +517,21 @@ table {
 		padding: 0 5px;
 		vertical-align: middle;
 		margin-right: -1px;
-		z-index: 1;
 		&:hover{
 			.box-shadow(inset 1px 1px 2px rgba(0,0,0,.1));
 			border-color:darken(@border_colors,10%);
+			~ input[type=button]{
+				border-color: darken(@border_colors,10%);
+			}
 		}
 		&:focus{
 			.box-shadow(inset 1px 1px 2px rgba(0,0,0,.1));
 			border-color: @main_color;
+			~ input[type=button]{
+				color: white;
+				background: @main_color;
+				border-color: darken(@main_color,10%);
+			}
 		}
 		&:disabled,&[disabled]{
 			background: lighten(@border_colors,8%);
@@ -568,10 +571,12 @@ table {
 		margin: 0;
 		padding: 0 10px;
 		&:hover{
+			.box-shadow(inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 2px rgba(255,255,255,.3), 0 1px 2px rgba(0,0,0,.29));
+			.text-shadow();
 			color: white;
 			background: @main_color;
 			border-color: darken(@main_color,10%);
-			.box-shadow(inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 2px rgba(255,255,255,.3), 0 1px 2px rgba(0,0,0,.29));
+			
 		}
 		&:active{
 			.box-shadow(inset 0 0 7px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,1));
@@ -582,6 +587,7 @@ table {
 		.button(white,@main_color,1px,solid,darken(@main_color,10%));
 		.border-radius(3px);
 		.box-shadow(inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 2px rgba(255,255,255,.3), 0 1px 2px rgba(0,0,0,.29));
+		.text-shadow(0 -1px 0 rgba(0,0,0,.3));
 		font-weight: bold;
 		height: 32px;
 		font-family: "微软雅黑";

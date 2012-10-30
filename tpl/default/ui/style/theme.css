@@ -776,15 +776,6 @@ button[type="submit"]{
 		box-shadow: inset 0 0 7px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,1);
 	}
 }*/
-select {
-  padding: 5px;
-  font-size: 12px;
-  vertical-align: middle;
-  background-color: #FBFBFB;
-  border: 1px solid #D8D8D8;
-  display: inline-block;
-  white-space: nowrap;
-}
 .form_row {
   zoom: 1;
   *zoom: 1;
@@ -9005,7 +8996,6 @@ a.submit:active {
 #user input[type=url],
 #user input[type=search],
 #user input[type=date] {
-  position: relative;
   -webkit-transition: box-shadow 0.2s ease-out 0.1s;
   -moz-transition: box-shadow 0.2s ease-out 0.1s;
   transition: box-shadow 0.2s ease-out 0.1s;
@@ -9021,7 +9011,6 @@ a.submit:active {
   padding: 0 5px;
   vertical-align: middle;
   margin-right: -1px;
-  z-index: 1;
 }
 #user input[type=email] :-moz-placeholder,
 #user input[type=number] :-moz-placeholder,
@@ -9056,6 +9045,16 @@ a.submit:active {
   box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.1);
   border-color: #c8c8c8;
 }
+#user input[type=email]:hover ~ input[type=button],
+#user input[type=number]:hover ~ input[type=button],
+#user input[type=password]:hover ~ input[type=button],
+#user input[type=tel]:hover ~ input[type=button],
+#user input[type=text]:hover ~ input[type=button],
+#user input[type=url]:hover ~ input[type=button],
+#user input[type=search]:hover ~ input[type=button],
+#user input[type=date]:hover ~ input[type=button] {
+  border-color: #c8c8c8;
+}
 #user input[type=email]:focus,
 #user input[type=number]:focus,
 #user input[type=password]:focus,
@@ -9068,6 +9067,18 @@ a.submit:active {
   -moz-box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.1);
   box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.1);
   border-color: #0090d2;
+}
+#user input[type=email]:focus ~ input[type=button],
+#user input[type=number]:focus ~ input[type=button],
+#user input[type=password]:focus ~ input[type=button],
+#user input[type=tel]:focus ~ input[type=button],
+#user input[type=text]:focus ~ input[type=button],
+#user input[type=url]:focus ~ input[type=button],
+#user input[type=search]:focus ~ input[type=button],
+#user input[type=date]:focus ~ input[type=button] {
+  color: white;
+  background: #0090d2;
+  border-color: #006d9f;
 }
 #user input[type=email]:disabled,
 #user input[type=number]:disabled,
@@ -9128,6 +9139,10 @@ a.submit:active {
   border-color: #e1e1e1;
   text-align: center;
   text-decoration: none;
+  -moz-user-select: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
   height: 32px;
   font-family: "微软雅黑";
   vertical-align: middle;
@@ -9138,12 +9153,13 @@ a.submit:active {
 #user button[type=button]:hover,
 #user input[type=reset]:hover,
 #user button[type=reset]:hover {
-  color: white;
-  background: #0090d2;
-  border-color: #006d9f;
   -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 2px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.29);
   -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 2px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.29);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 2px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.29);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+  color: white;
+  background: #0090d2;
+  border-color: #006d9f;
 }
 #user input[type=button]:active,
 #user button[type=button]:active,
@@ -9162,6 +9178,10 @@ a.submit:active {
   border-color: #006d9f;
   text-align: center;
   text-decoration: none;
+  -moz-user-select: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
@@ -9173,6 +9193,7 @@ a.submit:active {
   -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 2px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.29);
   -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 2px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.29);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 2px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.29);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
   font-weight: bold;
   height: 32px;
   font-family: "微软雅黑";

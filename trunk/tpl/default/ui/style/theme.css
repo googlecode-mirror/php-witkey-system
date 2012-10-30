@@ -490,6 +490,8 @@
 * html .fixed-bottom {position:absolute;bottom:auto;top:~"expression(eval(document.documentElement.scrollTop+document.documentElement.clientHeight-this.offsetHeight-(parseInt(this.currentStyle.marginTop,10)||0)-(parseInt(this.currentStyle.marginBottom,10)||0)))";}
 * html .fixed-left {position:absolute;right:auto;left:~"expression(eval(document.documentElement.scrollLeft))";}*/
 /* css3 */
+/*	font
+------------------------------*/
 /**弹出框内容宽度**
 .winbody{ width:510px;}
 	.min_win{ width:300px; margin:auto;}
@@ -697,107 +699,83 @@ textarea{
 	}
 }*/
 /* button submit 按钮 */
+/*
 input[type="button"],
 button[type="button"],
 input[type="reset"],
-button[type="reset"] {
-  margin: 5px;
-  padding: 4px 15px;
-  border: 1px solid #cacaca;
-  border-bottom-color: #bbb;
-  color: #3C3C3D;
-  text-align: center;
-  text-shadow: 0 -1px 0 rgba(255, 255, 255, 0.3);
-  text-decoration: none;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  khtml-border-radius: 2px;
-  border-radius: 2px;
-  background: #F6F6F6;
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.2, #f6f6f6), color-stop(1, #e3e3e3));
-  background: -moz-linear-gradient(center top, #f6f6f6 20%, #e3e3e3 100%);
+button[type="reset"],{
+	margin: 5px; 
+	padding: 4px 15px;  
+
+	&:hover{
+		border-color:#388AD4;
+		color: #fff; 
+		text-shadow: 0 1px 0 rgba(0,0,0,.3);
+		background: #75A9E2; 
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(.2, #75A9E2), color-stop(1, #4C83BF)); 
+		background: -moz-linear-gradient(center top, #75A9E2 20%, #4C83BF 100%); 
+		-webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 2px rgba(255,255,255,.3), 0 1px 2px rgba(0,0,0,.29); 
+		-moz-box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 2px rgba(255,255,255,.3), 0 1px 2px rgba(0,0,0,.29); 
+		box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 2px rgba(255,255,255,.3), 0 1px 2px rgba(0,0,0,.29);
+	}
+	&:active{
+		border-color: #20559a;
+		-webkit-box-shadow: inset 0 0 7px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,1);
+		-moz-box-shadow: inset 0 0 7px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,1);
+		box-shadow: inset 0 0 7px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,1);
+	}
+	&:disabled,&.disabled{
+		margin: 5px; 
+		padding: 4px 15px; 
+		border: 1px solid #ccc;
+		border-bottom-color: #bbb; 
+		color: #888; 
+		text-align: center; 
+		text-shadow: 0 -1px 0 rgba(255,255,255,.3); 
+		text-decoration: none; 
+		-webkit-border-radius: 4px; 
+		-moz-border-radius: 4px; 
+		khtml-border-radius: 4px; 
+		border-radius: 4px; 
+		background: #E9E9E9; 
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(.2, #E9E9E9), color-stop(1, #D1D1D1)); 
+		background: -moz-linear-gradient(center top, #E9E9E9 20%, #D1D1D1 100%); 
+	}
 }
-input[type="button"]:hover,
-button[type="button"]:hover,
-input[type="reset"]:hover,
-button[type="reset"]:hover {
-  border-color: #388AD4;
-  color: #fff;
-  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
-  background: #75A9E2;
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.2, #75a9e2), color-stop(1, #4c83bf));
-  background: -moz-linear-gradient(center top, #75a9e2 20%, #4c83bf 100%);
-  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 2px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.29);
-  -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 2px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.29);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 2px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.29);
-}
-input[type="button"]:active,
-button[type="button"]:active,
-input[type="reset"]:active,
-button[type="reset"]:active {
-  border-color: #20559a;
-  -webkit-box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.3), 0 1px 0 #ffffff;
-  -moz-box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.3), 0 1px 0 #ffffff;
-  box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.3), 0 1px 0 #ffffff;
-}
-input[type="button"]:disabled,
-button[type="button"]:disabled,
-input[type="reset"]:disabled,
-button[type="reset"]:disabled,
-input[type="button"].disabled,
-button[type="button"].disabled,
-input[type="reset"].disabled,
-button[type="reset"].disabled {
-  margin: 5px;
-  padding: 4px 15px;
-  border: 1px solid #ccc;
-  border-bottom-color: #bbb;
-  color: #888;
-  text-align: center;
-  text-shadow: 0 -1px 0 rgba(255, 255, 255, 0.3);
-  text-decoration: none;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  khtml-border-radius: 4px;
-  border-radius: 4px;
-  background: #E9E9E9;
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.2, #e9e9e9), color-stop(1, #d1d1d1));
-  background: -moz-linear-gradient(center top, #e9e9e9 20%, #d1d1d1 100%);
-}
+
+
 input[type="submit"],
-button[type="submit"] {
-  margin: 5px;
-  padding: 4px 15px;
-  border: 1px solid #4081af;
-  border-bottom-color: #20559a;
-  color: white;
-  text-align: center;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
-  text-decoration: none;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  khtml-border-radius: 4px;
-  border-radius: 4px;
-  background: #0090D2;
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.2, #52a8e8), color-stop(1, #2e76cf));
-  background: -moz-linear-gradient(center top, #52a8e8 20%, #2e76cf 100%);
-  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 2px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.29);
-  -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 2px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.29);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 2px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.29);
-}
-input[type="submit"]:hover,
-button[type="submit"]:hover {
-  background: #0073d2;
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.2, #3e9ee5), color-stop(1, #1666ca));
-  background: -moz-linear-gradient(center top, #3e9ee5 20%, #1666ca 100%);
-}
-input[type="submit"]:active,
-button[type="submit"]:active {
-  border-color: #20559a;
-  -webkit-box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.3), 0 1px 0 #ffffff;
-  -moz-box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.3), 0 1px 0 #ffffff;
-  box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.3), 0 1px 0 #ffffff;
-}
+button[type="submit"]{
+	margin: 5px; 
+	padding: 4px 15px; 
+	border: 1px solid #4081af; 
+	border-bottom-color: #20559a; 
+	color: white; 
+	text-align: center; 
+	text-shadow: 0 -1px 0 rgba(0,0,0,.3); 
+	text-decoration: none; 
+	-webkit-border-radius: 4px; 
+	-moz-border-radius: 4px; 
+	khtml-border-radius: 4px; 
+	border-radius: 4px; 
+	background: #0090D2; 
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(.2, #52a8e8), color-stop(1, #2e76cf)); 
+	background: -moz-linear-gradient(center top, #52a8e8 20%, #2e76cf 100%); 
+	-webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 2px rgba(255,255,255,.3), 0 1px 2px rgba(0,0,0,.29); 
+	-moz-box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 2px rgba(255,255,255,.3), 0 1px 2px rgba(0,0,0,.29); 
+	box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 2px rgba(255,255,255,.3), 0 1px 2px rgba(0,0,0,.29);
+	&:hover{
+		background: #0073d2; 
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(.2, #3e9ee5), color-stop(1, #1666ca)); 
+		background: -moz-linear-gradient(center top, #3e9ee5 20%, #1666ca 100%);
+	}
+	&:active{
+		border-color: #20559a;
+		-webkit-box-shadow: inset 0 0 7px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,1);
+		-moz-box-shadow: inset 0 0 7px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,1);
+		box-shadow: inset 0 0 7px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,1);
+	}
+}*/
 select {
   padding: 5px;
   font-size: 12px;
@@ -6381,6 +6359,11 @@ progress::-moz-progress-value {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
+  /* 背景不超出圆角 */
+
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -ms-box-sizing: border-box;
@@ -8208,6 +8191,13 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+/* 全局定义 */
+/* 打开ie滤镜 */
+body {
+  background: #ffffff;
+  font: 12px/25px Lucida, Verdana, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
+  color: #6d6d6d;
+}
 /* layout */
 .container {
   width: 1000px;
@@ -8222,12 +8212,6 @@ table {
 }
 .container:after {
   clear: both;
-}
-/* 全局定义 */
-body {
-  background: #eaeaea url(http://cn.bing.com/az/hprichbg?p=rb%2fKenting_ZH-CN7852586394_1366x768.jpg) fixed center repeat;
-  font: 12px/25px Lucida, Verdana, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
-  color: #6d6d6d;
 }
 /* setting */
 /* 标题
@@ -8506,6 +8490,8 @@ table td {
   border-left: 1px solid #bfbfbf;
   border-top: 1px solid #bfbfbf;
   vertical-align: middle;
+  /* fixed弹出窗口样式 */
+
 }
 .aui_outer table td {
   border: none;
@@ -8540,6 +8526,14 @@ table .rounded {
 -------------------------------*/
 button.button,
 a.button {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  /* 背景不超出圆角 */
+
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
   padding: 4px 10px;
   font: bold 14px/20px "微软雅黑";
   text-align: center;
@@ -8552,10 +8546,6 @@ a.button {
   background: #F6F6F6;
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0.2, #f6f6f6), color-stop(1, #e3e3e3));
   background: -moz-linear-gradient(center top, #f6f6f6 20%, #e3e3e3 100%);
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  khtml-border-radius: 4px;
-  border-radius: 4px;
 }
 button.button:hover,
 a.button:hover {
@@ -8595,6 +8585,11 @@ a.submit {
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
+  /* 背景不超出圆角 */
+
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
   -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 2px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.29);
   -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 2px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.29);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 2px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.29);
@@ -9036,7 +9031,7 @@ a.submit:active {
 #user input[type=url] :-moz-placeholder,
 #user input[type=search] :-moz-placeholder,
 #user input[type=date] :-moz-placeholder {
-  color: #cccccc;
+  color: #dddddd;
 }
 #user input[type=email] ::-webkit-input-placeholder,
 #user input[type=number] ::-webkit-input-placeholder,
@@ -9046,7 +9041,7 @@ a.submit:active {
 #user input[type=url] ::-webkit-input-placeholder,
 #user input[type=search] ::-webkit-input-placeholder,
 #user input[type=date] ::-webkit-input-placeholder {
-  color: #cccccc;
+  color: #dddddd;
 }
 #user input[type=email]:hover,
 #user input[type=number]:hover,
@@ -9126,10 +9121,15 @@ a.submit:active {
 #user button[type=button],
 #user input[type=reset],
 #user button[type=reset] {
+  color: #444444;
+  background: #f6f6f6;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #e1e1e1;
+  text-align: center;
+  text-decoration: none;
   height: 32px;
   font-family: "微软雅黑";
-  border: 1px solid #e1e1e1;
-  background: #f6f6f6;
   vertical-align: middle;
   margin: 0;
   padding: 0 10px;
@@ -9141,25 +9141,53 @@ a.submit:active {
   color: white;
   background: #0090d2;
   border-color: #006d9f;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 2px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.29);
+  -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 2px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.29);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 2px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.29);
+}
+#user input[type=button]:active,
+#user button[type=button]:active,
+#user input[type=reset]:active,
+#user button[type=reset]:active {
+  -webkit-box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.3), 0 1px 0 #ffffff;
+  -moz-box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.3), 0 1px 0 #ffffff;
+  box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.3), 0 1px 0 #ffffff;
 }
 #user input[type="submit"],
 #user button[type="submit"] {
-  color: white;
-  font-weight: bold;
+  color: #ffffff;
   background: #0090d2;
+  border-width: 1px;
+  border-style: solid;
   border-color: #006d9f;
-  height: 32px;
-  font-family: "微软雅黑";
-  vertical-align: middle;
-  margin: 0;
-  padding: 0 15px;
+  text-align: center;
+  text-decoration: none;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
+  /* 背景不超出圆角 */
+
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 2px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.29);
+  -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 2px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.29);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 2px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.29);
+  font-weight: bold;
+  height: 32px;
+  font-family: "微软雅黑";
+  vertical-align: middle;
+  padding: 0 15px;
 }
 #user input[type="submit"]:hover,
 #user button[type="submit"]:hover {
   background: #00a1eb;
+}
+#user input[type="submit"]:active,
+#user button[type="submit"]:active {
+  -webkit-box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.3), 0 1px 0 #ffffff;
+  -moz-box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.3), 0 1px 0 #ffffff;
+  box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.3), 0 1px 0 #ffffff;
 }
 #user .form_line {
   border-color: #eeeeee;
@@ -9247,6 +9275,11 @@ a.submit:active {
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   border-radius: 0;
+  /* 背景不超出圆角 */
+
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
   background: white;
   background: rgba(255, 255, 255, 0.5);
   border: none;
@@ -9268,6 +9301,11 @@ a.submit:active {
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   border-radius: 0;
+  /* 背景不超出圆角 */
+
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
   border-width: 0;
   margin: 0;
   padding: 4px 15px;
@@ -9465,6 +9503,11 @@ a.submit:active {
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   border-radius: 0;
+  /* 背景不超出圆角 */
+
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
   border-color: #e1e1e1;
   background: #f6f6f6;
 }
@@ -9474,7 +9517,7 @@ a.submit:active {
   border-color: #ffffff #ffffff #e1e1e1;
 }
 #user .wrapper .aside .minor_nav ul.nav_group li a:hover {
-  background: #ffffff;
+  background: white;
   text-decoration: none;
 }
 #user .wrapper .aside .minor_nav ul.nav_group li a.selected {
@@ -9483,7 +9526,7 @@ a.submit:active {
   border-width: 1px 1px 1px 5px ;
   border-style: solid;
   border-color: #e1e1e1 #e1e1e1 #e1e1e1 #0090d2;
-  background: #ffffff;
+  background: white;
 }
 #user .wrapper .aside .minor_nav ul.nav_group li a.sp_link:hover {
   background: #0090d2;

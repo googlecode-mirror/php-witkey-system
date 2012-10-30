@@ -28,7 +28,7 @@ unset ( $uid, $username);
 //支持子目录的路由
 Route::set('sections', '<directory>(/<controller>(/<action>(/<id>)))',
 array(
-'directory' => '(admin|ajax|auth|payitem|space|user|task|shop|ui)'
+'directory' => '(admin|ajax|auth|payitem|space|user|task|shop)'
 		))
 		->defaults(array(
 		'controller' => 'index',

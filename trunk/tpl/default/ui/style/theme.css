@@ -779,11 +779,11 @@ button[type="submit"]{
 .form_row {
   zoom: 1;
   *zoom: 1;
+  padding-top: 5px;
+  padding-bottom: 5px;
   font-size: 1.2em;
   line-height: 30px;
   vertical-align: top;
-  padding-top: 5px;
-  padding-bottom: 5px;
 }
 .form_row:before,
 .form_row:after {
@@ -797,6 +797,22 @@ button[type="submit"]{
   width: 130px;
   height: 30px;
   display: inline-block;
+}
+.form_row img {
+  vertical-align: middle;
+}
+.form_row .right_tip {
+  display: inline-block;
+  background: #f4f4f4;
+  border: 1px solid #ccc;
+  vertical-align: middle;
+}
+.float_row .form_label {
+  display: inline;
+  float: left;
+}
+.float_row .detail {
+  padding-left: 130px;
 }
 .form_line {
   zoom: 1;
@@ -8471,15 +8487,12 @@ iframe {
 ------------------------------*/
 table {
   color: #000;
-  border: 1px solid #bfbfbf;
 }
 table caption {
   text-align: center;
   display: table-caption;
 }
 table td {
-  border-left: 1px solid #bfbfbf;
-  border-top: 1px solid #bfbfbf;
   vertical-align: middle;
   /* fixed弹出窗口样式 */
 
@@ -9052,7 +9065,15 @@ a.submit:active {
 #user input[type=text]:hover ~ input[type=button],
 #user input[type=url]:hover ~ input[type=button],
 #user input[type=search]:hover ~ input[type=button],
-#user input[type=date]:hover ~ input[type=button] {
+#user input[type=date]:hover ~ input[type=button],
+#user input[type=email]:hover ~ .right_tip,
+#user input[type=number]:hover ~ .right_tip,
+#user input[type=password]:hover ~ .right_tip,
+#user input[type=tel]:hover ~ .right_tip,
+#user input[type=text]:hover ~ .right_tip,
+#user input[type=url]:hover ~ .right_tip,
+#user input[type=search]:hover ~ .right_tip,
+#user input[type=date]:hover ~ .right_tip {
   border-color: #c8c8c8;
 }
 #user input[type=email]:focus,
@@ -9075,7 +9096,15 @@ a.submit:active {
 #user input[type=text]:focus ~ input[type=button],
 #user input[type=url]:focus ~ input[type=button],
 #user input[type=search]:focus ~ input[type=button],
-#user input[type=date]:focus ~ input[type=button] {
+#user input[type=date]:focus ~ input[type=button],
+#user input[type=email]:focus ~ .right_tip,
+#user input[type=number]:focus ~ .right_tip,
+#user input[type=password]:focus ~ .right_tip,
+#user input[type=tel]:focus ~ .right_tip,
+#user input[type=text]:focus ~ .right_tip,
+#user input[type=url]:focus ~ .right_tip,
+#user input[type=search]:focus ~ .right_tip,
+#user input[type=date]:focus ~ .right_tip {
   color: white;
   background: #0090d2;
   border-color: #006d9f;
@@ -9212,6 +9241,12 @@ a.submit:active {
 }
 #user .form_line {
   border-color: #eeeeee;
+}
+#user .right_tip {
+  padding-left: 10px;
+  padding-right: 10px;
+  background: #f6f6f6;
+  border-color: #e1e1e1;
 }
 #user .pic_larger {
   width: 150px;
@@ -9795,14 +9830,6 @@ a.submit:active {
 #user .data_list .data_table tbody tr.hover .money,
 #user .data_list .data_table tbody tr:hover .money {
   color: #d24200;
-}
-#user .bind .form_label {
-  display: inline;
-  float: left;
-}
-#user .bind .bind_list {
-  display: inline;
-  float: left;
 }
 #user .bind .icon {
   width: 16px;

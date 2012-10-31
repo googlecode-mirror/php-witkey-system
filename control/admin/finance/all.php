@@ -42,7 +42,7 @@ class Control_admin_finance_all extends Controller {
 		//·ÖÒ³Êý¾Ý
 		$pages = $data_info['pages'];
 			
-		require Keke_tpl::template('control/admin/tpl/finance/all');
+		require Keke_tpl::template('control/admin/tpl/finance/detail');
 	}
 	
 

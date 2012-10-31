@@ -2,28 +2,15 @@
 <div class="page_title">
     <h1>{$_lang['financial_model']}</h1>
     <div class="tool">
-    	 <a href="{BASE_URL}/index.php/admin/finance_revenue/index">{$_lang['financial_summary']}</a>
-		<a href="{BASE_URL}/index.php/admin/finance_all">{$_lang['flow_record']}</a>
 	    <a href="{BASE_URL}/index.php/admin/finance_report/index" class="here">{$_lang['graphic_report']}</a>	   
-	    <a href="#">{$_lang['recharge_audit']}</a>
-	   <a href="#">{$_lang['withdraw_audit']}</a>
     </div>
 </div>
-<div class="box search p_relative">
- </div>
 <!--ËÑË÷½áÊø-->
 <div class="box list">
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 	    <tr>
-	        <th scope="row"><strong>{$_lang['income_report']}</strong>
-				 <button type="button" class="pill" onclick="location.href='{BASE_URL}/index.php/admin/finance_report/index?ac=update'">
-                 	<span class="icon magnifier">&nbsp;</span>{$_lang['refresh_report_data']}
-           		</button>
-			</th>
-	     </tr>
-	     <tr>
-	     	<th scope="row">
-	     		<select id="years">
+	    	<td>
+	    		<select id="years">
 	     			{loop $year_arr $k $v}
 	     			<option value="{$v['year']}">{$v['year']}</option>
 	     			{/loop}
@@ -32,8 +19,14 @@
 	     		<button type="button" class="pill" onclick="return setXML_Flie();">
                  	<span class="icon magnifier">&nbsp;</span>{$_lang['view']}
            		</button>
-			</th>
+	    	</td>
+	        <td > 
+				 <button type="button" class="pill" onclick="location.href='{BASE_URL}/index.php/admin/finance_report/index?ac=update'">
+                 	<span class="icon magnifier">&nbsp;</span>{$_lang['refresh_report_data']}
+           		</button>
+			</td>
 	     </tr>
+	     
   	</table>   
      <div id="income" style="float:left;"></div>
      <div id="analysis"></div>

@@ -39,6 +39,11 @@ class Control_admin_config_payitembuy extends Controller{
 		
 		$buy_use_type = array ("buy" => $_lang['buy'], "spend" => $_lang['spend'] );
 		
+		//用户购买总金额
+		
+		$all_buy_pro =(float)DB::select('sum(use_cash*use_num)')->from('witkey_payitem_record')->where("use_type='buy'")->get_count()->execute();
+		
+		
 		require Keke_tpl::template('control/admin/tpl/config/payitem_buy');
 	}
 	 

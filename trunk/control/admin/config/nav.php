@@ -11,7 +11,10 @@ class Control_admin_config_nav extends Controller{
 		global $_K,$_lang;
 		//nav_list 系统初始化过了
 		Keke::init_nav();
-		$nav_list = Keke::$_nav_list; 
+		$nav_list = Keke::$_nav_list;
+		//默认首页
+		$default_index = $_K['set_index'];
+		 
 		if(!$_POST){
 			//没有提交时
 			require Keke_tpl::template('control/admin/tpl/config/nav');
@@ -31,6 +34,7 @@ class Control_admin_config_nav extends Controller{
 			//更新
 			DB::update('witkey_nav')->set($columns)->value($values)->where($where)->execute();
 		}
+		
 		//更新导航菜单的缓存
 		Cache::instance()->del('keke_nav');
 		Keke::show_msg ($_lang['submit_success'], "admin/config_nav",'success' );

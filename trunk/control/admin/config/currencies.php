@@ -43,6 +43,8 @@ class Control_admin_config_currencies extends Controller{
 		//·ÖÒ³Êý¾Ý
 		$pages = $data_info['pages'];
 		
+		$default_currency = $_K['currency'];
+		
 		require Keke_tpl::template('control/admin/tpl/config/currencies');
 	}
 	/**

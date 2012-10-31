@@ -68,7 +68,7 @@ class Control_index extends Controller{
 		/**
 		 * 首页认证用户统计
 		*/
-		$all_auth = Dbfactory::get_one ( sprintf ( " select count(record_id) count from %switkey_auth_record where auth_status='1'", TABLEPRE ), 1, 600 ); // 认证用户
+		//$all_auth = Dbfactory::get_one ( sprintf ( " select count(record_id) count from %switkey_auth_record where auth_status='1'", TABLEPRE ), 1, 600 ); // 认证用户
 		$all_auth = str_pad ( intval ( $all_auth ['count'] ), 10, 0, STR_PAD_LEFT );
 		/**
 		 * 网站公告

@@ -22,16 +22,13 @@
 
 {loop $nav_list $k $v}
 <tr id="olditem_$k" class="item">
-	{if $v['nav_style']==$kekezu->_sys_config['set_index']}
-   	 	<td style='font-weight:bold'>
-  			<input type="text" value="{$v['nav_title']}" name="nav[$k][nav_title]" class='txt' size='12'>
-			({$_lang['default_index']})
-	 	</td>
-    {else}
-    	<td>
-  			<input type="text" value="{$v['nav_title']}" name="nav[$k][nav_title]" class='txt' size='12'>
-		</td>
-    {/if}
+	
+	<td style='font-weight:bold'>
+			<input type="text" value="{$v['nav_title']}" name="nav[$k][nav_title]" class='txt' size='12'>
+		{if $v['nav_style'] == $default_index} 
+		      ({$_lang['default_index']})
+		{/if}
+ 	</td>
     <td><!--{eval  $readonly = $this->url_analysis($v['nav_url']);}-->
     	{if $readonly}
 			$v['nav_url']

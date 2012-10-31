@@ -42,7 +42,9 @@
               <table cellspacing="0" cellpadding="0">
                   <tr>
                     <th width="15">
-                    	<input type="checkbox" onclick="checkall();" id="checkbox" name="checkbox"/>{$_lang['select_all']}</th>
+                    	<input type="checkbox" onclick="checkall();" id="checkbox" name="checkbox"/>
+					<a href="javascript:;" onclick="submitSort('{$uri}','skill_id',{$ord_tag})">ID{if $_GET['f']=='skill_id'}{$ord_char}{/if}</a>	
+					</th>
 					
                     <th width="20%">{$_lang['by_industry']}</th>
                     <th width="25%">{$_lang['skill_name']}</th>
@@ -71,8 +73,7 @@
                     <td colspan="7">
  	                    <div class="page">{$pages['page']}</div>
                         <label for="checkbox">{$_lang['select_all']}</label>
-                        <input type="hidden" name="sbt_action" class="sbt_action"/>
-                        <button name="sbt_action" type="submit" value={$_lang['mulit_delete']} onclick="return batch_act(this,'skill_op');" class="pill negative" ><span class="icon trash"></span>{$_lang['mulit_delete']}</button>
+						<button name="sbt_action" type="submit" value={$_lang['mulit_delete']} onclick="return batch_act(this,'skill_op');" >{$_lang['mulit_delete']}</button>
                     </td>
                   </tr>
                 </tfoot>

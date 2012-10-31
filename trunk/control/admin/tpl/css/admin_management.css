@@ -108,7 +108,7 @@ h1,h2,h3,h4,h5,h6{ font-size:14px;}
 	.list tr.item{cursor:pointer;}
 	.list tr.item:hover{ background:#FFF9D8; border-top:1px solid #69c;}
 	.list tr.item.selected{background:#FCFED7;}
-	.list td{ vertical-align:middle;padding:5px 0 5px 10px;border-bottom:1px solid #eee;}
+	.list td{ vertical-align:middle;padding:5px 0 5px 10px;border-bottom:1px solid #eee;-ms-word-break: break-all;word-break: break-all;word-break: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;}
 	.list th{ text-align:left;padding:0 0 0 10px; color: #555;  white-space:nowrap; background: #eee}
 	.list tfoot{ border-bottom:1px solid #ccc;
   background-color: #fcfcfc;

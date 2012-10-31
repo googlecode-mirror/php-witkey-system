@@ -6,14 +6,7 @@ include 'app_boot.php';
 
 
  
-$sql = "select * from :Pwitkey_task a LEFT join :Nwitkey_task_work b
-on a.task_id = b.task_id
-where a.task_id = :task_id";
- 
-//$res =   DB::query($sql,Database::SELECT)->tablepre(':P')->tablepre(':N')->param(':task_id', '129')->execute();
-$a = '403';
-$order_info = DB::select()->from('witkey_recharge')->where("rid=:rid")->param(":rid", $a)->get_one()->execute();
-var_dump($order_info);
+Keke_sms::instance()->send('13545368115', '您的悬赏任务已经完成');
 die;
  
 

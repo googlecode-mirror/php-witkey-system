@@ -7,149 +7,106 @@
 		{/loop}
     </div>
 </div>
-<div class="box tip clearfix p_relative" id="man_tips">
- <div class="control"><a href="javascript:void(0);" title={$_lang['close']}><b>&times;</b></a></div>
- <div class="title"><h2>{$_lang['tips']}</h2></div>
- <div class="detail pad10">
-  <ul>
-     <li>{$_lang['only_delete_not_accept']}
-     <font color="red">{$action_arr[$_K[action]]['1']}</font>{$_lang['record']}
-	 {$_lang['zh_jh']}{$_lang['delete_it_carefully_confirm']}</li>
-  </ul>
- </div>
-</div>
 <div class="box search p_relative">
- <div class="title">
-    <h2>{$_lang['search']}</h2>
- </div>
-  <form class="detail" action="{BASE_URL}/index.php/admin/user_trans/$_K[action]" method="get" id="frm_user_search">
+<form class="detail" action="{BASE_URL}/index.php/admin/user_trans/$_K[action]" method="get" id="frm_user_search">
    <input type="hidden" value="{$page}" name="page">
-     <table cellspacing="0" cellpadding="0">
-     	<tbody>
-			 	<tr>
-		                <th> 查询字段
-		                   <select name="slt_fields">
-		                   	<option></option>
-		                   	{loop $query_fields $k $v}
-		                   	 <option  value="$k" {if $k == $_GET['slt_fields']} selected="selected" {/if}>{$v}</option>
-							{/loop} 
-		                   </select>
-						 <select name="slt_cond">
-						 	<option value="=" {if $_GET['slt_cond']=='='}selected="selected"{/if}>=</option>
-							<option value=">" {if $_GET['slt_cond']=='>'}selected="selected"{/if}>></option>
-							<option value="<" {if $_GET['slt_cond']=='<'}selected="selected"{/if}><</option>
-							<option value="like" {if $_GET['slt_cond']=='like'}selected="selected"{/if}>Like</option>
-						 </select>
-		                 <input type="text" class="txt" name="txt_condition" id="txt_condition" value="{$_GET['txt_condition']}">
-						 <select name="page_size">
-                			<option value="10" {if $_GET['page_size']=='10'}selected="selected"{/if}>{$_lang['page_size']}10条</option>
-                			<option value="20" {if $_GET['page_size']=='20'}selected="selected"{/if}>{$_lang['page_size']}20条</option>
-                			<option value="30" {if $_GET['page_size']=='30'}selected="selected"{/if}>{$_lang['page_size']}30条</option>
-            			</select>
-						 <input type="submit" value="{$_lang['search']}">
-						 </td>
-	            </tr>
-			 </tbody>
-     </table>
+<table cellspacing="0" cellpadding="0">
+	<tbody>
+	<tr>
+    <td> 查询字段
+       <select name="slt_fields">
+       	<option></option>
+       	{loop $query_fields $k $v}
+       	 <option  value="$k" {if $k == $_GET['slt_fields']} selected="selected" {/if}>{$v}</option>
+		{/loop} 
+       </select>
+	 <select name="slt_cond">
+	 	<option value="=" {if $_GET['slt_cond']=='='}selected="selected"{/if}>=</option>
+		<option value=">" {if $_GET['slt_cond']=='>'}selected="selected"{/if}>></option>
+		<option value="<" {if $_GET['slt_cond']=='<'}selected="selected"{/if}><</option>
+		<option value="like" {if $_GET['slt_cond']=='like'}selected="selected"{/if}>Like</option>
+	 </select>
+     <input type="text" class="txt" name="txt_condition" id="txt_condition" value="{$_GET['txt_condition']}">
+	 <select name="page_size">
+		<option value="10" {if $_GET['page_size']=='10'}selected="selected"{/if}>{$_lang['page_size']}10条</option>
+		<option value="20" {if $_GET['page_size']=='20'}selected="selected"{/if}>{$_lang['page_size']}20条</option>
+		<option value="30" {if $_GET['page_size']=='30'}selected="selected"{/if}>{$_lang['page_size']}30条</option>
+	</select>
+	 <input type="submit" value="{$_lang['search']}">
+	 </td>
+</tr>
+</tbody>
+</table>
   </form>
  </div>
 <!--搜索结束-->
 <div class="box list">
-<div class="tab">
-   <a href="{BASE_URL}/index.php/admin/user_trans/$_K[action]" {if !$report_status}style="color:red" class="select"{/if}>{$_lang['all']}</a>
-    {loop $trans_status $k $v} 
-      <a href="{BASE_URL}/index.php/admin/user_trans/$_K[action]?report_status=$k" {if $report_status==$k}style="color:red" class="select"{/if}>{$v}</a>
-    {/loop}
-  </div>
-  <div class="tabcon">
-  <div class="detail">
-   <form action="{BASE_URL}/index.php/admin/user_trans/$_K[action]" method="post" id="frm_art_action">
-	<input type="hidden" value="{$page}" name="page">
-	<input type="hidden" value="{$page_size}" name="page_size">
-	<div id="ajax_dom"><input type="hidden" name="page" value="{$page}" />
-	<table cellpadding="0" cellspacing="0">
+   <form action="{BASE_URL}/index.php/admin/user_trans/report" method="post" id="frm_art_action">
+ 	<table cellpadding="0" cellspacing="0">
       <tbody>
        <tr>
-        <th>{$action_arr[$_K['action']]['1']}{$_lang['id']}</th>
-     {if $_K['action']!='complaint'}
-		<th>{$_lang['belong_to']}{if !$obj}{$_lang['object']}{else}{$trans_object[$obj]}{/if}</th>
-	 {/if}
-        <th>{$action_arr[$_K['action']]['1']}{$_lang['people']}</th>
-		{if $_K['action']!='complaint'}
-        <th>{$_lang['be']}{$action_arr[$_K['action']]['1']}{$_lang['people']}</th>
-		{/if}
-		<th>{$action_arr[$_K['action']]['1']}{$_lang['attachment']}</th>
-		{if $_K['action']=='complaint'}
-		<th>投诉内容</th>
-		{/if}
-        <th>{$action_arr[$_K['action']]['1']}{$_lang['time']}</th>
-        <th>{$_lang['now_status']}</th>
-        <th>{$_lang['process_people']}</th>
+        <th>ID</th>
+        <th>举报内容</th>
+	    <th>举报类型</th>
+		<th>{$_lang['attachment']}</th>
+        <th>举报{$_lang['people']}</th>
+        <th>{$_lang['be']}举报{$_lang['people']}</th>
+		<th>{$_lang['now_status']}</th>
+		<th>{$_lang['time']}</th>
 		<th>{$_lang['operate']}</th>
        </tr>
      {loop $report_list $v}
        <tr class="item">
          <td class="td25"><input type="checkbox" name="ckb[]" class="checkbox" value="{$v['report_id']}">{$v['report_id']}</td>
-		{if $_K['action']!='complaint'}
-         <td width="td28">
-        	{if $v['obj']=='task'||$v['obj']=='work'}<!--任务、稿件-->
-				<a href="{$_K['siteurl']}/index.php?do=task&task_id={$v['origin_id']}" target="_blank">
-			{elseif $v['obj']=='order'}<!--商品订单-->
-				<a href="{$_K['siteurl']}/index.php?do=user&view=finance&op=order" target="_blank">
+		 <td>
+		 	{if $v['obj']=='task'||$v['obj']=='work'}<!--任务、稿件-->
+				<a href="{BASE_URL}/index.php/task/{$v['origin_id']}" title="{$v['report_desc']}" target="_blank">
 			{elseif $v['obj']=='product'}<!--商品-->
-				<a href="{$_K['siteurl']}/index.php?do=service&sid={$v['origin_id']}" target="_blank">
+				<a href="{BASE_URL}/index.php/service/{$v['obj_id']}" title="{$v['report_desc']}" target="_blank">
 			{elseif $v['obj']=='seller'}<!--商家-->
-				<a href="{$_K['siteurl']}/index.php?do=space&member_id={$v['to_uid']}" target="_blank">
+				<a href="{BASE_URL}/index.php/space/{$v['to_uid']}" title="{$v['report_desc']}" target="_blank">
 			{/if}
-        	{$_lang['view_belongs']}{$trans_object[$v['obj']]}</a>
-		 </td>
-		{/if}
-         <td><a href="{$_K['siteurl']}/index.php?do=space&member_id={$v['uid']}" target="_blank">{$v['username']}</a></td>
-		 {if $_K['action']!='complaint'}
-		 <td><a href="{$_K['siteurl']}/index.php?do=space&member_id={$v['to_uid']}" target="_blank">{$v['to_username']}</a></td>
-		 {/if}
-         <td>
-         	<!--{eval $filename=substr($v['report_file'],strrpos($v['report_file'],'/')+1);}-->
-			{if $v['report_file']}<a href="index.php?do={$do}&view={$view}&ac=download&filename=$filename&filepath={$v['report_file']}">{$filename}</a>{else}{$_lang['not_submit_attachment']}{/if}
+			<!--{eval echo keke::cutstr($v['report_desc'],40);}--></a>
 		</td>
-		{if $_K['action']=='complaint'}
 		<td>
-		 <a href="javascript:void(0);" title="{$v['report_desc']}"><!--{eval echo keke::cutstr($v['report_desc'],20);}--></a>
+			{$rp_type[$v['report_type']]}
 		</td>
-		{/if}
-		<td>{date('Y-m-d H:i:s',$v['on_time'])}</td>
+		<td>
+         
+			{if $v['report_file']}<a href="{BASE_URL}/{$v['report_file']}">下载</a>{else}{$_lang['not_submit_attachment']}{/if}
+		</td>
+		<td>{$v['username']}</td>
+		<td>{$v['to_username']}</td>
 		<td>{$trans_status[$v['report_status']]}</td>
-		<td>{if $v['op_uid']}<a href="{$_K['siteurl']}/index.php?do=space&member_id={$v['op_uid']}" target="_blank">{$v['op_username']}</a>{else}--{/if}</td>
+		<td>{date('Y-m-d',$v['on_time'])}</td>
+		
 		<td>
             {if $v['report_status']=='1'||$v['report_status']=='2'||$v['report_status']=='4'}<!--待处理、处理中、已受理-->
-			<a class="button" href="{BASE_URL}/index.php/admin/user_trans/process?type=$type&report_id={$v['report_id']}">{if $v['report_status']=='4'}{$_lang['view_scheme']}{else}<span class="check icon"></span>{$_lang['process']}{$action_arr[$_K['action']]['1']}{/if}</a>
+			<a href="{BASE_URL}/index.php/admin/user_trans/process?report_id={$v['report_id']}" >
+				{if $v['report_status']=='4'}{$_lang['view_scheme']}
+				{else} {$_lang['process']}
+				{/if}
+			</a>
 			{/if}
 			{if $v['report_status']=='3'}<!--未受理、-->
-				<a class="button" href="{BASE_URL}/index.php/admin/user_trans/del?report_id={$v['report_id']}" onclick="return cdel(this);"><span class="trash icon"></span>{$_lang['delete']}</a>
+				<a class="button" href="{BASE_URL}/index.php/admin/user_trans/del?report_id={$v['report_id']}" onclick="return cdel(this);">{$_lang['delete']}</a>
 			{/if}
 		 </td>
         </tr>
         {/loop}
-        <tr>
+       </tbody>
+	   <tfoot>
+	    <tr>
+       
        <td colspan="9">
-         <div class="page fl_right">{$pages['page']}</div>
-         <div class="clearfix">
-         {if $report_status=='4'}<!--对已过期开放批量删除-->
-          <input type="checkbox" onclick="checkall();" id="checkbox" name="checkbox"/>
-            <label for="checkbox">{$_lang['select_all']}</label>
-          <button name="sbt_action" type="submit" value={$_lang['mulit_delete']} onclick="return confirm({$_lang['you_comfirm_to']}+this.value+'?{$_lang['only_delete_overdue']}{$action_arr[$_K['action']]['1']}{$_lang['record']}');" class="pill negative">
-           <span class="icon trash"></span>{$_lang['mulit_delete']}
-          </button>
-		  {/if}
-		</div>
+         <div class="page ">{$pages['page']}</div>
        </td>
       </tr>
-     </tbody>
-   </table></div>
+     </tfoot>
+   </table> 
   </form>
-  </div>
-  </div>
 </div>
+ 
  <script type="text/javascript">
 	$(function(){
 		$(".control").add(".title").click(function(){

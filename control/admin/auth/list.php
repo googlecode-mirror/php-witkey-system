@@ -120,6 +120,13 @@ class Control_admin_auth_list extends Controller{
 	function action_del(){
 		$auth_code = $_GET['auth_code'];
 		$where .="auth_code='$auth_code'";
+		//要删除认证的菜单
+		$menu_arr = array();
+		$path = S_ROOT.'/control/auth/'.$auth_code.'/init_config.php';
+		include $path;
+		$resource_id = $menu_arr['resource_id'];
+		DB::delete('witkey_resource')->where("resource_id = '$resource_id'")->execute();
+		
 		echo Model::factory('witkey_auth_item')->setWhere($where)->del();
 	}
 

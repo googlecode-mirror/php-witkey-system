@@ -361,7 +361,7 @@ abstract class keke_report_class {
 			$desc = Keke::utftogbk ( $desc );
 			$to_username = Keke::utftogbk ( $to_username );
 		}
-		$report_obj = new Keke_witkey_report_class ();
+		$report_obj = new Keke_witkey_report();
 		$report_obj->setObj ( $obj );
 		$report_obj->setObj_id ( $obj_id );
 		$report_obj->setUid ( $uid );
@@ -399,6 +399,13 @@ abstract class keke_report_class {
 		return dbfactory::execute ( $sql );
 	}
 	/**
+	 * 举报类型
+	 * @return array
+	 */
+	public static function get_report_type(){
+		return array('1'=>'广告','2'=>'拉圾','3'=>'重复交搞','4'=>'抄袭','5'=>'其它');
+	}
+	/**
 	 * 重置任务
 	 * @param int $task_id 任务编号
 	 * @param int $delay_days 延长天数
@@ -433,7 +440,7 @@ abstract class keke_report_class {
 	 * @param $report_id 数组是批量删除，数字是单条删除
 	 */
 	public static function del_report($report_id) {
-		$report_obj = new Keke_witkey_report_class ();
+		$report_obj = new Keke_witkey_report();
 		if (is_array ( $report_id )) {
 			$ids = implode ( ',', $report_id );
 			$where = "report_id in ($ids)";
@@ -540,7 +547,7 @@ abstract class keke_report_class {
 	 */
 	public static function get_transrights_type() {
 		global $_lang;
-		return array ("rights" => array ("1", $_lang ['rights'] ), "report" => array ("2", $_lang ['report'] ), "complaint" => array ("3", $_lang ['complaints'] ) );
+		return array ( "report" => array ("2", $_lang ['report'] ), "complaint" => array ("3", $_lang ['complaints'] ) );
 	}
 	/**
 	 * 获取交易维权对象

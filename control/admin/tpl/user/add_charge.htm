@@ -142,8 +142,8 @@
 								title: "{$_lang['operate_tips']}",
 								content: content,
 								icon: 'succeed',
-								yesFn: function(){$("#frm_cash").submit();},
-								noFn :function(){this.close();return false;}
+								ok: function(){$("#frm_cash").submit();},
+								cancel :function(){this.close();return false;}
 							});
 						}
 				}else{

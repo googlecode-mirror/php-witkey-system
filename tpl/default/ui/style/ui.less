@@ -143,17 +143,29 @@ button[type="submit"]{
 }
 .form_row{
 	.clearfix();
+	.pt_5;
+	.pb_5;
 	font-size:1.2em;
 	line-height:30px;
 	vertical-align:top;
-	.pt_5;
-	.pb_5;
+	
 	.form_label{
 		.size(130px,30px);
 		display:inline-block;
+
+	}
+	img{vertical-align: middle;}
+	.right_tip{
+		display:inline-block;
+		background:#f4f4f4;
+		border:1px solid #ccc;
+		vertical-align: middle;
 	}
 
-
+}
+.float_row{
+	.form_label{ display: inline; float: left;}
+	.detail{ padding-left: 130px;}
 }
 .form_line{
 	.clearfix();

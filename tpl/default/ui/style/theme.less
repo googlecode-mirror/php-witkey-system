@@ -212,7 +212,7 @@ iframe{ width: 100%; height: 500px;}
 ------------------------------*/
 table { 
 	color:#000;
-	border:1px solid #bfbfbf;  
+	//border:1px solid #bfbfbf;  
 
 	caption{ 
 		text-align:center; 
@@ -220,8 +220,8 @@ table {
 	}
 
 	td { 
-		border-left:1px solid #bfbfbf; 
-		border-top:1px solid #bfbfbf;
+		//border-left:1px solid #bfbfbf; 
+		//border-top:1px solid #bfbfbf;
 		vertical-align:middle;
 		/* fixed弹出窗口样式 */
 		.aui_outer &{
@@ -520,14 +520,14 @@ table {
 		&:hover{
 			.box-shadow(inset 1px 1px 2px rgba(0,0,0,.1));
 			border-color:darken(@border_colors,10%);
-			~ input[type=button]{
+			~ input[type=button],~ .right_tip{
 				border-color: darken(@border_colors,10%);
 			}
 		}
 		&:focus{
 			.box-shadow(inset 1px 1px 2px rgba(0,0,0,.1));
 			border-color: @main_color;
-			~ input[type=button]{
+			~ input[type=button],~ .right_tip{
 				color: white;
 				background: @main_color;
 				border-color: darken(@main_color,10%);
@@ -602,6 +602,12 @@ table {
 	}
 	.form_line{
 		border-color: lighten(@border_colors,5%);
+	}
+	.right_tip{
+		.pl_10;
+		.pr_10;
+		background: @main_bg;
+		border-color: @border_colors;
 	}
 
 	.pic_larger{
@@ -984,10 +990,10 @@ table {
 		}
 	}
 
+	
+
 	/* 账号绑定图标 */
 	.bind{
-		.form_label{ display: inline; float: left;}
-		.bind_list{display: inline; float: left;}
 		.icon{.size(16px); display: inline-block; vertical-align: middle; background: url(../img/share_ico.png) no-repeat;}
 		.sina .icon{background-position:0 -96px;}
 		.ten .icon{background-position:0 -144px;}
@@ -1000,4 +1006,7 @@ table {
 		.souhu .icon{background-position:0 -112px;}
 		a{.ml_10;}
 	}
+
+	
+
 }

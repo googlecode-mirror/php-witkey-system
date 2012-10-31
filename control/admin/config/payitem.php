@@ -51,7 +51,7 @@ class Control_admin_config_payitem extends Controller{
 		if($item_id){
 			$array = array('item_name'=>$_POST['item_name'],
 							'user_type'=>$_POST['user_type'],
-							'model_code'=>implode(',',$_POST['model_code']),
+							'model_code'=>implode(',',(array)$_POST['model_code']),
 							'item_cash'=>$_POST['item_cash'],
 							'item_standard'=>$_POST['item_standard'],
 							'item_limit'=>$_POST['item_limit'],

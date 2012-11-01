@@ -1,4 +1,4 @@
-<?php	defined ( 'IN_Keke' ) or exit ( 'Access Denied' );
+<?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
  * 用户添加
  */
@@ -11,11 +11,10 @@ class Control_admin_user_add extends Controller{
 			//获取用户信息
 			$edit_arr = Keke_user_class::get_user_info($uid);
 			//查询shop表的shop方便推荐
-			$shop_open = DB::select('shop_id')->from('witkey_shop')->where($where)->execute();
-			$shop_open = $shop_open['0'];
+			$shop_open = DB::select('shop_id')->from('witkey_shop')->where($where)->get_count()->execute();
 		}
 		//查询group表用来选择用户组
-		$member_arr = DB::select()->from('witkey_member_group')->where('1=1')->execute();
+		$member_arr = DB::select()->from('witkey_member_group')->execute();
 		require Keke_tpl::template('control/admin/tpl/user/add');
 	}
 	/**

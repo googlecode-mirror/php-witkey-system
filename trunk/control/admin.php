@@ -16,6 +16,18 @@ abstract  class Control_admin extends Controller{
 	 * 
 	 */
 	function before(){
+		$this->check_login();
+	}
+	
+	/**
+	 * ¼ì²éÊÇ·ñµÇÂ¼
+	 */
+	function check_login(){
+		$jump_url = "<script>window.parent.location.href='".BASE_URL."/index.php/admin/login';</script>";
+		if(!$_SESSION['admin_uid']){
+			echo $jump_url;
+		}
 		
 	}
+	
 }

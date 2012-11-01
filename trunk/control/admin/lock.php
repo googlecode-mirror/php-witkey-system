@@ -6,7 +6,8 @@
  * @version v 2.0
  * 2011-08-30 09:51:34
  */
-class Control_admin_lock extends Controller{
+class Control_admin_lock extends Control_admin{
+	
 	function action_index(){
 		global $_K,$_lang;
 		$admin_obj = new keke_admin_class();
@@ -21,15 +22,3 @@ class Control_admin_lock extends Controller{
 		$admin_obj->screen_unlock($_GET['unlock_num'],$_GET['unlock_pwd']);
 	}
 }
-
-/* defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
-switch ($ac){
-	case "lock":
-		$admin_obj->screen_lock();
-		break;
-	case "unlock":
-		$admin_obj->screen_unlock($unlock_times,$unlock_pwd);
-		break;
-		
-}
-require $Keke->_tpl_obj->template("control/admin/tpl/admin_" .$do); */

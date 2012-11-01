@@ -1,12 +1,10 @@
 <?php   defined ( "IN_KEKE" ) or die ( "Access Denied" );
 
-class Control_admin_index extends Controller{
+class Control_admin_index extends Control_admin{
 	
 	function action_index(){
 		
 		global $_K,$_lang;
-		
-		$this->check_user();
 		
 		$this->admin_init();
 		
@@ -20,7 +18,7 @@ class Control_admin_index extends Controller{
 				'finance' => $_lang['finance_manage'],
 				'user' => $_lang['user_manage'],
 				'tool' => $_lang['system_tool'],
-				//'keke'=>$_lang['witkey_union'],
+				 
 				 
 		
 		);
@@ -43,12 +41,6 @@ class Control_admin_index extends Controller{
 		require Keke_tpl::template('control/admin/tpl/index');
 	}
 	
-	function check_user(){
-        global $_K;
-        if(! $_SESSION ['admin_uid'] || $_K['user_info']['group_id'] == 0){
-			echo "<script>window.parent.location.href='".BASE_URL."/index.php/admin/login';</script>";
-		}
-	}
 	
 	function admin_init(){
 		/*后台禁止静态化*/
@@ -59,32 +51,39 @@ class Control_admin_index extends Controller{
 		$_K ['admin_tpl_path'] = S_ROOT . './control/admin/tpl/'; //后台模板目录
 	}
 	/**
-	 * 可以不要
+	 * 导航菜单
+	 */
+	function action_nav(){
+		global $_K,$_lang;
+		//获取后台的父目录和子目录
+		$menus_arr = keke_admin_class::get_admin_menu();
+		$menus_arr = $menus_arr['menu'];
+		
+		require keke_tpl::template('control/admin/tpl/nav');
+	}
+	/**
+	 * 后台导航搜索
+	 */
+	function action_nav_search(){
+		global $_K,$_lang;
+		$admin_obj=new keke_admin_class;
+		$arr=$admin_obj->search_nav($_GET['keyword']);
+		$menus_arr[][0]['name'] =$_GET['keyword'];
+		$menus_arr[][0]['items'] =$arr; 
+		require Keke_tpl::template("control/admin/tpl/nav");
+	}
+	/**
+	 * 快捷操作 
 	 */
 	function action_op(){
 		global $_K,$_lang;
-		$admin_obj=new keke_admin_class();
-		$_GET = $_POST+$_GET;
-		var_dump($_GET['ac']);die;
-		/**动作集**/
+		$admin_obj=new keke_admin_class;
 		switch ($_GET['ac']){
-			case "nav_search"://导航搜索
-				$nav_search=$admin_obj->search_nav($_GET['keyword']);
-				require Keke_tpl::template("control/admin/tpl/admin_" .$_GET['ac']);
-				die();
-				break;
-			case "lock":
-				$admin_obj->screen_lock();//锁屏
-				break;
-			case "unlock":
-				$unlock_times=$admin_obj->times_limit($_GET['unlock_num']);//允许登录尝试次数
-				$admin_obj->screen_unlock($_GET['unlock_num'],$_GET['unlock_pwd']);//解屏
-				require Keke_tpl::template("control/admin/tpl/lock");
-				die();
-				break;
+			//添加
 			case "add_shortcuts":
 				$admin_obj->add_fast_menu($_GET['r_id']);
 				break;
+			//删除	
 			case "rm_shortcuts":
 				$admin_obj->rm_fast_menu($_GET['r_id']);
 				break;

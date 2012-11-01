@@ -54,7 +54,7 @@
 			<td>{$v['username']}</td>
 			<td>{if $v['uid']==ADMIN_UID}{$_lang['public_admin_uid']}{else}{$group_arr[$v['user_type']]['groupname']}{/if}</td>
             <td><a  href="javascript:void(0)" title="{$v['log_content']}">{$v['log_content']}</a></td>
-			<td><!--{date('Y-m-d H:i:s',$v['log_time'])}--></td>
+			<td>{date('Y-m-d H:i:s',$v['log_time'])}</td>
 			<td>
 				<a class="button dbl_target" href="{$del_uri}?log_id=$v['log_id']" onclick="return cdel(this);"><span class="icon trash">&nbsp;</span>{$_lang['delete']}</a>
 			</td>

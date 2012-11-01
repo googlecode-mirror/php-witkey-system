@@ -184,7 +184,7 @@ window.onload = function(){
     </div>
     <div class="other">
     		<input type="text" class="txt" name="fds[resource_name]" id="recource"/>
-        	<button type="button" class="button ml_mr_5"  onclick="find_nav()"><span class="magnifier icon"></span>{$_lang['search']}</button>
+        	<button type="button" class="button ml_mr_5"  onclick="find_nav()">{$_lang['search']}</button>
 		<button id="map" type="button" class="button" onclick="nav();">{$_lang['nav_map']}</button>
     </div>
 </div>
@@ -246,7 +246,7 @@ function reset_shortcuts(obj){
 }
 /*show_map_nav*/
 function nav(){
-	art.dialog.open('{BASE_URL}/index.php/admin/nav',{title:"{$_lang['admin_nav_map']}",height:400,width:700});
+	art.dialog.open('{BASE_URL}/index.php/admin/index/nav',{title:"{$_lang['admin_nav_map']}",height:400,width:700});
 }	
 /**
  * search nav 
@@ -254,7 +254,7 @@ function nav(){
 function find_nav(){
 	var keyword=$("#recource").val();
 	if(keyword){
-		art.dialog.open('index.php?do=index&ac=nav_search&keyword='+keyword,{title:"{$_lang['nav_search']}",height:'auto',width:'auto'});
+		art.dialog.open('{BASE_URL}/index.php/admin/index/nav_search?keyword='+keyword,{title:"{$_lang['nav_search']}",height:'auto',width:'auto'});
 		}
 }
 /**lock screen**/

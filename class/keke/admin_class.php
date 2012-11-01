@@ -1,7 +1,7 @@
-<?php
+<?php  defined ( "IN_KEKE" ) or die ( "Access Denied" );
 /** 
  * @copyright keke-tech
- * @version v 2.0
+ * @version v 2.2
  * @Modify by Chen
  */
 keke_lang_class::load_lang_class('keke_admin_class');
@@ -39,24 +39,6 @@ class keke_admin_class {
 			$resource_arr = $temp_arr2;
 			$menuset_arr = array ( 'menu' => $resource_arr, 'submenu' => $submenu_set_arr, 'resource' => $resource_set_arr );
 			
-			/* Keke::init_model();
-			$model_list = Keke::$_model_list;
-			$i = 0;
-			
-			//加载模型的后台
-			foreach ( $model_list as $model ) {
-				$init_menu = array ();
-				if (! file_exists ( S_ROOT . $model ['model_type'] . '/' . $model ['model_dir'] . '/control/admin/init_config.php' )) {
-					continue;
-				}
-				require S_ROOT . $model ['model_type'] . '/' . $model ['model_dir'] . '/control/admin/init_config.php';
-				$mulist_arr = array ();
-				foreach ( $init_menu as $k => $v ) {
-					$mulist_arr [] = array ('resource_id' => "m{$model['model_id']}" . $i ++, 'resource_name' => $k, 'resource_url' => $v );
-				}
-				
-				$menuset_arr ['menu'] [$model ['model_type']] [] = array ('name' => $model ['model_name'], 'items' => $mulist_arr );
-			} */
             Cache::instance()->set('admin_menu', $menuset_arr,999999);
 		}
 		return $menuset_arr;
@@ -101,11 +83,7 @@ class keke_admin_class {
 	function screen_unlock($unlock_num, $unlock_pwd) {
 		global $kekezu;
 		global $_lang;
-		
-		/* if(empty($_SESSION ['admin_uid'])){
-			 //keke::show_msg ( $_lang['you_not_login'], 'index.php/admin/login', 'success');
-			 Keke::echojson('0',$_lang['you_not_login']);
-		} */
+				
 		if ($unlock_num > 0) { //解锁判断
 			/**获取当前登录用户密码**/
 			$admin_pwd = Dbfactory::get_count ( " select password from " . TABLEPRE . "witkey_member where uid = '" . $_SESSION ['uid'] . "'" );
@@ -122,8 +100,8 @@ class keke_admin_class {
 				} else { //最后一次操作失败
 					$_SESSION ['allow_times']='0';
 					$_SESSION ['lock_screen'] = '0';
-					$_SESSION ['uid'] = '';
-					$_SESSION ['username'] = '';
+					$_SESSION ['admin_uid'] = '';
+					$_SESSION ['admin_username'] = '';
 					keke::echojson ( $_lang['wrong_times_much_login_again'], '0' );
 					die ();
 				}
@@ -266,12 +244,14 @@ class keke_admin_class {
 			} else {  
 				$user_info = keke_user_class::get_user_info( $user_info['uid'] ); //获取用户信息
 			}
+			$roles = self::get_user_roles($user_info['uid']);
+		 
 			if (! $user_info) {
 				$_SESSION ['allow_times'] -= 1;
 				-- $allow_times == 0 and $this->set_login_limit_time ( '1' );
 				$kekezu->echojson ( $_lang['no_rights_login_backstage'], "3", array('times'=>$allow_times, 'formhash'=>$hash) );
 				die ();
-			} else if (! $user_info ['group_id'] && $user_info ['uid'] != ADMIN_UID) {
+			} elseif (empty($roles)) {
 				$_SESSION ['allow_times'] -= 1;
 				-- $allow_times == 0 and $this->set_login_limit_time ( '1' );
 				$kekezu->echojson ( $_lang['no_rights_login_backstage'], "2", array('times'=>$allow_times, 'formhash'=>$hash) );
@@ -287,6 +267,24 @@ class keke_admin_class {
 				die ();
 			}
 		}
+	}
+	/**
+	 * 获取用户操作资源id
+	 * @param int $uid
+	 * @return string
+	 */
+	public static function get_user_roles($uid = NULL){
+		if($uid===NULL){
+			$uid = $_SESSION['admin_uid'];
+		}
+		//判断用户组是否有权限
+		$sql = "SELECT b.group_roles FROM :Pwitkey_space as a ".
+				"left join :Pwitkey_member_group as b ".
+				"on a.group_id = b.group_id ".
+				"where a.uid = :uid ";
+		
+		return DB::query($sql)->tablepre(':P')->param(':uid', $uid)->get_count()->execute();
+		 
 	}
 	/**
 	 * 重置登录限制时间
@@ -307,48 +305,4 @@ class keke_admin_class {
 		}
 		return $allow_times;
 	}
-	
-	/**
-	 * 
-	 * 获取提现的实际金额
-	 * @param folat $cash
-	 */
-	public static function get_withdraw_cash($cash){
-		$fee = floatval ( $cash );
-		/** 站类付款收费标准*/
-		$pay_config = Keke::get_table_data ( "*", "witkey_pay_config", '', '', "", '', 'k' );
-		 
-		$site_per_charge = $pay_config[per_charge][v];
-		$site_per_low = $pay_config[per_low][v];
-		$site_per_high =$pay_config[per_high][v]; 
-		/** 支付宝付款收费标准*/
-		$alipay_per_charge = 0.5;
-		$alipay_per_low = 1;
-		$alipay_per_high = 25; 
-
-		if ($fee <= $site_per_low) {
-			$pay_cash = $fee;
-		} elseif ($fee > $site_per_low && $fee <= 200) {
-			$pay_cash = $fee + $alipay_per_low - $site_per_low;
-		} elseif ($fee > 200 && $fee < 5000) {
-			$pay_cash = number_format ( $fee * (100 - $site_per_charge) / (100 - $alipay_per_charge), 2, ".", "" );
-		} else {
-			$pay_cash = $fee + $alipay_per_high - $site_per_high;
-		}
-		
-		
-		return $pay_cash;
-		
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-}
-
-?>
+} 

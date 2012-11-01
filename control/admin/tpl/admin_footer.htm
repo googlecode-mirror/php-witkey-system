@@ -92,11 +92,14 @@ function batch_act(obj){
 	 	        $(tips).children().html('删除中... 已经删除成功!').addClass('tips_info'); 
 			},
 			success: function(data){
-			  if(data>0){
+				location.href= location.href;
+			  /*
+if(data>0){
 					$(":checkbox[name='ckb[]']:checked").each(function(){
 						$(this).parent().parent().remove();
 					})
 				}
+*/
 			},
 			complete:function(){
 				$(tips).children().html('').removeClass('tips_info');

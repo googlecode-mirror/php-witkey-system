@@ -7,7 +7,7 @@
     </div>
 </div>
 <div class="box search p_relative">
-		 <form method="get" action="{BASE_URL}/index.php/admin/user_custom"  id="frm_list">
+		 <form method="get" action="{$base_uri}"  id="frm_list">
         	<table class="detail" cellspacing="0" cellpadding="0">
 			 <tbody>
 			 	<tr>
@@ -38,73 +38,45 @@
  </div>
 <!--搜索结束-->
 <div class="box list">
-    <form class="detail" name="frm_list" id="frm_list" action="{BASE_URL}/index.php/admin/user_custom/save" method="post" >
-    	<div id="ajax_dom"><input type="hidden" name="page" value="{$page}" />
+    <form class="detail" name="frm_list" id="frm_list" action="{$base_uri}/save" method="post" >
+    	 
         <table cellpadding="0" cellspacing="0">
             <tr>
             	<th width="15">
             		<input type="checkbox" onclick="checkall();" id="checkbox" name="checkbox"/>
             	</th>
-                <th><a href="javascript:;" onclick="submitSort('{$uri}','uid',{$ord_tag})">UID{if $_GET['f']=='uid'}{$ord_char}{/if}</a></th>
-                <th width="100" class="motif">{$_lang['username']}</th>
-                <th><a href="javascript:;" onclick="submitSort('{$uri}','group_id',{$ord_tag})">{$_lang['users']}{if $_GET['f']=='group_id'}{$ord_char}{/if}</a></th>
-                <th>{$_lang['contact_tel']}</th>
-                <th>QQ</th>
-                <th>{$_lang['edit']}</th>
-                <th>{$_lang['delete']}</th>
+                <th width="30">用户组ID</th>
+                <th >组名称</th>
+                <th width="20">用户数</a></th>
+                <th>{$_lang['operate']}</th>
             </tr>
             {loop $list_arr $k $v}
             <tr class="item">
-            	<td><input type="checkbox" name="ckb[]" class="checkbox" value="{$v['uid']}"></td>
-                <td>{$v['uid']}</td>
-                <td class="motif"><a href="javascript:void(0)">{$v['username']}</a></td>
-                <td>{if $v['group_id']==0}普通用户组{else}{$grouplist_arr[$v['group_id']]['groupname']}{/if}</td>
-                <td>{$v['phone']}</td>
-                <td>{$v['qq']}</td>
+            	<td><input type="checkbox" name="ckb[]" class="checkbox" value="{$v['group_id']}"></td>
+                <td>{$v['group_id']}</td>
+                <td>{$v['groupname']}</td>
+                <td class="motif"><a href="javascript:void(0)">{$v['num']}</a></td>
                 <td>
-				{if $admin_info['uid']!=$v['uid']}
-                    <a class="button dbl_target" href="{BASE_URL}/index.php/admin/user_custom/add?uid={$v['uid']}"><span class="pen icon"></span>{$_lang['edit']}</a>
-				{/if}
-				</td>
-                <td>
-                    <a class="button" href="{BASE_URL}/index.php/admin/user_custom/del?uid={$v['uid']}" onclick="return cdel(this);">
-                    <span class="trash icon"></span>{$_lang['delete']}</a>
+				  <a class="button dbl_target" href="{$base_uri}/add?gid={$v['group_id']}">{$_lang['edit']}</a>
+				  <a class="button" href="{$base_uri}/del?gid={$v['group_id']}" onclick="return cdel(this);">{$_lang['delete']}</a>
                 </td>
             </tr>
             {/loop}
           <tfoot>	
-				<tr >
-					    <td colspan="9">
-					    <div class="page" >{$pages['page']}</div>
-					    <input type="checkbox" onclick="checkall(event);" id="checkbox" name="checkbox"/>
-		            	<label for="checkbox"> {$_lang['select_all']}</label>
-		            	<input type="hidden" name="sbt_action" class="sbt_action"/>
-						<button type="submit" name="sbt_action" onclick="return batch_act(this)" value="{$_lang['mulit_delete']}" class="pill negative" >
-							<span class="trash icon"></span>{$_lang['mulit_delete']}
-						</button>
-						<a   name="sbt_add" value={$_lang['links_add']} class="pill negative button"
-					 	 href="{$base_uri}/add"><span class="check icon"></span>{$_lang['links_add']} </a>
-						 <a name="sbt_action" value="{$_lang['add_new_kf']} " class="positive pill button" href="{BASE_URL}/index.php/admin/user_custom/add">
-						<span class="plus icon"></span>{$_lang['add_new_kf']}</a>
-		            	</td>
+				<tr>
+				    <td colspan="9">
+				    <div class="page" >{$pages['page']}</div>
+				    <input type="checkbox" onclick="checkall(event);" id="checkbox" name="checkbox"/>
+	            	 
+					<a   name="sbt_add" value={$_lang['links_add']} class="pill negative button"
+				 	 href="{$base_uri}/add"><span class="check icon"></span>{$_lang['links_add']} </a>
+					 <a name="sbt_action" value="{$_lang['add_new_kf']} " class="positive pill button" href="{BASE_URL}/index.php/admin/user_custom/add">
+					<span class="plus icon"></span>{$_lang['add_new_kf']}</a>
+	            	</td>
 		        </tr>
 		 </tfoot>
         </table>
 	</form>
 </div>
-<script type="text/javascript">
-    function showpl(){
-        $('#sbt_del').show();
-        $('#slt_action').show();
-    }
-	function has_selecte(action){
-	var count = $("#frm_list input:checked:not([id=checkbox])");
-	var len = count.length;
-	if(len>0){
-		return confirm("{$_lang['confirm']}"+action+"{$_lang['ma']}?") 
-	}else{
-		alert("{$_lang['choose_operate_item']}");return false;
-	}		
-	}
-</script>
+
 <!--{include control/admin/tpl/admin_footer}-->

@@ -169,5 +169,11 @@ abstract class Keke_Controller {
 		$r['page']=$page;
 		return $r;
 	}
+	/**
+	 * 刷新当前页面
+	 */
+	function refer(){
+		$this->request->redirect($this->request->referrer());
+	}
 
 } // End Controller

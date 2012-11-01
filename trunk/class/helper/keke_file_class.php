@@ -511,7 +511,7 @@ class keke_file_class {
 					}
 				}
 			}
-			return $unlink ? $unlink : false;
+			return (bool)$unlink;
 		}
 	}
 	

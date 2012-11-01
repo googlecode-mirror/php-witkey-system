@@ -9831,6 +9831,9 @@ a.submit:active {
 #user .data_list .data_table tbody tr:hover .money {
   color: #d24200;
 }
+#user .data_list .data_table tbody tr.nocheck td {
+  font-weight: bold;
+}
 #user .bind .icon {
   width: 16px;
   height: 16px;

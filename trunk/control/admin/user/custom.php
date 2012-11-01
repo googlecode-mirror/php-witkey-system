@@ -32,12 +32,14 @@ class Control_admin_user_custom extends Controller{
 		//如果获取出传递的uid，如果存在就是编辑，没有则是添加
 		if ($_GET['uid']){
 			$where .= 'uid ='.$_GET['uid'];
-			$spaceinfo = DB::select()->from('witkey_space')->where($where)->execute();
-			$spaceinfo = $spaceinfo[0];
+			$spaceinfo = DB::select()->from('witkey_space')->where($where)->get_one()->execute();
 		}
-		$member_group_arr = DB::select()->from('witkey_member_group')->where('1=1')->execute();
+		$member_group_arr = DB::select()->from('witkey_member_group')->execute();
 		require keke_tpl::template('control/admin/tpl/user/custom_add');
 	}
+	/**
+	 * 保存用户信息
+	 */
 	function action_update(){
 		//防止sql注入
 		$_POST = Keke_tpl::chars($_POST);
@@ -55,9 +57,9 @@ class Control_admin_user_custom extends Controller{
 				'qq'=>$qq,
 				'group_id'=>$group_id 
 				);
-			$data_info = DB::select('uid')->from('witkey_space')->execute();
 			Model::factory('witkey_space')->setData($array)->setWhere('uid = '.$_POST['euid'])->update();
-			keke::show_msg("提交成功","admin/user_custom/add?uid=$_POST[euid]","success");
+			$this->refer();
+			//keke::show_msg("提交成功","admin/user_custom/add?uid=$_POST[euid]","success");
 	}
 	/**
 	 * 获取用户信息

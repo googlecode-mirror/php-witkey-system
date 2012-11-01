@@ -30,6 +30,7 @@
 							<div class="box tip clearfix p_relative" style="width:310px;display:none;" id="man_tips">
 						    	<div class="title"><h2>{$_lang['account_info']}</h2></div>
 						        <div class="detail pad10">
+						         	<span class="pad10" id="uname"></span></br>
 						        	<span class="pad10" id="ucash"></span></br>
 									<span class="pad10" id="ucredit"></span>
 						        </div>
@@ -100,6 +101,7 @@
 				if(json.status==1){
 					$("#ucash").html("{$_lang['usefull_balance']}"+json.data.balance+"{$_lang['yuan']}");
 					$("#ucredit").html("{$_lang['usefull']}{CREDIT_NAME}£º"+json.data.credit);
+					$("#uname").html("{$_lang['username']}£º"+json.data.username);
 					$("#man_tips").show('slow');
 					$("#maxCash").val(json.data.balance);
 					$("#maxCredit").val(json.data.credit);

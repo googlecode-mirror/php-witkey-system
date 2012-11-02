@@ -6,13 +6,14 @@
  * 2012-10-01
  */
 
-class Control_admin_config_currencies extends Controller{
+class Control_admin_config_currencies extends Control_admin{
 	
 	private $_base_uri ;
 	
-	function __construct(){
+	function __construct($request, $response){
+		parent::__construct($request, $response);
 		$this->_base_uri = BASE_URL."/index.php/admin/config_currencies";
-	}
+	} 
 	function action_index(){
 		//定义全局变量与语言包，只要加载模板，这个是必须要定义.操
 		global $_K,$_lang;

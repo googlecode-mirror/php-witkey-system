@@ -4,7 +4,7 @@
  * @version v 2.0
  * @date 2012-10-7 
  */
-class Control_admin_finance_all extends Controller {
+class Control_admin_finance_all extends Control_admin {
 	
 	/**
 	 * 财务管理初始化页面

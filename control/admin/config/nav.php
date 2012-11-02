@@ -5,7 +5,7 @@
  * @version v 2.2
  * 2012-09-28
  */
-class Control_admin_config_nav extends Controller{
+class Control_admin_config_nav extends Control_admin{
 	
 	function action_index(){
 		global $_K,$_lang;

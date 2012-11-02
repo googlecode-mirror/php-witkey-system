@@ -6,7 +6,7 @@
    2012-10-10
  */
 
-class Control_admin_config_indus extends Controller{
+class Control_admin_config_indus extends Control_admin{
     /**
      * 行业列表
      */    

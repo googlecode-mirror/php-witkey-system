@@ -5,7 +5,7 @@
  * @version v 2.2
  * 2012-10-01
  */
-class Control_admin_config_pay extends Controller{
+class Control_admin_config_pay extends Control_admin{
 	/**
 	 * ÷ß∏∂≈‰÷√
 	 */

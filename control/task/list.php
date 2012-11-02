@@ -15,10 +15,12 @@ abstract class Control_task_list extends Control_admin{
 	protected  $_task_id ;
 	protected  $_base_uri;
 	
-	function before(){
+	function __construct($request, $response){
+		parent::__construct($request, $response);
 		$this->_task_id = intval($_GET['task_id']);
 		$this->_base_uri  = BASE_URL."/index.php/task/".$this->_model_code."_admin_list";
 	}
+ 
     /**
      * ÈÎÎñÍÆ¼ö
      */

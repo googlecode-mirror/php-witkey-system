@@ -39,14 +39,14 @@ class Control_admin_tool_dboptim extends Control_admin{
 		global $_K,$_lang;
 		$optimizetables = $_POST['optimizetables'];
 		if(empty($optimizetables)){
-			Keke::show_msg ( $_lang ['no_select_table'], 'index.php/admin/tool_dboptim',  'warning' );
+			Keke::show_msg ( $_lang ['no_select_table'], 'admin/tool_dboptim',  'warning' );
 		}
 		 
 		foreach ( $optimizetables as $v ) {
 			//”≈ªØ±Ì
 			Dbfactory::execute ( "OPTIMIZE TABLE " . $v ); 
 		}
-		Keke::show_msg ( $_lang ['operate_success'], 'index.php/admin/tool_dboptim',  'success' );
+		Keke::show_msg ( $_lang ['operate_success'], 'admin/tool_dboptim',  'success' );
 	}
 	/**
 	 * –ﬁ∏¥
@@ -59,7 +59,7 @@ class Control_admin_tool_dboptim extends Control_admin{
 		foreach ( $table_arr as $v ) {
 			Dbfactory::execute ( "REPAIR TABLE " . $v ['Tables_in_' . DBNAME] );
 		}
-		Keke::show_msg (  $_lang ['operate_success'], 'index.php/admin/tool_dboptim/repair', 'success' );
+		Keke::show_msg (  $_lang ['operate_success'], 'admin/tool_dboptim/repair', 'success' );
 	}
 	
 }

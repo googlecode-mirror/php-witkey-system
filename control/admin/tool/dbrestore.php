@@ -10,7 +10,8 @@ class Control_admin_tool_dbrestore extends Control_admin{
 	private $_sql_path ;
 	private $_file_arr;
 	
-	function before(){
+	function __construct($request, $response){
+		parent::__construct($request, $response);
 		//sql文件的存放路径
 		$this->_sql_path = S_ROOT . 'data/backup/';
 		//获取backup目录下的文件列表
@@ -57,7 +58,7 @@ class Control_admin_tool_dbrestore extends Control_admin{
 			Keke::admin_system_log ( $_lang['delete_database_backup_file'] . $file_arr[$_GET['restore_name']]['name'] );
 			echo 1;
 		} else {
-			Keke::show_msg($_lang['delete_database_backup_file_fail'],'index.php/admin/tool_dbrestore','warning');
+			Keke::show_msg($_lang['delete_database_backup_file_fail'],'admin/tool_dbrestore','warning');
 			echo 0;
 			
 		}

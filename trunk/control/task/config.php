@@ -32,16 +32,16 @@ abstract class Control_task_config extends Control_admin{
 	 * 模型的基本配置信息
 	 * @see Keke_Controller::before()
 	 */
-	public function before(){
+	function __construct($request, $response){
+		parent::__construct($request, $response);
 		Keke::init_model();
 		$model_list = Keke::get_arr_by_key(Keke::$_model_list,'model_code');
 		$model_info = $model_list[$this->_model_code];
 		//模型信息
 		$model_info += unserialize($model_info['config']);
 		$this->_model_info = $model_info;
-		
-		
 	}
+ 
 	/**
 	 * 任务配置信息
 	 */

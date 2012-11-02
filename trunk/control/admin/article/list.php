@@ -6,7 +6,7 @@
  * 2012-09-26
  */
 
-class Control_admin_article_list extends Controller {
+class Control_admin_article_list extends Control_admin {
  
 	function action_index($type=null) {
 		//定义全局变量与语言包，只要加载模板，这个是必须要定义.操

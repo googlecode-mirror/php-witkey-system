@@ -5,7 +5,7 @@
  * @author Michael	
  * 2012-09-26
  */
-class Control_admin_article_cate extends Controller {
+class Control_admin_article_cate extends Control_admin {
 
 	/**
 	 * 文章分类列表

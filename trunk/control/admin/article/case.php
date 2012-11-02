@@ -5,10 +5,8 @@
  * @author Michael	
  * 2012-09-26
  */
-class Control_admin_article_case extends Controller {
-	function before(){
-		 
-	}
+class Control_admin_article_case extends Control_admin {
+ 
 	function action_index() {
 		//定义全局变量与语言包，只要加载模板，这个是必须要定义.操
 		global $_K,$_lang;

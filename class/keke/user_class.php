@@ -100,7 +100,7 @@ class keke_user_class {
 	 */
 	
 	static function user_login($username, $password) {
-		global $kekezu;
+		 
 		//没有开用户整合
 		$pwd = md5 ( $password );
 		$check_username = Dbfactory::get_count ( sprintf ( " select username from %switkey_member where username='%s'", TABLEPRE, $username ) );

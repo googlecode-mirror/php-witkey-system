@@ -55,30 +55,32 @@
     <div class="detail pad10">
         <ul>
          
-            <li>
+            <li class="col2 mr_1">
                 {$_lang['server_software']}{$_lang['zh_mh']}		{$sys_info['web_server']}
             </li>
             
-            <li>
+            <li class="col2">
                 MySQL {$_lang['support']}{$_lang['zh_mh']} {$mysql_ver}-community
             </li>
-            <li>
+            <li class="col2 mr_1">
                 PHP{$_lang['version']} {$_lang['zh_mh']} {PHP_OS}/PHP v{PHP_VERSION}
             </li>
           
-            <li>
+            <li class="col2">
                 {$_lang['server_max_upload_file']} : {if $sys_info ['file_uploads']}	
 				{$sys_info['max_filesize']} {else}<font color=red>
 					{$_lang['close']} </font>{/if}
             </li>
 			
-			 <li>
+			 <li class="col2 mr_1">
                  {$_lang['db_size']} : {$dbsize} MB
             </li> 
 			 <li>
                  {$_lang['upload_size']} :	 {$file_size} MB
             </li>
-			
+            <li class="col2">是否开启上传</li>
+            <li>是否开启安全模式</li>
+            <li class="col2 mr_1">是否开启gorbal</li>
         </ul>
     </div>
 </div>

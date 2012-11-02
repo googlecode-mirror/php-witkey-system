@@ -15,25 +15,23 @@ abstract  class Control_admin extends Controller{
 	 * 
 	 */
 	function before(){
-		$this->check_login();
+		 $this->check_roles();
 	}
 	
 	/**
 	 * 检查是否登录
 	 */
-	function check_login(){
+	function check_roles(){
 		global $_K;
-		$jump_url = "<script>window.parent.location.href='".BASE_URL."/index.php/admin/login';</script>";
-		if(!$_SESSION['admin_uid']){
-			echo $jump_url;
+		$this->check_login();
+		if($_K ['control']=='index' or $_K ['control']=='main'){
+			return TRUE;
 		}
 		$res = DB::select()->from('witkey_resource')->cached(60000,'keke_admin_resource')->execute();
 		$res = Keke::get_arr_by_key($res,'resource_url');
 		 
 		$access_uri = 'index.php/'.$_K ['directory'].'/'.$_K ['control'];
-		if($_K ['control']=='index'){
-			return TRUE;
-		} 
+		
 		$rid = $res[$access_uri]['resource_id'];
 		$sql = 'SELECT group_id FROM `:Pwitkey_member_group` 
 				where FIND_IN_SET(:rid,group_roles) and group_id = :gid';
@@ -41,8 +39,12 @@ abstract  class Control_admin extends Controller{
 		if($res !== TRUE){
 			exit('您无权访问此页面');
 		}
-		//var_dump($res,$rid,$_SESSION['admin_gid']);
-		
+	}
+	function check_login(){
+		$jump_url = "<script>window.parent.location.href='".BASE_URL."/index.php/admin/login';</script>";
+		if(!$_SESSION['admin_uid']){
+			echo $jump_url;
+		}
 	}
 	
 }

@@ -5,7 +5,7 @@
  * @version v 2.2
  * 2012-10-01
  */
-class Control_admin_config_payitembuy extends Controller{
+class Control_admin_config_payitembuy extends Control_admin{
 	/**
 	 * 增值服务购买记录列表
 	 */

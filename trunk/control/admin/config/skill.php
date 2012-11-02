@@ -6,7 +6,7 @@
    2012-10-10
  */
 
-class Control_admin_config_skill extends Controller{
+class Control_admin_config_skill extends Control_admin{
     
 	function action_index(){
     	global $_K,$_lang;

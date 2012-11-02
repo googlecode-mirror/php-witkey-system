@@ -2,7 +2,7 @@
 /**
  * 短信配置
  */
-class Control_admin_config_msg extends Controller{
+class Control_admin_config_msg extends Control_admin{
     /**
      * 短信接口配置
      */

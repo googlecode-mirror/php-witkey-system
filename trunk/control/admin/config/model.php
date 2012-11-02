@@ -4,7 +4,7 @@
  * @author Michael
  * 2012-10-03
  */
-class Control_admin_config_model extends  Controller {
+class Control_admin_config_model extends  Control_admin {
     /**
      * 初始化加载页面，
      * @param string $type 确定加载那个配置模板文件

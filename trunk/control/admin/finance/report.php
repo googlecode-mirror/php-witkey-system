@@ -4,7 +4,7 @@
  * @version v 2.0
  * @date 2012-10-7 
  */
-class Control_admin_finance_report extends Controller {	
+class Control_admin_finance_report extends Control_admin {	
 	/**
 	 * 财务管理初始化页面
 	 * index 是必须的，否则路由找不到index，程序就挂了啊

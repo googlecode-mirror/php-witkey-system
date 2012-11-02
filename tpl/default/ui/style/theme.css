@@ -8992,6 +8992,8 @@ a.submit:active {
 
   /* 账号绑定图标 */
 
+  /* 账户首页 */
+
 }
 #user a:link,
 #user a:visited {
@@ -9870,4 +9872,43 @@ a.submit:active {
 }
 #user .bind a {
   margin-left: 10px;
+}
+#user .user_avatar {
+  float: left !important;
+  text-align: center;
+  background: #f6f6f6;
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+#user .user_avatar img {
+  display: block;
+}
+#user .about_user {
+  zoom: 1;
+  *zoom: 1;
+  font-size: 14px;
+  padding-left: 170px;
+}
+#user .about_user:before,
+#user .about_user:after {
+  content: "";
+  display: table;
+}
+#user .about_user:after {
+  clear: both;
+}
+#user .about_user .money {
+  color: #d24200;
+}
+#user .about_user span {
+  margin-right: 20px;
+  display: inline-block;
+}
+#user .about_user img {
+  vertical-align: middle;
+}
+#user .about_user p {
+  margin-bottom: 5px;
+  height: 30px;
 }

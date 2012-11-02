@@ -6,7 +6,7 @@
  * @version v 2.0
  * 2011-9-2
 */
-class Control_admin_tool_feed extends Controller{
+class Control_admin_tool_feed extends Control_admin{
 	function action_index(){
 		//定义全局变量与语言包，只要加载模板，这个是必须要定义.操
 		global $_K,$_lang;

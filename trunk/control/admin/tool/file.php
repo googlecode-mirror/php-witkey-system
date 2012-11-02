@@ -7,7 +7,7 @@
  * 2010-5-19早上0:54:00
  */
 
-class Control_admin_tool_file extends Controller{
+class Control_admin_tool_file extends Control_admin{
 	
 	function action_index(){
 		//定义全局变量与语言包，只要加载模板，这个是必须要定义.操

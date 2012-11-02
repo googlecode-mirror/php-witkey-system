@@ -6,7 +6,7 @@
  * @version v 2.0
  * 2010-5-20下午13:25:13
  */
-class Control_admin_tool_dboptim extends Controller{
+class Control_admin_tool_dboptim extends Control_admin{
 	
 	/**
 	 * 表优化,加载模板用的

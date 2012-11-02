@@ -6,7 +6,7 @@
  * @charset:GBK  last-modify 2011-10-22-下午04:10:03
  * @version V2.0
  */
-class Control_admin_user_markconfig extends Controller{
+class Control_admin_user_markconfig extends Control_admin{
 	function action_index(){
 		global $_K,$_lang;
 		//读取mark_config表的数据

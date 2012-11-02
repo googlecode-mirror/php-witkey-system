@@ -18,9 +18,6 @@ class Control_admin_index extends Control_admin{
 				'finance' => $_lang['finance_manage'],
 				'user' => $_lang['user_manage'],
 				'tool' => $_lang['system_tool'],
-				 
-				 
-		
 		);
 		$grouplist_arr = $admin_obj->get_user_group();
 		 

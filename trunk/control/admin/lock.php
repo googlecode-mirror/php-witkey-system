@@ -6,7 +6,7 @@
  * @version v 2.0
  * 2011-08-30 09:51:34
  */
-class Control_admin_lock extends Control_admin{
+class Control_admin_lock extends Control{
 	
 	function action_index(){
 		global $_K,$_lang;

@@ -6,7 +6,7 @@
  * @version v 1.0
  * 2010-5-19обнГ09:25:13
  */
-class Control_admin_tool_dbbackup extends Controller{
+class Control_admin_tool_dbbackup extends Control_admin{
 	
 	function action_index(){
 		global $_K,$_lang;

@@ -6,7 +6,7 @@
  * @version v 2.2
  * 2012-10-11
  */
-class Control_admin_tool_tpl extends Controller{
+class Control_admin_tool_tpl extends Control_admin{
 	/**
 	 * @var Ìø×ªÓÃ
 	 */

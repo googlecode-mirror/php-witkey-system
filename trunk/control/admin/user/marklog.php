@@ -6,7 +6,7 @@
  * @version v 2.2
  * 2010-08-29 14:37:34
  */
-class Control_admin_user_marklog extends Controller{
+class Control_admin_user_marklog extends Control_admin{
 	function action_index(){
 		global $_K,$_lang;
 		//Òª²éÑ¯µÄ×Ö¶Î

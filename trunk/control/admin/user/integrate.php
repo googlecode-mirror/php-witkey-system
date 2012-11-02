@@ -7,7 +7,7 @@
  * 2010-7-16下午06:02:31
  * @example //1表示不整合  2 表示整合uc  3 表示整合pw
  */
-class Control_admin_user_integrate extends Controller{
+class Control_admin_user_integrate extends Control_admin{
 	/**
 	 * 初始化整合的列表页
 	 */

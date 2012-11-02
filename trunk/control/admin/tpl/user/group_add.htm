@@ -12,7 +12,7 @@
 				<form class="detail" action="{BASE_URL}/index.php/admin/user_group/save" method="post">
 				    <table width="100%" border="0"  cellspacing="0"  cellpadding="0">
 				    <input type="hidden" name="formhash" value="{FORMHASH}">
-					  <input type="hidden" name="is_submit" value="$groupinfo_arr['group_id']"/>
+					  <input type="hidden" name="hdn_gid" value="$groupinfo_arr['group_id']"/>
 					   <tr>
 				        <th width="10%" scope="row">{$_lang['group_name']}{$_lang['zh_mh']}</th>
 				        <td><input type="text" value="{$groupinfo_arr['groupname']}" name="txt_groupname" id="txt_groupname" maxlength="50" 
@@ -47,10 +47,10 @@
 					  <tr>
 					 	<th scope="row">&nbsp;</th>
 				        <td>
-				          <div class="clearfix padt10">
-						  <button type="submit" onclick="return checkForm(document.getElementById('frm_art_edit'),false)" name="sbt_edit" class="positive pill primary button"  value="{if $editgid}{$_lang['edit_user_group']}{else}{$_lang['add_user_group']}{/if}"/><span class="check icon"></span>{$_lang['submit']}</button>
+				          <input type="checkbox" onclick="checkall(event);" id="checkbox" name="checkbox"/>
+				        	<label for="checkbox"> {$_lang['select_all']}</label>
+						  <button type="submit" onclick="return checkForm(document.getElementById('frm_art_edit'),false)" name="sbt_edit"  value="{if $editgid}{$_lang['edit_user_group']}{else}{$_lang['add_user_group']}{/if}"/>{$_lang['submit']}</button>
 				       	  <button type="button" name="rst_edit" class="pill button"  value="{$_lang['return']}" onclick="history.go(-1);"/><span class="uparrow icon"></span>{$_lang['return']}</button>
-				          </div>
 						</td>
 				     </tr>
 				    </table>

@@ -5,7 +5,7 @@
  *
  */
 
-class Control_admin_tool_link extends Controller {
+class Control_admin_tool_link extends Control_admin {
 	
 	/**
 	 * 友链管理初始化页面

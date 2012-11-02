@@ -2,10 +2,7 @@
 class Control_admin_login extends Controller {
 	 
 	
-	// 系统初始化
-	function before() {
-		$admin_obj = new keke_admin_class ;
-	}
+ 
 	/**
 	 * 判断有没有登录，如果登录了，跳到index.php
 	 * 如果没有登录跳到初始化登录页面

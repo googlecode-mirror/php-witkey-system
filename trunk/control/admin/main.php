@@ -1,5 +1,6 @@
 <?php  defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
-class Control_admin_main extends Control_admin {
+class Control_admin_main extends Controller {
+	
 	function action_index(){
 		global $_lang,$_K;
 		$file_obj = new keke_file_class ();

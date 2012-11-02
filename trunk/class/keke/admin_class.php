@@ -259,7 +259,7 @@ class keke_admin_class {
 			} else {
 				$_SESSION ['admin_uid'] = $_SESSION ['uid'] = $user_info ['uid'];
 				$_SESSION ['admin_username'] = $user_info ['username'];
-				
+				$_SESSION['admin_gid']  = $user_info['group_id'];
 				Keke::admin_system_log ( $user_info ['username'] . date ( 'Y-m-d H:i:s', time () ) . $_lang['login_system'] );
 				
 				$this->set_login_limit_time ();

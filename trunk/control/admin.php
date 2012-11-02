@@ -12,7 +12,6 @@ abstract  class Control_admin extends Controller{
 	/**
 	 * 通过control+action 得到后台资源ID
 	 * 通过资源ID ，与当前用户级id，判断用户组是否有操作权限
-	 * 可以让check_role去死了
 	 * 
 	 */
 	function before(){
@@ -23,10 +22,17 @@ abstract  class Control_admin extends Controller{
 	 * 检查是否登录
 	 */
 	function check_login(){
+		global $_K;
 		$jump_url = "<script>window.parent.location.href='".BASE_URL."/index.php/admin/login';</script>";
 		if(!$_SESSION['admin_uid']){
 			echo $jump_url;
 		}
+		$res = DB::select()->from('witkey_resource')->cached(60000,'keke_admin_resource')->execute();
+		$res = Keke::get_arr_by_key($res,'resource_url');
+		 
+		$access_uri = 'index.php/'.$_K ['directory'].'/'.$_K ['control'];
+		 
+		$rid = $res[$access_uri];
 		
 	}
 	

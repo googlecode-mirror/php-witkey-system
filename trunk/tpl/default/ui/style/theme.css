@@ -8468,7 +8468,6 @@ iframe {
   z-index: -1;
 }
 #video_layout video {
-  width: 100%;
   min-height: 768px;
 }
 /* 表格 

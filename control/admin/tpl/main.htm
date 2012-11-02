@@ -1,75 +1,23 @@
 <!--{include control/admin/tpl/admin_header}-->
-
 <div class="page_title clearfix">
     <h1>{$_lang['manage_index']}</h1>
-    <div class="tool">
-    </div>
 </div>
-<div class="box tip clearfix p_relative" id="man_tips">
-    <div class="control">
-        <a href="javascript:void(0);" onclick="$('#man_tips').fadeOut();" title="{$_lang['close']}"><b>&times;</b></a>
-    </div>
+<div class="box col2 mr_1">
     <div class="title">
-        <h2>{$_lang['safe_report']}</h2>
+        快捷导航
     </div>
     <div class="detail pad10">
-        <ul>
-            <li>
-                {$_lang['suggest_rename_notice']}
-            </li>
-            <li>
-                {$_lang['suggest_hide_notice']}
-            </li>
+        <ul class="link">
+            <li><a href="#">用户建议</a></li>
+			<li><a href="#">稿件举报</a></li>
+			<li><a href="#">添加新用户</a></li>
+			<li><a href="#">手动充值</a></li>
+			<li><a href="#">充值审核</a></li>
+			<li><a href="#">提交审核</a></li>
         </ul>
     </div>
 </div>
-<div class="box user_quick clearfix">
-    <div class="detail pad10">
-        <ul>
-            <li class="avatar">
-                <a href="#" title="admin"><!--{userpic($_K['user_info']['uid'],'small')}--></a>
-            </li>
-            <li class="name">
-                <span>{$_lang['good_morning']}</span>，{$_lang['public_admin_uid']}<b>{$_K['user_info']['username']}</b>
-                <span class="clock"> - {$_lang['today_is']}<span id="date"><!--{date('Y-m-d H:i:s',time())}--></span></span>
-            </li>
-            <li class="statistics clearfix">
-                <ul>
-                    <li>
-                        <a href="index.php?do=user&view=add" class="button"><span class="icon check">&nbsp;</span>{$_lang['new_member']}({$user_count})</a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)" class="button"><span class="icon book">&nbsp;</span>{$_lang['new_task']}({$task_count})</a>
-                    </li>
-                    <li>
-                        <a href="index.php?do=finance&view=withdraw" class="button"><span class="icon home">&nbsp;</span>{$_lang['withdraw_apply']}({$withdraw_count})</a>
-                    </li>
-                    <li>
-                        <a href="index.php?do=finance&view=recharge" class="button"><span class="icon rss">&nbsp;</span>{$_lang['user_recharge']}({$charge_count})</a>
-                    </li>
-                    <li>
-                        <a href="{$_K['siteurl']}/index.php?do=user&view=message&op=inbox&opp=inbox" target="_blank" class="button"><span class="icon comment">&nbsp;</span>{$_lang['user_message']}({$news_count})</a>
-                    </li>
-                    <li>
-                        <a href="index.php?do=trans&view=rights" class="button"><span class="icon mail">&nbsp;</span>{$_lang['trans_rights']}({$report_count})</a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-</div>
-<div class="box">
-    <div class="title">
-        {$_lang['system_announcement']}
-    </div>
-    <div class="detail pad10">
-        <ul>
-            <script type="text/javascript" charset="gbk" src="{$sysinfo}">
-            </script>
-        </ul>
-    </div>
-</div>
-<div class="box">
+<div class="box col2">
     <div class="title">
         {$_lang['authorization_info']}
     </div>
@@ -87,7 +35,20 @@
         </ul>
     </div>
 </div>
-<div class="box">
+
+<div class="clear"></div>
+<div class="box col2 mr_1">
+    <div class="title">
+        {$_lang['system_announcement']}
+    </div>
+    <div class="detail pad10">
+        <ul>
+            <script type="text/javascript" charset="gbk" src="{$sysinfo}">
+            </script>
+        </ul>
+    </div>
+</div>
+<div class="box col2">
     <div class="title">
         {$_lang['server_info']}
     </div>
@@ -121,6 +82,7 @@
         </ul>
     </div>
 </div>
+<div class="clear"></div>
 <script type="text/javascript" src="$notice" charset="gbk">
 </script>
 <script type="text/javascript">

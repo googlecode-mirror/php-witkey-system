@@ -668,7 +668,8 @@ button.pnc:active { border-color:#1c6a9e !important; filter:~'progid:DXImageTran
 /* 表单
 	-------------------------*/
 /* input 输入框 */
-/*input[type=email],
+/* 示例
+input[type=email],
 input[type=number],
 input[type=password],
 input[type=tel],
@@ -676,106 +677,61 @@ input[type=text],
 input[type=url],
 input[type=search],
 input[type=date]{ 
-	background:#FBFBFB; color:#333; border:1px solid #D8D8D8; border-left-color:#A8A8A8; border-top-color:#A8A8A8; border-radius:2px; box-shadow:inset 2px 2px 5px rgba(0,0,0,.1); padding:6px 4px 6px 8px; font:12px Arial, Helvetica, sans-serif;
+	.txt_input();
 	&:focus{
-		background:#fff; border-color:#006DC2;  box-shadow:inset 1px 1px 3px #A6CAEA, 0 0 3px rgba(102, 146, 219,1);
+		.txt_input(#000,#fff,1px,solid,#ccc);
 	}
 	&:disabled,&[disabled]{
-		border-color:#ccc; color:#999; background:#eee; box-shadow:none;
+		.txt_input(#666,#eee,1px,solid,#ccc);
 	}
 }*/
+/* 单选、多选 */
 input[type=radio],
 input[type=checkbox] {
   vertical-align: middle;
 }
-/*  textarea 文本域 	
-textarea{
-	background:#FBFBFB; color:#333; border:1px solid #D8D8D8 ; border-left-color:#A8A8A8; border-top-color:#A8A8A8; border-radius:2px; box-shadow:inset 2px 2px 5px rgba(0,0,0,.1); padding:6px 0 0 8px; font:12px Arial, Helvetica, sans-serif; resize:vertical; vertical-align:top;
-	&:focus{
-		background:#fff; border-color:#006DC2;  box-shadow:inset 1px 1px 3px #A6CAEA, 0 0 3px rgba(102, 146, 219,1);
-	}
-	&:disabled,[disabled]{
-		border-color:#ccc; color:#999; background:#eee; box-shadow:none;
-	}
-}*/
 /* button submit 按钮 */
-/*
+/* 示例
 input[type="button"],
 button[type="button"],
 input[type="reset"],
 button[type="reset"],{
-	margin: 5px; 
-	padding: 4px 15px;  
-
+	.button();text-align: center; text-decoration: none; .border-radius(4px); 
 	&:hover{
-		border-color:#388AD4;
-		color: #fff; 
-		text-shadow: 0 1px 0 rgba(0,0,0,.3);
-		background: #75A9E2; 
-		background: -webkit-gradient(linear, left top, left bottom, color-stop(.2, #75A9E2), color-stop(1, #4C83BF)); 
-		background: -moz-linear-gradient(center top, #75A9E2 20%, #4C83BF 100%); 
-		-webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 2px rgba(255,255,255,.3), 0 1px 2px rgba(0,0,0,.29); 
-		-moz-box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 2px rgba(255,255,255,.3), 0 1px 2px rgba(0,0,0,.29); 
-		box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 2px rgba(255,255,255,.3), 0 1px 2px rgba(0,0,0,.29);
+		.button(white,#75A9E2,1px,solid,#388AD4);
+		.box-shadow(inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 2px rgba(255,255,255,.3), 0 1px 2px rgba(0,0,0,.29));
+		.text-shadow(0 1px 0 rgba(0,0,0,.3));
+		#gradient > .vertical(#75A9E2,#4C83BF); //使用该样式必须先声明@disable-filters的布尔值
 	}
 	&:active{
 		border-color: #20559a;
-		-webkit-box-shadow: inset 0 0 7px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,1);
-		-moz-box-shadow: inset 0 0 7px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,1);
-		box-shadow: inset 0 0 7px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,1);
+		.box-shadow(inset 0 0 7px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,1));
 	}
 	&:disabled,&.disabled{
-		margin: 5px; 
-		padding: 4px 15px; 
-		border: 1px solid #ccc;
-		border-bottom-color: #bbb; 
-		color: #888; 
-		text-align: center; 
-		text-shadow: 0 -1px 0 rgba(255,255,255,.3); 
-		text-decoration: none; 
-		-webkit-border-radius: 4px; 
-		-moz-border-radius: 4px; 
-		khtml-border-radius: 4px; 
-		border-radius: 4px; 
-		background: #E9E9E9; 
-		background: -webkit-gradient(linear, left top, left bottom, color-stop(.2, #E9E9E9), color-stop(1, #D1D1D1)); 
-		background: -moz-linear-gradient(center top, #E9E9E9 20%, #D1D1D1 100%); 
+		.button(#888,#E9E9E9,1px,solid,#ccc #ccc #bbb);
+		.text-shadow(0 -1px 0 rgba(255,255,255,.3)); 
+		#gradient > .vertical(#E9E9E9,#D1D1D1);
 	}
 }
 
-
 input[type="submit"],
 button[type="submit"]{
-	margin: 5px; 
-	padding: 4px 15px; 
-	border: 1px solid #4081af; 
-	border-bottom-color: #20559a; 
-	color: white; 
+	.button(white,#0090D2,1px,solid,#4081af #4081af #20559a);
+	.text-shadow(0 -1px 0 rgba(0,0,0,.3)); 
+	.border-radius(4px); 
+	#gradient > .vertical(#52a8e8,#2e76cf);
+	.box-shadow(inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 2px rgba(255,255,255,.3), 0 1px 2px rgba(0,0,0,.29));
 	text-align: center; 
-	text-shadow: 0 -1px 0 rgba(0,0,0,.3); 
 	text-decoration: none; 
-	-webkit-border-radius: 4px; 
-	-moz-border-radius: 4px; 
-	khtml-border-radius: 4px; 
-	border-radius: 4px; 
-	background: #0090D2; 
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(.2, #52a8e8), color-stop(1, #2e76cf)); 
-	background: -moz-linear-gradient(center top, #52a8e8 20%, #2e76cf 100%); 
-	-webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 2px rgba(255,255,255,.3), 0 1px 2px rgba(0,0,0,.29); 
-	-moz-box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 2px rgba(255,255,255,.3), 0 1px 2px rgba(0,0,0,.29); 
-	box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 2px rgba(255,255,255,.3), 0 1px 2px rgba(0,0,0,.29);
 	&:hover{
-		background: #0073d2; 
-		background: -webkit-gradient(linear, left top, left bottom, color-stop(.2, #3e9ee5), color-stop(1, #1666ca)); 
-		background: -moz-linear-gradient(center top, #3e9ee5 20%, #1666ca 100%);
+		#gradient > .vertical(#3e9ee5,#1666ca);
 	}
 	&:active{
 		border-color: #20559a;
-		-webkit-box-shadow: inset 0 0 7px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,1);
-		-moz-box-shadow: inset 0 0 7px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,1);
-		box-shadow: inset 0 0 7px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,1);
+		.box-shadow(inset0 0 7px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,1));
 	}
 }*/
+/* 表单行 */
 .form_row {
   zoom: 1;
   *zoom: 1;
@@ -784,6 +740,10 @@ button[type="submit"]{
   font-size: 1.2em;
   line-height: 30px;
   vertical-align: top;
+  /* 表单标签 */
+
+  /*  输入框右边的字段 */
+
 }
 .form_row:before,
 .form_row:after {
@@ -807,6 +767,19 @@ button[type="submit"]{
   border: 1px solid #ccc;
   vertical-align: middle;
 }
+/* 浮动行 */
+.float_row {
+  zoom: 1;
+  *zoom: 1;
+}
+.float_row:before,
+.float_row:after {
+  content: "";
+  display: table;
+}
+.float_row:after {
+  clear: both;
+}
 .float_row .form_label {
   display: inline;
   float: left;
@@ -814,6 +787,7 @@ button[type="submit"]{
 .float_row .detail {
   padding-left: 130px;
 }
+/* 表单分割线 */
 .form_line {
   zoom: 1;
   *zoom: 1;
@@ -833,6 +807,7 @@ button[type="submit"]{
 .form_line hr {
   border: none;
 }
+/* 表单底部 */
 .form_footer {
   zoom: 1;
   *zoom: 1;
@@ -846,6 +821,7 @@ button[type="submit"]{
 .form_footer:after {
   clear: both;
 }
+/* 带图标表单提示共3种 */
 .form_tip {
   margin-top: 20px;
   font-size: 1.2em;
@@ -8199,9 +8175,8 @@ table {
   border-spacing: 0;
 }
 /* 全局定义 */
-/* 打开ie滤镜 */
 body {
-  background: #ffffff;
+  background: #000000 url(http://cn.bing.com/az/hprichv/?p=FarmhouseGhosts_Getty_126171235_ZH-CN31221548.jpg) fixed center repeat;
   font: 12px/25px Lucida, Verdana, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
   color: #6d6d6d;
 }
@@ -8398,6 +8373,7 @@ header#top .logo h2 {
   float: left;
   width: 790px;
   margin: 0 5px;
+  margin-bottom: 30px;
 }
 #main .box header {
   clear: both;
@@ -8407,7 +8383,7 @@ header#top .logo h2 {
   *zoom: 1;
   display: inline;
   float: left;
-  width: 150px;
+  width: 190px;
   margin: 0 5px;
 }
 #sidebar:before,
@@ -8430,7 +8406,7 @@ header#top .logo h2 {
   /* 导航
 		----------------------------------------*/
 
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 #sidebar .box .image-wrap {
   border-radius: 5px;
@@ -8482,6 +8458,18 @@ header#top .logo h2 {
 iframe {
   width: 100%;
   height: 500px;
+}
+#video_layout {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+#video_layout video {
+  width: 100%;
+  min-height: 768px;
 }
 /* 表格 
 ------------------------------*/

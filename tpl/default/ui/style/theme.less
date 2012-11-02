@@ -9,15 +9,17 @@
 .reset();
 
 /* 全局定义 */
-/* 打开ie滤镜 */
-@disable-filters: true;
 
+@disable-filters: true;//打开ie滤镜
+@using-ieclasses: true;//打开ie样式 
+
+@ws_bg:		#000  url(http://cn.bing.com/az/hprichv/?p=FarmhouseGhosts_Getty_126171235_ZH-CN31221548.jpg) fixed center repeat;
 @theme_bg:  #EAEAEA url(http://cn.bing.com/az/hprichbg?p=rb%2fKenting_ZH-CN7852586394_1366x768.jpg) fixed center repeat;
 @theme_bg1: #fff ;
 @theme_bg2: #fff url(../images/bg_hp.png) center top repeat-x;
 @theme_bg3:  url(../images/bg.png) fixed center top no-repeat ;
 body{
-	background:@theme_bg1 ;
+	background:@ws_bg ;
 	font: 12px/25px  Lucida,Verdana,Hiragino Sans GB,WenQuanYi Micro Hei,sans-serif;
 	color:#6d6d6d;
 }
@@ -189,7 +191,9 @@ header#top {
 	}
 }
 #main{
+	
 	.column(20);
+	.mb_30;
 	.box{
 		header{
 			.box_header;
@@ -199,15 +203,25 @@ header#top {
 
 #sidebar{
 	.clearfix;
-	.column(4);
+	.column(5);
 	.box{
 		.rigo_light;
-		.mb_30;
+		.mb_10;
 	}
 }
 iframe{ width: 100%; height: 500px;}
 
-
+#video_layout{
+	position: fixed;
+	.size(100%);
+	top:0;
+	left:0;
+	z-index: -1;
+	video{
+		width:100%;
+		min-height: 768px;
+	}
+}
 
 /* 表格 
 ------------------------------*/

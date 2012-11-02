@@ -15,7 +15,8 @@ abstract class Control_shop_list extends Control_admin{
 	protected  $_sid ;
 	protected  $_base_uri;
 	
-	function before(){
+	function __construct($request, $response){
+		parent::__construct($request, $response);
 		$this->_sid = intval($_GET['sid']);
 		$this->_base_uri  = BASE_URL."/index.php/shop/".$this->_model_code."_admin_list";
 	}

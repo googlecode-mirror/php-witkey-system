@@ -5,7 +5,7 @@
  * @version v 2.0
  * 2010-5-24下午06:08:41
  */
-class Control_admin_tool_tag extends Controller{
+class Control_admin_tool_tag extends Control_admin{
 	/**
 	 * 初始化标签列表
 	 */

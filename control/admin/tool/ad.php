@@ -9,7 +9,7 @@ defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
  * @encoding GBK
  */
 
-class Control_admin_tool_ad extends Controller{
+class Control_admin_tool_ad extends Control_admin{
 	function action_index(){
 		//加载全局变量，语言包
 		global $_K,$_lang;

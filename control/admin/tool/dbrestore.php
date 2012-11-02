@@ -6,7 +6,7 @@
  * @version v 2.0
  * 2010-5-20обнГ13:25:13
  */
-class Control_admin_tool_dbrestore extends Controller{
+class Control_admin_tool_dbrestore extends Control_admin{
 	private $_sql_path ;
 	private $_file_arr;
 	

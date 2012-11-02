@@ -7,7 +7,7 @@
  * @date 2011-12-21 下午05:54:07
  * @encoding GBK
 */
-class Control_admin_tool_adlist extends Controller{
+class Control_admin_tool_adlist extends Control_admin{
 	function action_index(){
 		//定义全局变量，加载模板和语言包
 		global $_K,$_lang;

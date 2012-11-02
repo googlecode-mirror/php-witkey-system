@@ -1,5 +1,5 @@
 <?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
-class Control_admin_user_group extends Controller{
+class Control_admin_user_group extends Control_admin{
 	function action_index(){
 		//加载全局变量和语言包
 		global $_K,$_lang;
@@ -27,16 +27,13 @@ class Control_admin_user_group extends Controller{
 				'finance' => $_lang['finance_manage'],
 				'user' => $_lang['user_manage'],
 				'tool' => $_lang['system_tool'],
-				'demo'=>'MVC演示',
 		);
 		//获取group_id，存在判断是编辑
 		$group_id=$_GET['group_id'];
 		if ($group_id){
-			$groupinfo_arr = DB::select()->from('witkey_member_group')->where('group_id ='. $group_id)->execute();
-			$groupinfo_arr = $groupinfo_arr[0];
+			$groupinfo_arr = DB::select()->from('witkey_member_group')->where('group_id ='. $group_id)->get_one()->execute();
+		
 		}
-// 		var_dump($groupinfo_arr);die;
-        //多选框选项字符串分解为数组
 		$grouprole_arr = explode ( ',', $groupinfo_arr ['group_roles'] );
 		require keke_tpl::template("control/admin/tpl/user/group_add");
 	}
@@ -48,9 +45,9 @@ class Control_admin_user_group extends Controller{
 		//获取选中的多选条件的group_id，为数组
 		$group_roles = $_POST['chb_resource'];
 		//将数组转化为字符串
-		if($group_roles!=''){
-		$group_roles = implode(",", $group_roles);
-		}
+		
+		$group_roles = implode(",", (array)$group_roles);
+		
 		if($_POST['txt_groupname']){
 			$txt_groupname = $_POST['txt_groupname'];
 		}else{
@@ -62,10 +59,10 @@ class Control_admin_user_group extends Controller{
 				'group_roles'=>$group_roles,
 				'on_time'=>time()
 				);
-		if ($_POST['is_submit']){
+		if ($_POST['hdn_gid']){
 			//编辑情况下提交，更新
-			Model::factory('witkey_member_group')->setData($array)->setWhere('group_id = '.$_POST['is_submit'])->update();
-			Keke::show_msg('编辑成功','admin/user_group/add?group_id='.$_POST['is_submit'],'success');
+			Model::factory('witkey_member_group')->setData($array)->setWhere('group_id = '.$_POST['hdn_gid'])->update();
+			Keke::show_msg('编辑成功','admin/user_group/add?group_id='.$_POST['hdn_gid'],'success');
 		}else{
 			//添加情况下提交，直接插入
 			Model::factory('witkey_member_group')->setData($array)->create();

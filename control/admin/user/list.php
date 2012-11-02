@@ -1,8 +1,12 @@
 <?php	defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
-后台用户路由
-*/
-class Control_admin_user_list extends Controller{
+ *  后台用户列表
+ * @author michael
+ * @version 2.2 
+ * 2012-11-01
+ *
+ */
+class Control_admin_user_list extends Control_admin{
 	function action_index(){
 		global $_K,$_lang;
 		//需要在显示的字段

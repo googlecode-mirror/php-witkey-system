@@ -2,7 +2,7 @@
 /**
  * ÓÃ»§Ìí¼Ó
  */
-class Control_admin_user_add extends Controller{
+class Control_admin_user_add extends Control_admin{
 	function action_index(){
 		global $_K,$_lang;
 		$uid = $_GET['uid'];

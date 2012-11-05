@@ -24,7 +24,7 @@
 			'delete_audit_withdraw_success' => '提现申请不通过！',
 			'fail_item_not_exist' => '提现申请不存在，不通过失败！',
 			'mulit_review' => '批量审核',
-		'confirm_cash'=>'确认打款',
+		    'confirm_cash'=>'确认打款',
 		
 		    /* admin_finance_withdraw.htm */
 	       'system_info'=>'系统目前支持支付宝的批量打款功能，您可以针对支付宝的提现申请进行批量打款',

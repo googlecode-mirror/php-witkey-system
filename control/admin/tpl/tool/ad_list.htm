@@ -63,10 +63,9 @@
 					<td><!--{eval echo date('Y-m-d',$v['on_time']);}--></td>
                     <td>{if $v['is_allow']==1}<span style="color:green">{$_lang['available']}</span>{else}<span style="color:red">{$_lang['not_available']}</span>{/if}</td><!-- ÊÇ·ñ¿ÉÓÃ -->
                     <td>
-						<!-- <a href="../../index.php?do=article&view=article_info&art_id=" target="_blank">{$_lang['view']}</a> -->
-						<a href="{BASE_URL}/index.php/admin/tool_adlist/add?ad_id=$v['ad_id']" class="button dbl_target"><span class="pen icon"></span>{$_lang['edit']}</a>
-						<!--<a href="index.php?do={$do}&view=ad_list&ac=del&ad_id=$v['ad_id']&target_id={$v['target_id']}&page={$page}&ord={$ord}"  onclick="return cdel(this);" class="button"><span class="trash icon"></span>{$_lang['delete']}</a>-->
-						<!-- <a href="#" onclick="javascript:setCopy(document.getElementById('code_{$v['ad_id']}').value, {$_lang['copy_code']});" class="button"><span class="book icon"></span>{$_lang['copy']}</a>  -->
+						 
+						<a href="{BASE_URL}/index.php/admin/tool_ad/add?ad_id=$v['ad_id']" class="button dbl_target"><span class="pen icon"></span>{$_lang['edit']}</a>
+						 
 					</td>
                   </tr>
                   {/loop}

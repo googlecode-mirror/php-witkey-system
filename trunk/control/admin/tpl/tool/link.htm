@@ -2,8 +2,8 @@
 <div class="page_title">
     	<h1>{$_lang['links']}</h1>
         <div class="tool">         
-            <a href="{BASE_URL}/index.php/admin/link" {if $_K['action'] != 'add'}class="here"{/if}>{$_lang['link_manage']}</a>
-			<a href="{BASE_URL}/index.php/admin/link/add" {if $_K['action'] == 'add'}class="here"{/if}>{if $link_id}{$_lang['link_edit']}{else}{$_lang['link_add']}{/if}</a>
+            <a href="{BASE_URL}/index.php/admin/tool_link" {if $_K['action'] != 'add'}class="here"{/if}>{$_lang['link_manage']}</a>
+			<a href="{BASE_URL}/index.php/admin/tool_link/add" {if $_K['action'] == 'add'}class="here"{/if}>{if $link_id}{$_lang['link_edit']}{else}{$_lang['link_add']}{/if}</a>
         </div>
 </div> 
 <form method="get" action="{BASE_URL}/index.php/admin/link" id="frm_art_search">

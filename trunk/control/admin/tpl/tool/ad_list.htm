@@ -3,13 +3,13 @@
     <h1>{$_lang['ads_manage']}</h1>
     <div class="tool">
         <a href="{BASE_URL}/index.php/admin/tool_ad" >{$_lang['advertising']}</a>
-        <a class="here" href="{BASE_URL}/index.php/admin/tool_adlist" >{$_lang['ads_list']}</a>
+        <a href="{BASE_URL}/index.php/admin/tool_ad/adlist"  class="here" >{$_lang['ads_list']}</a>
     </div>
 </div>
     <!--页头结束-->
     <!--提示结束-->
 <div class="box search p_relative">
-		    <form class="detail" id="detail" action="#" method="get" name="s" id="sl">
+		    <form class="detail" id="detail" action="{BASE_URL}/index.php/admin/tool_ad" method="get" name="s" id="sl">
                 <table cellspacing="0" cellpadding="0">
 					<tbody>
 			 	<tr>
@@ -42,7 +42,7 @@
     <!--搜索结束-->
     <div class="box list">
         	<form class="detail" action="" id='frm_list' method="post">
-        	<div id="ajax_dom"> 
+        	 
               <table cellpadding="0" cellspacing="0">
                 <tbody>
                   <tr>
@@ -85,33 +85,37 @@
                     </td>
                   </tr>
                 </tbody>
+                <tfoot>
+                  <tr>
+                  <td colspan="9">
+              		<div class="page">{$pages['page']}</div>    
+                  </td>
+                  </tr>
+                </tfoot>
               </table>
-			  <div class="page">{$pages['page']}</div>
-              </div>
         	</form>
-        </div>       
-    </div>
-    <script type="text/javascript">
-    	function setlinks(){
-    		var target_id=document.getElementById("ad_target_id");
-    		var alink=document.getElementById("add_ad");
-    		if(target_id.value!=""){
-    			alink.href="{BASE_URL}/index.php/admin/tool_adlist/add?target_id="+target_id.value;
-    			return true;
-    		}
-    		return false;
-    	}
-    	function sync_select(){
-    		var cat=document.getElementById("catid");
-    		var target=document.getElementById("ad_target_id");
-    		if(cat.value!=""){
-    			var i=cat.selectedIndex;
-    			target.options['i'].selected=true;
-    		}
-    	}
-    	function update_order(n_id,n_value){
-    		$.get("{BASE_URL}/index.php/admin/tool_adlist?action=u_order",{u_id:n_id,u_value:n_value});
-    	}
-    </script>
+</div>
+<script type="text/javascript">
+	function setlinks(){
+		var target_id=document.getElementById("ad_target_id");
+		var alink=document.getElementById("add_ad");
+		if(target_id.value!=""){
+			alink.href="{BASE_URL}/index.php/admin/tool_ad/add?target_id="+target_id.value;
+			return true;
+		}
+		return false;
+	}
+	function sync_select(){
+		var cat=document.getElementById("catid");
+		var target=document.getElementById("ad_target_id");
+		if(cat.value!=""){
+			var i=cat.selectedIndex;
+			target.options['i'].selected=true;
+		}
+	}
+	function update_order(n_id,n_value){
+		$.get("{BASE_URL}/index.php/admin/tool_adlist?action=u_order",{u_id:n_id,u_value:n_value});
+	}
+</script>
  	<!--主体结束-->
 <!--{include control/admin/tpl/admin_footer}-->

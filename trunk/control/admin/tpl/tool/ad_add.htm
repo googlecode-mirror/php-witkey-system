@@ -2,13 +2,13 @@
 <div class="page_title">
     <h1>{$_lang['ads']}{$page_tips}</h1>
     <div class="tool">
-        <a href="{BASE_URL}/index.php/admin/tool_adlist">{$_lang['ads_list']}</a>
-        <a href="{BASE_URL}/index.php/admin/tool_adlist/add" class="here">{$_lang['add_ads']}{$page_tips}</a>
+        <a href="{BASE_URL}/index.php/admin/tool_ad/adlist">{$_lang['ads_list']}</a>
+        <a href="{BASE_URL}/index.php/admin/tool_ad/add" class="here">{$_lang['add_ads']}{$page_tips}</a>
     </div>
 </div>
 <div class="box post">
  
-<form method="post" action="{BASE_URL}/index.php/admin/tool_adlist/save"  enctype="multipart/form-data" id="form1">
+<form method="post" action="{BASE_URL}/index.php/admin/tool_ad/save"  enctype="multipart/form-data" id="form1">
     <input type="hidden" name="formhash" value="{FORMHASH}">
 	<input type="hidden" name="hdn_ad_id" value="{$ad_data['ad_id']}">
     <input type="hidden" name="hdn_ad_type" id="hdn_ad_type" value="{$ad_data['ad_type']}" />
@@ -66,7 +66,7 @@
 				<div class="clear"></div>
 				<input type="hidden" name="ad_type_image_path" value="{$ad_data['ad_file']}">
 				<div style="margin-top:10px;" >
-					<img src="../../{$ad_data['ad_file']}" width="200px" height="200px" alt="{$_lang['ad_thumbnail']}" />
+					<img src="{BASE_URL}{$ad_data['ad_file']}" width="200px" height="200px" alt="{$_lang['ad_thumbnail']}" />
 				</div>
 			{/if}
 			</td>
@@ -119,99 +119,98 @@
 
 
 <script type="text/javascript">
-                $(function(){
-            		var show_type=$("#hdn_ad_type").val();
-					if(show_type){
-						$("#select_ad_type :radio").each(function(index){
-            			var value=$(this).val();
-            			if(value==show_type){ //alert(index);
-            				$(this).attr("checked","checked");
-            				var tab = 'div_ad_'+(index+1);
-							$("#"+tab+"").removeClass("hidden");
-            			}
-            			});
-					}else{
-							$("#div_ad_1").removeClass("hidden");
-					}
-            		
-            		$("#flash_way :radio").click(function(){
-            			$("#ad_type_flash_file").hide();
-            			$("#ad_type_falsh_url").hide();
-            			var v=$(this).val();
-            			if(v=="url"){
-            				$("#ad_type_falsh_url").show();
-            			}
-            			if(v=="file"){
-            				$("#ad_type_flash_file").show();
-            			}
-            			
-            		});
-            		$("#rdn_position :radio").click(function(){
-            			var type=$("#select_ad_type :checked").val();
-            			var typeID=type+"_select";
-            			var i = $(this).index();
-            			i++;
-            			var sel_option=document.getElementById(typeID);
-            			if(typeof(sel_option)=="object")
-            				sel_option.options['i'].selected=true;//没有触发onchange事件
-            				var v=sel_option.value; 
-            				setsize(v,type);
-            		})
-            });
-            	// v = value o = code|text|image|flash
-            	function setsize(v, o) {
-					if(v!=-1) {
-						var size = v.split('*');
-						//ad_type_image_width
-						 var w = size['0'];
-						 var h = size['1'];
-						 document.getElementById('ad_type_' + o + '_width').value = w;
-						 document.getElementById('ad_type_' +o + '_height').value = h;
-					}else{
-						document.getElementById('ad_type_' + o + '_width').value = '';
-						document.getElementById('ad_type_' +o + '_height').value = '';
-					}
-				}
-				function checkform(){
-					
-					var i = checkForm(document.getElementById('form1'));
-					if(i){
-								
-					 	document.getElementById("form1").submit();
-																
-					}else{
-						return false;
-					}
-				}
-				function chkCheckBoxChs(){ //檢測是否有選擇多选框的至少一项
-					var obj = document.getElementsByName('ckb_tpl_type[]'); //獲取多選框數組
-					var objLen= obj.length; //獲取數據長度
-					var objYN; //是否有選擇
-					var i;
-					objYN=false;
-					for (i = 0;i< objLen;i++){
-					if (obj [i].checked==true) {
-					objYN= true;
-					break;
-					}
-					}
-					return objYN;
-					
-					}
-				function chkRadio(){				
-				 var position = document.getElementsByName("ad_position");
-				 var objYN;
-				 var i;
-				 objYN=false;
-				 for(var i=0;i<position.length;i++){
-				  if(position[i].checked==true){
-				   return true;
-				   break;
-				  }
-				 }
-				return objYN;
-				}
+             $(function(){
+         		var show_type=$("#hdn_ad_type").val();
+		if(show_type){
+			$("#select_ad_type :radio").each(function(index){
+         			var value=$(this).val();
+         			if(value==show_type){ //alert(index);
+         				$(this).attr("checked","checked");
+         				var tab = 'div_ad_'+(index+1);
+				$("#"+tab+"").removeClass("hidden");
+         			}
+         			});
+		}else{
+				$("#div_ad_1").removeClass("hidden");
+		}
+         		
+         		$("#flash_way :radio").click(function(){
+         			$("#ad_type_flash_file").hide();
+         			$("#ad_type_falsh_url").hide();
+         			var v=$(this).val();
+         			if(v=="url"){
+         				$("#ad_type_falsh_url").show();
+         			}
+         			if(v=="file"){
+         				$("#ad_type_flash_file").show();
+         			}
+         			
+         		});
+         		$("#rdn_position :radio").click(function(){
+         			var type=$("#select_ad_type :checked").val();
+         			var typeID=type+"_select";
+         			var i = $(this).index();
+         			i++;
+         			var sel_option=document.getElementById(typeID);
+         			if(typeof(sel_option)=="object")
+         				sel_option.options['i'].selected=true;//没有触发onchange事件
+         				var v=sel_option.value; 
+         				setsize(v,type);
+         		})
+         });
+         	// v = value o = code|text|image|flash
+         	function setsize(v, o) {
+		if(v!=-1) {
+			var size = v.split('*');
+			//ad_type_image_width
+			 var w = size['0'];
+			 var h = size['1'];
+			 document.getElementById('ad_type_' + o + '_width').value = w;
+			 document.getElementById('ad_type_' +o + '_height').value = h;
+		}else{
+			document.getElementById('ad_type_' + o + '_width').value = '';
+			document.getElementById('ad_type_' +o + '_height').value = '';
+		}
+	}
+	function checkform(){
 		
-            </script>
+		var i = checkForm(document.getElementById('form1'));
+		if(i){
+					
+		 	document.getElementById("form1").submit();
+													
+		}else{
+			return false;
+		}
+	}
+	function chkCheckBoxChs(){ //檢測是否有選擇多选框的至少一项
+		var obj = document.getElementsByName('ckb_tpl_type[]'); //獲取多選框數組
+		var objLen= obj.length; //獲取數據長度
+		var objYN; //是否有選擇
+		var i;
+		objYN=false;
+		for (i = 0;i< objLen;i++){
+		if (obj [i].checked==true) {
+		objYN= true;
+		break;
+		}
+		}
+		return objYN;
+		
+		}
+	function chkRadio(){				
+	 var position = document.getElementsByName("ad_position");
+	 var objYN;
+	 var i;
+	 objYN=false;
+	 for(var i=0;i<position.length;i++){
+	  if(position[i].checked==true){
+	   return true;
+	   break;
+	  }
+	 }
+	return objYN;
+	}
+</script>
 
 <!--{include control/admin/tpl/admin_footer}-->

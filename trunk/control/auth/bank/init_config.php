@@ -6,7 +6,6 @@ $auth_config=array(
   'auth_cash' =>'1-3',
   'auth_day' =>'1-3',
   'auth_expir' => '',
-  'auth_dir'=>'bank',
   'auth_small_ico' =>'',
   'auth_big_ico' =>'',
   'auth_desc' =>$_lang['bank_auth'],

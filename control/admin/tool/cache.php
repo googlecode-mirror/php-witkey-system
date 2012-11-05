@@ -6,8 +6,16 @@
  * @version v 2.0
  * 2010-5-19下午09:25:13
  */
-class Control_admin_tool_cache extends Control_admin{
+class Control_admin_tool_cache extends Controller{
     
+	function __construct($request, $response){
+		parent::__construct($request, $response);
+		$jump_url = "<script>window.parent.location.href='".BASE_URL."/index.php/admin/login';</script>";
+		if(!$_SESSION['admin_uid']){
+			echo $jump_url;
+		}
+	}
+	
 	//初始化页面 
 	function action_index(){
 		global $_K,$_lang;
@@ -23,17 +31,17 @@ class Control_admin_tool_cache extends Control_admin{
 		$file_obj = new keke_file_class;
 		$msg = '';
 		// 清除数据缓存
-		if($_GET['ckb_obj_cache']){
+		 
 			Cache::instance()->del_all();
 			$msg = $_lang['object_cache_empty'];
-		}
+		 
 		//清除模板缓存
-		if($_GET['ckb_tpl_cache']==1){
+		 
 			$file_obj->delete_files($tpl_path);
 			$msg.= $_lang['template_cache_empty'];
-		}
+		 
 		//ajax请求响应 
-		if($_GET['ajax']=='1'){
+		if($this->request->is_ajax()){
 			Keke::echojson(1,1);
 		}else{
 		 //普通表单请求响应	

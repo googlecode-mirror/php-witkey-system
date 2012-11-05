@@ -1,4 +1,4 @@
-<?php
+<?php defined ( "IN_KEKE" ) or die ( "Access Denied" );
 /**
  * keke短信抽象类
  * @author Michael
@@ -6,31 +6,38 @@
  *
  */
 abstract class  Keke_msg {
+	
 	/**
-	 * @var 默认短信接口
+	 * @var 默认接口
 	 */
-	public static $default = 'd9';
+	public static $default = 'keke';
 	/**
-	 * 
-	 * @var 短信实例
+	 * @var 模板
+	 */
+	public static $_tpl ;
+	/**
+	 * @var 实例
 	 */
 	public static $instances = array ();
 	/**
-	 * 
-	 * @param string $name 短信接口名称，默认为三三得九
-	 * @return Keke_sms_d9
+	 * @param string $name 
+	 * @return Keke_msg_keke
 	 */
 	public static function instance($name = null ) {
 		if ($name === null) {
 			$name = Keke_msg::$default;
 		}
+		
 		if (isset ( Keke_msg::$instances [$name] )) {
 			return Keke_msg::$instances [$name];
 		}
-		$class = "Keke_sms_{$name}";
+		$class = "Keke_msg_{$name}";
 		Keke_msg::$instances [$name] = new $class ();
+		//var_dump(Keke_msg::$instances [$name]);die;
 		return Keke_msg::$instances [$name];
 	}
+	
+	abstract public function send();
 	
  
 }

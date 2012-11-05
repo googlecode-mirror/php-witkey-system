@@ -22,14 +22,14 @@ abstract class  Keke_sms {
 	 */
 	public static function instance($name = null ) {
 		if ($name === null) {
-			$name = Keke_msg::$default;
+			$name = Keke_sms::$default;
 		}
-		if (isset ( Keke_msg::$instances [$name] )) {
-			return Keke_msg::$instances [$name];
+		if (isset ( Keke_sms::$instances [$name] )) {
+			return Keke_sms::$instances [$name];
 		}
 		$class = "Keke_sms_{$name}";
-		Keke_msg::$instances [$name] = new $class ();
-		return Keke_msg::$instances [$name];
+		Keke_sms::$instances [$name] = new $class ();
+		return Keke_sms::$instances [$name];
 	}
 	
 	/**

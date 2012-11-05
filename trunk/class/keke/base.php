@@ -126,14 +126,14 @@ class Keke_base {
 	
 	}
 	static function send_mail($address, $title, $body) {
-		global $_K, $kekezu;
-		$basicconfig = $kekezu->_sys_config;
+		global $_K;
+		$basicconfig = Keke::$_sys_config;
 		$mail = new Phpmailer_class ();
 		if ($basicconfig ['mail_server_cat'] == "smtp" and function_exists ( 'fsockopen' )) {
 				
 			$mail->IsSMTP ();
 			$mail->SMTPAuth = true;
-			$mail->CharSet = strtolower ( $_K ['charset'] );
+			//$mail->CharSet = strtolower ( $_K ['charset'] );
 			// $mail->SMTPSecure = "tsl";
 			$mail->Host = $basicconfig ['smtp_url'];
 			$mail->Port = $basicconfig ['mail_server_port'];
@@ -143,21 +143,18 @@ class Keke_base {
 		} else {
 			$mail->IsMail ();
 		}
-	
-		// $mail->CharSet = $mail_charset;
-	
-	
+		$mail->CharSet = CHARSET=='gbk'?'iso-8859-1':CHARSET;
 		$mail->SetFrom ( $basicconfig ['post_account'], $basicconfig ['website_name'] );
 	
-		if ($basicconfig ['mail_replay'])
+		if ($basicconfig ['mail_replay']){
 			$mail->AddReplyTo ( $basicconfig ['mail_replay'], $basicconfig ['website_name'] );
+		}	
 	
 		$mail->Subject = $title;
-	
-		$mail->AltBody = "To view the message, please use an HTML compatible email viewer!";
+
 		$mail->MsgHTML ( $body );
 	
-		$mail->AddAddress ( $address, $basicconfig ['website_name'] );
+		$mail->AddAddress ( $address);
 	
 		return $mail->Send ();
 	}

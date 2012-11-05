@@ -22,12 +22,12 @@
         </tr> 
         <tr>
             <th scope="row" width="130">{$_lang['start_time']}</th><td>
-                <input type="text" value="<!--{date('Y-m-d',$ad_data['start_time'])}-->"  name="start_time" class="txt" onclick="showcalendar(event, this, 0)" title="设置广告广告开始的时间，格式 yyyy-mm-dd，留空为不限制开始时间">
+                <input type="text" value="{date('Y-m-d',$ad_data['start_time'])}"  name="start_time" class="txt" onclick="showcalendar(event, this, 0)" title="设置广告广告开始的时间，格式 yyyy-mm-dd，留空为不限制开始时间">
                 <span id="start_time_msg">设置广告展示生效开始时间，留空为永久有效</span></td>
         </tr>
         <tr>
             <th scope="row" width="130">{$_lang['end_time']}</th><td>
-                <input type="text" value="<!--{date('Y-m-d',$ad_data['end_time'])}-->" name="end_time" class="txt" onclick="showcalendar(event, this, 0)" title="设置广告广告结束的时间，格式 yyyy-mm-dd，留空为不限制结束时间" />
+                <input type="text" value="{date('Y-m-d',$ad_data['end_time'])}" name="end_time" class="txt" onclick="showcalendar(event, this, 0)" title="设置广告广告结束的时间，格式 yyyy-mm-dd，留空为不限制结束时间" />
                 <span id="end_time_msg">设置广告展示生效结束时间，留空为永久有效</span></td>
         </tr>
         <tr>

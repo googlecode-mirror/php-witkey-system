@@ -31,8 +31,13 @@ abstract  class Control_admin extends Controller{
 		$res = Keke::get_arr_by_key($res,'resource_url');
 		 
 		$access_uri = 'index.php/'.$_K ['directory'].'/'.$_K ['control'];
+		//不是默认的action 则uri 加上action
+		if($_K['action']!='index'){
+			$access_uri .= '/'.$_K['action'];
+		}
 		
 		$rid = $res[$access_uri]['resource_id'];
+		
 		$sql = 'SELECT group_id FROM `:Pwitkey_member_group` 
 				where FIND_IN_SET(:rid,group_roles) and group_id = :gid';
 		$res = (bool)DB::query($sql)->tablepre(':P')->param(':rid', $rid)->param(':gid', $_SESSION['admin_gid'])->get_count()->execute();

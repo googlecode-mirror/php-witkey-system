@@ -23,8 +23,7 @@ class Control_admin_user_markconfig extends Control_admin{
 		$mark_config_id = $_GET['mark_config_id'];
 		$where .='mark_config_id='.$mark_config_id;
 		//读取mark_config指定mark_config_id表的数据
-		$list_arr = db::select()->from('witkey_mark_config')->where($where)->execute();
-		$list_arr = $list_arr[0];
+		$list_arr = db::select()->from('witkey_mark_config')->where($where)->get_one()->execute();
 		//读取model表的数据，直接模板读取，
 		Keke::init_model();
 		$model_arr = Keke::$_model_list;
@@ -41,7 +40,8 @@ class Control_admin_user_markconfig extends Control_admin{
 				'bad'=>$_POST['bad'],
 				);
 		//更新mark_config表的数据
-		Model::factory('witkey_mark_config')->setData($array)->update();
+		$where = "mark_config_id ='{$_POST['hdn_mark_config_id']}'";
+		Model::factory('witkey_mark_config')->setData($array)->setWhere($where)->update();
 		Keke::show_msg("提交成功","admin/user_markconfig","success");
 	}
 	function action_del(){

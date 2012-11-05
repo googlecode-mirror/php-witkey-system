@@ -96,7 +96,7 @@ class Control_admin_tool_ad extends Control_admin{
 		$have_ad_num = Dbfactory::get_count ( sprintf ( "select count(*) count from %switkey_ad where target_id = %d", TABLEPRE, $target_id ) );
 		// 进行广告总数和已有广告的判断，添加需要判断，编辑不需要判断
 		if ($have_ad_num >= $ad_num and ! $ad_id) {
-			Keke::show_msg ( $_lang ['operate_notice'], 'index.php/admin/tool_ad/adlist', $_lang ['ads_num_over'], 'warning' );
+			Keke::show_msg ( $_lang ['ads_num_over'], 'admin/tool_ad/adlist', 'warning' );
 		}
 		// 如果存在获取的ad_id，则为编辑方式
 		if ($ad_id) {
@@ -180,7 +180,7 @@ class Control_admin_tool_ad extends Control_admin{
 			// 这也当然就是添加(insert)到数据库中
 			Model::factory ( 'witkey_ad' )->setData ( $array )->create ();
 			// 系统提示添加之后页面跳转到添加页面，可以继续添加
-			Keke::show_msg ( '提交成功', 'admin/tool_ad/add ', 'success' );
+			Keke::show_msg ( '提交成功', 'admin/tool_ad/add', 'success' );
 		}
 	}
 	

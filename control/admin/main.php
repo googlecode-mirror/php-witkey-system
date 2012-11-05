@@ -8,6 +8,7 @@ class Control_admin_main extends Control_admin {
 		$file_obj = new keke_file_class ();
 		$file_size = $file_obj->getdirsize ( S_ROOT . '/data/uploads' );
 		$file_size = intval ( $file_size / 1024 / 1024 ); // 获取当前附件大小
+		
 		$tables = Dbfactory::query ( "SHOW TABLE STATUS " );
 		foreach ( $tables as $table ) { // 数据库大小
 			$dbsize += $table ['Data_length'] + $table ['Index_length'];
@@ -15,34 +16,28 @@ class Control_admin_main extends Control_admin {
 		
 		$dbsize = round ( $dbsize / 1024 / 1024, 2 ); // 转换单位
 		$mysql_ver = mysql_get_server_info (); // 获得 MySQL 版本
+		 
 		
 		/* 系统信息 */
 		$sys_info ['os'] = PHP_OS;
 		$sys_info ['ip'] = $_SERVER ['SERVER_ADDR'];
-		$sys_info ['web_server'] = $_SERVER ['SERVER_SOFTWARE'];
+		$sys_info ['web_server'] = mb_strcut($_SERVER ['SERVER_SOFTWARE'],0,-10);
 		$sys_info ['php_ver'] = PHP_VERSION;
 		$sys_info ['mysql_ver'] = $mysql_ver;
 		$sys_info ['safe_mode'] = ( boolean ) ini_get ( 'safe_mode' ) ? $_lang ['yes'] : $_lang ['no'];
 		$sys_info ['safe_mode_gid'] = ( boolean ) ini_get ( 'safe_mode_gid' ) ? $_lang ['yes'] : $_lang ['no'];
 		$sys_info ['timezone'] = function_exists ( 'date_default_timezone_set' ) ? date_default_timezone_set ( 'Asia/Shanghai' ) : date_default_timezone_set ( 'Asia/Shanghai' );
 		
+// 		var_dump(ini_get_all());
+		
 		/* 允许上传的最大文件大小 */
 		$sys_info ['max_filesize'] = ini_get ( 'upload_max_filesize' );
 		$sys_info ['file_uploads'] = ini_get ( 'file_uploads' );
+		//是否开启上传
+		$info['allow_upload'] = (bool)ini_get('file_uploads')?'yes':'no';
+		//安全模式
+		$info['safe_mode'] = Keke::$_safe_mode?'yes':'no';
 		
-		/* 新增用户留言 */
-		$news_count = intval ( Dbfactory::get_count ( sprintf ( " select count(*) from %switkey_msg where to_uid='%d' and  uid>0 ", TABLEPRE, $_SESSION ['admin_uid'] ) ) );
-		/* 新增发布任务 */
-		$task_count = intval ( Dbfactory::get_count ( sprintf ( " select count(*) from %switkey_task where DATE(from_unixtime(start_time))=DATE('%s') ", TABLEPRE, date ( 'Y-m-d', time () ) ) ) );
-		/* 新增注册会员 */
-		$user_count = intval ( Dbfactory::get_count ( sprintf ( " select count(*) from %switkey_space where DATE(from_unixtime(reg_time))=DATE('%s')", TABLEPRE, date ( 'Y-m-d', time () ) ) ) );
-		/* 新增提现申请 */
-		$withdraw_count = intval ( Dbfactory::get_count ( sprintf ( " select count(*) from %switkey_withdraw where DATE(from_unixtime(on_time))=DATE('%s')", TABLEPRE, date ( 'Y-m-d', time () ) ) ) );
-		/* 新增用户充值 */
-		$charge_count = intval ( Dbfactory::get_count ( sprintf ( " select count(*) from %switkey_recharge where DATE(from_unixtime(pay_time))=DATE('%s') ", TABLEPRE, date ( 'Y-m-d', time () ) ) ) );
-		
-		/* 新增交易维权 */
-		$report_count = intval ( Dbfactory::get_count ( sprintf ( " select count(*) from %switkey_report where DATE(from_unixtime(on_time))=DATE('%s')", TABLEPRE, date ( 'Y-m-d', time () ) ) ) );
 		
 		$pars = array (
 				'ac' => 'run',

@@ -1,7 +1,6 @@
 <aside class="aside">
 	<nav class="minor_nav">
 	  <ul class="nav_group">
-	  	  <li><a href="">¿ªÍ¨µêÆÌ</a></li>
 	  	  {loop self::$_seller_nav $k $v}
 		     <li><a href="{USER_URL}/{$v[1]}" {if $k == self::$_left}class="selected"{/if} ><strong>{$v[0]}</strong></a></li>
 		  {/loop}

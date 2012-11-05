@@ -41,6 +41,7 @@ abstract  class Control_user extends Controller{
      * 卖家导航
      */
     protected static $_seller_nav =array(
+    		'shop'=>array('店铺管理','seller_shop'),
     		'index'=>array('我参与的任务','seller_index'),
     		'goods'=>array('我发布的商品','seller_goods'),
     		'mark'=>array('评价管理','seller_mark'),

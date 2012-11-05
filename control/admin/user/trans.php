@@ -66,7 +66,7 @@ class Control_admin_user_trans extends Control_admin{
 	 * 举报只针对稿件有效，不针对任务
 	 */
 	function action_report(){
-	 	$this->action_index('report');
+	 	//$this->action_index('report');
 	}
  
 	/**

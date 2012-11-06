@@ -25,5 +25,9 @@ class Control_user_buyer_index extends Control_user{
 		
 		require Keke_tpl::template('user/buyer/index');
 	}
+	function action_edit(){
+		
+		require Keke_tpl::template('user/buyer/task_edit');
+	}
 	
 }

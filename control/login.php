@@ -1,14 +1,44 @@
-<?php
+<?php  defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 
 /**
  * @copyright keke-tech
- * @author shang
- * @version v 2.0
- * 2010-5-27ÔçÉÏ9:55:00
+ * @author Michael
+ * @version v 2.2
+ * 2012-11-06
  */
+class Control_login extends Controller{
+	
+	
+	function action_index(){
+		global $_K,$_lang;
 
-defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
-$page_title=$_lang['login'].'- '.$_K['html_title'];
+		require Keke_tpl::template('login');
+	}
+	
+	function action_login(){
+		global $_K;
+		Keke::formcheck($_POST['formhash']);
+		$_POST = Keke_tpl::chars($_POST);
+        $account = $_POST['txt_account'];
+        $pwd  = $_POST['pwd_password'];
+        $ins = array(1=>'keke',2=>'uc',3=>'pw');
+        $login_obj = Keke_user_login::instance($ins[$_K['user_intergration']]);
+        if(Keke_valid::email($account)){
+        	$login_obj->set_email($account);
+        }elseif (Keke_valid::phone($account)){
+        	$login_obj->set_mobile($account);
+        }else{
+        	$login_obj->set_username($account);
+        }
+        $login_obj->set_pwd($pwd);
+        
+        $res = $login_obj->login();
+        
+        var_dump($res);die;
+	}
+}
+
+/* $page_title=$_lang['login'].'- '.$_K['html_title'];
 $uid and header ( "location:index.php" ); 
 $open_api_arr = Keke::$_api_open;
 $api_name = keke_global_class::get_open_api();
@@ -35,4 +65,4 @@ if (Keke::formcheck(isset($formhash))|| isset($login_type) ==3) {
  	
 	$login_obj->save_user_info($user_info, $ckb_cookie,$login_type); 
 }
-require  Keke_tpl::template ( $do );
+require  Keke_tpl::template ( $do ); */

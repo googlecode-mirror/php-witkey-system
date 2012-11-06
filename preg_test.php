@@ -10,7 +10,7 @@ $arr = array('{任务编号}'=>'1231','{任务标题}'=>'任务标题test',
 		'{选稿结束时间}'=>'2013-01-2'
 		);
  
-Keke_msg::instance()->send_msg(1,'test','wbd');
+Keke_msg::instance()->set_tpl('task_pub')->set_var($arr)->to_user(1)->send();
 
  
 

@@ -25,5 +25,7 @@ class Control_user_buyer_goods extends Control_user{
 		
 		require Keke_tpl::template('user/buyer/goods');
 	}
-	
+	function action_edit(){
+		require Keke_tpl::template('user/buyer/goods_eidt');
+	}
 }

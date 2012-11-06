@@ -1,4 +1,4 @@
-<!--{template header}-->
+<!--{include header}-->
 <div class="wrapper">
     <div class="container_24">
         <section class="clearfix section">
@@ -11,7 +11,7 @@
 				<div class="grid_18">
 					<nav class="box_nav clearfix">
 						<ul> 
-                			<li><a href="<!--{eval echo kekezu::refer_url();}-->">{$_lang['no_account_now_register']}</a></li>
+                			<li><a href="{$refer_url()}">{$_lang['no_account_now_register']}</a></li>
 						</ul>
 					</nav>
 				</div>
@@ -28,7 +28,7 @@
                 <div class="grid_17">
                     <!--from表单 start-->
                     <div class="form_box clearfix border_n">
-                        <form action="index.php?do=login" method="post" id="login_frm" name="login_frm">
+                        <form action="{BASE_URL}/index.php/login/login" method="post" id="login_frm" name="login_frm">
                             <input type="hidden" name="formhash" id="formhash" value="{FORMHASH}">
 							<input type="hidden" name="hdn_refer" id="hdn_refer" value="{$_K['refer']}">
 							<input type="hidden" name="handlekey" value="login_frm1"><!--账号-->
@@ -57,23 +57,6 @@
                             </div>
 
                             <input type="hidden" name="logins" id="logins" value='0'>
-                            <!--<div class="rowElem clearfix po_re">
-                                <label class="grid_4">
-                                    验证码{$_lang['zh_mh']}
-                                </label>
-                                <div class="grid_6">
-                                    <input name="txt_code" type="text" size="8" id="txt_code" limit="required:true;len:4" msg="验证码错误!" msgArea="secode_msg" ajax="index.php?do=ajax&view=code&txt_code=">
-                                    <div style=" width:100px; margin-left:5px; float:left; ">
-                                        <img width="100px" id="secode_img" src="secode_show.php?sid=1111" onclick="document.getElementById('secode_img').src='secode_show.php?sid='+Math.random(); return false;">
-										<div class="clear"></div>
-									    <a href="###" class="fl_l" style="line-height:20px; margin-top:8px;" onclick="document.getElementById('secode_img').src='secode_show.php?sid='+Math.random(); return false;">换一组</a>
-                                    </div>
-									
-                                </div>
-                                <span class="grid_4" id="secode_msg">验证信息</span>
-                                <div id="login_msg">
-                                </div>
-                            </div>-->
                             <div>
                             <div onmouseout="$(this).removeClass('po_re');$('.tips_word hidden').addClass('hidden').hide();" onmouseover="$(this).addClass('po_re');$('.tips_word hidden').removeClass('hidden').show();" class="clearfix tips_box">
 								<span class="prefix_4 tips">
@@ -136,9 +119,6 @@
     $("#txt_account").blur(function(){
         var content = $("#txt_account").val();
 			inter==1?val="{$_lang['you_can_user_phone_eamil']}":val="{$_lang['input_your_user_name']}";
-        if (!content) {
-            //$("#txt_account").val(val);
-        }
     });
     
     $("#txt_password").focus(function(){
@@ -163,15 +143,10 @@
     //登录
     function user_login(){ 
         if (checkForm(document.getElementById("login_frm"), false)) {
-        	//login_frm.submit();
         	showWindow('login_frm1', 'login_frm', 'post',0,{cover:1},'hide()');
-        	
         }
         return false;
     }
-    
-    function hide(){
-    	//hideWindow('login_frm1');
-    }
+
 </script>
-<!--{template footer}-->
+<!--{include footer}-->

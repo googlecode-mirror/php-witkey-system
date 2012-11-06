@@ -5,7 +5,7 @@
  * 2012-10-24
  *
  */
-class Keke_user_mark {
+class Keke_user_mark extends Keke_user {
     /**
      * »¥ÆÀ×´Ì¬
      * @return array  

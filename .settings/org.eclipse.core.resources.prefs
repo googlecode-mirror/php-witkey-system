@@ -1,10 +1,11 @@
-#Tue Oct 23 15:33:59 CST 2012
 eclipse.preferences.version=1
 encoding//class/database/keke/driver/mysql.php=GBK
 encoding//class/model.php=GBK
 encoding//class/model/keke_witkey_link.php=GBK
 encoding//control/admin/tpl/index.htm=gbk
 encoding//tpl/default/header_top.htm=GBK
+encoding//tpl/default/login_p.htm=gbk
+encoding//tpl/default/show_msg.htm=gbk
 encoding//tpl/default/ui=UTF-8
 encoding//tpl/default/ui/gallery.htm=UTF-8
 encoding//tpl/default/ui/style/theme.css=UTF-8

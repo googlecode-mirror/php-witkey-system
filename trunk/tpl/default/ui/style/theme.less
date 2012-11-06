@@ -507,7 +507,7 @@ table {
 	@border_colors		: #e1e1e1;
 	
 	/* 基本配置 */
-	font-family: "微软雅黑";
+	font-family: 'Lucida Grande','Microsoft YaHei','微软雅黑';
 	color: @text_color;
 	background:@theme_bg1 ;
 	a{
@@ -786,8 +786,9 @@ table {
 				.size(80px,auto);
 				.hidden;
 				.box-shadow(0 4px 10px rgba(0, 0, 0, 0.2));
+				.transition(all 0.2s ease-out 0.1s);
 				left: 0;
-				top:30;
+				top:30px;
 				z-index: 500;
 				background: @topbar_bg;
 				border: 1px solid @topbar_border;
@@ -796,7 +797,6 @@ table {
 					.ws_hide;
 					.pl_10;
 					.pr_10;
-					
 					&:hover{
 						background: lighten(@topbar_bg,10%);
 					}
@@ -1054,6 +1054,12 @@ table {
 		p{
 			.mb_5;
 			height: 30px;
+		}
+	}
+
+	.list_pic_view{
+		li{
+			.col5;
 		}
 	}
 

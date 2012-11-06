@@ -36,17 +36,14 @@ class Keke_core extends Keke_base {
 	 */
 	static function show_msg( $content = "", $url = "",  $type = 'success',$title = NULL,$time = 3) {
 		global $_K, $basic_config, $username, $uid, $nav_list, $_lang;
-		$r = $_GET;
+		$r = $_REQUEST;
 		//$msgtype = $type;
 		if($title===NULL){
 			$title = $_lang['sys_tips'];
 		}
 		//没有http加上base_url
-		if (strpos($url, '://') === FALSE)
-		{
-			// Make the URI into a URL
+		if (strpos($url, '://') === FALSE){
 			$url = Route::site($url, TRUE, Keke::$_index_file);
-			
 		}
 		require Keke_tpl::template ( 'show_msg' );
 		die ();

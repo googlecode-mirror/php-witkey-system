@@ -1,22 +1,20 @@
 <!--{if $_K['inajax']==1}-->
-<script src="{BASE_URL}/resource/js/jquery.js"></script>
-<script src="{BASE_URL}/resource/js/system/keke.js"></script>
-		<h3 class="flb"><em>{$title}</em><span><a href="javascript:;" class="flbc" onClick="hideWindow('$r['handlekey']');" title="{$_lang['close']}">&#10005</a></span></h3>
-     	<div class="c altw"><div class="{$type}"><p>$content</p></div></div>
-		<p class="o pns">
-			{if $time<1}
-			<button class="submit" value="true" onclick="{if $url}window.location.href ='$url';return false;{else}hideWindow('$r['handlekey']');{/if}" id="fwin_dialog_submit">{$_lang['confirm']}</button>
-			{else}
-			<button class="button" onclick="hideWindow('$r['handlekey']');" id="fwin_dialog_submit">{$_lang['jumping']}</button>
-			{/if}
-		</p>
+<h3 class="flb"><em>{$title}</em><span><a href="javascript:;" class="flbc" onClick="hideWindow('$r['handlekey']');" title="{$_lang['close']}">&#10005</a></span></h3>
+   	<div class="c altw"><div class="{$type}"><p>$content</p></div></div>
+<p class="o pns">
+	{if $time>0}
+	<button class="submit" value="true" onclick="{if $url}window.location.href ='$url';return false;{else}hideWindow('$r['handlekey']');{/if}" id="fwin_dialog_submit">{$_lang['confirm']}</button>
+	{else}
+	<button class="button" onclick="hideWindow('$r['handlekey']');" id="fwin_dialog_submit">{$_lang['jumping']}</button>
+	{/if}
+</p>
 <script type="text/javascript">
 	var t = parseInt("$time")*1000;
 	var u =encodeURI("$url");
 	if(t>0&&u){
 	    setTimeout(function(){
 			window.location.href=u;
-			},t);		 
+		},t);		 
 	}
 </script>
 <!--{else}-->

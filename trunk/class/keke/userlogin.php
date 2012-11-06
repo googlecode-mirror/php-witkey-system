@@ -244,7 +244,7 @@ class keke_userlogin {
 			$synhtml = keke_user_class::user_synlogin ( $user_info ['uid'], $this->_password );
 		}
 		$synhtml = isset($synhtml)?$synhtml:"";
-		$user_obj = new Keke_witkey_space_class ();
+		$user_obj = new Keke_witkey_space ();
 		$user_obj->setLast_login_time ( time () );
 		$user_obj->setWhere ( "uid = '{$user_info['uid']}'" );
 		$user_obj->edit_keke_witkey_space ();

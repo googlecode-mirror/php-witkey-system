@@ -1395,6 +1395,7 @@ function Ajax(recvType, waitId) {
 	aj.showLoading = function() {
 		if(aj.waitId && (aj.XMLHttpRequest.readyState != 4 || aj.XMLHttpRequest.status != 200)) {
 			$("#"+aj.waitId).fadeIn();
+			
  		}
 	};
 
@@ -1596,66 +1597,7 @@ function ajaxget(url, showid, waitid, loading, display, recall) {
 		//if(!evaled) evalscript(s);
 	});
 }
-function ajaxLogin(index){
-	var is_remember = $("#log_remember").attr("checked"); 
-	var log_name	 = $.trim($("#log_name").val());
-	var log_pass = $.trim($("#log_password").val());
-	if(is_remember ){ 
-		var log_remember =1;
-		}
-	if(!log_name){
-		$("#log_name").focus();
-		$("#login_submit").addClass('animated shake').animate({border:0},1000,function(){$(this).removeClass('animated shake');});
-		return false;
-	}else if(!log_pass){
-		$("#log_password").focus();
-		$("#login_submit").addClass('animated shake').animate({border:0},1000,function(){$(this).removeClass('animated shake');});
-		return false;
-	}else{
-		$.post("index.php?do=login",{log_remember:log_remember,txt_account:log_name,pwd_password:log_pass,login_type:3},function(json){
-			$("#load").addClass("hidden");
-			$("#loading").removeClass("hidden");
-			if(json.status){
-				var balance =json.data.balance;
-				var credit =json.data.credit;
-				var username = json.data.username;
-				var pic   = json.data.pic;
-				var uid   = json.data.uid;
-				var is_admin = json.data.is_admin;
-				$("head").append(json.data.syn);
-				loadHandle(index,json.msg,json.status,balance,credit,uid,username,pic,is_admin);
-			}
-		},'json')
-	}
-}
-function loadHandle(index,desc,status,balance,credit,uid,username,pic,is_admin){
-	$("#loading").addClass("hidden");
-	$("#login_submit").removeClass("animated shake");
-	if(status=="1"){// 成功
-		if(!index||index=='index'){
-		$("#load").removeClass("hidden");
-		$("#logined").removeClass("hidden");
-		$("#login").removeClass("selected");
-		$("#login_box").addClass("hidden");
-		$("#login_sub").addClass("hidden");
-		is_admin==1?$("#manage_center").removeClass("hidden"):'';
-		$("#avatar :first").attr("title",username).html(pic+username);
-		$("#money").html("￥"+balance+"|"+credit);
-		$("#space").attr("href","index.php?do=space&member_id="+uid);
-		}else{
-			window.document.location.reload();
-		}
-	}else{// 错误
-		$("#loading_error").removeClass("hidden").addClass("selected").html(desc);
-		
-		setTimeout("loginBoxShow()",1500);
-	}
-	
-}
-function loginBoxShow(){
-	$("#loading_error").removeClass("selected").addClass("hidden");
-	$("#load").removeClass("hidden");
-}
+ 
 function ajaxpost(formid, showid, waitid, showidclass, submitbtn, recall) {
 	var waitid = typeof waitid == 'undefined' || waitid === null ? showid : (waitid !== '' ? waitid : '');
 	var showidclass = !showidclass ? '' : showidclass;
@@ -1682,8 +1624,7 @@ function ajaxpost(formid, showid, waitid, showidclass, submitbtn, recall) {
 				}
 			}
 		}
-		
-       if (isUndefined(s)) {
+	   if (isUndefined(s)) {
 	     s = 'server return empty , Plase check php script';
 	   }
 
@@ -1723,10 +1664,11 @@ function ajaxpost(formid, showid, waitid, showidclass, submitbtn, recall) {
 
 	_attachEvent(ajaxframe, 'load', handleResult);
 
-	showloading();
+	showloading('none');
 	document.getElementById(formid).target = ajaxframeid;
 	var action = document.getElementById(formid).action;
 	document.getElementById(formid).action += (action.indexOf('?') != -1 ?  '&' : '?')+'inajax=1';
+	
 	document.getElementById(formid).submit();
 	if(submitbtn) {
 		submitbtn.disabled = true;
@@ -2354,63 +2296,6 @@ function ajaxTab(tid,data,url){
 	}
 }
 
-var noflushwarper = document.getElementById('noflushwarper');
-function page_load_get(url,delay_time){
-	page_ajax_load_start();
-	$.get(url,{ajaxflush:1},function(data){
-		$('#wrapper').html(data);
-		delay_time = parseInt(delay_time);
-		if(!isNaN(delay_time)){
-			settimeout("page_ajax_load_end();",delay_time*1000);
-		}
-		else{
-			page_ajax_load_end();
-		}
-	});
-	return false;
-}
-function page_load_post(url,delay_time){
-	page_ajax_load_start();
-	$.post(url,{ajaxflush:1},function(data){
-		$('#keke_content_body').html(data);
-		delay_time = parseInt(delay_time);
-		if(!isNaN(delay_time)){
-			settimeout("page_ajax_load_end();",delay_time*1000);
-		}
-		else{
-			page_ajax_load_end();
-		}
-	});
-	return false;
-}
-function page_load_form(formid,delay_time){
-	page_ajax_load_start();
-	var queryString = $("#"+formid).formSerialize();
-	var url = $("#"+formid).attr('action');
-	if(url.match(/\?/)){url+='&ajaxflush=1';}else{url+='?ajaxflush=1';}
-	$.post(url, queryString, function(data){
-		$('#keke_content_body').html(data);
-		delay_time = parseInt(delay_time);
-		if(!isNaN(delay_time)){
-			settimeout("page_ajax_load_end();",delay_time*1000);
-		}
-		else{
-			page_ajax_load_end();
-		}
-    });
-	return false;
-}
-function page_ajax_load_start(){
-	document.body.scrollHeight;
-
-	noflushwarper.style.width = document.body.scrollWidth;
-	noflushwarper.style.height = document.body.scrollHeight;
-	$(noflushwarper).show();
-
-}
-function page_ajax_load_end(){
-	$(noflushwarper).hide();
-}
 /**
  * ajax分页
  * 	  向指定容器中异步加载分页数据。
@@ -2507,13 +2392,13 @@ function d_time(end_time){
 }
 window.onload = function(){ 
     
-   
+/*   
  $("body").ajaxStart(function(){
 	   $("#ajaxwaitid").fadeIn();
    }).ajaxComplete(function(){
 	   $("#ajaxwaitid").fadeOut();
    });	
- 
+ */
 }
 
  

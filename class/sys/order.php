@@ -46,7 +46,7 @@ class Sys_order {
 	 */
 	public static function create_order($model_id, $seller_uid, $seller_username, $order_name, $order_amount, $order_body, $order_status = 'ok') {
 		global $uid, $username;
-		$order_obj = new Keke_witkey_order_class ();
+		$order_obj = new Keke_witkey_order ();
 		$order_obj->_order_id = null;
 		$order_obj->setModel_id ( $model_id );
 		$order_obj->setOrder_name ( $order_name );
@@ -87,7 +87,7 @@ class Sys_order {
 		$order_id or $create = true; //Ğè´´½¨
 		$update and dbfactory::execute ( sprintf ( " update %switkey_order_charge set pay_money='%.2f',pay_time='%s' where order_id='%d'", TABLEPRE, $money, time (), $order_id ) );
 		if ($create) {
-			$order_obj = new Keke_witkey_order_charge_class ();
+			$order_obj = new Keke_witkey_order_charge ();
 			$order_obj->_order_id = null;
 			$order_obj->setOrder_type ( $order_type );
 			$order_obj->setUid ( $uid );

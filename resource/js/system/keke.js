@@ -1725,7 +1725,8 @@ function ajaxpost(formid, showid, waitid, showidclass, submitbtn, recall) {
 
 	showloading();
 	document.getElementById(formid).target = ajaxframeid;
-	document.getElementById(formid).action += '&inajax=1';
+	var action = document.getElementById(formid).action;
+	document.getElementById(formid).action += (action.indexOf('?') != -1 ?  '&' : '?')+'inajax=1';
 	document.getElementById(formid).submit();
 	if(submitbtn) {
 		submitbtn.disabled = true;

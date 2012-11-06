@@ -24,7 +24,7 @@ class Keke_msg_keke extends Keke_msg {
 	/**
 	 * 设定发送模板
 	 * 
-	 * @param string $msg_type        	
+	 * @param string $msg_type 短信模板代码 (task_pub...)        	
 	 * @return Keke_msg_keke
 	 */
 	function set_tpl($msg_type) {
@@ -63,7 +63,6 @@ class Keke_msg_keke extends Keke_msg {
 		(bool)$this->_tpl_info['send_msg'] and $this->send_msg();
 		(bool)$this->_tpl_info['send_sms'] and $this->send_sms();
 		(bool)$this->_tpl_info['send_mail'] and $this->send_mail();
-		
 		return TRUE;
 	}
 	/**

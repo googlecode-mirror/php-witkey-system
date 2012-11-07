@@ -5,7 +5,8 @@ class Control_test extends Controller{
 	function action_index(){
 		 global $_K,$_lang;
           $test = 'вс╠Да©';  	 
-		 require Keke_tpl::template('test');
+          var_dump($_SESSION);
+		 require Keke_tpl::template('test/link');
 	}
  
 }

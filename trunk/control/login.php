@@ -4,8 +4,8 @@
  *
  * @copyright keke-tech
  * @author Michael
- * @version v 2.2
- *          2012-11-06
+ * @version v 2.2 2012-11-06
+ *          
  */
 class Control_login extends Controller {
 	/**
@@ -13,12 +13,15 @@ class Control_login extends Controller {
 	 */
 	function action_index() {
 		global $_K, $_lang;
+		//echo $this->request->referrer();
+		//echo $this->request->url(true);
 		require Keke_tpl::template ( 'login' );
 	}
 	/**
 	 * 用户登录
 	 */
 	function action_login() {
+		
 		global $_K;
 		Keke::formcheck ( $_POST ['formhash'] );
 		$_POST = Keke_tpl::chars ( $_POST );
@@ -45,7 +48,11 @@ class Control_login extends Controller {
 		}else {
 			$msg = '登录成功';
 			$t = 'success';
-			$uri = $this->request->referrer () ? $this->request->referrer () : '/user/index';
+			if($this->request->referrer()==$this->request->url(true)){
+				$uri = 'user/index';
+			}else{
+				$uri = $this->request->referrer();
+			}
 		}
 		Keke::show_msg ( $msg, $uri, $t );
 	}
@@ -53,8 +60,9 @@ class Control_login extends Controller {
 	 * 用登出
 	 */
 	function action_logout(){
-		Keke_user_login::instance()->logout();
-		$this->refer();
+		$res = Keke_user_login::instance()->logout();
+		Keke::show_msg('成功退出'.$res,$this->request->uri(),'success');
+// 		$this->refer();
 	}
 	/**
 	 * 判断账号类型

@@ -1,13 +1,30 @@
-<?php
+<?php defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 /**
+ * 用户注册
  * @copyright keke-tech
- * @author shang
- * @version v 2.0
- * 2010-5-26早上11:49:00
+ * @author Michael
+ * @version v 2.2 2012-11-06
  */
-defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
+class Control_register extends Control_front{
+	
+	function action_index(){
+		global $_K, $_lang;
+		var_dump($_SESSION);
+		
+		require Keke_tpl::template('register');
+	}
+	function action_check_username(){
+		
+	}
+	function action_check_email(){
+		
+	}
+	
+	
+}
 
-//如果是管理员添加用户就不作判断
+
+/* //如果是管理员添加用户就不作判断
 ($uid && !isset($_SESSION['auid'])) and Keke::show_msg ( $_lang['friendly_notice'], 'index.php', 3, $_lang['you_has_login'],'warning');
 $page_title=$_lang['register'].'-'.$_K['html_title'];
 //初始化对象
@@ -41,4 +58,4 @@ if (isset ( $check_username ) && ! empty ( $check_username )) {
 	 echo  $res;
 	 die ();
 }
-require Keke_tpl::template ( $do );
+require Keke_tpl::template ( $do ); */

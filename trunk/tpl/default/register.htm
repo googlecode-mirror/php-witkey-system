@@ -1,4 +1,4 @@
-<!--{template header}--><!--Ò³ÃæÑùÊ½	-->
+<!--{include header}-->
 <div class="wrapper">
 	<div class="container_24">
     	<section class="clearfix section">
@@ -92,13 +92,13 @@
                             			<div class="grid_8 alpha omega po_re" >
                                 			<input style="width:65px;" class="fl_l txt_input" name="txt_code" type="text" 
 											size="8" id="txt_code" limit="required:true;len:4" msg="{$_lang['auth_code_error']}"msgArea="secode_msg"
-											ajax="index.php?do=ajax&view=code&txt_code=" >
+											ajax="{BASE_URL}/index.php/captcha/check/" >
 								 			<div id="show_secode_menu_content" class="hidden secode_box">
-								 				<img id="secode_img" src="secode_show.php?sid=" onclick="document.getElementById('secode_img').src='secode_show.php?sid='+Math.random(); return false;">
-								 				<a class="font14" href="#" onclick="document.getElementById('secode_img').src='secode_show.php?sid='+Math.random(); return false;">{$_lang['change_a_group']}</a>
+								 				<img id="secode_img" src="{BASE_URL}/index.php/captcha/index/basic/150/30" onclick="document.getElementById('secode_img').src='{BASE_URL}/index.php/captcha?sid='+Math.random(); return false;">
+								 				<a class="font14" href="javascript:;" onclick="document.getElementById('secode_img').src='{BASE_URL}/index.php/captcha?sid='+Math.random(); return false;">{$_lang['change_a_group']}</a>
 												<span class="" id="secode_msg"></span>
 											</div>
-								 	        <a id="show_secode" href='index.php?do=ajax&view=menu&ajax=show_secode'></a>
+								 	       
                             				
 										</div>
                             			
@@ -213,4 +213,4 @@ function pwStrength(pwd){
 }
 								
 </script>
-<!--{template footer}-->
+<!--{include footer}-->

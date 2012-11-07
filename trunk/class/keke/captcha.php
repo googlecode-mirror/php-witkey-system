@@ -176,7 +176,7 @@ abstract class Keke_captcha {
 		if (Keke_captcha::instance ()->promoted ()){
 			return TRUE;
 		}
-		var_dump($_SESSION);die;	
+		//var_dump($_SESSION);die;	
 		// ½á¹ûÅÐ¶Ï
 		$result = ( bool ) (sha1 ( strtoupper ( $response ) ) === $_SESSION ['Keke_captcha_response']);
 		

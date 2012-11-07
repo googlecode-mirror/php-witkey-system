@@ -66,7 +66,7 @@ abstract class Keke_captcha {
 		// 获取配置
 		$config = Keke_captcha_config::get ();
 		// 设置验证码的类名
-		$class = 'Keke_captcha_' . $style;
+		$class = 'Keke_captcha_'.$style;
 		
 		// 创建实例
 		Keke_captcha::$instance = $Keke_captcha = new $class ( 'default',$w,$h );

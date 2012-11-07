@@ -94,7 +94,7 @@
 											size="8" id="txt_code" limit="required:true;len:4" msg="{$_lang['auth_code_error']}"msgArea="secode_msg"
 											ajax="{BASE_URL}/index.php/captcha/check/" >
 								 			<div id="show_secode_menu_content" class="hidden secode_box">
-								 				<img id="secode_img" src="{BASE_URL}/index.php/captcha/index/basic/150/30" onclick="document.getElementById('secode_img').src='{BASE_URL}/index.php/captcha?sid='+Math.random(); return false;">
+								 				<img id="secode_img" src="{BASE_URL}/index.php/captcha/index/math" onclick="document.getElementById('secode_img').src='{BASE_URL}/index.php/captcha?sid='+Math.random(); return false;">
 								 				<a class="font14" href="javascript:;" onclick="document.getElementById('secode_img').src='{BASE_URL}/index.php/captcha?sid='+Math.random(); return false;">{$_lang['change_a_group']}</a>
 												<span class="" id="secode_msg"></span>
 											</div>

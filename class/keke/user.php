@@ -8,6 +8,14 @@
  */
 abstract class Keke_user {
    
-	
+	/**
+	 *
+	 * @var µÇÂ¼ÀàÐÍ
+	 */
+	public static $_type = array (
+			1 => 'keke',
+			2 => 'uc',
+			3 => 'pw'
+	);
 	
 }

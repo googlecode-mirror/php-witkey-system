@@ -175,14 +175,12 @@ class uc_note {
 		$_SESSION['uid'] = $syn_uid;
 		$_SESSION['username'] = $syn_username;
 		//kekezu::prom_check();
+		
 		//最新登录时间
-		$space_obj = new Keke_witkey_space_class();
-		$space_obj->setUid($syn_uid);
-		$space_obj->setLast_login_time(time());
-		$space_obj->edit_keke_witkey_space();
+		Keke_user_login::instance('uc')->update_login_time($syn_uid);
 		header('P3P: CP="CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR"');
 		return API_RETURN_SUCCEED;
-		//		_setcookie('Example_auth', _authcode($uid."\t".$username, 'ENCODE'));
+		
 	}
 
 	function synlogout($get, $post) {

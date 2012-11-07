@@ -9,49 +9,19 @@
 
 class Keke_user_login_keke extends Keke_user_login {
     
-    const USERNAME = 1;
-    
-    const MOBILE = 2;
-    
-    const EMAIL = 3;
-
-    protected $_pwd ;
-    
-    function set_username($username){
-    	$this->_username = $username;
-    	return $this;
-    }
-    /**
-     * 手机账号
-     */
-    function set_mobile($mobile){
-    	$this->_mobile = $mobile;
-    	return $this;
-    }
-    /**
-     * email账号
-     */
-    function set_email($email){
-    	$this->_email = $email;
-    	return $this;
-    }
-    function set_pwd($pwd){
-    	$this->_pwd = md5($pwd);
-    	return $this;
-    }
+    const USERNAME = 0;
+ 
     /**
      * 用户登录
      * @param int $type (登录方式1,2,3 分别表示，用户名，手机号，邮箱地址 )
      * @return int -1账号不对,-2密码不对
      */
-	function login($type=NULL){
+	function login($type=self::USERNAME){
 		
-		if($type===NULL){
-			$type = self::USERNAME;
-		}
+		//密码为空
 		if (empty($this->_pwd)){
 			return FALSE;
-		}	
+		}
 		$username = $this->check_account($type);
 		if(empty($username)){
 			//账号不存在
@@ -60,11 +30,35 @@ class Keke_user_login_keke extends Keke_user_login {
 		$where = "username = '$username' and password = '$this->_pwd'";
 		$uid = DB::select('uid')->from('witkey_member')->where($where)->get_count()->execute();
 		if($uid){
+			//更新登录时间，登录IP地址
+			$this->update_login_time($uid);
+			$this->remember_me($uid, $username, $this->_pwd);
 		    $this->complete_login($uid, $username);
+		    //登录成功
 			return TRUE;
 		}else{
+			//密码错误
 			return -2;
 		}
+	}
+	/**
+	 * 登出系统
+	 *
+	 * @return boolean
+	 */
+	function logout($destroy = FALSE) {
+		if ($destroy === TRUE) {
+			$this->_session->destroy();
+		} else {
+			// 删除登录用户会话
+			$this->_session->delete ( 'uid' );
+			$this->_session->delete ( 'username' );
+			// 重新生成会话
+			$this->_session->regenerate ();
+		}
+		Cookie::delete('remember_me');
+		// 检查登出是否成功
+		return ! $this->logged_in ();
 	}
 	/**
 	 * 判断账号是否存在
@@ -74,17 +68,14 @@ class Keke_user_login_keke extends Keke_user_login {
 	function check_account($type){
 		if($type==1){
 			$where = "username = '$this->_username'";
-		}
-		if($type==2){
-			$where = "mobile = '$this->_mobile'";
-		}
-		if($type==3){
-			$where = "email = '$this->_email'";
+		}elseif($type == 2){
+			$where = "mobile = '$this->_username'";
+		}elseif($type==3){
+			$where = "email = '$this->_username'";
 		}
 		return DB::select('username')->from('witkey_space')->where($where)->get_count()->execute();
 	}
-	function check_pwd(){
-		
-	}
+
+	
 	
 }

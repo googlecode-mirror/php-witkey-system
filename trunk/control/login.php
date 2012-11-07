@@ -53,7 +53,7 @@ class Control_login extends Controller {
 			$msg = 'ÃÜÂëÎª¿Õ';
 			$t = 'error';
 		}else if($res===true){
-			$msg = 'µÇÂ¼³É¹¦' . $res;
+			$msg = 'µÇÂ¼³É¹¦';
 			$t = 'success';
 			$uri = $this->request->referrer () ? $this->request->referrer () : '/user/index';
 		}

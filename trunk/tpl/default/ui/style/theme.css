@@ -9135,7 +9135,7 @@ a.submit:active {
   vertical-align: middle;
   display: inline-block;
   white-space: nowrap;
-  padding: 5px;
+  padding: 4px 5px;
   font-family: "微软雅黑";
 }
 #user textarea {

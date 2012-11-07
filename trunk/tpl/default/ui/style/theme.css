@@ -9815,6 +9815,14 @@ a.submit:active {
   vertical-align: top;
   color: #777777;
 }
+#user .data_list .data_table tbody tr td .item_pic {
+  width: 50;
+  height: 50;
+  float: left !important;
+  margin-top: 5px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
 #user .data_list .data_table tbody tr .title {
   font-size: 1.2em;
 }

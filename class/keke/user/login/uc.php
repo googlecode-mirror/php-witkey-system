@@ -3,7 +3,7 @@
 /**
  * Ucenter ÓÃ»§µÇÂ¼
  * @author Michael
- * @version 2.2 
+ * @version 2.2 2012-11-06
  */
 
 require_once S_ROOT.'keke_client/ucenter/client.php';
@@ -38,7 +38,7 @@ class Keke_user_login_uc extends Keke_user_login{
 			$this->_session->regenerate ();
 		}
 		Cookie::delete('remember_me');
-		return uc_user_synlogout();
+		return  uc_user_synlogout();
 	}
 
 }//end

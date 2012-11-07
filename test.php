@@ -1,9 +1,26 @@
 <?php define ( "IN_KEKE", TRUE );
  
- 
-$test = '±äÁ¿¼ÓÔØ²âÊÔ';
+class a{
+	
+	function __construct(){
+		register_shutdown_function(array($this,'fa'));
+	}
+	
+	function fa(){
+		$b = new b;
+		register_tick_function(array($b,'fb'));
+		echo 'fa';
+	}
+} 
+class b{
+	function fb(){
+		echo 'fb';
+	}
+}
+$a = new a;
 
-phpinfo();
+
+
 //require Keke_tpl::template('test');
 
 //var_dump(Cache::instance()->del('keke_config')); 

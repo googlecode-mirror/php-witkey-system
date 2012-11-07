@@ -221,6 +221,7 @@ abstract class Keke_session{
 	 */
 	public function write()
 	{
+		
 		if (headers_sent() OR $this->_destroyed)
 		{
 			// Session cannot be written when the headers are sent or when

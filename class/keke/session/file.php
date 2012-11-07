@@ -67,7 +67,7 @@ class Keke_session_file extends Keke_session {
 	 */
 	protected function _write() {
 		// Write and close the session
-		session_write_close ();
+		//session_write_close ();
 		
 		return TRUE;
 	}

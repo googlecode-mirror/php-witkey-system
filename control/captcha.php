@@ -21,6 +21,7 @@ class Control_captcha extends Controller{
 	 * 检查code
 	 */
 	function action_check(){
+		 
 		//验证码
 		if(($code = $this->request->param('id'))!==null){
 			//不能请求 Keke_captcah::valid()，否则SESSION会刷新，所以这里

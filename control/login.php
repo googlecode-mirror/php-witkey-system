@@ -43,30 +43,20 @@ class Control_login extends Controller {
 		$res = $login_obj->login ();
 		
 		$uri = 'login';
-		switch ($res) {
-			case - 1 :
-				$msg = 'ÓÃ»§Ãû´íÎó';
-				$t = 'error';
-				break;
-			case - 2 :
-				$msg = 'ÃÜÂë´íÎó';
-				$t = 'error';
-				break;
-			default :
-				$msg = 'µÇÂ¼³É¹¦' . $res;
-				$t = 'success';
-				$uri = $this->request->referrer () ? $this->request->referrer () : '/user/index';
-				break;
+		if($res===-1){
+			$msg = 'ÓÃ»§Ãû´íÎó';
+			$t = 'error';
+		}else if($res===-2){
+			$msg = 'ÃÜÂë´íÎó';
+			$t = 'error';
+		}else if($res===false){
+			$msg = 'ÃÜÂëÎª¿Õ';
+			$t = 'error';
+		}else if($res===true){
+			$msg = 'µÇÂ¼³É¹¦' . $res;
+			$t = 'success';
+			$uri = $this->request->referrer () ? $this->request->referrer () : '/user/index';
 		}
-		
-		/*
-		 * if($res==-1){ $msg = 'ÓÃ»§Ãû´íÎó'; $t ='error'; }elseif($res==-2){ $msg =
-		 * 'ÃÜÂë´íÎó'; $t ='error'; }elseif($res==1){ $msg = 'µÇÂ¼³É¹¦'.$res; $t
-		 * ='success'; $uri =
-		 * $this->request->referrer()?$this->request->referrer():'/user/index';
-		 * }
-		 */
-		
 		Keke::show_msg ( $msg, $uri, $t );
 	}
 }

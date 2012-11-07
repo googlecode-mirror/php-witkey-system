@@ -26,7 +26,7 @@ define('API_RETURN_FORBIDDEN', '-2');
 define('DISCUZ_ROOT', '../');
 
 define('IN_KEKE',true);
-
+require '../app_boot.php';
 //note 普通的 http 通知方式
 if(!defined('IN_UC')) {
 
@@ -69,8 +69,8 @@ if(!defined('IN_UC')) {
 	if(in_array($get['action'], array('test', 'deleteuser', 'renameuser', 'gettag', 'synlogin', 'synlogout', 'updatepw', 'updatebadwords', 'getcredit','updatehosts', 'updateapps', 'updateclient', 'updatecredit', 'getcreditsettings', 'updatecreditsettings'))) {
 		require_once DISCUZ_ROOT.'./keke_client/ucenter/include/db_mysql.class.php';
 		$GLOBALS['db'] = new dbstuff;
-		$GLOBALS['db']->connect(DBHOST, DBUSER, DBPASS, DBNAME, 0, true);
-		$GLOBALS['tablepre'] = TABLEPRE;
+		$GLOBALS['db']->connect(UC_DBHOST, UC_DBUSER, UC_DBPASS, UC_DBNAME, 0, true);
+		$GLOBALS['tablepre'] = UC_DBTABLEPRE;
 		
 		$uc_note = new uc_note();
 		exit($uc_note->$get['action']($get, $post));
@@ -81,13 +81,13 @@ if(!defined('IN_UC')) {
 	//note include 通知方式
 } else {
 
-	/*	require_once DISCUZ_ROOT.'./connfig/config_ucenter.php';
+	 require_once DISCUZ_ROOT.'connfig/config_ucenter.php';
 	 require_once DISCUZ_ROOT.'./keke_client/ucenter/include/db_mysql.class.php';
 	 require_once DISCUZ_ROOT.'/config/config.inc.php';
 	 $GLOBALS['db'] = new dbstuff;
-	 $GLOBALS['db']->connect(DBHOST, DBUSER, DBPASS, DBNAME, 0, true);
-	 $GLOBALS['tablepre'] = TABLEPRE;*/
-	//unset($uc_dbhost, $uc_dbuser, $uc_dbpw, $uc_dbname, $uc_connect);
+	 $GLOBALS['db']->connect(UC_DBHOST, UC_DBUSER, UC_DBPASS, UC_DBNAME, 0, true);
+	 $GLOBALS['tablepre'] = UC_DBTABLEPRE;
+	  
 }
 
 class uc_note {
@@ -108,7 +108,7 @@ class uc_note {
 		$this->appdir = DISCUZ_ROOT;
 		$this->dbconfig = $this->appdir.'./config/config.inc.php';
 		$this->db = $GLOBALS['db'];
-		$this->tablepre = TABLEPRE;
+		$this->tablepre = $GLOBALS['tablepre'];
 	}
 	/*通讯测试 */
 	function test($get, $post) {
@@ -123,10 +123,11 @@ class uc_note {
 		$uids = $get['ids'];
 		!API_DELETEUSER && exit(API_RETURN_FORBIDDEN);
 
-		$db = $this->db;
+		/* $db = $this->db;
 		$tablepre = $this->tablepre;
 		$db->query("delete from ".$tablepre."witkey_member where uid in($uids)");
-		$db->query("delete from ".$tablepre."witkey_space where uid in($uids)");
+		$db->query("delete from ".$tablepre."witkey_space where uid in($uids)"); */
+		
 		return API_RETURN_SUCCEED;
 	}
 	/**
@@ -142,10 +143,10 @@ class uc_note {
 			return API_RETURN_FORBIDDEN;
 		}
 
-		$db = $this->db;
+		/* $db = $this->db;
 		$tablepre = $this->tablepre;
 		$db->query("update ".$tablepre."witkey_member set username='$usernamenew''' where uid=$uid and username='$usernameold'");
-		$db->query("update ".$tablepre."witkey_space set username='$usernamenew' where uid=$uid and username='$usernameold'");
+		$db->query("update ".$tablepre."witkey_space set username='$usernamenew' where uid=$uid and username='$usernameold'"); */
 
 		return API_RETURN_SUCCEED;
 	}
@@ -171,13 +172,12 @@ class uc_note {
 			return API_RETURN_FORBIDDEN;
 		}
 
-		require_once  $this->appdir.'./app_comm.php';
-		$_SESSION['uid'] = $syn_uid;
-		$_SESSION['username'] = $syn_username;
-		//kekezu::prom_check();
-		
+		//require_once  $this->appdir.'./app_comm.php';
 		//最新登录时间
-		Keke_user_login::instance('uc')->update_login_time($syn_uid);
+		Keke_user_login::instance('keke')->update_login_time($syn_uid);
+		Keke_user_login::instance('keke')->complete_login($syn_uid, $syn_username);
+		
+		
 		header('P3P: CP="CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR"');
 		return API_RETURN_SUCCEED;
 		
@@ -189,14 +189,8 @@ class uc_note {
 		}
 		//note 同步登出 API 接口
 		header('P3P: CP="CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR"');
-		require_once  $this->appdir.'./app_comm.php';
-		$_SESSION['uid'] = '';
-		$_SESSION['username'] = '';
-		setcookie ( 'user_login', '' );
-		setcookie ( 'prom_cke', '' );
-		setcookie ( 'score_log', '' );
-		unset($_COOKIE);
-		unset($_SESSION);
+		//require_once  $this->appdir.'./app_comm.php';
+		Keke_user_login::instance('keke')->logout(); 
 		return API_RETURN_SUCCEED;
 	}
 	/**
@@ -208,14 +202,13 @@ class uc_note {
 		if(!API_UPDATEPW) {
 			return API_RETURN_FORBIDDEN;
 		}
+		$uid = $get['uid'];
 		$username = $get['username'];
 		$password = $get['password'];
-
-		$db = $this->db;
-		$tablepre = $this->tablepre;
-		$db->query("update ".$tablepre."witkey_space set password = '$password' where username = '$username'");
-		$db->query("update ".$tablepre."witkey_member set password = '$password' where username = '$username'");
-
+        $columns = array('password');
+        $values = array($password);
+        $where = "uid ='$uid'";
+		DB::update('witkey_member')->set($columns)->value($values)->where($where)->execute();
 		return API_RETURN_SUCCEED;
 	}
 
@@ -306,7 +299,7 @@ class uc_note {
 		}
 		$uid = intval($get['uid']);
 		$db = $this->db;
-		echo $credit = $db->result_first("select experience_value FROM ".$this->tablepre."witkey_space WHERE uid='$uid'");
+		echo $credit = $db->result_first("select experience_value FROM ".TABLEPRE."witkey_space WHERE uid='$uid'");
 		//return intval($credit); 
 	}
 

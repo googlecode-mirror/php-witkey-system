@@ -45,6 +45,7 @@ class Cookie {
 		return setcookie ( $name, $value, $expiration, self::$_path, self::$_domain, self::$_secure, self::$_httponly );
 	}
 	public static function delete($name) {
+		$name = self::$_pre.$name;
 		//移除cookie 中的值
 		unset ( $_COOKIE [$name] );
 		//设置cookie 过期

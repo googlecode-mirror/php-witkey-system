@@ -18,9 +18,13 @@ class Keke_user_login_uc extends Keke_user_login{
 	   list ($uid, $username, $password, $email) =  uc_user_login($this->_username, $this->_pwd,$type);
 	   //大于0表示登录成功
 	   if($uid>0){
-	   	  	return uc_user_synlogin($uid);
+	   		$res = $this->check_account($uid);
+	   		if($res!==TRUE){
+	   			return $res;
+	   		}
+	   		return uc_user_synlogin($uid);
 	   }else{
-	   		return $uid;
+	   	    return $uid;
 	   }	
 	}
     /**
@@ -39,6 +43,29 @@ class Keke_user_login_uc extends Keke_user_login{
 		}
 		Cookie::delete('remember_me');
 		return  uc_user_synlogout();
+	}
+	
+	/**
+	 * keke系统判断账号是否存在
+	 * @param int $uid
+	 * @return string
+	 */
+	function check_account($uid){
+        $where  = "uid ='$uid'";
+		$res = DB::select('username,status')->from('witkey_space')->where($where)->get_one()->execute();
+		list($username,$status) = array($res['username'],$res['status']);
+		//账号不存在
+		if(!Keke_valid::not_empty($username)){
+			return -1;
+		}
+		if($status==2){
+			//账号被冻结
+			return -3;
+		}elseif($status==3){
+			//账号未激活
+			return -4;
+		}
+		return TRUE;
 	}
 
 }//end

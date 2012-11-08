@@ -9,14 +9,13 @@
 
 class Keke_user_login_keke extends Keke_user_login {
     
-    const USERNAME = 0;
  
     /**
      * 用户登录
      * @param int $type (登录方式1,2,3 分别表示，用户名，手机号，邮箱地址 )
      * @return int -1账号不对,-2密码不对
      */
-	function login($type=self::USERNAME){
+	function login($type=1){
 		
 		//密码为空
 		if (empty($this->_pwd)){
@@ -72,12 +71,12 @@ class Keke_user_login_keke extends Keke_user_login {
 		}elseif($type==3){
 			$where = "email = '$this->_username'";
 		}
-		list($username,$status) = DB::select('username,status')->from('witkey_space')->where($where)->get_count()->execute();
-	    //账号不存在
+		$res = DB::select('username,status')->from('witkey_space')->where($where)->get_one()->execute();
+		list($username,$status) = array($res['username'],$res['status']);
+	   //账号不存在
 		if(!Keke_valid::not_empty($username)){
 			return -1;
 		}
-		
 		if($status==2){
 			//账号被冻结
 			return -3;
@@ -85,7 +84,6 @@ class Keke_user_login_keke extends Keke_user_login {
 			//账号未激活
 			return -4;
 		}
-		
 		return $username;
 	}
 

@@ -9,7 +9,7 @@ class Control_register extends Control_front{
 	
 	function action_index(){
 		global $_K, $_lang;
-		var_dump($_SESSION);
+		//var_dump($_SESSION);
 		
 		require Keke_tpl::template('register');
 	}

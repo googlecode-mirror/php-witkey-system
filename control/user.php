@@ -68,6 +68,7 @@ abstract  class Control_user extends Controller{
     		'detail'=>array('收支明细','finance_detail'),
     		'recharges'=>array('充值记录','finance_recharges'),
     		'withdraws'=>array('提现记录','finance_withdraws'),
+    		'prom'=>array('推广收入','finance_prom'),
     		);
     /**
      * 客服导航

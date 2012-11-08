@@ -10,7 +10,7 @@ class Keke_captcha_config {
    					'height'     	=> 40,
    					'complexity' 	=> 4,
    					'background' 	=> '',
-   					'fontpath'   	=> S_ROOT.'resource/img/gdfonts/',
+   					'fontpath'   	=> S_ROOT.'static/img/gdfonts/',
    					'fonts'      	=> array('DejaVuSerif.ttf'),
    					'promote'    	=> FALSE,
    			),

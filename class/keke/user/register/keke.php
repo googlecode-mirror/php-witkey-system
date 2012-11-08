@@ -36,24 +36,30 @@ class Keke_user_register_keke extends Keke_user_register {
 	 */
 	function check_username($username){
 		if(!Keke_valid::not_empty($username)){
+			//用名为空
 			return -1;
 		}
 		if(Keke::k_strpos($username)){
+			//用户名敏感
 			return -2;
 		}
 		if((bool)DB::select('count(*)')->from('witkey_memeber')->where("username='$username'")->execute()){
+			//用户存在
 			return -3;
 		}
-		return 1;
+		return TRUE;
 	}
 	
 	function check_email($email){
 		if(!Keke_valid::email($email)){
+			//邮箱格式不对
 			return -4;
 		}
 		if((bool)DB::select('count(*)')->from('witkey_space')->where("email='$email'")->execute()){
+			//邮箱已存在
 			return -5;
 		}
+		return TRUE;
 	}
 	
 	function syc_login(){

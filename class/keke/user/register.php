@@ -2,7 +2,8 @@
 /**
  * 
  * 用户注册
- * @author Administrator
+ * @author Michael
+ * @version 2.2 2012-11-08
  *
  */
 abstract class Keke_user_register extends Keke_user{
@@ -80,5 +81,14 @@ abstract class Keke_user_register extends Keke_user{
       * 同步登录
       */	
 	abstract public function syc_login();
-	
+	/**
+	 * 注册返回的状态集
+	 */
+	public static $_status = array(
+			-1=>'name_empty',
+			-2=>'name_filter',
+			-3=>'name_exists',
+			-4=>'email_error',
+			-5=>'email_exists'
+			);
 }

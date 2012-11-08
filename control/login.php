@@ -13,7 +13,7 @@ class Control_login extends Controller {
 	 */
 	function action_index() {
 		global $_K, $_lang;
-		 
+		var_dump($_SESSION); 
 		require Keke_tpl::template ( 'login' );
 	}
 	/**
@@ -34,8 +34,7 @@ class Control_login extends Controller {
 		$res = $login_obj->login ($type);
 		
 		$uri = 'login';
-		
-		if(array_key_exists($res, Keke_user_login::$_status)){
+		if(array_key_exists((int)$res, Keke_user_login::$_status)){
 			$t = 'error';
 			$msg = Keke_user_login::$_status[$res];
 		}else {
@@ -64,11 +63,11 @@ class Control_login extends Controller {
 	 */
 	function get_account_type($var){
 	     if(Keke_valid::email($var)){
-	     	return 2;
+	     	return 3;
 	     }elseif(Keke_valid::phone($var)){
-	     	return 1;
+	     	return 2;
 	     }else{
-	     	return 0;
+	     	return 1;
 	     }
 	}
 } //end

@@ -15,14 +15,14 @@
 		 <tr class="$value['sub'] item " {if $value['sub']&&$value['sub']!='index'} style="display:none" {/if} id = "$key" >
                  <td align="left" >
                         {if $value['sub']=='index'}
-							<img src="{BASE_URL}/resource/img/public/folder.png">
+							<img src="{BASE_URL}/static/img/public/folder.png">
 							<a href="javascript:;" onclick="show_file('$key');">$key</a>
 						{elseif $value['sub']&&$value['sub']!='index'}
 						¡¡¡¡|- 
-							<img src="{BASE_URL}/resource/img/public/file.png"> 
+							<img src="{BASE_URL}/static/img/public/file.png"> 
 							$key
 						{else}
-							<img src="{BASE_URL}/resource/img/public/file.png"> 
+							<img src="{BASE_URL}/static/img/public/file.png"> 
 							$key
 						{/if} 
                  </td>

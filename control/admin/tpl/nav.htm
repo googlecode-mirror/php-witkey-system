@@ -7,7 +7,7 @@
             	<div class="detail pad10">
         		<ul>
         			{loop $v['0']['items'] $v2}
-            			<li><a href="javascript:nav_jump('{$v2['resource_url']}');"><span class="font_st">，</span>{$v2['resource_name']}</a></li>
+            			<li><a href="javascript:nav_jump('{$v2['static_url']}');"><span class="font_st">，</span>{$v2['static_name']}</a></li>
 					{/loop}
 				</ul>
 				</div>
@@ -17,7 +17,7 @@
             	<div class="detail pad10">
         		<ul>
         			{loop $v['1']['items'] $v2}
-            			<li><a href="javascript:nav_jump('{$v2['resource_url']}');"><span class="font_st">，</span>{$v2['resource_name']}</a></li>
+            			<li><a href="javascript:nav_jump('{$v2['static_url']}');"><span class="font_st">，</span>{$v2['static_name']}</a></li>
 					{/loop}
 				</ul>
 				</div>
@@ -28,7 +28,7 @@
             	<div class="detail pad10">
         		<ul>
         			{loop $v['2']['items'] $v2}
-            			<li><a href="javascript:nav_jump(' {$v2['resource_url']}');"><span class="font_st">，</span>{$v2['resource_name']}</a></li>
+            			<li><a href="javascript:nav_jump(' {$v2['static_url']}');"><span class="font_st">，</span>{$v2['static_name']}</a></li>
 					{/loop}
 				</ul>
 				</div>

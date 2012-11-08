@@ -14,6 +14,6 @@ $config['sign_type'] = 'MD5';
 //默认字符编码
 $config['_input_charset'] = strtoupper(CHARSET);
 //同步回调地址
-$config['return_url'] = $_K['siteurl'].'/keke_client/keke/return.php';
+$config['return_url'] = $_K['siteurl'].'/client/keke/return.php';
 //异步回调地址
-$config['notify_url'] = $_K['siteurl'].'/keke_client/keke/notify.php';
+$config['notify_url'] = $_K['siteurl'].'/client/keke/notify.php';

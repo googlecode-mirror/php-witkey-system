@@ -47,7 +47,7 @@ class UC {
 	}
 
 	function init_db() {
-		require_once S_ROOT .'/keke_client/pw_client/class_db.php';
+		require_once S_ROOT .'/client/pw_client/class_db.php';
 		$this->db = new UcDB(UC_DBHOST, UC_DBUSER, UC_DBPW, UC_DBNAME, UC_DBPCONNECT, UC_DBCHARSET);
 	}
 

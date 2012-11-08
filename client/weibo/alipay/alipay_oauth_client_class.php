@@ -17,7 +17,7 @@ class alipay_oauth_client_class extends base_client_class{
 		$this->_config = array(
 		  'partner'			=>	$this->_app_key,
 		  'key'				=>	$this->_app_secret,
-		  'return_url'		=>	$_K['siteurl']."/keke_client/weibo/alipay/return_url.php",
+		  'return_url'		=>	$_K['siteurl']."/client/weibo/alipay/return_url.php",
 		  'sign_type'		=>	'MD5',
 		  'input_charset'	=>	strtoupper(CHARSET),
 		  'transport'		=>	'http',

@@ -60,7 +60,7 @@ class keke_service_class {
 				 */
 				if($user_info){
 					$url = $_K['siteurl'].'/index.php?do=task&task_id='.$task_id;
-					require_once S_ROOT . '/keke_client/keke/config.php';
+					require_once S_ROOT . '/client/keke/config.php';
 					//¶ÔÓ¦µÇÂ½
 					$inter = 'keke_login'; 
 					$param = array('releation_id'=>$data['releation_id'],'to_uid'=>$user_info['uid'],'to_username'=>$user_info['username'],'r_task_id'=>$data['r_task_id']);

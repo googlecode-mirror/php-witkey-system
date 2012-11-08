@@ -3,9 +3,9 @@
  * @todo 联盟任务处理类
  * @author H.R.
  */
-require_once S_ROOT . '/keke_client/keke/keke_tool_class.php';
-require_once S_ROOT . '/keke_client/keke/keke_service_class.php';
-require_once S_ROOT . '/keke_client/keke/config.php';
+require_once S_ROOT . '/client/keke/keke_tool_class.php';
+require_once S_ROOT . '/client/keke/keke_service_class.php';
+require_once S_ROOT . '/client/keke/config.php';
 
 class keke_union_class {
 	private $_task_id; //任务id

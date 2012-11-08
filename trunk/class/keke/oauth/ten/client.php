@@ -5,7 +5,7 @@
  * @version 2.2
    2012-10-9
  */
-require_once S_ROOT.'keke_client/weibo/ten/Tencent.php';
+require_once S_ROOT.'client/weibo/ten/Tencent.php';
 
 
 class Keke_oauth_ten_client extends Keke_oauth_login{

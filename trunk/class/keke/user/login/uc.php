@@ -6,7 +6,7 @@
  * @version 2.2 2012-11-06
  */
 
-require_once S_ROOT.'keke_client/ucenter/client.php';
+require_once S_ROOT.'client/ucenter/client.php';
 
 class Keke_user_login_uc extends Keke_user_login{
     const USERNAME = 0;

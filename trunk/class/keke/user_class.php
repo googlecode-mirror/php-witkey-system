@@ -43,11 +43,11 @@ class keke_user_class {
 		$pwd = self::get_password ( $password, $slt );
 		switch (Keke::$_sys_config ['user_intergration']) {
 			case 2 :
-				require_once S_ROOT . './keke_client/ucenter/client.php';
+				require_once S_ROOT . './client/ucenter/client.php';
 				$reg_uid = uc_user_register ( $username, $password, $email );
 				break;
 			case 3 :
-				require_once (S_ROOT . './keke_client/pw_client/uc_client.php');
+				require_once (S_ROOT . './client/pw_client/uc_client.php');
 				$reg_uid = uc_user_register ( $username, md5 ( $password ), $email );
 				break;
 		}
@@ -124,10 +124,10 @@ class keke_user_class {
 		if (Keke::$_sys_config ['user_intergration'] == 1) {
 			return 1;
 		} elseif (Keke::$_sys_config ['user_intergration'] == 2) {
-			require_once S_ROOT . './keke_client/ucenter/client.php';
+			require_once S_ROOT . './client/ucenter/client.php';
 			return uc_user_edit ( $username, $oldpwd, $newpwd, $email, $nocheckold );
 		} elseif (Keke::$_sys_config ['user_intergration'] == 3) { //整合pw
-			require_once (S_ROOT . './keke_client/pw_client/uc_client.php');
+			require_once (S_ROOT . './client/pw_client/uc_client.php');
 			return uc_user_edit ( $uid, $username, $newpwd, $email );
 		}
 	
@@ -145,10 +145,10 @@ class keke_user_class {
 		if (Keke::$_sys_config ['user_intergration'] == 1) {
 			return $uid;
 		} elseif (Keke::$_sys_config ['user_intergration'] == 2) {
-			require_once S_ROOT . './keke_client/ucenter/client.php';
+			require_once S_ROOT . './client/ucenter/client.php';
 			return uc_user_delete ( $uid );
 		} elseif (Keke::$_sys_config ['user_intergration'] == 3) { //整合pw
-			require_once (S_ROOT . './keke_client/pw_client/uc_client.php');
+			require_once (S_ROOT . './client/pw_client/uc_client.php');
 			return uc_user_delete ( $uid );
 		}
 	}
@@ -160,10 +160,10 @@ class keke_user_class {
 	static function user_synlogin($uid, $pwd = null) {
 		global $kekezu;
 		if (Keke::$_sys_config ['user_intergration'] == 2) {
-			require_once S_ROOT . './keke_client/ucenter/client.php';
+			require_once S_ROOT . './client/ucenter/client.php';
 			return uc_user_synlogin ( $uid );
 		} elseif (Keke::$_sys_config ['user_intergration'] == 3) { //整合pw
-			require_once (S_ROOT . './keke_client/pw_client/uc_client.php');
+			require_once (S_ROOT . './client/pw_client/uc_client.php');
 			$syn_arr = uc_user_login ( $uid, $pwd, 1 );
 			return $syn_arr ['synlogin'];
 		}
@@ -173,10 +173,10 @@ class keke_user_class {
 		global $kekezu;
 		
 		if (Keke::$_sys_config ['user_intergration'] == 2) {
-			require_once S_ROOT . './keke_client/ucenter/client.php';
+			require_once S_ROOT . './client/ucenter/client.php';
 			return uc_user_synlogout ();
 		} elseif (Keke::$_sys_config ['user_intergration'] == 3) { //整合pw
-			require_once (S_ROOT . './keke_client/pw_client/uc_client.php');
+			require_once (S_ROOT . './client/pw_client/uc_client.php');
 			return uc_user_synlogout ();
 		}
 	}
@@ -190,11 +190,11 @@ class keke_user_class {
 			$res = $res == 0 ? 1 : - 6;
 		
 		} elseif (Keke::$_sys_config ['user_intergration'] == 2) {
-			require_once S_ROOT . './keke_client/ucenter/client.php';
+			require_once S_ROOT . './client/ucenter/client.php';
 			$res = uc_user_checkemail ( $email );
 		
 		} elseif (Keke::$_sys_config ['user_intergration'] == 3) { //整合pw
-			require_once (S_ROOT . './keke_client/pw_client/uc_client.php');
+			require_once (S_ROOT . './client/pw_client/uc_client.php');
 			$res = uc_check_email ( $email );
 		}
 		return $res;
@@ -209,10 +209,10 @@ class keke_user_class {
 			$res = $member_obj->count_keke_witkey_member ();
 			$res = $res ? 0 : 1;
 		} elseif (Keke::$_sys_config ['user_intergration'] == 2) {
-			require_once S_ROOT . './keke_client/ucenter/client.php';
+			require_once S_ROOT . './client/ucenter/client.php';
 			$res = uc_user_checkname ( $username );
 		} elseif (Keke::$_sys_config ['user_intergration'] == 3) { //整合pw
-			require_once (S_ROOT . './keke_client/pw_client/uc_client.php');
+			require_once (S_ROOT . './client/pw_client/uc_client.php');
 			$res = uc_check_username ( $username );
 		}
 		
@@ -229,7 +229,7 @@ class keke_user_class {
 		if (Keke::$_sys_config ['user_intergration'] == 1) {
 			return $limit_username;
 		} elseif (Keke::$_sys_config ['user_intergration'] == 2) {
-			require_once S_ROOT . './keke_client/ucenter/client.php';
+			require_once S_ROOT . './client/ucenter/client.php';
 			$limit_username = $limit_username ? $limit_username : array ();
 			uc_user_getprotected ();
 			if(is_array(uc_user_getprotected ())&&is_array($limit_username)){
@@ -254,7 +254,7 @@ class keke_user_class {
 			$dir = keke_useravatar_class::get_avatar ( $uid, $size );
 			return "<img src='$_K[siteurl]/data/avatar/" . $dir . "' uid='$uid' class='pic_" . $size . "'>";
 		} elseif (Keke::$_sys_config ['user_intergration'] == 2) {
-			require_once S_ROOT . './keke_client/ucenter/client.php';
+			require_once S_ROOT . './client/ucenter/client.php';
 			return "<img src=" . UC_API . "/avatar.php?uid=$uid&size=$size uid='$uid' class='pic_" . $size . "'>";
 		}
 	

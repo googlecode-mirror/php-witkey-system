@@ -15,7 +15,7 @@ $third_nav=array('choose'=>$_lang['select_head_pic'],'upload'=>$_lang['upload_he
 if($Keke->_sys_config['user_intergration']==2){
 	unset($third_nav['choose']);
 	$show="upload";
-	include 'keke_client/ucenter/client.php';
+	include 'client/ucenter/client.php';
 	$user_swf =uc_avatar($uid);/**用户头象上传flash代*/
 }else{
 	$show or $show="choose";

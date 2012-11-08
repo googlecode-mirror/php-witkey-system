@@ -66,7 +66,7 @@ switch ($ac) {
 	case 'select_pic':
 		$title =$_lang['edit_user_pic'];
 		 
-		Keke::keke_require_once(S_ROOT . './keke_client/ucenter/client.php');
+		Keke::keke_require_once(S_ROOT . './client/ucenter/client.php');
 		require keke_tpl_class::template('select_pic');
 		exit();
 		break;

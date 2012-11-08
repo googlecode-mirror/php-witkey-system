@@ -622,10 +622,15 @@ class Keke_base {
 		
 		}
 	}
-	// 用户名禁用词匹配
+	
+	/**
+	 * 用户名是否含有敏感词
+	 * @param string $k
+	 * @return boolean
+	 */
 	static function k_strpos($k) {
-		global $basic_config;
-		$user_arr = explode ( '|', $basic_config ['ban_users'] );
+		global $_K;
+		$user_arr = explode ( '|', $_K ['ban_users'] );
 		$r = '';
 		foreach ( $user_arr as $value ) {
 			if (preg_match ( '/' . $value . '/', $k )) {
@@ -636,7 +641,7 @@ class Keke_base {
 		return $r ? true : false;
 	}
 	// 在内容中匹配关键字
-	public static function k_match($k_arr, $content) {
+	public static function k_match($k_arr=NULL, $content) {
 		$m = 0;
 		foreach ( $k_arr as $value ) {
 			if (preg_match ( '/' . $value . '/', $content )) {

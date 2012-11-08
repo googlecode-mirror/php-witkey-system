@@ -18,4 +18,5 @@ abstract class Keke_user {
 			3 => 'pw'
 	);
 	
+
 }

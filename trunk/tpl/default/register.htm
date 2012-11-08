@@ -22,14 +22,13 @@
                 			<div class="form_box clearfix border_n">
                     			<form action="index.php?do=register" method="post" id="register_frm" name="register_frm">
                         			<input type="hidden" name="formhash" id="formhash" value="{FORMHASH}">
-                        			<input type="hidden" name="hdn_refer" id="hdn_refer" value="{$_K['refer']}">
-									<input type="hidden" name="handlekey" value="register_frm1"><!--ук╨е-->
+                        			<input type="hidden" name="handlekey" value="register_frm1">
                         			<div class="rowElem clearfix po_re">
                             			<label class="grid_4">
                                 			{$_lang['account']}
                             			</label>
                             			<div class="fl_l ">
-                                			<input type="text" class="txt txt_input" autocomplete="off" name="txt_account" id="txt_account" limit="required:true;len:2-20;type:string;general:true" msg="{$_lang['username_input_error']}" ajax="index.php?do=register&check_username=" title="{$_lang['please_input_register_account']}" msgArea="login_account_msg" style="width:200px;" />
+                                			<input type="text" class="txt txt_input" autocomplete="off" name="txt_account" id="txt_account" limit="required:true;len:2-20;type:string;general:true" msg="{$_lang['username_input_error']}" ajax="{BASE_URL}/index.php/register/check_username/txt_account" title="{$_lang['please_input_register_account']}" msgArea="login_account_msg" style="width:200px;" />
                             				<span class="msg" id="login_account_msg"><i></i></span>
 										</div>
 									
@@ -94,7 +93,7 @@
 											size="8" id="txt_code" limit="required:true;len:4" msg="{$_lang['auth_code_error']}"msgArea="secode_msg"
 											ajax="{BASE_URL}/index.php/captcha/check/" >
 								 			<div id="show_secode_menu_content" class="hidden secode_box">
-								 				<img id="secode_img" src="{BASE_URL}/index.php/captcha/index/math" onclick="document.getElementById('secode_img').src='{BASE_URL}/index.php/captcha?sid='+Math.random(); return false;">
+								 				<img id="secode_img" src="{BASE_URL}/index.php/captcha/index" onclick="document.getElementById('secode_img').src='{BASE_URL}/index.php/captcha?sid='+Math.random(); return false;">
 								 				<a class="font14" href="javascript:;" onclick="document.getElementById('secode_img').src='{BASE_URL}/index.php/captcha?sid='+Math.random(); return false;">{$_lang['change_a_group']}</a>
 												<span class="" id="secode_msg"></span>
 											</div>

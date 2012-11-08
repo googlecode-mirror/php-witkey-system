@@ -42,17 +42,16 @@
 <!--jQuery1.4.4库-->
 <script src="{BASE_URL}/static/js/jquery.js" type="text/javascript"></script>
 <script src="{BASE_URL}/lang/{$_K['language']}/script/lang.js" type="text/javascript"></script>
-<script src="{BASE_URL}/static/js/system/keke.js" type="text/javascript"></script>
+<script src="{BASE_URL}/static/js/keke.js" type="text/javascript"></script>
 <script src="{BASE_URL}/static/js/in.js" type="text/javascript"></script>
 <script type="text/javascript">
 	 //js异步加载预定义
  	In.add('mouseDelay',{path:"{BASE_URL}/static/js/jqplugins/jQuery.mouseDelay.js",type:'js'});
 	In.add('waypoints',{path:"{BASE_URL}/static/js/jqplugins/waypoints/waypoints.min.js",type:'js'});
 	In.add('custom',{path:"{BASE_URL}/static/js/system/custom.js",type:'js',rely:['waypoints']});
- 	In.add('form',{path:"{BASE_URL}/static/js/system/form_and_validation.js",type:'js'});
-	In.add('print',{path:"{BASE_URL}/static/js/jqplugins/jquery.print.js",type:'js'});
+ 	In.add('form',{path:"{BASE_URL}/static/js/system/valid.js",type:'js'});
 	In.add('task',{path:"{BASE_URL}/static/js/system/task.js",type:'js'});
- 	In.add('calendar',{path:"{BASE_URL}/static/js/system/script_calendar.js",type:'js'}); 
+ 	In.add('calendar',{path:"{BASE_URL}/static/js/system/calendar.js",type:'js'}); 
 	In.add('xheditor',{path:"{BASE_URL}/static/js/xheditor/xheditor.js",type:'js'});  
  	In.add('script_city',{path:"{BASE_URL}/static/js/system/script_city.js",type:'js'}); 
 	In.add('rating',{path:"{BASE_URL}/static/js/jqplugins/starrating/jquery.rating.js",type:'js'}); 
@@ -72,7 +71,7 @@
 	In.add('css_task',{path:"{BASE_URL}/{SKIN_PATH}/theme/{$_K['theme']}/css/task.css",type:'css'});
 	 
     In.add('css_rating',{path:"{BASE_URL}/static/js/jqplugins/starrating/jquery.rating.css",type:'css'});
-	In.add('pcas',{path:"{BASE_URL}/static/js/system/PCASClass.js",type:'js'});
+	In.add('pcas',{path:"{BASE_URL}/static/js/system/city.js",type:'js'});
   		
 	//css异步加载
  

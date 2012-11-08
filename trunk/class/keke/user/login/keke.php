@@ -23,9 +23,8 @@ class Keke_user_login_keke extends Keke_user_login {
 			return FALSE;
 		}
 		$username = $this->check_account($type);
-		if(empty($username)){
-			//账号不存在
-			return -1;
+		if($username<0){
+			return $username;
 		}
 		$where = "username = '$username' and password = '$this->_pwd'";
 		$uid = DB::select('uid')->from('witkey_member')->where($where)->get_count()->execute();
@@ -73,7 +72,21 @@ class Keke_user_login_keke extends Keke_user_login {
 		}elseif($type==3){
 			$where = "email = '$this->_username'";
 		}
-		return DB::select('username')->from('witkey_space')->where($where)->get_count()->execute();
+		list($username,$status) = DB::select('username,status')->from('witkey_space')->where($where)->get_count()->execute();
+	    //账号不存在
+		if(!Keke_valid::not_empty($username)){
+			return -1;
+		}
+		
+		if($status==2){
+			//账号被冻结
+			return -3;
+		}elseif($status==3){
+			//账号未激活
+			return -4;
+		}
+		
+		return $username;
 	}
 
 	

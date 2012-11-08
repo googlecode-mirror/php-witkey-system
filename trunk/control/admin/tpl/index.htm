@@ -140,7 +140,7 @@ window.onload = function(){
 			                        <ul id="ul_kjcz">
 			                        	
 			                        	<!--{loop $fast_menu_arr $k $v}-->
-			                        		<li><a href="{BASE_URL}/{$v['static_url']}" target="display_frame" {if $k==0}class="select"{/if} r_id="{$v['static_id']}">{$v['static_name']}</a></li>
+			                        		<li><a href="{BASE_URL}/{$v['resource_url']}" target="display_frame" {if $k==0}class="select"{/if} r_id="{$v['resource_id']}">{$v['resource_name']}</a></li>
 										<!--{/loop}-->
 									</ul>
 			                  </dd>
@@ -155,7 +155,7 @@ window.onload = function(){
 			                  <dd>
 			                        <ul >
 			                        	<!--{loop $vv['items'] $kkk $vvv}-->
-											<li><a href="{BASE_URL}/{$vvv['static_url']}" target="display_frame" r_id="{$vvv['static_id']}">{$vvv['static_name']}</a></li>
+											<li><a href="{BASE_URL}/{$vvv['resource_url']}" target="display_frame" r_id="{$vvv['resource_id']}">{$vvv['resource_name']}</a></li>
 										<!--{/loop}-->
 	 		                        </ul>
 			                  </dd>
@@ -182,7 +182,7 @@ window.onload = function(){
 	</div>
     </div>
     <div class="other">
-    		<input type="text" class="txt" name="fds[static_name]" id="recource"/>
+    		<input type="text" class="txt" name="fds[resource_name]" id="recource"/>
         	<button type="button" class="button ml_mr_5"  onclick="find_nav()">{$_lang['search']}</button>
 		<button id="map" type="button" class="button" onclick="nav();">{$_lang['nav_map']}</button>
     </div>

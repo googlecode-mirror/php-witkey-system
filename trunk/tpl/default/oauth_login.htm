@@ -21,7 +21,7 @@
                 <div class="grid_17" >
                     <div class="use_now">
 	                	<h3 class="font14">{$_lang['you_user_account']}</h3>
-	                    <p>$oauth_type_arr[$type]['name']{$_lang['zh_mh']}<img src="resource/img/ico/{$type}_t.gif" style="width:17px; height:17px; vertical-align:middle; margin-right:5px" alt=''><span class="font14">{if $type==taobao}$nick{else}$oauth_user_info['name']{/if}</span></p>
+	                    <p>$oauth_type_arr[$type]['name']{$_lang['zh_mh']}<img src="static/img/ico/{$type}_t.gif" style="width:17px; height:17px; vertical-align:middle; margin-right:5px" alt=''><span class="font14">{if $type==taobao}$nick{else}$oauth_user_info['name']{/if}</span></p>
                 	</div>
                                                 
                     <!--from±íµ¥ start-->
@@ -88,7 +88,7 @@
 							{loop $api_open $k $v}
 								{if $_K[$k.'_app_id']}
 		                            <div class="mt_10">
-		                                <a href="{BASE_URL}/index.php/ologin/login?type=$k"><img src="resource/img/ico/{$k}_t.gif"  title="{$api_name[$k]['name']}">$api_name[$k]['name']{$_lang['login']}</a>
+		                                <a href="{BASE_URL}/index.php/ologin/login?type=$k"><img src="static/img/ico/{$k}_t.gif"  title="{$api_name[$k]['name']}">$api_name[$k]['name']{$_lang['login']}</a>
 		                            </div>
 								{/if}
 							{/loop}

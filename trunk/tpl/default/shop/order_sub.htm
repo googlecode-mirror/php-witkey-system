@@ -1,6 +1,6 @@
 <!--{eval $page_title=$service_info['title'].'--'.$_K['html_title'];}--><!--{template header}--><!--页面内容区-->
 <!--页面样式-->
-<link href="resource/css/public.css" rel="stylesheet" type="text/css">
+<link href="static/css/public.css" rel="stylesheet" type="text/css">
 <link href="{SKIN_PATH}/css/shop.css" rel="stylesheet" type="text/css">
 <link href="{SKIN_PATH}/theme/{$_K['theme']}/css/shop.css" rel="stylesheet" type="text/css">
 <div class="wrapper">
@@ -160,7 +160,7 @@
 <!--end 页面内容区-->
  
 <script type="text/javascript">
-	In.add('service',{path:"resource/js/system/service.js",type:'js'});
+	In.add('service',{path:"static/js/system/service.js",type:'js'});
 	In('service','custom');
 	var sid = "{$sid}";
     var basic_url = "index.php?do=service&sid=" + sid;

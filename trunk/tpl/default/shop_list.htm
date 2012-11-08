@@ -307,7 +307,7 @@
 															{/if}
 															{if $v['urgent_time']>$time&&$item_config['3']['small_pic']}<img src="{$_K['siteurl']}/{$item_config['3']['small_pic']}" alt="{$_lang['hurry_up']}" title="{$_lang['hurry_up']}">{/if}
                                                      	   {if stristr($v['pay_item'],'4')&&$item_config['4']['small_pic']}<img src="{$_K['siteurl']}/{$item_config['4']['small_pic']}" alt="{$_lang['map']}" title="{$_lang['map']}">{/if}
-														   {if $v['is_top'] == '1'}<img src="{$_K['siteurl']}/resource/img/ico/tj.png" alt="{$_lang['recommend']}" title="{$_lang['recommend']}">{/if}
+														   {if $v['is_top'] == '1'}<img src="{$_K['siteurl']}/static/img/ico/tj.png" alt="{$_lang['recommend']}" title="{$_lang['recommend']}">{/if}
                                                         
                                                     </li>
                                                     <li class="w3 t_l ws_normal m_h">
@@ -506,8 +506,8 @@ var share=function(obj,title){
 </script>		
 <script type="text/javascript"> 
     In.config('serial',true);
-	In.add('ui_core',{path:"resource/js/others/ui.core.js",type:'js'});
-	In.add('ui_slider',{path:"resource/js/others/ui.slider.js",type:'js',rely:['ui_core']});
+	In.add('ui_core',{path:"static/js/others/ui.core.js",type:'js'});
+	In.add('ui_slider',{path:"static/js/others/ui.slider.js",type:'js',rely:['ui_core']});
 	In.add('search',{path:"{$style_path}/js/search.js",type:'js'});
 	In('search','ui_slider','lazy',function(){task_bar();loadPics();});
  

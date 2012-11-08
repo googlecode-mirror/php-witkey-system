@@ -4,20 +4,20 @@
 <ul>
 	<li><a class="sina" title="{$_lang['share_sina_weibo']}" target="_blank" name="sina"
 	 onclick="share_to(this,{'key':'sina','url':document.location.href,'title':'{$share_title}','overview':'{$overview}'});" 
-	 href="javascript:void(0);"><img src="resource/img/ico/sina_t.gif" alt=''></a></li>
+	 href="javascript:void(0);"><img src="static/img/ico/sina_t.gif" alt=''></a></li>
 	<li><a class="sina" title="{$_lang['share_ten_weibo']}" target="_blank" name="ten"
 	 onclick="share_to(this,{'key':'qq','url':document.location.href,'title':'{$share_title}','overview':'{$overview}'});" 
-	 href="javascript:void(0);"><img src="resource/img/ico/tencent_t.gif" alt=''></a></li>
+	 href="javascript:void(0);"><img src="static/img/ico/tencent_t.gif" alt=''></a></li>
 	<li><a class="sina" title="{$_lang['share_wy_weibo']}" target="_blank" name="wy163"
 	 onclick="share_to(this,{'key':'netease','url':document.location.href,'title':'{$share_title}','overview':'{$share_title}'});" 
-	 href="javascript:void(0);"><img src="resource/img/ico/163_t.gif" alt=''></a></li>
+	 href="javascript:void(0);"><img src="static/img/ico/163_t.gif" alt=''></a></li>
 	<li><a class="souh" title="{$_lang['share_sohu_weibo']}" target="_blank" name="sohu"
 	 onclick="share_to(this,{'key':'sohu','url':document.location.href,
 	 'title':'{$share_title}','title':'{$share_title}','overview''{$overview}'});" 
-	 href="javascript:void(0);"><img src="resource/img/ico/sohu_t.gif" alt=''></a></li>
+	 href="javascript:void(0);"><img src="static/img/ico/sohu_t.gif" alt=''></a></li>
 	 <li><a class="sina" title="{$_lang['share_to_fb']}" target="_blank"
 	 onclick="share_to(this,{'key':'fb','url':document.location.href,'title':'{$share_title}','overview':'{$share_title}'});" 
-	 href="javascript:void(0);"><img src="resource/img/ico/fb.jpg" alt=''></a></li>
+	 href="javascript:void(0);"><img src="static/img/ico/fb.jpg" alt=''></a></li>
 </ul>
 </div> 
 {elseif $op=='center'}
@@ -31,7 +31,7 @@
 		 		<li style='display:inline;float:left;' class='grid_3 pad10'>
 					<a href="javascript:void(0);" style="text-decoration:none;" title="{$apis[$k]['name']}"
 					   onclick="share_to(this,{'key':'{$k}','url':'{$url}','title':'{$share_title}','overview':'{$share_title}'},1);">
-			 			<img src="resource/img/ico/ico_48x48_{$k}.gif" alt="{$apis[$k]['name']}" />
+			 			<img src="static/img/ico/ico_48x48_{$k}.gif" alt="{$apis[$k]['name']}" />
 			 		</a>
 				</li>
 		 		{/loop}

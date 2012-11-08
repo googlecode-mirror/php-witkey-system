@@ -63,7 +63,7 @@
             <div class="box mb_10 goods hidden">
                 <div class="pad10 clearfix">
                     <div class="block po_re clearfix"  onMouseover="show_new('$v[service_id]');" >
-                    	<img  alt="$v[title]" onerror="this.src='{$_K[siteurl]}/{SKIN_PATH}/img/shop/shop_default.gif'" name="lazyImg"   src="{if $v[pic] and is_file($v['pic'])}$v[pic]{else}resource/img/style/shop_default_big.jpg{/if}">
+                    	<img  alt="$v[title]" onerror="this.src='{$_K[siteurl]}/{SKIN_PATH}/img/shop/shop_default.gif'" name="lazyImg"   src="{if $v[pic] and is_file($v['pic'])}$v[pic]{else}static/img/style/shop_default_big.jpg{/if}">
 						{if $member_id!=$uid}
 						<div class="shade" style="display:none" id="p_$v[service_id]">
 							<ul>

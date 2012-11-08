@@ -15,6 +15,10 @@ class Keke_user_login_pw extends Keke_user_login{
 	 function login($type=0){
         list($uid,$username,$status,$synlogin) = uc_user_login($this->_username, $this->_pwd, $type);
         if($status===1){
+        	$res = $this->check_account($uid);
+        	if($res!==TRUE){
+        		return $res;
+        	}
         	//Òì²½µÇÂ¼´úÂë
         	return $synlogin;
         }else{
@@ -38,5 +42,27 @@ class Keke_user_login_pw extends Keke_user_login{
      	}
      	Cookie::delete('remember_me');
      	return uc_user_synlogout();
+     }
+     /**
+      * kekeÏµÍ³ÅĞ¶ÏÕËºÅÊÇ·ñ´æÔÚ
+      * @param int $uid
+      * @return string
+      */
+     function check_account($uid){
+     	$where  = "uid ='$uid'";
+     	$res = DB::select('username,status')->from('witkey_space')->where($where)->get_one()->execute();
+     	list($username,$status) = array($res['username'],$res['status']);
+     	//ÕËºÅ²»´æÔÚ
+     	if(!Keke_valid::not_empty($username)){
+     		return -1;
+     	}
+     	if($status==2){
+     		//ÕËºÅ±»¶³½á
+     		return -3;
+     	}elseif($status==3){
+     		//ÕËºÅÎ´¼¤»î
+     		return -4;
+     	}
+     	return TRUE;
      }
 }

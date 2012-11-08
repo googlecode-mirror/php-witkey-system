@@ -12,7 +12,7 @@ define('D_P',R_P);
 
 require_once(S_ROOT.'/api/pw_api/security.php');
 require_once(S_ROOT.'/api/pw_api/pw_common.php');
-require_once(S_ROOT . '/keke_client/pw_client/class_db.php');
+require_once(S_ROOT . '/client/pw_client/class_db.php');
 
 $ucdb =  new UcDB(UC_DBHOST, UC_DBUSER, UC_DBPW, UC_DBNAME, UC_DBPCONNECT, UC_DBCHARSET);
 

@@ -117,7 +117,7 @@ var L = {
 			can_input:'可输入',
 			has_exceeded_length:'已超出长度',
 			
-			/** system/script_calendar.js zc**/
+			/** system/calendar.js zc**/
 			pre_month:'上一月',
 			next_month:'下一月',
 			c_choice_year:'点击选择年份',
@@ -156,7 +156,7 @@ var L = {
 			/** 文件名：control/admin/tpl/js/table.js**/	
 			t_hand_forbidden:'操作无效，用户无法对自己发布的任务交稿!',
 			
-			/** 文件名：system/keke.js  xj * */
+			/** 文件名：keke.js  xj * */
 			you_not_login_now_login:'你还没有登陆，是否现在登陆？',
 			login_tips:'登陆消息提示',
 			content_is_empty:'内容不得为空！',
@@ -183,7 +183,7 @@ var L = {
 			lasting:'永久',
 			this_content_requires_the_adobe_flash_player_9_or_later:'此内容需要 Adobe Flash Player 9.0.124 或更高版本',
 			click_copy:'点此复制到剪贴板',
-			/**resource/js/system/form_and_validation.js xj**/
+			/**resource/js/system/valid.js xj**/
 			ele:'元素',
 			error_config_val:'值类型配置有误',
 			file_format_error:'的文件格式不正确',
@@ -201,7 +201,7 @@ var L = {
 			only_tender_confirm_completion:'只有投标威客才可确认完工',
 			only_employer_acceptance:'只有雇主才可验收工作',
 			confirm_acceptance_work:'确定验收工作吗?',
-		   /*resource/js/system/script_calendar.js*/	
+		   /*resource/js/system/calendar.js*/	
 			
 			/*zone.js*/
 			z_access_forbidden:'您无权设置空间',

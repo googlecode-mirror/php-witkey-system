@@ -87,8 +87,8 @@
       		
        </div>
 <script src='../resource/js/jquery.js' type='text/javascript'></script>
-<script src='../resource/js/system/form_and_validation.js'  type='text/javascript'></script>
-<script src='../resource/js/system/keke.js' type='text/javascript'></script>
+<script src='../resource/js/system/valid.js'  type='text/javascript'></script>
+<script src='../resource/js/keke.js' type='text/javascript'></script>
 <script type="text/javascript">
 $(function(){
 <?php 

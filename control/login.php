@@ -13,8 +13,7 @@ class Control_login extends Controller {
 	 */
 	function action_index() {
 		global $_K, $_lang;
-		//echo $this->request->referrer();
-		//echo $this->request->url(true);
+		 
 		require Keke_tpl::template ( 'login' );
 	}
 	/**

@@ -1,5 +1,5 @@
 <!--{template control/admin/tpl/admin_header}-->
-<link href="{$_K['siteurl']}/resource/css/box.css" type="text/css" rel="stylesheet">
+<link href="{$_K['siteurl']}/static/css/box.css" type="text/css" rel="stylesheet">
 <div class="page_title" id="taskScroll">
     <h1>{$model_info['model_name']}{$_lang['manage']}</h1>
     <div class="tool">
@@ -32,7 +32,7 @@
 									<a href="{$_K['siteurl']}/index.php?do=space&member_id={$v['uid']}" target="_blank">{$v['username']}</a>
                                 	{$_lang['mark_time']}{$_lang['zh_mh']}
 										{if $v['mark_status']}
-										<img src="{$_K['siteurl']}/resource/img/ico/ico_mark_{$v['mark_status']}.gif" alt=''>
+										<img src="{$_K['siteurl']}/static/img/ico/ico_mark_{$v['mark_status']}.gif" alt=''>
 										<!--{date('Y-m-d H:i:s',$v['mark_time'])}-->
 										{else}
 											{$_lang['no_mark']}

@@ -22,11 +22,11 @@
 <tr>
 	<td>{if $v['task_title']}{$v['task_title']}{else}{$v['title']}{/if}</td>
 	<td>{if $v['mark_status']=='1'}{$_lang['praise']}
-            <img src="resource/img/ico/ico_mark_{$v['mark_status']}.gif" >
+            <img src="static/img/ico/ico_mark_{$v['mark_status']}.gif" >
             {elseif $v['mark_status']=='2'}{$_lang['the_assessment']}
-            <img src="resource/img/ico/ico_mark_{$v['mark_status']}.gif" >
+            <img src="static/img/ico/ico_mark_{$v['mark_status']}.gif" >
             {elseif $v['mark_status']=='3'}{$_lang['negative_feedback']}
-            <img src="resource/img/ico/ico_mark_{$v['mark_status']}.gif" >
+            <img src="static/img/ico/ico_mark_{$v['mark_status']}.gif" >
             {/if}
              {if !empty($v['mark_content'])}
 	                                             {$v['mark_content']}<p><!--{eval echo date('Y-m-d H:i:s',$v['mark_time'])}--></p> 

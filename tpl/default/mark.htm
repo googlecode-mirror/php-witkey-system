@@ -13,9 +13,9 @@
          	<input type="hidden" id="jump_url" value="{$jump_url}">
          	<div class="rowElem clearfix">
          		<label class="grid_2 t_r">{$_lang['mark_type']}</label> 
-                 <input type="radio" name="mark_status" value="1" {if $mark_info['mark_status']==1||!$mark_info['mark_status']}checked=checked{/if}/><label>{$_lang['good_value']}<img src="resource/img/ico/ico_mark_1.gif" alt=''></label>
-                 <input type="radio" name="mark_status" value="2" {if $mark_info['mark_status']==2}checked=checked{/if}/><label>{$_lang['middle_value']}<img src="resource/img/ico/ico_mark_2.gif" alt=''></label>
-                  <input type="radio" name="mark_status" value="3" {if $mark_info['mark_status']==3}checked=checked{/if}/><label>{$_lang['bad_value']}<img src="resource/img/ico/ico_mark_3.gif" alt=''></label>
+                 <input type="radio" name="mark_status" value="1" {if $mark_info['mark_status']==1||!$mark_info['mark_status']}checked=checked{/if}/><label>{$_lang['good_value']}<img src="static/img/ico/ico_mark_1.gif" alt=''></label>
+                 <input type="radio" name="mark_status" value="2" {if $mark_info['mark_status']==2}checked=checked{/if}/><label>{$_lang['middle_value']}<img src="static/img/ico/ico_mark_2.gif" alt=''></label>
+                  <input type="radio" name="mark_status" value="3" {if $mark_info['mark_status']==3}checked=checked{/if}/><label>{$_lang['bad_value']}<img src="static/img/ico/ico_mark_3.gif" alt=''></label>
 		    </div>
            <div class="rowElem clearfix">
              <label class="grid_3"><strong>{$_lang['mark_content']}</strong></label>
@@ -61,10 +61,10 @@
 </section>
 <!--end 详细内容区-->
 <!--星级评定-->
-<link href="resource/js/jqplugins/starrating/jquery.rating.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="resource/js/jquery.js"></script>
-<script type="text/javascript" src="resource/js/jqplugins/starrating/jquery.rating.js"></script>
-<script type="text/javascript" src="resource/js/jqplugins/starrating/jquery.MetaData.js"></script>
+<link href="static/js/jqplugins/starrating/jquery.rating.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="static/js/jquery.js"></script>
+<script type="text/javascript" src="static/js/jqplugins/starrating/jquery.rating.js"></script>
+<script type="text/javascript" src="static/js/jqplugins/starrating/jquery.MetaData.js"></script>
 <script type="text/javascript">
 	var mark_id = parseInt('{$mark_info[mark_id]}')+0;
 	var task_id = parseInt('{$task_id}')+0;

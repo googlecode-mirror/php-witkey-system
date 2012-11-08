@@ -42,8 +42,8 @@
 								<li {if $k%3==2} class="no_rborder" {/if} class="clerfix">
 									<div class="case_con clearfix">
 										
-										<a {if $v['obj_type']=='task'} href="index.php?do=task&task_id=$v['obj_id']" {else} href="index.php?do=service&sid=$v['obj_id']" {/if} ><img name="lazyImg" lazy_src="{if $v['case_img']}$v['case_img']{else}<!--{eval echo 'resource/img/system/shop_default_big.jpg'}-->{/if}" 
-										onerror="this.src='resource/img/style/shop_default_big.jpg'" alt="{if $v['obj_type']=='task'}{$v['task_title']}{else}{$v['title']}{/if}" title="{if $v['obj_type']=='task'}{$v['task_title']}{else}{$v['title']}{/if}"></a>
+										<a {if $v['obj_type']=='task'} href="index.php?do=task&task_id=$v['obj_id']" {else} href="index.php?do=service&sid=$v['obj_id']" {/if} ><img name="lazyImg" lazy_src="{if $v['case_img']}$v['case_img']{else}<!--{eval echo 'static/img/system/shop_default_big.jpg'}-->{/if}" 
+										onerror="this.src='static/img/style/shop_default_big.jpg'" alt="{if $v['obj_type']=='task'}{$v['task_title']}{else}{$v['title']}{/if}" title="{if $v['obj_type']=='task'}{$v['task_title']}{else}{$v['title']}{/if}"></a>
 										
 										
 										<div class="mt_5 img_title clearfix">

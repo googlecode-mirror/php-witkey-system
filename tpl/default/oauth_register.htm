@@ -20,7 +20,7 @@
 	                <div class="grid_17" > 
 	                    <div class="use_now">
 	                	<h3 class="font14">{$_lang['you_user_account']}</h3>
-	                    <p>$oauth_type_arr[$type]['name']{$_lang['zh_mh']}<img src="resource/img/ico/{$type}_t.gif" style="width:17px; height:17px; vertical-align:middle; margin-right:5px" alt=''><span class="font14">{if $type==taobao}$nick{else}$oauth_user_info['name']{/if}</span></p>
+	                    <p>$oauth_type_arr[$type]['name']{$_lang['zh_mh']}<img src="static/img/ico/{$type}_t.gif" style="width:17px; height:17px; vertical-align:middle; margin-right:5px" alt=''><span class="font14">{if $type==taobao}$nick{else}$oauth_user_info['name']{/if}</span></p>
 	                </div>
 	                                                
 	                    <!--from±íµ¥ start-->
@@ -126,7 +126,7 @@
 	                        	<span>{$_lang['use_friend_web_login']}</span>
 								{loop $open_api_arr $k $v}
 	                            <div class="mt_10">
-	                                <a href="index.php?do=oauth_login&type=$v['ico']"><img src="resource/img/ico/{$v['ico']}_t.gif" alt="$v['name']" title="$v['name']"></a><a href="index.php?do=oauth_login&type=$v['ico']" class="ml_5">$v['name']</a>
+	                                <a href="index.php?do=oauth_login&type=$v['ico']"><img src="static/img/ico/{$v['ico']}_t.gif" alt="$v['name']" title="$v['name']"></a><a href="index.php?do=oauth_login&type=$v['ico']" class="ml_5">$v['name']</a>
 	                            </div>
 								{/loop}
 	                             </div>

@@ -77,13 +77,13 @@
 					   {if $payment_list['tenpay']['pay_status']}
 					<div class="clearfix form_box">
 						<table id="tbl_ten" cellspacing="0" border="0" cellpadding="0" width="100%" height="120" >
-							<caption class="bf7 pad5"><img src="resource/img/bank/logo.gif"/>{$_lang['provide_payment_service']}</caption>
+							<caption class="bf7 pad5"><img src="static/img/bank/logo.gif"/>{$_lang['provide_payment_service']}</caption>
 							<!--{eval $i=0;}-->
 							<tr>
 							{loop $ten_bank_type_arr $k $v}
 							<!--{eval $i++;}-->
 								<td class="pl_20 pt_10 pb_10"><input class="fl_l" type="radio" name="bank_type" {if $i==1} checked="checked" {/if} value="{$k}" id="{$k}">
-								<label class="pay_way" for="{$k}" style="cursor:pointer; float:left; *width:100px;"><img src="resource/img/bank/{$v}.gif"/></label>
+								<label class="pay_way" for="{$k}" style="cursor:pointer; float:left; *width:100px;"><img src="static/img/bank/{$v}.gif"/></label>
 								</td>
 								{if $i%4==0}
 								</tr>
@@ -146,7 +146,7 @@
 			                              <td class="pl_20 pt_10 pb_10">
 			                                 <input type="radio" name="offline" id="{$v['payment']}"  value="{$v['pay_name']}" {if $k=='icbc'}checked{/if}/>
 											 <label for="{$v['payment']}">
-											 <img src="resource/img/system/kppw_2.0_{$v['payment']}.png" height="34">
+											 <img src="static/img/system/kppw_2.0_{$v['payment']}.png" height="34">
 											 </label>
 			                              
 			                                 <ul class="prefix_1">

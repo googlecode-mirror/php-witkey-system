@@ -682,8 +682,8 @@
                       		{if file_exists($v['case_img'])}
                       		<img name="lazyImg" lazy_src="{$v['case_img']}" alt="{$v['case_title']}">
 							{else}
-							<!--<img src="{$_K['siteurl']/resource/img/system/kppw.jpg}" width="80px" height="80px" alt="系统默认图片">-->
-							<span style="width:80px;height:80px;"><!--{eval echo 'resource/img/system/shop_default_big.jpg'}--></span>
+							<!--<img src="{$_K['siteurl']/static/img/system/kppw.jpg}" width="80px" height="80px" alt="系统默认图片">-->
+							<span style="width:80px;height:80px;"><!--{eval echo 'static/img/system/shop_default_big.jpg'}--></span>
 							{/if}
 							
                       	</a>
@@ -919,7 +919,7 @@
 <!--内容区 end-->
 <!--{include footer}-->
 <script type="text/javascript" >
-	In.add('easySlider',{path:"{BASE_URL}/resource/js/jqplugins/easySlider1.5.js",type:'js'});
+	In.add('easySlider',{path:"{BASE_URL}/static/js/jqplugins/easySlider1.5.js",type:'js'});
 	In.add('index',{path:"{BASE_URL}/{SKIN_PATH}/js/index.js",type:'js',rely:['easySlider']});
 	
 	In('easySlider','index','lazy','slides',function(){

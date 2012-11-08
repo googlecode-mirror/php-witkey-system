@@ -88,7 +88,7 @@
             <input type="radio" name="bank_id" value="{$v[bank_id]}" {if $ki=='1'}checked="checked"{/if}>
 		  </div>-->
           <div class="grid_5">
-            <img src="resource/img/system/kppw_2.0_{$v[bank_name]}.png" alt="{$bank_arr[$v[bank_name]]}" title="{$bank_arr[$v[bank_name]]}"/>
+            <img src="static/img/system/kppw_2.0_{$v[bank_name]}.png" alt="{$bank_arr[$v[bank_name]]}" title="{$bank_arr[$v[bank_name]]}"/>
 		  </div>
           <div class="grid_5">
            
@@ -191,7 +191,7 @@
 	                {loop $auth_list $v}
 	                  <li class="border_b_c clearfix pad20">
 	                     <div class="grid_5">
-	                         <img src="resource/img/system/kppw_2.0_{$v[bank_name]}.png" alt="{$bank_arr[$v[bank_name]]}" title="{$bank_arr[$v[bank_name]]}"/>
+	                         <img src="static/img/system/kppw_2.0_{$v[bank_name]}.png" alt="{$bank_arr[$v[bank_name]]}" title="{$bank_arr[$v[bank_name]]}"/>
 	                     </div>
 	                     <div class="grid_10 t_r">
 	                          <button type="button" class="negative button" onclick="location.href='{$origin_url}&op={$op}&auth_code=$auth_code&auth_step=step4&show_id=$v[bank_a_id]&ver=1'" value="{$_lang['view']}" name="{$_lang['view']}">
@@ -232,7 +232,7 @@
 			                      <div class="c999 grid_3 alpha omega">{$auth_item['auth_desc']}</div>
 			                 </li>
 						   <li class="clearfix">                          
-								 <div class="c999"> <img src="resource/img/system/kppw_2.0_{$account_info[bank_name]}.png" ></div>
+								 <div class="c999"> <img src="static/img/system/kppw_2.0_{$account_info[bank_name]}.png" ></div>
 			               	 </li>
  							<li  class="clearfix">
 						         <div class=" grid_2 ">{$_lang['bank_card_num']}{$_lang['zh_mh']}</div>

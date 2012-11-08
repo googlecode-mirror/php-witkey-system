@@ -20,7 +20,7 @@ class Keke_user_login_keke extends Keke_user_login {
 		
 		//ÃÜÂëÎª¿Õ
 		if (empty($this->_pwd)){
-			return FALSE;
+			return -5;
 		}
 		$username = $this->check_account($type);
 		if($username<0){

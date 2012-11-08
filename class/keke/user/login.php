@@ -190,5 +190,14 @@ abstract class Keke_user_login extends Keke_user {
 		return $obj->login ();
 		
 	}
+	/**
+	 * µÇÂ¼µÄ·µ»Ø×´Ì¬ 
+	 */
+	public static $_status = array(
+			-1=>'user_not_exists',
+			-2=>'password_error',
+			-3=>'account_freeze',
+			-4=>'account_not_allow',
+			-5=>'password_empty');
 	
 }

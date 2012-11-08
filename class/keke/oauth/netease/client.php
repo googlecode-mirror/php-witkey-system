@@ -5,7 +5,7 @@
  * @version 2.2
    2012-10-9
  */
-require_once S_ROOT.'keke_client/weibo/netease/tblog.class.php';
+require_once S_ROOT.'client/weibo/netease/tblog.class.php';
 
 class Keke_oauth_netease_client extends Keke_oauth_login{
      private static $_oauth_obj;

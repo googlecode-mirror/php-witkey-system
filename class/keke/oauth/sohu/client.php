@@ -5,7 +5,7 @@
  * @version 2.2
    2012-10-9
  */
-require_once S_ROOT.'keke_client/weibo/sohu/SohuOAuth.php';
+require_once S_ROOT.'client/weibo/sohu/SohuOAuth.php';
 
 
 class Keke_oauth_sohu_client extends Keke_oauth_login{

@@ -175,7 +175,7 @@ class keke_userlogin {
 		switch ($this->_sys_config ['user_intergration']) {
 			case 2 :
 				$notify = "UCenter";
-				require_once S_ROOT . './keke_client/ucenter/client.php';
+				require_once S_ROOT . './client/ucenter/client.php';
 				//$pwd Îª·ÇMD5
 				$uc_info = uc_user_login ( $username, $pwd );
 				if ($uc_info ['0'] > 0) {
@@ -187,7 +187,7 @@ class keke_userlogin {
 			case 3 :
 				
 				$notify = "PW";
-				require_once (S_ROOT . './keke_client/pw_client/uc_client.php');
+				require_once (S_ROOT . './client/pw_client/uc_client.php');
 				//$PWD  
 				$uc_info = uc_user_login ( $username, $pwd, 0 );
 				if ($uc_info ['status'] != 1) {

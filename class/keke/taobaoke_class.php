@@ -1,5 +1,5 @@
 <?php
-require_once S_ROOT . '/keke_client/taoapi/lib/taoapi_get.php';
+require_once S_ROOT . '/client/taoapi/lib/taoapi_get.php';
 class keke_taobaoke_class {
 	
 	public static function get_shop_info($nick) {

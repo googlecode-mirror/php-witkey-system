@@ -31,9 +31,9 @@
 							<dl><dt>$vv['name']:</dt>
 							  <dd>
 								<ul>
-								{loop $vv['items']  $resource}
+								{loop $vv['items']  $static}
 								<label>
-								<input type="checkbox" {if in_array($resource['resource_id'],$grouprole_arr)}checked="checked"{/if} name="chb_resource[]" value="{$resource['resource_id']}">{$resource['resource_name']}
+								<input type="checkbox" {if in_array($static['static_id'],$grouprole_arr)}checked="checked"{/if} name="chb_static[]" value="{$static['static_id']}">{$static['static_name']}
 								</label>
 								{/loop}
 								</ul>

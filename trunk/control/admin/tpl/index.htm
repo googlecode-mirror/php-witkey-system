@@ -5,7 +5,7 @@
 <title>{P_NAME} {KEKE_VERSION}--{$_lang['admin_keke_sys']}</title>
 <link href="{BASE_URL}/control/admin/tpl/css/admin_management.css" rel="stylesheet" type="text/css" />
 <link href="{BASE_URL}/control/admin/tpl/skin/default/green.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="{BASE_URL}/resource/js/jquery.js"></script>
+<script type="text/javascript" src="{BASE_URL}/static/js/jquery.js"></script>
 <script type="text/javascript" src="{BASE_URL}/lang/{$_K['language']}/script/lang.js" ></script>
 </head>
 
@@ -16,7 +16,7 @@
 <div id="append_parent"></div>
 <div id="ajaxwaitid" style="display:none">
 	<div>
-        	<img src="{BASE_URL}/resource/img/system/loading.gif" alt="loading"/>
+        	<img src="{BASE_URL}/static/img/system/loading.gif" alt="loading"/>
 			{$_lang['request_processing']}
 	</div>
 </div>
@@ -140,7 +140,7 @@ window.onload = function(){
 			                        <ul id="ul_kjcz">
 			                        	
 			                        	<!--{loop $fast_menu_arr $k $v}-->
-			                        		<li><a href="{BASE_URL}/{$v['resource_url']}" target="display_frame" {if $k==0}class="select"{/if} r_id="{$v['resource_id']}">{$v['resource_name']}</a></li>
+			                        		<li><a href="{BASE_URL}/{$v['static_url']}" target="display_frame" {if $k==0}class="select"{/if} r_id="{$v['static_id']}">{$v['static_name']}</a></li>
 										<!--{/loop}-->
 									</ul>
 			                  </dd>
@@ -155,7 +155,7 @@ window.onload = function(){
 			                  <dd>
 			                        <ul >
 			                        	<!--{loop $vv['items'] $kkk $vvv}-->
-											<li><a href="{BASE_URL}/{$vvv['resource_url']}" target="display_frame" r_id="{$vvv['resource_id']}">{$vvv['resource_name']}</a></li>
+											<li><a href="{BASE_URL}/{$vvv['static_url']}" target="display_frame" r_id="{$vvv['static_id']}">{$vvv['static_name']}</a></li>
 										<!--{/loop}-->
 	 		                        </ul>
 			                  </dd>
@@ -182,7 +182,7 @@ window.onload = function(){
 	</div>
     </div>
     <div class="other">
-    		<input type="text" class="txt" name="fds[resource_name]" id="recource"/>
+    		<input type="text" class="txt" name="fds[static_name]" id="recource"/>
         	<button type="button" class="button ml_mr_5"  onclick="find_nav()">{$_lang['search']}</button>
 		<button id="map" type="button" class="button" onclick="nav();">{$_lang['nav_map']}</button>
     </div>
@@ -392,8 +392,8 @@ $(function() {
 <!--[if IE 6]></div><![endif]-->
 <!--[if IE 7]></div><![endif]-->
 <!--[if IE 8]></div><![endif]-->
-<script src="{BASE_URL}/resource/js/artdialog/artDialog.js?skin=default" ></script>
-<script src="{BASE_URL}/resource/js/artdialog/plugins/iframeTools.js"  ></script>
+<script src="{BASE_URL}/static/js/artdialog/artDialog.js?skin=default" ></script>
+<script src="{BASE_URL}/static/js/artdialog/plugins/iframeTools.js"  ></script>
 
  
 </body>

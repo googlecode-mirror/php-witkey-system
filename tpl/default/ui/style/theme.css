@@ -687,9 +687,11 @@ input[type=date]{
 }*/
 /* 单选、多选 */
 input[type=radio],
-input[type=checkbox] {
+input[type=checkbox],
+input[type=file] {
   vertical-align: middle;
 }
+/* 文件上传 */
 /* button submit 按钮 */
 /* 示例
 input[type="button"],
@@ -735,10 +737,6 @@ button[type="submit"]{
 .form_row {
   zoom: 1;
   *zoom: 1;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  font-size: 1.2em;
-  line-height: 30px;
   vertical-align: top;
   /* 表单标签 */
 
@@ -754,8 +752,6 @@ button[type="submit"]{
   clear: both;
 }
 .form_row .form_label {
-  width: 130px;
-  height: 30px;
   display: inline-block;
 }
 .form_row img {
@@ -763,8 +759,6 @@ button[type="submit"]{
 }
 .form_row .right_tip {
   display: inline-block;
-  background: #f4f4f4;
-  border: 1px solid #ccc;
   vertical-align: middle;
 }
 /* 浮动行 */
@@ -784,17 +778,15 @@ button[type="submit"]{
   display: inline;
   float: left;
 }
-.float_row .detail {
-  padding-left: 135px;
-}
 /* 表单分割线 */
 .form_line {
   zoom: 1;
   *zoom: 1;
   font-size: 100%;
   height: 1px;
-  margin: 2em 0px 1.2em;
-  border-bottom: 1px solid #ccc;
+  overflow: hidden;
+  border-bottom-width: 1px;
+  border-style: solid;
 }
 .form_line:before,
 .form_line:after {
@@ -811,7 +803,6 @@ button[type="submit"]{
 .form_footer {
   zoom: 1;
   *zoom: 1;
-  margin: 0 0px 2em;
 }
 .form_footer:before,
 .form_footer:after {
@@ -823,10 +814,8 @@ button[type="submit"]{
 }
 /* 带图标表单提示共3种 */
 .form_tip {
-  margin-top: 20px;
   zoom: 1;
   *zoom: 1;
-  font-size: 1.2em;
 }
 .form_tip:before,
 .form_tip:after {
@@ -836,34 +825,19 @@ button[type="submit"]{
 .form_tip:after {
   clear: both;
 }
-.form_tip.success .detail {
-  padding-left: 70px;
-}
 .form_tip.success .icon {
-  float: left !important;
   width: 48px;
   height: 48px;
-  margin: 10px 0 0 15px;
   background: url(../img/succeed.png) no-repeat;
 }
-.form_tip.error .detail {
-  padding-left: 70px;
-}
 .form_tip.error .icon {
-  float: left !important;
   width: 48px;
   height: 48px;
-  margin: 10px 0 0 15px;
   background: url(../img/error.png) no-repeat;
 }
-.form_tip.info .detail {
-  padding-left: 70px;
-}
 .form_tip.info .icon {
-  float: left !important;
   width: 48px;
   height: 48px;
-  margin: 10px 0 0 15px;
   background: url(../img/warning.png) no-repeat;
 }
 /* 星星 
@@ -8976,6 +8950,16 @@ a.submit:active {
   font-family: 'Lucida Grande', 'Microsoft YaHei', '微软雅黑';
   color: #444444;
   background: #ffffff;
+  /* 表单行 */
+
+  /* 浮动行 */
+
+  /* 表单分割线 */
+
+  /* 表单底部 */
+
+  /* 带图标表单提示共3种 */
+
   /* 头部 */
 
   /* 主导航 */
@@ -9126,6 +9110,9 @@ a.submit:active {
 #user input[type=date][disabled] {
   background: #f5f5f5;
 }
+#user input[type=file] {
+  background: white;
+}
 #user select {
   color: #3c3c3d;
   background: #fbfbfb;
@@ -9247,14 +9234,46 @@ a.submit:active {
   -moz-box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.3), 0 1px 0 #ffffff;
   box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.3), 0 1px 0 #ffffff;
 }
-#user .form_line {
-  border-color: #eeeeee;
+#user .form_row {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-size: 1.2em;
+  line-height: 30px;
+  /* 表单标签 */
+
+  /*  输入框右边的字段 */
+
 }
-#user .right_tip {
+#user .form_row .form_label {
+  width: 130px;
+  height: 30px;
+}
+#user .form_row .right_tip {
   padding-left: 10px;
   padding-right: 10px;
   background: #f6f6f6;
   border-color: #e1e1e1;
+}
+#user .float_row .detail {
+  padding-left: 135px;
+}
+#user .form_line {
+  margin: 2em 0px 1.2em;
+  border-color: #eeeeee;
+}
+#user .form_footer {
+  margin: 0 0px 2em;
+}
+#user .form_tip {
+  margin-top: 20px;
+  font-size: 1.2em;
+}
+#user .form_tip .detail {
+  padding-left: 70px;
+}
+#user .form_tip .icon {
+  float: left !important;
+  margin-right: 15px;
 }
 #user .pic_larger {
   width: 150px;
@@ -9892,6 +9911,7 @@ a.submit:active {
 }
 #user .user_avatar {
   float: left !important;
+  display: inline;
   text-align: center;
   background: #f6f6f6;
   -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);

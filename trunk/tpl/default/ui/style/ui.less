@@ -30,10 +30,11 @@ input[type=date]{
 	}
 }*/
 /* 单选、多选 */
-input[type=radio],input[type=checkbox]{
+input[type=radio],input[type=checkbox],input[type=file]{
 	vertical-align:middle;
 }
-
+/* 文件上传 */
+.file{}
 /* button submit 按钮 */
 .button(@color:#3C3C3D,@bg:#F6F6F6,@border_width:1px, @border_style:solid, @border_color:#cacaca #cacaca #bbb){
 	color: @color;
@@ -98,68 +99,55 @@ button[type="submit"]{
 	display:inline-block;
 	white-space:nowrap;
 }
+
 /* 表单行 */
 .form_row{
-	.clearfix();
-	.pt_5;
-	.pb_5;
-	font-size:1.2em;
-	line-height:30px;
+	.clearfix;
 	vertical-align:top;
 	/* 表单标签 */
 	.form_label{
-		.size(130px,30px);
 		display:inline-block;
-
 	}
 	img{vertical-align: middle;}
 	/*  输入框右边的字段 */
 	.right_tip{
 		display:inline-block;
-		background:#f4f4f4;
-		border:1px solid #ccc;
 		vertical-align: middle;
 	}
 
 }
 /* 浮动行 */
 .float_row{
-	.clearfix();
+	.clearfix;
 	.form_label{ display: inline; float: left;}
-	.detail{ padding-left: 135px;}
 }
 /* 表单分割线 */
 .form_line{
-	.clearfix();
+	.clearfix;
 	font-size:100%;
 	height:1px;
-	margin:2em 0px 1.2em;
-	border-bottom:1px solid #ccc;
+	overflow:hidden;
+	border-bottom-width:1px;
+	border-style:solid;
 	hr{
 		border:none;
 	}
 }
 /* 表单底部 */
 .form_footer{
-	.clearfix();
-	margin:0 0px 2em;
+	.clearfix;
 }
 /* 带图标表单提示共3种 */
 .form_tip{
-	 .mt_20;
-	 .clearfix;
-	 font-size:1.2em;
+	.clearfix;
 	 &.success{
-		.detail{padding-left:70px;}
-		.icon{.fl_l; .size(48px); margin:10px 0 0 15px; background:url(../img/succeed.png) no-repeat;}
+		.icon{.size(48px);background:url(../img/succeed.png) no-repeat;}
 	}
 	&.error{
-		.detail{padding-left:70px;}
-		.icon{.fl_l; .size(48px); margin:10px 0 0 15px;  background:url(../img/error.png) no-repeat;}
+		.icon{.size(48px); background:url(../img/error.png) no-repeat;}
 	}
 	&.info{
-		.detail{padding-left:70px;}
-		.icon{.fl_l; .size(48px); margin:10px 0 0 15px;  background:url(../img/warning.png) no-repeat;}
+		.icon{.size(48px); background:url(../img/warning.png) no-repeat;}
 	}
 }
 

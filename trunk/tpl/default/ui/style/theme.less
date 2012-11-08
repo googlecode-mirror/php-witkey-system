@@ -554,6 +554,10 @@ table {
 		
 	}
 
+	input[type=file]{
+		background: white;
+	}
+
 	select{
 		.select;
 		padding: 4px 5px;
@@ -617,14 +621,48 @@ table {
 			.box-shadow(inset 0 0 7px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,1));	
 		}
 	}
-	.form_line{
-		border-color: lighten(@border_colors,5%);
+
+
+	/* 表单行 */
+	.form_row{
+		.pt_5;
+		.pb_5;
+		font-size:1.2em;
+		line-height:30px;
+		/* 表单标签 */
+		.form_label{
+			.size(130px,30px);
+		}
+		/*  输入框右边的字段 */
+		.right_tip{
+			.pl_10;
+			.pr_10;
+			background: @main_bg;
+			border-color: @border_colors;
+		}
+
 	}
-	.right_tip{
-		.pl_10;
-		.pr_10;
-		background: @main_bg;
-		border-color: @border_colors;
+	/* 浮动行 */
+	.float_row{
+		.detail{ padding-left: 135px;}
+	}
+	/* 表单分割线 */
+	.form_line{
+		margin:2em 0px 1.2em;
+		border-color: lighten(@border_colors,5%);
+
+	}
+	/* 表单底部 */
+	.form_footer{
+		margin:0 0px 2em;
+	}
+	/* 带图标表单提示共3种 */
+	.form_tip{
+		 .mt_20;
+		 font-size:1.2em;
+		.detail{padding-left:70px;}
+		.icon{.fl_l;  margin-right: 15px;}
+		
 	}
 
 	.pic_larger{
@@ -1039,6 +1077,7 @@ table {
 	/* 账户首页 */
 	.user_avatar{
 		.fl_l;
+		display: inline;
 		text-align: center;
 		background: @main_bg;
 		.box-shadow(0 0 5px rgba(0,0,0,.2));

@@ -35,15 +35,9 @@ class Control_login extends Controller {
 		
 		$uri = 'login';
 		
-		if($res===-1){
-			$msg = '用户名错误';
+		if(array_key_exists($res, Keke_user_login::$_status)){
 			$t = 'error';
-		}else if($res===-2){
-			$msg = '密码错误';
-			$t = 'error';
-		}else if($res===FALSE){
-			$msg = '密码为空';
-			$t = 'error';
+			$msg = Keke_user_login::$_status[$res];
 		}else {
 			$msg = '登录成功';
 			$t = 'success';

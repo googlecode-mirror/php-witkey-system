@@ -58,7 +58,7 @@ class Control_admin_user_integrate extends Control_admin{
 		//没有定义就定义ucapi
 		UC_API?UC_API:define(UC_API, $settingnew['UC_API']);
 		//加载uc的client
-		include S_ROOT.'keke_client/ucenter/client.php';
+		include S_ROOT.'client/ucenter/client.php';
 		//用fopen获取ucenter的info
 		$ucinfo = uc_fopen($ucapi.'/index.php?m=app&a=ucinfo&release='.UC_CLIENT_RELEASE, 500, '', '', 1, $ucip);
 		//分解uc_info给对应的变量
@@ -199,7 +199,7 @@ if ($type == 'uc'){
 		$ucip = isset($settingnew['UC_IP']) ? $settingnew['UC_IP'] : '';
 		$ucfounderpw = $uc_creater;
 		UC_API?UC_API:define(UC_API, $settingnew['UC_API']);
-		include_once S_ROOT.'./keke_client/ucenter/client.php';
+		include_once S_ROOT.'./client/ucenter/client.php';
 		$ucinfo = uc_fopen($ucapi.'/index.php?m=app&a=ucinfo&release='.UC_CLIENT_RELEASE, 500, '', '', 1, $ucip);
 		list($status, $ucversion, $ucrelease, $uccharset, $ucdbcharset, $apptypes) = explode('|', $ucinfo);
 	 

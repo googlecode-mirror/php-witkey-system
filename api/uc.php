@@ -63,11 +63,11 @@ if(!defined('IN_UC')) {
 	}
 	$action = $get['action'];
 
-	require_once DISCUZ_ROOT.'./keke_client/ucenter/lib/xml.class.php';
+	require_once DISCUZ_ROOT.'./client/ucenter/lib/xml.class.php';
 	$post = xml_unserialize(file_get_contents('php://input'));
 
 	if(in_array($get['action'], array('test', 'deleteuser', 'renameuser', 'gettag', 'synlogin', 'synlogout', 'updatepw', 'updatebadwords', 'getcredit','updatehosts', 'updateapps', 'updateclient', 'updatecredit', 'getcreditsettings', 'updatecreditsettings'))) {
-		require_once DISCUZ_ROOT.'./keke_client/ucenter/include/db_mysql.class.php';
+		require_once DISCUZ_ROOT.'./client/ucenter/include/db_mysql.class.php';
 		$GLOBALS['db'] = new dbstuff;
 		$GLOBALS['db']->connect(UC_DBHOST, UC_DBUSER, UC_DBPASS, UC_DBNAME, 0, true);
 		$GLOBALS['tablepre'] = UC_DBTABLEPRE;
@@ -82,7 +82,7 @@ if(!defined('IN_UC')) {
 } else {
 
 	 require_once DISCUZ_ROOT.'connfig/config_ucenter.php';
-	 require_once DISCUZ_ROOT.'./keke_client/ucenter/include/db_mysql.class.php';
+	 require_once DISCUZ_ROOT.'./client/ucenter/include/db_mysql.class.php';
 	 require_once DISCUZ_ROOT.'/config/config.inc.php';
 	 $GLOBALS['db'] = new dbstuff;
 	 $GLOBALS['db']->connect(UC_DBHOST, UC_DBUSER, UC_DBPASS, UC_DBNAME, 0, true);
@@ -99,7 +99,7 @@ class uc_note {
 
 	function _serialize($arr, $htmlon = 0) {
 		if(!function_exists('xml_serialize')) {
-			include_once DISCUZ_ROOT.'./keke_client/ucenter/lib/xml.class.php';
+			include_once DISCUZ_ROOT.'./client/ucenter/lib/xml.class.php';
 		}
 		return xml_serialize($arr, $htmlon);
 	}
@@ -216,7 +216,7 @@ class uc_note {
 		if(!API_UPDATEBADWORDS) {
 			return API_RETURN_FORBIDDEN;
 		}
-		//		$cachefile = $this->appdir.'./keke_client/ucenter/data/cache/badwords.php';
+		//		$cachefile = $this->appdir.'./client/ucenter/data/cache/badwords.php';
 		//		$fp = fopen($cachefile, 'w');
 		//		$data = array();
 		//		if(is_array($post)) {
@@ -236,7 +236,7 @@ class uc_note {
 		if(!API_UPDATEHOSTS) {
 			return API_RETURN_FORBIDDEN;
 		}
-		/*		$cachefile = $this->appdir.'./keke_client/ucenter/data/cache/hosts.php';
+		/*		$cachefile = $this->appdir.'./client/ucenter/data/cache/hosts.php';
 		 $fp = fopen($cachefile, 'w');
 		 $s = "<?php\r\n";
 		 $s .= '$_CACHE[\'hosts\'] = '.var_export($post, TRUE).";\r\n";
@@ -253,7 +253,7 @@ class uc_note {
 		if(empty($post) || empty($UC_API)) {
 			return API_RETURN_SUCCEED;
 		}
-		$cachefile = $this->appdir.'./keke_client/ucenter/data/cache/apps.php';
+		$cachefile = $this->appdir.'./client/ucenter/data/cache/apps.php';
 		$fp = fopen($cachefile, 'w');
 		$s = "<?php\r\n";
 		$s .= '$_CACHE[\'apps\'] = '.var_export($post, TRUE).";\r\n";
@@ -266,7 +266,7 @@ class uc_note {
 		if(!API_UPDATECLIENT) {
 			return API_RETURN_FORBIDDEN;
 		}
-		$cachefile = $this->appdir.'./keke_client/ucenter/data/cache/settings.php';
+		$cachefile = $this->appdir.'./client/ucenter/data/cache/settings.php';
 		$fp = fopen($cachefile, 'w');
 		$s = "<?php\r\n";
 		$s .= '$_CACHE[\'settings\'] = '.var_export($post, TRUE).";\r\n";
@@ -283,7 +283,7 @@ class uc_note {
 		$amount = $get['amount'];
 		$uid = $get['uid'];
 
-		require_once $this->appdir.'./keke_client/ucenter/data/cache/creditsettings.php'; 
+		require_once $this->appdir.'./client/ucenter/data/cache/creditsettings.php'; 
         
 		$this->db->query("UPDATE ".$this->tablepre."witkey_space SET experience_value=experience_value+'$amount' WHERE uid='$uid'");
 
@@ -334,7 +334,7 @@ class uc_note {
 			}
 		}
 
-		$cachefile = $this->appdir.'./keke_client/keke/data/cache/creditsettings.php';
+		$cachefile = $this->appdir.'./client/keke/data/cache/creditsettings.php';
 		$fp = fopen($cachefile, 'w');
 		$s = "<?php\r\n";
 		$s .= '$_CACHE[\'creditsettings\'] = '.var_export($outextcredits, TRUE).";\r\n";

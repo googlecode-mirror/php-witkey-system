@@ -1,4 +1,0 @@
-<?php
-class messagemodel {
-    //TODO ÔÝÎ´ÊµÏÖ
-}

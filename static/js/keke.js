@@ -24,55 +24,7 @@ function ifOut(obj,max,msgType,showTarget){
 		return true;
 	}
 }
-/**
- * 互评页面调用
- */
-function mark(require_url,Do,obj,obj_id){
-	var jump='';
-	Do&&obj&&obj_id?jump+='do-'+Do+'*'+obj+'-'+obj_id+'*view'+'-'+'mark':'';
-	showWindow('mark',require_url+'&jump_url='+jump,'get',0);return false;
-}
 
-/**
- * 消息提示方法
- * @param target 当前操作对象id
- * @param msg	提示消息
- * @param type	提示类型  successful error waring
- * @param color 提示框颜色
- */
-function tipsAppend(target, msg, type, color,s){
-	if(s==1){
-	    $("#" + target).after("<div id='tips' class='fl_l ml_5'></div>");
-	}else{
-		$("#" + target).before("<div id='tips'></div>");
-	}
-    var tips = $("<div class='messages " + color + "' style='margin:0'><span class='icon16'>" + type + "</span>" + msg+"</div>" );
-    $("#tips").empty().append(tips);
-    $('html,body').animate({scrollTop:$("#"+target).offset().top-100});
-    msgshow(tips);
-	var hide = setTimeout(function() {
-		msghide($("#tips"));
-		clearTimeout(hide);
-	}, 2000);
-}
-
-// 显示消息
-function msgshow(ele) {
-	var t = setTimeout(function() {
-		ele.slideDown(200);
-		clearTimeout(t);
-	}, 100);
-}
-// 关闭消息
-function msghide(ele) {
-	ele.animate({
-		opacity : .01
-	}, 200, function() {
-		ele.slideUp(200, function() {
-			ele.remove();
-		});
-	});
-};
 /**
  * flash 文件上传
  * @param (Object)
@@ -196,52 +148,7 @@ function upload(fileName,fileType,task_id,obj_id,obj_type,width,height,msgType,s
 		}
 }
 
-/**
- * 发送 站内信
- * 
- * @param int
- *            to_uid 接受方
- */
-function sendMessage(to_uid,to_username) {
-if(check_user_login()){
-	if (uid == to_uid) {
-		showDialog(L.can_not_give_yourself_send_message, 'error', L.operate_notice);
-				return false;
-		}
-	var url = 'index.php?do=ajax&view=message&op=send&to_uid='+ to_uid+'&to_username='+to_username;
-		showWindow('message',encodeURI(url));return false;
-}
-}
-/**
- * 交易维权 *请在外部定义basic_url参数
- * 
- * @param string
- *            type 维权类型 1=>维权,2=>举报,3=>投诉
- * @param string
- *            obj 维权对象 task/work/product/order
- * @param string
- *            obj_id 对象编号
- * @param int
- *            to_uid 被举报人
- * @param string
- *            to_username 被举报人名称
- */
-function report( obj, type,obj_id,to_uid,to_username) {
-	if (check_user_login()) {
-		var s='';
-		if(type=='1') s=L.rights;else if(type=='2') s=L.report;else s=L.complaints;
-		if(type==3){
-			showWindow("report",'index.php?do=index&op=report_3&type='+type+'&obj='+obj,'get','0');			
-		}else{ 
-			if(uid==to_uid){
-				showDialog(L.can_not_be_initiated+s,"error",L.operate_notice);return false;
-			}else{
-				showWindow("report",basic_url+'&op=report&type='+type+'&obj='+obj+'&obj_id='+obj_id+'&to_uid='+to_uid+'&to_username='+to_username,'get','0');
-			}
-		}
-		
-	}
-}
+
 function addFav(name,url){
 		if (document.all){
 	     	window.external.addFavorite(url,name);

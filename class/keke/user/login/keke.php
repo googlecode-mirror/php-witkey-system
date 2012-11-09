@@ -28,10 +28,9 @@ class Keke_user_login_keke extends Keke_user_login {
 		$where = "username = '$username' and password = '$this->_pwd'";
 		$uid = DB::select('uid')->from('witkey_member')->where($where)->get_count()->execute();
 		if($uid){
-			//更新登录时间，登录IP地址
-			$this->update_login_time($uid);
 			$this->remember_me($uid, $username, $this->_pwd);
-		    $this->complete_login($uid, $username);
+		    //完成登录 
+			$this->complete_login($uid, $username);
 		    //登录成功
 			return TRUE;
 		}else{

@@ -22,6 +22,7 @@ class Keke_user_login_uc extends Keke_user_login{
 	   		if($res!==TRUE){
 	   			return $res;
 	   		}
+	   		$this->complete_login($uid, $username);
 	   		return uc_user_synlogin($uid);
 	   }else{
 	   	    return $uid;

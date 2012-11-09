@@ -8,7 +8,10 @@
 
 class Keke_user_register_keke extends Keke_user_register {
 
-	
+	/**
+	 * kekeÏµÍ³×¢²á
+	 * @see Keke_user_register::reg()
+	 */
 	function reg(){
 		if(($res = $this->check_username($this->_username))<1){
 			return $res;
@@ -16,15 +19,8 @@ class Keke_user_register_keke extends Keke_user_register {
 		if(($res= $this->check_email($this->_email))<1){
 			return $res;
 		}
-		$columns = array('username','password','salt','sec_code');
 		
-		$scode = $this->gen_secode($this->_pwd);
-		
-		$values = array($this->_username,md5($this->_pwd),$this->_salt,$scode);
-		
-		$uid = DB::insert('witkey_member')->set($columns)->value($values)->execute();
-		
-		$this->complete_reg($uid, $this->_username);
+		$uid = $this->complete_reg(NULL, $this->_username);
 		
 		return $uid;
 		
@@ -62,7 +58,7 @@ class Keke_user_register_keke extends Keke_user_register {
 		return TRUE;
 	}
 	
-	function syc_login(){
+	function syn_login($uid){
 		
 	}
 	

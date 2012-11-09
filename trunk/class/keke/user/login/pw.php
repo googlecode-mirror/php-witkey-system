@@ -19,6 +19,7 @@ class Keke_user_login_pw extends Keke_user_login{
         	if($res!==TRUE){
         		return $res;
         	}
+        	$this->complete_login($uid, $username);
         	//Òì²½µÇÂ¼´úÂë
         	return $synlogin;
         }else{

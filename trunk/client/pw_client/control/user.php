@@ -1,9 +1,9 @@
 <?php
 
-define('UC_USER_REG_ILLEGAL_USERNAME', -1);
-define('UC_USER_REG_USERNAME_SAME', -2);
-define('UC_USER_REG_ILLEGAL_EMAIL', -3);
-define('UC_USER_REG_EMAIL_SAME', -4);
+define('UC_USER_REG_ILLEGAL_USERNAME', -2);
+define('UC_USER_REG_USERNAME_SAME', -3);
+define('UC_USER_REG_ILLEGAL_EMAIL', -4);
+define('UC_USER_REG_EMAIL_SAME', -5);
 
 define('UC_USER_NOT_EXISTS', -1);
 define('UC_USER_CHECK_ERROR', -2);
@@ -32,14 +32,9 @@ class usercontrol {
 			return $status;
 		}
 		$uid = $this->user->add($username, $pwd, $email);
-		/*注册接口不发送邮件
-		$this->base->init_cache();
-		if ($this->base->cache['rg_mailcheck']) {
-			$mmail = $this->base->load('mail');
-			$mmail->send($email, $this->base->cache['rg_mail_subject'], $this->base->cache['rg_mail_content']);
-		}*/
+		
 		return $uid;
-		//return $this->user->add($username, $pwd, $email);
+		
 	}
 
 	function login($username, $password, $logintype) {

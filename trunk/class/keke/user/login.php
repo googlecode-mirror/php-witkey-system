@@ -113,7 +113,11 @@ abstract class Keke_user_login extends Keke_user {
 		$this->_session->regenerate ();
 		$this->_session->set ( 'uid', $uid );
 		$this->_session->set ( 'username', $username );
-		return TRUE;
+		$columns = array('last_login_time','reg_ip');
+		$values = array(time(),Keke::get_ip());
+		$where = "uid = '$uid'";
+		//更新登录时间
+		return (bool)DB::update('witkey_space')->set($columns)->value($values)->where($where)->execute();
 	}
 	/**
 	 * 判断是否登录
@@ -124,19 +128,6 @@ abstract class Keke_user_login extends Keke_user {
 		return ($this->get_user () !== NULL);
 	}
 
-	/**
-	 * 更新登录时间
-	 * @param  $uid
-	 * @return int time
-	 */
-	function update_login_time($uid){
-		$columns = array('last_login_time','reg_ip');
-		$t = time();
-		$values = array($t,Keke::get_ip());
-		$where = "uid = '$uid'";
-		DB::update('witkey_space')->set($columns)->value($values)->where($where)->execute();
-		return $t;
-	}
 	/**
 	 * 记住登录状态
 	 * @param int $uid

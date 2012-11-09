@@ -45,10 +45,61 @@ abstract class Keke_user_register extends Keke_user{
 	 * 完成注册
 	 */
 	function complete_reg($uid,$username){
-		Keke_user_login::instance()->complete_login($uid, $username);
-		$columns = array('uid','username','email','reg_time','reg_ip','last_login_time');
-		$values = array($uid,$username,$this->_email,time(),Keke::get_ip(),time());
-		return (bool)DB::insert('witkey_space')->set($columns)->value($values)->execute();
+		global $_K;
+		$columns = array('uid','username','password','salt','sec_code');
+		
+		$scode = $this->gen_secode($this->_pwd);
+		
+		$values = array($uid,$username,md5($this->_pwd),$this->_salt,$scode);
+		
+		$uid = DB::insert('witkey_member')->set($columns)->value($values)->execute();
+		//注册激活判断
+		if($_K['allow_reg_action']){
+			$status = 3;
+		}else{
+			$status =1;
+			Keke_user_login::instance()->complete_login($uid, $username);
+		}
+		
+		$columns = array('uid','username','email','reg_time','reg_ip','last_login_time','status');
+		
+		$values = array($uid,$username,$this->_email,time(),Keke::get_ip(),time(),$status);
+		
+		return (int)DB::insert('witkey_space')->set($columns)->value($values)->execute();
+	}
+	/**
+	 * 发送激活短信
+	 * @param int $uid
+	 */
+	function send_active_msg($uid){
+		global $_lang;
+		
+		$hash_code = hash_hmac('md5', $uid.md5($this->_pwd), ENCODE_KEY);
+			
+		$title = Keke::$_sys_config['website_name'] . '--' . $_lang['activate_the_account'];
+			
+		$body = '
+			<font color="red">'.Keke::$_sys_config['website_name'].'--'.$_lang['activate_the_account'].'</font><br><br>
+			&nbsp;&nbsp;&nbsp;'.$_lang['welcome_you_register'].Keke::$_sys_config['website_name'].$_lang['please_onclick_this_address_activate'].'
+			<a href="'.Keke::$_sys_config['website_url'].'/index.php/login/active_email?code='.$hash_code.'&auid='.$uid.'" traget="_blank">
+			'.$_lang['onclick_activate_account'].'
+			</a>';
+
+		Keke_msg::instance()->to_user($uid)->send_mail($this->_email,$title,$body);
+	}
+	/**
+	 * 激活注册用户
+	 */
+	function active_reg_user($uid,$code){
+		$where = "uid='$uid'";
+		$pwd = DB::select('password')->from('witkey_member')->where($where)->get_count()->execute();
+		$hash_code = hash_hmac('md5', $uid.$pwd, ENCODE_KEY);
+		if($code !== $hash_code){
+			//激活连接无效
+			return -1;
+		}
+		return (bool)DB::update('witkey_space')->set(array('status'))->value(array(1))->where($where)->execute();
+		
 	}
 	/**
 	 * 生成安全码
@@ -60,6 +111,10 @@ abstract class Keke_user_register extends Keke_user{
 			$this->_salt = $salt;
 		}
 		return hash_hmac('md5', $str, $this->_salt);
+	}
+	
+	function get_salt(){
+		return $this->_salt;
 	}
 	/**
 	 * 注册用户信息
@@ -80,7 +135,7 @@ abstract class Keke_user_register extends Keke_user{
      /**
       * 同步登录
       */	
-	abstract public function syc_login();
+	abstract public function syn_login($uid);
 	/**
 	 * 注册返回的状态集
 	 */

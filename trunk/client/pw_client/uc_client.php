@@ -79,19 +79,30 @@ function uc_user_check($uid, $checkstr) {
 	return uc_data_request('user', 'check', $args);
 }
 
-// EMAIL
+/**
+ * email 检查
+ * @param string $email
+ * @return -3email无效，-4email已存在
+ */
 function uc_check_email($email) {
 	$args = func_get_args();
 	//调用 control user类
 	return uc_data_request('user', 'checkEmail', $args);
 }
-
+/**
+ * 返回phpwind最大UID
+ * @return int $uid
+ */
 function uc_check_maxuid(){
 	$args = func_get_args();
 	return uc_data_request('user', 'CheckMaxUid', $args);
 }
 
-
+/**
+ * 用户名检查
+ * @param string $username
+ * @return -1用户名无效，-2用户名已存在
+ */
 function uc_check_username($username) {
 	$args = func_get_args();
 	return uc_data_request('user', 'checkName', $args);

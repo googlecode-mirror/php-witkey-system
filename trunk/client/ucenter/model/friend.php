@@ -14,11 +14,9 @@ class friendmodel {
 	var $db;
 	var $base;
 
-	function __construct(&$base) {
-		$this->friendmodel($base);
-	}
+ 
 
-	function friendmodel(&$base) {
+	function friendmodel($base) {
 		$this->base = $base;
 		$this->db = $base->db;
 	}

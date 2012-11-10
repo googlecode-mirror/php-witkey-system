@@ -5,7 +5,7 @@
  * @version 2.2 2012-11-09
  */
 
-require S_ROOT.'client/pw_client/uc_client.php';
+include_once S_ROOT.'client/pw_client/uc_client.php';
 
 class Keke_user_register_pw extends Keke_user_register {
 
@@ -20,7 +20,16 @@ class Keke_user_register_pw extends Keke_user_register {
 		if($uid<=0){
 			return $uid;
 		}
-		return $this->complete_reg($uid, $this->_username);
+		//异步登录
+		$user = $this->syn_login($uid);
+		//状态1表示登录成功，否则出错
+		$status = $user['status'];
+		if($status<=0){
+			return $status;
+		}
+		
+		$this->complete_reg($uid, $this->_username);
+		return $user['synlogin'];
 		
 	}
 	
@@ -33,7 +42,7 @@ class Keke_user_register_pw extends Keke_user_register {
 	}
 	
 	function syn_login($uid){
-		return uc_user_login($username, $password, $logintype);
+		return uc_user_login($this->_username, md5($this->_pwd), 0);
 	}
 	
 }

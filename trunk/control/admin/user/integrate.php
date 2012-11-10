@@ -33,9 +33,10 @@ class Control_admin_user_integrate extends Control_admin{
 		Keke::formcheck($_POST['formhash']);
 		//读取
 		$settingnew  = $_POST['settingnew'];
+		//var_dump($settingnew);die;
 		//用户正规更换配置的参数
 		foreach ($settingnew as $k=>$v){
-			$config_ucenter = preg_replace("/define\('$k',\s*'.*?'\);/i", "define('$k', '$v');".PHP_EOL, $config_ucenter);
+			$config_ucenter = preg_replace("/define\('$k',\s*'.*?'\);".PHP_EOL."/i", "define('$k', '$v');".PHP_EOL, $config_ucenter);
 		}
 		//写内容
 		keke_file_class::write_file(S_ROOT."config/config_ucenter.php",$config_ucenter);
@@ -80,35 +81,39 @@ class Control_admin_user_integrate extends Control_admin{
 				Keke::show_msg($_lang['uc_different_coding'],'admin/user_integrate/uc','warning');
 			}
 		    //构造app添加的请求参数
-			$postdata = "m=app&a=add
-			 &ucfounderpw=".urlencode($ucfounderpw).
-			"&apptype=".urlencode($app_type).
-			"&appname=".urlencode($app_name).
-			"&appurl=".urlencode($app_url).
-			"&appip=$ucip
-			 &appcharset=".CHARSET.
-			'&appdbcharset='.DBCHARSET.
-			'&release='.UC_CLIENT_RELEASE;
+			$p_arr = array('m'=>'app','a'=>'add',
+					'ucfounderpw'=>$ucfounderpw,
+					'apptype'=>$app_type,
+					'appname'=>$app_name,
+					'appurl'=>$app_url,
+					'appip'=>$ucip,
+					'appcharset'=>CHARSET,
+					'appdbcharset'=>$dbcharset,
+					'release'=>UC_CLIENT_RELEASE);
+			$postdata = http_build_query($p_arr);
 			//请求添加
 			$ucconfig = uc_fopen($ucapi.'/index.php', 500, $postdata, '', 1, $ucip);
+			
+			//var_dump($postdata,$ucconfig);die;
+			
 	        //返回的值为空，则添加失败
 			if(empty($ucconfig)) {
-				Keke::show_msg($_lang['uc_app_fail_to_add'],'admin/user_integrate/uc','warning');
+				Keke::show_msg($_lang['uc_app_fail_to_add'],'admin/user_integrate/uc','error');
 			} elseif($ucconfig == '-1') {
 				//负1为管理密码错误
-				Keke::show_msg($_lang['uc_error_author_password'],'admin/user_integrate/uc','warning');
+				Keke::show_msg($_lang['uc_error_author_password'],'admin/user_integrate/uc','error');
 			} else {
 				list($appauthkey, $appid) = explode('|', $ucconfig);
 				if(empty($appauthkey) || empty($appid)) {
 					//添加无效
-					Keke::show_msg($_lang['uc_app_invalid_to_add'],'admin/user_integrate/uc','success');
+					Keke::show_msg($_lang['uc_app_invalid_to_add'],'admin/user_integrate/uc','error');
 				}
 			}
 		}
 	    //添加成功后，要写uckey,与uc_appid
 		$ucconfig_info = explode('|', $ucconfig);
 		$config_ucenter = keke_file_class::read_file(S_ROOT."config/config_ucenter.php");
-		$config_ucenter = preg_replace("/define\('UC_KEY',\s*'.*?'\);/s", "define('UC_KEY', '".$ucconfig_info['0']."');", $config_ucenter);
+		$config_ucenter = preg_replace("/define\('UC_KEY',\s*'.*?'\);/s", "define('UC_KEY', '".$ucconfig_info[0]."');", $config_ucenter);
 		$config_ucenter = preg_replace("/define\('UC_APPID',\s*'*.*?'*\);/s", "define('UC_APPID', ".$ucconfig_info[1].");", $config_ucenter);
 		//写uc的配置文件
 		keke_file_class::write_file(S_ROOT."config/config_ucenter.php",$config_ucenter);

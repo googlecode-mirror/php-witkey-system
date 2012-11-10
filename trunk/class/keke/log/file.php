@@ -9,6 +9,7 @@ class Keke_log_file extends Keke_log_write {
 	 * @throws Keke_exception
 	 */
 	public function __construct($directory = 'data/log') {
+		$directory = S_ROOT.$directory;
 		if (! is_dir ( $directory ) or ! is_writable ( $directory )) {
 			throw new Keke_exception ( 'Directory ?dir must be writable', array ('?dir' => keke_debug::path ( $directory ) ) );
 		}

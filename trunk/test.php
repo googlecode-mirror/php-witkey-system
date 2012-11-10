@@ -1,5 +1,6 @@
 <?php define ( "IN_KEKE", TRUE );
- 
+
+include 'app_boot.php';
 class a{
 	
 	function __construct(){

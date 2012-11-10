@@ -20,7 +20,7 @@
             			<div class="grid_17">
                 		<!--from±íµ¥ start-->
                 			<div class="form_box clearfix border_n">
-                    			<form action="index.php?do=register" method="post" id="register_frm" name="register_frm">
+                    			<form action="{BASE_URL}/index.php/register/reg" method="post" id="register_frm" name="register_frm">
                         			<input type="hidden" name="formhash" id="formhash" value="{FORMHASH}">
                         			<input type="hidden" name="handlekey" value="register_frm1">
                         			<div class="rowElem clearfix po_re">
@@ -28,7 +28,7 @@
                                 			{$_lang['account']}
                             			</label>
                             			<div class="fl_l ">
-                                			<input type="text" class="txt txt_input" autocomplete="off" name="txt_account" id="txt_account" limit="required:true;len:2-20;type:string;general:true" msg="{$_lang['username_input_error']}" ajax="{BASE_URL}/index.php/register/check_username/txt_account" title="{$_lang['please_input_register_account']}" msgArea="login_account_msg" style="width:200px;" />
+                                			<input type="text" class="txt txt_input" autocomplete="off" name="txt_account" id="txt_account" limit="required:true;len:2-20;type:string;general:true" msg="{$_lang['username_input_error']}" ajax="{BASE_URL}/index.php/register/check_username?username=" title="{$_lang['please_input_register_account']}" msgArea="login_account_msg" style="width:200px;" />
                             				<span class="msg" id="login_account_msg"><i></i></span>
 										</div>
 									
@@ -76,7 +76,7 @@
                                 			{$_lang['email']}
                             			</label>
                             			<div class="fl_l">
-                                			<input class="txt_input" style="width:200px;" autocomplete="off" type="text" class="txt" name="txt_email" id="txt_email"limit="type:email;required:true;len:6-50" msg="{$_lang['email_error']}" title="{$_lang['email_format']}" ajax="index.php?do=register&check_email=" msgArea="email_msg"/>
+                                			<input class="txt_input" style="width:200px;" autocomplete="off" type="text" class="txt" name="txt_email" id="txt_email"limit="type:email;required:true;len:6-50" msg="{$_lang['email_error']}" title="{$_lang['email_format']}" ajax="{BASE_URL}/index.php/register/check_email?email=" msgArea="email_msg"/>
                             				<span class="" id="email_msg"></span>
 										</div>
 										
@@ -93,7 +93,7 @@
 											size="8" id="txt_code" limit="required:true;len:4" msg="{$_lang['auth_code_error']}"msgArea="secode_msg"
 											ajax="{BASE_URL}/index.php/captcha/check/" >
 								 			<div id="show_secode_menu_content" class="hidden secode_box">
-								 				<img id="secode_img" src="{BASE_URL}/index.php/captcha/index" onclick="document.getElementById('secode_img').src='{BASE_URL}/index.php/captcha?sid='+Math.random(); return false;">
+								 				<img id="secode_img" src="" onclick="document.getElementById('secode_img').src='{BASE_URL}/index.php/captcha?sid='+Math.random(); return false;">
 								 				<a class="font14" href="javascript:;" onclick="document.getElementById('secode_img').src='{BASE_URL}/index.php/captcha?sid='+Math.random(); return false;">{$_lang['change_a_group']}</a>
 												<span class="" id="secode_msg"></span>
 											</div>
@@ -162,6 +162,9 @@
 		 }
     }
 $("#txt_code").focus(function(){
+	if(!$("#secode_img").attr('src')){
+		$("#secode_img").attr('src','{BASE_URL}/index.php/captcha/index');
+	}
 	$("#show_secode_menu_content").removeClass("hidden");
 });
 $(".agreement_link").toggle(function(){
@@ -170,20 +173,15 @@ $(".agreement_link").toggle(function(){
 	$(".agreement_part").hide();
 });
 function checkStrong(sPW){
-	//if (sPW.length < 3){
-		//Modes=1;
-	//}else{
-		var pwLength = 	sPW.length;
-		  var patEn = /[a-zA-Z]/;
-		  var patnum = /[0-9]/;
-		  var speChar = /[`~!@#$\^&\*\(\)=\|{}':;',\/\?\[\]\.<>]/;
-		  var isEn = patEn.test(sPW);
-		  var isNum = patnum.test(sPW);
-		  var isSpe = speChar.test(sPW);
-		  Modes = getStrong(isEn,isNum,isSpe,pwLength);
-	
-	//}
-	 return Modes; 
+  var pwLength = 	sPW.length;
+  var patEn = /[a-zA-Z]/;
+  var patnum = /[0-9]/;
+  var speChar = /[`~!@#$\^&\*\(\)=\|{}':;',\/\?\[\]\.<>]/;
+  var isEn = patEn.test(sPW);
+  var isNum = patnum.test(sPW);
+  var isSpe = speChar.test(sPW);
+  Modes = getStrong(isEn,isNum,isSpe,pwLength);
+  return Modes; 
 }
 
 function getStrong (isEn,isNum,isSpe,pwLength){

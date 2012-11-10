@@ -1,7 +1,7 @@
 <?php
 
 define('IN_DISCUZ', TRUE);
-
+define('IN_KEKE',true);
 define('UC_CLIENT_VERSION', '1.5.0');	//note UCenter 版本标识
 define('UC_CLIENT_RELEASE', '20081031');
 define('DEBUGUC', 0);
@@ -23,71 +23,52 @@ define('API_RETURN_SUCCEED', '1');
 define('API_RETURN_FAILED', '-1');
 define('API_RETURN_FORBIDDEN', '-2');
 
-define('DISCUZ_ROOT', '../');
 
-define('IN_KEKE',true);
-require '../app_boot.php';
+include '../app_boot.php';
+
+
 //note 普通的 http 通知方式
-if(!defined('IN_UC')) {
+// if(!defined('IN_UC')) {
 
-	error_reporting(0);
-	set_magic_quotes_runtime(0);
+error_reporting(0);
+ 
+require S_ROOT.'/config/config_ucenter.php';
+ 
 
-	defined('MAGIC_QUOTES_GPC') || define('MAGIC_QUOTES_GPC', get_magic_quotes_gpc());
-	require_once DISCUZ_ROOT.'/config/config_ucenter.php';
-	require_once DISCUZ_ROOT.'/config/config.inc.php';
+ 
+$_DCACHE = $get = $post = array();
 
-	 
-	$_DCACHE = $get = $post = array();
+$code = @$_GET['code'];
+parse_str(_authcode($code, 'DECODE', UC_KEY), $get);
+if(TRUE == DEBUGUC)
+{
+	$get['realtime'] = date('Y-m-d H:i:s', $get['time']);
+	$debugStr = date('Y-m-d H:i:s', time()) . ':' . print_r($get, 1);
+	$debugLogFile = dirname(__FILE__)  . '/uc_client_log.txt';
+	file_put_contents($debugLogFile, $debugStr, FILE_APPEND);
+}
+if(MAGIC_QUOTES_GPC) {
+	$get = _stripslashes($get);
+}
 
-	$code = @$_GET['code'];
-	parse_str(_authcode($code, 'DECODE', UC_KEY), $get);
-	if(TRUE == DEBUGUC)
-	{
-		$get['realtime'] = date('Y-m-d H:i:s', $get['time']);
-		$debugStr = date('Y-m-d H:i:s', time()) . ':' . print_r($get, 1);
-		$debugLogFile = dirname(__FILE__)  . '/uc_client_log.txt';
-		file_put_contents($debugLogFile, $debugStr, FILE_APPEND);
-	}
-	if(MAGIC_QUOTES_GPC) {
-		$get = _stripslashes($get);
-	}
+$timestamp = time();
 
-	$timestamp = time();
+if($timestamp - $get['time'] > 3600) {
+	exit('Authracation has expiried');
+}
+if(empty($get)) {
+	exit('Invalid Request');
+}
+$action = $get['action'];
 
-	if($timestamp - $get['time'] > 3600) {
-		exit('Authracation has expiried');
-	}
-	if(empty($get)) {
-		exit('Invalid Request');
-	}
-	$action = $get['action'];
+require S_ROOT.'./client/ucenter/lib/xml.class.php';
+$post = xml_unserialize(file_get_contents('php://input'));
 
-	require_once DISCUZ_ROOT.'./client/ucenter/lib/xml.class.php';
-	$post = xml_unserialize(file_get_contents('php://input'));
-
-	if(in_array($get['action'], array('test', 'deleteuser', 'renameuser', 'gettag', 'synlogin', 'synlogout', 'updatepw', 'updatebadwords', 'getcredit','updatehosts', 'updateapps', 'updateclient', 'updatecredit', 'getcreditsettings', 'updatecreditsettings'))) {
-		require_once DISCUZ_ROOT.'./client/ucenter/include/db_mysql.class.php';
-		$GLOBALS['db'] = new dbstuff;
-		$GLOBALS['db']->connect(UC_DBHOST, UC_DBUSER, UC_DBPASS, UC_DBNAME, 0, true);
-		$GLOBALS['tablepre'] = UC_DBTABLEPRE;
-		
-		$uc_note = new uc_note();
-		exit($uc_note->$get['action']($get, $post));
-	} else {
-		exit(API_RETURN_FAILED);
-	}
-
-	//note include 通知方式
+if(in_array($get['action'], array('test', 'deleteuser', 'renameuser', 'gettag', 'synlogin', 'synlogout', 'updatepw', 'updatebadwords', 'getcredit','updatehosts', 'updateapps', 'updateclient', 'updatecredit', 'getcreditsettings', 'updatecreditsettings'))) {
+	$uc_note = new uc_note();
+	exit($uc_note->$get['action']($get, $post));
 } else {
-
-	 require_once DISCUZ_ROOT.'connfig/config_ucenter.php';
-	 require_once DISCUZ_ROOT.'./client/ucenter/include/db_mysql.class.php';
-	 require_once DISCUZ_ROOT.'/config/config.inc.php';
-	 $GLOBALS['db'] = new dbstuff;
-	 $GLOBALS['db']->connect(UC_DBHOST, UC_DBUSER, UC_DBPASS, UC_DBNAME, 0, true);
-	 $GLOBALS['tablepre'] = UC_DBTABLEPRE;
-	  
+	exit(API_RETURN_FAILED);
 }
 
 class uc_note {
@@ -99,16 +80,13 @@ class uc_note {
 
 	function _serialize($arr, $htmlon = 0) {
 		if(!function_exists('xml_serialize')) {
-			include_once DISCUZ_ROOT.'./client/ucenter/lib/xml.class.php';
+			include_once S_ROOT.'./client/ucenter/lib/xml.class.php';
 		}
 		return xml_serialize($arr, $htmlon);
 	}
 
 	function uc_note() {
-		$this->appdir = DISCUZ_ROOT;
-		$this->dbconfig = $this->appdir.'./config/config.inc.php';
-		$this->db = $GLOBALS['db'];
-		$this->tablepre = $GLOBALS['tablepre'];
+		$this->appdir = S_ROOT;
 	}
 	/*通讯测试 */
 	function test($get, $post) {

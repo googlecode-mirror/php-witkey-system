@@ -8,7 +8,7 @@
 */
 
 
-class db {
+class ucdb {
 	var $querynum = 0;
 	var $link;
 	var $histories;

@@ -23,11 +23,9 @@ class cachemodel {
 	var $base;
 	var $map;
 
-	function __construct(&$base) {
-		$this->cachemodel($base);
-	}
+ 
 
-	function cachemodel(&$base) {
+	function cachemodel($base) {
 		$this->base = $base;
 		$this->db = $base->db;
 		$this->map = array(

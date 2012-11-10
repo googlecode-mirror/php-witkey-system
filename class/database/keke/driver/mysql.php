@@ -66,7 +66,7 @@ final class Keke_driver_mysql extends Keke_database {
 			while ( ($rs = $this->fetch_array ()) != false ) {
 				$result [] = $rs;
 			}
-		} elseif ($type === Database::INSERT and (bool)$this->_return_insert_id===TRUE) {
+		} elseif ($type === Database::INSERT ) {
 			$result = mysql_insert_id ( $this->_link );
 		} else {
 			$result = mysql_affected_rows ( $this->_link );

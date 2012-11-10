@@ -6,7 +6,10 @@
 }
  */
 error_reporting(0);
-require_once(S_ROOT.'./config/config_ucenter.php'); 
+
+
+
+require (S_ROOT.'/config/config_ucenter.php'); 
 define('IN_UC', TRUE);
 define('UC_CLIENT_VERSION', '1.5.0');
 define('UC_CLIENT_RELEASE', '20090121');
@@ -15,6 +18,8 @@ define('UC_DATADIR', UC_ROOT.'./data/');		//note 用户中心的数据缓存目录
 define('UC_DATAURL', UC_API.'/data');			//note 用户中心的数据 URL
 define('UC_API_FUNC', UC_CONNECT == 'mysql' ? 'uc_api_mysql' : 'uc_api_post');
 $GLOBALS['uc_controls'] = array();
+
+
 
 function uc_addslashes($string, $force = 0, $strip = FALSE) {
 	!defined('MAGIC_QUOTES_GPC') && define('MAGIC_QUOTES_GPC', get_magic_quotes_gpc());
@@ -985,4 +990,3 @@ function uc_check_version() {
 	return is_array($data) ? $data : $return;
 }
 
-?>

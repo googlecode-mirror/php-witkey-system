@@ -5,6 +5,7 @@
  * @auther ¾Å½­
  * 
  */
+
 error_reporting(E_ALL|E_STRICT);
 date_default_timezone_set ( 'PRC' );
 define ( "S_ROOT", dirname ( __FILE__ ).DIRECTORY_SEPARATOR);
@@ -42,7 +43,7 @@ array(
 'action'     => 'index',
 )); 
 if(!Route::cache()){
-	Route::cache(TRUE);
+	Route::cache(FALSE);
 }   
 
 $_K = $_K+Keke::$_sys_config;

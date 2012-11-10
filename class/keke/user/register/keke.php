@@ -19,7 +19,6 @@ class Keke_user_register_keke extends Keke_user_register {
 		if(($res= $this->check_email($this->_email))<1){
 			return $res;
 		}
-		
 		$uid = $this->complete_reg(NULL, $this->_username);
 		
 		return $uid;
@@ -39,7 +38,7 @@ class Keke_user_register_keke extends Keke_user_register {
 			//用户名敏感
 			return -2;
 		}
-		if((bool)DB::select('count(*)')->from('witkey_memeber')->where("username='$username'")->execute()){
+		if((bool)DB::select('count(*)')->from('witkey_member')->where("username='$username'")->get_count()->execute()){
 			//用户存在
 			return -3;
 		}
@@ -51,7 +50,7 @@ class Keke_user_register_keke extends Keke_user_register {
 			//邮箱格式不对
 			return -4;
 		}
-		if((bool)DB::select('count(*)')->from('witkey_space')->where("email='$email'")->execute()){
+		if((bool)DB::select('count(*)')->from('witkey_space')->where("email='$email'")->get_count()->execute()){
 			//邮箱已存在
 			return -5;
 		}

@@ -18,9 +18,13 @@ abstract class Keke_user_register extends Keke_user{
 	/**
 	 * ÓÃ»§×¢²áÊµÀý
 	 * @param string $name   (keke,uc,pw)
-	 * 
+	 * @return Keke_user_register_keke
 	 */
-	public static function instance($name='keke'){
+	public static function instance($name=NUll){
+		global $_K;
+		if ($name === NULL) {
+			$name =  Keke_user::$_type[$_K ['user_intergration']];
+		}
 		if(isset(self::$_instance)){
 			return self::$_instance;
 		}
@@ -51,11 +55,12 @@ abstract class Keke_user_register extends Keke_user{
 		$scode = $this->gen_secode($this->_pwd);
 		
 		$values = array($uid,$username,md5($this->_pwd),$this->_salt,$scode);
-		
+		//var_dump($values);die;
 		$uid = DB::insert('witkey_member')->set($columns)->value($values)->execute();
 		//×¢²á¼¤»îÅÐ¶Ï
 		if($_K['allow_reg_action']){
 			$status = 3;
+			$this->send_active_msg($uid);
 		}else{
 			$status =1;
 			Keke_user_login::instance()->complete_login($uid, $username);
@@ -144,6 +149,7 @@ abstract class Keke_user_register extends Keke_user{
 			-2=>'name_filter',
 			-3=>'name_exists',
 			-4=>'email_error',
-			-5=>'email_exists'
+			-5=>'email_exists',
+			-6=>'email_exists',
 			);
 }

@@ -6,7 +6,7 @@
  * @version 2.2 2012-11-08
  *
  */
-require S_ROOT.'client/ucenter/client.php';
+include_once S_ROOT.'client/ucenter/client.php';
 
 class Keke_user_register_uc  extends Keke_user_register{
 
@@ -18,11 +18,17 @@ class Keke_user_register_uc  extends Keke_user_register{
 		if(($res = $this->check_email($this->_email))!==1){
 			return $res; 
 		}
+		$uid = 556;
+		DB::insert('witkey_member')->set(array('uid'))->value(array($uid))->execute();
+		die;
 		$uid = uc_user_register($this->_username, $this->_pwd, $this->_email);
 		if($uid<=0){
 			return $uid;
 		}
+		
+		
 		$this->complete_reg($uid, $this->_username);
+		
 		$html = $this->syn_login($uid);
 		return $html;
 	}

@@ -10,6 +10,7 @@ error_reporting(0);
 
 
 require (S_ROOT.'/config/config_ucenter.php'); 
+define('UC_DEBUG',1);
 define('IN_UC', TRUE);
 define('UC_CLIENT_VERSION', '1.5.0');
 define('UC_CLIENT_RELEASE', '20090121');
@@ -76,7 +77,8 @@ function uc_api_post($module, $action, $arg = array()) {
 		$sep = '&';
 	}
 	$postdata = uc_api_requestdata($module, $action, $s);
-	//KEKE_DEBUG and file_put_contents(dirname(__FILE__)."./log.txt", UC_API.'/index.php?'.$postdata."\n\n\r", FILE_APPEND );
+	
+	UC_DEBUG and file_put_contents(dirname(__FILE__)."./log.txt", UC_API.'/index.php?'.$postdata."\n\n\r", FILE_APPEND );
 	return uc_fopen2(UC_API.'/index.php', 500000, $postdata, '', TRUE, UC_IP, 20);
 }
 
@@ -116,7 +118,6 @@ function uc_api_input($data) {
 function uc_api_mysql($model, $action, $args=array()) {
 	 
 	global $uc_controls;
-	 
 	if(empty($uc_controls[$model])) {  
 	
 		include_once UC_ROOT.'./lib/db.class.php';
@@ -125,9 +126,10 @@ function uc_api_mysql($model, $action, $args=array()) {
 		 
 		include_once UC_ROOT."./control/$model.php";
 		 
-	 
+	    
 		eval("\$uc_controls['$model'] = new {$model}control();");
 	}
+	
 	if($action{0} != '_') {
 		$args = uc_addslashes($args, 1, TRUE);
 		$action = 'on'.$action;
@@ -538,6 +540,7 @@ function uc_user_deleteavatar($uid) {
  */
 function uc_user_checkname($username) {
 	return call_user_func(UC_API_FUNC, 'user', 'check_username', array('username'=>$username));
+	 
 }
 
 /**

@@ -14,11 +14,9 @@ class tagmodel {
 	var $db;
 	var $base;
 
-	function __construct(&$base) {
-		$this->tagmodel($base);
-	}
+	
 
-	function tagmodel(&$base) {
+	function tagmodel($base) {
 		$this->base = $base;
 		$this->db = $base->db;
 	}

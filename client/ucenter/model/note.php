@@ -23,11 +23,9 @@ class notemodel {
 	var $operations = array();
 	var $notetype = 'HTTP';//note HTTP|INCLUDE
 
-	function __construct(&$base) {
-		$this->notemodel($base);
-	}
+	 
 
-	function notemodel(&$base) {
+	function notemodel($base) {
 		$this->base = $base;
 		$this->db = $base->db;
 		$this->apps = $this->base->cache('apps');

@@ -7,7 +7,7 @@
 	$Id: xml.class.php 846 2008-12-08 05:37:05Z zhaoxiongfei $
 */
 
-function xml_unserialize(&$xml, $isnormal = FALSE) {
+function xml_unserialize($xml, $isnormal = FALSE) {
 	$xml_parser = new XML($isnormal);
 	$data = $xml_parser->parse($xml);
 	$xml_parser->destruct();
@@ -39,9 +39,9 @@ class XML {
 	var $attrs = array();
 	var $failed = FALSE;
 
-	function __construct($isnormal) {
+	/* function __construct($isnormal) {
 		$this->XML($isnormal);
-	}
+	} */
 
 	function XML($isnormal) {
 		$this->isnormal = $isnormal;

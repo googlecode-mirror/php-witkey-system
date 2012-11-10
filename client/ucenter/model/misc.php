@@ -17,11 +17,9 @@ class miscmodel {
 	var $db;
 	var $base;
 
-	function __construct(&$base) {
-		$this->miscmodel($base);
-	}
+	 
 
-	function miscmodel(&$base) {
+	function miscmodel($base) {
 		$this->base = $base;
 		$this->db = $base->db;
 	}

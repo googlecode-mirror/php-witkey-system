@@ -11,9 +11,7 @@
 
 class appcontrol extends base {
 
-	function __construct() {
-		$this->appcontrol();
-	}
+	 
 
 	function appcontrol() {
 		parent::__construct();

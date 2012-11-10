@@ -16,9 +16,7 @@ define('PMSENDREGDAYS', -4);//note 发短消息最少注册天数
 
 class pmcontrol extends base {
 
-	function __construct() {
-		$this->pmcontrol();
-	}
+	 
 
 	function pmcontrol() {
 		parent::__construct();

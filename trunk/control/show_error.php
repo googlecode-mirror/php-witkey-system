@@ -49,8 +49,8 @@ return false;
 <div id="keke_error">
   <h1><span class="type"><?php echo $type;?>[ <?php echo $code;?> ]:</span> <span class="message"><?php echo $message;?></span></h1>
   <div id="<?php echo $error_id;?>" class="content">
-    <p><span class="file"><?php echo keke_debug::path($file); ?>[ <?php echo $line;?> ]</span></p>
-    <?php echo keke_debug::source($file, $line); ?>
+    <p><span class="file"><?php echo Keke_debug::path($file); ?>[ <?php echo $line;?> ]</span></p>
+    <?php echo Keke_debug::source($file, $line); ?>
     <ol class="trace">
       <?php if(is_array($data['trace'])) { foreach($data['trace'] as $i => $step) { ?>
       <li>
@@ -60,7 +60,7 @@ return false;
           <?php if(($step['file'])) { ?>
   <?php $source_id = $error_id.'source'.$i; ?>
           <a href="# <?php echo $source_id?>" onClick="return koggle('<?php echo $source_id?>')">
-          	<?php echo keke_debug::path($step['file']); ?> [ <?php echo $step['line'];?> ]</a>
+          	<?php echo Keke_debug::path($step['file']); ?> [ <?php echo $step['line'];?> ]</a>
           <?php } else { ?>
   	<span>PHP internal call</span>
           <?php } ?>
@@ -99,7 +99,7 @@ return false;
       <table cellspacing="0">
         <?php if(is_array($included)) { foreach($included as $file) { ?>
         <tr>
-          <td><code><?php echo keke_debug::path($file); ?></code></td>
+          <td><code><?php echo Keke_debug::path($file); ?></code></td>
         </tr>
         <?php } } ?>
       </table>
@@ -110,7 +110,7 @@ return false;
       <table cellspacing="0">
         <?php if(is_array($included)) { foreach($included as $file) { ?>
         <tr>
-          <td><code><?php echo keke_debug::path($file); ?></code></td>
+          <td><code><?php echo Keke_debug::path($file); ?></code></td>
         </tr>
         <?php } } ?>
       </table>

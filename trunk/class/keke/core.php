@@ -13,18 +13,7 @@ class Keke_core extends Keke_base {
 	protected  static $_core_class = array ();
 	protected static $_caching = FALSE;
 	protected static $_files_changed = false;
-	/**
-	 * 用于后台页面跳转提示
-	 *
-	 * @param $type string
-	 *        	{'info'=>默认,'success'=>'成功','warning'=>'警告'}
-	 */
-	/* static function admin_show_msg($title = "", $url = "", $time = 3, $content = "", $type = "info") {
-		global $_K, $_lang;
-		$url ? $url : $_K ['refer'];
-		require Keke_tpl::template ( 'control/admin/tpl/show_msg' );
-		die ();
-	} */
+ 
 	/**
 	 * 用于页面跳转提示
 	 *@param $content 提示信息 $_lang['submit_success']提交成功,$_lang['submit_fail']提交失败
@@ -193,7 +182,7 @@ class Keke_core extends Keke_base {
 		return ( bool ) file_put_contents ( $dir . $file, $data, LOCK_EX );
 	}
 	
-	public static function keke_show_msg($url, $content, $type = 'success', $output = 'normal') {
+	/* public static function keke_show_msg($url, $content, $type = 'success', $output = 'normal') {
 		global $_lang;
 		switch ($output) {
 			case "normal" :
@@ -206,7 +195,7 @@ class Keke_core extends Keke_base {
 				die ();
 				break;
 		}
-	}
+	} */
 	
 	/**
 	 * $fileds,$where可以为数组 , $pk为@return数组的key , 对Dbfactory -> select()的改进,添加缓存
@@ -269,8 +258,9 @@ class Keke_core extends Keke_base {
 	 * 错误监听
 	 */
 	static function error_handler($code, $error, $file = NULL, $line = NULL) {
-		if (error_reporting () && $code !== 8) {
+		if ($code!=8 ) {
 			ob_get_level () and ob_clean ();
+// 			var_dump($code,$error);die;
 			Keke_exception::handler ( new ErrorException ( $error, $code, 0, $file, $line ) );
 		}
 		return TRUE;
@@ -279,9 +269,9 @@ class Keke_core extends Keke_base {
 	 * 异常监听
 	 */
 	static function shutdown_handler() {
-		if(!Keke::$_inited){
-			return ;
-		}
+		//if(!Keke::$_inited){
+		//	return ;
+		//}
 		if (self::$_caching === TRUE AND self::$_files_changed === TRUE){
 			Keke::cache('loader_class', self::$_core_class);
 		}
@@ -374,11 +364,13 @@ class Keke extends Keke_core {
 		}
 		
 		self::register_autoloader ();
+		
 		if (( int ) KEKE_DEBUG == 1) {
 			set_exception_handler ( array (	'Keke_exception','handler' ) );
 			set_error_handler ( array ('Keke_core','error_handler' ) );
 		}
 		register_shutdown_function ( array ('Keke_core','shutdown_handler') );
+		
 		if(ini_get('register_globals')){
 			self::globals();
 		}
@@ -396,7 +388,7 @@ class Keke extends Keke_core {
 		Keke::init_session ();
 		$this->init_config ();
 		
-		$this->init_user ();
+		//$this->init_user ();
 		
 		Keke::$_cache_obj = Cache::instance ();
 		//Keke::$_tpl_obj = new Keke_tpl();

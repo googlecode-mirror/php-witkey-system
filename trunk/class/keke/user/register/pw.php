@@ -44,5 +44,8 @@ class Keke_user_register_pw extends Keke_user_register {
 	function syn_login($uid){
 		return uc_user_login($this->_username, md5($this->_pwd), 0);
 	}
+	function get_max_uid(){
+		return uc_check_maxuid();
+	}
 	
 }

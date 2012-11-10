@@ -18,27 +18,28 @@ class Keke_user_register_uc  extends Keke_user_register{
 		if(($res = $this->check_email($this->_email))!==1){
 			return $res; 
 		}
-		$uid = 556;
-		DB::insert('witkey_member')->set(array('uid'))->value(array($uid))->execute();
-		die;
 		$uid = uc_user_register($this->_username, $this->_pwd, $this->_email);
 		if($uid<=0){
 			return $uid;
 		}
-		
-		
 		$this->complete_reg($uid, $this->_username);
-		
 		$html = $this->syn_login($uid);
 		return $html;
 	}
-	
-	function check_email($email){
-		return uc_user_checkemail($email);
+	/**
+	 * ×î´óUID
+	 * @return mixed
+	 */
+	function get_max_uid(){
+		return uc_user_get_maxuid();
 	}
 	function check_username($username){
 		return uc_user_checkname($username);
 	}
+	function check_email($email){
+		return uc_user_checkemail($email);
+	}
+	
 	function syn_login($uid){
 		return uc_user_synlogin($uid);
 	}

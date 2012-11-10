@@ -108,9 +108,10 @@ class ucdb {
 		return intval(($this->link) ? mysql_errno($this->link) : mysql_errno());
 	}
 
-	function result($query, $row) {
-		$query = @mysql_result($query, $row);
-		return $query;
+	function result($query, $row=0) {
+		//$query = @mysql_result($query, $row);
+		$query = mysql_fetch_row($query);
+		return $query[0];
 	}
 
 	function num_rows($query) {

@@ -14,11 +14,11 @@ class usermodel {
 	var $db;
 	var $base;
 
-	function __construct(&$base) {
+	/* function __construct(&$base) {
 		$this->usermodel($base);
-	}
+	} */
 
-	function usermodel(&$base) {
+	function usermodel($base) {
 		$this->base = $base;
 		$this->db = $base->db;
 	}

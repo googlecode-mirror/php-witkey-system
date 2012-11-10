@@ -32,9 +32,9 @@ class base {
 	var $app = array();
 	var $user = array();
 	var $input = array();
-	function __construct() {
+	/* function __construct() {
 		$this->base();
-	}
+	} */
 
 	/**
 	 * 初始化基类
@@ -80,7 +80,7 @@ class base {
 	 */
 	function init_db() {
 		require_once UC_ROOT.'lib/db.class.php';
-		$this->db = new db();
+		$this->db = new ucdb();
 		$this->db->connect(UC_DBHOST, UC_DBUSER, UC_DBPW, '', UC_DBCHARSET, UC_DBCONNECT, UC_DBTABLEPRE);
 	}
 

@@ -13,11 +13,9 @@ class pmmodel {
 
 	var $db;
 	var $base;
-	function __construct(&$base) {
-		$this->pmmodel($base);
-	}
+	 
 
-	function pmmodel(&$base) {
+	function pmmodel($base) {
 		$this->base = $base;
 		$this->db = $base->db;
 	}

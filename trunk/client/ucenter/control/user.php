@@ -19,9 +19,7 @@ define('UC_USER_EMAIL_EXISTS', -6);
 class usercontrol extends base {
 
 
-	function __construct() {
-		$this->usercontrol();
-	}
+	 
 
 	function usercontrol() {
 		parent::__construct();

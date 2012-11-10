@@ -11,9 +11,7 @@
 
 class domaincontrol extends base {
 
-	function __construct() {
-		$this->domaincontrol();
-	}
+	 
 
 	function domaincontrol() {
 		parent::__construct();

@@ -56,7 +56,9 @@ class Keke_user_register_keke extends Keke_user_register {
 		}
 		return TRUE;
 	}
-	
+	function get_max_uid(){
+		 return DB::select('max(uid)')->from('witkey_member')->get_count()->execute();
+	}
 	function syn_login($uid){
 		
 	}

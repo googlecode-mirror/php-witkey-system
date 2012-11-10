@@ -993,3 +993,7 @@ function uc_check_version() {
 	return is_array($data) ? $data : $return;
 }
 
+function uc_user_get_maxuid(){
+	return call_user_func(UC_API_FUNC, 'user', 'getmaxuid');
+}
+

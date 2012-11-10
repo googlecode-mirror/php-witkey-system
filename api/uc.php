@@ -61,7 +61,8 @@ if(empty($get)) {
 }
 $action = $get['action'];
 
-require S_ROOT.'./client/ucenter/lib/xml.class.php';
+require_once S_ROOT.'client/ucenter/lib/xml.class.php';
+
 $post = xml_unserialize(file_get_contents('php://input'));
 
 if(in_array($get['action'], array('test', 'deleteuser', 'renameuser', 'gettag', 'synlogin', 'synlogout', 'updatepw', 'updatebadwords', 'getcredit','updatehosts', 'updateapps', 'updateclient', 'updatecredit', 'getcreditsettings', 'updatecreditsettings'))) {
@@ -79,9 +80,6 @@ class uc_note {
 	var $appdir = '';
 
 	function _serialize($arr, $htmlon = 0) {
-		if(!function_exists('xml_serialize')) {
-			include_once S_ROOT.'./client/ucenter/lib/xml.class.php';
-		}
 		return xml_serialize($arr, $htmlon);
 	}
 
@@ -150,11 +148,10 @@ class uc_note {
 			return API_RETURN_FORBIDDEN;
 		}
 
-		//require_once  $this->appdir.'./app_comm.php';
-		//最新登录时间
-		Keke_user_login::instance('keke')->update_login_time($syn_uid);
-		Keke_user_login::instance('keke')->complete_login($syn_uid, $syn_username);
-		
+		if(!Keke_user_login::instance()->logged_in()){
+			//最新登录时间
+			Keke_user_login::instance()->complete_login($syn_uid, $syn_username);
+		}
 		
 		header('P3P: CP="CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR"');
 		return API_RETURN_SUCCEED;

@@ -192,6 +192,9 @@ class usermodel {
 	function quescrypt($questionid, $answer) {
 		return $questionid > 0 && $answer != '' ? substr(md5($answer.md5($questionid)), 16, 8) : '';
 	}
+	function get_max_uid(){
+		return $this->db->result_first("SELECT MAX(uid) FROM ".UC_DBTABLEPRE."members ");
+	}
 
 }
 

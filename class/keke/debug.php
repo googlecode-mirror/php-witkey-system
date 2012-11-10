@@ -189,6 +189,7 @@ class Keke_debug {
 			$output [] = array ('function' => $function, 'args' => isset ( $args ) ? $args : NULL, 'file' => isset ( $file ) ? $file : NULL, 'line' => isset ( $line ) ? $line : NULL, 'source' => isset ( $source ) ? $source : NULL );
 			unset ( $function, $args, $file, $line, $source );
 		}
+		
 		return $output;
 	}
 }

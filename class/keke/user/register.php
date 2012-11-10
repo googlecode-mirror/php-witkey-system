@@ -142,6 +142,10 @@ abstract class Keke_user_register extends Keke_user{
       */	
 	abstract public function syn_login($uid);
 	/**
+	 * get max uid
+	 */
+	abstract public function get_max_uid();
+	/**
 	 * ×¢²á·µ»ØµÄ×´Ì¬¼¯
 	 */
 	public static $_status = array(

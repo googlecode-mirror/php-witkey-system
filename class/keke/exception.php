@@ -1,5 +1,5 @@
 <?php defined ( "IN_KEKE" ) or die ( "Access Denied" );
-
+require_once S_ROOT.'class/keke/debug.php';
 class Keke_exception extends Exception {
 	public static $php_errors = array (E_ERROR => 'Fatal Error', E_USER_ERROR => 'User Error', E_PARSE => 'Parse Error', E_WARNING => 'Warning', E_USER_WARNING => 'User Warning', E_STRICT => 'Strict', E_NOTICE => 'Notice', E_RECOVERABLE_ERROR => 'Recoverable Error' );
 	public static $error_view = '';
@@ -35,7 +35,9 @@ class Keke_exception extends Exception {
 					}
 				}
 			}
+ 
 			$error = Keke_exception::text ( $e );
+			 
 			if(is_object(Keke::$_log)){
 				Keke::$_log->add(log::ERROR, $error);
 				$strace = Keke_exception::text($e)."\n--\n" . $e->getTraceAsString();
@@ -48,12 +50,11 @@ class Keke_exception extends Exception {
 			$data ['message'] = $message;
 			$data ['file'] = $file;
 			$data ['line'] = $line;
-			// $data['trace'] = $trace;
-			$vars = array ('_SESSION', '_GET', '_POST', '_FILES', '_COOKIE', '_SERVER' );
 			
-			$data ['trace'] = array_reverse ( keke_debug::trace ( $trace ) );
-
-			require S_ROOT . './control/show_error.php';
+			$vars = array ('_SESSION', '_GET', '_POST', '_FILES', '_COOKIE', '_SERVER' );
+			$data ['trace'] =  Keke_debug::trace ( $trace ) ;
+			
+			require S_ROOT . 'control/show_error.php';
 			die ();
 		} catch ( Exception $e ) {
 			ob_get_level () and ob_clean ();
@@ -62,7 +63,9 @@ class Keke_exception extends Exception {
 		}
 	}
 	public static function text(Exception $e) {
-		return sprintf ( '%s [ %s ]: %s ~ %s [ %d ]', get_class ( $e ), $e->getCode (), strip_tags ( $e->getMessage () ), keke_debug::path ( $e->getFile () ), $e->getLine () );
+		 
+		return sprintf ( '%s [ %s ]: %s ~ %s [ %d ]', get_class ( $e ), $e->getCode (), strip_tags ( $e->getMessage () ),  $e->getFile () , $e->getLine () );
+		 
 	}
 }
 

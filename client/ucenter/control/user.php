@@ -282,6 +282,11 @@ class usercontrol extends base {
     function ongetmaxuid(){
     	return $_ENV['user']->get_max_uid();
     }
+    function onincrement(){
+    	$id = $this->input('id');
+    	$sql = "ALTER TABLE ".UC_DBTABLEPRE."members AUTO_INCREMENT=".($id+1);
+    	return $this->db->query($sql);
+    }
 
 	/**
 	 * -1 身份不合法

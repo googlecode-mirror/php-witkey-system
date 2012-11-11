@@ -18,10 +18,18 @@ class Keke_user_register_uc  extends Keke_user_register{
 		if(($res = $this->check_email($this->_email))!==1){
 			return $res; 
 		}
+		
+		$uc_max_uid  = $this->get_max_uid();
+		$keke_max_uid = Keke_user_register::instance('keke')->get_max_uid();
+		if($uc_max_uid<=$keke_max_uid){
+			uc_user_update_increment($keke_max_uid);
+		}
 		$uid = uc_user_register($this->_username, $this->_pwd, $this->_email);
 		if($uid<=0){
 			return $uid;
 		}
+		
+		
 		$this->complete_reg($uid, $this->_username);
 		$html = $this->syn_login($uid);
 		return $html;

@@ -996,4 +996,10 @@ function uc_check_version() {
 function uc_user_get_maxuid(){
 	return call_user_func(UC_API_FUNC, 'user', 'getmaxuid');
 }
+/**
+ * 更新ucenter的auto_incremnet值
+ */
+function uc_user_update_increment($id){
+	return call_user_func(UC_API_FUNC, 'user', 'increment',array('id'=>$id));
+}
 

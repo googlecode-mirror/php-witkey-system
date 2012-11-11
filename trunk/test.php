@@ -1,27 +1,8 @@
 <?php define ( "IN_KEKE", TRUE );
 
 include 'app_boot.php';
-class a{
-	
-	function __construct(){
-		register_shutdown_function(array($this,'fa'));
-	}
-	
-	function fa(){
-		$b = new b;
-		register_tick_function(array($b,'fb'));
-		echo 'fa';
-	}
-} 
-class b{
-	function fb(){
-		echo 'fb';
-	}
-}
-$a = new a;
-
-
-
+ 
+var_dump($GLOBALS);
 //require Keke_tpl::template('test');
 
 //var_dump(Cache::instance()->del('keke_config')); 

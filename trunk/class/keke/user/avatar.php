@@ -1,17 +1,17 @@
 <?php defined ( "IN_KEKE" ) or  die ( "Access Denied" );
 
 /**
+ * 用户头象
  * @copyright keke-tech
- * @author Monkey
- * @version v 2.0
- * 2010-7-6上午11:52:51
+ * @author Michael
+ * @version v 2.2 2012-11-11
  */
 keke_lang_class::load_lang_class('keke_user_avatar_class');
 
 define ( '_DATADIR', S_ROOT . "data/" );
 global $_K;
 define ( '_DATAURL', $_K ['siteurl'] . "/data" );
-class keke_useravatar_class extends keke_user_class {
+class Keke_user_avatar extends Keke_user {
 	
 	/**
 	 * 上传用户临时图象
@@ -50,7 +50,11 @@ class keke_useravatar_class extends keke_user_class {
 		$avatarurl = _DATAURL . '/tmp/upload' . $uid . $filetype;
 		return $avatarurl;
 	}
-	
+	/**
+	 * 裁剪用户头象
+	 * @param int $uid
+	 * @return xml
+	 */
 	static function rectavatar($uid) {
 		@header ( "Expires: 0" );
 		@header ( "Cache-Control: private, post-check=0, pre-check=0, max-age=0", FALSE );
@@ -111,7 +115,11 @@ class keke_useravatar_class extends keke_user_class {
 			return '<?xml version="1.0" ?><root><face success="0"/></root>';
 		}
 	}
-	
+	/**
+	 * flash 解码
+	 * @param stream $s
+	 * @return string
+	 */
 	static function flashdata_decode($s) {
 		$r = '';
 		$l = strlen ( $s );
@@ -141,6 +149,11 @@ class keke_useravatar_class extends keke_user_class {
 		}
 		return isset ( $var [$k] ) ? $var [$k] : NULL;
 	}
+	/**
+	 * 通UID得到路径
+	 * @param int $uid
+	 * @return string
+	 */
 	static function get_home($uid) {
 		$uid = sprintf ( "%09d", $uid );
 		$dir1 = substr ( $uid, 0, 3 );
@@ -157,6 +170,13 @@ class keke_useravatar_class extends keke_user_class {
 		! is_dir ( $dir . '/' . $dir1 . '/' . $dir2 ) && mkdir ( $dir . '/' . $dir1 . '/' . $dir2, 0777 );
 		! is_dir ( $dir . '/' . $dir1 . '/' . $dir2 . '/' . $dir3 ) && mkdir ( $dir . '/' . $dir1 . '/' . $dir2 . '/' . $dir3, 0777 );
 	}
+	/**
+	 * 得用户图象地址
+	 * @param int $uid
+	 * @param string $size
+	 * @param unknown_type $type
+	 * @return Ambigous <图象Id, string>
+	 */
 	static function get_avatar($uid, $size = 'big', $type = '') {
 		 
 		$size = in_array ( $size, array ('big', 'middle', 'small' ) ) ? $size : 'big';
@@ -165,16 +185,17 @@ class keke_useravatar_class extends keke_user_class {
 		$dir1 = substr ( $uid, 0, 3 );
 		$dir2 = substr ( $uid, 3, 2 );
 		$dir3 = substr ( $uid, 5, 2 );
-		$typeadd = $type == 'real' ? '_real' : '';
+		$type == 'real' ? '_real' : '';
 		$dir  = $dir1 . '/' . $dir2 . '/' . $dir3 . '/'. substr ( $uid, - 2 );
-		$fpath = $dir. $typeadd . "_avatar_$size.jpg";
-		//用户的图象
-		return self::get_user_sys_pic ($fpath,$dir,$size);
+		$fpath = $dir. $type . "_avatar_$size.jpg";
+		if(file_exists($fpath)){
+			return $fpath;
+		}else{
+			return  _DATAURL.'/avatar/default/man_'.$size.'.jpg';
+		}
 	}
 	static function avatar_html($uid, $avatartype = 'virtual') {
-		global $_K;
-		
-		$_avatarflash = "resource/img/system/camera.swf?inajax=1&appid=1&input=$uid&ucapi={$_K [siteurl]}&avatartype=virtual";
+		$_avatarflash = "resource/img/system/camera.swf?inajax=1&appid=1&input=$uid&ucapi={$GLOBALS['K']['siteurl']}&avatartype=virtual";
 		$swf = '<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" 
 		codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0" 
 		width="520" height="280" id="mycamera" align="middle">
@@ -189,53 +210,4 @@ class keke_useravatar_class extends keke_user_class {
 		</object>';
 		return $swf;
 	}
-	/**
-	 * 获取用户的系统图象
-	 * @return 图象Id
-	 */
-	static function get_user_sys_pic($fpath,$dir,$size) {
-		global $_K,$_lang;
-		$path=S_ROOT."/data/avatar/";
-		$log_file = $path.$dir.'_avatar.txt';
-		if(file_exists($log_file)){
-			$log_info = file_get_contents($log_file);
-			$info     = explode("|", $log_info);
-			switch ($info[0]){
-				case "sys":
-					$path = "system/" . $info[1] . "_" . $size . ".jpg";
-					break;
-				case "cus":
-					$path=$fpath;
-					break;
-			}
-		}else{
-			$sex = Keke::$_userinfo['sex'];
-			$sex==$_lang['female'] and $u='women' or $u='man';
-			$path =  "default/" . $u . "_" . $size . ".jpg";
-		}
-		return $path;
-	}
-	/**
-	 * 保存用户选择的的系统图象
-	 * @param int $uid
-	 * @param int $pic_id
-	 * @return $last_id
-	 */
-	static function set_user_sys_pic($uid, $pic_id,$type='sys') {
-		global $_K;
-	
-		$rpath=S_ROOT."/data/avatar/";
-		$uid = abs ( intval ( $uid ) );
-		$uid = sprintf ( "%09d", $uid );
-		$dir1 = substr ( $uid, 0, 3 );
-		$dir2 = substr ( $uid, 3, 2 );
-		$dir3 = substr ( $uid, 5, 2 );
-		$dir  = $dir1 . '/' . $dir2 . '/' . $dir3 . '/';
-		$path = $rpath.$dir. substr ( $uid, - 2 ). "_avatar.txt"; 
-		is_dir($rpath.$dir)==false and mkdir($rpath.$dir);
-		
-		
-	    return file_put_contents($path,$type.'|'.$pic_id);
-	}
-
 }

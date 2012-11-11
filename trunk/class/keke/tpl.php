@@ -181,15 +181,13 @@ class Keke_tpl {
 	
 	//广告群调用
 	static function showads($adname) {
-		global $_K;
 		$content = '<!--{eval keke_loaddata_class::adgroup(' . $adname . ')}-->';
 		return $content;
 	}
 	
 	//头像调用
 	static function userpic($uid, $size) {
-		global $_K;
-		return '<!--{eval echo  keke_user_class::get_user_pic(' . $uid . ',' . $size . ')}-->';
+		return '<!--{eval echo  Keke_user::avatar(' . $uid . ',' . $size . ')}-->';
 	}
 	
 	static function stripvtags($expr, $statement = '') {

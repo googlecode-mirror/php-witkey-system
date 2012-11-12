@@ -84,7 +84,13 @@ class Control_admin_user_list extends Control_admin{
 		$where .= ' uid='.$uid;
 		}elseif($_GET['ids']) {
 			$where .= 'uid in'.'('.$_GET['ids'].')' ;
+			$ids = explode(',', $_GET['ids']);
+			foreach ((array)$ids as $v){
+				Keke_user::instance()->del_user($v);
+			}
+			exit('1');
 		}
+		
 		echo Model::factory('witkey_space')->setWhere($where)->del();
 	}
 }

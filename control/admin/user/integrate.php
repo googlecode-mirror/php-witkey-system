@@ -141,7 +141,7 @@ class Control_admin_user_integrate extends Control_admin{
 		$config_ucenter = keke_file_class::read_file(S_ROOT."config/config_pw.php");
 		$settingnew = $_POST['settingnew'];
 		foreach ($settingnew as $k=>$v){
-			$config_ucenter = preg_replace("/define\('$k',\s*'.*?'\);/i", "define('$k', '$v');".PHP_EOL, $config_ucenter);
+			$config_ucenter = preg_replace("/define\('$k',\s*'.*?'\);".PHP_EOL."/i", "define('$k', '$v');".PHP_EOL, $config_ucenter);
 		}
 		keke_file_class::write_file(S_ROOT."./config/config_pw.php",$config_ucenter);
 	    

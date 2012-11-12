@@ -76,7 +76,7 @@ class keke_file_class {
 	 * @return bool
 	 */
 	
-	function delete_files($path, $del_dir = FALSE, $level = 0) {
+	static public function delete_files($path, $del_dir = FALSE, $level = 0) {
 		// Trim the trailing slash
 		$path = rtrim ( $path, DIRECTORY_SEPARATOR );
 		
@@ -88,7 +88,7 @@ class keke_file_class {
 				if (is_dir ( $path . DIRECTORY_SEPARATOR . $filename )) {
 					// Ignore empty folders
 					if (substr ( $filename, 0, 1 ) != '.') {
-						$this->delete_files ( $path . DIRECTORY_SEPARATOR . $filename, $del_dir, $level + 1 );
+						self::delete_files ( $path . DIRECTORY_SEPARATOR . $filename, $del_dir, $level + 1 );
 					}
 				} else {
 					unlink ( $path . DIRECTORY_SEPARATOR . $filename );

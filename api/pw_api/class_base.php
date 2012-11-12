@@ -72,7 +72,8 @@ class api_client {
 	
 		global $ucdb; 
 		$request = $this->strips($request);
-		KEKE_DEBUG and  file_put_contents('pw_log.txt', var_export($request,true),FILE_APPEND);
+		
+		//KEKE_DEBUG and  file_put_contents('pw_log.txt', var_export($ucdb,true),FILE_APPEND);
 		if (isset($request['type']) && $request['type'] == 'uc') {
 		
 			$this->type		= 'uc';
@@ -84,11 +85,6 @@ class api_client {
             $this->siteappkey = UC_KEY;
 		}
 		
-		/***
-		if ($this->type == 'app' && !$GLOBALS['o_appifopen']) {
-			return new ErrorMsg(API_CLOSED, 'App Closed');
-		}
-		***/
 		ksort($request);
 		reset($request);
 		$arg = '';
@@ -118,7 +114,7 @@ class api_client {
 			$params = pwConvert($params, $this->charset, $request['charset']);
 
 		}
-    
+		//KEKE_DEBUG and  file_put_contents('pw_log.txt', var_export($mode.$method,true),FILE_APPEND);
 		return $this->callback($mode, $method, $params);
 	}
 
@@ -136,7 +132,7 @@ class api_client {
 			return new ErrorMsg(API_METHOD_NOT_EXISTS, "Method($method of $mode) Not Exists");
 		}
 		!is_array($params) && $params = array();
-
+		
 		return @call_user_func_array(array(&$this->classdb[$mode], $method), $params);
 	}
 

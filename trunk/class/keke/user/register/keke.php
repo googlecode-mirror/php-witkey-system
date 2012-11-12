@@ -42,7 +42,7 @@ class Keke_user_register_keke extends Keke_user_register {
 			//用户存在
 			return -3;
 		}
-		return TRUE;
+		return 1;
 	}
 	
 	function check_email($email){
@@ -54,7 +54,7 @@ class Keke_user_register_keke extends Keke_user_register {
 			//邮箱已存在
 			return -5;
 		}
-		return TRUE;
+		return 1;
 	}
 	function get_max_uid(){
 		 return DB::select('max(uid)')->from('witkey_member')->get_count()->execute();

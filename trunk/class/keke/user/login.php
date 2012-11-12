@@ -8,14 +8,14 @@
  *          2012-11-06
  *         
  */
-abstract class Keke_user_login extends Keke_user {
+abstract class Keke_user_login   {
 	
 	protected $_uid;
 	protected $_username;
 	protected $_pwd ;
 
 	protected $_session;
-	
+ 
 	/**
 	 *
 	 * @var 记录登录的时间单位天
@@ -31,7 +31,7 @@ abstract class Keke_user_login extends Keke_user {
 	 *
 	 * @var 登录实例
 	 */
-	public static $_instance;
+	public static $_instance = array();
 	/**
 	 *
 	 * @param string $name        	
@@ -42,12 +42,12 @@ abstract class Keke_user_login extends Keke_user {
 		if ($name === NULL) {
 			$name =  Keke_user::$_type[$_K ['user_intergration']];
 		}
-		if (isset ( self::$_instance )) {
-			return self::$_instance;
+		if (isset ( self::$_instance[$name] )) {
+			return self::$_instance[$name];
 		}
 		$class = "Keke_user_login_" . $name;
-		self::$_instance = new $class ();
-		return self::$_instance;
+		self::$_instance[$name] = new $class ();
+		return self::$_instance[$name];
 	}
 	public function __construct() {
 		$this->_session = Keke_session::instance ();

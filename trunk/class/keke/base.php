@@ -723,25 +723,7 @@ class Keke_base {
 			return false;
 		}
 	}
-	static function curl_file_get_contents($durl) {
-		
-		$ch = curl_init ();
-		
-		curl_setopt ( $ch, CURLOPT_URL, $durl );
-		
-		curl_setopt ( $ch, CURLOPT_POST, 1 );
-		curl_setopt ( $ch, CURLOPT_TIMEOUT, 5 );
-		
-		curl_setopt ( $ch, CURLOPT_USERAGENT, _USERAGENT_ );
-		
-		curl_setopt ( $ch, CURLOPT_REFERER, _REFERER_ );
-		
-		curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, 1 );
-		$r = curl_exec ( $ch );
-		curl_close ( $ch );
-		
-		return $r;
-	}
+
 	static function show_error($data = '') {
 		require Keke_tpl::template ( 'tpl/default/show_error' );
 	}
@@ -863,6 +845,19 @@ class Keke_base {
 		curl_close ( $ci );
 		return $response;
 	
+	}
+	/**
+	 * 判断远程文件或者页里是否存在
+	 * @param string $url
+	 * @return boolean
+	 */
+	static function remote_file_exists($url){
+		$heads = get_headers($url);
+		if(strpos($heads[0], '200')!==FALSE){
+			return TRUE ;
+		}else{
+			return FALSE;
+		}
 	}
 	// 系统日志
 	static function admin_system_log($msg) {

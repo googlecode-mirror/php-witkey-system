@@ -1330,7 +1330,7 @@ function ajaxpost(formid, showid, waitid, showidclass, submitbtn, recall) {
 	   }
 
 		if(s != '' && s.indexOf('ajaxerror') != -1) {
-			evalscript(s);
+			//evalscript(s);
 			evaled = true;
 		}
 		if(showidclass) {

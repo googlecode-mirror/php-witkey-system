@@ -12,8 +12,7 @@ require_once(S_ROOT.'/api/pw_api/pw_common.php');
 
 // uc_client 包的根目录
 define('UC_CLIENT_ROOT', dirname(__FILE__) . '/');
-// uc_client 包使用的 lib 库所在的目录
-// define('UC_LIB_ROOT', dirname(__FILE__) . '/../lib/');
+
 // uc_client 包的版本
 define('UC_CLIENT_VERSION', '0.1.0');
 // uc_client 使用的API规范号
@@ -96,6 +95,15 @@ function uc_check_email($email) {
 function uc_check_maxuid(){
 	$args = func_get_args();
 	return uc_data_request('user', 'CheckMaxUid', $args);
+}
+/**
+ * 更新pw的uid 的起始值 
+ * @param 最大的uid $id
+ * @return Ambigous <string, mixed>
+ */
+function uc_user_update_increment($id){
+	$args = func_get_args();
+	return uc_data_request('user', 'update_increment',$args);
 }
 
 /**

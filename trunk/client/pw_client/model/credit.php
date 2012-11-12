@@ -6,10 +6,7 @@ class creditmodel {
 	var $db;
 	var $relate;
 
-	function __construct(&$base) {
-		$this->creditmodel($base);
-	}
-
+ 
 	function creditmodel(&$base) {
 		$this->base = $base;
 		$this->db = $base->db;

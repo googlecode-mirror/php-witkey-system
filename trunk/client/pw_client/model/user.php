@@ -6,9 +6,7 @@ class usermodel {
 	var $db;
 	var $user;
 
-	function __construct(&$base) {
-		$this->usermodel($base);
-	}
+ 
 
 	function usermodel(&$base) {
 		$this->base =& $base;
@@ -96,6 +94,11 @@ class usermodel {
 	function get_by_maxuid() {
 		$arr = $this->db->get_one("SELECT uid FROM pw_members ORDER BY uid DESC LIMIT 0,1");
 		return $arr;
+	}
+	function update_increment($id){
+		$sql = "ALTER TABLE ".UC_DBTABLEPRE."members AUTO_INCREMENT=".($id+1);
+		$this->db->query($sql);
+		return $this->db->affected_rows();
 	}
 }
 ?>

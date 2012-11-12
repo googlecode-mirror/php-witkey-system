@@ -1,5 +1,0 @@
-<?php
-class friendmodel {
-    //TODO ÔÝÎ´ÊµÏÖ
-}
-?>

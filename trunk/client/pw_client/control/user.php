@@ -14,10 +14,7 @@ class usercontrol {
 	var $db;
 	var $user;
 
-	function __construct(&$base) {
-		$this->usercontrol($base);
-	}
-
+	
 	function usercontrol(&$base) {
 		$this->base = $base;
 		$this->db = $base->db;
@@ -106,6 +103,7 @@ class usercontrol {
 		}
 		return array();
 	}
+	
 
 	function edit($uid, $oldname, $pwd, $email) {
 
@@ -165,6 +163,9 @@ class usercontrol {
 	
 	function CheckMaxUid(){
 		return $this->user->get_by_maxuid();
+	}
+	function update_increment($id){
+		return $this->user->update_increment($id);
 	}
 }
 ?>

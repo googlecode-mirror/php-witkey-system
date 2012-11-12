@@ -6,9 +6,7 @@ class notifymodel {
 	var $db;
 	var $operations;
 
-	function __construct(&$base) {
-		$this->notifymodel($base);
-	}
+	 
 
 	function notifymodel(&$base) {
 		$this->base =& $base;

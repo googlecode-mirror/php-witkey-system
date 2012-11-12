@@ -10,7 +10,7 @@ error_reporting(0);
 
 
 require (S_ROOT.'/config/config_ucenter.php'); 
-define('UC_DEBUG',1);
+define('UC_DEBUG',0);
 define('IN_UC', TRUE);
 define('UC_CLIENT_VERSION', '1.5.0');
 define('UC_CLIENT_RELEASE', '20090121');

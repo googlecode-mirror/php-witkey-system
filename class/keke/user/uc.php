@@ -9,11 +9,11 @@
 include_once S_ROOT.'client/ucenter/client.php';
 class Keke_user_uc extends Keke_user {
     
-	function get_user_info($uid,$fields){
+	function get_user_info($uid,$fields='*'){
 	    return Keke_user::instance('keke')->get_user_info($uid,$fields); 
 	}
 	
-	function get_avatar($uid,$size){
+	function get_avatar($uid,$size='middle'){
 		return $path =  UC_API . "/avatar.php?uid=$uid&size=$size";
 	}
 	

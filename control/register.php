@@ -11,6 +11,9 @@ class Control_register extends Control_front{
 		global $_K, $_lang;
 	 
 		var_dump($_SESSION);
+		
+		$img = Keke_user::instance()->get_avatar($_SESSION['uid']);
+		
  		require Keke_tpl::template('register');
 	}
 	

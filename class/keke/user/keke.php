@@ -3,17 +3,18 @@
  * 客客的用户信息
  * @author Michael	
  * @version 2.2 
- * 2012-11-06
+ * 2012-11-12
  *
  */
 
 class Keke_user_keke extends Keke_user {
     
-   function get_user_info($uid,$fields=''){
+   function get_user_info($uid,$fields='*'){
    	   return DB::select($fields)->from('witkey_space')->where("uid='$uid'")->get_one()->execute();
    }
 	
-   function get_avatar($uid,$size){
+   function get_avatar($uid,$size='middle'){
+   	   
    	   return Keke_user_avatar::get_avatar($uid,$size);
    }
    

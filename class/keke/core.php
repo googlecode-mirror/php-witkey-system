@@ -258,7 +258,8 @@ class Keke_core extends Keke_base {
 	 * ´íÎó¼àÌý
 	 */
 	static function error_handler($code, $error, $file = NULL, $line = NULL) {
-		if ($code!=8 ) {
+		
+		if ($code != 8 ) {
 			ob_get_level () and ob_clean ();
 // 			var_dump($code,$error);die;
 			Keke_exception::handler ( new ErrorException ( $error, $code, 0, $file, $line ) );

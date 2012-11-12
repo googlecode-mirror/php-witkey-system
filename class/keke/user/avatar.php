@@ -11,7 +11,7 @@ keke_lang_class::load_lang_class('keke_user_avatar_class');
 define ( '_DATADIR', S_ROOT . "data/" );
 global $_K;
 define ( '_DATAURL', $_K ['siteurl'] . "/data" );
-class Keke_user_avatar extends Keke_user {
+class Keke_user_avatar  {
 	
 	/**
 	 * 上传用户临时图象
@@ -177,17 +177,16 @@ class Keke_user_avatar extends Keke_user {
 	 * @param unknown_type $type
 	 * @return Ambigous <图象Id, string>
 	 */
-	static function get_avatar($uid, $size = 'big', $type = '') {
+	static function get_avatar($uid, $size = 'middle') {
 		 
-		$size = in_array ( $size, array ('big', 'middle', 'small' ) ) ? $size : 'big';
 		$uid = abs ( intval ( $uid ) );
 		$uid = sprintf ( "%09d", $uid );
 		$dir1 = substr ( $uid, 0, 3 );
 		$dir2 = substr ( $uid, 3, 2 );
 		$dir3 = substr ( $uid, 5, 2 );
-		$type == 'real' ? '_real' : '';
+		 
 		$dir  = $dir1 . '/' . $dir2 . '/' . $dir3 . '/'. substr ( $uid, - 2 );
-		$fpath = $dir. $type . "_avatar_$size.jpg";
+		$fpath = $dir."_avatar_$size.jpg";
 		if(file_exists($fpath)){
 			return $fpath;
 		}else{

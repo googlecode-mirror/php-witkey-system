@@ -5,14 +5,13 @@
  * 2012-10-24
  *
  */
-class Keke_user_mark extends Keke_user {
+class Keke_user_mark {
     /**
      * 互评状态
      * @return array  
      */
-	public static function get_mark_status(){
-		return array('1'=>'好评','2'=>'中评','3'=>'差评');
-	}
+	public static $_mark_status= array('1'=>'好评','2'=>'中评','3'=>'差评');
+	
 	/**
 	 * 互评项的键值对
 	 * @return array et 

@@ -6,15 +6,15 @@
  * @version 2.2 2012-11-08
  *
  */
-abstract class Keke_user_register extends Keke_user{
+abstract class Keke_user_register {
    
 	protected $_username;
 	protected $_pwd;
 	protected $_email;
 	protected $_salt;
 
-	public static $_instance;
-	
+	public static $_instance = array();
+	 
 	/**
 	 * 用户注册实例
 	 * @param string $name   (keke,uc,pw)
@@ -25,14 +25,14 @@ abstract class Keke_user_register extends Keke_user{
 		if ($name === NULL) {
 			$name =  Keke_user::$_type[$_K ['user_intergration']];
 		}
-		if(isset(self::$_instance)){
-			return self::$_instance;
+		if(isset(self::$_instance[$name])){
+			return self::$_instance[$name];
 		}
 		$class = 'Keke_user_register_'.$name;
-		self::$_instance = new $class;
-		return self::$_instance;
+		self::$_instance[$name] = new $class;
+		return self::$_instance[$name];
 	}
- 	
+  
 	function set_username($var){
 		$this->_username = $var;
 		return $this;
@@ -63,7 +63,10 @@ abstract class Keke_user_register extends Keke_user{
 			$this->send_active_msg($uid);
 		}else{
 			$status =1;
-			Keke_user_login::instance()->complete_login($uid, $username);
+			//keke系统才用完成登录，uc与pw 有一个登录请求的通知
+			if($_K ['user_intergration']!=2){
+				Keke_user_login::instance()->complete_login($uid, $username);
+			}
 		}
 		
 		$columns = array('uid','username','email','reg_time','reg_ip','last_login_time','status');

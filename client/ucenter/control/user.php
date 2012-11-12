@@ -285,6 +285,7 @@ class usercontrol extends base {
     function onincrement(){
     	$id = $this->input('id');
     	$sql = "ALTER TABLE ".UC_DBTABLEPRE."members AUTO_INCREMENT=".($id+1);
+//     	$sql2 = "ALTER TABLE ".UC_DBTABLEPRE."memberfields AUTO_INCREMENT=".($id+1);
     	return $this->db->query($sql);
     }
 

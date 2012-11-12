@@ -6,9 +6,6 @@ class creditcontrol {
 	var $db;
 	var $credit;
 
-	function __construct(&$base) {
-		$this->creditcontrol($base);
-	}
 
 	function creditcontrol(&$base) {
 		$this->base = $base;

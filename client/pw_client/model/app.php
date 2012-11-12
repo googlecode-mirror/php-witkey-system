@@ -5,9 +5,7 @@ class appmodel {
 	var $base;
 	var $db;
 
-	function __construct(&$base) {
-		$this->appmodel($base);
-	}
+	
 
 	function appmodel(&$base) {
 		$this->base =& $base;

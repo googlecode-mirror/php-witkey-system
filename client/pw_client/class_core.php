@@ -24,9 +24,7 @@ class UC {
 	var $models = array();
 	var $cache = null;
 
-	function __construct() {
-		$this->UC();
-	}
+	 
 
 	function UC() {
 
@@ -96,7 +94,7 @@ class UC {
 	}
 
 	//static function
-	function escape($var) {
+	static function escape($var) {
 		if (is_array($var)) {
 			foreach ($var as $key => $value) {
 				$var[$key] = trim(UC::escape($value));
@@ -110,7 +108,7 @@ class UC {
 	}
 	
 	//static function
-	function sqlSingle($array) {
+	static function sqlSingle($array) {
 		//Copyright (c) 2003-09 PHPWind
 		$array = UC::escape($array);
 		$str = '';
@@ -121,12 +119,12 @@ class UC {
 	}
 
 	//static function
-	function implode($array) {
+	static function implode($array) {
 		return implode(',', UC::escape($array));
 	}
 
 	//static function
-	function sqlMulti($array) {
+	static function sqlMulti($array) {
 		$str = '';
 		foreach ($array as $val) {
 			if (!empty($val)) {
@@ -137,7 +135,7 @@ class UC {
 	}
 
 	//static function
-	function strcode($string, $hash_key, $encode = true) {
+	static function strcode($string, $hash_key, $encode = true) {
 		!$encode && $string = base64_decode($string);
 		$code = '';
 		$key  = substr(md5($_SERVER['HTTP_USER_AGENT'] . $hash_key),8,18);

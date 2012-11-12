@@ -103,12 +103,12 @@ class UcDB {
 	}
 	function get_value($sql, $result_type = MYSQL_NUM, $field = 0){
 		$result_set = $this->query($sql);
-		$rt =& $this->fetch_array($result_set, $result_type);
+		$rt = $this->fetch_array($result_set, $result_type);
 		return isset($rt[$field]) ? $rt[$field] : false;
 	}
 	function get_one($sql, $result_type = MYSQL_ASSOC){
 		$result_set = $this->query($sql,'Q');
-		$rt =& $this->fetch_array($result_set, $result_type);
+		$rt = $this->fetch_array($result_set, $result_type);
 		return $rt;
 	}
 	function update($sql, $lp = 1){

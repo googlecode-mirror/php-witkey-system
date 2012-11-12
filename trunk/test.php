@@ -1,8 +1,20 @@
 <?php define ( "IN_KEKE", TRUE );
 
-include 'app_boot.php';
+error_reporting(E_ALL);
+
+/* abstract class a {
+	abstract public function aa($i,$k=1);
+}
+class b extends a{
+	function aa($i,$b){
+		echo 'bb';
+	}
+} */
+//$a = new a;
+//$a->aa('ccc');
+phpinfo();
  
-var_dump($GLOBALS);
+
 //require Keke_tpl::template('test');
 
 //var_dump(Cache::instance()->del('keke_config')); 

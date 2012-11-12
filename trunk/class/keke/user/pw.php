@@ -10,13 +10,15 @@ include_once S_ROOT.'client/pw_client/uc_client.php';
 
 class Keke_user_pw extends Keke_user {
  
-	function get_user_info($uid,$fields){
+	function get_user_info($uid,$fields='*'){
 		return Keke_user::instance('keke')->get_user_info($uid,$fields);
 	}
 	
-	function get_avatar($uid,$size){
+	function get_avatar($uid,$size='middle'){
+		
 		 $size = in_array ( $size, array ('middle', 'small' ) ) ? $size : 'middle';
-		 $path = UC_API ."/attachment/$size/middle/$uid/$uid.jpg";
+		 $path = UC_API ."/attachment/upload/$size/$uid/$uid.jpg";
+		
          if(Keke::remote_file_exists($path)){
          	return $path;
          }else{

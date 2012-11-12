@@ -1,6 +1,6 @@
 <?php 
 
-error_reporting(0);
+//error_reporting(0);
 define('P_W','admincp');
 
 require_once (S_ROOT."/config/config_pw.php");

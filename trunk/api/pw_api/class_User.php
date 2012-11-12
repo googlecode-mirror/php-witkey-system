@@ -68,35 +68,15 @@ class User {
 	function synlogin($user) {
 		global $timestamp,$uc_key;
 		list($winduid, $windid, $windpwd) = explode("\t", $this->base->strcode($user, false));
- 
 		header('P3P: CP="CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR"');
-		
-		include_once ('../../app_comm.php');
-		//kekezu::prom_check();
-		//最新登录时间
-		$space_obj = new Keke_witkey_space_class();
-		$space_obj->setUid($winduid);
-		$space_obj->setLast_login_time(time());
-		$space_obj->edit_keke_witkey_space();
- 
-		$uinfo = kekezu::get_user_info($winduid);
-		$_SESSION['uid'] = $uinfo['uid'];
-		$_SESSION['username'] = $uinfo['username'];
+		$username = DB::select('username')->from('witkey_member')->where("uid='$winduid'")->get_count()->execute();
+	 	Keke_user_login::instance()->complete_login($winduid, $username);
 	    return new ApiResponse(1);
-		
 	}
 
 	function synlogout() {
 		header('P3P: CP="CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR"');
-		include_once ('../../app_comm.php');
-		$_SESSION['uid'] = '';
-		$_SESSION['username'] = '';
-		setcookie ( 'user_login', '' );
-		setcookie ( 'prom_cke', '' );
-		setcookie ( 'score_log', '' );
-		unset($_COOKIE);
-		unset($_SESSION);
-		session_destroy();
+		Keke_user_login::instance()->logout();
 		return new ApiResponse(1);
 	}
     function getusergroup() {

@@ -11,7 +11,7 @@ class S {
 	 * @param $param
 	 * @return int
 	 */
-	function int($param) {
+	static function int($param) {
 		return intval($param);
 	}
 	/**
@@ -19,7 +19,7 @@ class S {
 	 * @param $param
 	 * @return string
 	 */
-	function str($param) {
+	static function str($param) {
 		return trim($param);
 	}
 	/**
@@ -27,7 +27,7 @@ class S {
 	 * @param $param
 	 * @return boolean
 	 */
-	function isObj($param) {
+	static function isObj($param) {
 		return is_object($param) ? true : false;
 	}
 	/**
@@ -35,7 +35,7 @@ class S {
 	 * @param $params
 	 * @return boolean
 	 */
-	function isArray($params) {
+	static function isArray($params) {
 		return (!is_array($params) || !count($params)) ? false : true;
 	}
 	/**
@@ -44,7 +44,7 @@ class S {
 	 * @param $params
 	 * @return boolean
 	 */
-	function inArray($param, $params) {
+	static function inArray($param, $params) {
 		return (!$param || !is_array($params) || !in_array($param, $params)) ? false : true;
 	}
 	/**
@@ -52,7 +52,7 @@ class S {
 	 * @param $param
 	 * @return boolean
 	 */
-	function isBool($param) {
+	static function isBool($param) {
 		return is_bool($param) ? true : false;
 	}
 	/**
@@ -60,14 +60,14 @@ class S {
 	 * @param $param
 	 * @return boolean
 	 */
-	function isNum($param) {
+	static function isNum($param) {
 		return is_numeric($param) ? true : false;
 	}
 	/**
 	 * 加载类/函数文件
 	 * @param $file
 	 */
-	function import($file) {
+	static function import($file) {
 		if (!is_file($file)) return false;
 		require_once $file;
 	}
@@ -76,7 +76,7 @@ class S {
 	 * @param $param
 	 * @return string
 	 */
-	function htmlEscape($param) {
+	static function htmlEscape($param) {
 		return trim(htmlspecialchars($param, ENT_QUOTES));
 	}
 	/**
@@ -84,7 +84,7 @@ class S {
 	 * @param $param
 	 * @return string
 	 */
-	function stripTags($param) {
+	static function stripTags($param) {
 		return trim(strip_tags($param));
 	}
 	/**
@@ -93,7 +93,7 @@ class S {
 	 * @param $method
 	 * @param $cvtype
 	 */
-	function gp($keys, $method = null, $cvtype = 1) {
+	static function gp($keys, $method = null, $cvtype = 1) {
 		!is_array($keys) && $keys = array($keys);
 		foreach ($keys as $key) {
 			if ($key == 'GLOBALS') continue;
@@ -114,14 +114,14 @@ class S {
 	 * @param $key
 	 * @param $method
 	 */
-	function getGP($key, $method = null) {
+	static function getGP($key, $method = null) {
 		if ($method == 'G' || $method != 'P' && isset($_GET[$key])) {return $_GET[$key];}
 		return $_POST[$key];
 	}
 	/**
 	 * 全局变量过滤
 	 */
-	function filter() {
+	static function filter() {
 		$allowed = array('GLOBALS' => 1,'_GET' => 1,'_POST' => 1,'_COOKIE' => 1,'_FILES' => 1,'_SERVER' => 1,
 						'P_S_T' => 1);
 		foreach ($GLOBALS as $key => $value) {
@@ -149,7 +149,7 @@ class S {
 	 * @param $ifCheck
 	 * @return string
 	 */
-	function escapePath($fileName, $ifCheck = true) {
+	static function escapePath($fileName, $ifCheck = true) {
 		if (!S::_escapePath($fileName, $ifCheck)) {
 			exit('Forbidden');
 		}
@@ -162,7 +162,7 @@ class S {
 	 * @param $ifCheck
 	 * @return boolean
 	 */
-	function _escapePath($fileName, $ifCheck = true) {
+	static function _escapePath($fileName, $ifCheck = true) {
 		$tmpname = strtolower($fileName);
 		$tmparray = array('://',"\0");
 		$ifCheck && $tmparray[] = '..';
@@ -176,7 +176,7 @@ class S {
 	 * @param unknown_type $dir
 	 * @return string
 	 */
-	function escapeDir($dir) {
+	static function escapeDir($dir) {
 		$dir = str_replace(array("'",'#','=','`','$','%','&',';'), '', $dir);
 		return trim(preg_replace('/(\/){2,}|(\\\){1,}/', '/', $dir), '/');
 	}
@@ -187,7 +187,7 @@ class S {
 	 * @param $istrim
 	 * @return mixture
 	 */
-	function escapeChar($mixed, $isint = false, $istrim = false) {
+	static function escapeChar($mixed, $isint = false, $istrim = false) {
 		if (is_array($mixed)) {
 			foreach ($mixed as $key => $value) {
 				$mixed[$key] = S::escapeChar($value, $isint, $istrim);
@@ -204,7 +204,7 @@ class S {
 	 * @param $string
 	 * @return string
 	 */
-	function escapeStr($string) {
+	static function escapeStr($string) {
 		$string = str_replace(array("\0","%00","\r",'\0','%00','\r'), '', $string); //modified@2010-7-5
 		$string = preg_replace(array('/[\\x00-\\x08\\x0B\\x0C\\x0E-\\x1F]/','/&(?!(#[0-9]+|[a-z]+);)/is'), array('', '&amp;'), $string);
 		$string = str_replace(array("%3C",'<'), '&lt;', $string);
@@ -216,7 +216,7 @@ class S {
 	 * 变量检查
 	 * @param $var
 	 */
-	function checkVar(&$var) {
+	static function checkVar(&$var) {
 		if (is_array($var)) {
 			foreach ($var as $key => $value) {
 				S::checkVar($var[$key]);
@@ -234,7 +234,7 @@ class S {
 	 * 变量转义
 	 * @param $array
 	 */
-	function slashes(&$array) {
+	static function slashes(&$array) {
 		if (is_array($array)) {
 			foreach ($array as $key => $value) {
 				if (is_array($value)) {
@@ -251,7 +251,7 @@ class S {
 	 * @param $keys
 	 * @return string
 	 */
-	function getServer($keys) {
+	static function getServer($keys) {
 		$server = array();
 		$array = (array) $keys;
 		foreach ($array as $key) {
@@ -270,7 +270,7 @@ class S {
 	 * @param $isArray
 	 * @return mixture
 	 */
-	function sqlEscape($var, $strip = true, $isArray = false) {
+	static function sqlEscape($var, $strip = true, $isArray = false) {
 		if (is_array($var)) {
 			if (!$isArray) return " '' ";
 			foreach ($var as $key => $value) {
@@ -289,7 +289,7 @@ class S {
 	 * @param $strip
 	 * @return string
 	 */
-	function sqlImplode($array, $strip = true) {
+	static function sqlImplode($array, $strip = true) {
 		return implode(',', S::sqlEscape($array, $strip, true));
 	}
 	/**
@@ -298,7 +298,7 @@ class S {
 	 * @param $strip
 	 * @return string
 	 */
-	function sqlSingle($array, $strip = true) {
+	static function sqlSingle($array, $strip = true) {
 		if (!S::isArray($array)) return ''; // modified@2010-7-2
 		$array = S::sqlEscape($array, $strip, true);
 		$str = '';
@@ -313,7 +313,7 @@ class S {
 	 * @param $strip
 	 * @return string
 	 */
-	function sqlMulti($array, $strip = true) {
+	static function sqlMulti($array, $strip = true) {
 		if (!S::isArray($array)) return ''; // modified@2010-7-2
 		$str = '';
 		foreach ($array as $val) {
@@ -329,7 +329,7 @@ class S {
 	 * @param $num
 	 * @return string
 	 */
-	function sqlLimit($start, $num = false) {
+	static function sqlLimit($start, $num = false) {
 		return ' LIMIT ' . ($start <= 0 ? 0 : (int) $start) . ($num ? ',' . abs($num) : '');
 	}
 }

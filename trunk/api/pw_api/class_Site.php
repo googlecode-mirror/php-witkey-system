@@ -1,7 +1,7 @@
 <?php
 
 !defined('P_W') && exit('Forbidden');
-//api mode 9
+
 
 class Site {
 	
@@ -11,6 +11,7 @@ class Site {
 	function Site($base) {
 		$this->base = $base;
 		$this->db = $base->db;
+		
 	}
 
 	function connect() {

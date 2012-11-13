@@ -35,7 +35,7 @@ class Control_login extends Controller {
 		$login_obj->set_username ( $account )->set_pwd($pwd)->set_remember_me($remember);
 	 	//µÇÂ¼
 		$res = $login_obj->login ($type);
-		
+		 
 		$uri = 'login';
 		if(array_key_exists((int)$res, Keke_user_login::$_status)){
 			$msg = Keke_user_login::$_status[$res];

@@ -23,7 +23,7 @@ class Keke_user_login_uc extends Keke_user_login{
 	   		if($res === -6){
 	   			Keke_user_register::instance('keke')->set_username($this->_username)->set_pwd($this->_pwd)->set_email($email)->reg();
 	   		}
-	   		if($res!==1){
+	   		if($res<1 and $res > -6){
 	   			return $res;
 	   		}
 	   		$this->complete_login($uid, $username);

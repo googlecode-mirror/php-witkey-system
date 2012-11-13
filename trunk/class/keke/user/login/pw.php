@@ -15,7 +15,7 @@ class Keke_user_login_pw extends Keke_user_login {
 	 */
 	function login($type = 0) {
 		
-		$uc_info = uc_user_login ( $this->_username, $this->_pwd, $type );
+		$uc_info = uc_user_login ( $this->_username, md5($this->_pwd), $type );
 		
 		if ($uc_info ['status'] !== 1) {
 			return $uc_info ['status'];
@@ -63,7 +63,7 @@ class Keke_user_login_pw extends Keke_user_login {
 		);
 		// 账号不存在
 		if (! Keke_valid::not_empty ( $username )) {
-			return - 1;
+			return - 6;
 		}
 		if ($status == 2) {
 			// 账号被冻结

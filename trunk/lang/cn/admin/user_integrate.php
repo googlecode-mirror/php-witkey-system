@@ -22,8 +22,8 @@ $lang = array(
 	'uc_app_fail_to_add'=>'应用添加失败请检查参数!',
 	'uc_error_author_password'=>'ucenter创始人密码错误',
 	'uc_app_invalid_to_add'=>'应用的数据添加无效',
-	'uc_integrate_success'=>'Ucenter 用户整合设设成功！',
-	'phpwind_integrate_success'=>'phpwind用户整合参数设定成功！',
+	'uc_integrate_success'=>'Ucenter 用户整合成功！',
+	'phpwind_integrate_success'=>'phpwind用户整合成功！',
 	
 	/* admin_config_integration.htm */
 	'how_to_use'=>'使用方法',

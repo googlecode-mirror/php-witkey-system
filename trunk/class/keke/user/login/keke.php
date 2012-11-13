@@ -25,10 +25,11 @@ class Keke_user_login_keke extends Keke_user_login {
 		if($username<0){
 			return $username;
 		}
-		$where = "username = '$username' and password = '$this->_pwd'";
+		$pwd = md5($this->_pwd);
+		$where = "username = '$username' and password = '$pwd'";
 		$uid = DB::select('uid')->from('witkey_member')->where($where)->get_count()->execute();
 		if($uid){
-			$this->remember_me($uid, $username, $this->_pwd);
+			$this->remember_me($uid, $username, $pwd);
 		    //完成登录 
 			$this->complete_login($uid, $username);
 		    //登录成功

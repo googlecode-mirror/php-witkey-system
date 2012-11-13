@@ -6,7 +6,7 @@
  * encodingGBK  last-modify 2011-8-25
  *
  */
-keke_lang_class::load_lang_class('keke_page_class');
+Keke_lang::load_lang_class('keke_page_class');
 class keke_page_class {
 	public $_style = 'Pagination';
 	public $_ajax = 0;

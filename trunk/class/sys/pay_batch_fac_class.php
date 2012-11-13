@@ -4,7 +4,7 @@
  * @author Administrator
  *
  */
-keke_lang_class::load_lang_class('pay_batch_fac_class');
+Keke_lang::load_lang_class('pay_batch_fac_class');
 class pay_batch_fac_class {
 	private $_pay_mode;
 	private $_pay_config;

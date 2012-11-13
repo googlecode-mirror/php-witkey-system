@@ -1,5 +1,5 @@
 <?php
-keke_lang_class::load_lang_class('pay_return_fac_class');
+Keke_lang::load_lang_class('pay_return_fac_class');
 class pay_return_fac_class {
 	public $_model_id;
 	public $_uid;

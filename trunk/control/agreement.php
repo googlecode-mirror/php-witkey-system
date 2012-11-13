@@ -17,7 +17,7 @@ $model_info = Keke::$_model_list[$agree_info['model_id']];
 //任务模型
 $model_info or Keke::keke_show_msg("index.php",$_lang['now_model_no_exits_no_in'],'error');
 
-keke_lang_class::package_init("task_".$model_info['model_dir']);
-keke_lang_class::loadlang("task_agreement");
+Keke_lang::package_init("task_".$model_info['model_dir']);
+Keke_lang::loadlang("task_agreement");
 
 require "task/".$model_info['model_dir']."/control/task_agreement.php";

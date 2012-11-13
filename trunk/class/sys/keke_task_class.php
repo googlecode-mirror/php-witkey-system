@@ -40,7 +40,7 @@
  * work_choose 		      任务稿件选择		 
  * has_new_comment    稿件有信息的回复
  */
-keke_lang_class::load_lang_class('keke_task_class');
+Keke_lang::load_lang_class('keke_task_class');
 abstract class keke_task_class {
 	
 	public $_task_obj; //任务对象

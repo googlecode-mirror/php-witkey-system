@@ -4,7 +4,7 @@
  * @author Chen
  * 
  */
-keke_lang_class::load_lang_class('keke_task_config');
+Keke_lang::load_lang_class('keke_task_config');
 class keke_task_config {
 	/**
 	 * 获取任务时间规则

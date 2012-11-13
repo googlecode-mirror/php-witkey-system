@@ -5,7 +5,7 @@
  * @version 2.2
    2012-10-21
  */
-keke_lang_class::loadlang ('public','shop');
+Keke_lang::loadlang ('public','shop');
 abstract class Control_shop_base{
     
 	

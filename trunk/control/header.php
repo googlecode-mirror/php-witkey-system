@@ -3,8 +3,8 @@ class Control_header extends Controller {
 
 	function action_index(){
 		global $_K,$_lang;
-		keke_lang_class::package_init("index");
-		keke_lang_class::loadlang($do);
+		Keke_lang::package_init("index");
+		Keke_lang::loadlang($do);
 		$page_keyword = Keke::$_sys_config['seo_keyword'];
 		$page_description = Keke::$_sys_config ['seo_desc'];
 		

@@ -6,7 +6,7 @@
  * @author Michael
  * @version v 2.2 2012-11-11
  */
-keke_lang_class::load_lang_class('keke_user_avatar_class');
+Keke_lang::load_lang_class('keke_user_avatar_class');
 
 define ( '_DATADIR', S_ROOT . "data/" );
 global $_K;

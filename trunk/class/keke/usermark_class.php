@@ -11,7 +11,7 @@
  * 
  */
 
-keke_lang_class::load_lang_class('keke_user_mark_class');
+Keke_lang::load_lang_class('keke_user_mark_class');
 class keke_user_mark_class {
 	public function __construct() {
 	}

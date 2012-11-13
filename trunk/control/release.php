@@ -5,8 +5,8 @@
 defined ( 'IN_KEKE' ) or exit('Access Denied');
  Keke::check_login();
  //ÓïÑÔ°ü
-keke_lang_class::package_init("task");
-keke_lang_class::loadlang($do);
+Keke_lang::package_init("task");
+Keke_lang::loadlang($do);
 $mode_arr  = array("professional","guide","onekey");
 in_array($pub_mode,$mode_arr) or $pub_mode='professional';
 switch($pub_mode){

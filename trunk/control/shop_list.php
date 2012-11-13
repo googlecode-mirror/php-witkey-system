@@ -12,8 +12,8 @@ defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 $page_title=$_lang['shop_list'].'- '.$_K['html_title'];
 /*页面头文件  */ 
 $nav_active_index = 'shop';
-keke_lang_class::package_init ( "shop_list" );
-keke_lang_class::loadlang ( $do );
+Keke_lang::package_init ( "shop_list" );
+Keke_lang::loadlang ( $do );
 
 /*初始化信息*/
 $item_config = keke_payitem_class::get_payitem_config ( null, null, null, 'item_id' );

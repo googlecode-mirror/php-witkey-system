@@ -1,5 +1,5 @@
 <?php
-keke_lang_class::load_lang_class ( 'goods_shop_class' );
+Keke_lang::load_lang_class ( 'goods_shop_class' );
 class goods_shop_class {
 	
 	/**

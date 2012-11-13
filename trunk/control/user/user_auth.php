@@ -6,8 +6,8 @@
  * 2011-10-8下午06:42:39
  */
 
-keke_lang_class::package_init ( 'auth' );
-keke_lang_class::loadlang ( 'auth_add' );  
+Keke_lang::package_init ( 'auth' );
+Keke_lang::loadlang ( 'auth_add' );  
 $keys = array_keys ( $auth_item_list );
 $auth_code or $auth_code = $keys ['0']; //默认认证项 
 $auth_code or Keke::show_msg ( $_lang['param_error'], "index.php?do=auth",3,'','warning' );

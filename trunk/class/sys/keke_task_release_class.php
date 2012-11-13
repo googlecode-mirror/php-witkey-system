@@ -4,7 +4,7 @@
  * @author       Administrator
  * std_obj 为类的成员对象。用来保存release_info发布信息,att_info附加项信息
  */
-keke_lang_class::load_lang_class ( 'keke_task_release_class' );
+Keke_lang::load_lang_class ( 'keke_task_release_class' );
 abstract class keke_task_release_class {
 	public $_uid;
 	public $_username;

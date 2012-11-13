@@ -1,5 +1,5 @@
 <?php
-keke_lang_class::load_lang_class('keke_auth_bank_class');
+Keke_lang::load_lang_class('keke_auth_bank_class');
 class keke_auth_bank_class extends keke_auth_base_class {
 	public static function get_instance($auth_code='bank') {
 		static $obj = null;

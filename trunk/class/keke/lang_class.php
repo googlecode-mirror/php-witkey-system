@@ -1,5 +1,5 @@
 <?php
-class keke_lang_class {
+class Keke_lang {
 	
 	static $_init_lang_set = array();
 	private  static $_package = 'public';

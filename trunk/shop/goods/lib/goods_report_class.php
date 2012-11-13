@@ -1,5 +1,5 @@
 <?php
-keke_lang_class::load_lang_class('goods_report_class');
+Keke_lang::load_lang_class('goods_report_class');
 class goods_report_class extends keke_report_class {
 	
 	public static function get_instance($report_id, $report_info = null, $obj_info = null,$user_info=null,$to_userinfo=null) {

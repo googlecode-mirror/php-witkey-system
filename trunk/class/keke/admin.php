@@ -4,7 +4,7 @@
  * @version v 2.2
  * @Modify by Chen
  */
-keke_lang_class::load_lang_class('keke_admin_class');
+Keke_lang::load_lang_class('keke_admin_class');
 class Keke_admin {
 	public $_uid;
 	public function __construct() {

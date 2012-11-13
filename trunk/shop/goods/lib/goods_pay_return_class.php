@@ -1,5 +1,5 @@
 <?php
-keke_lang_class::load_lang_class ( 'goods_pay_return_class' );
+Keke_lang::load_lang_class ( 'goods_pay_return_class' );
 final class goods_pay_return_class extends Pay_return_base_class {
 	
 	function __construct($charge_type, $model_id = '', $uid = '', $obj_id = '', $order_id = '', $total_fee = '') {

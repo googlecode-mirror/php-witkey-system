@@ -17,8 +17,8 @@ defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 
 $nav_active_index = "task";
 $page_title = $_lang ['task_list'] . '-' . $_K ['html_title'];
-keke_lang_class::package_init ( "task" );
-keke_lang_class::loadlang ( $do );
+Keke_lang::package_init ( "task" );
+Keke_lang::loadlang ( $do );
 $feed_time = time () - 3600 * 24;
 $dynamic_arr = Keke::get_feed ( " feedtype='pub_task' or feedtype='work_accept' and $feed_time>feed_time ", "feed_time desc", 10 ); // ¶¯Ì¬ÐÅÏ¢
 $cash_cove_arr = Keke::get_table_data ( '*', 'witkey_task_cash_cove', '', '', '', '', 'cash_rule_id', null );

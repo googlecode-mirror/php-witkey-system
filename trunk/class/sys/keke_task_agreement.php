@@ -9,7 +9,7 @@
  * 获取威客信息
  *
  */
-keke_lang_class::load_lang_class('keke_task_agreement');
+Keke_lang::load_lang_class('keke_task_agreement');
 abstract class keke_task_agreement {
 	public $_agree_id; //协议编号
 	public $_agree_status; //协议状态

@@ -7,7 +7,7 @@
  */
 
 defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
-keke_lang_class::loadlang ( 'user_finance_order', 'user' );
+Keke_lang::loadlang ( 'user_finance_order', 'user' );
 if ($model_id) {
 
 	/**

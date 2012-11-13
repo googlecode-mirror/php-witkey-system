@@ -37,9 +37,9 @@ if (isset($task_id)) {
 	}
 	$model_info = $model_list [$task_info ['model_id']];
 	$model_code = $model_info ['model_code'];
-	keke_lang_class::package_init ( "task" );
-	keke_lang_class::loadlang ( $model_info ['model_dir'] );
-	keke_lang_class::loadlang ( "task_info" );
+	Keke_lang::package_init ( "task" );
+	Keke_lang::loadlang ( $model_info ['model_dir'] );
+	Keke_lang::loadlang ( "task_info" );
 	$model_info and (require S_ROOT . "/task/" . $model_info ['model_dir'] . "/control/task_info.php") or Keke::show_msg ( $_lang ['error'], "index.php?do=index", 3, $_lang ['task_model_not_exist'], 'error' );
 } else {
 	  

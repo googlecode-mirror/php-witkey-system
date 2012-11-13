@@ -9,8 +9,8 @@ defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 $ops = array ('basic', 'order', 'comm', 'mark');
 in_array ( $op, $ops ) or $op = 'basic';
 
-keke_lang_class::loadlang('public','shop');
-keke_lang_class::loadlang('task_edit','task');
+Keke_lang::loadlang('public','shop');
+Keke_lang::loadlang('task_edit','task');
 if ($op == 'basic') { //基本信息
 	$service_obj = new service_shop_class();
 	$service_info = db_factory::get_one(sprintf("select * from %switkey_service where service_id='%d'",TABLEPRE,$service_id));

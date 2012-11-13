@@ -9,7 +9,7 @@
 
 
 $ac_url = $origin_url . "&op=credit";
-keke_lang_class::loadlang('user_credit','user');
+Keke_lang::loadlang('user_credit','user');
 switch ($view) {
 	case "employer" :
 		/**¹ÍÖ÷ĞÅÓş**/

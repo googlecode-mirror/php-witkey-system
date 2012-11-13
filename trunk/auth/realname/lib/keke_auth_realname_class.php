@@ -5,7 +5,7 @@
  * @version v 2.0
  * 2011-8-31 09:58:34
  */
-keke_lang_class::load_lang_class('keke_auth_realname_class');
+Keke_lang::load_lang_class('keke_auth_realname_class');
 class keke_auth_realname_class extends keke_auth_base_class{
 	
 	public static function get_instance($auth_code='realname') {

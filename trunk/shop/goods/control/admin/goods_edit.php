@@ -9,8 +9,8 @@ defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 $ops = array ('basic', 'order', 'comm', 'mark');
 in_array ( $op, $ops ) or $op = 'basic';
 
-keke_lang_class::loadlang('public','shop');
-keke_lang_class::loadlang('task_edit','task');
+Keke_lang::loadlang('public','shop');
+Keke_lang::loadlang('task_edit','task');
 if ($op == 'basic') { //基本信息
 	$pk['service_id'] and $service_id=$pk['service_id'];
 	$service_id or kekezu::admin_show_msg($_lang['please_choose_should_edit_goods'],'index.php?do=model&model_id=6&view=list',3,'','warning');

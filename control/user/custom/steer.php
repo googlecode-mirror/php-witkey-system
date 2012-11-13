@@ -19,8 +19,17 @@ class Control_user_custom_steer extends Control_user{
 	protected static $_left = 'steer';
 	
 	function action_index(){
-		
-		
+		//要查询的字段
+		$fields = " ``,``,``,``,``,``,``,`` ";
+		//基本uri
+		$base_uri = BASE_URL."/index.php/user/custon_steer";
+		//记录数
+		$count = $_GET['count'];
+		//默认排序字段
+		$this->_default_ord_field = "on_time";
+		//获取分页条件
+		extract($this->get_url($base_uri));
+		$data_info = Model::factory('witkey_report')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
 		$open_url = BASE_URL.'/index.php/user/custom_steer/comment';
 		require Keke_tpl::template('user/custom/steer');
 	}

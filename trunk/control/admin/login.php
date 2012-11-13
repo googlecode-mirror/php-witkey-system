@@ -10,12 +10,12 @@ class Control_admin_login extends Controller {
 	function action_index() {
 		global $_K, $_lang;
 		// group_id > 0 表示是
-		if ($_SESSION ['admin_uid'] and keke_admin_class::get_user_roles()) {
+		if ($_SESSION ['admin_uid'] and Keke_admin::get_user_roles()) {
 			// 已经登录了，跳到首页
 			$this->request->redirect('/admin/index');
 		} else {
 			// 初始化登录页面
-			$admin_obj = new keke_admin_class ;
+			$admin_obj = new Keke_admin ;
 			$login_limit = $_SESSION ['login_limit']; // 用户登录限制时间
 			$remain_times = $login_limit - time (); // 允许再次登录时差
 			$allow_times = $admin_obj->times_limit ();
@@ -28,7 +28,7 @@ class Control_admin_login extends Controller {
 	function action_login() {
 		
 		Keke::formcheck ( $_POST ['formhash'] ); 
-		$admin_obj = new keke_admin_class ;
+		$admin_obj = new Keke_admin ;
 			// 验证用户与密码不能为空!
 			$p = Keke_validation::factory ( $_POST )->rule ( 'user_name', 'Keke_valid::not_empty' )->rule ( 'pass_word', 'Keke_valid::not_empty' );
 			if (!$p->check ()) {

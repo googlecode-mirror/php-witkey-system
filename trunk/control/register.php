@@ -12,7 +12,7 @@ class Control_register extends Control_front{
 	 
 		var_dump($_SESSION);
 		
-		$img = Keke_user::instance()->get_avatar($_SESSION['uid']);
+		$uid = $_SESSION['uid'];
 		
  		require Keke_tpl::template('register');
 	}

@@ -71,7 +71,7 @@ class Keke_tpl {
 		//货币显示
 		$template = preg_replace ( "/{c\:(.+?)(,?)(\d?)\}/ie", "keke_curren_class::currtags('\\1','\\3')", $template );
 		//头像处理
-		$template = preg_replace ( "/\{userpic\((.+?),(.+?)\)\}/ie", "Keke_tpl::userpic('\\1','\\2')", $template );
+		$template = preg_replace ( "/\{avatar\((.+?),(.+?)\)\}/ie", "Keke_tpl::avatar('\\1','\\2')", $template );
 		//PHP代码
 		$template = preg_replace ( "/\<\!\-\-\{eval\s+(.+?)\s*\}\-\-\>/ies", "Keke_tpl::evaltags('\\1')", $template );
 		//开始处理
@@ -185,9 +185,11 @@ class Keke_tpl {
 		return $content;
 	}
 	
-	//头像调用
-	static function userpic($uid, $size) {
-		return '<!--{eval echo  Keke_user::avatar(' . $uid . ',' . $size . ')}-->';
+	/**
+	 * 头像调用
+	 */
+	static function avatar($uid, $size) {
+		return '<!--{eval echo "<img src=".Keke_user::instance()->get_avatar('.$uid.','.$size.')." >"}-->';
 	}
 	
 	static function stripvtags($expr, $statement = '') {

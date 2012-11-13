@@ -8,7 +8,7 @@ class Control_admin_index extends Control_admin{
 		
 		$this->admin_init();
 		
-		$admin_obj=new keke_admin_class();
+		$admin_obj=new Keke_admin();
 		//一级菜单
 		$menu_arr = array (
 				'config' => $_lang['global_config'],
@@ -53,7 +53,7 @@ class Control_admin_index extends Control_admin{
 	function action_nav(){
 		global $_K,$_lang;
 		//获取后台的父目录和子目录
-		$menus_arr = keke_admin_class::get_admin_menu();
+		$menus_arr = Keke_admin::get_admin_menu();
 		$menus_arr = $menus_arr['menu'];
 		
 		require keke_tpl::template('control/admin/tpl/nav');
@@ -63,7 +63,7 @@ class Control_admin_index extends Control_admin{
 	 */
 	function action_nav_search(){
 		global $_K,$_lang;
-		$admin_obj=new keke_admin_class;
+		$admin_obj=new Keke_admin;
 		$arr=$admin_obj->search_nav($_GET['keyword']);
 		$menus_arr[][0]['name'] =$_GET['keyword'];
 		$menus_arr[][0]['items'] =$arr; 
@@ -74,7 +74,7 @@ class Control_admin_index extends Control_admin{
 	 */
 	function action_op(){
 		global $_K,$_lang;
-		$admin_obj=new keke_admin_class;
+		$admin_obj=new Keke_admin;
 		switch ($_GET['ac']){
 			//添加
 			case "add_shortcuts":

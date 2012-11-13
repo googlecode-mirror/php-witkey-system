@@ -33,7 +33,7 @@ class Control_admin_finance_recharge extends Control_admin {
 		// 分页数据
 		$pages = $data_info ['pages'];
 		// 用户组
-		$group_arr = keke_admin_class::get_user_group ();
+		$group_arr = Keke_admin::get_user_group ();
 		
 		// 充值订单类型
 		$charge_type_arr = keke_global_class::get_charge_type ();

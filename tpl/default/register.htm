@@ -11,7 +11,7 @@
 						<div class="grid_18">
 							<nav class="box_nav clearfix">
 								<ul> 
-                					<li><a href="index.php?do=login&ac_type=reg">{$_lang['has_account_now_to_login']}</a></li>
+                					<li><a href="{BASE_URL}/index.php/login">{$_lang['has_account_now_to_login']}</a></li>
 								</ul>
 							</nav>
 						</div>
@@ -156,12 +156,10 @@
    In('form');
     //зЂВс
     function user_register(){
-		var i = checkForm(document.getElementById("register_frm"));
-        if (i) {
+		if(checkForm(document.getElementById("register_frm"))){
 			 showWindow('register_frm1', 'register_frm', 'post',0,{cover:1});
-         }else{
-      		return false;
-		 }
+		}
+        return false;
     }
 $("#txt_code").focus(function(){
 	if(!$("#secode_img").attr('src')){

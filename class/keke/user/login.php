@@ -189,6 +189,7 @@ abstract class Keke_user_login   {
 			-2=>'password_error',
 			-3=>'account_freeze',
 			-4=>'account_not_allow',
-			-5=>'password_empty');
+			-5=>'password_empty',
+			-6=>'account_not_active');
 	
 }

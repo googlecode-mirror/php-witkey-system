@@ -44,6 +44,20 @@ class Keke_user_register_keke extends Keke_user_register {
 		}
 		return 1;
 	}
+	/**
+	 * 检查,这个UID是否存在
+	 * @param int $uid
+	 * @return number 1 存在，0 不存在
+	 */
+	function check_uid($uid){
+       
+		if((bool)DB::select('count(*)')->from('witkey_member')->where("uid='$uid'")->get_count()->execute()){
+			//用户存在
+			return 1;
+		}
+		
+		return 0;
+	}
 	
 	function check_email($email){
 		if(!Keke_valid::email($email)){

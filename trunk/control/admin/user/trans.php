@@ -22,7 +22,7 @@ class Control_admin_user_trans extends Control_admin{
 	function action_index($type=NULL){
 		global $_K,$_lang;
 		//需要在列表中显示的字段
-		$fields = '`report_id`,`obj`,`username`,`to_username`,`report_file`,`on_time`,`report_status`,`report_type`,`op_uid`,`op_username`,`report_desc`';
+		$fields = '`report_id`,`origin_id`,`obj`,`username`,`to_username`,`report_file`,`on_time`,`report_status`,`report_type`,`op_uid`,`op_username`,`report_desc`';
 		//搜索中查询的字段
 		$query_fields = array('report_id'=>$_lang['id'],'report_status'=>'当前状态','on_time'=>$_lang['time']);
 		
@@ -50,7 +50,9 @@ class Control_admin_user_trans extends Control_admin{
 		 
 		 
 		$rp_type =  keke_report_class::get_report_type();
-	 
+		
+		$where .= " and  obj in ('task','work') ";
+		
 		//查询各种类型下的数据
 		$data_info = Model::factory('witkey_report')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
 		//查询出来的数据
@@ -60,6 +62,7 @@ class Control_admin_user_trans extends Control_admin{
 		//所属的类别，商品，任务，稿件，订单
 		$trans_object = $this->_trans_object;
 // 		var_dump($trans_object);die;
+		$obj = 'work';
 		require keke_tpl::template('control/admin/tpl/user/trans');
 	}
 	/**
@@ -90,7 +93,6 @@ class Control_admin_user_trans extends Control_admin{
 		extract($this->get_url($base_uri.'/complaint'));
 		
 		$trans_status = $this->_trans_status;
- 		
 		//查询各种类型下的数据
 		$data_info = Model::factory('witkey_report')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
 		
@@ -99,6 +101,91 @@ class Control_admin_user_trans extends Control_admin{
 		$pages = $data_info['pages'];
 		 
 		require keke_tpl::template('control/admin/tpl/user/steer');
+	}
+	
+	/**
+	 * 商品举报 
+	 */
+	function  action_product(){
+		global $_K,$_lang;
+		//需要在列表中显示的字段
+		$fields = '`report_id`,`obj_id`,`obj`,`username`,`to_username`,`report_file`,`on_time`,`report_status`,`report_type`,`op_uid`,`op_username`,`report_desc`';
+		//搜索中查询的字段
+		$query_fields = array('report_id'=>$_lang['id'],'report_status'=>'当前状态','on_time'=>$_lang['time']);
+		
+		//基本uri
+		$base_uri = BASE_URL.'/index.php/admin/user_trans';
+		$del_uri = $base_uri.'/del';
+		//统计的总数，这里写出避免再查询一次
+		$count = intval($_GET['count']);
+		//默认排序字段
+		$this->_default_ord_field = 'on_time';
+		//获取分页条件
+		extract($this->get_url($base_uri));
+		//处理的情况
+		$trans_status = $this->_trans_status;
+		//获取后面的参数type，包括report，rights，complaint
+		if(isset($_GET['type'])){
+			$type = $_GET['type'];
+		}elseif(!isset($type)){
+			$type = 'report';
+		}
+		$rp_type =  keke_report_class::get_report_type();
+		$where .= " and  obj = 'product' ";
+		//查询各种类型下的数据
+		$data_info = Model::factory('witkey_report')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
+		//查询出来的数据
+		$report_list = $data_info['data'];
+		//显示分页的页数
+		$pages = $data_info['pages'];
+		//所属的类别，商品，任务，稿件，订单
+		$trans_object = $this->_trans_object;
+		//var_dump($data_info);die;
+		
+		$obj = 'product';
+		require keke_tpl::template('control/admin/tpl/user/trans');
+	}
+	
+	/**
+	 * 店铺举报
+	 */
+	function action_seller(){
+		global $_K,$_lang;
+		//需要在列表中显示的字段
+		$fields = '`report_id`,`to_uid`,`obj`,`username`,`to_username`,`report_file`,`on_time`,`report_status`,`report_type`,`op_uid`,`op_username`,`report_desc`';
+		//搜索中查询的字段
+		$query_fields = array('report_id'=>$_lang['id'],'report_status'=>'当前状态','on_time'=>$_lang['time']);
+		
+		//基本uri
+		$base_uri = BASE_URL.'/index.php/admin/user_trans';
+		$del_uri = $base_uri.'/del';
+		//统计的总数，这里写出避免再查询一次
+		$count = intval($_GET['count']);
+		//默认排序字段
+		$this->_default_ord_field = 'on_time';
+		//获取分页条件
+		extract($this->get_url($base_uri));
+		//处理的情况
+		$trans_status = $this->_trans_status;
+		//获取后面的参数type，包括report，rights，complaint
+		if(isset($_GET['type'])){
+			$type = $_GET['type'];
+		}elseif(!isset($type)){
+			$type = 'report';
+		}
+		$rp_type =  keke_report_class::get_report_type();
+		$where .= " and  obj = 'seller' ";
+		//查询各种类型下的数据
+		$data_info = Model::factory('witkey_report')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
+		//查询出来的数据
+		$report_list = $data_info['data'];
+		//显示分页的页数
+		$pages = $data_info['pages'];
+		//所属的类别，商品，任务，稿件，订单
+		$trans_object = $this->_trans_object;
+		//var_dump($trans_object);die;
+		$obj = 'seller';
+		require keke_tpl::template('control/admin/tpl/user/trans');
 	}
 	/**
 	 * 客服回复用建议

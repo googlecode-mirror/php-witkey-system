@@ -12,7 +12,8 @@ class b extends a{
 } */
 //$a = new a;
 //$a->aa('ccc');
-phpinfo();
+$a = 'a01234564a';
+var_dump((int)$a);
  
 
 //require Keke_tpl::template('test');

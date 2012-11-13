@@ -36,7 +36,9 @@ class Control_register extends Control_front{
 			echo Keke_user_register::$_status[$res];
 		}
 	}
-	
+	/**
+	 * 用户注册
+	 */
 	function action_reg(){
 		$_POST = Keke_tpl::chars($_POST);
 		Keke::formcheck($_POST['formhash']);
@@ -44,15 +46,17 @@ class Control_register extends Control_front{
 		$pwd  = $_POST['pwd_password'];
 		$email = $_POST['txt_email'];
 		$res = Keke_user_register::instance()->set_username($username)->set_pwd($pwd)->set_email($email)->reg();
+		$msg = '注册成功';
+		$t = 'success';
 		if($res<0){
-			$res = '注册失败:'.Keke_user_register::$_status[$res];
+			$msg = '注册失败:'.Keke_user_register::$_status[$res];
+			$t = 'error';
 		}elseif (Keke_valid::numeric($res) and $res>0){
-			$res = '注册成功';
+			
 		}else{
-			//整合后输出html
-			$res .='注册成功';
+			$msg .= $res;
 		}
-		Keke::show_msg($res,'register','success');
+		Keke::show_msg($msg,'register',$t);
 	}
 	
 }

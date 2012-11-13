@@ -36,8 +36,7 @@ class usercontrol {
 
 	function login($username, $password, $logintype) {
 		$num = 1;
-	
-		switch ($logintype) {
+	    switch ($logintype) {
 			case 1:
 				$user = $this->user->get_by_uid($username);break;
 			case 2:

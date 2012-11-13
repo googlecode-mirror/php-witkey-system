@@ -12,10 +12,10 @@ class Keke_user_login_keke extends Keke_user_login {
  
     /**
      * 用户登录
-     * @param int $type (登录方式1,2,3 分别表示，用户名，手机号，邮箱地址 )
+     * @param int $type (登录方式0,1,2,3 分别表示，用户名，UID,邮箱地址,手机号 )
      * @return int -1账号不对,-2密码不对
      */
-	function login($type=1){
+	function login($type=0){
 		
 		//密码为空
 		if (empty($this->_pwd)){
@@ -63,12 +63,14 @@ class Keke_user_login_keke extends Keke_user_login {
 	 * @return string 
 	 */
 	function check_account($type){
-		if($type==1){
+		if($type==0){
 			$where = "username = '$this->_username'";
-		}elseif($type == 2){
+		}elseif($type == 3){
 			$where = "mobile = '$this->_username'";
-		}elseif($type==3){
+		}elseif($type==2){
 			$where = "email = '$this->_username'";
+		}elseif($type==1){
+			$where = "uid = '$this->_username'";
 		}
 		$res = DB::select('username,status')->from('witkey_space')->where($where)->get_one()->execute();
 		list($username,$status) = array($res['username'],$res['status']);

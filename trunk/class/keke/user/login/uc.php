@@ -9,17 +9,21 @@
 require_once S_ROOT.'client/ucenter/client.php';
 
 class Keke_user_login_uc extends Keke_user_login{
-    const USERNAME = 0;
+   
 	/**
 	 * Ucenter 登录
 	 * @see Keke_user_login::login()
 	 */
-	function login($type=self::USERNAME){
+	function login($type=0){
 	   list ($uid, $username, $password, $email) =  uc_user_login($this->_username, $this->_pwd,$type);
 	   //大于0表示登录成功
 	   if($uid>0){
 	   		$res = $this->check_account($uid);
-	   		if($res!==TRUE){
+	   		//keke系统没有这个人，需要激活
+	   		if($res === -6){
+	   			Keke_user_register::instance('keke')->set_username($this->_username)->set_pwd($this->_pwd)->set_email($email)->reg();
+	   		}
+	   		if($res!==1){
 	   			return $res;
 	   		}
 	   		$this->complete_login($uid, $username);
@@ -57,7 +61,7 @@ class Keke_user_login_uc extends Keke_user_login{
 		list($username,$status) = array($res['username'],$res['status']);
 		//账号不存在
 		if(!Keke_valid::not_empty($username)){
-			return -1;
+			return -6;
 		}
 		if($status==2){
 			//账号被冻结
@@ -66,7 +70,7 @@ class Keke_user_login_uc extends Keke_user_login{
 			//账号未激活
 			return -4;
 		}
-		return TRUE;
+		return 1;
 	}
 
 }//end

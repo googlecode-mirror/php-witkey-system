@@ -1305,8 +1305,9 @@ function ajaxpost(formid, showid, waitid, showidclass, submitbtn, recall) {
 	var ajaxframeid = 'ajaxframe';
 	var ajaxframe = document.getElementById(ajaxframeid);
 	var formtarget = document.getElementById(formid).target;
-
+     
 	var handleResult = function() {
+		 
 		var s = '';
 		var evaled = false;
 
@@ -1330,9 +1331,9 @@ function ajaxpost(formid, showid, waitid, showidclass, submitbtn, recall) {
 	   }
 
 		if(s != '' && s.indexOf('ajaxerror') != -1) {
-			//evalscript(s);
 			evaled = true;
 		}
+		
 		if(showidclass) {
 			document.getElementById(showid).className = showidclass;
 		}
@@ -1349,7 +1350,7 @@ function ajaxpost(formid, showid, waitid, showidclass, submitbtn, recall) {
 		} else {
 			eval(recall);
 		}
-		if(!evaled) evalscript(s);
+		//if(!evaled) evalscript(s);
 		ajaxframe.loading = 0;
 		document.getElementById('append_parent').removeChild(ajaxframe.parentNode);
 	};

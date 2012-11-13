@@ -147,9 +147,11 @@ class uc_note {
 		if(!API_SYNLOGIN) {
 			return API_RETURN_FORBIDDEN;
 		}
-
-		if(!Keke_user_login::instance()->logged_in()){
-			//最新登录时间
+	    
+		//判断这个用户在keke系统中有没有激活
+		$res = Keke_user_register::instance('keke')->check_uid($syn_uid);
+		//最新登录时间
+		if($res ==1){
 			Keke_user_login::instance()->complete_login($syn_uid, $syn_username);
 		}
 		

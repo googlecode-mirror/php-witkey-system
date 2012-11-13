@@ -59,9 +59,11 @@ class User {
 	}
 
 	function deluser($uids) {
-		$user = L::loadClass('ucuser', 'user');
-		$user->delUserByIds($uids);
-
+		
+		$uid_arr = implode(',', $uids);
+		foreach ($uid_arr as $v){
+			Keke_user::instance('keke')->del_user($v);
+		}
 		return new ApiResponse(1);
 	}
 
@@ -70,7 +72,7 @@ class User {
 		list($winduid, $windid, $windpwd) = explode("\t", $this->base->strcode($user, false));
 		header('P3P: CP="CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR"');
 		$username = DB::select('username')->from('witkey_member')->where("uid='$winduid'")->get_count()->execute();
-	 	Keke_user_login::instance()->complete_login($winduid, $username);
+		Keke_user_login::instance()->complete_login($winduid, $username);
 	    return new ApiResponse(1);
 	}
 

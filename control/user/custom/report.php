@@ -32,7 +32,7 @@ class Control_user_custom_report extends Control_user{
 		extract($this->get_url($base_uri));
 		//我收到的举报
 		$my = $_GET['my'];
-		$my&&$_SESSION['uid'] and $where .= " and to_uid = '1'".$_SESSION['uid'] or $where .=" and uid = ".$_SESSION['uid'];
+		//$my&&$_SESSION['uid'] and $where .= " and to_uid = '1'".$_SESSION['uid'] or $where .=" and uid = ".$_SESSION['uid'];
 		$my and $base_uri = BASE_URL.'/index.php/user/custom_report?my=1';
 		//搜索条件
 		$sear_key = $_GET['search_key'];

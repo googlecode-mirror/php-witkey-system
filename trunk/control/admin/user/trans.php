@@ -124,13 +124,9 @@ class Control_admin_user_trans extends Control_admin{
 		extract($this->get_url($base_uri));
 		//处理的情况
 		$trans_status = $this->_trans_status;
-		//获取后面的参数type，包括report，rights，complaint
-		if(isset($_GET['type'])){
-			$type = $_GET['type'];
-		}elseif(!isset($type)){
-			$type = 'report';
-		}
+		
 		$rp_type =  keke_report_class::get_report_type();
+		
 		$where .= " and  obj = 'product' ";
 		//查询各种类型下的数据
 		$data_info = Model::factory('witkey_report')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
@@ -167,13 +163,9 @@ class Control_admin_user_trans extends Control_admin{
 		extract($this->get_url($base_uri));
 		//处理的情况
 		$trans_status = $this->_trans_status;
-		//获取后面的参数type，包括report，rights，complaint
-		if(isset($_GET['type'])){
-			$type = $_GET['type'];
-		}elseif(!isset($type)){
-			$type = 'report';
-		}
+		
 		$rp_type =  keke_report_class::get_report_type();
+		
 		$where .= " and  obj = 'seller' ";
 		//查询各种类型下的数据
 		$data_info = Model::factory('witkey_report')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']);

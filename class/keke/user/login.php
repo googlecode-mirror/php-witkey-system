@@ -74,12 +74,7 @@ abstract class Keke_user_login   {
 	}
  	
 	function set_pwd($pwd){
-		//如果密码是32位的就不用加密了
-		if(strlen($pwd)==32){
-			$this->_pwd = $pwd;
-		}else{
-			$this->_pwd = md5($pwd);
-		}
+		$this->_pwd = $pwd;
 		return $this;
 	}
 	/**

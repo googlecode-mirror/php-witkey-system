@@ -2,16 +2,16 @@
 <div class="page_title">
     <h1>{$_lang['trans_rights']}</h1>
     <div class="tool">
-    	<a href="{BASE_URL}/index.php/admin/user_trans" {if $obj == 'work'} class="here" {/if}>稿件举报</a>
-		<a href="{BASE_URL}/index.php/admin/user_trans/product" {if $obj == 'product'} class="here" {/if}>商品举报</a>
-		<a href="{BASE_URL}/index.php/admin/user_trans/seller" {if $obj == 'seller'} class="here" {/if}>店铺举报</a>
+    	<a href="{BASE_URL}/index.php/admin/user_trans" {if $_K['action'] == 'index'} class="here" {/if}>稿件举报</a>
+		<a href="{BASE_URL}/index.php/admin/user_trans/product" {if $_K['action'] == 'product'} class="here" {/if}>商品举报</a>
+		<a href="{BASE_URL}/index.php/admin/user_trans/seller" {if $_K['action'] == 'seller'} class="here" {/if}>店铺举报</a>
     	{loop $action_arr $k $v}
 		  <a href="{BASE_URL}/index.php/admin/user_trans/$k" {if $_K['action']==$k} class="here"{/if}>{$v['1']}{$_lang['list']}</a>
 		{/loop}
     </div>
 </div>
 <div class="box search p_relative">
-<form class="detail" action="{BASE_URL}/index.php/admin/user_trans/$_K[action]" method="get" id="frm_user_search">
+<form class="detail" action="{BASE_URL}/index.php/admin/user_trans/$_K['action']" method="get" id="frm_user_search">
    <input type="hidden" value="{$page}" name="page">
 <table cellspacing="0" cellpadding="0">
 	<tbody>
@@ -62,14 +62,14 @@
        <tr class="item">
          <td class="td25"><input type="checkbox" name="ckb[]" class="checkbox" value="{$v['report_id']}">{$v['report_id']}</td>
 		 <td>
-		 	{if $v['obj']=='task'||$v['obj']=='work'}<!--任务、稿件-->
+		 	{if $v['obj']=='work'}<!--稿件-->
 				<a href="{BASE_URL}/index.php/task/{$v['origin_id']}" title="{$v['report_desc']}" target="_blank">
 			{elseif $v['obj']=='product'}<!--商品-->
 				<a href="{BASE_URL}/index.php/service/{$v['obj_id']}" title="{$v['report_desc']}" target="_blank">
 			{elseif $v['obj']=='seller'}<!--商家-->
 				<a href="{BASE_URL}/index.php/space/{$v['to_uid']}" title="{$v['report_desc']}" target="_blank">
 			{/if}
-			<!--{eval echo keke::cutstr($v['report_desc'],40);}--></a>
+			{cutstr($v['report_desc'],40)}</a>
 		</td>
 		<td>
 			{$rp_type[$v['report_type']]}
@@ -110,11 +110,5 @@
   </form>
 </div>
  
- <script type="text/javascript">
-	$(function(){
-		$(".control").add(".title").click(function(){
-			$(".tip").children().not($(".control,.title")).slideToggle('800');
-		});
-	})
-</script>
+
 <!--{include control/admin/tpl/admin_footer}-->

@@ -51,7 +51,7 @@ class Control_admin_user_trans extends Control_admin{
 		 
 		$rp_type =  keke_report_class::get_report_type();
 		
-		$where .= " and  obj in ('task','work') ";
+		$where .= " and  obj = 'work' ";
 		
 		//查询各种类型下的数据
 		$data_info = Model::factory('witkey_report')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
@@ -62,7 +62,6 @@ class Control_admin_user_trans extends Control_admin{
 		//所属的类别，商品，任务，稿件，订单
 		$trans_object = $this->_trans_object;
 // 		var_dump($trans_object);die;
-		$obj = 'work';
 		require keke_tpl::template('control/admin/tpl/user/trans');
 	}
 	/**
@@ -138,7 +137,6 @@ class Control_admin_user_trans extends Control_admin{
 		$trans_object = $this->_trans_object;
 		//var_dump($data_info);die;
 		
-		$obj = 'product';
 		require keke_tpl::template('control/admin/tpl/user/trans');
 	}
 	
@@ -176,7 +174,6 @@ class Control_admin_user_trans extends Control_admin{
 		//所属的类别，商品，任务，稿件，订单
 		$trans_object = $this->_trans_object;
 		//var_dump($trans_object);die;
-		$obj = 'seller';
 		require keke_tpl::template('control/admin/tpl/user/trans');
 	}
 	/**

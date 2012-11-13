@@ -9,7 +9,7 @@ class Control_admin_user_add extends Control_admin{
 		if ($uid){
 			$where .= ' uid='.$uid;
 			//获取用户信息
-			$edit_arr = Keke_user_class::get_user_info($uid);
+			$edit_arr = Keke_user::instance()->get_user_info($uid);
 			//查询shop表的shop方便推荐
 			$shop_open = DB::select('shop_id')->from('witkey_shop')->where($where)->get_count()->execute();
 		}
@@ -23,8 +23,8 @@ class Control_admin_user_add extends Control_admin{
 	function action_checkusername(){
 		$check_username = $_GET['check_username'];
 		if (isset ( $check_username ) && ! empty ( $check_username )) {
-			$res =  Keke_user_class::check_username ( $check_username );
-			CHARSET == 'gbk' and $res = Keke::gbktoutf($res);
+			$res =  Keke_user_register::instance()->check_username ( $check_username );
+			CHARSET == 'gbk' and $res = Keke::gbktoutf(Keke_user_register::$_status[$res]);
 			echo  $res;
 // 			die ();
 		}

@@ -422,7 +422,7 @@ class keke_loaddata_class {
 		$art_arr = $art_obj->query('*', 5*60);
 		
 		$temp_arr = array ();
-		$cat_arr = keke_admin_class::get_article_cate ();
+		$cat_arr = Keke_admin::get_article_cate ();
 		foreach ( $art_arr as $v ) {
 			$a = array ();
 			$a ['id'] = $v ['art_id'];

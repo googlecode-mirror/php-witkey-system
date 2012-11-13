@@ -138,7 +138,7 @@ class usercontrol {
 	}
 
 	function checkEmail($email, $username = '') {
-		if (empty($email) || !ereg("^[-a-zA-Z0-9_\.]+\@([0-9A-Za-z][0-9A-Za-z-]+\.)+[A-Za-z]{2,5}$", $email)) {
+		if (empty($email) || !Keke_valid::email($email)) {
 			return UC_USER_REG_ILLEGAL_EMAIL;
 		}
 		if ($this->user->check_email($email, $username)) {

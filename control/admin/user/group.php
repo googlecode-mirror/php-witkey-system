@@ -16,7 +16,7 @@ class Control_admin_user_group extends Control_admin{
 	function action_add(){
 		global $_K,$_lang;
 		//一级标题
-		$menus_arr = keke_admin_class::get_admin_menu();
+		$menus_arr = Keke_admin::get_admin_menu();
  
 		//权限中加黑部分语言包
 		$menu_arr = array (

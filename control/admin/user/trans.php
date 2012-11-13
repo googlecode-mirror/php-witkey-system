@@ -128,9 +128,9 @@ class Control_admin_user_trans extends Control_admin{
 		//对应的信息
 		$report_info = keke_report_class::get_report_info ( $report_id );
 		//举报方信息
-		$user_info = keke_user_class::get_user_info ( $report_info ['uid'] ); 
+		$user_info = Keke_user::instance()->get_user_info ( $report_info ['uid'] ); 
 		//对方信息
-		$to_userinfo = keke_user_class::get_user_info ( $report_info ['to_uid'] );
+		$to_userinfo = Keke_user::instance()->get_user_info ( $report_info ['to_uid'] );
 		//获取process页面的信息
 		$obj_info = keke_report_class::obj_info_init ( $report_info,$user_info);
 		//所属的类别，商品，任务，稿件，订单

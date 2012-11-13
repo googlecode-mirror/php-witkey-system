@@ -36,7 +36,7 @@ class Control_admin_tool_log extends Control_admin{
 		//分页数据
 		$pages = $data_info['pages'];
 		//用户组
-		$group_arr = keke_admin_class::get_user_group ();
+		$group_arr = Keke_admin::get_user_group ();
 		
 		require Keke_tpl::template('control/admin/tpl/tool/log');
 		

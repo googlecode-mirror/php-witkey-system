@@ -30,7 +30,7 @@ class Sys_finance {
 		global $user_info;
 	
 		if ($user_info ['uid'] != $uid) {
-			$user_info = keke_user_class::get_user_info ( $uid );
+			$user_info = Keke_user::instance()->get_user_info ( $uid );
 		}
 		if ($user_info) {
 			try {

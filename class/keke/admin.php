@@ -5,7 +5,7 @@
  * @Modify by Chen
  */
 keke_lang_class::load_lang_class('keke_admin_class');
-class keke_admin_class {
+class Keke_admin {
 	public $_uid;
 	public function __construct() {
 		$_SESSION ['uid'] and $this->_uid = $_SESSION ['uid'];
@@ -223,14 +223,16 @@ class keke_admin_class {
 				die();
 			}
 		
-			$user_info = keke_user_class::user_login ( $username, $password ); //用户信息
+			$user_info = Keke_user_login::instance('keke')->set_username($username)
+						 ->set_pwd($password)->login();
+			//( $username, $password ); //用户信息
 			$hash = Keke::formhash();
-			if ($user_info == - 1) {
+			if ($user_info === - 1) {
 				$_SESSION ['allow_times'] -= 1;
 				-- $allow_times == 0 and $this->set_login_limit_time ( '1' );
 				$kekezu->echojson ( $_lang['username_input_error'], "6", array('times'=>$allow_times, 'formhash'=>$hash) );
 				die ();
-			} else if ($user_info == - 2) {
+			} else if ($user_info === - 2) {
 				$_SESSION ['allow_times'] -= 1;
 				-- $allow_times == 0 and $this->set_login_limit_time ( '1' );
 				$kekezu->echojson ( $_lang['password_input_error'], "5", array('times'=>$allow_times, 'formhash'=>$hash) );
@@ -242,7 +244,7 @@ class keke_admin_class {
 				$kekezu->echojson ( $_lang['login_fail'], "4", array('times'=>$allow_times, 'formhash'=>$hash) );
 				die ();
 			} else {  
-				$user_info = keke_user_class::get_user_info( $user_info['uid'] ); //获取用户信息
+				$user_info = Keke_user::instance()->get_user_info( $user_info ); //获取用户信息
 			}
 			$roles = self::get_user_roles($user_info['uid']);
 		 
@@ -257,7 +259,7 @@ class keke_admin_class {
 				$kekezu->echojson ( $_lang['no_rights_login_backstage'], "2", array('times'=>$allow_times, 'formhash'=>$hash) );
 				die ();
 			} else {
-				$_SESSION ['admin_uid'] = $_SESSION ['uid'] = $user_info ['uid'];
+				$_SESSION ['admin_uid'] =  $user_info ['uid'];
 				$_SESSION ['admin_username'] = $user_info ['username'];
 				$_SESSION['admin_gid']  = $user_info['group_id'];
 				Keke::admin_system_log ( $user_info ['username'] . date ( 'Y-m-d H:i:s', time () ) . $_lang['login_system'] );

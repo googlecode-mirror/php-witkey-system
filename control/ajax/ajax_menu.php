@@ -10,7 +10,7 @@
 
 switch ($ajax) {
 	case "user_detail" :
-		$user_info 		= keke_user_class::get_user_info ( $user_id );
+		$user_info 		= Keke_user::instance()->get_user_info ( $user_id );
 		$take_num  		= intval($user_info['take_num']);
 		$accepted_num   = intval($user_info['accepted_num']);
 		$auth_info	    = keke_auth_fac_class::get_submit_auth_record ( $user_id, 1 );

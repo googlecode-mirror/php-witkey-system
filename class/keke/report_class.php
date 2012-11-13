@@ -121,8 +121,8 @@ abstract class keke_report_class {
 				$re_obj = "<a href=\"" . $_K ['siteurl'] . "/index.php?do=task&task_id=" . $obj_info ['origin_id'] . "&view=list_work&work_id=" . $obj_info ['obj_id'] . "\">" . $obj_info ['origin_title'] . "</a>";
 				break;
 			case "product" : //…Ã∆∑
-				$obj_info = dbfactory::get_one ( sprintf ( " select service_id origin_id,uid origin_uid,model_id,title origin_title from %switkey_service where service_id='%d'", TABLEPRE, $report_info ['obj_id'] ) );
-				$re_obj = "<a href=\"" . $_K ['siteurl'] . "/shop.php?do=service&service_id=" . $obj_info ['origin_id'] . "\">" . $obj_info ['origin_title'] . "</a>";
+				$obj_info = dbfactory::get_one ( sprintf ( " select sid origin_id,uid origin_uid,model_id,title origin_title from %switkey_service where sid='%d'", TABLEPRE, $report_info ['obj_id'] ) );
+				$re_obj = "<a href=\"" . $_K ['siteurl'] . "/shop.php?do=service&sid=" . $obj_info ['origin_id'] . "\">" . $obj_info ['origin_title'] . "</a>";
 				break;
 			case "order" : //∂©µ•
 				$sql = " select a.obj_id obj_id,b.order_id origin_id,b.order_uid origin_uid,b.seller_uid obj_uid,

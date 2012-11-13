@@ -72,6 +72,8 @@ class Keke_tpl {
 		$template = preg_replace ( "/{c\:(.+?)(,?)(\d?)\}/ie", "keke_curren_class::currtags('\\1','\\3')", $template );
 		//头像处理
 		$template = preg_replace ( "/\{avatar\((.+?),(.+?)\)\}/ie", "Keke_tpl::avatar('\\1','\\2')", $template );
+		//文字裁剪
+		$template = preg_replace ( "/\{cutstr\((.+?),(.+?)\)\}/ie", "Keke_tpl::cutstr('\\1','\\2')", $template );
 		//PHP代码
 		$template = preg_replace ( "/\<\!\-\-\{eval\s+(.+?)\s*\}\-\-\>/ies", "Keke_tpl::evaltags('\\1')", $template );
 		//开始处理
@@ -191,7 +193,15 @@ class Keke_tpl {
 	static function avatar($uid, $size) {
 		return '<!--{eval echo "<img src=".Keke_user::instance()->get_avatar('.$uid.','.$size.')." >"}-->';
 	}
-	
+	/**
+	 * 文字裁剪
+	 * @param string $string
+	 * @param int $length
+	 * @return string
+	 */
+	static function cutstr($string,$length){
+		return '<!--{eval echo Keke::cutstr('.$string.','.$length.')}-->';
+	}
 	static function stripvtags($expr, $statement = '') {
 		$res = preg_replace ( "/\<\?\=(\\\$.+?)\?\>/s", "\\1", $expr );
 		$expr = str_replace ( "\\\"", "\"", $res );

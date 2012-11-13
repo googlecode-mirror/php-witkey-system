@@ -192,7 +192,7 @@ class Keke_base {
 	}
 	static function filter_xss() {
 		global $_lang;
-		keke_lang_class::loadlang ( 'public', 'public' );
+		Keke_lang::loadlang ( 'public', 'public' );
 		$temp = strtoupper ( urldecode ( urldecode ( $_SERVER ['REQUEST_URI'] ) ) );
 		
 		if (strpos ( $temp, '<' ) !== false || strpos ( $temp, '>' ) !== false || strpos ( $temp, '"' ) !== false || strpos ( $temp, 'CONTENT-TRANSFER-ENCODING' ) !== false) {

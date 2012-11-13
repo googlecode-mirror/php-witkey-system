@@ -7,8 +7,8 @@ defined ( 'IN_KEKE' )&&defined('ISWAP')&&ISWAP or kekezu::echojson ($wap_msg, 0)
 
 
  //ÓïÑÔ°ü
-keke_lang_class::package_init("task");
-keke_lang_class::loadlang($do);
+Keke_lang::package_init("task");
+Keke_lang::loadlang($do);
 $pub_mode='professional';
 
 $model_list = kekezu::get_table_data ( '*', 'witkey_model', " model_type = 'task' and model_status='1'", 'model_id asc ', '', '', 'model_id', 3600 );

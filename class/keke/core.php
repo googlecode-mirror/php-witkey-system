@@ -239,7 +239,7 @@ class Keke_core extends Keke_base {
 	}
 	
 	static function lang($key) {
-		return keke_lang_class::lang ( $key );
+		return Keke_lang::lang ( $key );
 	}
 	
 	// 获取用户最后操作时间
@@ -345,7 +345,7 @@ class Keke extends Keke_core {
 	}
 	function __construct() {
 		$this->init ();
-		keke_lang_class::loadlang ( 'public', 'public' );
+		Keke_lang::loadlang ( 'public', 'public' );
 	}
 	
 	function init() {
@@ -524,8 +524,8 @@ class Keke extends Keke_core {
 	}
 	//初始化语言
 	function init_lang() {
-		Keke::$_lang_list = keke_lang_class::lang_type ();
-		Keke::$_lang = keke_lang_class::get_lang ();
+		Keke::$_lang_list = Keke_lang::lang_type ();
+		Keke::$_lang = Keke_lang::get_lang ();
 	}
 	//初始化货币
 	function init_curr() {
@@ -535,7 +535,7 @@ class Keke extends Keke_core {
 			Keke::$_currency = Keke::$_sys_config ['currency'];
 			$_SESSION ['currency'] = Keke::$_sys_config ['currency'];
 		}
-		Keke::$_curr_list = keke_lang_class::get_curr_list ();
+		Keke::$_curr_list = Keke_lang::get_curr_list ();
 	}
 	/**
 	 * 初始化任务model,按需加载
@@ -694,5 +694,5 @@ file_exists ( $ipath ) == true or header ( "Location: install/index.php" );
 
 $kekezu = Keke::get_instance ();
 
-keke_lang_class::load_lang_class ( 'keke_core_class' );
+Keke_lang::load_lang_class ( 'keke_core_class' );
 // end 

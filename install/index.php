@@ -15,7 +15,7 @@
   	define('KEKE_ROOT', dirname(INSTALL_ROOT).DIRECTORY_SEPARATOR);//根目录
   	require_once '../lib/inc/keke_base_class.php';
   	require_once '../lib/inc/keke_tpl_class.php';
-  	require_once '../lib/inc/keke_lang_class.php';
+  	require_once '../lib/inc/Keke_lang.php';
   	require_once '../lib/helper/keke_file_class.php';
   	require_once KEKE_ROOT.'config/keke_version.php';//版本信息
   	require_once KEKE_ROOT.'config/config.inc.php';//配置信息

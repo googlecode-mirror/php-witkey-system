@@ -7,7 +7,7 @@
  * @property 手机认证类
  * 
  */
-keke_lang_class::load_lang_class('keke_auth_mobile_class');
+Keke_lang::load_lang_class('keke_auth_mobile_class');
 class keke_auth_mobile_class extends keke_auth_base_class{
 	
 	public static function get_instance($auth_code='mobile') {

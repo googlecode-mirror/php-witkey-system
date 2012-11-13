@@ -9,7 +9,7 @@
 
 
 $url = "index.php?do=$do&view=$view&op=$op&msg_type=$msg_type"; 
-keke_lang_class::loadlang ( "user_message_send" );
+Keke_lang::loadlang ( "user_message_send" );
 if (isset($formhash)&&Keke::submitcheck($formhash)){
 	$msg_obj = new Keke_witkey_msg_class ();
 	$space_obj = new Keke_witkey_space_class ();

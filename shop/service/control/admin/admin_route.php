@@ -7,8 +7,8 @@
  */
 defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 //”Ô—‘∞¸≥ı ºªØ
-keke_lang_class::package_init ( "shop" );
-keke_lang_class::loadlang("service_process");
+Keke_lang::package_init ( "shop" );
+Keke_lang::loadlang("service_process");
 
 $views = array ('config','list', 'order', 'op','process' ,'edit');
 

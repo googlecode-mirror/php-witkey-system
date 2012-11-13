@@ -10,7 +10,7 @@
 
 defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 $member_id = intval ( $member_id );
-keke_lang_class::package_init($do);
+Keke_lang::package_init($do);
 $member_info = Keke::get_user_info($member_id);
 $e_route_arr = array ("index", "statistic", "goods","member","intr","case","task" );//只能是一维或者是索引数组,不然对首页的幻灯片的(显示,更改)有影响
 $e_banner_keys = array('index'=>'sy','intr'=>'gsjs','member'=>'qycy','task'=>'xgrw','goods'=>'spzs','case'=>'cgal','statistic'=>'gstj');
@@ -95,8 +95,8 @@ if ($p_shop_info['shop_backstyle'] ){//空间背景图片的显示
   setcookie("ip",1,time()+3600*24,COOKIE_PATH);
  }
 
-keke_lang_class::package_init("space");
-keke_lang_class::loadlang("{$type}_{$view}");
+Keke_lang::package_init("space");
+Keke_lang::loadlang("{$type}_{$view}");
 
  $p_shop_nav = array(
  		"index"=>$_lang['home'],

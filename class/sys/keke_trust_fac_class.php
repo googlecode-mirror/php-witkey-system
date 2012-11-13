@@ -1,5 +1,5 @@
 <?php
-keke_lang_class::load_lang_class('keke_trust_fac_class');
+Keke_lang::load_lang_class('keke_trust_fac_class');
 class keke_trust_fac_class {
 	public $_action;//当前动作
 	public $_trust_type;//当前担保类型

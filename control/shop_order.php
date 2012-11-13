@@ -11,8 +11,8 @@ defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 
 Keke::check_login ();
 $nav_active_index = 'shop';
-keke_lang_class::package_init ( "shop" );
-keke_lang_class::loadlang ( "info");
+Keke_lang::package_init ( "shop" );
+Keke_lang::loadlang ( "info");
 $sid and $sid = intval($_GET['sid']);
 
 if ($sid) {

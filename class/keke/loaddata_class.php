@@ -1,5 +1,5 @@
 <?php
-keke_lang_class::load_lang_class('keke_loaddata_class');
+Keke_lang::load_lang_class('keke_loaddata_class');
 class keke_loaddata_class {
 	/**
 	 * 获取标签列表

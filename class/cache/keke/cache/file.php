@@ -1,5 +1,5 @@
 <?php
-// keke_lang_class::load_lang_class('file_cache_class');
+// Keke_lang::load_lang_class('file_cache_class');
 // require_once 'acache_class.php';
 class Keke_cache_file extends Keke_cache {
 

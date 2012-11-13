@@ -5,7 +5,7 @@
  * @version v 2.0
  * 2010-5-28обнГ16:59:00
  */
-keke_lang_class::load_lang_class('keke_shop_class');
+Keke_lang::load_lang_class('keke_shop_class');
 class keke_shop_class {
 	
 	/**

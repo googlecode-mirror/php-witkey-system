@@ -7,7 +7,7 @@
  *
  *
  */
-keke_lang_class::load_lang_class ( 'sys_finance' );
+Keke_lang::load_lang_class ( 'sys_finance' );
 class Sys_finance {
 	public static $_basic_config;
 	// ½ð¶î

@@ -7,8 +7,8 @@
 defined ( 'IN_KEKE' ) or exit('Access Denied');
 Keke::check_login();
 
-keke_lang_class::package_init("shop");
-keke_lang_class::loadlang("release");
+Keke_lang::package_init("shop");
+Keke_lang::loadlang("release");
 $page_title= $_lang['pub_witkey_service'] . $_K ['html_title'];
 
 $model_list = Keke::get_table_data ( '*', 'witkey_model', " model_type = 'shop' and model_status='1'", 'model_id asc ', '', '', 'model_id', 3600 );

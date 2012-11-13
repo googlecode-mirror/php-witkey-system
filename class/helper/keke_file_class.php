@@ -405,7 +405,7 @@ class keke_file_class {
 	 * ¸½¼þÏÂÔØ
 	 */
 	static function file_down($file_name, $file_path) {
-		keke_lang_class::load_lang_class ( 'keke_file_class' );
+		Keke_lang::load_lang_class ( 'keke_file_class' );
 		global $_lang;
 		$filename = S_ROOT . $file_path;
 		if (! file_exists ( $filename ) || strrpos ( $filename, ".php" ) !== false) {

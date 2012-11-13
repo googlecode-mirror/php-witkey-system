@@ -8,8 +8,8 @@
  */
 
 defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
-keke_lang_class::package_init("shop");
-keke_lang_class::loadlang("info");
+Keke_lang::package_init("shop");
+Keke_lang::loadlang("info");
 $nav_active_index = "shop"; 
 $sid=intval($_GET['sid']); 
 if ($sid) { 
@@ -47,9 +47,9 @@ if ($sid) {
 	/** 同类任务*/
 	$task_list = keke_shop_class::get_task_info($service_info['indus_id']);
 	/** 语言包**/
-	keke_lang_class::package_init("shop");
-	keke_lang_class::loadlang($model_info ['model_dir']);
-	keke_lang_class::loadlang("service_info");
+	Keke_lang::package_init("shop");
+	Keke_lang::loadlang($model_info ['model_dir']);
+	Keke_lang::loadlang("service_info");
 } else {
 	
 	Keke::show_msg ( $_lang['operate_notice'], "index.php?do=index", '1', $_lang['param_error'], 'error' );

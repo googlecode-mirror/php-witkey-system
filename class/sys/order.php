@@ -2,7 +2,7 @@
 /**
  * ∂©µ•¥¶¿Ì
  */
-keke_lang_class::load_lang_class ( 'keke_order_class' );
+Keke_lang::load_lang_class ( 'keke_order_class' );
 class Sys_order {
 	
 	/**

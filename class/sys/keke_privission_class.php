@@ -6,7 +6,7 @@
  * @desc 权限控制基类
  * @version 2011-08-25 09:27:34
  */
-keke_lang_class::load_lang_class('keke_privission_class');
+Keke_lang::load_lang_class('keke_privission_class');
 abstract class keke_privission_class {
 	public $_model_id;
 	

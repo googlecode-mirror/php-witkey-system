@@ -2,6 +2,9 @@
 <div class="page_title">
     <h1>{$_lang['trans_rights']}</h1>
     <div class="tool">
+    	<a href="{BASE_URL}/index.php/admin/user_trans" {if $obj == 'work'} class="here" {/if}>稿件举报</a>
+		<a href="{BASE_URL}/index.php/admin/user_trans/product" {if $obj == 'product'} class="here" {/if}>商品举报</a>
+		<a href="{BASE_URL}/index.php/admin/user_trans/seller" {if $obj == 'seller'} class="here" {/if}>店铺举报</a>
     	{loop $action_arr $k $v}
 		  <a href="{BASE_URL}/index.php/admin/user_trans/$k" {if $_K['action']==$k} class="here"{/if}>{$v['1']}{$_lang['list']}</a>
 		{/loop}

@@ -5,7 +5,7 @@
 <title>keke admin</title>
 </head>
 <link href="tpl/css/admin_management.css" rel="stylesheet" type="text/css" />
-<link href="../../static/css/button/stylesheets/css3buttons.css" rel="stylesheet" type="text/css" />
+<link href="../static/css/button/stylesheets/css3buttons.css" rel="stylesheet" type="text/css" />
 <link title="style1" href="tpl/skin/default/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="../../static/js/jquery.js"></script>
 <body style="margin:0">
@@ -26,9 +26,12 @@
 
 
 <script type="text/javascript" src="../../static/js/system/valid.js"></script>
-<script type="text/javascript" src="../../static/js/artdialog/artDialog.js"></script>
+<!--<script type="text/javascript" src="../../static/js/artdialog/artDialog.js"></script>
 <script type="text/javascript" src="../../static/js/artdialog/jquery.artDialog.js?skin=default"></script>
-<script type="text/javascript" src="../../static/js/artdialog/artDialog.iframeTools.source.js"></script>
+<script type="text/javascript" src="../../static/js/artdialog/artDialog.iframeTools.source.js"></script>-->
+
+<script src="{BASE_URL}/static/js/artdialog/artDialog.js?skin=default" ></script>
+<script src="{BASE_URL}/static/js/artdialog/plugins/iframeTools.js"  ></script>
 <script type="text/javascript">
 	/**unlock screen**/
 document.getElementById("unlock_pwd").onkeydown = function(event){

@@ -43,7 +43,7 @@ abstract class keke_report_class {
 	public function __construct($report_id, $report_info = null, $obj_info = null, $user_info = null, $to_userinfo = null) {
 		
 		$report_info or $report_info = $this->get_report_info ( $report_id ); //获取交易维权信息
-		$this->_msg_obj = new keke_msg_class ();
+		$this->_msg_obj = new Keke_msg ();
 		$this->_report_info = $report_info;
 		$this->_report_id = $report_id;
 		$this->_report_status = $report_info ['report_status'];
@@ -146,11 +146,16 @@ abstract class keke_report_class {
 	 */
 	public static function accept_notify($report_info, $user_info, $re_obj) {
 		global $_lang;
-		$msg_obj = new keke_msg_class ();
+		
 		$trans_name = self::get_transrights_name ( $report_info ['report_type'] ); //交易维权中文
+		
 		$re_type = self::get_transrights_obj ( $report_info ['obj'] ); //交易维权对象中文
+		
 		$result = array ($_lang ['order_rights_id'] => $report_info ['report_id'], $_lang ['order_rights_name'] => $trans_name, $_lang ['order_rights_type'] => $re_type, $_lang ['order_rights_object'] => $re_obj, $_lang ['action'] => $_lang ['attention_follow'] );
-		$msg_obj->send_message ( $user_info ['uid'], $user_info ['username'], 'transrights_accept', $trans_name . '受理通知', $result, $user_info ['email'] );
+		
+		
+		Keke_msg::instance()->set_tpl('transrights_accept')->set_var($result)->to_user($user_info ['uid'])->send();
+		
 	}
 	/**
 	 * 举报(投诉)处理结果 提示用户
@@ -162,7 +167,7 @@ abstract class keke_report_class {
 	 */
 	public static function process_notify($process_type = 'pass', $report_info, $user_info, $to_userinfo, $process_result) {
 		global $_lang;
-		$msg_obj = new keke_msg_class ();
+		$msg_obj = new Keke_msg ();
 		if ($report_info ['report_type'] != '1') {
 			$trans_name = self::get_transrights_name ( $report_info ['report_type'] ); //交易维权中文
 			$re_type = self::get_transrights_obj ( $report_info ['obj'] ); //交易维权对象中文
@@ -214,7 +219,7 @@ abstract class keke_report_class {
 						break;
 				}
 				if ($res) { /*冻结时通知用户*/
-					$msg_obj = new keke_msg_class ();
+					$msg_obj = new Keke_msg ();
 					$result = array ($_lang ['launch_people'] => $_lang ['you'], $_lang ['order_rights_object'] => $re_obj, $_lang ['order_rights_type'] => $re_type, $_lang ['submit_reason'] => $desc );
 					$result2 = array ($_lang ['order_rights_id'] => $report_id, $_lang ['order_rights_name'] => $_lang ['rights'], $_lang ['order_rights_type'] => $re_type, $_lang ['order_rights_object'] => $re_obj, $_lang ['action'] => $_lang ['freeze'] );
 					$msg_obj->send_message ( $user_info ['uid'], $user_info ['username'], 'transrights_freeze', $re_type . $_lang ['freeze_notice'], $result, $user_info ['email'] );
@@ -396,7 +401,7 @@ abstract class keke_report_class {
 	 */
 	public static function change_status($report_id, $status, $op_result = null, $process_result = null) {
 		$sql = sprintf ( "update %switkey_report set report_status= '%d',op_uid='%d',op_username='%s',op_result='%s',op_time='%d'  where report_id='%d'", TABLEPRE, $status, $op_result ['op_uid'], $op_result ['op_username'], $process_result, $op_result ['op_time'], $report_id );
-		return dbfactory::execute ( $sql );
+		return Dbfactory::execute ( $sql );
 	}
 	/**
 	 * 举报类型
@@ -542,13 +547,7 @@ abstract class keke_report_class {
 			return $type_arr;
 		}
 	}
-	/**
-	 * 获取交易维权类型
-	 */
-	public static function get_transrights_type() {
-		global $_lang;
-		return array ( "report" => array ("2", $_lang ['report'] ), "complaint" => array ("3", $_lang ['complaints'] ) );
-	}
+	 
 	/**
 	 * 获取交易维权对象
 	 */

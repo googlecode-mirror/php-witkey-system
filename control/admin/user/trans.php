@@ -6,20 +6,19 @@
  * 2012-10-9 下午17：30
  */
 class Control_admin_user_trans extends Control_admin{
-	private $_action_arr ;
+	 
 	private $_trans_status;
 	private $_trans_object;
 	
 	function __construct($request, $response){
 		parent::__construct($request, $response);
-		//查询举报，维权，投诉类型
-		$this->_action_arr  = keke_report_class::get_transrights_type();
-		//处理的情况
+		//状态
 		$this->_trans_status =  keke_report_class::get_transrights_status();
+		//对象
 		$this->_trans_object = keke_report_class::get_transrights_obj();
 	}
 	
-	function action_index($type=NULL){
+	function action_index($type='work'){
 		global $_K,$_lang;
 		//需要在列表中显示的字段
 		$fields = '`report_id`,`origin_id`,`obj`,`username`,`to_username`,`report_file`,`on_time`,`report_status`,`report_type`,`op_uid`,`op_username`,`report_desc`';
@@ -35,23 +34,12 @@ class Control_admin_user_trans extends Control_admin{
 		$this->_default_ord_field = 'on_time';
 		//获取分页条件
 		extract($this->get_url($base_uri));
-	 
-	 
 		//处理的情况
 		$trans_status = $this->_trans_status;  
-		
-		//var_dump($trans_status);
-		//获取后面的参数type，包括report，rights，complaint
-		if(isset($_GET['type'])){
-			$type = $_GET['type'];
-		}elseif(!isset($type)){
-			$type = 'report';
-		}
-		 
 		 
 		$rp_type =  keke_report_class::get_report_type();
 		
-		$where .= " and  obj = 'work' ";
+		$where .= " and  obj = '$type' ";
 		
 		//查询各种类型下的数据
 		$data_info = Model::factory('witkey_report')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
@@ -61,22 +49,14 @@ class Control_admin_user_trans extends Control_admin{
 		$pages = $data_info['pages'];
 		//所属的类别，商品，任务，稿件，订单
 		$trans_object = $this->_trans_object;
-// 		var_dump($trans_object);die;
+
 		require keke_tpl::template('control/admin/tpl/user/trans');
 	}
-	/**
-	 * 举报只针对稿件有效，不针对任务
-	 */
-	function action_report(){
-	 	//$this->action_index('report');
-	}
- 
-	/**
+ 	/**
 	 * 用户建议，客服可以回复
 	 */
 	function action_complaint(){
 		global $_K,$_lang;
-		
 		
 		$fields = '`report_id`,`obj`,`username`,`on_time`,`op_uid`,`op_username`,`report_desc`,`report_status`,`op_result`';
 		
@@ -90,7 +70,7 @@ class Control_admin_user_trans extends Control_admin{
 		$this->_default_ord_field = 'on_time';
 		//获取分页条件
 		extract($this->get_url($base_uri.'/complaint'));
-		
+		$where .= " and obj = 'comment'";
 		$trans_status = $this->_trans_status;
 		//查询各种类型下的数据
 		$data_info = Model::factory('witkey_report')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
@@ -106,75 +86,14 @@ class Control_admin_user_trans extends Control_admin{
 	 * 商品举报 
 	 */
 	function  action_product(){
-		global $_K,$_lang;
-		//需要在列表中显示的字段
-		$fields = '`report_id`,`obj_id`,`obj`,`username`,`to_username`,`report_file`,`on_time`,`report_status`,`report_type`,`op_uid`,`op_username`,`report_desc`';
-		//搜索中查询的字段
-		$query_fields = array('report_id'=>$_lang['id'],'report_status'=>'当前状态','on_time'=>$_lang['time']);
-		
-		//基本uri
-		$base_uri = BASE_URL.'/index.php/admin/user_trans';
-		$del_uri = $base_uri.'/del';
-		//统计的总数，这里写出避免再查询一次
-		$count = intval($_GET['count']);
-		//默认排序字段
-		$this->_default_ord_field = 'on_time';
-		//获取分页条件
-		extract($this->get_url($base_uri));
-		//处理的情况
-		$trans_status = $this->_trans_status;
-		
-		$rp_type =  keke_report_class::get_report_type();
-		
-		$where .= " and  obj = 'product' ";
-		//查询各种类型下的数据
-		$data_info = Model::factory('witkey_report')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
-		//查询出来的数据
-		$report_list = $data_info['data'];
-		//显示分页的页数
-		$pages = $data_info['pages'];
-		//所属的类别，商品，任务，稿件，订单
-		$trans_object = $this->_trans_object;
-		//var_dump($data_info);die;
-		
-		require keke_tpl::template('control/admin/tpl/user/trans');
+		 $this->action_index('product');
 	}
 	
 	/**
 	 * 店铺举报
 	 */
-	function action_seller(){
-		global $_K,$_lang;
-		//需要在列表中显示的字段
-		$fields = '`report_id`,`to_uid`,`obj`,`username`,`to_username`,`report_file`,`on_time`,`report_status`,`report_type`,`op_uid`,`op_username`,`report_desc`';
-		//搜索中查询的字段
-		$query_fields = array('report_id'=>$_lang['id'],'report_status'=>'当前状态','on_time'=>$_lang['time']);
-		
-		//基本uri
-		$base_uri = BASE_URL.'/index.php/admin/user_trans';
-		$del_uri = $base_uri.'/del';
-		//统计的总数，这里写出避免再查询一次
-		$count = intval($_GET['count']);
-		//默认排序字段
-		$this->_default_ord_field = 'on_time';
-		//获取分页条件
-		extract($this->get_url($base_uri));
-		//处理的情况
-		$trans_status = $this->_trans_status;
-		
-		$rp_type =  keke_report_class::get_report_type();
-		
-		$where .= " and  obj = 'seller' ";
-		//查询各种类型下的数据
-		$data_info = Model::factory('witkey_report')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
-		//查询出来的数据
-		$report_list = $data_info['data'];
-		//显示分页的页数
-		$pages = $data_info['pages'];
-		//所属的类别，商品，任务，稿件，订单
-		$trans_object = $this->_trans_object;
-		//var_dump($trans_object);die;
-		require keke_tpl::template('control/admin/tpl/user/trans');
+	function action_shop(){
+		 $this->action_index('shop');
 	}
 	/**
 	 * 客服回复用建议
@@ -195,10 +114,7 @@ class Control_admin_user_trans extends Control_admin{
 		global $_K,$_lang;
 		//获取穿过来的type,用户返回对应的类型列表，如举报列表
 		$type = $_GET['type'];
-		//查询举报，维权，投诉类型
-		$action_arr = $this->_action_arr; 
-		//类型的汉字，举报，维权，投诉
-		$rep_type_chinese = $action_arr[$_GET['type']][1];
+	 
 		//获取传递过来的额report_id，用来查询对应的report表的信息
 		$report_id = $_GET['report_id'];
 		//对应的信息
@@ -234,7 +150,7 @@ class Control_admin_user_trans extends Control_admin{
 		DB::update('witkey_report')->set($columns)->value($values)->where($where)->execute();
 		
 		Keke::show_msg($_lang['submit_success'],$this->request->referrer());
-		//$this->request->redirect($this->request->referrer());
+		 
 	}
 	/**
 	 * 删除单条举报信息

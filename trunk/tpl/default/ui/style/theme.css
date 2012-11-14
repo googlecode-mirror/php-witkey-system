@@ -8938,6 +8938,68 @@ a.submit:active {
   margin-left: 5px;
   padding: 2px 10px;
 }
+.aui_outer {
+  -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  border: 1px solid #b7b7b7;
+  background: white;
+}
+.aui_titleBar {
+  width: 100%;
+  position: relative;
+}
+.aui_titleBar .aui_title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-left: 10px;
+  padding-right: 20px;
+  background: #f7f7f7;
+  border-bottom: 1px solid #b7b7b7;
+}
+.aui_titleBar a.aui_close {
+  position: absolute;
+  -webkit-border-radius: 0 0 5px 5px;
+  -moz-border-radius: 0 0 5px 5px;
+  border-radius: 0 0 5px 5px;
+  /* 背景不超出圆角 */
+
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  right: 5px;
+  top: -1px;
+  font: bold 18px/15px '微软雅黑';
+  color: #666;
+  border: 1px solid #b7b7b7;
+  display: block;
+  padding: 2px 10px;
+}
+.aui_titleBar a.aui_close:hover,
+#user .aui_titleBar a.aui_close:hover {
+  text-decoration: none;
+  background: #c00;
+  border-color: #900;
+  color: #fff;
+  -webkit-box-shadow: 0 0 5px rgba(204, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 5px rgba(204, 0, 0, 0.5);
+  box-shadow: 0 0 5px rgba(204, 0, 0, 0.5);
+}
+.aui_icon div {
+  width: 48px;
+  height: 48px;
+  margin: 10px 0 10px 10px;
+}
+.aui_footer .aui_buttons {
+  padding: 10px;
+  text-align: right !important;
+  border-top: 1px solid #DADEE5;
+  background: #f7f7f7;
+}
+.aui_footer .aui_buttons button {
+  margin-left: 10px;
+}
 /* --------------------------------------------------------------------- 
 								用户中心
 -----------------------------------------------------------------------*/
@@ -9169,7 +9231,6 @@ a.submit:active {
   height: 32px;
   font-family: "微软雅黑";
   vertical-align: middle;
-  margin: 0;
   padding: 0 10px;
 }
 #user input[type=button]:hover,
@@ -9193,7 +9254,8 @@ a.submit:active {
   box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.3), 0 1px 0 #ffffff;
 }
 #user input[type="submit"],
-#user button[type="submit"] {
+#user button[type="submit"],
+#user button.aui_state_highlight {
   color: #ffffff;
   background: #0090d2;
   border-width: 1px;
@@ -9224,11 +9286,13 @@ a.submit:active {
   padding: 0 15px;
 }
 #user input[type="submit"]:hover,
-#user button[type="submit"]:hover {
+#user button[type="submit"]:hover,
+#user button.aui_state_highlight:hover {
   background: #00a1eb;
 }
 #user input[type="submit"]:active,
-#user button[type="submit"]:active {
+#user button[type="submit"]:active,
+#user button.aui_state_highlight:active {
   -webkit-box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.3), 0 1px 0 #ffffff;
   -moz-box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.3), 0 1px 0 #ffffff;
   box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.3), 0 1px 0 #ffffff;

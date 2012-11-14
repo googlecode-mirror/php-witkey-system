@@ -8938,6 +8938,7 @@ a.submit:active {
   margin-left: 5px;
   padding: 2px 10px;
 }
+/* artDialog 弹出框 */
 .aui_outer {
   -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   -moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
@@ -8946,8 +8947,8 @@ a.submit:active {
   background: white;
 }
 .aui_titleBar {
-  width: 100%;
   position: relative;
+  width: 100%;
 }
 .aui_titleBar .aui_title {
   white-space: nowrap;
@@ -8990,6 +8991,13 @@ a.submit:active {
   width: 48px;
   height: 48px;
   margin: 10px 0 10px 10px;
+}
+.aui_content.aui_state_full {
+  display: block;
+  height: 100%;
+  margin: 0;
+  padding: 0 !important;
+  width: 100%;
 }
 .aui_footer .aui_buttons {
   padding: 10px;

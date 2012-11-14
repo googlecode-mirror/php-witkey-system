@@ -191,7 +191,7 @@ class Keke_tpl {
 	 * 头像调用
 	 */
 	static function avatar($uid, $size) {
-		return '<!--{eval echo "<img src=".Keke_user::instance()->get_avatar('.$uid.','.$size.')." >"}-->';
+		return '<!--{eval echo "<img class=pic_'.$size.' src=".Keke_user::instance()->get_avatar('.$uid.','.$size.')." >"}-->';
 	}
 	/**
 	 * 文字裁剪

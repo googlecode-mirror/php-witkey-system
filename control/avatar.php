@@ -10,7 +10,7 @@ class Control_avatar extends Controller{
 		if($a){
 			$method = $a;
 			$uid = $_GET['input'];
-			$class = new keke_useravatar_class();
+			$class = new Keke_user_avatar();
 			echo $data=$class->$method($uid);
 		}else{
 			exit('上传参数错误!');
@@ -18,12 +18,4 @@ class Control_avatar extends Controller{
 	}
 }
 
-/* if ($a) {
-	$method = $a;
-	$uid = $input;
-	$class = new keke_user_avatar_class();
-	echo $data=$class->$method($uid);	
-	exit ();
-}else{
-    exit('parame is error');
-} */
+

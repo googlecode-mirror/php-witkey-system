@@ -151,7 +151,7 @@ abstract class keke_report_class {
 		
 		$re_type = self::get_transrights_obj ( $report_info ['obj'] ); //交易维权对象中文
 		
-		$result = array ($_lang ['order_rights_id'] => $report_info ['report_id'], $_lang ['order_rights_name'] => $trans_name, $_lang ['order_rights_type'] => $re_type, $_lang ['order_rights_object'] => $re_obj, $_lang ['action'] => $_lang ['attention_follow'] );
+		$result = array ($_lang ['id'] => $report_info ['report_id'], $_lang ['title'] => $trans_name, $_lang ['type'] => $re_type, $_lang ['obj'] => $re_obj, $_lang ['action'] => $_lang ['attention_follow'] );
 		
 		
 		Keke_msg::instance()->set_tpl('transrights_accept')->set_var($result)->to_user($user_info ['uid'])->send();

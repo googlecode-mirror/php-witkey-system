@@ -31,7 +31,7 @@ $lang = array(
 	'order_pay'=>'订单付款',
 	'cancel_order'=>'取消订单',
 	'wait_pay'=>'等待付款',
-	'trate_rights'=>'交易维权',
+	 
 	'confirm_download'=>'确认作品',
 	'wait_confirm'=>'等待确认',
 	'file_download'=>'文件下载',

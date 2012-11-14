@@ -40,7 +40,7 @@ $lang = array(
 	'order_pay'=>'订单付款',
 	'cancel_order'=>'取消订单',
 	'wait_pay'=>'等待付款',
-	'trate_rights'=>'交易维权',
+	 
 	'confirm_download'=>'确认下载',
 	'wait_seller_confirm_order'=>'等待卖家确认订单',
 	'recept_order'=>'接受订单',

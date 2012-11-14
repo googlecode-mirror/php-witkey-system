@@ -28,7 +28,7 @@
 
 	
 	/* user_trans_rights.htm */
-		'trading_rights' => '交易维权',
+		 
 		'and_being' => '与被',
 		'were_no_actual_transactions_but_found_in' => '人无实际交易产生，但发现其在',
 		'there_are_irregularities_can_be' => '上有违规情况，可以通过',

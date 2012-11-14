@@ -15,7 +15,7 @@ $lang = array(
 		'credit_grade' => '信誉等级',
 		'ac' => '认证中心',
 		'bank_account' => '银行账户',
-		'trade_rights' => '交易维权',
+		
 		
 		'safe_set'=>'安全设置',
 		'accoutn_bind'=>'账号绑定',

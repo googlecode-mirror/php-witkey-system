@@ -9,10 +9,10 @@ $lang=array(
        'you_has_to_this_user'=>'您已对此用户进行过',
        'please_not_repeat_operate'=>'请勿重复操作！',
        'this_task_has_delete'=>'该任务已被删除',
-       'order_rights_id'=>'交易维权编号',
-       'order_rights_name'=>'交易维权名称',
-       'order_rights_type'=>'交易维权类型',
-       'order_rights_object'=>'交易维权对象',
+		
+       
+        
+		
        'attention_follow'=>'关注跟进',
        'process_result'=>'处理结果',
        'process_notice'=>'处理通知',

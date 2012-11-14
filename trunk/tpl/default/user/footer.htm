@@ -1,7 +1,5 @@
 <script src="{BASE_URL}/static/js/jquery.js"></script>
-<script src="{BASE_URL}/static/js/artdialog/artDialog.js?skin=default" ></script>
-<script src="{BASE_URL}/static/js/artdialog/plugins/iframeTools.js"  ></script>
-<script src="{BASE_URL}/lang/{$_K['language']}/script/lang.js"></script>
+ 
 <script type="text/javascript">
 	//排序 
 function submitSort(uri,f,ord){
@@ -11,6 +9,20 @@ function submitSort(uri,f,ord){
 	//要去掉同级A标签到中最后一个排序字符
 	
 	location.href = uri;
+}
+
+function kconfirm(o,s){
+	d = art.dialog;
+	var c = "{$_lang['confirm']}";
+	if(s){
+		c=s;
+	}
+	d.confirm(c, function(){
+		$.get(o.href,function(){
+			location.href = location.href;
+		})
+	}).follow(o);
+	return false;
 }
 </script>
 </body>

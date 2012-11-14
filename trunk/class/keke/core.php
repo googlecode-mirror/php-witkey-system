@@ -357,7 +357,7 @@ class Keke extends Keke_core {
 		define ( 'LIB', S_ROOT . 'class' . DIRECTORY_SEPARATOR );
 		define ( 'EXT', '.php' );
 		include (S_ROOT . 'config/config.inc.php');
-		define ( 'KEKE_VERSION', '2.1' );
+		define ( 'KEKE_VERSION', '2.2' );
 		define ( 'KEKE_RELEASE', '2012-06-2' );
 		define ( "P_NAME", 'KPPW' );
 		if(Keke::$_caching === true){

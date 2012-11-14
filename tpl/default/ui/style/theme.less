@@ -15,11 +15,11 @@
 
 @ws_bg:		#000  url(http://cn.bing.com/az/hprichv/?p=FarmhouseGhosts_Getty_126171235_ZH-CN31221548.jpg) fixed center repeat;
 @theme_bg:  #EAEAEA url(http://cn.bing.com/az/hprichbg?p=rb%2fKenting_ZH-CN7852586394_1366x768.jpg) fixed center repeat;
-@theme_bg1: #fff ;
+@theme_bg1: #fff;
 @theme_bg2: #fff url(../images/bg_hp.png) center top repeat-x;
 @theme_bg3:  url(../images/bg.png) fixed center top no-repeat ;
 body{
-	background:@ws_bg ;
+	background:@theme_bg1 ;
 	font: 12px/25px  Lucida,Verdana,Hiragino Sans GB,WenQuanYi Micro Hei,sans-serif;
 	color:#6d6d6d;
 }
@@ -185,8 +185,8 @@ header#top {
 	.logo{
 		.column(24);
 		margin-top:30px; display:block;
-		h1{color:#fff; font: bold 35pt/40pt Arial,sans-serif; text-shadow:0 0 20px rgba(0,0,0,.8);}
-		h2{color:#fff; font: 12pt/18pt "微软雅黑",Arial,sans-serif;text-shadow:0 0 5px rgba(0,0,0,.5);}
+		h1{color:#000; font: bold 35pt/40pt Arial,sans-serif; }
+		h2{color:#333; font: 12pt/18pt "微软雅黑",Arial,sans-serif;}
 
 	}
 }
@@ -213,6 +213,7 @@ iframe{ width: 100%; height: 500px;}
 
 #video_layout{
 	position: fixed;
+	display: none;
 	.size(100%);
 	top:0;
 	left:0;
@@ -535,14 +536,14 @@ table {
 		&:hover{
 			.box-shadow(inset 1px 1px 2px rgba(0,0,0,.1));
 			border-color:darken(@border_colors,10%);
-			~ input[type=button],~ .right_tip{
+			+ input[type=button],+ .right_tip{
 				border-color: darken(@border_colors,10%);
 			}
 		}
 		&:focus{
 			.box-shadow(inset 1px 1px 2px rgba(0,0,0,.1));
 			border-color: @main_color;
-			~ input[type=button],~ .right_tip{
+			+ input[type=button],+ .right_tip{
 				color: white;
 				background: @main_color;
 				border-color: darken(@main_color,10%);

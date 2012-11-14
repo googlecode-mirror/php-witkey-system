@@ -86,14 +86,12 @@
 	
     
     <div class="user_box">
-    	 
+    	<div class="avatar">
+        	 {avatar($_SESSION['admin_uid'],'small')}
+        </div> 
         <div class="name">{$_lang['hello']}£¬
-		{if $admin_info['uid']==ADMIN_UID}
-		   {$_lang['public_admin_uid']}
-		{else}
-			{$grouplist_arr[$_K['user_info']['group_id']]['groupname']}
-		{/if}
-		<b>{$_K['user_info']['username']}</b>
+		{$grouplist_arr[$_SESSION['admin_gid']]['groupname']}
+		<b>{$_SESSION['admin_username']}</b>
 		</div>
         <div class="link_bar">
         	<a href="javascript:;" class="lock" onclick="fresh();" title="{$_lang['lock']}">{$_lang['refresh']}</a> 

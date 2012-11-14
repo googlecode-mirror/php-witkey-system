@@ -37,5 +37,12 @@ class Keke_user_keke extends Keke_user {
    	   //删除这个目录下的文件
    	   keke_file_class::delete_files($home_dir,TRUE);
    } 
-	
+   /**
+    * 上传头象的flash
+    * @param int $uid
+    * @return string HTML
+    */
+   function avatar_flash($uid){
+       return Keke_user_avatar::avatar_html($uid);	
+   }	
 }

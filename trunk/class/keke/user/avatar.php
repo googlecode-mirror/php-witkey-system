@@ -69,20 +69,23 @@ class Keke_user_avatar  {
 		}
 		$puid = sprintf ( "%09d", $uid );
 		$puid = substr ( $puid, - 2 );
-		self::set_user_sys_pic($uid, $puid,$type='cus');
-		$avatartype = self::getgpc ( 'avatartype', 'G' ) == 'real' ? 'real' : 'virtual';
-		$bigavatarfile = _DATADIR . './avatar/' . self::get_avatar ( $uid, 'big', $avatartype );
-		$middleavatarfile = _DATADIR . './avatar/' . self::get_avatar ( $uid, 'middle', $avatartype );
-		$smallavatarfile = _DATADIR . './avatar/' . self::get_avatar ( $uid, 'small', $avatartype );
+		//self::set_user_sys_pic($uid, $puid,$type='cus');
+		 $avatartype = self::getgpc ( 'avatartype', 'G' ) == 'real' ? 'real' : 'virtual';
+		$bigavatarfile = _DATADIR . '/avatar/'.$home.'/'.$puid."_avatar_big.jpg";
+		$middleavatarfile = _DATADIR . '/avatar/' .$home.'/'.$puid."_avatar_middle.jpg";
+		$smallavatarfile = _DATADIR . '/avatar/' .$home.'/'.$puid."_avatar_small.jpg";
+		
 		$bigavatar = self::flashdata_decode ( self::getgpc ( 'avatar1', 'P' ) );
 		$middleavatar = self::flashdata_decode ( self::getgpc ( 'avatar2', 'P' ) );
 		$smallavatar = self::flashdata_decode ( self::getgpc ( 'avatar3', 'P' ) );
+		
 		if (! $bigavatar || ! $middleavatar || ! $smallavatar) {
 			return '<root><message type="error" value="-2" /></root>';
 		}
 		
 		$success = 1;
-		$fp = fopen ( $bigavatarfile, 'wb' );
+		
+	 	$fp = fopen ( $bigavatarfile, 'wb' );
 		fwrite ( $fp, $bigavatar );
 		fclose ( $fp );
 		
@@ -92,7 +95,7 @@ class Keke_user_avatar  {
 		
 		$fp = fopen ( $smallavatarfile, 'wb' );
 		fwrite ( $fp, $smallavatar );
-		fclose ( $fp );
+		fclose ( $fp ); 
 		
 		$biginfo = @getimagesize ( $bigavatarfile );
 		$middleinfo = @getimagesize ( $middleavatarfile );
@@ -187,14 +190,16 @@ class Keke_user_avatar  {
 		 
 		$dir  = $dir1 . '/' . $dir2 . '/' . $dir3 . '/'. substr ( $uid, - 2 );
 		$fpath = $dir."_avatar_$size.jpg";
-		if(file_exists($fpath)){
-			return $fpath;
+		
+		if(file_exists(S_ROOT.'/data/avatar/'.$fpath)){
+			return _DATAURL.'/avatar/'.$fpath;
 		}else{
 			return  _DATAURL.'/avatar/default/man_'.$size.'.jpg';
 		}
 	}
-	static function avatar_html($uid, $avatartype = 'virtual') {
-		$_avatarflash = "resource/img/system/camera.swf?inajax=1&appid=1&input=$uid&ucapi={$GLOBALS['K']['siteurl']}&avatartype=virtual";
+	static function avatar_html($uid) {
+		global $_K;
+		$_avatarflash = BASE_URL."/static/img/system/camera.swf?inajax=1&appid=1&input=$uid&ucapi=".$_K['siteurl']."/avatar/";
 		$swf = '<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" 
 		codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0" 
 		width="520" height="280" id="mycamera" align="middle">

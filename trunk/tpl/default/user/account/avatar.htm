@@ -21,18 +21,20 @@
 
 		                	<div class="avatar_show">
 		                		<p>
-		                			<img class="pic_larger" src="{BASE_URL}/{SKIN_PATH}/ui/images/l_avatar.png" alt="avatar">
+		                			{avatar($_SESSION['uid'],big)}
 		                		</p>
 		                		<p>
-		                			<img class="pic_middle" src="{BASE_URL}/{SKIN_PATH}/ui/images/avatar.png" alt="avatar">
+		                		{avatar($_SESSION['uid'],middle)}
+		                			
 		                		</p>
 		                		<p>
-		                			<img class="pic_small" src="{BASE_URL}/{SKIN_PATH}/ui/images/s_avatar.png" alt="avatar">
+		                		{avatar($_SESSION['uid'],small)}
+		                			
 		                		</p>
 		                	</div>
 
 		                	<div class="avatar_upload">
-		                		上传头像的flash文件
+		                		{$flash_html}
 		                	</div>
 							<div class="clear"></div>
 		                	<div class="form_line">

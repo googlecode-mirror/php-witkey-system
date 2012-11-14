@@ -41,10 +41,10 @@ class Control_user_custom_report extends Control_user{
 		
 		if($my===NULL){
 			//我举报的
-			$where .= " and uid = {$_SESSION['uid']}";
+			$where .= " and uid = '{$_SESSION['uid']}'";
 		}else{
 			//举报我的
-			$where .= " and to_uid = {$_SESSION['uid']}";
+			$where .= " and to_uid ='{$_SESSION['uid']}'";
 		}
 		//获取分页条件
 		

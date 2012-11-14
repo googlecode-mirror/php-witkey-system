@@ -13,15 +13,15 @@
 		                </header>
 		                <nav class="box_nav">
 								<ul id="test_ul" class="clearfix">
-									<li {if !$m}class="selected"{/if}><a href="{BASE_URL}/index.php/user/custom_report">我举报的</a></li>
-									<li {if $m}class="selected"{/if}><a href="{BASE_URL}/index.php/user/custom_report/my">我收到的</a></li>
+									<li {if !$my}class="selected"{/if}><a href="{BASE_URL}/index.php/user/custom_report">我举报的</a></li>
+									<li {if $my}class="selected"{/if}><a href="{BASE_URL}/index.php/user/custom_report/my">我收到的</a></li>
 								</ul>
 		                </nav>
 		                <div class="box_detail">
 
 		                	<div class="toolbar">
 		                		<div class="actions">
-		                			<form class="detail" action="{BASE_URL}/index.php/user/custom_report/my" method="get" id="frm_user_search">
+		                			<form class="detail" action="{BASE_URL}/index.php/user/custom_report/{if $my}my{/if}" method="get" id="frm_user_search">
 										   <input type="hidden" value="{$page}" name="page">
 										<table cellspacing="0" cellpadding="0">
 											<tbody>
@@ -60,7 +60,7 @@
 		                            <thead>
 		                            <tr>
 		                              <th scope="col"><a href="javascript:;" onclick="submitSort('{$uri}','report_id',{$ord_tag})">编号{if $_GET['f']=='report_id'}{$ord_char}{/if}</a></th>
-		                              <th scope="col" width="">被举报人</th>
+		                              <th scope="col" width="">{if !$my}被{/if}举报人</th>
 		                              <th scope="col" width="10%">类型</th>
 		                              <th scope="col" width="30%">原因</th>
 		                              <th scope="col">附件</th>
@@ -72,7 +72,13 @@
 		                         {loop $list_arr $v}
 		                            <tr>
 		                              <td>{$v['report_id']}</td>
-		                              <td>{$v['to_username']}</td>
+		                              <td>
+		                              {if $my}
+		                               ***
+		                              {else}
+		                              {$v['to_username']}
+		                              {/if}
+		                              </td>
 		                              <td>{$rp_type[$v['report_type']]}</td>
 		                              <td>
 		                              	<p title="{$v['report_desc']}">
@@ -91,7 +97,7 @@
 											{elseif $v['report_status']=='3'}
 												未受理
 											{elseif $v['report_status']=='4'}
-												已处理,{cutstr($v['op_result'],16)}
+												已处理,{$v['op_result']}
 											{/if}
 											
 									  </td>

@@ -1,7 +1,6 @@
 @import 'resets.less';
 /* ---- reset ---- */
 .reset();
-
 @import 'base.less';
 @import 'ui.less';
 @import 'boxs.less';
@@ -14,16 +13,7 @@
 @disable-filters: true;//打开ie滤镜
 @using-ieclasses: true;//打开ie样式 
 
-@ws_bg:		#000  url(http://cn.bing.com/az/hprichv/?p=FarmhouseGhosts_Getty_126171235_ZH-CN31221548.jpg) fixed center repeat;
-@theme_bg:  #EAEAEA url(http://cn.bing.com/az/hprichbg?p=rb%2fKenting_ZH-CN7852586394_1366x768.jpg) fixed center repeat;
 @theme_bg1: #fff;
-@theme_bg2: #fff url(../images/bg_hp.png) center top repeat-x;
-@theme_bg3:  url(../images/bg.png) fixed center top no-repeat ;
-body{
-	background:@theme_bg1 ;
-	font: 12px/25px  Lucida,Verdana,Hiragino Sans GB,WenQuanYi Micro Hei,sans-serif;
-	color:#6d6d6d;
-}
 
 /* layout */
 
@@ -38,7 +28,6 @@ body{
 	margin:0 auto;
 	.clearfix;
 }
-
 
 /* setting */
 
@@ -178,196 +167,6 @@ ol {
 		*padding-left: 2.2em; 
 	}
 }
-
-
-
-header#top {
-	.clearfix;
-	.logo{
-		.column(24);
-		margin-top:30px; display:block;
-		h1{color:#000; font: bold 35pt/40pt Arial,sans-serif; }
-		h2{color:#333; font: 12pt/18pt "微软雅黑",Arial,sans-serif;}
-
-	}
-}
-#main{
-	
-	.column(20);
-	.mb_30;
-	.box{
-		header{
-			.box_header;
-		}
-	}
-}
-
-#sidebar{
-	.clearfix;
-	.column(5);
-	.box{
-		.rigo_light;
-		.mb_10;
-	}
-}
-iframe{ width: 100%; height: 500px;}
-
-#video_layout{
-	position: fixed;
-	display: none;
-	.size(100%);
-	top:0;
-	left:0;
-	z-index: -1;
-	video{
-		
-		min-height: 768px;
-	}
-}
-
-/* 表格 
-------------------------------*/
-table { 
-	color:#000;
-	//border:1px solid #bfbfbf;  
-
-	caption{ 
-		text-align:center; 
-		display:table-caption;
-	}
-
-	td { 
-		//border-left:1px solid #bfbfbf; 
-		//border-top:1px solid #bfbfbf;
-		vertical-align:middle;
-		/* fixed弹出窗口样式 */
-		.aui_outer &{
-			border:none;
-		}
-	}
-	tr{}
-	th{}
-
-	.configure { 
-		margin-bottom:0; 
-		color:#666; 
-		font-size:.8571em; 
-		line-height:1.6667em; 
-		a { 
-			color:#666; 
-			text-decoration:none; 
-			&:hover { 
-				color:#222; 
-			}
-		}
-	}
-
-	.rounded { 
-		float:left; 
-		width:83px; 
-		padding:9px 0 10px; 
-		margin:0 0 17px; 
-		border:2px solid #898989; 
-		text-align:center; 
-		-webkit-border-radius:8px; 
-		-moz-border-radius:8px; 
-		-o-border-radius:8px; 
-		-khtml-border-radius:8px; 
-		border-radius:8px; 
-	}
-}
-
-/* 按钮
--------------------------------*/
-	input[type=button],
-	button[type=button],
-	input[type=reset],
-	button[type=reset]{
-		.border-radius(4px);
-		.button;
-		padding: 4px 10px;
-		font:bold 14px/20px "微软雅黑"; 
-		text-shadow: 0 -1px 0 rgba(255,255,255,.3);
-		background: -webkit-gradient(linear, left top, left bottom, color-stop(.2, #F6F6F6), color-stop(1, #E3E3E3)); 
-		background: -moz-linear-gradient(center top, #F6F6F6 20%, #E3E3E3 100%); 
-		
-		&:hover{
-			color: #fff;
-			border-color:#388AD4;
-			background: #75A9E2; 
-			background: -webkit-gradient(linear, left top, left bottom, color-stop(.2, #75A9E2), color-stop(1, #4C83BF)); 
-			background: -moz-linear-gradient(center top, #75A9E2 20%, #4C83BF 100%);
-			text-shadow: 0 1px 0 rgba(0,0,0,.3);
-			-webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 2px rgba(255,255,255,.3), 0 1px 2px rgba(0,0,0,.29); 
-			-moz-box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 2px rgba(255,255,255,.3), 0 1px 2px rgba(0,0,0,.29); 
-			box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 2px rgba(255,255,255,.3), 0 1px 2px rgba(0,0,0,.29);
-			background-position:0 0;
-		}
-		&:active{
-			border-color: #20559a;
-			background-position:0 0;
-			-webkit-box-shadow: inset 0 0 7px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,1);
-			-moz-box-shadow: inset 0 0 7px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,1);
-			box-shadow: inset 0 0 7px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,1);
-		}
-	}
-	button.submit,a.submit{
-			border: 1px solid #4081af; 
-			border-bottom-color: #20559a; 
-			background: -webkit-gradient(linear, left top, left bottom, color-stop(.2, #52a8e8), color-stop(1, #2e76cf)); 
-			background: -moz-linear-gradient(center top, #52a8e8 20%, #2e76cf 100%);
-			background-color: #0090D2;  
-			font:bold 14px/20px "微软雅黑"; 
-			display:inline-block;
-			color:#fff; 
-			padding: 4px 10px;
-			text-align: center; 
-			text-shadow: 0 -1px 0 rgba(0,0,0,.3); 
-			text-decoration: none; 
-			.border-radius(4px);
-			-webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 2px rgba(255,255,255,.3), 0 1px 2px rgba(0,0,0,.29); 
-			-moz-box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 2px rgba(255,255,255,.3), 0 1px 2px rgba(0,0,0,.29); 
-			box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 2px rgba(255,255,255,.3), 0 1px 2px rgba(0,0,0,.29);
-		
-			&:hover{
-				background: -webkit-gradient(linear, left top, left bottom, color-stop(.2, #3e9ee5), color-stop(1, #1666ca)); 
-				background: -moz-linear-gradient(center top, #3e9ee5 20%, #1666ca 100%);
-				background-color: #0073d2; 
-			}
-
-			&:active{
-				-webkit-box-shadow: inset 0 0 7px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,1);
-				-moz-box-shadow: inset 0 0 7px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,1);
-				box-shadow: inset 0 0 7px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,1);
-				border-color: #20559a;
-			}
-	
-	}
-	
-
-.nav{
-		background:#537bcc url(../img/nav_bg.jpg) no-repeat center top;  border-top:1px solid #7296d8; border-bottom:1px solid #7296d8;
-
-		li{
-
-			&.line { display:block; height:30px; width:0; font-size:0; border-left:1px solid #446ac1; border-right:1px solid #7fa2dd;}
-			/*导航链接*/
-			a{ 
-				min-width:85px;  font-weight:bold;  border:1px solid #5D8AD2; 
-				&:hover{
-				 	z-index:1;/* border-color: #95C3ED;*/ border-color:#95C3ED;background:#7498d9 url(../img/style/nav_ul_hover.gif) no-repeat center center; box-shadow:0 0 3px rgba(149,195,237,0.8);  
-				}
-
-				&:active{ 
-					background:#2F549F; border-color:#446AC1; 
-				}
-
-				&.selected,&.selected:hover,&.selected:visited{
-					background:#fff url(../img/style/nav_ul_selected.gif) no-repeat center center; color:#2F549F;border-color:#fff; box-shadow:0 0 3px rgba(255,255,255,0.5);
-				}
-			}
-		}
-	}
 
 
 /* 弹出框
@@ -561,7 +360,7 @@ table {
 	@border_colors		: #e1e1e1;
 	
 	/* 基本配置 */
-	font-family: 'Lucida Grande','Microsoft YaHei','微软雅黑';
+	font: 12px/25px 'Lucida Grande','Microsoft YaHei','微软雅黑';
 	color: @text_color;
 	background:@theme_bg1 ;
 	a{

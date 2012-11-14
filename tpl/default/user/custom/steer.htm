@@ -15,26 +15,36 @@
 
 		                	<div class="toolbar">
 		                		<div class="actions">
- 
-		                			<input type="submit" value="提建议" onclick="art.dialog.open('{$open_url}',{height:228,width:420,lock:true}).title('提交建议！');">
-
-		                		</div>
-		                		<div class="actions">
-		                			<input type="search" placeholder="请输入关键字"><input type="button" value="搜索">
-		                		</div>
-
-		                		<div class="page">
-					                <p>
-					                    <a href="###" title="第一页">&#171;</a>
-					                    <a href="###" title="上一页">&#139;</a>
-					                    <a href="###" class="selected">1</a>
-					                    <a href="###">2</a>
-					                    <a href="###">3</a>
-					                    <a href="###">4</a>
-					                    <a href="###" title="下一页">&#155;</a>
-					                    <a href="###" title="最后一页">&#187;</a>
-					                    <span class="stats">1/10</span>
-					                </p>
+ 									<form class="detail" action="{BASE_URL}/index.php/user/custom_steer" method="get" id="frm_user_search">
+										   <input type="hidden" value="{$page}" name="page">
+										<table cellspacing="0" cellpadding="0">
+											<tbody>
+											<tr>
+										    <td> 查询字段
+										       <select name="slt_fields">
+										       	<option></option>
+										       	{loop $query_fields $k $v}
+										       	 <option  value="$k" {if $k == $_GET['slt_fields']} selected="selected" {/if}>{$v}</option>
+												{/loop} 
+										       </select>
+											 <select name="slt_cond">
+											 	<option value="=" {if $_GET['slt_cond']=='='}selected="selected"{/if}>=</option>
+												<option value=">" {if $_GET['slt_cond']=='>'}selected="selected"{/if}>></option>
+												<option value="<" {if $_GET['slt_cond']=='<'}selected="selected"{/if}><</option>
+												<option value="like" {if $_GET['slt_cond']=='like'}selected="selected"{/if}>Like</option>
+											 </select>
+										     <input type="text" class="txt" name="txt_condition" id="txt_condition" value="{$_GET['txt_condition']}">
+											 <select name="page_size">
+												<option value="10" {if $_GET['page_size']=='10'}selected="selected"{/if}>{$_lang['page_size']}10条</option>
+												<option value="20" {if $_GET['page_size']=='20'}selected="selected"{/if}>{$_lang['page_size']}20条</option>
+												<option value="30" {if $_GET['page_size']=='30'}selected="selected"{/if}>{$_lang['page_size']}30条</option>
+											</select>
+											 <input type="submit" value="{$_lang['search']}">
+											 </td>
+										</tr>
+										</tbody>
+										</table>
+										</form>
 					            </div>
 		                	</div>
 
@@ -43,48 +53,35 @@
 		                        <table  class="data_table">
 		                            <thead>
 		                            <tr>
-		                              <th scope="col">编号</th>	
+		                              <th scope="col"><a href="javascript:;" onclick="submitSort('{$uri}','report_id',{$ord_tag})">编号{if $_GET['f']=='report_id'}{$ord_char}{/if}</a></th>	
 		                              <th scope="col" width="40%">内容</th>
 		                              <th scope="col" width="40%">回复</th>
-		                              <th scope="col">发布时间</th>
+		                              <th scope="col"><a href="javascript:;" onclick="submitSort('{$uri}','on_time',{$ord_tag})">时间{if $_GET['f']=='on_time'}{$ord_char}{/if}</a></th>
 		                            </tr>
 		                            </thead>
 		                            <tbody>
+		                           {loop $data_list $v}
 		                            <tr>
-		                              <td>01</td>
-		                              <td>
-		                              	<p>
-		                              		招标任务和雇佣任务，应该设个期限的，我们交稿都N天了，雇主玩消失，我们那点微薄的利益谁来保障
-		                              	</p>
+		                              <td>{$v['report_id']}</td>
+		                              <td><p>
+		                              		
+									  			{cutstr($v['report_desc'],45)}
+											</p>
 		                              	<div class="item_action">
-		                              		<a href="#">删除</a>
+		                              		<a href="{$del_uri}/?report_id={$v['report_id']}" onclick="kconfirm(this);return false;">删除</a>
 		                              	</div>
 		                              </td>
-		                              <td>您好！招标和雇佣任务，在雇主托管赏金以前建议不要工作，一旦托管赏金威客开始工作了，平台会尽力保障双方的利益。有任何问题请第一时间联系在线客服QQ：4006-999-467。 </td>
-		                              <td>2012-12-21</td>
-		                            </tr>
-		                            <tr>
-		                              <td>02</td>	
 		                              <td>
-		                              	<p>快速，便捷！挺好的~</p>
-		                              	<div class="item_action">
-		                              		<a href="#">删除</a>
-		                              	</div>
-		                              </td>
-		                              <td>感谢您的支持，我们会努力做得更好~</td>
-		                              <td>2011-08-25</td>
+									  		{if $v['report_status'] == 1}
+												--
+											{elseif $v['report_status'] == 4}
+									  			{cutstr($v['op_result'],30)}
+											{/if}
+									  </td>
+		                              <td>{date('Y-m-d',$v['on_time'])}</td>
 		                            </tr>
-		                            <tr>
-		                              <td>03</td>
-		                              <td>
-		                              	<p>您好，近日收到多个站内信息推介下载“威客任务板”（http://viketask.com/），请是否可靠，可以放心下载使用吗？</p>
-		                              	<div class="item_action">
-		                              		<a href="#">删除</a>
-		                              	</div>
-		                              </td>
-		                              <td>不知道是什么客户端</td>
-		                              <td>2011-08-25</td>
-		                            </tr>
+									{/loop}
+		                            
 		                            </tbody>
 		                            
 		                          </table>
@@ -93,19 +90,11 @@
 
 			               	<div class="toolbar bottom">
 		                		<div class="actions">
-		                			<input type="submit" value="提建议" onclick="art.dialog.open('{$open_url}',{height:228,width:420,lock:true}).title('提交建议！');">
+		                			<input type="submit" value="提建议" onclick="art.dialog.open('{$open_url}',{title:'提交建议！',height:228,width:420},false);">
 		                		</div>
 		                		<div class="page">
 					                <p>
-					                    <a href="###" title="第一页">&#171;</a>
-					                    <a href="###" title="上一页">&#139;</a>
-					                    <a href="###" class="selected">1</a>
-					                    <a href="###">2</a>
-					                    <a href="###">3</a>
-					                    <a href="###">4</a>
-					                    <a href="###" title="下一页">&#155;</a>
-					                    <a href="###" title="最后一页">&#187;</a>
-					                    <span class="stats">1/10</span>
+					                    {$pages['page']}
 					                </p>
 					            </div>
 		                	</div>

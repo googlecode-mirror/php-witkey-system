@@ -12,16 +12,17 @@
 	<link href="{BASE_URL}/{SKIN_PATH}/ui/style/theme.css" rel="stylesheet" charset="utf-8"  >
 </head>
 <body id="user">
-	<form action="" method="post">
+	<form action="{BASE_URL}/index.php/user/custom_steer/comment" method="post" target="_top">
+		<input type="hidden" name="formhash" value="{FORMHASH}">
 		<div class="form_row pl_10 pr_20">
 			<label class="form_label">内容：</label>
-			<textarea cols="50" rows="6" class="col1"></textarea>
+			<textarea cols="50" rows="6" class="col1" name="txt_comment"></textarea>
 		</div>
 		
     	<div class="clearfix pl_10 pr_10">
 			<div class="fl_r">
 				<input type="submit" value="提交">
-				<input type="button" value="取消">
+				<input type="button" value="取消" onclick=";">
 			</div>
 			
     	</div>

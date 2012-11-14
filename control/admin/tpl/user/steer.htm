@@ -52,7 +52,7 @@
          <td class="td25"><input type="checkbox" name="ckb[]" class="checkbox" value="{$v['report_id']}">{$v['report_id']}</td>
 		 <td><!--{eval echo nl2br($v['report_desc'])}--></td>
 		<td>{$v['username']}</td>
-		<td>{$v['op_result']}</td>
+		<td>{if $v['report_status']==4}{$v['op_result']}{else}--{/if}</td>
 		<td>{$trans_status[$v['report_status']]}</td>
 		<td>{date('Y-m-d',$v['on_time'])}</td>
 		

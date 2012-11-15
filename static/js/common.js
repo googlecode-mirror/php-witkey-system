@@ -238,54 +238,7 @@ function favor(pk,type,model_code,obj_uid,obj_id,obj_name,origin_id) {
 	}
 }
 
-/**
-	 * 稿件描述检测
-	 * 
-	 * @Param contentObj
-	 *            待检测文本域ID
-	 * @param minLength
-	 *            最小字数
-	 * @param maxLength
-	 *            最大字数
-	 * @param winTitle
-	 *            窗口标题
-	 * @param msgType
-	 * 			  msgType 消息提示类型  0 shoDialog提示。1表示tips提示
-	 * @param showTarget
-	 * 			showTarget 消息插入容器ID  。当msgType=1,2时有效
-	 * @param Object
-	 * 			editor 编辑器对象
-	 */
 
-function contentCheck(contentObj,winTitle,minLength,maxLength,msgType,showTarget,editor){
-		var shtml = '';
-		var len	  = 0;
-		if(typeof editor=='object'){
-			shtml =	editor.stripHtml();
-		}else{
-			shtml =	$("#"+contentObj).val();
-		}
-		len	  = shtml.length;
-		if(len>maxLength){
-			if(msgType!=0){
-				tipsAppend(showTarget,winTitle+L.content_not_more_than+maxLength+L.words,'warning','m_warn',msgType==2?s=1:s=0);
-			}else{
-				var des_msg = $("#"+contentObj).attr("msgArea");
-				$("#"+des_msg).addClass('msg').addClass('msg_error').html("<i></i><span>"+winTitle+L.content_not_more_than+maxLength+L.words+"</span>");
-			}return false;
-		}else if(len<minLength){
-			if(msgType!=0){
-				tipsAppend(showTarget,winTitle+L.content_not_less_than+minLength+L.words,'warning','m_warn',msgType==2?s=1:s=0);
-			}else{
-				var des_msg = $("#"+contentObj).attr("msgArea");	
-				$("#"+des_msg).addClass('msg').addClass('msg_error').html("<i></i><span>"+winTitle+L.content_not_less_than+minLength+L.words+"</span>");
-			}return false;
-		}else{
-			var des_msg = $("#"+contentObj).attr("msgArea");
-			$("#"+des_msg).removeClass('msg').removeClass("msg_error").html(" ");
-			return shtml;
-		}
-}
 
 /**
  * 发送 站内信
@@ -381,4 +334,127 @@ function mark(require_url,Do,obj,obj_id){
 	var jump='';
 	Do&&obj&&obj_id?jump+='do-'+Do+'*'+obj+'-'+obj_id+'*view'+'-'+'mark':'';
 	showWindow('mark',require_url+'&jump_url='+jump,'get',0);return false;
+}
+
+/**
+ * 获取任务行业
+ * @param indus_pid
+ */
+function showIndus(indus_pid){
+	if(indus_pid){
+		$.post("index.php?do=ajax&view=indus",{indus_pid: indus_pid}, function(html){
+			var str_data = html;
+			if (trim(str_data) == '') {
+				$("#indus_id").html('<option value="-1"> '+L.select_a_subsector+' </option>');
+			}
+			else {
+				$("#indus_id").html(str_data);
+				$("#reload_indus div.jqTransformSelectWrapper ul li a").triggerHandler("click");
+			}
+		},'text');
+	}
+}
+/**
+ * 稿件描述检测
+ * 
+ * @Param contentObj
+ *            待检测文本域ID
+ * @param minLength
+ *            最小字数
+ * @param maxLength
+ *            最大字数
+ * @param winTitle
+ *            窗口标题
+ * @param msgType
+ * 			  msgType 消息提示类型  0 shoDialog提示。1表示tips提示
+ * @param showTarget
+ * 			showTarget 消息插入容器ID  。当msgType=1,2时有效
+ * @param Object
+ * 			editor 编辑器对象
+ */
+
+function contentCheck(contentObj,minLength,maxLength,msgType,editor){
+	var shtml = '';
+	var len	  = 0;
+	if(typeof editor=='object'){
+		shtml =	editor.stripHtml();
+	}else{
+		shtml =	$("#"+contentObj).val();
+	}
+	msgType = msgType?msgType:0;
+	showTarget = $("#"+contentObj).attr('msg');
+	len	  = shtml.length;
+	if(len>maxLength){
+		if(msgType!=0){
+			tipsAppend(showTarget,L.content_not_more_than+maxLength+L.words,'warning','m_warn',msgType==2?s=1:s=0);
+		}else{
+			art.dialog.alert(L.content_not_more_than+maxLength+L.words);
+			 
+		}return false;
+	}else if(len<minLength){
+		if(msgType!=0){
+			tipsAppend(showTarget,L.content_not_less_than+minLength+L.words,'warning','m_warn',msgType==2?s=1:s=0);
+		}else{
+			 art.dialog.alert(L.content_not_less_than+minLength+L.words);
+		}return false;
+	}else{
+	 
+		return shtml;
+	}
+}
+
+/**
+* 需求字数检查
+* 
+* @param obj
+*            需求对象
+* @param 最大长度
+*/
+function checkInner(obj,maxLength){
+var e = window.event || arguments[0];
+
+var  len   = obj.value.length;
+	e.keyCode==8?len-=1:len+=1;
+	len<0?len=0:'';
+
+var Remain = Math.abs(maxLength-len);
+
+if(maxLength>=len){
+   
+    $("#length_show").text(L.has_input_length+len+','+L.can_also_input+Remain+L.word);
+}else{
+	$("#length_show").text(L.can_input+maxLength+L.word+','+L.has_exceeded_length+Remain+L.word);
+}
+}
+
+
+
+/**
+* 
+* @param string  form 表单ID或者操作链接
+* @param int     type 操作类型，为链接时默认为1；为表单时为2；
+* @param boolean check 是否验证表单。默认为false，需验证请设置为true 
+*/
+function formSub(form,type,check){
+
+var t      = type=='form'?'form':'url';//操作类型 1为链接型，二为表单型
+var c      = check==true?true:false;//是否需验证表单 true为验证,默认为false
+var pass   = true;//默认为通过 ,当表单验证不过时为false;
+switch(t){
+	case 'url'://链接
+		var url = form;
+		break;
+	case 'form'://表单
+		if(c==true){
+			pass = checkForm(document.getElementById(form));
+		}
+		break;
+}
+if(pass==true){
+	if(t=='url'){
+		showWindow('sitesub',url,'get','0');return false;
+	}else{
+		showWindow('sitesub',form,'post','0');return false;
+	}
+}
 }

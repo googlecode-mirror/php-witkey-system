@@ -199,7 +199,7 @@ class Keke_user_avatar  {
 	}
 	static function avatar_html($uid) {
 		global $_K;
-		$_avatarflash = BASE_URL."/static/img/system/camera.swf?inajax=1&appid=1&input=$uid&ucapi=".$_K['siteurl']."/avatar/";
+		$_avatarflash = BASE_URL."/static/img/system/camera.swf?inajax=1&appid=1&input=$uid&ucapi=".$_K['siteurl']."/data/avatar/";
 		$swf = '<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" 
 		codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0" 
 		width="520" height="280" id="mycamera" align="middle">

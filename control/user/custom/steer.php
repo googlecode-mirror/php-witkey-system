@@ -56,9 +56,9 @@ class Control_user_custom_steer extends Control_user{
 	    				'on_time' => time(),
 	    				'report_status' => 1,
 	    				'username'=>$_SESSION['username'],
+	    				'uid'=>$_SESSION['uid'],
 	    			);
-	    	Model::factory('witkey_report')->setData($array)->create();
-	    	
+	    	$res = Model::factory('witkey_report')->setData($array)->create();
 	    	$this->request->redirect('user/custom_steer');
 	    	
 	    }else{	

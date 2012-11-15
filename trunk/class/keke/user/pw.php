@@ -10,8 +10,8 @@ include_once S_ROOT.'client/pw_client/uc_client.php';
 
 class Keke_user_pw extends Keke_user {
  
-	function get_user_info($uid,$fields='*'){
-		return Keke_user::instance('keke')->get_user_info($uid,$fields);
+	function get_user_info($uid,$fields='*', $isuid = 1){
+		return Keke_user::instance('keke')->get_user_info($uid,$fields,$isuid);
 	}
 	
 	function get_avatar($uid,$size='middle'){
@@ -38,6 +38,29 @@ class Keke_user_pw extends Keke_user {
 	function del_user($uid){
 		Keke_user::instance('keke')->del_user($uid);
 		uc_user_delete($uid);
+	}
+	
+	function avatar_flash($uid){
+		$ico_url = 'http://localhost/pw/job.php?action=uploadicon&step=2&&url=images/facebg.jpg&imgsize=20480&';
+		
+		$icon_encode_url  = 'saveFace='.rawurlencode($ico_url);
+		$pw_url = rtrim(UC_API,'/');
+		$html = <<<EOT
+<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase=" http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=10,0,0,0" width="500" height="405" id="FlashVars" align="middle">
+		<param name="movie" value="$pw_url/js/face.swf" />
+		<param name="wmode" value="transparent"/>
+		<param name="FlashVars" value="$icon_encode_url" />
+		<!--[if !IE]>-->
+		<object type="application/x-shockwave-flash" data="$pw_url/js/face.swf" width="500" height="405" FlashVars="$icon_encode_url" wmode="transparent"  allowScriptAccess="always">
+		<!--<![endif]-->
+		<p><span style="display:none;">
+		<embed src="$pw_url/images/blank.swf" type="application/x-shockwave-flash" wmode="transparent"/></span><em class="s2" style="position:relative;top:3px;">该浏览器尚未安装flash插件，<a href="http://www.adobe.com/go/getflashplayer" target="_blank">点击安装</a></em></p>
+        <!--[if !IE]>-->
+		</object>
+		<!--<![endif]-->
+		</object>
+EOT;
+	return $html;	
 	}
 	
 }

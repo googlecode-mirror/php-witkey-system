@@ -9,8 +9,8 @@
 include_once S_ROOT.'client/ucenter/client.php';
 class Keke_user_uc extends Keke_user {
     
-	function get_user_info($uid,$fields='*'){
-	    return Keke_user::instance('keke')->get_user_info($uid,$fields); 
+	function get_user_info($uid,$fields='*', $isuid = 1){
+	    return Keke_user::instance('keke')->get_user_info($uid,$fields,$isuid); 
 	}
 	
 	function get_avatar($uid,$size='middle'){
@@ -21,5 +21,9 @@ class Keke_user_uc extends Keke_user {
 		Keke_user::instance('keke')->del_user($uid);
 		uc_user_delete($uid);
 		uc_user_deleteavatar($uid);
+	}
+	
+	function avatar_flash($uid){
+	   return uc_avatar($uid);	
 	}
 }

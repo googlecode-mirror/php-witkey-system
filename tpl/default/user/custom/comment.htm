@@ -38,7 +38,7 @@
 			
     	<div class="clearfix aui_footer">
 			<div class="aui_buttons">
-				<input type="button" value="提交" id="sbt_comment" name="sbt_comment">
+				<input type="submit" value="提交" id="sbt_comment" name="sbt_comment">
 				<input type="button" value="取消" onclick="art.dialog.close();">
 			</div>
 			
@@ -58,14 +58,15 @@
 
 	$(function(){
 		
-		$("#sbt_comment").click(function(){
+		$("#comment_frm").submit(function(){
 			var shtml  = contentCheck('tar_content',10,200,1);
 			if(shtml){
 				if(checkForm(document.getElementById("comment_frm"))){
-					$("#comment_frm").submit();
+					return true;
 				}
-				
+				return false;	
 			}
+			return false
 		})
 		
 		$("#txt_code").focus(function(){

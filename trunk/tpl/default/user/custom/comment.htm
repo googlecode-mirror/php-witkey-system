@@ -15,23 +15,18 @@
 	<form action="{BASE_URL}/index.php/user/custom_steer/comment" method="post" target="_top" id="comment_frm" >
 		<input type="hidden" name="formhash" value="{FORMHASH}">
 		<div class="form_row pl_10 pr_20" id="txt_msg">
-			<textarea cols="50" rows="5" class="col1" name="txt_comment" id="tar_content" 
+			<textarea cols="60" rows="5" class="col1" name="txt_comment" id="tar_content"
 			onkeydown="checkInner(this,'200')" msg='txt_msg'></textarea>
-			<div id="length_show">{$_lang['msg_content_notice']}</div>
+			<div id="length_show">请输入建议内容{$_lang['msg_content_notice']}</div>
 		</div>
-		
-		
-			
 			<div class="form_row pl_10">
     			<input  class="txt_input" name="txt_code" type="text" placeholder="验证码"
-				size="8" id="txt_code" limit="required:true;len:4" msg="请输入验证码"msgArea="secode_msg"
+				size="8" id="txt_code" limit="required:true;len:4" msg="验证码错误"msgArea="secode_msg"
 				ajax="{BASE_URL}/index.php/captcha/check/" >
 	 			<span id="show_secode_menu_content" class="hidden" >
-	 				<img id="secode_img" src="" onclick="document.getElementById('secode_img').src='{BASE_URL}/index.php/captcha?sid='+Math.random(); return false;" style="vertical-align:middle; height:30px">
-	 				<a class="font14" href="javascript:;" onclick="document.getElementById('secode_img').src='{BASE_URL}/index.php/captcha?sid='+Math.random(); return false;">换一张</a>
-					<span class="" id="secode_msg"></span>
+	 				<img id="secode_img" src="" title="点击换一张" onclick="document.getElementById('secode_img').src='{BASE_URL}/index.php/captcha?sid='+Math.random(); return false;" style="vertical-align:middle; height:30px;">
+					<span class="" id="secode_msg">&nbsp;</span>
 				</span>
-	 	       
 				
 			</div>
 			
@@ -59,7 +54,7 @@
 	$(function(){
 		
 		$("#comment_frm").submit(function(){
-			var shtml  = contentCheck('tar_content',10,200,1);
+			var shtml  = contentCheck('tar_content',10,200,0);
 			if(shtml){
 				if(checkForm(document.getElementById("comment_frm"))){
 					return true;

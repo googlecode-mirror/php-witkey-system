@@ -33,7 +33,7 @@ class Control_user_custom_steer extends Control_user{
 		
 		$trans_status = $this->_trans_status;
 		//Ìõ¼þ
-		$where .= " and obj = 'comment' ";
+		$where .= " and obj = 'comment' and uid = '{$_SESSION['uid']}' ";
 
 		$data_info = Model::factory('witkey_report')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
 		

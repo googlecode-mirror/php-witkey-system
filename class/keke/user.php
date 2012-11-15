@@ -45,7 +45,7 @@ abstract class Keke_user {
 	 * @param int $uid
 	 * @param string $fields 指定的用户信息 
 	 */
-	abstract public function get_user_info($uid,$fields='*');
+	abstract public function get_user_info($uid,$fields='*',$isuid = 1);
 	/**
 	 *  删除keke系统中用户的所有信息
 	 * @param int $uid
@@ -57,6 +57,10 @@ abstract class Keke_user {
 	 * @param string $size (big,middle,small)
 	 */
 	abstract public function get_avatar($uid,$size='middle');
-	
+	/**
+	 * 用户头象上传flash
+	 * @param unknown $uid
+	 */
+	abstract public function avatar_flash($uid);
 
 }

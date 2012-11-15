@@ -74,8 +74,8 @@ class Keke_msg_keke extends Keke_msg {
 			$to_uid = NULL;
 			$to_username = NULL;
 		}else{
-			$to_uid = $_SESSION['uid'];
-			$to_username = $_SESSION['username'];
+			$to_uid = $uid;
+			//$to_username = $_SESSION['username'];
 		}
 		if($content===NULL){
 			$content = strtr($this->_tpl_info['msg_tpl'],self::$_var);

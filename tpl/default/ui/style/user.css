@@ -8513,6 +8513,9 @@ ol.sosumi {
   -moz-box-shadow: 0 0 5px rgba(204, 0, 0, 0.5);
   box-shadow: 0 0 5px rgba(204, 0, 0, 0.5);
 }
+.aui_icon {
+  vertical-align: middle;
+}
 .aui_icon div {
   width: 48px;
   height: 48px;

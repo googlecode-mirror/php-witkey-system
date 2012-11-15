@@ -14,7 +14,7 @@ class Keke_user_keke extends Keke_user {
 		} else {
 			$where = "username='$uid'";
 		}
-		return DB::select ( $fields )->from ( 'witkey_space' )->where ( "uid='$uid'" )->get_one ()->execute ();
+		return DB::select ( $fields )->from ( 'witkey_space' )->where ( $where )->get_one ()->execute ();
 	}
 	function get_avatar($uid, $size = 'middle') {
 		return Keke_user_avatar::get_avatar ( $uid, $size );

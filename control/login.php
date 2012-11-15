@@ -61,7 +61,7 @@ class Control_login extends Controller {
 	 */
 	function action_logout(){
 		$res = Keke_user_login::instance()->logout();
-		Keke::show_msg('成功退出'.$res,$this->request->uri(),'success');
+		Keke::show_msg('成功退出'.$res,'index','success');
 	}
 	/**
 	 * 判断账号，确定是登录类型

@@ -28,8 +28,8 @@ class Control_user_account_basic extends Control_user{
 	 * 更新用户头象
 	 */
 	function action_avatar(){
-		
 		$flash_html = Keke_user::instance()->avatar_flash($_SESSION['uid']);
 		require Keke_tpl::template('user/account/avatar');
 	}
+	
 }

@@ -1284,6 +1284,19 @@ button[type="submit"]{
   right: 0;
   background: url(../img/system/new.gif) no-repeat right top;
 }
+.nav li ul {
+  position: absolute;
+  visibility: hidden;
+  left: 0;
+  top: 30px;
+}
+.nav li ul li {
+  float: none;
+  position: static;
+}
+.nav li:hover ul {
+  visibility: visible;
+}
 #ie6 .nav {
   height: expression( this.scrollHeight < 30 ? "30px" : "auto" );
 }

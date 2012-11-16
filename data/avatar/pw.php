@@ -4,8 +4,6 @@ include '../../app_boot.php';
 include S_ROOT.'config/config_pw.php';
 $request = Request::factory()->initial();
 
-
-
 if($_GET){
 	$uri = "action=uploadicon&step=2&&url=images/facebg.jpg&imgsize=20480&filename=$_GET[filename]&";
 	$data = $_SERVER['HTTP_RAW_POST_DATA'] ? $_SERVER['HTTP_RAW_POST_DATA'] : file_get_contents('php://input');
@@ -13,8 +11,6 @@ if($_GET){
 	if (!$data){
 		return false;
 	}
-	
-	
 	$options = array(
 			strtolower('http') => array(
 					'method'     => 'get',
@@ -22,17 +18,14 @@ if($_GET){
 					'content'    => $data
 			)
 	);
-	
+
 	// Create the context stream
 	$context = stream_context_create($options);
-	
+
 	stream_context_set_option($context, $options);
-	
+
  	$stream = fopen($url, 'r', FALSE, $context);
-	
-	$meta_data = stream_get_meta_data($stream);
-	$content = stream_get_contents($stream);
-	//print_r($content);
+
 	fclose($stream);
 	$request->redirect('user/account_basic/avatar');
 

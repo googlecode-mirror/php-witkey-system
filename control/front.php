@@ -9,9 +9,8 @@
 abstract  class Control_front extends Controller{
 	 
 	function before(){
-	    global $_K; 
-		$res = Keke_user_login::instance()->auto_login();
-	     	 
+		parent::before();
+	    Keke_user_login::instance()->auto_login();
 	}
 	
 }

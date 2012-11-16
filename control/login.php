@@ -7,13 +7,13 @@
  * @version v 2.2 2012-11-06
  *          
  */
-class Control_login extends Controller {
+class Control_login extends Control_front {
 	/**
 	 * 登录页面
 	 */
 	function action_index() {
 		global $_K, $_lang;
-		var_dump($_SESSION); 
+		
 		require Keke_tpl::template ( 'login' );
 	}
 	/**
@@ -51,7 +51,7 @@ class Control_login extends Controller {
 			if($this->request->referrer()==$this->request->url(true)){
 				$uri = 'user/index';
 			}else{
-				$uri = $this->request->referrer();
+				$uri = Cookie::get('last_page');
 			}
 		}
 		Keke::show_msg ( $msg, $uri, $t );
@@ -61,7 +61,9 @@ class Control_login extends Controller {
 	 */
 	function action_logout(){
 		$res = Keke_user_login::instance()->logout();
-		Keke::show_msg('成功退出'.$res,'index','success');
+		$refer = $this->request->referrer();
+		Cookie::set('last_page', $refer);
+		Keke::show_msg('成功退出'.$res,$refer,'success');
 	}
 	/**
 	 * 判断账号，确定是登录类型
@@ -79,4 +81,24 @@ class Control_login extends Controller {
 	     	return 0;
 	     }
 	}
+	/**
+	 * OAUTH登录
+	 */
+	function action_oauth(){
+		global $_K,$_lang;
+		
+		$api_open = unserialize($_K['oauth_api_open']);
+		$api_name = keke_global_class::get_open_api();
+		$type = $_GET['type'];
+		if($type){
+			$u = Keke_oauth_login::instance($type)->get_login_info();
+				
+		}
+		require Keke_tpl::template("oauth_login");
+		
+	}
+	
+	
+	
+	
 } //end

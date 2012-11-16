@@ -68,7 +68,7 @@ abstract class Keke_session{
 	 */
 	public function __construct( $id = NULL){
 			// Load the session
-		$this->_lifetime = get_cfg_var ( "session.gc_maxlifetime" );
+		$this->_lifetime = 3600;//get_cfg_var ( "session.gc_maxlifetime" );
 		$this->read($id);
 	}
 	public function __toString(){

@@ -1,5 +1,7 @@
 <?php  define('IN_KEKE', 1);
-
+/**
+ * phpwind 头象接收
+ */
 include '../../app_boot.php';
 include S_ROOT.'config/config_pw.php';
 $request = Request::factory()->initial();

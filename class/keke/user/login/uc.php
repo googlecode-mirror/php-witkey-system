@@ -27,6 +27,7 @@ class Keke_user_login_uc extends Keke_user_login{
 	   		if($res<0 and $res > -6){
 	   			return $res;
 	   		}
+	   		$this->remember_me($uid, $username, md5($this->_pwd));
 	   		$this->complete_login($uid, $username);
 	   		$html = uc_user_synlogin($uid);
 	   		return $html;

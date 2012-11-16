@@ -44,26 +44,28 @@ class Control_user_custom_steer extends Control_user{
 		require Keke_tpl::template('user/custom/steer');
 	}
 	/**
-	 * 提交建议
+	 * 
 	 */
 	function action_comment(){
-		if($_POST){
-	    	$_POST = Keke_tpl::chars($_POST);//防sql注入
-	    	Keke::formcheck($_POST['formhash']);//跨域提交
-	    	$array = array(
-	    				'obj' => 'comment',
-	    				'report_desc' => $_POST['txt_comment'],
-	    				'on_time' => time(),
-	    				'report_status' => 1,
-	    				'username'=>$_SESSION['username'],
-	    				'uid'=>$_SESSION['uid'],
-	    			);
-	    	$res = Model::factory('witkey_report')->setData($array)->create();
-	    	$this->request->redirect('user/custom_steer');
-	    	
-	    }else{	
+		
 			require Keke_tpl::template('user/custom/comment');
-	    }
+	}
+	/**
+	 * 提交建议
+	 */
+	function action_sbt_comment(){
+		Keke::formcheck($_POST['formhash']);//跨域提交
+		$_POST = Keke_tpl::chars($_POST);//防sql注入
+		$array = array(
+				'obj' => 'comment',
+				'report_desc' => $_POST['txt_comment'],
+				'on_time' => time(),
+				'report_status' => 1,
+				'username'=>$_SESSION['username'],
+				'uid'=>$_SESSION['uid'],
+		);
+		Model::factory('witkey_report')->setData($array)->create();
+		$this->request->redirect('user/custom_steer');
 	}
 	/**
 	 * 删除单条信息

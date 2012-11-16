@@ -32,8 +32,15 @@
 			                	</div>
 			                	<div class="form_row">
 			                		<label for="" class="form_label">ÄÚÈÝ£º</label>
-									<textarea name="txt_content" id="txt_content" cols="81" rows="10"></textarea>
+									<textarea name="txt_content" id="txt_content" cols="87" rows="10" class="xheditor-simple"></textarea>
 			                	</div>
+								<script type="text/javascript">
+									var editor;
+									$(function(){
+										editor = $('#txt_content').xheditor();	
+									})
+									
+								</script>
 	
 			                	<div class="form_line"><hr></div>
 	

@@ -13,7 +13,6 @@ class Control_login extends Control_front {
 	 */
 	function action_index() {
 		global $_K, $_lang;
-		
 		require Keke_tpl::template ( 'login' );
 	}
 	/**
@@ -86,19 +85,89 @@ class Control_login extends Control_front {
 	 */
 	function action_oauth(){
 		global $_K,$_lang;
-		
 		$api_open = unserialize($_K['oauth_api_open']);
 		$api_name = keke_global_class::get_open_api();
 		$type = $_GET['type'];
-		if($type){
+		if(Keke_valid::not_empty($type)){
 			$u = Keke_oauth_login::instance($type)->get_login_info();
-				
+			
+			//如果这个账号绑定过，则直接登录成功
+			$bind_info = self::check_bind($type, $u['username']);
+			if(Keke_valid::not_empty($bind_info)){
+				Keke_user_login::instance()->complete_login($bind_info['uid'], $bind_info['username']);
+				$this->request->redirect(Cookie::get('last_page'));
+			}
 		}
 		require Keke_tpl::template("oauth_login");
-		
 	}
 	
+	function action_ologin(){
+		global $_K,$ouri,$code;
+		$type = $_GET['type'];
+		//如果access_token 有值,返回到index
+		if($_SESSION[$type.'_token']['access_token']){
+			$this->request->redirect('login/oauth?type='.$type);
+		}
+		//回调页面
+		$ouri = $_K['website_url'].'/index.php/login/call/'.$type;
+		//url 地址编码
+		$ouri = urlencode($ouri);
+		 
+		if($_GET['back']){
+			Keke_oauth_login::instance($type)->get_access_token();
+			//header('Location:'.$_K['website_url'].'/index.php/login/oauth?type='.$type);
+			$this->request->redirect('login/oauth?type='.$type);
+		}else{
+			//oauth 登录认证的地址
+			$to_url =  Keke_oauth_login::instance($type)->get_auth_url($ouri);
+			$to_url = urldecode($to_url);
+			header("Location:".$to_url);
+		}
+	}
 	
+	function action_call(){
+		global $_K;
+		$type = $this->request->param('id');
+		if($_GET){
+			//如腾讯等微博，附加了一个扩展数据,也要用到
+			$ext = http_build_query($_GET);
+		}
+		$uri = $_K['website_url'].'/index.php/login/ologin?back=1&type='.$type.'&'.$ext;
+		$this->request->redirect($uri);
+	}
+	/**
+	 * oatuh 登录成功后，keke系统登录，如果有账号则绑定oauth 账号
+	 */
+	function action_bind(){
+	    Keke::formcheck($_POST['formhash']);
+	    $_POST = Keke_tpl::chars($_POST);
+	    $t = $this->get_account_type($_POST['txt_account']);
+	    $res = Keke_user_login::instance()->set_username($_POST['txt_account'])->set_pwd($_POST['pwd_password'])->login($t);
+	    //登录失败
+	    if((int)$res < 0){
+	       Keke::show_msg('账号与密码不正确','login/oauth?type='.$_POST['type'],'error');	
+	    }
+	    $type = $_POST['type'];
+	    //绑定账号
+		$columns = array('type','account','uid','username');
+		$u = Keke_oauth_login::instance($type)->get_login_info();
+		$values = array($type,$u['username'],$_SESSION['uid'],$_SESSION['username']);
+		//写入绑定库	    
+	    DB::insert('witkey_member_oauth')->set($columns)->value($values)->execute();
+	    
+	    $this->action_login();
+	    
+	}
+	/**
+	 *  判断这个账号是否有绑定
+	 * @param String $type   微博类型
+	 * @param string $nick   微博账号名称
+	 * @return array 绑定账号的uid,username
+	 */
+	static public function check_bind($type,$nick){
+		$where = "type ='$type' and account='$nick'";
+		return DB::select('uid,username')->from('witkey_member_oauth')->where($where)->get_one()->execute();
+	}
 	
 	
 } //end

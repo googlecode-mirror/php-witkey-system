@@ -1,5 +1,5 @@
 <?php  define('IN_KEKE', 1);
-
+//Ucenter 头象接收
 include '../../app_boot.php';
 $a = $_GET['a'];
 if($a){

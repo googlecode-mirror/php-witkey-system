@@ -1284,6 +1284,19 @@ button[type="submit"]{
   right: 0;
   background: url(../img/system/new.gif) no-repeat right top;
 }
+.nav li ul {
+  position: absolute;
+  visibility: hidden;
+  left: 0;
+  top: 30px;
+}
+.nav li ul li {
+  float: none;
+  position: static;
+}
+.nav li:hover ul {
+  visibility: visible;
+}
 #ie6 .nav {
   height: expression( this.scrollHeight < 30 ? "30px" : "auto" );
 }
@@ -8448,6 +8461,7 @@ a.submit:active {
   min-width: 85px;
   font-weight: bold;
   border: 1px solid #5D8AD2;
+  width: expression( this.scrollWidth < 85 ? "85px" : "auto" );
 }
 .nav li a:hover {
   z-index: 1;
@@ -8467,6 +8481,9 @@ a.submit:active {
   color: #2F549F;
   border-color: #fff;
   box-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
+}
+.nav li ul {
+  background: #537bcc;
 }
 /* 弹出框
 	------------------------*/

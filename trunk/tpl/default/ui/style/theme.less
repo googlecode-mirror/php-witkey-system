@@ -352,7 +352,8 @@ table {
 			&.line { display:block; height:30px; width:0; font-size:0; border-left:1px solid #446ac1; border-right:1px solid #7fa2dd;}
 			/*导航链接*/
 			a{ 
-				min-width:85px;  font-weight:bold;  border:1px solid #5D8AD2; 
+				min-width:85px;  font-weight:bold;  border:1px solid #5D8AD2;
+				width: ~'expression( this.scrollWidth < 85 ? "85px" : "auto" )';
 				&:hover{
 				 	z-index:1;/* border-color: #95C3ED;*/ border-color:#95C3ED;background:#7498d9 url(../img/style/nav_ul_hover.gif) no-repeat center center; box-shadow:0 0 3px rgba(149,195,237,0.8);  
 				}
@@ -365,6 +366,8 @@ table {
 					background:#fff url(../img/style/nav_ul_selected.gif) no-repeat center center; color:#2F549F;border-color:#fff; box-shadow:0 0 3px rgba(255,255,255,0.5);
 				}
 			}
+
+			ul{background: #537bcc;}
 		}
 	}
 

@@ -4,7 +4,7 @@ $lang = array(
       'no_account_now_register'=>'无账号？现在去注册',
       'register_success_to_login'=>'账号注册成功后，通过邮箱认证和手机认证之后，就可以通过邮箱和手机来登录啦!',
       'need_to_logined'=>'您所访问的页面需要登录',
-		'account'=>'账　号：',
+	  'account'=>'账　号：',
       'password'=>'密　码：',
       'you_can_user_phone_eamil'=>'手机号/邮箱/用户名',
 	  'input_your_user_name'=>'填写您的用户名',
@@ -23,6 +23,26 @@ $lang = array(
 		'password_is_not_null'=>'密码不可以为空',
 		'one_week_auto_login'=>'一周内自动登录',
 	  'in_order_account_security_not_check_on_public'=>'为了账户安全，请勿在公用电脑上勾选此项',
+		
+		'type_no_empty'=>'type不能为空!',
+		'login_in_fail'=>'登陆失败',
+		'login_account_fail'=>'注册帐号失败',
+		'now_three_account_bind'=>'当前的第三方账号已被绑定',
+		'account_bind'=>'绑定已有账号',
+		'improve_information'=>'完善个人信息',
+		'you_user_account'=>'您使用的账号',
+		 
+		'user_error'=>'用户名输入错误',
+		'username_can_zh'=>'用户名可以为中文!',
+		'this_accout_used_login'=>'此账号 用于登录及找回密码，不会公开',
+		 
+		 
+		 
+		'now_bindding'=>'立 即 绑 定',
+	 
+		 
+		'use_friend_web_login'=>'使用合作网站账号登录',
+		'i_has_read_and_accept'=>'我已阅读并接受',
 
 
 

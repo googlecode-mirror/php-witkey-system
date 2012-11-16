@@ -48,13 +48,8 @@ class Keke_user_login_keke extends Keke_user_login {
 		if ($destroy === TRUE) {
 			$this->_session->destroy();
 		} else {
-			// 删除登录用户会话
-			$this->_session->delete ( 'uid' );
-			$this->_session->delete ( 'username' );
-			// 重新生成会话
-			$this->_session->regenerate ();
+			$this->clear_session();
 		}
-		Cookie::delete('remember_me');
 		// 检查登出是否成功
 		return ! $this->logged_in ();
 	}

@@ -175,6 +175,20 @@ abstract class Keke_user_login   {
 		
 		
 	}
+	function clear_session(){
+		// 删除登录用户会话
+		$this->_session->delete ( 'uid' );
+		$this->_session->delete ( 'username' );
+		//删除所有token 的值
+		foreach ($this->_session->as_array() as $k=>$v){
+			if(strpos(strtolower($k), '_token')!==FALSE){
+				$this->_session->delete($k);
+			}
+		}
+		// 重新生成会话
+		$this->_session->regenerate ();
+		Cookie::delete('remember_me');
+	}
 	/**
 	 * 登录的返回状态 
 	 */

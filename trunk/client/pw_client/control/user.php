@@ -166,5 +166,8 @@ class usercontrol {
 	function update_increment($id){
 		return $this->user->update_increment($id);
 	}
+	function db_siteid(){
+		return $this->user->db_siteid();
+	}
 }
 ?>

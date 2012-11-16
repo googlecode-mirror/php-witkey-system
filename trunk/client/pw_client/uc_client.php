@@ -135,7 +135,9 @@ function uc_user_edit($uid, $oldname, $pwd, $email) {
 function uc_user_delete($uids) {
 	return uc_data_request('user', 'delete', array($uids));
 }
-
+function uc_db_siteid(){
+	return uc_data_request('user', 'db_siteid');
+}
 /**
  * Ìí¼ÓºÃÓÑ
  *

@@ -100,5 +100,10 @@ class usermodel {
 		$this->db->query($sql);
 		return $this->db->affected_rows();
 	}
+	function db_siteid(){
+		$sql = "select db_value from pw_config where db_name='db_siteid' limit 0,1";
+		$res = $this->db->get_one($sql);
+		return $res['db_value'];
+	}
 }
 ?>

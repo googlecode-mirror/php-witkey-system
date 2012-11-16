@@ -41,10 +41,20 @@ class Keke_user_pw extends Keke_user {
 	}
 	
 	function avatar_flash($uid){
-		$ico_url = 'http://localhost/pw/job.php?action=uploadicon&step=2&&url=images/facebg.jpg&imgsize=20480&';
+		//$db_siteid = uc_db_siteid();
+		 
+		//$pwServer['HTTP_USER_AGENT'] = 'Shockwave Flash';
+		
+		//$swfhash = $this->GetVerify($uid,$db_siteid);
+		
+		$pw_url = rtrim(UC_API,'/');
+		
+		//$ico_url = 'http://localhost/kppw_google/data/avatar/pw.php?action=uploadicon&verify='.$swfhash.'&wuid='.$uid.'&';
+		
+		$ico_url = 'http://localhost/kppw_google/data/avatar/pw.php?action=uploadicon&step=2&&url=images/facebg.jpg&imgsize=20480&';
 		
 		$icon_encode_url  = 'saveFace='.rawurlencode($ico_url);
-		$pw_url = rtrim(UC_API,'/');
+		
 		$html = <<<EOT
 <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase=" http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=10,0,0,0" width="500" height="405" id="FlashVars" align="middle">
 		<param name="movie" value="$pw_url/js/face.swf" />
@@ -61,6 +71,10 @@ class Keke_user_pw extends Keke_user {
 		</object>
 EOT;
 	return $html;	
+	}
+	function GetVerify($str, $app = null) {
+		//empty($app) && $app = $GLOBALS['db_siteid'];
+		return substr(md5($str . $app ), 8, 8);
 	}
 	
 }

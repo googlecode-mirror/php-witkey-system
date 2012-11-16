@@ -25,7 +25,7 @@ class Keke_user_login_pw extends Keke_user_login {
 		if ($res !== 1) {
 			return $res;
 		}
-		 
+		$this->remember_me($uc_info['uid'], $uc_info['username'], md5($this->_pwd));
 		$this->complete_login ( $uc_info['uid'], $uc_info['username'] );
 		// Òì²½µÇÂ¼´úÂë
 		return $uc_info['synlogin'];

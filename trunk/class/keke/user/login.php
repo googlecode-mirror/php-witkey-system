@@ -138,8 +138,8 @@ abstract class Keke_user_login   {
 		$data = $uid.$username.$pwd.$_SERVER['HTTP_USER_AGENT'];
 		$hash = hash_hmac('sha512', $data, ENCODE_KEY);
 		$arr = array('uid'=>$uid,'username'=>$username,'hash'=>$hash);
-		$c_str = serialize($arr);
-		return (bool)Cookie::set('remember_me', $c_str,$this->_remember_day*24*3600);
+		$c_str = base64_encode(serialize($arr));
+		return (bool)Cookie::set('remember_me', $c_str,(int)$this->_remember_day*24*3600);
 	}
 	/**
 	 * 自动登录
@@ -158,7 +158,7 @@ abstract class Keke_user_login   {
 			return FALSE;
 		}
 		
-		$c_arr = unserialize($cdata);
+		$c_arr = base64_decode(unserialize($cdata));
 		$uid = $c_arr['uid'];
 		$username = $c_arr['username'];
 		$pwd = DB::select('password')->from('witkey_member')->where("uid='$uid' and username = '$username'")->get_count()->execute();
@@ -169,11 +169,10 @@ abstract class Keke_user_login   {
 		if($hash != $c_arr['hash']){
 			return FALSE;
 		}
-		//执行登录.注：uc登录成功的结果要输出到html才可以实现同步,要在前端控制层处理
-		$obj = Keke_user_login::instance();
-		$obj->set_username ( $username );
-		$obj->set_pwd ( $pwd );
-		return $obj->login ();
+		//执行本地的登录
+		
+		return $this->complete_login($uid, $username);
+		
 		
 	}
 	/**

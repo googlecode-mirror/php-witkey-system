@@ -13,4 +13,9 @@ class Control_ui extends Controller {
 		
 		require Keke_tpl::template('ui/box');
 	}
+	function action_ui(){
+		global $_K,$_lang;
+		
+		require Keke_tpl::template('ui/ui');
+	}
 }

@@ -77,4 +77,13 @@ abstract  class Control_user extends Controller{
     		'report'=>array('举报','custom_report'),
     		'steer'=>array('建议','custom_steer'),
     );
+    
+    function before(){
+    	parent::before();
+    	Keke_user_login::instance()->auto_login();
+    	if(Keke_user_login::instance()->logged_in()===FALSE){
+    		$this->request->redirect('login');
+    	}
+    }
+    
 }

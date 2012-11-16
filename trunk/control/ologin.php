@@ -14,7 +14,7 @@ class Control_ologin extends Controller{
 		$type = $_GET['type'];
 		if($type){
 			$u = Keke_oauth_login::instance($type)->get_login_info();
-			var_dump($u);
+			
 		}
 		require Keke_tpl::template("oauth_login");
 	}

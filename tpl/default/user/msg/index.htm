@@ -15,10 +15,11 @@
 		                <div class="box_detail">
 		                	<form action="{BASE_URL}/index.php/user/msg_index" name="msg_frm" method="post" id="msg_frm" onsubmit="return check_send('msg_frm')">
 								<input type="hidden" name="formhash" value="{FORMHASH}">
-			                	<div class="form_row">
+			                	
+								<div class="form_row">
 			                		<label for="" class="form_label">收件人：</label>
-									<input type="text" name="txt_to_username" id="txt_to_username" size="80" value="" onblur="check_user();" tmp="1" 
-									limit="required:true;len:2-40" msg="收件人用户名" title="收件人用户名" msgArea="msg_txt_to_username"
+									<input type="text" name="txt_to_username" id="txt_to_username" size="80" 
+									limit="required:true;len:2-40" ajax = '{BASE_URL}/index.php/user/msg_index/check_username/' msg="收件人用户名" title="收件人用户名" msgArea="msg_txt_to_username"
 									/>
 									<span id="msg_txt_to_username"></span>
 			                	</div>
@@ -34,16 +35,7 @@
 			                		<label for="" class="form_label">内容：</label>
 									<textarea name="txt_content" id="txt_content" cols="87" rows="10" class="xheditor-simple"></textarea>
 			                	</div>
-								<script type="text/javascript">
-									var editor;
-									$(function(){
-										editor = $('#txt_content').xheditor();	
-									})
-									
-								</script>
-	
 			                	<div class="form_line"><hr></div>
-	
 			                	<div class="form_footer">
 			                		<input type="submit" value="发送">
 			                	</div>
@@ -59,29 +51,12 @@
 	<script type="text/javascript">
 		//发送消息
 		function check_send(id){
-			var name = $("#txt_to_username").attr("tmp");
-			if(parseInt(name)==2&&checkForm(document.getElementById("msg_frm"))){
-					if(contentCheck('tar_content',10,300,0)){						
-						return true;
-					}else{
-						return false;
-					}                        	             
+			if(checkForm(document.getElementById("msg_frm")) && contentCheck('tar_content',10,300,0)){
+				return true;
 			}else{
 				return false;
 			}
 		}
-		//检测用户名是否存在
-		function check_user(){
-			var username= $("#txt_to_username").val();
-			$.post("{BASE_URL}/index.php/user/msg_index?check_username="+username,function(data){		
-				if(data!=1){							
-					$("#txt_to_username").attr("tmp",1);
-					$("#msg_txt_to_username").html("<span>用户名不存在</span>");			
-				}else{
-					$("#txt_to_username").attr("tmp",2);	
-					$("#msg_txt_to_username").html("<span>用户名正确</span>");							
-				}
-			},'text')
-		}
+ 
 	</script>
 <!--{include user/footer}-->

@@ -61,6 +61,8 @@ class Keke_oauth_ten_client extends Keke_oauth_login{
 	 		//Tencent::$debug = true;
 	 	    $r = Tencent::api('user/info');
 	 	    $uinfo = (json_decode($r, true));
+	 	}else{
+	 		return FALSE;
 	 	}
 	 	if(CHARSET == 'gbk'){
 	 		$uinfo = Keke::utftogbk($uinfo);

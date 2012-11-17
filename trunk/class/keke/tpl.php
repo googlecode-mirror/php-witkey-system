@@ -100,7 +100,7 @@ class Keke_tpl {
 		$template = preg_replace ( "/ \?\>[\n\r]*\<\? /s", " ", $template );
 		
 		//附加处理
-		$template = "<?php Keke_tpl::checkrefresh('$tpl', '{$_K['timestamp']}' );?>$template<?php Keke_tpl::ob_out();?>";
+		$template = "<?php global \$_K,\$_lang; Keke_tpl::checkrefresh('$tpl', '{$_K['timestamp']}' );?>$template<?php Keke_tpl::ob_out();?>";
 		
 		//替换
 		empty ( $_K ['block_search'] ) or $template = str_replace ( $_K ['block_search'], $_K ['block_replace'], $template );
@@ -281,10 +281,10 @@ class Keke_tpl {
 		if(! file_exists ( $objfile ) or ! TPL_CACHE){
 			Keke_tpl::parse_template ( $tpl );
 		}
-		
-		//(! file_exists ( $objfile ) || ! TPL_CACHE) and Keke_tpl::parse_template ( $tpl );
+
 		return $objfile;
 	}
+	
 	
 	/**
 	 * //子模板更新检查 
@@ -305,7 +305,7 @@ class Keke_tpl {
 	
 	//调整输出
 	static function ob_out() {
-		global $_K;
+		global $_K,$_lang;
 		$content = ob_get_contents ();
 		$preg_searchs = $preg_replaces = $str_searchs = $str_replaces = array();
 		if ($_K ['is_rewrite'] == 1) {
@@ -340,24 +340,14 @@ class Keke_tpl {
 		}
 		Keke_tpl::obclean ();
 		($_K ['inajax']) and self::xml_out ( $content );
-		//header ( 'Content-Type: text/html; charset='.CHARSET);
-		//var_dump($content);die; 
-		//echo  $content;
-		//Request::current()->response()->body($content);
-		//Request::current()->body($content);
-		//echo $content;
+
 	}
 	static function obclean() {
 		global $_K;
-		
-		 //var_dump($_K['inajax']==1 or GZIP===false);die;
 		 if($_K['inajax']==1){
 		 	ob_end_clean();
 		 	ob_start();
-		 }else{
-		 	//ob_start();
-			//ob_start('ob_gzhandler');
-		 }
+		 } 
 		 
 	}
 	static function rewrite_url($pre, $para, $hot = '') {

@@ -3,10 +3,9 @@
 class Control_test extends Controller{
 
 	function action_index(){
-		 global $_K,$_lang;
-          $test = '子变量';  	 
-          var_dump($_SESSION);
-		 require Keke_tpl::template('test/link');
+        $test = '子变量';  	 
+         
+        require Keke_tpl::template('test/link');
 	}
  
 }

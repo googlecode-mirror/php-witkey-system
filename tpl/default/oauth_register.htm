@@ -1,17 +1,17 @@
-<!--{template header}-->
+<!--{include header}-->
 	<div class="wrapper">
 		<div class="container_24">
 			<section class="clearfix section">
 				<div class="box model green ">
         		<div class="inner">
 				<header class="box_header clearfix pad10">
-            	<div class="grid_11 alpha omega">
-	            	<h1 class="box_title">{$_lang['improve_information']}  Improve information</h1>
+            	<div class="grid_5 alpha omega">
+	            	<h1 class="box_title">{$_lang['improve_information']}</h1>
 				</div>
 					<div class="fl_l">
 						<nav class="box_nav">
 							<ul>
-	                			<li><a href="index.php?do=oauth_login&type=$type&refer={$_K['refer']}">{$_lang['account_bind']}</a></li>
+	                			<li><a href="{BASE_URL}/index.php/login/oauth?type=$type">{$_lang['account_bind']}</a></li>
 							</ul>
 						</nav>
 					</div>
@@ -19,123 +19,109 @@
 	            <div class="box_detail clearfix po_re box">
 	                <div class="grid_17" > 
 	                    <div class="use_now">
-	                	<h3 class="font14">{$_lang['you_user_account']}</h3>
-	                    <p>$oauth_type_arr[$type]['name']{$_lang['zh_mh']}<img src="static/img/ico/{$type}_t.gif" style="width:17px; height:17px; vertical-align:middle; margin-right:5px" alt=''><span class="font14">{if $type==taobao}$nick{else}$oauth_user_info['name']{/if}</span></p>
-	                </div>
+	                	<img src="{BASE_URL}/static/img/ico/{$type}_t.gif" style="vertical-align:middle;" >
+	                    <span class="font14">{$u['nick']}</span>
+	               		</div>
 	                                                
 	                    <!--from±íµ¥ start-->
-	                    <div class="form_box clearfix box">
-	                    <form action="index.php?do=oauth_register&type=$type" method="post" id="oauth_register_frm"  name="oauth_register_frm">
-	                    	<input type="hidden" name="formhash" id="formhash" value="{FORMHASH}">
-							<input type="hidden" name="handlekey" value="oauth_register_frm1">
-							<input type="hidden" name="hdn_refer" id="hdn_refer" value="{$_K['refer']}">
-								<input type="hidden" name="type" value="$type">
-	                    		<!--ÕËºÅ-->
-			                       <div class="rowElem clearfix po_re">
-		                                <label class="grid_4">{$_lang['account']}</label>
-		                                <div class="fl_l mr_5 ">
-		                                    <input  type="text" style="width:200px;" class="txt txt_input" autocomplete="off" name="txt_account" id="txt_account" limit="required:true;len:2-20;type:string" 
-										msg="{$_lang['username_input_wrong']}" ajax="index.php?do=register&check_username=" title="{$_lang['username_no_mobile_email']}" msgArea="login_account_msg" />
-		                               		<span class="login_msg" id="login_account_msg"></span>
-		                               </div>
-	                                
-	                             </div>
-								 <div class="prefix_4 ml_5"></div>
-								 <!--end ÕËºÅ-->
-								 
-								 <!--ÓÊÏä-->
-	                             <div class="rowElem clearfix po_re">
-	                                <label class="grid_4">{$_lang['email']}</label>
-	                                <div class="fl_l mr_5 ">
-	                                    <input autocomplete="off" style="width:200px;" type="text" class="txt_input" name="txt_email" id="txt_email"limit="type:email;required:true;len:6-50" msg="{$_lang['email_msg']}" title="{$_lang['email_title']}" ajax="index.php?do=register&check_email=" msgArea="email_msg"/>
-	                               		<span class="" id="email_msg"></span>
-	                               </div>
-	                                
-	                             </div>
-	                      
-								 <!--end ÓÊÏä-->
-								 
-								 <!--ÃÜÂë-->
-	                             <div class="rowElem clearfix po_re">
-	                                <label class="grid_4">{$_lang['pwd']}</label>
-	                                <div class="fl_l mr_5 ">
-	                                   <input class="txt_input" onKeyup="pwStrength(this.value)" style="width:200px;" type="password" name="pwd_password" id="pwd_password" maxlength="20" limit="required:true;len:6-20" msg="{$_lang['password_input_error']}" title="{$_lang['please_input_register_pw']}" msgArea="password_msg"/>
-	                                	<span class="msg" id="password_msg"></span>
-	                                </div>
-	                                
-	                                <div class="clear"></div>
-	                                <!--ÃÜÂëÇ¿¶È-->
+	                     <div class="form_box clearfix border_n">
+                    			<form action="{BASE_URL}/index.php/register/bind" method="post" id="register_frm" name="register_frm">
+                        			<input type="hidden" name="formhash" id="formhash" value="{FORMHASH}">
+                        			<input type="hidden" name="handlekey" value="register_frm1">
+									<input type="hidden" name="type" value="{$type}">
+                        			<div class="rowElem clearfix po_re">
+                            			<label class="grid_4">
+                                			{$_lang['account']}
+                            			</label>
+                            			<div class="fl_l ">
+                                			<input type="text" class="txt txt_input" autocomplete="off" name="txt_account" id="txt_account" limit="required:true;len:2-20;type:string;general:true" msg="{$_lang['username_input_error']}" ajax="{BASE_URL}/index.php/register/check_username?username=" title="{$_lang['please_input_register_account']}" msgArea="login_account_msg" style="width:200px;" />
+                            				<span class="msg" id="login_account_msg"><i></i></span>
+										</div>
+									
+                        			</div>
+
+                        		<!--end ÕËºÅ--><!--ÃÜÂë-->
+                        			<div class="rowElem clearfix po_re">
+                            			<label class="grid_4">
+                                			{$_lang['password']}
+                            			</label>
+                            			<div class="fl_l  ">
+                                			<input class="txt_input" onKeyup="pwStrength(this.value)" style="width:200px;" type="password" name="pwd_password" id="pwd_password" maxlength="20" limit="required:true;len:6-20" msg="{$_lang['password_input_error']}" title="{$_lang['please_input_register_pw']}" msgArea="password_msg"/>
+                            				<span class="msg" id="password_msg"></span>
+										</div>
+										
+                        			<div class="clear"></div>
+									<!--ÃÜÂëÇ¿¶È-->
 									
 										<div class="prefix_4">
-                            		 	<div id="pwdStrength" class="msg pw_strength">
+                            		 	<div id="pwdStrength" class=" msg pw_strength">
 	                                		<div class="pw_letter">
 	                                			<span class="selected">{$_lang['weak']}</span>
 												<span>{$_lang['general']}</span>
 												<span>{$_lang['better']}</span>
 											</div>
                            			 	</div>
-                           			 	</div>
+										
+										</div>
                         			</div>
 									<!--Ç¿¶Èend-->
-	                 
-							
-								 
-	                             <div class="rowElem clearfix po_re">
-	                                <label class="grid_4">{$_lang['confirm_pwd']}</label>
-	                                <div class="fl_l mr_5">
-	                               	<input class="txt_input" style="width:200px;" type="password" name="pwd_password2" id="pwd_password2" maxlength="20" limit="required:true;equals:pwd_password" msg="{$_lang['confirm_pwd_wrong']}" title="{$_lang['input_confirm_pwd']}" msgArea="password2_msg"/>
-	                               		 <span class="msg" id="password2_msg"></span>
-	                                </div>
-	                               
-	                             </div>
-								 
-								 
-	                         <!--end ÃÜÂë-->
-								
-								 <!--ÑéÖ¤Âë-->
                         			<div class="rowElem clearfix po_re">
                             			<label class="grid_4">
-                                			{$_lang['code']}
+                                			{$_lang['confirm_password']}
                             			</label>
-                            			<div class="grid_8 alpha po_re" >
-                                			<input style="width:65px;" class="fl_l txt_input" name="txt_code" type="text" 
-											size="8" id="txt_code" limit="required:true;len:4" msg="{$_lang['code_error']}"msgArea="secode_msg"
-											ajax="index.php?do=ajax&view=code&txt_code=" >
-								 			<div id="show_secode_menu_content" class="hidden secode_box">
-								 				<img id="secode_img" src="secode_show.php?sid=" onclick="document.getElementById('secode_img').src='secode_show.php?sid='+Math.random(); return false;">
-								 				<a class="font14" href="#" onclick="document.getElementById('secode_img').src='secode_show.php?sid='+Math.random(); return false;">{$_lang['change_a_group']}</a>
-												<span class="" id="secode_msg"></span>
-											</div>
-								 	        <a id="show_secode" href='index.php?do=ajax&view=menu&ajax=show_secode'></a>
-                            			</div>
-                            			
-                        			</div>						
-                        	<!--end ÑéÖ¤Âë-->
-								 
-								 
-	                          <div class="mt_20 prefix_4">
-	                         	<button  type="submit" class="big button" onclick="return oauth_register();"><span class="check icon"> </span>{$_lang['improve']}</button>
-							 </div>
-	                             <p class="mt_20 prefix_4 ml_5"><input name="inputtext" type="checkbox" checked/> &nbsp;{$_lang['i_have_read_and_recept']}<a href="index.php?do=protocol&pro_id=219">{$_lang['rigister_agree']}</a>{$_lang['rights_pub']}</p>
+                            			<div class="fl_l">
+                                			<input class="txt_input" style="width:200px;" type="password" name="pwd_password2" id="pwd_password2" maxlength="20" limit="required:true;equals:pwd_password" msg="{$_lang['repeat_password_error']}" title="{$_lang['input_pw_agian']}" msgArea="password2_msg"/>
+                            				<span class="msg" id="password2_msg"></span>
+										</div>
+										
+                        			</div> 
+                        		<!--end ÃÜÂë-->
+								<!--ÓÊÏä-->
+                        			<div class="rowElem clearfix po_re">
+                            			<label class="grid_4">
+                                			{$_lang['email']}
+                            			</label>
+                            			<div class="fl_l">
+                                			<input class="txt_input" style="width:200px;" autocomplete="off" type="text" class="txt" name="txt_email" id="txt_email"limit="type:email;required:true;len:6-50" msg="{$_lang['email_error']}" title="{$_lang['email_format']}" ajax="{BASE_URL}/index.php/register/check_email?email=" msgArea="email_msg"/>
+                            				<span class="" id="email_msg"></span>
+										</div>
+										
+                        			</div>
+                        	<!--end ÓÊÏä-->					
+						 
+							
+                        <div class="mt_20 prefix_4 ml_5">
+                            <button type="submit" class="button" onclick="return user_register();">
+                                {$_lang['register']}
+                            </button>
+                        </div>
+												
+                        <p class="mt_20 prefix_4 ml_5">
+                            <input  name="inputtext" type="checkbox" checked="checked" id="inputtext" limit="required:true"
+							msg="{$_lang['you_should_agree_agreement']}" msgArea="login_msg"/> &nbsp;{$_lang['i_has_read_and_accpet']}<a  class="agreement_link" href="" target="_blank">{$_lang['register_agreement']}</a>{$_lang['and_copyright_notice']}
+                        	<span id="login_msg"></span>
+						</p>
 	                        </form>
 	                    </div>
 	                </div>
 	                <div class="grid_7 omega border_l_c">
 	                    <div class="pad10">
-	                          <div class="pl_20">
-	                        	<span>{$_lang['use_friend_web_login']}</span>
-								{loop $open_api_arr $k $v}
-	                            <div class="mt_10">
-	                                <a href="index.php?do=oauth_login&type=$v['ico']"><img src="static/img/ico/{$v['ico']}_t.gif" alt="$v['name']" title="$v['name']"></a><a href="index.php?do=oauth_login&type=$v['ico']" class="ml_5">$v['name']</a>
-	                            </div>
-								{/loop}
-	                             </div>
-	                    </div>
+                        <div class="pl_20">
+                        	<span>{$_lang['use_friend_web_login']}</span>
+							{loop $api_open $k $v}
+								{if $_K[$k.'_app_id']}
+		                            <div class="mt_10">
+		                                <a href="{BASE_URL}/index.php/login/ologin?type=$k"><img src="{BASE_URL}/static/img/ico/{$k}_t.gif"  title="{$api_name[$k]['name']}">$api_name[$k]['name']{$_lang['login']}</a>
+		                            </div>
+								{/if}
+							{/loop}
+						</div>
+                    </div>
 	                </div>
 	            </div>
 				</div>
 	            </div>
-				<div id="login_msg"></div>
+				
 			</section>
 		</div>
 	</div>		
@@ -144,10 +130,10 @@
 <script type="text/javascript">
 In('form'); 
 	//×¢²á
-	function oauth_register(){
+	function user_register(){
 		
-	if(checkForm(document.getElementById("oauth_register_frm"), false)){ 
-			showWindow('oauth_register_frm1','oauth_register_frm','post'); 
+	   if(checkForm(document.getElementById("register_frm"))){
+			 showWindow('register_frm1', 'register_frm', 'post',0,{cover:1});
 		}
 		return false;  
 	}
@@ -155,9 +141,6 @@ In('form');
 		$("#show_secode_menu_content").removeClass("hidden");
 	});
 	function checkStrong(sPW){
-		//if (sPW.length < 3){
-			//Modes=1;
-		//}else{
 			var pwLength = 	sPW.length;
 			  var patEn = /[a-zA-Z]/;
 			  var patnum = /[0-9]/;
@@ -166,8 +149,6 @@ In('form');
 			  var isNum = patnum.test(sPW);
 			  var isSpe = speChar.test(sPW);
 			  Modes = getStrong(isEn,isNum,isSpe,pwLength);
-		
-		//}
 		 return Modes; 
 	}
 
@@ -196,6 +177,5 @@ In('form');
 
 	}
 </script>
-
  
-<!--{template footer}-->
+<!--{include footer}-->

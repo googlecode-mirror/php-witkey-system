@@ -25,8 +25,7 @@ class Control_user_msg_in extends Control_user{
 		
 		$count = intval($_GET['count']);
 		$this->_default_ord_field = 'on_time';
-		$base_uri = BASE_URL.'/index.php/user/msg_in/'.$type;
-		$del_uri = $base_uri.'/del';
+		$base_uri = BASE_URL.'/index.php/user/msg_in/ '.$type;
 		extract($this->get_url($base_uri));
 		//收件	条件
 		switch ($type){

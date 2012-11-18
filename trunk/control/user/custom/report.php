@@ -21,9 +21,8 @@ class Control_user_custom_report extends Control_user{
 	 * @param string $my
 	 */
 	function action_index($my = NULL){
-		//定义全局变量与语言包
-		global $_lang , $_K;
-		//var_dump($_SESSION);
+		
+		
 		//编号 	被举报人 	类型 	原因 	附件 	状态 	时间
 		$fields = "`report_id`,`to_username`,`report_type`,`report_desc`,`report_file`,`report_status`,`on_time`,`op_result`";
 		//查询字段

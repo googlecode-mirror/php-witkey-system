@@ -12,13 +12,16 @@ class Control_login extends Control_front {
 	 * 登录页面
 	 */
 	function action_index() {
-		global $_K, $_lang;
+		global $_K;
+		$api_open = unserialize($_K['oauth_api_open']);
+		$api_name = keke_global_class::get_open_api();
+		
 		require Keke_tpl::template ( 'login' );
 	}
 	/**
 	 * 用户登录
 	 */
-	function action_login() {
+	function action_login($is_bind=FALSE) {
 		
 		global $_K;
 		Keke::formcheck ( $_POST ['formhash'] );
@@ -41,7 +44,13 @@ class Control_login extends Control_front {
 			$t = 'error';
 		}else {
 			$msg = '登录成功';
-			
+			//是否绑定登录
+			if($is_bind===TRUE){
+				$u = Keke_oauth_login::instance($_POST['type'])->get_login_info();
+				if(!self::check_bind($_POST['type'], $u['username'])){
+					self::user_bind($_POST['type']);
+				}
+			}
 			if($_K ['user_intergration']!=1){
 				//同步登录的代码
 				$msg .= $res;
@@ -84,13 +93,14 @@ class Control_login extends Control_front {
 	 * OAUTH登录
 	 */
 	function action_oauth(){
-		global $_K,$_lang;
+		global $_K;
+		
 		$api_open = unserialize($_K['oauth_api_open']);
 		$api_name = keke_global_class::get_open_api();
 		$type = $_GET['type'];
+		 
 		if(Keke_valid::not_empty($type)){
 			$u = Keke_oauth_login::instance($type)->get_login_info();
-			
 			//如果这个账号绑定过，则直接登录成功
 			$bind_info = self::check_bind($type, $u['username']);
 			if(Keke_valid::not_empty($bind_info)){
@@ -139,23 +149,7 @@ class Control_login extends Control_front {
 	 * oatuh 登录成功后，keke系统登录，如果有账号则绑定oauth 账号
 	 */
 	function action_bind(){
-	    Keke::formcheck($_POST['formhash']);
-	    $_POST = Keke_tpl::chars($_POST);
-	    $t = $this->get_account_type($_POST['txt_account']);
-	    $res = Keke_user_login::instance()->set_username($_POST['txt_account'])->set_pwd($_POST['pwd_password'])->login($t);
-	    //登录失败
-	    if((int)$res < 0){
-	       Keke::show_msg('账号与密码不正确','login/oauth?type='.$_POST['type'],'error');	
-	    }
-	    $type = $_POST['type'];
-	    //绑定账号
-		$columns = array('type','account','uid','username');
-		$u = Keke_oauth_login::instance($type)->get_login_info();
-		$values = array($type,$u['username'],$_SESSION['uid'],$_SESSION['username']);
-		//写入绑定库	    
-	    DB::insert('witkey_member_oauth')->set($columns)->value($values)->execute();
-	    
-	    $this->action_login();
+	    $this->action_login(TRUE);
 	    
 	}
 	/**
@@ -164,9 +158,21 @@ class Control_login extends Control_front {
 	 * @param string $nick   微博账号名称
 	 * @return array 绑定账号的uid,username
 	 */
-	static public function check_bind($type,$nick){
-		$where = "type ='$type' and account='$nick'";
+	static public function check_bind($type,$account){
+		$where = "type ='$type' and account='$account'";
 		return DB::select('uid,username')->from('witkey_member_oauth')->where($where)->get_one()->execute();
+	}
+	/**
+	 * 绑定用户信息入库
+	 * @param string $type (sina,ten,qq..)
+	 */
+	static public function user_bind($type){
+		//绑定账号
+		$columns = array('type','account','uid','username');
+		$u = Keke_oauth_login::instance($type)->get_login_info();
+		$values = array($type,$u['username'],$_SESSION['uid'],$_SESSION['username']);
+		//写入绑定库
+		DB::insert('witkey_member_oauth')->set($columns)->value($values)->execute();
 	}
 	
 	

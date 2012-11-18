@@ -30,10 +30,13 @@ $lang = array(
       'you_should_agree_agreement'=>'您必须同意注册协议',
       'i_has_read_and_accpet'=>'我已阅读并接受',
       'and_copyright_notice'=>'和版权声明',
-      'from_cooperation_website_login'=>'通过合作网站直接登陆KPPW',
+       
+	  'use_friend_web_login'=>'使用合作网站账号登录',
 	  'general'=>'中',
 	  'better'=>'强',
 	  'weak'=>'弱',
+	  'account_bind'=>'绑定已有账号',
+	 'improve_information'=>'完善个人信息',
   
 
 

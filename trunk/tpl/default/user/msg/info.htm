@@ -20,13 +20,12 @@
 							
 		                    <h2>{$date_arr['title']}</h2>
 		                	
-							<p>发件人：{$date_arr['username']}</p>
+							<p>发件人：{if $data_arr['uid']}{$date_arr['username']}{else}系统消息{/if}</p>
 							<p>时间：{date('Y-m-d h:i:s',$date_arr['on_time'])}</p>
 							<div class="form_line"></div>
-
-
+								
 							<article >
-								{$date_arr['content']}
+									<!--{eval echo htmlspecialchars_decode($date_arr['content']);}-->	
 							</article >
 
 							<div class="form_line"></div>

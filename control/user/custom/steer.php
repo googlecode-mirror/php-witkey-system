@@ -19,7 +19,6 @@ class Control_user_custom_steer extends Control_user{
 	protected static $_left = 'steer';
 	
 	function action_index(){
-		global $_K,$_lang;
 		
 		$fields = '`report_id`,`obj`,`username`,`on_time`,`op_uid`,`op_username`,`report_desc`,`report_status`,`op_result`';
 		

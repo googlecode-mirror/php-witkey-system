@@ -35,7 +35,7 @@
 		                			<input type="button" value="·µ»ØÁÐ±í" onclick="history.go(-1);">
 		                		</div>
 								<div class="actions">
-		                			<input type="button" value="É¾³ý" onclick="location.href='del?msg_id='+{$date_arr['msg_id']};">
+		                			<input type="button" value="É¾³ý" onclick="del();">
 		                		</div>
 		                	</div>
 
@@ -46,4 +46,13 @@
     	</article>
     </div>
     <!--content end-->
+   	
+    <script type="text/javascript">
+    function del(){
+          location.href='{BASE_URL}/index.php/user/msg_in/del?msg_id='+{$date_arr['msg_id']};
+    }
+    
+    
+
+	</script>
 <!--{include user/footer}-->

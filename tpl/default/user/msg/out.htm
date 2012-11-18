@@ -26,15 +26,7 @@
 		                		</div>
 		                		<div class="page">
 					                <p>
-					                    <a href="###" title="第一页">&#171;</a>
-					                    <a href="###" title="上一页">&#139;</a>
-					                    <a href="###" class="selected">1</a>
-					                    <a href="###">2</a>
-					                    <a href="###">3</a>
-					                    <a href="###">4</a>
-					                    <a href="###" title="下一页">&#155;</a>
-					                    <a href="###" title="最后一页">&#187;</a>
-					                    <span class="stats">1/10</span>
+					                    {$pages['page']}
 					                </p>
 					            </div>
 		                	</div>
@@ -44,55 +36,30 @@
 		                        <table  class="data_table">
 		                            <thead>
 		                            <tr>
-		                                <th scope="col" width="5%"></th>
+		                                <th scope="col" width="5%">ID</th>
 		                                <th scope="col">收件人</th>	
 		                              	<th scope="col">主题</th>
 		                              	<th scope="col">时间</th>
 		                            </tr>
 		                            </thead>
 		                            <tbody>
+		                            {loop $data_list $v}
 		                            <tr>
-		                              <td><input type="checkbox"></td>
-		                              <td>灵媒师</td>
+		                              <td><input type="checkbox">{$v['msg_id']}</td>
+		                              <td>{$v['username']}</td>
 		                              <td>
-		                              	<a href="#" class="title">武汉理工大学接待中心大楼外立面设计加急!</a>
+		                              	<a href="{BASE_URL}/index.php/user/msg_in/info?msg_id={$v['msg_id']}" class="title">{$v['title']}</a>
 		                              	<div class="item_action">
-		                              		<a href="#">编辑</a>
-		                              		<a href="#">删除</a>
-		                              		<a href="#">查看</a>
+		                              		<a href="{BASE_URL}/index.php/user/msg_out/edit?msg_id={$v['msg_id']}">编辑</a>
+		                              		<a href="{$del_uri}?msg_id={$v['msg_id']}">删除</a>
+		                              		<a href="{BASE_URL}/index.php/user/msg_in/info?msg_id={$v['msg_id']}">查看</a>
 		                              	</div>
 		                              </td>
-		                              <td>2012-12-21</td>
+		                              <td>{date('Y-m-d',$v['on_time'])}</td>
 
 		                            </tr>
-		                            <tr>
-		                              <td><input type="checkbox"></td>
-		                              <td>管理员</td>
-		                              <td>
-		                              	<a href="#" class="title">稿件中标</a>
-		                              	<div class="item_action">
-		                              		<a href="#">编辑</a>
-		                              		<a href="#">删除</a>
-		                              		<a href="#">查看</a>
-		                              	</div>
-		                              </td>
-
-		                              <td>2011-08-25</td>
-
-		                            </tr>
-		                            <tr>
-		                              <td><input type="checkbox"></td>
-		                              <td>噜阿鲁</td>
-		                              <td>
-		                              	<a href="#" class="title">饰品主题连锁店系列装修风格效果图征集</a>
-		                              	<div class="item_action">
-		                              		<a href="#">编辑</a>
-		                              		<a href="#">删除</a>
-		                              		<a href="#">查看</a>
-		                              	</div>
-		                              </td>
-		                              <td>2011-08-25</td>
-		                            </tr>
+		                            {/loop}
+		                            
 		                            </tbody>
 		                            
 		                          </table>
@@ -108,15 +75,7 @@
 		                		</div>
 		                		<div class="page">
 					                <p>
-					                    <a href="###" title="第一页">&#171;</a>
-					                    <a href="###" title="上一页">&#139;</a>
-					                    <a href="###" class="selected">1</a>
-					                    <a href="###">2</a>
-					                    <a href="###">3</a>
-					                    <a href="###">4</a>
-					                    <a href="###" title="下一页">&#155;</a>
-					                    <a href="###" title="最后一页">&#187;</a>
-					                    <span class="stats">1/10</span>
+					                    {$pages['page']}
 					                </p>
 					            </div>
 		                	</div>

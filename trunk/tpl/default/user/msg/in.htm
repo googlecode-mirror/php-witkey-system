@@ -13,38 +13,30 @@
 		                </header>
 		                <nav class="box_nav">
 								<ul id="test_ul" class="clearfix">
-									<li class="selected"><a href="#">全部消息</a></li>
-									<li><a href="#">未读消息</a></li>
-									<li><a href="#">系统消息</a></li>
-									<li><a href="#">非系统消息</a></li>
+									<li {if !isset($type)||$type=='all'}class="selected"{/if}><a href="{BASE_URL}/index.php/user/msg_in">全部消息</a></li>
+									<li {if $type=='unread'}class="selected"{/if}><a href="{BASE_URL}/index.php/user/msg_in/unread">未读消息</a></li>
+									<li {if $type=='sys'}class="selected"{/if}><a href="{BASE_URL}/index.php/user/msg_in/sys">系统消息</a></li>
+									<li {if $type=='unsys'}class="selected"{/if}><a href="{BASE_URL}/index.php/user/msg_in/unsys">非系统消息</a></li>
 								</ul>
 		                </nav>
 		                <div class="box_detail">
 
 		                	<div class="toolbar">
 		                		<div class="actions">
-		                			<input type="button" value="全选">
+		                			<input type="button" value="全选" onclick="checkall(event);">
+			                			</div>
+		                		<div class="actions">
+		                			<input type="button" value="删除" onclick="return mulit_del();">
 		                		</div>
 		                		<div class="actions">
-		                			<input type="button" value="删除">
+		                			<input type="button" value="标记为已读" onclick="return mulit_views();"	>
 		                		</div>
 		                		<div class="actions">
-		                			<input type="button" value="标记为已读">
-		                		</div>
-		                		<div class="actions">
-		                			<input type="search" placeholder="请输入主题关键字"><input type="button" value="搜索主题">
+		                			<input type="search" placeholder="请输入主题关键字" name="search_key" id="search_key"><input type="button" value="搜索主题" onclick="search_title();">
 		                		</div>
 		                		<div class="page">
 					                <p>
-					                    <a href="###" title="第一页">&#171;</a>
-					                    <a href="###" title="上一页">&#139;</a>
-					                    <a href="###" class="selected">1</a>
-					                    <a href="###">2</a>
-					                    <a href="###">3</a>
-					                    <a href="###">4</a>
-					                    <a href="###" title="下一页">&#155;</a>
-					                    <a href="###" title="最后一页">&#187;</a>
-					                    <span class="stats">1/10</span>
+					                     {$pages['page']}
 					                </p>
 					            </div>
 		                	</div>
@@ -54,52 +46,30 @@
 		                        <table  class="data_table">
 		                            <thead>
 		                            <tr>
-		                                <th scope="col" width="5%"></th>
+		                                <th scope="col" width="10%">ID</th>
 		                                <th scope="col">发件人</th>	
 		                              	<th scope="col">主题</th>
 		                              	<th scope="col">时间</th>
 		                            </tr>
 		                            </thead>
 		                            <tbody>
-		                            <tr class="nocheck">
-		                              <td><input type="checkbox"></td>
-		                              <td>灵媒师</td>
+		                            {loop $data_list $v}
+		                            <tr {if $v['view_status']!=1}class="nocheck"{/if}>
 		                              <td>
-		                              	<a href="{BASE_URL}/index.php/user/msg_in/info" class="title">武汉理工大学接待中心大楼外立面设计加急!</a>
+		                             	 <input type="checkbox" value="$v['msg_id']" id="cbk_selected" name="ckb[]">{$v['msg_id']}
+		                              </td>
+		                              <td>{if $data_arr['uid']}{$date_arr['uid']}{else}系统消息{/if}</td>
+		                              <td>
+		                              	<a href="{BASE_URL}/index.php/user/msg_in/info?msg_id={$v['msg_id']}" class="title">{$v['title']}</a>
 		                              	<div class="item_action">
-		                              		<a href="#">删除</a>
-		                              		<a href="{BASE_URL}/index.php/user/msg_in/info">查看</a>
+		                              		<a href="{BASE_URL}/index.php/user/msg_in/del	?msg_id={$v['msg_id']}" onclick="kconfirm(this);return false;">删除</a>
+		                              		<a href="{BASE_URL}/index.php/user/msg_in/info?msg_id={$v['msg_id']}">查看</a>
 		                              	</div>
 		                              </td>
-		                              <td>2012-12-21</td>
+		                              <td>{date('Y-m-d',$v['on_time'])}</td>
 
 		                            </tr>
-		                            <tr class="nocheck">
-		                              <td><input type="checkbox"></td>
-		                              <td>系统消息</td>
-		                              <td>
-		                              	<a href="#" class="title">稿件中标</a>
-		                              	<div class="item_action">
-		                              		<a href="#">删除</a>
-		                              		<a href="#">查看</a>
-		                              	</div>
-		                              </td>
-
-		                              <td>2011-08-25</td>
-
-		                            </tr>
-		                            <tr>
-		                              <td><input type="checkbox"></td>
-		                              <td>灵媒师</td>
-		                              <td>
-		                              	<a href="#" class="title">饰品主题连锁店系列装修风格效果图征集</a>
-		                              	<div class="item_action">
-		                              		<a href="#">删除</a>
-		                              		<a href="#">查看</a>
-		                              	</div>
-		                              </td>
-		                              <td>2011-08-25</td>
-		                            </tr>
+		                            {/loop}
 		                            </tbody>
 		                            
 		                          </table>
@@ -108,25 +78,17 @@
 
 			               	<div class="toolbar bottom">
 		                		<div class="actions">
-		                			<input type="button" value="全选">
+		                			<input type="button" value="全选" onclick="checkall(event);">
+			                			</div>
+		                		<div class="actions">
+		                			<input type="button" value="删除" onclick="return mulit_del();">
 		                		</div>
 		                		<div class="actions">
-		                			<input type="button" value="删除">
-		                		</div>
-		                		<div class="actions">
-		                			<input type="button" value="标记为已读">
+		                			<input type="button" value="标记为已读" onclick="return mulit_views();"	>
 		                		</div>
 		                		<div class="page">
 					                <p>
-					                    <a href="###" title="第一页">&#171;</a>
-					                    <a href="###" title="上一页">&#139;</a>
-					                    <a href="###" class="selected">1</a>
-					                    <a href="###">2</a>
-					                    <a href="###">3</a>
-					                    <a href="###">4</a>
-					                    <a href="###" title="下一页">&#155;</a>
-					                    <a href="###" title="最后一页">&#187;</a>
-					                    <span class="stats">1/10</span>
+					                    {$pages['page']}
 					                </p>
 					            </div>
 		                	</div>
@@ -139,4 +101,15 @@
     	</article>
     </div>
     <!--content end-->
+	<script type="text/javascript">
+		function search_title(){
+			
+		}
+		function mulit_del(){
+			
+		}
+		function mulit_views(){
+			
+		}
+	</script>
 <!--{include user/footer}-->

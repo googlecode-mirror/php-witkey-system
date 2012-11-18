@@ -52,7 +52,7 @@ class Keke_oauth_sina_client extends Keke_oauth_login{
 	 	if(CHARSET == 'gbk'){
 	 		$uinfo = Keke::utftogbk($uinfo);
 	 	}
-	 	
+	 	$uinfo = $this->format_user_info($uinfo);
 	 	return $uinfo;
 	 }
 	 public function format_user_info($uinfo){

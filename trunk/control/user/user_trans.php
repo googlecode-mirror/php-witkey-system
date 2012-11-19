@@ -7,7 +7,7 @@
  */
 
 
-$transrights_object = keke_report_class::get_transrights_obj(); //交易维权对象
+$transrights_object = Sys_report::get_transrights_obj(); //交易维权对象
 $objs = array_keys($transrights_object);
 if($task_open==0){
 	unset($objs[0],$objs[1],$transrights_object['task'],$transrights_object['work']);
@@ -59,8 +59,8 @@ if ($ac) {
 			break;
 	}
 } else {
-	$transrights_status = keke_report_class::get_transrights_status (); //交易维权状态
-	$transrights_type   = keke_report_class::get_transrights_type();//交易维权类型
+	$transrights_status = Sys_report::get_transrights_status (); //交易维权状态
+	$transrights_type   = Sys_report::get_transrights_type();//交易维权类型
 	/**
 	 *三级菜单 
 	 */

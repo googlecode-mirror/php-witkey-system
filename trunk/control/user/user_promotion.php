@@ -29,10 +29,10 @@ if($task_open==0){
 if($shop_open==0){
 	unset($third_nav['service']);
 }
-$effect_mode = keke_prom_class::get_prom_rule($show);
+$effect_mode = Sys_prom::get_prom_rule($show);
 switch ($show){
 	case "reg":
-		$effect_mode = keke_prom_class::get_prom_rule($effect_mode['auth_step']);
+		$effect_mode = Sys_prom::get_prom_rule($effect_mode['auth_step']);
 		$global_config = $Keke->get_table_data ( '*', 'witkey_basic_config', ' type="prom"', '', '', '', 'k' );		
 		break;
 	case "pub_task":

@@ -27,7 +27,15 @@ class keke_file_class {
 		
 		return $data;
 	}
-	
+	/**
+	 * 返回系统允许的文件类型
+	 * @return array('jpeg','png','zip','doc'...)
+	 */
+	static public function allow_file_type(){
+		global  $_K;
+		return explode('|', $_K['file_type']);
+		
+	}
 	/**
 	 * Write File
 	 *
@@ -330,6 +338,7 @@ class keke_file_class {
 	
 	public static function get_mime_by_extension($file) {
 		$extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+		$mimes = array();
 		require_once (S_ROOT . 'config/mimes.php');
 	 
 		

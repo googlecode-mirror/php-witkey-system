@@ -20,7 +20,7 @@ $seller_goods_num = db_factory::get_count(sprintf("select count(service_id) from
 $shop_aid = keke_user_mark_class::get_user_aid ( $owner_info['uid'], 2, null, 1 );
 switch ($op){
 	case "report" : //¾Ù±¨ 
-		$transname = keke_report_class::get_transrights_name($type);
+		$transname = Sys_report::get_transrights_name($type);
 		$title=$transname.$_lang['submit'];
 		if($sbt_edit){
 			$tar_content = kekezu::escape($tar_content);

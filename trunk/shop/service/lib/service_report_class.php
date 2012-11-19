@@ -1,6 +1,6 @@
 <?php
 Keke_lang::load_lang_class('service_report_class');
-class service_report_class extends keke_report_class {
+class service_report_class extends Sys_report {
 	
 	public static function get_instance($report_id, $report_info = null, $obj_info = null,$user_info=null,$to_userinfo=null) {
 		static $obj = null;
@@ -15,7 +15,7 @@ class service_report_class extends keke_report_class {
 	
 	/**
 	 * 维权处理
-	 * @see keke_report_class::sub_process_rights()
+	 * @see Sys_report::sub_process_rights()
 	 */
 	public function process_rights($op_result, $type) {
 		$trans_name = $this->get_transrights_name ( $this->_report_type );
@@ -52,7 +52,7 @@ class service_report_class extends keke_report_class {
 	}
 	/**
 	 * 举报处理
-	 * @see keke_report_class::sub_process_report()
+	 * @see Sys_report::sub_process_report()
 	 */
 	public function process_report($op_result, $type) {
 		global $_lang;

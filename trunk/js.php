@@ -17,7 +17,7 @@ switch ($op){
 	case "tag":
 		
 		$html_str = Keke::$_cache_obj->get('tag_html_data_'.$tag_id);
-		$html_str = $html_str?$html_str:keke_loaddata_class::gettagHTML($tag_id);
+		$html_str = $html_str?$html_str:Keke_loaddata::gettagHTML($tag_id);
 	
 		$html_str = str_replace("'","\'",trim($html_str));
 		$html_str = str_replace("\r\n","",$html_str);

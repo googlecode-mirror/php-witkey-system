@@ -109,14 +109,14 @@ class Control_admin_tool_tag extends Control_admin{
 	function action_preview(){
 		$tagid = $_GET['tag_id'];
 		
-		$taglist =keke_loaddata_class::get_tag(1);
+		$taglist =Keke_loaddata::get_tag(1);
 		$tag_info = $taglist[$tagid];
 		if($tag_info['tag_type']==9){
 			//预览广告
-			keke_loaddata_class::preview_addgroup($tag_info['tagname'],$tag_info['loadcount']);
+			Keke_loaddata::preview_addgroup($tag_info['tagname'],$tag_info['loadcount']);
 		}elseif($tag_info['tag_type']==5){
 			//预览自定义代码 
-			keke_loaddata_class::previewtag($tag_info);
+			Keke_loaddata::previewtag($tag_info);
 		}
 		 
 	}

@@ -21,7 +21,7 @@ $task_cash_arr = keke_search_class::get_cash_cove();//任务赏金数组
 
 $where_arr = get_where_arr();//获取数组 
 
-$end_time_arr = keke_global_class::get_taskstatus_desc ();//任务时间描述
+$end_time_arr = Keke_global::get_taskstatus_desc ();//任务时间描述
 if(isset($area)&&$area){
  $area = str_replace("slt_city", "", $area);
  $map_city = $province.','.$city.','.$area;

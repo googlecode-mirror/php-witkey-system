@@ -64,7 +64,7 @@ class Control_admin_config_pay extends Control_admin{
 		//线下银行列表
 		$payment_list = DB::select()->from('witkey_pay_api')->where($where)->execute();
 		//银行数组
-		$bank_arr = keke_global_class::get_bank();
+		$bank_arr = Keke_global::get_bank();
 		//加载支付配置模板
 		require Keke_tpl::template('control/admin/tpl/config/pay_offline');
 	}
@@ -77,7 +77,7 @@ class Control_admin_config_pay extends Control_admin{
 			$payment_config = self::get_pay_config($_GET['pay_id']);
 			
 		}
-		$bank_arr   = keke_global_class::get_bank();
+		$bank_arr   = Keke_global::get_bank();
 	 
 		//加载支付配置模板
 		require Keke_tpl::template('control/admin/tpl/config/pay_offline_add');

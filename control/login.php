@@ -14,7 +14,7 @@ class Control_login extends Control_front {
 	function action_index() {
 		global $_K;
 		$api_open = unserialize($_K['oauth_api_open']);
-		$api_name = keke_global_class::get_open_api();
+		$api_name = Keke_global::get_open_api();
 		
 		require Keke_tpl::template ( 'login' );
 	}
@@ -96,7 +96,7 @@ class Control_login extends Control_front {
 		global $_K;
 		
 		$api_open = unserialize($_K['oauth_api_open']);
-		$api_name = keke_global_class::get_open_api();
+		$api_name = Keke_global::get_open_api();
 		$type = $_GET['type'];
 		 
 		if(Keke_valid::not_empty($type)){

@@ -122,10 +122,10 @@ class Control_admin_config_msg extends Control_admin{
     		Keke::show_msg($_lang['submit_success'],'admin/config_msg/tpl'.$uri,'success');
     	}
     	//手机，邮件，站内信
-    	$message_send_type = keke_global_class::get_message_send_type ();
+    	$message_send_type = Keke_global::get_message_send_type ();
     	
     	//短信对象 eg (task,service)
-		$message_send_obj  = keke_global_class::get_message_send_obj();
+		$message_send_obj  = Keke_global::get_message_send_obj();
 		//字段
  		$fields = ' `tpl_id`,`k`,`obj`,`desc`,`on_time`,`send_sms`,`send_mail`,`send_msg`';
 		//要查询的字段,在模板中显示用的
@@ -171,7 +171,7 @@ class Control_admin_config_msg extends Control_admin{
     		$msg_tpl_info = DB::select('msg_tpl,sms_tpl,send_sms,send_mail,send_msg')->from('witkey_msg_tpl')->where("tpl_id='$tpl_id'")->execute();
     		$msg_tpl_info = $msg_tpl_info[0];
     		//短信类型
-    		$message_send_type = keke_global_class::get_message_send_type ();
+    		$message_send_type = Keke_global::get_message_send_type ();
     	}
     	require Keke_tpl::template('control/admin/tpl/config/msg_tpl_add');
     }

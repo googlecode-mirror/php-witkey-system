@@ -8,8 +8,7 @@
 class Control_admin_article_case extends Control_admin {
  
 	function action_index() {
-		//定义全局变量与语言包，只要加载模板，这个是必须要定义.操
-		global $_K,$_lang;
+		 
 		//要显示的字段,即SQl中SELECT要用到的字段
 		$fields = ' `case_id`,`obj_id`,`obj_type`,`case_img`,`case_title`,`case_desc`,`case_price`,`on_time` ';
 		//要查询的字段,在模板中显示用的
@@ -36,8 +35,7 @@ class Control_admin_article_case extends Control_admin {
 		require Keke_tpl::template('control/admin/tpl/article/case');
 	}
 	function action_add(){
-		//始始化全局变量，语言包变量
-		global $_K,$_lang;
+		 
 		$case_id = $_GET['case_id'];
 		//如果有值，就进入编辑状态
 		if($case_id){
@@ -91,7 +89,7 @@ class Control_admin_article_case extends Control_admin {
 	}
 	function action_search(){
 		global $_K,$_lang;
-		$model_type_arr  = keke_global_class::get_task_type();
+		$model_type_arr  = Keke_global::get_task_type();
 		/* Keke::$_page_obj->setAjax(1);
 		Keke::$_page_obj->setAjaxDom('ajax_dom'); */
 		$search_type = $_GET['search_type'];
@@ -125,7 +123,7 @@ class Control_admin_article_case extends Control_admin {
 	
 	function action_search_service(){
 		global $_K,$_lang;
-		//$model_type_arr  = keke_global_class::get_task_type();
+		//$model_type_arr  = Keke_global::get_task_type();
 		/* Keke::$_page_obj->setAjax(1);
 		 Keke::$_page_obj->setAjaxDom('ajax_dom'); */
 		$search_type = $_GET['search_type'];

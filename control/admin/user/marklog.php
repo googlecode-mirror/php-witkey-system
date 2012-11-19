@@ -30,7 +30,7 @@ class Control_admin_user_marklog extends Control_admin{
 		//分页数据
 		$pages = $data_info['pages'];
 		//获取model_code和model_name，组成的一个数组
-		$model_type_arr = keke_global_class::get_model_type ();
+		$model_type_arr = Keke_global::get_model_type ();
 		//model表数据
 		$model_list = keke::$_model_list;
 		//通过model_code获取model_type的值

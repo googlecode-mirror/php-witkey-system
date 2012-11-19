@@ -34,10 +34,10 @@ class Control_admin_finance_withdraw extends Control_admin {
 		$pages = $data_info ['pages'];
 		
 		// 银行
-		$bank_arr = keke_global_class::get_bank ();
+		$bank_arr = Keke_global::get_bank ();
 		
 		// 提现状态 0待审核,1提现成功,2提现失败
-		$status_arr = keke_global_class::withdraw_status ();
+		$status_arr = Keke_global::withdraw_status ();
 		
 		require Keke_tpl::template ( 'control/admin/tpl/finance/withdraw' );
 	}

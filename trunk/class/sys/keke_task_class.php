@@ -826,7 +826,7 @@ abstract class keke_task_class {
 	function show_payitem() {
 		global $_K;
 		$str = '';
-		$item_config = keke_payitem_class::get_payitem_config ( null, null, null, 'item_id' );
+		$item_config = Sys_payitem::get_payitem_config ( null, null, null, 'item_id' );
 		
 		$item_arr = array_filter(explode ( ",", $this->_task_info ['pay_item'] ));
 		$time_arr = unserialize ( $this->_task_info ['payitem_time'] );

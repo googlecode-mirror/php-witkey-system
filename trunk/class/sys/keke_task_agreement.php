@@ -261,7 +261,7 @@ abstract class keke_task_agreement {
 	 * @return json
 	 */
 	public function set_report($obj, $obj_id, $to_uid, $to_username, $report_type, $file_name, $desc) {
-		$res = keke_report_class::add_report ( $obj, $obj_id, $to_uid, $to_username, $desc, $report_type, '6', $this->_task_id, $this->_user_role, $file_name );
+		$res = Sys_report::add_report ( $obj, $obj_id, $to_uid, $to_username, $desc, $report_type, '6', $this->_task_id, $this->_user_role, $file_name );
 		$res&&$this->set_agreement_status($type = 'agree_status',4);
 	}
 	/**

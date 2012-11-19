@@ -454,7 +454,7 @@ abstract class keke_task_class {
 		global $_lang;
 		$this->_priv ['report'] ['pass'] or Keke::keke_show_msg ( '', $this->_priv ['report'] ['notice'] . $_lang['no_report_rights'], "error", 'json' );
 		$this->_uid != $this->_guid and $user_type = '1' or $user_type = '2';
-		$res = keke_report_class::add_report ( $obj, $obj_id, $to_uid, $to_username, $desc, $report_type, $this->_task_status, $this->_task_id, $user_type, $file_name );
+		$res = Sys_report::add_report ( $obj, $obj_id, $to_uid, $to_username, $desc, $report_type, $this->_task_status, $this->_task_id, $user_type, $file_name );
 	}
 	/**
 	 * 任务（稿件）举报

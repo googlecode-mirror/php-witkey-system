@@ -14,7 +14,7 @@ class Control_admin_config_payitem extends Control_admin{
 		$type = $_GET['type']?$_GET['type']:'witkey';
 		$unit = array ('times' =>$_lang['times'], 'month' =>$_lang['month'], 'year' =>$_lang['year'],'day'=>$_lang['day']);
 		$type_arr = array("witkey"=>$_lang['witkey'],"employer"=>$_lang['employer']);
-		$payitem_arr = keke_payitem_class::get_payitem_config ($type,null,null,0,null);
+		$payitem_arr = Sys_payitem::get_payitem_config ($type,null,null,0,null);
 		require Keke_tpl::template('control/admin/tpl/config/payitem');
 	}
 	/**
@@ -94,7 +94,7 @@ class Control_admin_config_payitem extends Control_admin{
 		//增值项类型 ,用来定义显示的选卡
 		$type = $_GET['type'];
 		//改变状态
-		keke_payitem_class::payitem_edit ( $item_id, array ('is_open' => $status ) );
+		Sys_payitem::payitem_edit ( $item_id, array ('is_open' => $status ) );
 		
 		Keke::show_msg($_lang['submit_success'],'admin/config_payitem?type='.$type,'success');
 	}
@@ -103,7 +103,7 @@ class Control_admin_config_payitem extends Control_admin{
 	 */
 	function action_install(){
 		global $_lang;
-		$res = keke_payitem_class::payitem_install ( $_POST['txt_item_code'] );
+		$res = Sys_payitem::payitem_install ( $_POST['txt_item_code'] );
 		$url = "admin/config_payitem";
 		$res and Keke::show_msg ($_lang['payitem_install_success'], $url,'success' ) ;
 	}
@@ -112,7 +112,7 @@ class Control_admin_config_payitem extends Control_admin{
 	 */
 	function action_uninstall(){
 		$item_id = $_GET['item_id'];
-		echo  keke_payitem_class::payitem_uninstall ( $item_id );
+		echo  Sys_payitem::payitem_uninstall ( $item_id );
 	}
 	
 }

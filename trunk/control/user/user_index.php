@@ -34,7 +34,7 @@ $xg_task = intval ( Dbfactory::get_count ( sprintf ( "select count(*) from %swit
 //待确认商品数
 $confirm_service = intval ( Dbfactory::get_count ( sprintf ( "select count(*) from %switkey_order where order_status='wait' and model_id in(6,7) and order_uid='%d'", TABLEPRE, $uid ) ) );
 //工具箱
-$payitem_list = keke_payitem_class::get_payitem_config ( null, null, null, 'item_id' ); //可购买服务
+$payitem_list = Sys_payitem::get_payitem_config ( null, null, null, 'item_id' ); //可购买服务
 
 
 //任务状态数组

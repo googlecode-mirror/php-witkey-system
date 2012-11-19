@@ -9,9 +9,9 @@
 
 
 if(isset($formhash)&&Keke::submitcheck($formhash)){
-	$res=keke_payitem_class::payitem_cost($item_code,$buy_num);
+	$res=Sys_payitem::payitem_cost($item_code,$buy_num);
 	$res and Keke::show_msg($_lang['system prompt'],"index.php?do=$do&view=$view&op=$op&show=my#userCenter","1",$item_info['item_name'].$_lang['buy_success'],'alert_right') or Keke::show_msg($_lang['system prompt'],$_SERVER['HTTP_REFERER'],"1",$item_info['item_name'].$_lang['buy_fail'],"alert_error");
 }
 //Òþ²Ø½»¸åÊ£ÓàÊýÁ¿
-$remain= keke_payitem_class::payitem_exists($uid,$item_code);
+$remain= Sys_payitem::payitem_exists($uid,$item_code);
 require keke_tpl_class::template("control/payitem/$item_code/tpl/user_buy");

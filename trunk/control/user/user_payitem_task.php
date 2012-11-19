@@ -8,7 +8,7 @@
 
 
 $payitem_time = "1325811866,1325811866";
-$payitem_standard = keke_payitem_class::payitem_standard (); // 收费标准
+$payitem_standard = Sys_payitem::payitem_standard (); // 收费标准
 $payitem_type_arr = keke_glob_class::get_payitem_arr ();
 $payitem_arr = explode ( ',', $payitem_time );
 

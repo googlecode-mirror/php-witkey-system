@@ -22,7 +22,7 @@ if (isset($task_id)) {
 	$task_ext_obj->setWhere ( 'a.task_id=' . intval ( $task_id ) );
 	$task_info = $task_ext_obj->query_keke_witkey_task ();
 	$task_info = Keke::k_stripslashes ( $task_info ['0'] );
-	$prom_rule = keke_prom_class::get_prom_rule ( "bid_task" );
+	$prom_rule = Sys_prom::get_prom_rule ( "bid_task" );
 	$task_info ['uid'] != $uid && $uid != ADMIN_UID && $task_info ['task_status'] == 1 and Keke::show_msg ( $_lang ['friendly_notice'], 'index.php?do=task_list', 2, $_lang ['task_auditing'] );
 	$task_info ['uid'] != $uid &&$task_info ['task_status'] == 0 and Keke::show_msg ( $_lang ['friendly_notice'], 'index.php?do=task_list', 2, 'ÈÎÎñÎ´¸¶¿î' );
 	

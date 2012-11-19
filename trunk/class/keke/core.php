@@ -37,89 +37,6 @@ class Keke_core extends Keke_base {
 		require Keke_tpl::template ( 'show_msg' );
 		die ();
 	}
-	
-	/**
-	 * 清除全局缓存
-	 */
-	static function empty_cache() {
-		$file_obj = new keke_file_class ();
-		TPL_CACHE and $file_obj->delete_files ( S_ROOT . "/data/tpl_c" );
-		IS_CACHE and $file_obj->delete_files ( S_ROOT . "/data/cache" );
-	}
-	/**
-	 * 安全码SESSION重置
-	 *
-	 * @param $verify boolean
-	 *        	是否需验证
-	 */
-	static function reset_secode_session($verify) {
-		global $uid;
-		if ($verify) { // 需验证。不管之前是否验证过。强制重新验证
-			unset ( $_SESSION ['check_secode_' . $uid] );
-			return TRUE;
-		} else { // 不需验证
-			if ($_SESSION ['check_secode_' . $uid]) { //
-				return FALSE;
-			} else { // 虽然外部指示不需验证。但是由于安全码session不存在。此时强制需验证
-				return TRUE;
-			}
-		}
-	}
-	/**
-	 * 获取showWindw的弹窗链接
-	 */
-	static function get_window_url() {
-		global $_K;
-		$post_url = $_SERVER ['QUERY_STRING'];
-		preg_match ( '/(.*)&infloat/U', $post_url, $match );
-		return $_K ['siteurl'] . '/index.php?' . $match ['1'];
-	}
-	
-	/**
-	 * 盖楼函数
-	 *
-	 * @param $int $nodeid
-	 *        	-- 顶级父ID的值
-	 * @param $arTree array
-	 *        	-- 数组
-	 */
-	static function sort_tree($nodeid, $data_arr, $pid = "indus_pid", $id = "indus_id") {
-		$res = array ();
-		for($i = 0; $i < sizeof ( $data_arr ); $i ++)
-			if ($data_arr [$i] ["$pid"] == $nodeid) {
-				array_push ( $res, $data_arr [$i] );
-				$subres = self::sort_tree ( $data_arr [$i] ["$id"], $data_arr, $pid, $id );
-				for($j = 0; $j < sizeof ( $subres ); $j ++)
-					array_push ( $res, $subres [$j] );
-			}
-		return $res;
-	}
-	
-	static function get_format_size($bytes) {
-		$units = array (0 => 'B',1 => 'kB',2 => 'MB',3 => 'GB'	);
-		$log = log ( $bytes, 1024 );
-		$power = ( int ) $log;
-		$size = pow ( 1024, $log - $power );
-		return round ( $size, 2 ) . ' ' . $units [$power];
-	
-	}
-	/**
-	 * 将很长的数字转换成 xx万
-	 *
-	 * @param $number int、float..
-	 *        	数字
-	 * @param $unit string
-	 *        	单位
-	 */
-	static function pretty_format($number, $unit = '') {
-		global $_lang;
-		$unit == '' && $unit = $_lang ['million'];
-		if ($number < 10000) {
-			return $number;
-		}
-		return ((round ( $number / 1000 )) / 10) . $unit; // round四舍五入 ceil进一法取整
-			                                                  // floor舍去法取整
-	}
 
 	public static function register_autoloader($callback = null) {
 		spl_autoload_unregister ( array ('Keke_core','autoload') );
@@ -181,21 +98,6 @@ class Keke_core extends Keke_base {
 		$data = serialize ( $data );
 		return ( bool ) file_put_contents ( $dir . $file, $data, LOCK_EX );
 	}
-	
-	/* public static function keke_show_msg($url, $content, $type = 'success', $output = 'normal') {
-		global $_lang;
-		switch ($output) {
-			case "normal" :
-				$type == 'success' or $type = 'warning';
-				Keke::show_msg ( $_lang ['operate_notice'], $url, '3', $content, $type );
-				break;
-			case "json" :
-				$type == 'error' or $status = '1'; // 非错误提示,即正确
-				Keke::echojson ( $_lang ['operate_notice'], intval ( $status ), $content );
-				die ();
-				break;
-		}
-	} */
 	
 	/**
 	 * $fileds,$where可以为数组 , $pk为@return数组的key , 对Dbfactory -> select()的改进,添加缓存

@@ -125,7 +125,7 @@ class taobao_oauth_client_class extends base_client_class {
 				$p['nick'] = urldecode($p['taobao_user_nick']);
 			} 
 			
-			$d =keke_taobaoke_class::get_user_info($p['nick'],1);
+			$d =Sys_taobaoke::get_user_info($p['nick'],1);
 			$d = $d['user'];
 			//var_dump($d);die();
 			//CHARSET== 'gbk' and $d = kekezu::utftogbk ( $d);

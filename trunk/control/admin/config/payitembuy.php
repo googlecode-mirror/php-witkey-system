@@ -35,7 +35,7 @@ class Control_admin_config_payitembuy extends Control_admin{
 		//·ÖÒ³Êı¾İ
 		$pages = $data_info['pages'];
 		
-		$add_service_type = keke_global_class::get_value_add_type ();
+		$add_service_type = Keke_global::get_value_add_type ();
 		
 		$buy_use_type = array ("buy" => $_lang['buy'], "spend" => $_lang['spend'] );
 		

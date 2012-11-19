@@ -24,7 +24,7 @@ $dynamic_arr = Keke::get_feed ( " feedtype='pub_task' or feedtype='work_accept' 
 $cash_cove_arr = Keke::get_table_data ( '*', 'witkey_task_cash_cove', '', '', '', '', 'cash_rule_id', null );
 $website_url = "index.php?" . $_SERVER ['QUERY_STRING']; // 当前连接
 $task_cash_arr = keke_search_class::get_cash_cove (); // 任务赏金数组
-$end_time_arr = keke_global_class::get_taskstatus_desc ();
+$end_time_arr = Keke_global::get_taskstatus_desc ();
  
 $where_arr = get_where_arr ();
 if (isset ( $search_key )) { 

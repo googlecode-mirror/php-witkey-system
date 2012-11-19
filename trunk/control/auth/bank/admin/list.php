@@ -26,7 +26,7 @@ class Control_auth_bank_admin_list extends Controller {
 	   
  	   $fields = ' `r_id`,`uid`,`username`,`bank_account`,`bank_name`,`bank_id`,`pay_to_user_cash`,`cash`,`start_time`,`auth_status`,`end_time`,`bank_sname`';
 	   
- 	   $bank_name = keke_global_class::get_bank();
+ 	   $bank_name = Keke_global::get_bank();
  	   
  	   //要查询的字段,在模板中显示用的
 	   $query_fields = array('r_id'=>$_lang['id'],'bank'=>$_lang['name'],'start_time'=>$_lang['time']);

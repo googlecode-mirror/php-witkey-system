@@ -32,8 +32,8 @@ class Control_admin_tool_feed extends Control_admin{
 		
 		//·ÖÒ³Êý¾Ý
 		$pages = $data_info['pages'];
-		//$file_type_arr = keke_global_class::get_file_type();
-		$feed_type = keke_global_class::get_feed_type ();
+		//$file_type_arr = Keke_global::get_file_type();
+		$feed_type = Keke_global::get_feed_type ();
 		require Keke_tpl::template('control/admin/tpl/tool/feed');
 	}
 	/**

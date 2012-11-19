@@ -33,7 +33,7 @@ class Control_admin_config_payitem extends Control_admin{
 		//模型代码数组
 		$code_arr=explode(",",$payitem['model_code']);
 		//增值类型
-		$payitem_type = keke_global_class::get_payitem_type();
+		$payitem_type = Keke_global::get_payitem_type();
 		//加载支付配置模板
 		require Keke_tpl::template('control/admin/tpl/config/payitem_config');
 	}

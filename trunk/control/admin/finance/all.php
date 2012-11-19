@@ -26,7 +26,7 @@ class Control_admin_finance_all extends Control_admin {
 		$base_uri = BASE_URL."/index.php/admin/finance_all";
 		
         //获取财务动作数组值
-        $fina_action_arr = keke_global_class::get_finance_action();		
+        $fina_action_arr = Keke_global::get_finance_action();		
 		//添加编辑的uri,add这个action 是固定的
 		$add_uri =  $base_uri.'/add';
 		//删除uri,del也是一个固定的，写成其它的，你死定了

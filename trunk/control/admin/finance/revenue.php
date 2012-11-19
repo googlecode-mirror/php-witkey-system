@@ -91,7 +91,7 @@ class Control_admin_finance_revenue extends Control_admin {
 		$charge = Dbfactory::query ( $sql . $r_sql . $f_sql . ' group by obj_type ', 1, 3600 );
 		// 用户充值
 		$charge = Keke::get_arr_by_key ( $charge, 'obj_type' );
-		$fina_type = keke_global_class::get_fina_charge_type ();
+		$fina_type = Keke_global::get_fina_charge_type ();
 		
 		// 加载模板，这有点费J8话,地球人都懂的
 		require Keke_tpl::template ( 'control/admin/tpl/finance/re_charge' );
@@ -129,8 +129,8 @@ class Control_admin_finance_revenue extends Control_admin {
 					count(wid) count,type from %switkey_withdraw where 1 = 1 ', TABLEPRE ) . $w_sql . ' group by type', 1, 3600 );
 		$list && $list = Keke::get_arr_by_key ( $list, 'type' );
 		// var_dump($list);
-		$bank_arr = keke_global_class::get_bank ();
-		$pay_online = keke_global_class::get_payment_config ( '', 'online' );
+		$bank_arr = Keke_global::get_bank ();
+		$pay_online = Keke_global::get_payment_config ( '', 'online' );
 		
 		// 加载模板，这有点费J8话,地球人都懂的
 		require Keke_tpl::template ( 'control/admin/tpl/finance/re_withdraw' );

@@ -36,10 +36,10 @@ class Control_admin_finance_recharge extends Control_admin {
 		$group_arr = Keke_admin::get_user_group ();
 		
 		// 充值订单类型
-		$charge_type_arr = keke_global_class::get_charge_type ();
+		$charge_type_arr = Keke_global::get_charge_type ();
 		
 		// 充值类型
-		$bank_arr = keke_global_class::get_bank ();
+		$bank_arr = Keke_global::get_bank ();
 		
 		// 充值订单状态
 		$status_arr = Sys_order::get_recharge_status ();
@@ -69,7 +69,7 @@ class Control_admin_finance_recharge extends Control_admin {
 			return FALSE;
 		}
 		//银行名称
-		$bank_arr = keke_global_class::get_bank ();
+		$bank_arr = Keke_global::get_bank ();
 		
 		$order_info = DB::select ()->from ( 'witkey_recharge' )->where ( "rid=:rid" )
 		->param ( ":rid", $rid )->get_one ()->execute ();

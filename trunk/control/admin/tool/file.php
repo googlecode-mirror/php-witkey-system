@@ -36,7 +36,7 @@ class Control_admin_tool_file extends Control_admin{
 		$list_arr = $data_info['data'];
 		//·ÖÒ³Êý¾Ý
 		$pages = $data_info['pages'];
-		$file_type_arr = keke_global_class::get_file_type();
+		$file_type_arr = Keke_global::get_file_type();
 		require Keke_tpl::template('control/admin/tpl/tool/file');
 	}
 	/**

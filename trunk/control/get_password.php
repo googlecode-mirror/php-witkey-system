@@ -8,7 +8,7 @@
 defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 $page_title=$_lang['find_back_password'].'- '.$_K['html_title'];
 
-$api_name = keke_global_class::get_open_api();
+$api_name = Keke_global::get_open_api();
 if (Keke::submitcheck($formhash)) {
 	//≈–∂œ’À∫≈ «∑Ò¥Ê‘⁄
 		$user_info = Keke::get_user_info($txt_account,true);

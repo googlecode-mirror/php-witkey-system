@@ -26,7 +26,7 @@ class Control_admin_config_basic extends  Control_admin {
 			$type = 'web';
 		}
 		//微博接口的中文名称
-		$oauth_type_list = keke_global_class::get_open_api();
+		$oauth_type_list = Keke_global::get_open_api();
 		if($type=='weibo'){
 			$api_open  = unserialize($config_arr['oauth_api_open']);
 		}

@@ -1,6 +1,6 @@
 <?php
 Keke_lang::load_lang_class('keke_loaddata_class');
-class keke_loaddata_class {
+class Keke_loaddata {
 	/**
 	 * 获取标签列表
 	 * @param  $mode 1=>tag_id 索引数组,其它的用tagname 索引数组
@@ -80,13 +80,13 @@ class keke_loaddata_class {
 				$cid = 'db_tag_' . $tag_info ['tag_id'];
 				$datalist = Keke::$_cache_obj->get ( $cid );
 				if (! $datalist) {
-					$datalist = keke_loaddata_class::loaddata ( $tag_info );
+					$datalist = Keke_loaddata::loaddata ( $tag_info );
 					Keke::$_cache_obj->set ( $cid, $datalist, $tag_info ['cache_time'] );
 				}
 			 
 				require Keke_tpl::parse_code ( htmlspecialchars_decode ( $tag_info [tag_code] ), $tag_info [tag_id] );
 			} else if ($tag_info) { //不带缓存的  用传统调用
-				keke_loaddata_class::previewtag ( $tag_info );
+				Keke_loaddata::previewtag ( $tag_info );
 			} else {
 				echo $_lang['tag'] . $name . $_lang['not_found'];
 			}
@@ -112,7 +112,7 @@ class keke_loaddata_class {
 		if ($tag_info ['tag_type'] == 5) {
 			echo htmlspecialchars_decode ( $tag_info ['tag_code'] );
 		} else {
-			$datalist = keke_loaddata_class::loaddata ( $tag_info );
+			$datalist = Keke_loaddata::loaddata ( $tag_info );
 			require Keke_tpl::parse_code ( htmlspecialchars_decode ( $tag_info ['tag_code'] ), $tag_info ['tag_id'] );
 		}
 	
@@ -134,7 +134,7 @@ class keke_loaddata_class {
 	//纯读数据
 	static function loaddata($tag_info) {
 		global $_K;
-		$tag_type = keke_global_class::get_tag_type ();
+		$tag_type = Keke_global::get_tag_type ();
 		if ($tag_info ['tag_type'] != 5) {
 			$f = $tag_type [$tag_info ['tag_type']] [2]?$tag_type [$tag_info ['tag_type']] [2]:'article';
 			$func_name = "load_" . $f . "_data";

@@ -161,7 +161,7 @@ class Keke_tpl {
 	//广告调用
 	static function showad($adid) {
 		global $_K;
-		$content = '<!--{eval keke_loaddata_class::ad(' . $adid . ')}-->';
+		$content = '<!--{eval Keke_loaddata::ad(' . $adid . ')}-->';
 		return $content;
 	
 	}
@@ -172,7 +172,7 @@ class Keke_tpl {
 	 */
 	static function ad_show($target, $is_slide = null) {
 		global $_K, $do;
-		$content = '<!--{eval keke_loaddata_class::ad_show(\'' . $target . '\',\'' . $do . '\',\'' . $is_slide . '\')}-->';
+		$content = '<!--{eval Keke_loaddata::ad_show(\'' . $target . '\',\'' . $do . '\',\'' . $is_slide . '\')}-->';
 		return $content;
 	}
 	static function runwidget($widgetname) {
@@ -183,7 +183,7 @@ class Keke_tpl {
 	
 	//广告群调用
 	static function showads($adname) {
-		$content = '<!--{eval keke_loaddata_class::adgroup(' . $adname . ')}-->';
+		$content = '<!--{eval Keke_loaddata::adgroup(' . $adname . ')}-->';
 		return $content;
 	}
 	
@@ -226,13 +226,13 @@ class Keke_tpl {
 	
 	static function readtag($name) {
 		global $kekezu; 	
-		$content = '<!--{eval keke_loaddata_class::readtag(' . $name . ')}-->';
+		$content = '<!--{eval Keke_loaddata::readtag(' . $name . ')}-->';
 		return $content;
 	
 	}
 	
 	static function loadfeed($name) {
-		$content = '<!--{eval keke_loaddata_class::readfeed(' . $name . ')}-->';
+		$content = '<!--{eval Keke_loaddata::readfeed(' . $name . ')}-->';
 		return $content;
 	
 	}

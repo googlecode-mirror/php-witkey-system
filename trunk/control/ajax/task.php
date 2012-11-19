@@ -19,7 +19,7 @@ class Control_ajax_task extends Controller{
      			break;
      		case 'tao_goods' :  //淘宝客获取商品
      			$page_no or $page_no = 1;
-     			$data = keke_taobaoke_class::get_items_info ( $nick, $page_no );
+     			$data = Sys_taobaoke::get_items_info ( $nick, $page_no );
      			break;
      	}
      	require Keke_tpl::template ( "ajax/ajax_task");

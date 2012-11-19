@@ -52,7 +52,7 @@ switch ($ajax) {
 		$page or $page = 1;
 		$page_size or $page_size = 10;
 		$url = "index.php?do=ajax&view=menu&ajax=prom_list&prom_code=$prom_code";
-		$prom_rule = keke_prom_class::get_prom_rule ( $prom_code );
+		$prom_rule = Sys_prom::get_prom_rule ( $prom_code );
 		switch ($prom_code) {
 			case "bid_task" :
 				$table_title = array ($_lang['belong_model'], $_lang['task_title'], $_lang['task_cash'], $_lang['pro_cash'] );

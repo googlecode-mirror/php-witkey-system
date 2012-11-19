@@ -349,7 +349,7 @@ class Keke extends Keke_core {
 	}
 	
 	function init() {
-		global  $_K, $_lang;
+// 		global  $_K, $_lang;
 		if(self::$_inited){
 			return;
 		}
@@ -385,33 +385,28 @@ class Keke extends Keke_core {
 		$_GET = Keke::k_stripslashes($_GET);
 		$_POST = Keke::k_stripslashes($_POST);
 		$_COOKIE = Keke::k_stripslashes($_COOKIE);
-			// self::$_db = Database::instance ();
+			 
 		Keke::init_session ();
 		$this->init_config ();
 		
-		//$this->init_user ();
+		 
 		
 		Keke::$_cache_obj = Cache::instance ();
-		//Keke::$_tpl_obj = new Keke_tpl();
-		//Keke::$_page_obj = new keke_page_class ();
+		 
 
 		$this->init_out_put ();
 		$this->init_lang ();
 		$this->init_curr();
-		//$this->init_model();
+		 
 
 		self::$_log = log::instance()->attach(new keke_log_file());
-		if (!isset($_SESSION['auid']) and Keke::$_sys_config ['is_close'] == 1 && substr ( $_SERVER ['PHP_SELF'], - 24 ) != '/control/admin/index.php') {
-			Keke::show_msg ( $_lang ['site_is_close_notice'], 'index.php', 20, $_lang ['site_close_reason_notice'] . Keke::$_sys_config ['close_reason'] . '！', 'warning' );
-		}
-		
 		  
 	}
 	/**
 	 * 初始化配置信息
 	 */
 	function init_config() {
-		global $i_model, $_lang, $_K;
+		global $_lang, $_K;
 		$config_arr = array ();
 		if(($config_arr = Cache::instance()->get('keke_config'))==NULL){
 			$basic_arr = DB::select('`k`,`v`')->from('witkey_config')->execute();
@@ -422,7 +417,7 @@ class Keke extends Keke_core {
 			Cache::instance()->set('keke_config', $config_arr,60000);
 		}
 		Keke::$_sys_config = $config_arr ;
-		//$template = Keke::get_tpl ();
+		
 		Keke::$_template = $config_arr ['template'];
 		$map_config = unserialize ( $config_arr ['map_api_open'] );
 		$map_api = "baidu";
@@ -587,7 +582,6 @@ class Keke extends Keke_core {
 		
 	}
 	function init_out_put() {
-		global  $_K;
 		ob_start ();
 	}
 	/**
@@ -650,21 +644,7 @@ class Keke extends Keke_core {
 			self::$_inited = false;
 		}
 	}
-	/**
-	 * 检验用户名
-	 * 
-	 */
-	public static function check_user_by_name($user, $isusername = 0) {
-		global $_K;
-		$member_obj = new keke_witkey_member();
-		if ($isusername) {
-			$member_obj->setWhere ( "username='{$user}'" );
-		} else {
-			$member_obj->setWhere ( "uid='{$user}'" );
-		}
-		$user_count = $member_obj->count();
-		return $user_count;
-	}
+ 
 	/**
 	 * 删除全局变量
 	 * @return void();

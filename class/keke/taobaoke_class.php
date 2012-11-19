@@ -1,6 +1,6 @@
 <?php
 require_once S_ROOT . '/client/taoapi/lib/taoapi_get.php';
-class keke_taobaoke_class {
+class Sys_taobaoke {
 	
 	public static function get_shop_info($nick) {
 		$taoapi = new taoapi_get ( 'shop', array('nick'=>$nick));

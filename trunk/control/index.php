@@ -5,7 +5,7 @@
  * @version v 2.0
  * 2010-5-26‘Á…œ11:49:00
  */
-class Control_index extends Controller{
+class Control_index extends Control_front{
 	
 	function action_index(){
 		global $Keke,$_K,$_lang;

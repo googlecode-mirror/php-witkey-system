@@ -13,9 +13,9 @@ class Control_admin_user_trans extends Control_admin{
 	function __construct($request, $response){
 		parent::__construct($request, $response);
 		//状态
-		$this->_trans_status =  keke_report_class::get_transrights_status();
+		$this->_trans_status =  Sys_report::get_transrights_status();
 		//对象
-		$this->_trans_object = keke_report_class::get_transrights_obj();
+		$this->_trans_object = Sys_report::get_transrights_obj();
 	}
 	
 	function action_index($type='work'){
@@ -37,7 +37,7 @@ class Control_admin_user_trans extends Control_admin{
 		//处理的情况
 		$trans_status = $this->_trans_status;  
 		 
-		$rp_type =  keke_report_class::get_report_type();
+		$rp_type =  Sys_report::get_report_type();
 		
 		$where .= " and  obj = '$type' ";
 		
@@ -118,18 +118,18 @@ class Control_admin_user_trans extends Control_admin{
 		//获取传递过来的额report_id，用来查询对应的report表的信息
 		$report_id = $_GET['report_id'];
 		//对应的信息
-		$report_info = keke_report_class::get_report_info ( $report_id );
+		$report_info = Sys_report::get_report_info ( $report_id );
 		//举报方信息
 		$user_info = Keke_user::instance()->get_user_info ( $report_info ['uid'] ); 
 		//对方信息
 		$to_userinfo = Keke_user::instance()->get_user_info ( $report_info ['to_uid'] );
 		//获取process页面的信息
-		$obj_info = keke_report_class::obj_info_init ( $report_info,$user_info);
+		$obj_info = Sys_report::obj_info_init ( $report_info,$user_info);
 		//所属的类别，商品，任务，稿件，订单
 		$trans_object = $this->_trans_object; 
 		//处理的情况
 		$trans_status = $this->_trans_status;
-		$rp_type =  keke_report_class::get_report_type();
+		$rp_type =  Sys_report::get_report_type();
 		require keke_tpl::template('control/admin/tpl/user/trans_process');
 	}
 	/**

@@ -50,7 +50,7 @@ abstract class keke_shop_release_class {
 	 * @return   void
 	 */
 	public function pay_item_init() {
-		$this->_pay_item = keke_payitem_class::get_payitem_config ( 'employer', $this->_model_info ['model_code'] );
+		$this->_pay_item = Sys_payitem::get_payitem_config ( 'employer', $this->_model_info ['model_code'] );
 	}
 	/**
 	 * 随机抽取客服
@@ -287,13 +287,13 @@ abstract class keke_shop_release_class {
 	public function create_payitem_reocrd($service_id, $att_info = array(), $release_info) {
 		/**增值服务记录产生**/
 		if (! empty ( $att_info )) {
-			$payitem_list = keke_payitem_class::get_payitem_config (); //可购买服务
+			$payitem_list = Sys_payitem::get_payitem_config (); //可购买服务
 	
 			foreach ( $att_info as $k => $v ) {
-				$remain = keke_payitem_class::payitem_exists ( $this->_uid, $v ['item_code'], $payitem_list [$v ['item_code']] ['item_type'] );
-				$remain or keke_payitem_class::payitem_cost ( $v ['item_code'], $v[item_num],'', 'buy', $service_id, $service_id ); //买
+				$remain = Sys_payitem::payitem_exists ( $this->_uid, $v ['item_code'], $payitem_list [$v ['item_code']] ['item_type'] );
+				$remain or Sys_payitem::payitem_cost ( $v ['item_code'], $v[item_num],'', 'buy', $service_id, $service_id ); //买
 				//用
-				$v ['record_id'] = $pay_id = keke_payitem_class::payitem_cost ( $v ['item_code'], $v[item_num], 'service', 'spend', $service_id, $service_id );
+				$v ['record_id'] = $pay_id = Sys_payitem::payitem_cost ( $v ['item_code'], $v[item_num], 'service', 'spend', $service_id, $service_id );
 				$pay_id and dbfactory::execute ( sprintf ( " update %switkey_service set point='%s',city='%s' where service_id = '%d'", TABLEPRE, $release_info ['point'], $release_info ['province'], $service_id ) );
 			}
 		}

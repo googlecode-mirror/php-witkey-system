@@ -9,7 +9,7 @@
  * @author Administrator
  *
  */
-Keke_lang::load_lang_class('keke_payitem_class');
+Keke_lang::load_lang_class('Sys_payitem');
 class Sys_payitem {
 	
 	public static function get_table_obj($table = 'witkey_payitem') {

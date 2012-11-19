@@ -5,7 +5,7 @@
  * @author Administrator
  *
  */
-Keke_lang::load_lang_class('keke_prom_class');
+Keke_lang::load_lang_class('sys_prom');
 class Sys_prom {
 	public $_prom_open;
 	public $_prom_period;

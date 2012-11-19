@@ -6,7 +6,7 @@
  * @version v 2.0
  * 2010-5-28下午16:59:00
  */
-Keke_lang::load_lang_class ( 'keke_report_class' );
+Keke_lang::load_lang_class ( 'sys_report' );
 abstract class Sys_report {
 	
 	public $_report_info; //交易维权记录信息   单条

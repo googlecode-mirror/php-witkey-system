@@ -129,7 +129,7 @@ class keke_search_class {
 	 */
 	static function task_time_desc( $status, $end_time) {
 		global $_lang;
-		$end_time_arr = keke_global_class::get_taskstatus_desc (); 
+		$end_time_arr = Keke_global::get_taskstatus_desc (); 
 		$now_time = time ();
 		$desc_time = $end_time - $now_time;
 		

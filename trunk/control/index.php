@@ -133,7 +133,7 @@ class Control_index extends Controller{
 	//Ω®“È
 	function action_report($param) {
 	     global $_K,$_lang;
-			$transname = keke_report_class::get_transrights_name($_GET['type']);
+			$transname = Sys_report::get_transrights_name($_GET['type']);
 			$title=$transname.$_lang['submit'];
 			require Keke_tpl::template("report");
 	}

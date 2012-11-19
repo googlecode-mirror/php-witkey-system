@@ -65,12 +65,23 @@ class Control_user_msg_in extends Control_user{
 		require Keke_tpl::template('user/msg/info');
 	}
 	function action_del(){
-		if($_GET['msg_id']){  
+		if($_GET['msg_id']){
 			$where = 'msg_id = '.$_GET['msg_id'];
 		}elseif($_GET['ids']){
 			$where = 'msg_id in ('.$_GET['ids'].')';
 		}
-		//Model::factory('witkey_msg')->setWhere($where)->del();
+		$this->action_msg_status($where);
+	}
+	
+	function action_msg_status($where){
+		$res = DB::select('msg_status')->from('witkey_msg')->where($where)->get_one()->execute();
+		if($res['msg_status'] == 1 || $res['msg_status'] == 0){
+			DB::update('witkey_msg')->set(array('msg_status'))->value(array(2))->where($where)->execute();
+			keke::show_msg('删除成功','/user/msg_in',"success");
+		}else{
+			DB::delete('wtikey_msg')->where($where)->execute();
+			keke::show_msg('删除成功','/user/msg_in',"success");
+		}
 	}
 	//未读消息
 	function action_unread(){

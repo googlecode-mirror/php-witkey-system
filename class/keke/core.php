@@ -107,21 +107,7 @@ class Keke_core extends Keke_base {
 	public static function get_table_data($fileds = '*', $table, $where = '', $order = '', $group = '', $limit = '', $pk = '', $cachetime = 0) {
 		return Dbfactory::get_table_data ( $fileds, $table, $where, $order, $group, $limit, $pk, $cachetime );
 	}
-	
-	/**
-	 * 获取附件类型
-	 */
-	public static function get_ext_type() {
-		global $kekezu;
-		$basic_config = Keke::$_sys_config;
-		$flie_types = explode ( '|', $basic_config ['file_type'] );
-		
-		foreach ( $flie_types as $k => $v ) {
-			$k and $ext .= ",";
-			$ext .= '.' . $v;
-		}
-		return $ext;
-	}
+	 
 	/**
 	 * 获取系统当前的模板
 	 * @return Ambigous <string, unknown, Ambigous, unknown, number, multitype:multitype: >

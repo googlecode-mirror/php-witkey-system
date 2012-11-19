@@ -43,7 +43,7 @@ if($ac){
 			break;
 		case 'pass'://ио╪э
 			$time = time()-$service_arr['on_time']; 
-		 	keke_payitem_class::update_service_payitem_time($service_arr['payitem_time'], $time, $service_id);
+		 	Sys_payitem::update_service_payitem_time($service_arr['payitem_time'], $time, $service_id);
 		 	goods_shop_class::set_service_status($service_id, 2) and kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['goods_open_success'],'success') or kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['goods_open_fail'],"warning");
 			break;
 		case 'nopass'://об╪э
@@ -69,7 +69,7 @@ if(isset($sbt_action)){
 					$service_info = kekezu::get_table_data("*","witkey_service","service_id = $v");
 					$service_info = $service_info['0'];
 					$add_time = time()-$service_info['on_time'];
-					keke_payitem_class::update_service_payitem_time($service_info['payitem_time'], $add_time, $v); 
+					Sys_payitem::update_service_payitem_time($service_info['payitem_time'], $add_time, $v); 
 				}
 				$res = goods_shop_class::set_service_status($key_ids, 2);
 				$action = $_lang['shelves'];

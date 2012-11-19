@@ -55,7 +55,7 @@ if($service_id){
 		break;
 		case 'pass'://ио╪э
 			$time = time()-$service_arr[on_time]; 
-		 	keke_payitem_class::update_service_payitem_time($service_arr[payitem_time], $time, $service_id); 
+		 	Sys_payitem::update_service_payitem_time($service_arr[payitem_time], $time, $service_id); 
 			service_shop_class::set_on_sale_num($service_id);
 			$service_obj->service_pass($service_id) and kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['service_audit_success'],'success') or kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['service_audit_fail'],"warning");
 		break;
@@ -81,7 +81,7 @@ if($sbt_action){
 						$service_info = kekezu::get_table_data("*","witkey_service","service_id = $v");
 						$service_info = $service_info[0];
 						$add_time = time()-$service_info[on_time];
-						keke_payitem_class::update_service_payitem_time($service_info[payitem_time], $add_time, $v); 
+						Sys_payitem::update_service_payitem_time($service_info[payitem_time], $add_time, $v); 
 					}
 					$service_obj->service_pass($keyids) and kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['mulit_pass_success'],'success') or kekezu::admin_show_msg($_lang['operate_notice'],$url_str,2,$_lang['mulit_pass_fail'],"warning");
 				break;

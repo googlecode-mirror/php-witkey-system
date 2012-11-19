@@ -11,8 +11,8 @@ $basic_url = $_K['siteurl']."/index.php?do=service&sid=".$sid;
 
 keke_shop_class::plus_view_num($sid, $owner_info['uid']);
 $payitem_arr = unserialize($service_info[payitem_time]);
-$item_config = keke_payitem_class::get_payitem_config ( null, null, null, 'item_id' );
-$item_list= keke_payitem_class::get_payitem_config ( 'employer', 'service', null, 'item_id' );
+$item_config = Sys_payitem::get_payitem_config ( null, null, null, 'item_id' );
+$item_list= Sys_payitem::get_payitem_config ( 'employer', 'service', null, 'item_id' );
 //var_dump(date('Y-m-d',$payitem_arr['top']));
 //出售服务的数量
 $seller_goods_num = db_factory::get_count(sprintf("select count(service_id) from %switkey_service where model_id=7 and uid=%d and service_status=2",TABLEPRE,$owner_info['uid']));

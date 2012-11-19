@@ -480,7 +480,7 @@ class Keke extends Keke_core {
 	 * 初始化推广实例，按需加载
 	 */
 	static function init_prom() {
-		Keke::$_prom_obj = keke_prom_class::get_instance ();
+		Keke::$_prom_obj = Sys_prom::get_instance ();
 	}
 	/**
 	 * 初始化行业,按需加载

@@ -43,7 +43,7 @@ switch ($r_step) { //服务发布步骤
 			$kf_info	 = $release_obj->_kf_info; //随机客服
 			$indus_p_arr = $release_obj->get_bind_indus(); //父级行业
 			$indus_arr   = $release_obj->get_service_indus($release_info ['indus_pid']); //子集行业
-			$ext_types   = kekezu::get_ext_type (); //附件允许类型
+			//$ext_types   = kekezu::get_ext_type (); //附件允许类型
 			
 			//die();
 			$price_unit  = $release_obj->get_price_unit();//价格单位			

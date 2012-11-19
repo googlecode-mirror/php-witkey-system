@@ -89,7 +89,7 @@ if ($model_id) {
 		$task_info = Dbfactory::query ( $sql . $where . $pages ['where'] );
 	}
 
-	$payitem_list = keke_payitem_class::get_payitem_config ();
+	$payitem_list = Sys_payitem::get_payitem_config ();
 }
 
 $len = strlen($status);

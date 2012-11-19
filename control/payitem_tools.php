@@ -11,10 +11,10 @@ defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 
 $uid!=$task_info['uid'] and Keke::show_msg($_lang['friendly_notice'],'index.php?do=index',3,$_lang['cannot_access_page']); 
 
-$payitem_arr = keke_payitem_class::get_payitem_info('employer',$model_list[$task_info['model_id']]['model_code']); //获取该任务所有的增值服务 
-$exist_payitem_arr = keke_payitem_class::payitem_exists($uid,false ,'',$payitem_arr);//获取已购买的增值服务 
+$payitem_arr = Sys_payitem::get_payitem_info('employer',$model_list[$task_info['model_id']]['model_code']); //获取该任务所有的增值服务 
+$exist_payitem_arr = Sys_payitem::payitem_exists($uid,false ,'',$payitem_arr);//获取已购买的增值服务 
 $payitem_arr_desc = unserialize($task_info['payitem_time']);//获取任务属性描述
-$payitem_standard = keke_payitem_class::payitem_standard (); //收费标准
+$payitem_standard = Sys_payitem::payitem_standard (); //收费标准
 
  
  foreach ($payitem_arr_desc as $k=>$v) { 
@@ -44,14 +44,14 @@ $payitem_standard = keke_payitem_class::payitem_standard (); //收费标准
 				dbfactory::execute(sprintf("update %switkey_task set point='%s',city='%s' where task_id=%d",TABLEPRE,$_POST['point'],$province,$task_id));
 				//更新任务属性  
 		  	} 
-			$cost_res = keke_payitem_class::payitem_cost ( $payitem_arr[$k]['item_code'], $v, 'task', 'spend', $task_id, $task_id );
+			$cost_res = Sys_payitem::payitem_cost ( $payitem_arr[$k]['item_code'], $v, 'task', 'spend', $task_id, $task_id );
 			//生成使用记录  
  	}   	
  	$pay_item = ltrim($pay_item,",");
  	if(strlen($pay_item)){
  		dbfactory::execute(sprintf("update %switkey_task set pay_item='%s' where task_id=%d",TABLEPRE,$pay_item,$task_id));//更新任务属性
  	}
-	$res = keke_payitem_class::set_payitem_time($payitem_arr_desc, $task_id, 'task'); 
+	$res = Sys_payitem::set_payitem_time($payitem_arr_desc, $task_id, 'task'); 
 	//更新增值服务结束时间
  	$res||$cost_res and Keke::show_msg($_lang['operate_notice'],"index.php?do=task&task_id=$task_id&view=tools",'3',$_lang['operate_success'],'success'); 
  }

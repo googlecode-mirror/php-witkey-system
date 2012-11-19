@@ -10,11 +10,11 @@
 defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 $nav_active_index = 'shop';
 $uid != $service_info ['uid'] and Keke::show_msg ( $_lang['friendly_notice'], 'index.php?do=index', 3, '您不能访问此页面' );
-$payitem_arr = keke_payitem_class::get_payitem_info ( 'employer', $model_list [$service_info ['model_id']] ['model_code'] );
-$exist_payitem_arr = keke_payitem_class::payitem_exists ( $uid, false, '', $payitem_arr ); 
+$payitem_arr = Sys_payitem::get_payitem_info ( 'employer', $model_list [$service_info ['model_id']] ['model_code'] );
+$exist_payitem_arr = Sys_payitem::payitem_exists ( $uid, false, '', $payitem_arr ); 
 //获取已购买的增值服务 
 $payitem_arr_desc = unserialize ( $service_info ['payitem_time'] );
-$payitem_standard = keke_payitem_class::payitem_standard (); //收费标准
+$payitem_standard = Sys_payitem::payitem_standard (); //收费标准
 
 if ($formhash) {
 	is_array($payitem_num) or $payitem_num=array();
@@ -35,7 +35,7 @@ if ($formhash) {
 			dbfactory::execute ( sprintf ( "update %switkey_service set point='%s',city='%s' where service_id=%d", TABLEPRE, $_POST ['point'], $province, $sid ) ); 
 			//更新任务属性  
 		}
-		$cost_res = keke_payitem_class::payitem_cost ( $payitem_arr [$k] ['item_code'], $v, 'service', 'spend', $sid, $sid ); 
+		$cost_res = Sys_payitem::payitem_cost ( $payitem_arr [$k] ['item_code'], $v, 'service', 'spend', $sid, $sid ); 
 		//生成使用记录 
 	}
 	$pay_item = ltrim ( $pay_item, "," );
@@ -43,7 +43,7 @@ if ($formhash) {
 		dbfactory::execute ( sprintf ( "update %switkey_service set pay_item='%s' where service_id=%d", TABLEPRE, $pay_item, $sid ) ); 
 		//更新任务属性
 	}
-	$res = keke_payitem_class::set_payitem_time ( $payitem_arr_desc, $sid, 'service' ); 
+	$res = Sys_payitem::set_payitem_time ( $payitem_arr_desc, $sid, 'service' ); 
 	//更新增值服务结束时间
 	$res || $cost_res and Keke::show_msg ( $_lang['friendly_notice'], "index.php?do=service&sid=$sid&view=tools", '3', '操作成功', 'success' );
 }

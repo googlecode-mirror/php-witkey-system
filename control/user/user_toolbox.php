@@ -20,9 +20,9 @@ $ord_arr = array (" record_id desc " => $_lang ['record_num_desc'], " record_id 
 in_array ( $show, $shows ) or $show = 'buy';
 switch ($show) {
 	case 'buy' :
-		$payitem_list = keke_payitem_class::get_payitem_config ( null, null, null, 'item_code' ); //可购买服务		
+		$payitem_list = Sys_payitem::get_payitem_config ( null, null, null, 'item_code' ); //可购买服务		
 		$payitem_type = keke_glob_class::get_payitem_type (); //使用范围
-		$payitem_standard = keke_payitem_class::payitem_standard (); //收费标准		
+		$payitem_standard = Sys_payitem::payitem_standard (); //收费标准		
 		if ($item_code) { //购买页面加载
 			in_array ( $item_code, array ('top', 'urgent', 'workhide', 'map' ) ) or Keke::show_msg ( $_lang ['operate_notice'], 'index.php?do=user&view=payitem&op=toolbox', 3, $_lang ['param_error'], 'warning' );
 			$item_info = $payitem_list [$item_code]; //选择项信息
@@ -33,7 +33,7 @@ switch ($show) {
 		break;
 	case 'my' : //我购买的
 		//读取配置
-		$payitem_config = keke_payitem_class::get_payitem_config (null, null, null, 'item_code',2);
+		$payitem_config = Sys_payitem::get_payitem_config (null, null, null, 'item_code',2);
 		//威客增值服务统计
 		//读取记录
 		$p ['page'] = intval ( $page );
@@ -41,13 +41,13 @@ switch ($show) {
 		$p ['url'] = $origin_url . "&op=$op&show=$show&wh['item_code']={$wh['item_code']}&wh['use_type']={$wh['use_type']}&ord=$ord&page=$page&p['page_size']={$p['page_size']}";
 		$p ['anchor'] = "userCenter";
 		$wh ['uid'] = $uid;
-		$payitem_arr = keke_payitem_class::get_payitem_record ( $wh, $ord, $p );
+		$payitem_arr = Sys_payitem::get_payitem_record ( $wh, $ord, $p );
 		$payitem_list = $payitem_arr ['list'];
 		$pages = $payitem_arr ['page'];
 		break;
 	case 'list' : //我使用的
 		//读取配置
-		$payitem_config = keke_payitem_class::get_payitem_config (null, null, null, 'item_code',2);
+		$payitem_config = Sys_payitem::get_payitem_config (null, null, null, 'item_code',2);
 		//威客增值服务统计
 		//读取记录
 		
@@ -57,7 +57,7 @@ switch ($show) {
 		$p ['url'] = $origin_url . "&op=$op&show=$show&wh['item_code']={$wh['item_code']}&wh['use_type']={$wh['use_type']}&ord=$ord&page=$page&p['page_size']={$p['page_size']}";
 		$p ['anchor'] = "userCenter";
 		$wh ['uid'] = $uid;
-		$payitem_arr = keke_payitem_class::get_payitem_record ( $wh, $ord, $p );
+		$payitem_arr = Sys_payitem::get_payitem_record ( $wh, $ord, $p );
 		$payitem_list = $payitem_arr ['list'];
 		$pages = $payitem_arr ['page'];
 		break;

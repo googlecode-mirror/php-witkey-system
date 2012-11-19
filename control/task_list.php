@@ -35,7 +35,7 @@ if (isset ( $search_key )) {
 
 $model_open = get_model (); // 开启的任务模型
 
-$item_config = keke_payitem_class::get_payitem_config ( null, null, null, 'item_id' );
+$item_config = Sys_payitem::get_payitem_config ( null, null, null, 'item_id' );
 // 微博平台图标
 if (isset ( $path )) {
 	$platform_arr = get_wbtask_info ( $path );

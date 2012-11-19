@@ -16,7 +16,7 @@ Keke_lang::package_init ( "shop_list" );
 Keke_lang::loadlang ( $do );
 
 /*初始化信息*/
-$item_config = keke_payitem_class::get_payitem_config ( null, null, null, 'item_id' );
+$item_config = Sys_payitem::get_payitem_config ( null, null, null, 'item_id' );
 $feed_time = time()-3600*24;  
 $dynamic_arr = Keke::get_feed(" feedtype='pub_service'  and $feed_time>feed_time ", "feed_time desc", 10); //动态信息
 $website_url = "index.php?" . $_SERVER ['QUERY_STRING'];

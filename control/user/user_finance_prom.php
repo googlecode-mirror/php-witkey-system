@@ -18,7 +18,7 @@ $event_id and $event_id= intval($event_id);
 $url = "index.php?do=user&view=finance&op=$op&show=$show&page_size=$page_size&page=$page";
 switch($show){
 	case "income":
-		$status_arr = keke_prom_class::get_pevent_status();
+		$status_arr = Sys_prom::get_pevent_status();
 		$event_obj=new Keke_witkey_prom_event_class();
 		$ord_arr=array("event_id desc"=>$_lang['prom_id_desc'],"event_id asc"=>$_lang['prom_id_asc'],"rake_cash desc"=>$_lang['gain_cash_desc'],"rake_cash asc"=>$_lang['gain_cash_asc']);
 		//查询获得的推广收益（已完成的）
@@ -34,8 +34,8 @@ switch($show){
 		$event_arr = $event_obj->query_keke_witkey_prom_event ();	
 		break;
 	case "relation":
-		$status_arr = keke_prom_class::get_prelation_status();
-		$type_arr = keke_prom_class::get_prom_type();
+		$status_arr = Sys_prom::get_prelation_status();
+		$type_arr = Sys_prom::get_prom_type();
 		$relation_obj=new Keke_witkey_prom_relation_class();
 		$ord_arr=array("on_time desc"=>$_lang['prom_time_desc'],"on_time asc"=>$_lang['prom_time_asc']);
 		//搜索条件

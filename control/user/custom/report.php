@@ -55,7 +55,7 @@ class Control_user_custom_report extends Control_user{
 		//处理的情况
 		$trans_status = $this->_trans_status;
 		//举报类型
-		$rp_type =  keke_report_class::get_report_type();
+		$rp_type =  Sys_report::get_report_type();
 		require Keke_tpl::template('user/custom/report');
 	}
 	/**

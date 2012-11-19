@@ -54,7 +54,51 @@ class Keke_base {
 	
 		return $value;
 	}
-
+	/**
+	 * 盖楼函数
+	 *
+	 * @param $int $nodeid
+	 *        	-- 顶级父ID的值
+	 * @param $arTree array
+	 *        	-- 数组
+	 */
+	static function sort_tree($nodeid, $data_arr, $pid = "indus_pid", $id = "indus_id") {
+		$res = array ();
+		for($i = 0; $i < sizeof ( $data_arr ); $i ++)
+			if ($data_arr [$i] ["$pid"] == $nodeid) {
+			array_push ( $res, $data_arr [$i] );
+			$subres = self::sort_tree ( $data_arr [$i] ["$id"], $data_arr, $pid, $id );
+			for($j = 0; $j < sizeof ( $subres ); $j ++)
+				array_push ( $res, $subres [$j] );
+		}
+		return $res;
+	}
+	
+	static function get_format_size($bytes) {
+	$units = array (0 => 'B',1 => 'kB',2 => 'MB',3 => 'GB'	);
+			$log = log ( $bytes, 1024 );
+			$power = ( int ) $log;
+			$size = pow ( 1024, $log - $power );
+			return round ( $size, 2 ) . ' ' . $units [$power];
+	
+	}
+	/**
+	* 将很长的数字转换成 xx万
+	*
+	* @param $number int、float..
+	*        	数字
+	* @param $unit string
+	*        	单位
+	*/
+	static function pretty_format($number, $unit = '') {
+	global $_lang;
+	$unit == '' && $unit = $_lang ['million'];
+	if ($number < 10000) {
+	return $number;
+	}
+	return ((round ( $number / 1000 )) / 10) . $unit; // round四舍五入 ceil进一法取整
+	// floor舍去法取整
+	}
 	/**
 	 * 
 	 * Enter 字符串星号装换

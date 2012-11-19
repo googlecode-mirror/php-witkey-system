@@ -89,7 +89,7 @@ class Sys_finance {
 		$fo->setUsername ( $user_info ['username'] );
 		if (empty ( self::$_mem )) { 
 			// 如果没有初始化事由或者初始化失败,就调用默认简单的行为描述
-			$action_arr = keke_global_class::get_finance_action ( $action );
+			$action_arr = Keke_global::get_finance_action ( $action );
 			self::$_mem = $action_arr [$action];
 		}
 		$fo->setFina_mem ( self::$_mem );
@@ -181,7 +181,7 @@ class Sys_finance {
 		$fo->setFina_credit ( $credit );
 		$fo->setFina_cash ( $cash );
 		if (empty ( self::$_mem )) { // 如果没有初始化事由或者初始化失败,就调用默认简单的行为描述
-			$action_arr = keke_global_class::get_finance_action ( $action );
+			$action_arr = Keke_global::get_finance_action ( $action );
 			self::$_mem = $action_arr [$action];
 		}
 		$fo->setFina_mem ( self::$_mem );
@@ -235,7 +235,7 @@ class Sys_finance {
 	 * 后台站长支付宝打款
 	 */
 	public static function alipayjs_format_moneys($cash) {
-		$website_cash = keke_finance_class::get_to_cash ( $cash );
+		$website_cash = self::get_to_cash ( $cash );
 		$alipay_per_charge = 0.5;
 		$alipay_per_low = 1;
 		$alipay_per_high = 25;

@@ -9,7 +9,7 @@ defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 $nav_active_index = 'shop';
 $basic_url = $_K['siteurl']."/index.php?do=service&sid=".$sid;
 $payitem_arr = unserialize($service_info['payitem_time']); 
-$item_config = keke_payitem_class::get_payitem_config ( null, null, null, 'item_id' );
+$item_config = Sys_payitem::get_payitem_config ( null, null, null, 'item_id' );
 
 keke_shop_class::plus_view_num($sid, $owner_info['uid']);
  //var_dump($owner_info);
@@ -119,6 +119,6 @@ switch ($view) {
 		$pages     = $mark_arr['pages'];
 		break;
 }
-$item_list= keke_payitem_class::get_payitem_config ( 'employer', 'goods', null, 'item_id' );
+$item_list= Sys_payitem::get_payitem_config ( 'employer', 'goods', null, 'item_id' );
 
 require keke_tpl_class::template ( "shop/" . $model_info ['model_code'] . "/tpl/" . $_K ['template'] . "/service_info" );

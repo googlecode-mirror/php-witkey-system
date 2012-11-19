@@ -2,8 +2,8 @@
 defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 $std_cache_name = 'service_cache_'.$model_id.'_' . substr ( md5 ( $uid ), 0, 6 );
 $release_obj = service_release_class::get_instance ( $model_id );
-$payitem_arr = keke_payitem_class::get_payitem_info('employer','service'); //获取该任务所有的增值服务  
-$payitem_standard = keke_payitem_class::payitem_standard (); //收费标准
+$payitem_arr = Sys_payitem::get_payitem_info('employer','service'); //获取该任务所有的增值服务  
+$payitem_standard = Sys_payitem::payitem_standard (); //收费标准
 
 $release_obj->get_service_obj ( $std_cache_name ); //获取服务信息对象
 $release_info = $release_obj->_std_obj->_release_info; //服务发布信息
@@ -57,9 +57,9 @@ switch ($r_step) { //服务发布步骤
 			die ();
 		} else {
 			$release_obj->check_access ( $r_step, $model_id, $release_info ); //页面进入权限检测
-			$item_list = keke_payitem_class::get_payitem_info ('employer',$model_info[model_code] );//雇主增值服务项
+			$item_list = Sys_payitem::get_payitem_info ('employer',$model_info[model_code] );//雇主增值服务项
 			
-			$standard = keke_payitem_class::payitem_standard ();//增值服务收费标准中文
+			$standard = Sys_payitem::payitem_standard ();//增值服务收费标准中文
 			$item_info = $release_obj->get_pay_item (); //附加项获取
 			$total_cash = $release_obj->get_payitem_cash ( 0); //任务总金额
 		}

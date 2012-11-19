@@ -167,7 +167,7 @@ class Sys_order {
 		global $uid;
 		global $_lang;
 		$order_info = self::get_order_info ( $order_id );
-		$transname = keke_report_class::get_transrights_name ( $report_type ); //举报投诉中文
+		$transname = Sys_report::get_transrights_name ( $report_type ); //举报投诉中文
 		if ($order_info ['order_uid'] == $uid || $order_info ['seller_uid'] == $uid) {
 			if ($order_info ['order_uid'] == $uid && $uid == $to_uid) {
 				Keke::keke_show_msg ( '', $_lang['buyer_can_not_to_self'] . $transname, 'error', 'json' );
@@ -178,7 +178,7 @@ class Sys_order {
 			Keke::keke_show_msg ( '', $_lang['no_trans_not_to_order'] . $transname, 'error', 'json' );
 		}
 		$uid == $order_info ['order_uid'] and $user_type = '2' or $user_type = '1'; //角色
-		$res = keke_report_class::add_report ( 'order', $order_info ['obj_id'], $to_uid, $to_username, $desc, $report_type, $order_info ['order_status'], $order_id, $user_type, $file_name );
+		$res = Sys_report::add_report ( 'order', $order_info ['obj_id'], $to_uid, $to_username, $desc, $report_type, $order_info ['order_status'], $order_id, $user_type, $file_name );
 	}
 	/**
 	 * 更新财务记录的订单号

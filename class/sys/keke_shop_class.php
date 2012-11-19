@@ -166,10 +166,10 @@ class keke_shop_class {
 		global $uid;
 		global $_lang;
 		$service_info = self::get_service_info ( $obj_id );
-		$transname = keke_report_class::get_transrights_name ( $report_type ); //举报投诉中文
+		$transname = Sys_report::get_transrights_name ( $report_type ); //举报投诉中文
 		$service_info ['uid'] == $uid and Keke::keke_show_msg ( '', $_lang['can_not_to_self'] . $transname, 'error', 'json' );
 		$user_type = '2'; //只能雇主对他发起
-		$res = keke_report_class::add_report ( 'product', $obj_id, $to_uid, $to_username, $desc, $report_type, $service_info ['service_status'], $obj_id, $user_type, $file_name );
+		$res = Sys_report::add_report ( 'product', $obj_id, $to_uid, $to_username, $desc, $report_type, $service_info ['service_status'], $obj_id, $user_type, $file_name );
 	}
 	/**
 	 * 统计互评各状态条数

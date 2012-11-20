@@ -15,10 +15,11 @@ class Sys_cron {
 	 * 执行计划
 	 */
 	static public function run() {
-		global $_K;
-		var_dump(self::$_crontime+SYS_START_TIME,$_K['cronnextrun']);
-		//判断时间
-		if(self::$_crontime+SYS_START_TIME>$_K['cronnextrun']){
+		 
+		$runtime = Cache::instance()->get('keke_cron_runtime');
+		 
+		//判断执行时间大于当前时间则不执行
+		if($runtime>SYS_START_TIME){
 			return TRUE;
 		}
 		
@@ -36,11 +37,8 @@ class Sys_cron {
 	 * 更新下次计划执行的时间
 	 */
 	static function update_cron_time() {
-		die('不会执行');
 		$t = self::$_crontime + time();
-		$where = "k='cronnextrun'";
-		Cache::instance()->del('keke_config');
-        return (bool)DB::update('witkey_config')->set(array('v'))->value(array($t))->where($where)->execute(); 		
+		Cache::instance()->set('keke_cron_runtime',$t);
 	}
 	
 	

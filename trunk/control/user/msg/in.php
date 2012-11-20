@@ -48,8 +48,7 @@ class Control_user_msg_in extends Control_user{
 		$data_list = $data_info['data'];
 		//显示分页的页数
 		$pages = $data_info['pages'];
-		//
-		$this_user = $_SESSION['username'];
+		
 		require Keke_tpl::template('user/msg/in');
 	}
 	function action_info(){

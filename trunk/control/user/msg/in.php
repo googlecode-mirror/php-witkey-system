@@ -59,7 +59,7 @@ class Control_user_msg_in extends Control_user{
 	function action_info(){
 		$from = $_GET['from'];
 		$date_arr = DB::select()->from('witkey_msg')->where('msg_id = '.$_GET['msg_id'])->get_one()->execute();
-		if($_GET['msg_id']&& $date_arr['view_status']<1){
+		if($_GET['msg_id']&& $date_arr['view_status']<1&&$from!='out'){
 			DB::update('witkey_msg')->set(array('view_status'))->value(array(1))->where('msg_id = '.$_GET['msg_id'])->execute();
 		}
 		require Keke_tpl::template('user/msg/info');

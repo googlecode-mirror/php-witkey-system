@@ -86,9 +86,9 @@
 	
     
     <div class="user_box">
-    	<div class="avatar">
+    	<!-- <div class="avatar">
         	 {avatar($_SESSION['admin_uid'],'small')}
-        </div> 
+        </div> --> 
         <div class="name">{$_lang['hello']}£¬
 		{$grouplist_arr[$_SESSION['admin_gid']]['groupname']}
 		<b>{$_SESSION['admin_username']}</b>
@@ -168,7 +168,7 @@ window.onload = function(){
 
 
 
-<div class="tool_box">
+<!-- <div class="tool_box">
 	<div class="bread">
     <a href="{BASE_URL}/index.php/admin/main" target="display_frame">{$_lang['manage_home']}</a>
     <span class="font_st">&gt;</span>
@@ -184,7 +184,7 @@ window.onload = function(){
         	<button type="button" class="button ml_mr_5"  onclick="find_nav()">{$_lang['search']}</button>
 		<button id="map" type="button" class="button" onclick="nav();">{$_lang['nav_map']}</button>
     </div>
-</div>
+</div> -->
 
 <div class="frame_box po_re">	
 	<iframe id="display_frame" name="display_frame"  scrolling="auto"  src="{BASE_URL}/index.php/admin/main" frameborder="0" ></iframe>
@@ -275,7 +275,7 @@ function showpanel(){
 		var f=$('.frame_box').width();
 		var h=$('.nav').height();
 		$('.side_bar').animate({left: 0}).show();
-		$('.frame_box,.tool_box').animate({left: m}).show();
+		$('.frame_box').animate({left: m}).show();
 		$('.header,.logo,.nav,.user_box').animate({top: 0}).show();
 };
 /*hide_control_panel*/	
@@ -284,7 +284,7 @@ function hidepanel(){
 		var f=$('.frame_box').width();
 		var h=$('.nav').height();
 		$('.side_bar').animate({left: -m}).fadeOut();
-		$('.frame_box,.tool_box').animate({left: f + m}).fadeOut();
+		$('.frame_box').animate({left: f + m}).fadeOut();
 		$('.header,.logo,.nav,.user_box').animate({top: -h}).fadeOut();
 };
 /*show_login*/
@@ -302,7 +302,7 @@ $(function() {
 	var h=$('.nav').height();
 	
 	$('.side_bar').css("left",-m);
-	$('.frame_box,.tool_box').css("left",f + m);
+	$('.frame_box').css("left",f + m);
 	$('.header,.logo,.nav,.user_box').css("top",-h);
  
 	

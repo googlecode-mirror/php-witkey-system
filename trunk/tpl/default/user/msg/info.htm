@@ -11,7 +11,7 @@
 		                			<input type="button" value="返回列表" onclick="history.go(-1);">
 		                	</div>
 							<div class="actions">
-	                			<input type="button" value="删除" onclick="location.href='del?msg_id='+{$date_arr['msg_id']};">
+	                			<input type="button" value="删除" onclick="del();">
 	                		</div>
 	                	</div>
 		                
@@ -20,7 +20,7 @@
 							
 		                    <h2>{$date_arr['title']}</h2>
 		                	
-							<p>发件人：{if $data_arr['uid']}{某人}{else}系统消息{/if}</p>
+							<p>发件人：{if $data_arr['uid']}{$data_arr['username']}{else}系统消息{/if}</p>
 							<p>时间：{date('Y-m-d H:i:s',$date_arr['on_time'])}</p>
 							<div class="form_line"></div>
 								

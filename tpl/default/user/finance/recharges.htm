@@ -14,25 +14,36 @@
 		                <div class="box_detail">
 
 		                	<div class="toolbar">
-		                		<div class="actions">
-		                			<input type="submit" value="我要充值">
-		                		</div>
-		                		<div class="actions">
-		                			<input type="search" placeholder="请输入关键字"><input type="button" value="搜索">
-		                		</div>
-		                		<div class="page">
-					                <p>
-					                    <a href="###" title="第一页">&#171;</a>
-					                    <a href="###" title="上一页">&#139;</a>
-					                    <a href="###" class="selected">1</a>
-					                    <a href="###">2</a>
-					                    <a href="###">3</a>
-					                    <a href="###">4</a>
-					                    <a href="###" title="下一页">&#155;</a>
-					                    <a href="###" title="最后一页">&#187;</a>
-					                    <span class="stats">1/10</span>
-					                </p>
-					            </div>
+		                		<form class="detail" action="{BASE_URL}/index.php/user/finance_recharges" method="get" id="frm_user_search">
+										   <input type="hidden" value="{$page}" name="page">
+										<table cellspacing="0" cellpadding="0">
+											<tbody>
+											<tr>
+										    <td> 查询字段
+										       <select name="slt_fields">
+										       	<option></option>
+										       	{loop $query_fields $k $v}
+										       	 <option  value="$k" {if $k == $_GET['slt_fields']} selected="selected" {/if}>{$v}</option>
+												{/loop} 
+										       </select>
+											 <select name="slt_cond">
+											 	<option value="=" {if $_GET['slt_cond']=='='}selected="selected"{/if}>=</option>
+												<option value=">" {if $_GET['slt_cond']=='>'}selected="selected"{/if}>></option>
+												<option value="<" {if $_GET['slt_cond']=='<'}selected="selected"{/if}><</option>
+												<option value="like" {if $_GET['slt_cond']=='like'}selected="selected"{/if}>Like</option>
+											 </select>
+										     <input type="text" class="txt" name="txt_condition" id="txt_condition" value="{$_GET['txt_condition']}">
+											 <select name="page_size">
+												<option value="10" {if $_GET['page_size']=='10'}selected="selected"{/if}>{$_lang['page_size']}10条</option>
+												<option value="20" {if $_GET['page_size']=='20'}selected="selected"{/if}>{$_lang['page_size']}20条</option>
+												<option value="30" {if $_GET['page_size']=='30'}selected="selected"{/if}>{$_lang['page_size']}30条</option>
+											</select>
+											 <input type="submit" value="{$_lang['search']}">
+											 </td>
+										</tr>
+										</tbody>
+										</table>
+										</form>
 		                	</div>
 
 		                	<!--date_table数据表格 start-->
@@ -48,34 +59,18 @@
 		                            </tr>
 		                            </thead>
 		                            <tbody>
+		                            {loop $data_list $v}
 		                            <tr>
-		                              <td>01</td>
-		                              <td><span class="money">1000元</span></td>
+		                              <td>{$v['rid']}</td>
+		                              <td><span class="money">￥ {$v['cash']} 元</span></td>
 		                              <td>
 		                              	<p>6222***********6656 灵媒师 中国农业银行</p>
 		                              	
 		                              </td>
 		                              <td>成功</td>
-		                              <td>2012-12-25</td>
+		                              <td>{date('Y-m-d',$v['pay_time'])}</td>
 		                            </tr>
-		                            <tr>
-		                              <td>02</td>
-		                              <td><span class="money">1000元</span></td>	
-		                              <td>
-		                              	<p>6222***********6656 灵媒师 中国工商银行硚口支行</p>
-		                              </td>
-		                              <td>失败!网络错误</td>
-		                              <td>2011-08-21</td>
-		                            </tr>
-		                            <tr>
-		                              <td>03</td>
-		                              <td><span class="money">800元</span></td>
-		                              <td>
-		                              	<p>6771***********6656 噜阿鲁 中国建设银行</p>
-		                              </td>
-		                              <td>成功</td>
-		                              <td>2011-08-20</td>
-		                            </tr>
+		                            {/loop}
 		                            </tbody>
 		                            <tfoot>
 		                            <tr>
@@ -92,15 +87,7 @@
 		                		</div>
 		                		<div class="page">
 					                <p>
-					                    <a href="###" title="第一页">&#171;</a>
-					                    <a href="###" title="上一页">&#139;</a>
-					                    <a href="###" class="selected">1</a>
-					                    <a href="###">2</a>
-					                    <a href="###">3</a>
-					                    <a href="###">4</a>
-					                    <a href="###" title="下一页">&#155;</a>
-					                    <a href="###" title="最后一页">&#187;</a>
-					                    <span class="stats">1/10</span>
+					                    {$pages['page']}
 					                </p>
 					            </div>
 		                	</div>

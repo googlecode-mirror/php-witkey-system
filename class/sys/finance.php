@@ -235,6 +235,7 @@ class Sys_finance {
 	 * 后台站长支付宝打款
 	 */
 	public static function alipayjs_format_moneys($cash) {
+		
 		$website_cash = self::get_to_cash ( $cash );
 		$alipay_per_charge = 0.5;
 		$alipay_per_low = 1;

@@ -21,6 +21,7 @@ class Control_user_msg_out extends Control_user{
 	function action_index(){
 		global $_K,$_lang;
 		$fields = '`msg_id`,`uid`,`username`,`to_uid`,`to_username`,`title`,`msg_status`,`view_status`,`on_time`';
+		$query_fields = array('msg_id'=>'编号','title'=>'主题','on_time'=>'时间');
 		$base_uri = BASE_URL.'/index.php/user/msg_out';
 		$del_uri = $base_uri.'/del';
 		$count = intval($_GET['count']);
@@ -30,9 +31,6 @@ class Control_user_msg_out extends Control_user{
 		//发件条件
 		$where .=" and msg_status<>2 and uid = ".$_SESSION['uid'];
 		
-		if($_GET['search_key']){
-			$where .= " and title like '%".Keke::escape($_GET['search_key'])."%'";
-		}
 		$data_info = Model::factory('witkey_msg')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
 		$data_list = $data_info['data'];
 		$pages = $data_info['pages'];

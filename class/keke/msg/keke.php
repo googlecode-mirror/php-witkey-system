@@ -74,8 +74,11 @@ class Keke_msg_keke extends Keke_msg {
 			$to_uid = NULL;
 			$to_username = NULL;
 		}else{
-			$to_uid = $uid;
+			$to_uid = $uid;//收件id
 			//$to_username = $_SESSION['username'];
+			$user_username = Keke_user::instance()->get_user_info($to_uid,'username',1);
+			$to_username = $user_username['username'];//收件id
+			$uid = $_SESSION['uid'];
 		}
 		if($content===NULL){
 			$content = strtr($this->_tpl_info['msg_tpl'],self::$_var);

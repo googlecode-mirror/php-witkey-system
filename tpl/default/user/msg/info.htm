@@ -8,14 +8,12 @@
 		            <div class="inner clearfix">
 		            	<div class="toolbar">
 	                		<div class="actions">
-		                			<input type="button" value="返回列表" onclick="history.go(-1);">
+		                		<input type="button" value="返回列表" onclick="history.go(-1);">
 		                	</div>
 							<div class="actions">
 	                			<input type="button" value="删除" onclick="del();">
 	                		</div>
 	                	</div>
-		                
-		                
 		                <div class="box_detail">
 							
 		                    <h2>{$date_arr['title']}</h2>
@@ -49,7 +47,7 @@
    	
     <script type="text/javascript">
     function del(){
-          location.href='{BASE_URL}/index.php/user/msg_in/del?msg_id='+{$date_arr['msg_id']};
+		location.href='{BASE_URL}/index.php/user/msg_{$from}/del?msg_id='+{$date_arr['msg_id']};
     }
     
     

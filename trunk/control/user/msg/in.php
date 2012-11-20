@@ -57,7 +57,7 @@ class Control_user_msg_in extends Control_user{
 		require Keke_tpl::template('user/msg/in');
 	}
 	function action_info(){
-		$from = $_GET['from'];
+		$from = $_GET['from'];//用来判断是收件(in)还是发件(out)
 		$date_arr = DB::select()->from('witkey_msg')->where('msg_id = '.$_GET['msg_id'])->get_one()->execute();
 		if($_GET['msg_id']&& $date_arr['view_status']<1&&$from!='out'){
 			DB::update('witkey_msg')->set(array('view_status'))->value(array(1))->where('msg_id = '.$_GET['msg_id'])->execute();

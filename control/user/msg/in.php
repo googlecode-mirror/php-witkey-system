@@ -43,6 +43,9 @@ class Control_user_msg_in extends Control_user{
 				break;
 		}
 		
+		if($_GET['search_key']){
+			$where .= " and title like '%".Keke::escape($_GET['search_key'])."%'";
+		}
 		
 		$data_info = Model::factory('witkey_msg')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
 		
@@ -54,6 +57,7 @@ class Control_user_msg_in extends Control_user{
 		require Keke_tpl::template('user/msg/in');
 	}
 	function action_info(){
+		$from = $_GET['from'];
 		$date_arr = DB::select()->from('witkey_msg')->where('msg_id = '.$_GET['msg_id'])->get_one()->execute();
 		if($_GET['msg_id']&& $date_arr['view_status']<1){
 			DB::update('witkey_msg')->set(array('view_status'))->value(array(1))->where('msg_id = '.$_GET['msg_id'])->execute();

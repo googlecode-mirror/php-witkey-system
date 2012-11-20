@@ -58,12 +58,12 @@
 		                              <td>
 		                             	 <input type="checkbox" value="$v['msg_id']" id="cbk_selected" name="ckb[]">{$v['msg_id']}
 		                              </td>
-		                              <td>{if $data_arr['uid']}{$date_arr['uid']}{else}系统消息{/if}</td>
+		                              <td>{if $v['uid']}{$v['username']}{else}系统消息{/if}</td>
 		                              <td>
 		                              	<a href="{BASE_URL}/index.php/user/msg_in/info?msg_id={$v['msg_id']}" class="title">{$v['title']}</a>
 		                              	<div class="item_action">
-		                              		<a href="{BASE_URL}/index.php/user/msg_in/del	?msg_id={$v['msg_id']}" onclick="kconfirm(this);return false;">删除</a>
-		                              		<a href="{BASE_URL}/index.php/user/msg_in/info?msg_id={$v['msg_id']}">查看</a>
+		                              		<a href="{BASE_URL}/index.php/user/msg_in/del?msg_id={$v['msg_id']}" onclick="kconfirm(this);return false;">删除</a>
+		                              		<a href="{BASE_URL}/index.php/user/msg_in/info?msg_id={$v['msg_id']}&from=in">查看</a>
 		                              	</div>
 		                              </td>
 		                              <td>{date('Y-m-d',$v['on_time'])}</td>
@@ -78,8 +78,8 @@
 
 			               	<div class="toolbar bottom">
 		                		<div class="actions">
-		                			<input type="button" value="全选" onclick="checkall(event);">
-			                			</div>
+		                			<input type="button" value="全选" onclick="checkall(event);" id="checkbox" name="checkbox">
+			                	</div>
 		                		<div class="actions">
 		                			<input type="button" value="删除" onclick="return mulit_del();">
 		                		</div>
@@ -103,7 +103,10 @@
     <!--content end-->
 	<script type="text/javascript">
 		function search_title(){
-			
+			var search_key = $('#search_key').val();
+			if(search_key){
+				location.href = "{BASE_URL}/index.php/user/msg_in?search_key="+search_key;
+			}
 		}
 		function mulit_del(){
 			

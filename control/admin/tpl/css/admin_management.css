@@ -220,9 +220,9 @@ button.pill{*margin:0 5px;}
 	.header .user_box .avatar img{padding:3px; display:block;border-radius:6px; width:35px; height:35px;}
 	.header .user_box .avatar a{ display:block; border-radius:3px; padding:0;}
 		#ie6 .header .user_box .avatar a{  display:inline-block; width:43px; height:43px;}
-	.header .user_box .name {display: block;padding:0; padding:3px 50px 3px 5px; text-align:right;}
+	.header .user_box .name {display: block;padding:0; padding:3px 0 3px 5px; text-align:right;}
 	.header .user_box .name b{ padding:0 5px;}
-	.header .user_box .link_bar { padding:0 50px 0 0;text-align:right;  }
+	.header .user_box .link_bar { text-align:right;  }
 	#ie6 .header .user_box .link_bar {clear:both; }
 	.header .user_box .link_bar a {text-decoration: none; padding:2px 5px; padding:4px 5px 2px\9;  *margin-top:-40px; display:inline-block; font-size:12px;border-radius:3px;}
 
@@ -237,7 +237,7 @@ button.pill{*margin:0 5px;}
 	
 	#ie6 .side_bar {height:expression(document.body.offsetHeight - 50 + 'px');}
 		.side_bar .menu_bar dl {width: auto;height: auto; text-align:right;}
-		.side_bar .menu_bar dt {padding:4px 0 4px 10px; cursor:pointer;}
+		.side_bar .menu_bar dt {padding:4px 0 4px 2px; cursor:pointer;}
 		.side_bar .menu_bar dt i{ -o-transition: all 0.2s ease-out;-moz-transition:all 0.2s ease-out 0s;-webkit-transition:all 0.2s ease-out 0s;}
 		.side_bar .menu_bar dd {font-size: 14px;}
 		.side_bar .menu_bar li{ display:inline;}
@@ -255,11 +255,11 @@ button.pill{*margin:0 5px;}
 
 
 
-.frame_box {background:#fff;position: absolute;z-index: 4;top: 90px;left: 180px;width: auto; min-height: auto;  right: 0px;bottom: 0px;overflow:hidden;}
+.frame_box {background:#fff;position: absolute;z-index: 4;top: 50px;left: 180px;width: auto; min-height: auto;  right: 0px;bottom: 0px;overflow:hidden;}
 
-#ie6 .frame_box{top:95px;width:expression(document.body.offsetWidth - 180 + 'px');height:expression(document.body.offsetHeight - 94 + 'px');}
+#ie6 .frame_box{top:50px;width:expression(document.body.offsetWidth - 180 + 'px');height:expression(document.body.offsetHeight - 64 + 'px');}
 	#display_frame {height: 100%;width: 100%;z-index: 5; }
-	#ie7 #display_frame{height:expression(document.body.offsetHeight -90 + 'px');}
+	#ie7 #display_frame{height:expression(document.body.offsetHeight -60 + 'px');}
 		.frame_body{ background:#fff;}
 		.frame_content{color:#666; line-height:25px; font-size:12px; padding:10px;}		
 

@@ -76,6 +76,7 @@ class Keke_msg_keke extends Keke_msg {
 		}else{
 			$to_uid = $uid;//收件id
 			//$to_username = $_SESSION['username'];
+			//方便测试短信。临时加了以下三条语句！
 			$user_username = Keke_user::instance()->get_user_info($to_uid,'username',1);
 			$to_username = $user_username['username'];//收件id
 			$uid = $_SESSION['uid'];

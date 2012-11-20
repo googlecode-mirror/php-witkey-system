@@ -42,7 +42,6 @@ class Control_user_msg_out extends Control_user{
 			$date_arr = DB::select()->from('witkey_msg')->where('msg_id = '.$_GET['msg_id'])->get_one()->execute();
 		}
 	}
-	
 	function action_del(){
 		if($_GET['msg_id']){
 			$where = 'msg_id = '.$_GET['msg_id'];
@@ -57,7 +56,7 @@ class Control_user_msg_out extends Control_user{
 			DB::update('witkey_msg')->set(array('msg_status'))->value(array(2))->where($where)->execute();
 			keke::show_msg('删除成功','/user/msg_out',"success");
 		}else{
-			DB::delete('wtikey_msg')->where($where)->execute();
+			DB::delete('witkey_msg')->where($where)->execute();
 			keke::show_msg('删除成功','/user/msg_out',"success");
 		}
 	}

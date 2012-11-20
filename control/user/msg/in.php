@@ -33,7 +33,7 @@ class Control_user_msg_in extends Control_user{
 				$where .=" and msg_status<>1 and to_uid = ".$_SESSION['uid'];
 				break;
 			case "unread"://Î´¶Á
-				$where .=" and view_status<>1 and msg_status<>1 and and to_uid = ".$_SESSION['uid'];
+				$where .=" and view_status<>1 and msg_status<>1 and to_uid = ".$_SESSION['uid'];
 				break;
 			case "sys"://ÏµÍ³
 				$where .=" and to_uid = ".$_SESSION['uid']." and uid<1 and msg_status<>1 ";

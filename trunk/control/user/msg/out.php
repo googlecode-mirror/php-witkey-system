@@ -31,7 +31,7 @@ class Control_user_msg_out extends Control_user{
 		$where .=" and msg_status<>2 and uid = ".$_SESSION['uid'];
 		
 		if($_GET['search_key']){
-			$where .= " and title like '%".$_GET['search_key']."%'";
+			$where .= " and title like '%".Keke::escape($_GET['search_key'])."%'";
 		}
 		$data_info = Model::factory('witkey_msg')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
 		$data_list = $data_info['data'];

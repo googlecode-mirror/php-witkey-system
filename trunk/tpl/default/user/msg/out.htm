@@ -22,7 +22,7 @@
 		                			<input type="button" value="删除">
 		                		</div>
 		                		<div class="actions">
-		                			<input type="search" placeholder="请输入主题关键字"><input type="button" value="搜索主题">
+		                			<input type="search" placeholder="请输入主题关键字" name="search_key" id="search_key"><input type="button" value="搜索主题" onclick="search_title();">
 		                		</div>
 		                		<div class="page">
 					                <p>
@@ -52,7 +52,7 @@
 		                              	<div class="item_action">
 		                              		<a href="{BASE_URL}/index.php/user/msg_out/edit?msg_id={$v['msg_id']}">编辑</a>
 		                              		<a href="{$del_uri}?msg_id={$v['msg_id']}">删除</a>
-		                              		<a href="{BASE_URL}/index.php/user/msg_in/info?msg_id={$v['msg_id']}">查看</a>
+		                              		<a href="{BASE_URL}/index.php/user/msg_in/info?msg_id={$v['msg_id']}&from=out">查看</a>
 		                              	</div>
 		                              </td>
 		                              <td>{date('Y-m-d',$v['on_time'])}</td>
@@ -88,4 +88,12 @@
     	</article>
     </div>
     <!--content end-->
+	<script type="text/javascript">
+		function search_title(){
+			var search_key = $('#search_key').val();
+			if(search_key){
+				location.href = "{BASE_URL}/index.php/user/msg_out?search_key="+search_key;
+			}
+		}
+	</script>
 <!--{include user/footer}-->

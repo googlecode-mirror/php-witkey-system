@@ -21,7 +21,7 @@ class Control_user_msg_in extends Control_user{
 	function action_index($type='all'){
 		//编号 发件人		主题 	时间
 		$fields = '`msg_id`,`uid`,`username`,`to_uid`,`to_username`,`title`,`msg_status`,`view_status`,`on_time`';
-		
+		$query_fields = array('msg_id'=>'编号','title'=>'主题','on_time'=>'时间');
 		
 		$count = intval($_GET['count']);
 		$this->_default_ord_field = 'on_time';
@@ -41,10 +41,6 @@ class Control_user_msg_in extends Control_user{
 			case "unsys"://非系统
 				$where .=" and to_uid = ".$_SESSION['uid']." and uid>1 and msg_status<>1 ";
 				break;
-		}
-		
-		if($_GET['search_key']){
-			$where .= " and title like '%".Keke::escape($_GET['search_key'])."%'";
 		}
 		
 		$data_info = Model::factory('witkey_msg')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']);

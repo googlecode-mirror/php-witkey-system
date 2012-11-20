@@ -20,7 +20,7 @@ class Control_user_msg_in extends Control_user{
 	
 	function action_index($type='all'){
 		//编号 发件人		主题 	时间
-		$fields = '`msg_id`,`to_username`,`title`,`msg_status`,`view_status`,`on_time`';
+		$fields = '`msg_id`,`uid`,`username`,`to_uid`,`to_username`,`title`,`msg_status`,`view_status`,`on_time`';
 		
 		
 		$count = intval($_GET['count']);
@@ -30,16 +30,16 @@ class Control_user_msg_in extends Control_user{
 		//收件	条件
 		switch ($type){
 			case "all"://全部
-				$where .=" and to_uid = ".$_SESSION['uid'];
+				$where .=" and msg_status<>1 and to_uid = ".$_SESSION['uid'];
 				break;
 			case "unread"://未读
-				$where .=" and view_status<>1 and to_uid = ".$_SESSION['uid'];
+				$where .=" and view_status<>1 and msg_status<>1 and and to_uid = ".$_SESSION['uid'];
 				break;
 			case "sys"://系统
-				$where .=" and to_uid = ".$_SESSION['uid']." and uid<>1";
+				$where .=" and to_uid = ".$_SESSION['uid']." and uid<1 and msg_status<>1 ";
 				break;
 			case "unsys"://非系统
-				$where .=" and to_uid = ".$_SESSION['uid']." and uid>1";
+				$where .=" and to_uid = ".$_SESSION['uid']." and uid>1 and msg_status<>1 ";
 				break;
 		}
 		
@@ -49,7 +49,8 @@ class Control_user_msg_in extends Control_user{
 		$data_list = $data_info['data'];
 		//显示分页的页数
 		$pages = $data_info['pages'];
-		
+		//
+		$this_user = $_SESSION['username'];
 		require Keke_tpl::template('user/msg/in');
 	}
 	function action_info(){
@@ -74,14 +75,18 @@ class Control_user_msg_in extends Control_user{
 	}
 	
 	function action_msg_status($where){
-		$res = DB::select('msg_status')->from('witkey_msg')->where($where)->get_one()->execute();
-		if($res['msg_status'] == 1 || $res['msg_status'] == 0){
-			DB::update('witkey_msg')->set(array('msg_status'))->value(array(2))->where($where)->execute();
+		$res = DB::select('msg_status,uid')->from('witkey_msg')->where($where)->get_one()->execute();
+		if($res['msg_status'] ==0 && $res['uid']){
+			DB::update('witkey_msg')->set(array('msg_status'))->value(array(1))->where($where)->execute();
 			keke::show_msg('删除成功','/user/msg_in',"success");
 		}else{
-			DB::delete('wtikey_msg')->where($where)->execute();
+			DB::delete('witkey_msg')->where($where)->execute();
 			keke::show_msg('删除成功','/user/msg_in',"success");
 		}
+	}
+	//所有消息
+	function action_all(){
+		$this->action_index('all');
 	}
 	//未读消息
 	function action_unread(){

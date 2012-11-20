@@ -47,7 +47,7 @@
 		}
 </script>
 {elseif $ajax=='goods_filedown'}
-<!--{template header}--><!--用户中心作品文件下载-->
+<!--{include header}--><!--用户中心作品文件下载-->
 <section class="content box {$_K['theme']}_style">
  <!--布局框-->  
 <div class="clearfix">
@@ -74,7 +74,7 @@
   </div>
 </div>
 </section>
-<!--{template footer}-->
+<!--{include footer}-->
 {elseif $ajax=='help_second'}<!--帮助中心左边二级菜单-->
  <ul>
 	{loop $second_list $v}

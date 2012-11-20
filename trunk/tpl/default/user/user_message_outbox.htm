@@ -1,11 +1,11 @@
-<!--{template header}-->
+<!--{include header}-->
 <!--contain start-->
 <div class="wrapper">
     <div class="container_24">
-        <!--{template user/user_nav}-->
+        <!--{include user/user_nav}-->
 		<!--main start-->
         <section class="clearfix section">
-            <!--{template user/user_side}-->
+            <!--{include user/user_side}-->
             <div class="show_panel container_24 po_re">
                 <div class="prefix_3">
                     <div class="panel clearfix box">
@@ -131,5 +131,5 @@
 		showDialog("{$_lang['confirm_delete']}",'confirm',"{$_lang['operate_notice']}",function(){$("#frm_msg").submit();});return false;
 	}
    </script>
-   <!--{template user/user_footer}-->
-<!--{template footer}-->
+   <!--{include user/user_footer}-->
+<!--{include footer}-->

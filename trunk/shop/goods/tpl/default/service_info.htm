@@ -1,4 +1,4 @@
-<!--{eval $page_title=$service_info['title'].'--'.$_K['html_title']}--><!--{template header}-->
+<!--{eval $page_title=$service_info['title'].'--'.$_K['html_title']}--><!--{include header}-->
 <link href="{SKIN_PATH}/css/shop.css" rel="stylesheet" type="text/css">
 <link href="{SKIN_PATH}/theme/{$_K['theme']}/css/shop.css" rel="stylesheet" type="text/css">
  <!--Ò³ÃæÄÚÈÝÇø-->
@@ -182,9 +182,9 @@
 								<details open  class="mb_20">       
 							        <summary class="fontb">{$_lang['shop_map']}<em class="c999 font_normal"></em></summary> 
 									{if $_K['map_api']=='baidu'}
-									<!--{template tpl/default/task/task_info_map_baidu}-->
+									<!--{include tpl/default/task/task_info_map_baidu}-->
 									{else}
-									<!--{template tpl/default/task/task_info_map_google}-->
+									<!--{include tpl/default/task/task_info_map_google}-->
 									{/if}     
 							    </details>	
 								{/if}
@@ -463,9 +463,9 @@
 				</div>
 			
 			
-			 {elseif $view=='sale'}<!--{template shop/goods/tpl/default/service_sale}-->
-                          {elseif $view=='comment'}<!--{template shop/goods/tpl/default/service_comment}-->
-                          {elseif $view=='mark'}<!--{template shop/goods/tpl/default/service_mark}-->
+			 {elseif $view=='sale'}<!--{include shop/goods/tpl/default/service_sale}-->
+                          {elseif $view=='comment'}<!--{include shop/goods/tpl/default/service_comment}-->
+                          {elseif $view=='mark'}<!--{include shop/goods/tpl/default/service_mark}-->
 						  {elseif $view=='tools'&&$uid==$service_info['uid']}
 	 								<!--{eval require S_ROOT.'/control/shop_payitem_tools.php'}-->
                           {/if}
@@ -575,4 +575,4 @@
 	loadPics();
 	})
 </script>
-<!--{template footer}-->
+<!--{include footer}-->

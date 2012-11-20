@@ -13,7 +13,7 @@ class Keke_core extends Keke_base {
 	protected  static $_core_class = array ();
 	protected static $_caching = FALSE;
 	protected static $_files_changed = false;
- 
+	
 	/**
 	 * 用于页面跳转提示
 	 *@param $content 提示信息 $_lang['submit_success']提交成功,$_lang['submit_fail']提交失败
@@ -467,6 +467,12 @@ class Keke extends Keke_core {
 	public static function init_session() {
 		$session = Keke_session::instance();
 		$_SESSION = & $session->as_array();
+		
+	}
+	/**
+	 * 初始划计划任务
+	 */
+	public static function init_cron(){
 		
 	}
 	function init_out_put() {

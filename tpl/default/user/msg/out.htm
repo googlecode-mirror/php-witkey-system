@@ -14,32 +14,46 @@
 		                
 		                <div class="box_detail">
 
-		                	<div class="toolbar">
-		                		<div class="actions">
-		                			<input type="button" value="全选">
-		                		</div>
-		                		<div class="actions">
-		                			<input type="button" value="删除">
-		                		</div>
-		                		<div class="actions">
-		                			<input type="search" placeholder="请输入主题关键字" name="search_key" id="search_key"><input type="button" value="搜索主题" onclick="search_title();">
-		                		</div>
-		                		<div class="page">
-					                <p>
-					                    {$pages['page']}
-					                </p>
-					            </div>
-		                	</div>
+		                	<form class="detail" action="{BASE_URL}/index.php/user/msg_out" method="get" id="frm_user_search">
+										   <input type="hidden" value="{$page}" name="page">
+										<table cellspacing="0" cellpadding="0">
+											<tbody>
+											<tr>
+										    <td> 查询字段
+										       <select name="slt_fields">
+										       	<option></option>
+										       	{loop $query_fields $k $v}
+										       	 <option  value="$k" {if $k == $_GET['slt_fields']} selected="selected" {/if}>{$v}</option>
+												{/loop} 
+										       </select>
+											 <select name="slt_cond">
+											 	<option value="=" {if $_GET['slt_cond']=='='}selected="selected"{/if}>=</option>
+												<option value=">" {if $_GET['slt_cond']=='>'}selected="selected"{/if}>></option>
+												<option value="<" {if $_GET['slt_cond']=='<'}selected="selected"{/if}><</option>
+												<option value="like" {if $_GET['slt_cond']=='like'}selected="selected"{/if}>Like</option>
+											 </select>
+										     <input type="text" class="txt" name="txt_condition" id="txt_condition" value="{$_GET['txt_condition']}">
+											 <select name="page_size">
+												<option value="10" {if $_GET['page_size']=='10'}selected="selected"{/if}>{$_lang['page_size']}10条</option>
+												<option value="20" {if $_GET['page_size']=='20'}selected="selected"{/if}>{$_lang['page_size']}20条</option>
+												<option value="30" {if $_GET['page_size']=='30'}selected="selected"{/if}>{$_lang['page_size']}30条</option>
+											</select>
+											 <input type="submit" value="{$_lang['search']}">
+											 </td>
+										</tr>
+										</tbody>
+										</table>
+										</form>
 
 		                	<!--date_table数据表格 start-->
 		                    <div class="data_list">
 		                        <table  class="data_table">
 		                            <thead>
 		                            <tr>
-		                                <th scope="col" width="10%">ID</th>
+		                                <th scope="col" width="10%"><a href="javascript:;" onclick="submitSort('{$uri}','msg_id',{$ord_tag})">编号{if $_GET['f']=='msg_id'}{$ord_char}{/if}</a></th>
 		                                <th scope="col">收件人</th>	
 		                              	<th scope="col">主题</th>
-		                              	<th scope="col">时间</th>
+		                              	<th scope="col"><a href="javascript:;" onclick="submitSort('{$uri}','on_time',{$ord_tag})">时间{if $_GET['f']=='on_time'}{$ord_char}{/if}</a></th>
 		                            </tr>
 		                            </thead>
 		                            <tbody>
@@ -88,12 +102,4 @@
     	</article>
     </div>
     <!--content end-->
-	<script type="text/javascript">
-		function search_title(){
-			var search_key = $('#search_key').val();
-			if(search_key){
-				location.href = "{BASE_URL}/index.php/user/msg_out?search_key="+search_key;
-			}
-		}
-	</script>
 <!--{include user/footer}-->

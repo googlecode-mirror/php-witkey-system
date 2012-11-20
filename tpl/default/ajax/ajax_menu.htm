@@ -88,7 +88,7 @@
 <!--留言回复结束-->
 {elseif $ajax=='prom_link'}<!--用户中心推广链接获取-->
 <!--推广链接 start-->
-<!--{template header}-->
+<!--{include header}-->
 <script type="text/javascript" src="static/js/system/custom.js"></script>
  <article class="box_detail">
      <div class="form_box {$_K['theme']}_style pad10">
@@ -136,7 +136,7 @@
         setCopy($("#" + i).val(), "{$_lang['copy_success']}");
     }
  </script>
-<!--{template footer}-->
+<!--{include footer}-->
 <!--推广链接 end-->
 {elseif $ajax=='prom_list'}<!--用户中心推广数据加载-->
 <div id="ajax_list">

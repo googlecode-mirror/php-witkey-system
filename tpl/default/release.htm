@@ -1,4 +1,4 @@
-<!--{template header}-->
+<!--{include header}-->
 <link href="static/css/public.css" rel="stylesheet" type="text/css">
 <div class="wrapper">
     <!--页面头部-->
@@ -14,21 +14,8 @@
             </div>
             <div class="clear">
             </div>
-            <!--页面子导航-->
-            <nav class="clearfix page_nav po_re">
-                <ul>
-                    <li {if $pub_mode=='professional'}class="selected"{/if}>
-                        <a href="index.php?do=release&pub_mode=professional" title="{$_lang['specialty_model']}">{$_lang['specialty_model']}</a>
-                    </li>
-                 
-                    <li {if $pub_mode=='onekey'}class="selected"{/if}>
-                        <a href="index.php?do=release&pub_mode=onekey&target_task={$target_task}" class="{$_lang['onkey_release']}">{$_lang['onkey_release']}</a>
-                    </li>
-                </ul>
-            </nav>
-            <!--end 页面子导航-->
-            <div class="clear">
-            </div>
+             
+           
         </div>
     </header>
     <!--end 页面头部--><!--详细内容区-->
@@ -51,9 +38,9 @@
                 {if $r_step=='step1'}<!--任务模式-->
                 <nav class="primary_nav primary_nav1 clearfix border_b_c">
                     <ul>
-                        {loop $model_list $k $v}
+                        {loop Keke::$_model_list $k $v}
                         <li>
-                            <a href="index.php?do=release&pub_mode={$pub_mode}&model_id={$k}" {if $k==$model_id}class="selected"{/if}><span class="icon32 task_model"><!--{eval echo kekezu::cutstr($v['model_name'],0,2)}--></span><em>{$v['model_name']}</em></a>
+                            <a href="index.php?do=release&pub_mode={$pub_mode}&model_id={$k}" {if $k==$model_id}class="selected"{/if}><span class="icon32 task_model">{cutstr($v['model_name'],2)}</span><em>{$v['model_name']}</em></a>
                         </li>
                         {/loop}
                     
@@ -83,7 +70,7 @@
 				<!--end 任务模式-->
                 <!--任务模式下部内容-->
                 <div class="clearfix">
-                    <!--{eval require keke_tpl_class::template("task/{$model_info['model_dir']}/tpl/{$_K['template']}/release_$r_step") }-->
+                    <!--{eval require Keke_tpl::template("control/task/{$model_info['model_code']}/tpl/release_$r_step") }-->
                     <!--end 任务模式下部内容-->
                 </div>
                 <!--end 步骤下所有内容-->
@@ -106,4 +93,4 @@
 	In('ajaxfileupload','form');
 </script>
 
-<!--{template footer}-->
+<!--{include footer}-->

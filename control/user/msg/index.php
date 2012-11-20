@@ -33,8 +33,8 @@ class Control_user_msg_index extends Control_user{
        	  echo 'user_not_exists';
        }
    }
-   
    function action_send(){
+   		$this->action_checkusername();
 	   	Keke::formcheck($_POST['formhash']);
 	   	//防sql注入
 	   	$_POST=Keke_tpl::chars($_POST);
@@ -43,8 +43,12 @@ class Control_user_msg_index extends Control_user{
 	   	$user_to_uid = $user_uid['uid'];
 	   	//发送信息
 	   	Keke_msg::instance()->send_msg($user_to_uid,$_POST['txt_title'],$_POST['txt_content']);
-	   	keke::show_msg('发送成功',$this->request->uri(),'success','系统提示',3);
+	   	keke::show_msg('发送成功','user/msg_out','success','系统提示',3);
    }
-	
+   function action_checkusername(){
+   		if($_POST['txt_to_username']==$_SESSION['username']){
+   			keke::show_msg('不能给自己发消息！','user/msg_index','error','系统提示',3);
+   		}
+   }
 	
 }

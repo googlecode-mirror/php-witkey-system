@@ -1,6 +1,9 @@
 <?php define ( "IN_KEKE", TRUE );
 
-error_reporting(E_ALL);
+include 'app_boot.php';
+Sys_cron::run();
+
+// error_reporting(E_ALL);
 
 /* abstract class a {
 	abstract public function aa($i,$k=1);

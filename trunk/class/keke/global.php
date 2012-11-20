@@ -380,24 +380,5 @@ class Keke_global {
 		}
 		return $ch_arr;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

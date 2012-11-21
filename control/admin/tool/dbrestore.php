@@ -21,7 +21,6 @@ class Control_admin_tool_dbrestore extends Control_admin{
  	}
 	function action_index(){
 		
-		
 		//¼ÓÔØÄ£°å
 		require Keke_tpl::template('control/admin/tpl/tool/dbrestore');
 	}

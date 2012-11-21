@@ -18,7 +18,7 @@
 			                	
 								<div class="form_row">
 			                		<label for="" class="form_label">收件人：</label>
-									<input type="text" name="txt_to_username" id="txt_to_username" size="80" 
+									<input type="text" name="txt_to_username" id="txt_to_username" style="width:475px" 
 									limit="required:true;len:2-40" ajax = '{BASE_URL}/index.php/user/msg_index/check_username/' msg="收件人用户名" title="收件人用户名" msgArea="msg_txt_to_username"
 									/>
 									<span id="msg_txt_to_username"></span>
@@ -26,7 +26,7 @@
 								
 			                	<div class="form_row">
 			                		<label for="" class="form_label">主题：</label>
-									<input type="text" name="txt_title" id="txt_title" size="80" value="" 
+									<input type="text" name="txt_title" id="txt_title" style="width:475px"   
 									limit="type:string;required:true;len:1-50" msg="消息主题" title="消息主题" msgArea="msg_title"
 									/>
 									<span id="msg_title"></span> 

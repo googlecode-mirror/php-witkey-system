@@ -8828,6 +8828,8 @@ ol.sosumi {
   vertical-align: middle;
   display: inline-block;
   white-space: nowrap;
+  width: auto;
+  height: 32px;
   padding: 4px 5px;
   font-family: "微软雅黑";
 }
@@ -8968,14 +8970,15 @@ ol.sosumi {
 
 }
 #user .form_row .form_label {
-  width: 130px;
+  width: 7em;
   height: 30px;
+  vertical-align: top;
 }
 #user .form_row .right_tip {
   padding-left: 10px;
   padding-right: 10px;
   background: #f6f6f6;
-  border-color: #e1e1e1;
+  border: 1px solid #e1e1e1;
 }
 #user .form_row .left_tip {
   padding-left: 10px;
@@ -8985,7 +8988,7 @@ ol.sosumi {
   margin-right: -1px;
 }
 #user .float_row .detail {
-  padding-left: 135px;
+  padding-left: 7em;
 }
 #user .form_line {
   margin: 2em 0px 1.2em;
@@ -8993,6 +8996,7 @@ ol.sosumi {
 }
 #user .form_footer {
   margin: 0 0px 2em;
+  padding-left: 9em;
 }
 #user .form_tip {
   margin-top: 20px;

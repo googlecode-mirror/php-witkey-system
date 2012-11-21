@@ -416,6 +416,7 @@ ol {
 
 	select{
 		.select;
+		.size(auto,32px);
 		padding: 4px 5px;
 		font-family: "微软雅黑";
 	}
@@ -487,14 +488,16 @@ ol {
 		line-height:30px;
 		/* 表单标签 */
 		.form_label{
-			.size(130px,30px);
+			.size(7em,30px);
+			vertical-align: top;
+
 		}
 		/*  输入框右边的字段 */
 		.right_tip{
 			.pl_10;
 			.pr_10;
 			background: @main_bg;
-			border-color: @border_colors;
+			border:1px solid @border_colors;
 		}
 		/*  输入框左边的字段 */
 		.left_tip{
@@ -507,7 +510,7 @@ ol {
 	}
 	/* 浮动行 */
 	.float_row{
-		.detail{ padding-left: 135px;}
+		.detail{ padding-left: 7em;}
 	}
 	/* 表单分割线 */
 	.form_line{
@@ -518,6 +521,7 @@ ol {
 	/* 表单底部 */
 	.form_footer{
 		margin:0 0px 2em;
+		padding-left: 9em;
 	}
 	/* 带图标表单提示共3种 */
 	.form_tip{

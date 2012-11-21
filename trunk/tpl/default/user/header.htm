@@ -20,7 +20,9 @@
 	</script>
 </head>
 <body id="user">
-
+<div id='ajax_tips' class="tips_box success">
+		<span  class=""></span>
+</div>
 	<div class="header">
 		<div class="container">
 			<div class="logo">
@@ -32,15 +34,17 @@
 			<div class="search">
 				<input type="search" placeholder="ÇëÊäÈë¹Ø¼ü×Ö"><input type="button" value="ËÑË÷">
 			</div>
-			<div class="login {if $_SESSION['uid']}hidden{/if}">
+			{if !$_SESSION['uid']}
+			<div class="login ">
 				<a href="{BASE_URL}/index.php/register">×¢²á</a>
 				<a href="{BASE_URL}/index.php/login">µÇÂ¼</a>
 			</div>
-			<div id="logined" class="login {if !$_SESSION['uid']}hidden{/if}">
+			{else}
+			<div id="logined" class="login ">
 				<a href="javascript:void(0);">ÄúºÃ£¬ {$_SESSION['username']} !</a>
 				<a href="{BASE_URL}/index.php/login/logout">ÍË³ö</a>
              </div>
-			
+			{/if}
 		</div>
 	</div>
 

@@ -1,7 +1,8 @@
- 
+<script type="text/javascript">
+In('art','artiframe');
+</script>	 
 <script type="text/javascript">
  
-
 //排序 
 function submitSort(uri,f,ord){
 	uri += (uri.indexOf('?')==-1)?"?":"&";
@@ -11,8 +12,8 @@ function submitSort(uri,f,ord){
 	
 	location.href = uri;
 }
-
-function kconfirm(o,s){
+//删除单条
+function kdel(o,s){
 	d = art.dialog;
 	var c = "确认删除？";
 	if(s){
@@ -25,6 +26,45 @@ function kconfirm(o,s){
 	}).follow(o);
 	return false;
 }
+
+var tips = window.document.getElementById('ajax_tips');
+//删除多条
+function batch_del(obj){
+	d = art.dialog;
+	var c = $(obj).val(); 
+	var conf = $(":checkbox[name='ckb[]']:checked").length;
+	if (conf > 0) {
+		d.confirm("{$_lang['confirm']}" + c + '?', function(){
+			//获取选中的值
+			var str = [];
+			$(":checkbox[name='ckb[]']:checked").each(function(){
+				str.push($(this).val());
+			})
+			var val = str.join(',');
+			var url = '{$del_uri}?ids='+val;
+ 			//d.alert(url);return false;
+			$.ajax({
+			url:url,
+			dataType:'text',
+			beforeSend:function(){
+	 	        $(tips).children().html('删除中... 已经删除成功!').addClass('tips_info'); 
+			},
+			success: function(data){
+				location.href= location.href;
+			},
+			complete:function(){
+				setInterval(function(){
+					$(tips).children().html('').removeClass('tips_info');
+				},2000);
+			}
+			});
+		}).follow(obj);
+	}else{
+		d.alert("no_checkbox");
+	}
+	return false;  
+}
+
 </script>
 </body>
 </html>

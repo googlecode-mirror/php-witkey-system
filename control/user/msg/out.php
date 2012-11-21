@@ -21,7 +21,7 @@ class Control_user_msg_out extends Control_user{
 	function action_index(){
 		global $_K,$_lang;
 		$fields = '`msg_id`,`uid`,`username`,`to_uid`,`to_username`,`title`,`msg_status`,`view_status`,`on_time`';
-		$query_fields = array('msg_id'=>'编号','title'=>'主题','on_time'=>'时间');
+		$query_fields = array('title'=>'主题','on_time'=>'时间');
 		$base_uri = BASE_URL.'/index.php/user/msg_out';
 		$del_uri = $base_uri.'/del';
 		$count = intval($_GET['count']);

@@ -21,7 +21,7 @@ class Control_user_msg_in extends Control_user{
 	function action_index($type='all'){
 		//编号 发件人		主题 	时间
 		$fields = '`msg_id`,`uid`,`username`,`to_uid`,`to_username`,`title`,`msg_status`,`view_status`,`on_time`';
-		$query_fields = array('msg_id'=>'编号','title'=>'主题','on_time'=>'时间');
+		$query_fields = array('title'=>'主题','on_time'=>'时间');
 		
 		$count = intval($_GET['count']);
 		$this->_default_ord_field = 'on_time';

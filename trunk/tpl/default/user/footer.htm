@@ -65,6 +65,17 @@ function batch_del(obj){
 	return false;  
 }
 
+function check_all(){
+    var ckb = $("input[type='checkbox']");
+    $.each(ckb,function(){
+    	if($(this).attr('checked')){
+    		$(this).attr('checked',false);
+    	}else{
+    		$(this).attr('checked',true);
+    	}
+    })
+}
+
 </script>
 </body>
 </html>

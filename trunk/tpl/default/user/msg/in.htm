@@ -59,7 +59,7 @@
 		                        <table  class="data_table">
 		                            <thead>
 		                            <tr>
-		                                <th scope="col" width="10%"><a href="javascript:;" onclick="submitSort('{$uri}','msg_id',{$ord_tag})">编号{if $_GET['f']=='msg_id'}{$ord_char}{/if}</a></th>
+		                                <th scope="col" width="5%"><input type="checkbox" name="ckb"></th>
 		                                <th scope="col" width="15%">发件人</th>	
 		                              	<th scope="col">主题</th>
 		                              	<th scope="col" width="15%"><a href="javascript:;" onclick="submitSort('{$uri}','on_time',{$ord_tag})">时间{if $_GET['f']=='on_time'}{$ord_char}{/if}</a></th>
@@ -69,7 +69,7 @@
 		                            {loop $data_list $v}
 		                            <tr {if $v['view_status']!=1}class="nocheck"{/if}>
 		                              <td>
-		                             	 <input type="checkbox" value="$v['msg_id']" id="cbk_selected" name="ckb[]">{$v['msg_id']}
+		                             	 <input type="checkbox" value="$v['msg_id']|$v['msg_status']|$v['to_uid']" id="cbk_selected" name="ckb[]">
 		                              </td>
 		                              <td>{if $v['uid']}{$v['username']}{else}系统消息{/if}</td>
 		                              <td>
@@ -88,16 +88,15 @@
 		                          </table>
 		                    </div>
 			               	<!--data_table数据表格 end-->
-
 			               	<div class="toolbar bottom">
 		                		<div class="actions">
-		                			<input type="button" value="全选" onclick="checkall(event);" id="checkbox" name="checkbox">
+		                			<input type="button" value="全选" onclick="check_all();" id="checkbox" name="checkbox">
 			                	</div>
 		                		<div class="actions">
-		                			<input type="button" value="删除" onclick="return mulit_del();">
+		                			<input type="button" value="删除" onclick="return batch_del(this);">
 		                		</div>
 		                		<div class="actions">
-		                			<input type="button" value="标记为已读" onclick="return mulit_views();"	>
+		                			<input type="button" value="标记为已读" onclick="return batch_read(this);"	>
 		                		</div>
 		                		<div class="page">
 					                <p>
@@ -114,5 +113,42 @@
     	</article>
     </div>
     <!--content end-->
- 
+<script type="text/javascript">
+function batch_read(obj){
+	d = art.dialog;
+	var c = $(obj).val(); 
+	var conf = $(":checkbox[name='ckb[]']:checked").length;
+	if (conf > 0) {
+		d.confirm("{$_lang['confirm']}" + c + '?', function(){
+			//获取选中的值
+			var str = [];
+			$(":checkbox[name='ckb[]']:checked").each(function(){
+				str.push($(this).val());
+			})
+			var val = str.join(',');
+			var url = '{$read_uri}?ids='+val;
+ 			 
+			$.ajax({
+			url:url,
+			dataType:'text',
+			beforeSend:function(){
+	 	        $("#ajax_tips").children().html('删除中...').addClass('tips_info'); 
+			},
+			success: function(data){
+				location.href= location.href;
+			},
+			complete:function(){
+				 $("#ajax_tips").children().html('已经删除成功!');
+				setInterval(function(){
+					$("#ajax_tips").children().html('').removeClass('tips_info');
+				},2000);
+			}
+			});
+		}).follow(obj);
+	}else{
+		d.alert("no_checkbox");
+	}
+	return false;  
+}
+</script> 
 <!--{include user/footer}-->

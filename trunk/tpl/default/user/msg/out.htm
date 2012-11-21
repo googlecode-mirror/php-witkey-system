@@ -50,7 +50,7 @@
 		                        <table  class="data_table">
 		                            <thead>
 		                            <tr>
-		                                <th scope="col" width="10%"><a href="javascript:;" onclick="submitSort('{$uri}','msg_id',{$ord_tag})">编号{if $_GET['f']=='msg_id'}{$ord_char}{/if}</a></th>
+		                                <th scope="col" width="5%"><input type="checkbox" name="ckb"></th>
 		                                <th scope="col" width="15%">收件人</th>	
 		                              	<th scope="col">主题</th>
 		                              	<th scope="col" width="15%"><a href="javascript:;" onclick="submitSort('{$uri}','on_time',{$ord_tag})">时间{if $_GET['f']=='on_time'}{$ord_char}{/if}</a></th>
@@ -59,13 +59,13 @@
 		                            <tbody>
 		                            {loop $data_list $v}
 		                            <tr>
-		                              <td><input type="checkbox" name="ckb[]" value="$v['msg_id']|$v['msg_status']|$v['uid']">{$v['msg_id']}</td>
+		                              <td><input type="checkbox" name="ckb[]" value="$v['msg_id']|$v['msg_status']|$v['uid']"></td>
 		                              <td>{$v['to_username']}</td>
 		                              <td>
 		                              	<a href="{BASE_URL}/index.php/user/msg_in/info?msg_id={$v['msg_id']}&from=out" class="title">{$v['title']}</a>
 		                              	<div class="item_action">
 		                              		<a href="{BASE_URL}/index.php/user/msg_in/info?msg_id={$v['msg_id']}&from=out">查看</a>
-		                              		<a href="{$del_uri}?msg_id={$v['msg_id']}&status={$v['msg_status']}&is_sys={$v['to_uid']}" onclick="return kdel(this);">删除</a>
+		                              		<a href="{$del_uri}?msg_id={$v['msg_id']}&status={$v['msg_status']}&is_sys={$v['uid']}" onclick="return kdel(this);">删除</a>
 		                              	</div>
 		                              </td>
 		                              <td>{date('Y-m-d',$v['on_time'])}</td>

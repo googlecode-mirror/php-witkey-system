@@ -1,7 +1,9 @@
 <?php define ( "IN_KEKE", TRUE );
 
 include 'app_boot.php';
-Sys_cron::run();
+
+
+
 
 // error_reporting(E_ALL);
 

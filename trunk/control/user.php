@@ -82,6 +82,7 @@ abstract  class Control_user extends Controller{
     	parent::before();
     	Keke_user_login::instance()->auto_login();
     	if(Keke_user_login::instance()->logged_in()===FALSE){
+    		Cookie::set('last_page', $this->request->uri());
     		$this->request->redirect('login');
     	}
     }

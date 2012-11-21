@@ -14,9 +14,12 @@ class Control_admin_tool_dbrestore extends Control_admin{
 		parent::__construct($request, $response);
 		//sql文件的存放路径
 		$this->_sql_path = S_ROOT . 'data/backup/';
-		//获取backup目录下的文件列表
-		$this->_file_arr = keke_file_class::get_dir_file_info ( $this->_sql_path );
-	}
+		
+		foreach (glob($this->_sql_path.'*.sql') as $v){
+			$this->_file_arr[] = keke_file_class::get_file_info($v);
+		}
+		
+ 	}
 	function action_index(){
 		global $_K, $_lang;
 		

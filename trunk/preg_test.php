@@ -13,15 +13,5 @@ $arr = array('{任务编号}'=>'1231','{任务标题}'=>'任务标题test',
 //站内信测试 
 Keke_msg::instance()->set_tpl('task_pub')->set_var($arr)->to_user(1)->send();
 
- 
-
-//$m = strtr($str, array($str=>"Keke_tpl::readtemplate('\\1')"));
-// mbereg_replace($pattern, $replacement, $string, $option);//
-
-// '/\<\!\-\-\{include\s+([\d_\/]+)\}\-\-\>/ie', "Keke_tpl::readtemplate('\\1')", $template )
-
-//$m =preg_replace ( '/\<\!\-\-\{include\s+([\w_\/]+)\}\-\-\>/ie', "Keke_tpl::readtemplate('\\1')", $str );
-// preg_match($par, $str,$matches);
-
 
  

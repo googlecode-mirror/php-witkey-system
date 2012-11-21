@@ -20,18 +20,21 @@ class Control_user_finance_recharges extends Control_user{
 	
 	function action_index(){
 		//编号		金额 	账户 	状态 	时间
-		$fields = '`rid`,`cash`,`bank`,`status`,`pay_time`';
-		$query_fields = array('rid'=>'编号','status'=>'状态','pay_time'=>'时间');
+		
+		$sql = sprintf("select a.*,b.pay_id bpid,b.payment bpayment,b.type btype,b.config bconfig,b.pay_name bpay_name,b.status bstatus from %switkey_recharge a left join %switkey_pay_api b on a.pay_id=b.pay_id ",TABLEPRE,TABLEPRE);
+		$query_fields = array('status'=>'状态','pay_time'=>'时间');
 		
 		$count = intval($_GET['count']);
 		$this->_default_ord_field = 'pay_time';
 		$base_uri = BASE_URL.'/index.php/user/finance_recharges	';
 		extract($this->get_url($base_uri));
 		//收件	条件
-		$where .= ' and uid = '.$_SESSION['uid'];
-		$data_info = Model::factory('witkey_recharge')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
+		$where .= ' and a.uid = '.$_SESSION['uid'];
+		
+		$data_info = Model::sql_grid($sql,$where,$uri,$order,'',$page,$count,$_GET['page_size'],null);
 		
 		$data_list = $data_info['data'];
+// 		var_dump($data_list);
 		//显示分页的页数
 		$pages = $data_info['pages'];
 		

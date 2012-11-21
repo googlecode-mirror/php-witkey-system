@@ -60,9 +60,9 @@
 		                            <thead>
 		                            <tr>
 		                                <th scope="col" width="10%"><a href="javascript:;" onclick="submitSort('{$uri}','msg_id',{$ord_tag})">编号{if $_GET['f']=='msg_id'}{$ord_char}{/if}</a></th>
-		                                <th scope="col">发件人</th>	
+		                                <th scope="col" width="15%">发件人</th>	
 		                              	<th scope="col">主题</th>
-		                              	<th scope="col"><a href="javascript:;" onclick="submitSort('{$uri}','on_time',{$ord_tag})">时间{if $_GET['f']=='on_time'}{$ord_char}{/if}</a></th>
+		                              	<th scope="col" width="15%"><a href="javascript:;" onclick="submitSort('{$uri}','on_time',{$ord_tag})">时间{if $_GET['f']=='on_time'}{$ord_char}{/if}</a></th>
 		                            </tr>
 		                            </thead>
 		                            <tbody>
@@ -75,8 +75,8 @@
 		                              <td>
 		                              	<a href="{BASE_URL}/index.php/user/msg_in/info?msg_id={$v['msg_id']}" class="title">{$v['title']}</a>
 		                              	<div class="item_action">
-		                              		<a href="{BASE_URL}/index.php/user/msg_in/del?msg_id={$v['msg_id']}" onclick="kconfirm(this);return false;">删除</a>
 		                              		<a href="{BASE_URL}/index.php/user/msg_in/info?msg_id={$v['msg_id']}&from=in">查看</a>
+		                              		<a href="{BASE_URL}/index.php/user/msg_in/del?msg_id={$v['msg_id']}" onclick="return kdel(this);">删除</a>
 		                              	</div>
 		                              </td>
 		                              <td>{date('Y-m-d',$v['on_time'])}</td>
@@ -114,12 +114,5 @@
     	</article>
     </div>
     <!--content end-->
-	<script type="text/javascript">
-		function mulit_del(){
-			
-		}
-		function mulit_views(){
-			
-		}
-	</script>
+ 
 <!--{include user/footer}-->

@@ -13,7 +13,7 @@
 		                </header>
 		                
 		                <div class="box_detail">
-
+							<div class="toolbar">
 		                	<form class="detail" action="{BASE_URL}/index.php/user/msg_out" method="get" id="frm_user_search">
 										   <input type="hidden" value="{$page}" name="page">
 										<table cellspacing="0" cellpadding="0">
@@ -44,29 +44,28 @@
 										</tbody>
 										</table>
 										</form>
-
+								</div>
 		                	<!--date_table数据表格 start-->
 		                    <div class="data_list">
 		                        <table  class="data_table">
 		                            <thead>
 		                            <tr>
 		                                <th scope="col" width="10%"><a href="javascript:;" onclick="submitSort('{$uri}','msg_id',{$ord_tag})">编号{if $_GET['f']=='msg_id'}{$ord_char}{/if}</a></th>
-		                                <th scope="col">收件人</th>	
+		                                <th scope="col" width="15%">收件人</th>	
 		                              	<th scope="col">主题</th>
-		                              	<th scope="col"><a href="javascript:;" onclick="submitSort('{$uri}','on_time',{$ord_tag})">时间{if $_GET['f']=='on_time'}{$ord_char}{/if}</a></th>
+		                              	<th scope="col" width="15%"><a href="javascript:;" onclick="submitSort('{$uri}','on_time',{$ord_tag})">时间{if $_GET['f']=='on_time'}{$ord_char}{/if}</a></th>
 		                            </tr>
 		                            </thead>
 		                            <tbody>
 		                            {loop $data_list $v}
 		                            <tr>
-		                              <td><input type="checkbox">{$v['msg_id']}</td>
+		                              <td><input type="checkbox" name="ckb[]" value="$v['msg_id']|$v['msg_status']|$v['uid']">{$v['msg_id']}</td>
 		                              <td>{$v['to_username']}</td>
 		                              <td>
 		                              	<a href="{BASE_URL}/index.php/user/msg_in/info?msg_id={$v['msg_id']}&from=out" class="title">{$v['title']}</a>
 		                              	<div class="item_action">
-		                              		<a href="{BASE_URL}/index.php/user/msg_out/edit?msg_id={$v['msg_id']}">编辑</a>
-		                              		<a href="{$del_uri}?msg_id={$v['msg_id']}">删除</a>
 		                              		<a href="{BASE_URL}/index.php/user/msg_in/info?msg_id={$v['msg_id']}&from=out">查看</a>
+		                              		<a href="{$del_uri}?msg_id={$v['msg_id']}" onclick="return kdel(this);">删除</a>
 		                              	</div>
 		                              </td>
 		                              <td>{date('Y-m-d',$v['on_time'])}</td>
@@ -82,10 +81,10 @@
 
 			               	<div class="toolbar bottom">
 		                		<div class="actions">
-		                			<input type="button" value="全选">
+		                			<input type="button" onclick="check_all()" value="全选">
 		                		</div>
 		                		<div class="actions">
-		                			<input type="button" value="删除">
+		                			<input type="button" onclick="return batch_del(this)" value="删除">
 		                		</div>
 		                		<div class="page">
 					                <p>

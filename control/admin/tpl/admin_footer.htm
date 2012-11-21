@@ -6,6 +6,11 @@
  
 <script type="text/javascript">
 var tips = window.parent.document.getElementById('del_tips');
+function clear_tips(){
+	setInterval(function(){
+		$(tips).children().html('').removeClass('tips_info');
+	},20000);
+}
 function cdel(o,s){
 	d = art.dialog;
 	var c = "{$_lang['confirm_delete']}";
@@ -26,7 +31,8 @@ function cdel(o,s){
 				}
 			},
 			complete:function(){
-				$(tips).children().html('').removeClass('tips_info');
+				//$(tips).children().html('').removeClass('tips_info');
+				clear_tips();
 			}
 			
 		});
@@ -34,6 +40,7 @@ function cdel(o,s){
 	}).follow(o);
 	return false;	
 }
+
 function kconfirm(o,s){
 	d = art.dialog;
 	var c = "{$_lang['confirm']}";
@@ -93,16 +100,10 @@ function batch_act(obj){
 			},
 			success: function(data){
 				location.href= location.href;
-			  /*
-if(data>0){
-					$(":checkbox[name='ckb[]']:checked").each(function(){
-						$(this).parent().parent().remove();
-					})
-				}
-*/
+
 			},
 			complete:function(){
-				$(tips).children().html('').removeClass('tips_info');
+				clear_tips();
 			}
 			});
 		}).follow(obj);

@@ -26,6 +26,7 @@ class Control_user_msg_in extends Control_user{
 		$count = intval($_GET['count']);
 		$this->_default_ord_field = 'on_time';
 		$base_uri = BASE_URL.'/index.php/user/msg_in/'.$type;
+		$del_uri = BASE_URL.'/index.php/user/msg_in/del';
 		extract($this->get_url($base_uri));
 		//收件	条件
 		switch ($type){
@@ -66,21 +67,28 @@ class Control_user_msg_in extends Control_user{
 	}
 	function action_del(){
 		if($_GET['msg_id']){
-			$where = 'msg_id = '.$_GET['msg_id'];
+			$this->del_msg_by_status($_GET['msg_id'], $_GET['status'], $_GET['is_sys']);
 		}elseif($_GET['ids']){
-			$where = 'msg_id in ('.$_GET['ids'].')';
+			(array)$msg_arr = explode(',',$_GET['ids']);
+			foreach ($msg_arr as $v){
+				list($msg_id,$status,$is_sys) = explode('|', $v);
+				$this->del_msg_by_status($msg_id, $status, !(bool)$is_sys);
+			}
 		}
-		$this->action_msg_status($where);
+		 
 	}
-	
-	function action_msg_status($where){
-		$res = DB::select('msg_status,uid')->from('witkey_msg')->where($where)->get_one()->execute();
-		if($res['msg_status'] ==0 && $res['uid']){
-			DB::update('witkey_msg')->set(array('msg_status'))->value(array(1))->where($where)->execute();
-			keke::show_msg('删除成功','/user/msg_in',"success");
+	/**
+	 * 删除或者改为状态
+	 * @param int $msg_id
+	 * @param int $status
+	 * @param bool $is_sys
+	 * @return int 
+	 */
+ 	function del_msg_by_status($msg_id,$status,$is_sys){
+		if($status == 0 and $is_sys==TRUE){
+			return DB::update('witkey_msg')->set(array('msg_status'))->value(array(1))->where("msg_id = '$msg_id'")->execute();
 		}else{
-			DB::delete('witkey_msg')->where($where)->execute();
-			keke::show_msg('删除成功','/user/msg_in',"success");
+			return DB::delete('witkey_msg')->where("msg_id = '$msg_id'")->execute();
 		}
 	}
 	//所有消息

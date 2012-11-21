@@ -27,6 +27,7 @@ class Control_user_msg_in extends Control_user{
 		$this->_default_ord_field = 'on_time';
 		$base_uri = BASE_URL.'/index.php/user/msg_in/'.$type;
 		$del_uri = BASE_URL.'/index.php/user/msg_in/del';
+		$read_uri = BASE_URL.'/index.php/user/msg_in/read';
 		extract($this->get_url($base_uri));
 		//收件	条件
 		switch ($type){
@@ -56,7 +57,7 @@ class Control_user_msg_in extends Control_user{
 		$from = $_GET['from'];//用来判断是收件(in)还是发件(out)
 		$date_arr = DB::select()->from('witkey_msg')->where('msg_id = '.$_GET['msg_id'])->get_one()->execute();
 		if($_GET['msg_id']&& $date_arr['view_status']<1&&$from!='out'){
-			DB::update('witkey_msg')->set(array('view_status'))->value(array(1))->where('msg_id = '.$_GET['msg_id'])->execute();
+			 $this->change_view_status($_GET['msg_id']);
 		}
 		require Keke_tpl::template('user/msg/info');
 	}
@@ -72,7 +73,7 @@ class Control_user_msg_in extends Control_user{
 			(array)$msg_arr = explode(',',$_GET['ids']);
 			foreach ($msg_arr as $v){
 				list($msg_id,$status,$is_sys) = explode('|', $v);
-				$this->del_msg_by_status($msg_id, $status, !(bool)$is_sys);
+				$this->del_msg_by_status($msg_id, $status, $is_sys);
 			}
 		}
 		 
@@ -107,4 +108,33 @@ class Control_user_msg_in extends Control_user{
 	function action_unsys(){
 		$this->action_index('unsys');
 	}
+	/**
+	 * 设为已读
+	 */
+	function action_read(){
+		(array)$msg_arr = explode(',',$_GET['ids']);
+		$id = array();
+		foreach ($msg_arr as $v){
+			list($msg_id,$status,$is_sys) = explode('|', $v);
+		    array_push($id, $msg_id);
+		}
+		 
+	    $this->change_view_status($id); 
+	    	
+	}
+	/**
+	 * 改状态为已读
+	 * @param int/array  $msg_id
+	 */
+	function change_view_status($msg_id){
+		if(is_array($msg_id)){
+			$msg_ids = implode(',', $msg_id);
+			 
+			DB::update('witkey_msg')->set(array('view_status'))->value(array(1))->where("msg_id in ($msg_ids)")->execute();
+		}else{
+			DB::update('witkey_msg')->set(array('view_status'))->value(array(1))->where("msg_id = $msg_id")->execute();
+		}
+	}
+	
+	
 }

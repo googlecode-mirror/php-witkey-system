@@ -70,25 +70,25 @@ class Keke_msg_keke extends Keke_msg {
 	 */
 	function send_msg($uid=NULL,$title=NULL,$content=NULL){
 		if($uid===NULL){
-			$uid = $this->_userinfo['uid'];
-			$to_uid = NULL;
-			$to_username = NULL;
+			$to_uid = $this->_userinfo['uid'];
+			$to_username = $this->_userinfo['username'];
 		}else{
 			$to_uid = $uid;//收件id
-			//$to_username = $_SESSION['username'];
-			//方便测试短信。临时加了以下三条语句！
 			$user_username = Keke_user::instance()->get_user_info($to_uid,'username',1);
 			$to_username = $user_username['username'];//收件id
-			$uid = $_SESSION['uid'];
+			
 		}
+		$uid = $_SESSION['uid'];
+		$username  = $_SESSION['username'];
+		
 		if($content===NULL){
 			$content = strtr($this->_tpl_info['msg_tpl'],self::$_var);
 		}
 		if($title===NULL){
 			$title = $this->_tpl_info['desc'];
 		}
-		$columns = array('uid','to_uid','to_username','title','content','on_time');
-		$values = array($uid,$to_uid,$to_username,$title,$content,time());
+		$columns = array('uid','username','to_uid','to_username','title','content','on_time');
+		$values = array($uid,$username,$to_uid,$to_username,$title,$content,time());
 		return DB::insert('witkey_msg')->set($columns)->value($values)->execute();
 		
 	}

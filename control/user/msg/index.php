@@ -19,36 +19,31 @@ class Control_user_msg_index extends Control_user{
 	protected static $_left = 'index';
 	
 	function action_index(){
-  				
+		
 		require Keke_tpl::template('user/msg/index');
 	}
 	
    function action_check_username(){
        $username = $this->request->param('id');
        $where = "username = '$username'";
-       $res = DB::select('count(*)')->from('witkey_member')->where($where)->get_count()->execute();
+       (int)$res = DB::select('uid')->from('witkey_member')->where($where)->get_count()->execute();
        if($res > 0){
-       	  echo  TRUE;
+       	  echo  $res;
        }else{
        	  echo 'user_not_exists';
        }
    }
+   
    function action_send(){
-   		$this->action_checkusername();
-	   	Keke::formcheck($_POST['formhash']);
+      	Keke::formcheck($_POST['formhash']);
 	   	//防sql注入
 	   	$_POST=Keke_tpl::chars($_POST);
 	   	//取得用户名
-	   	$user_uid = Keke_user::instance()->get_user_info($_POST['txt_to_username'],'uid',0);
-	   	$user_to_uid = $user_uid['uid'];
+	   	(int)$to_uid = DB::select('uid')->from('witkey_member')->where("username='{$_POST['txt_to_username']}'")->get_count()->execute();
 	   	//发送信息
-	   	Keke_msg::instance()->send_msg($user_to_uid,$_POST['txt_title'],$_POST['txt_content']);
-	   	keke::show_msg('发送成功','user/msg_out','success','系统提示',3);
+	   	Keke_msg::instance()->send_msg($to_uid,$_POST['txt_title'],$_POST['txt_content']);
+	   	keke::show_msg('发送成功','user/msg_out');
    }
-   function action_checkusername(){
-   		if($_POST['txt_to_username']==$_SESSION['username']){
-   			keke::show_msg('不能给自己发消息！','user/msg_index','error','系统提示',3);
-   		}
-   }
+ 
 	
 }

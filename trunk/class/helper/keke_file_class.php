@@ -243,7 +243,7 @@ class keke_file_class {
 		foreach ( $returned_values as $key ) {
 			switch ($key) {
 				case 'name' :
-					$fileinfo ['name'] = substr ( strrchr ( $file, DIRECTORY_SEPARATOR ), 1 );
+					$fileinfo ['name'] = pathinfo($file,PATHINFO_BASENAME); //substr ( strrchr ( $file, DIRECTORY_SEPARATOR ), 1 );
 					break;
 				case 'server_path' :
 					$fileinfo ['server_path'] = $file;

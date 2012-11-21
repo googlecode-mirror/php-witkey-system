@@ -207,6 +207,10 @@ table {
   display: block !important;
   visibility: visible;
 }
+.hidden {
+  display: none !important;
+  visibility: hidden;
+}
 .fl_l {
   float: left !important;
 }
@@ -1316,6 +1320,8 @@ button[type="submit"]{
 }
 .nav li ul {
   position: absolute;
+  display: none !important;
+  visibility: hidden;
   display: none !important;
   visibility: hidden;
 }
@@ -8645,7 +8651,7 @@ ol.sosumi {
 
   /* 基本配置 */
 
-  font: 12px/25px 'Lucida Grande', 'Microsoft YaHei', '微软雅黑';
+  font: 12px/25px Arial, 'Lucida Grande', 'Microsoft YaHei', '微软雅黑';
   color: #444444;
   background: #ffffff;
   /* 表单行 */
@@ -8701,7 +8707,7 @@ ol.sosumi {
   border-style: solid;
   border-color: #e1e1e1;
   line-height: 30px;
-  font-family: "微软雅黑";
+  font-family: Arial, "微软雅黑";
   padding: 0 5px;
   vertical-align: middle;
   margin-right: -1px;
@@ -8831,7 +8837,7 @@ ol.sosumi {
   width: auto;
   height: 32px;
   padding: 4px 5px;
-  font-family: "微软雅黑";
+  font-family: Arial, "微软雅黑";
 }
 #user textarea {
   color: #333333;
@@ -9256,6 +9262,8 @@ ol.sosumi {
   position: absolute;
   width: 80px;
   height: auto;
+  display: none !important;
+  visibility: hidden;
   display: none !important;
   visibility: hidden;
   -webkit-box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);

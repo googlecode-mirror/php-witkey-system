@@ -207,6 +207,10 @@ table {
   display: block !important;
   visibility: visible;
 }
+.hidden {
+  display: none !important;
+  visibility: hidden;
+}
 .fl_l {
   float: left !important;
 }
@@ -1316,6 +1320,8 @@ button[type="submit"]{
 }
 .nav li ul {
   position: absolute;
+  display: none !important;
+  visibility: hidden;
   display: none !important;
   visibility: hidden;
 }

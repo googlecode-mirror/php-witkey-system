@@ -18,10 +18,9 @@ class Control_admin_tool_dbrestore extends Control_admin{
 		foreach (glob($this->_sql_path.'*.sql') as $v){
 			$this->_file_arr[] = keke_file_class::get_file_info($v);
 		}
-		
  	}
 	function action_index(){
-		global $_K, $_lang;
+		
 		
 		//º”‘ÿƒ£∞Â
 		require Keke_tpl::template('control/admin/tpl/tool/dbrestore');

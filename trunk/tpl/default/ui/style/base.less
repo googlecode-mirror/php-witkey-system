@@ -1,9 +1,51 @@
 /*global*/
-.clear{clear:both;height:0;overflow:hidden;display: block; visibility: hidden;}
-.clearfix:before,
-.clearfix:after {  content: '\0020';  display: block;  overflow: hidden;  visibility: hidden;  width: 0;  height: 0;}
-.clearfix:after {clear: both;}
-.clearfix {zoom: 1;}
+.clearfix() when not (@using-ieclasses) {
+	&:before,
+	&:after {
+	    content: "";
+	    display: table;
+	}
+	&:after {
+	    clear: both;
+	}
+	*zoom: 1;
+}
+
+.clearfix() when (@using-ieclasses) {
+	&:before,
+	&:after {
+	    content: "";
+	    display: table;
+	}
+	&:after {
+	    clear: both;
+	}
+	#ie6 &, #ie7 & {
+		zoom: 1;
+	}
+}
+
+.inline-block() when (@using-ieclasses) {
+	display: inline-block;
+	#ie7 & {
+		display: inline;
+		zoom: 1;
+	}
+}
+
+.inline-block() when not (@using-ieclasses) {
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+}
+
+.ir() {
+	border: 0;
+	font: 0/0 a;
+	text-shadow: none;
+	color: transparent;
+	background-color: transparent;
+}
 
 .font12{font-size:12px;}
 .font14{font-size:14px;}
@@ -31,7 +73,6 @@
 .t_r{text-align:right !important;}
 
 .block{ display:block !important; visibility:visible;}
-.hidden{ display:none !important;}
 .hidden() {
 	display: none !important;
 	visibility: hidden;
@@ -236,6 +277,13 @@
 	}
 }
 
+.opacity(@transparency:50){
+	opacity:@transparency/100;
+	-moz-opacity:@transparency/100;
+	-khtml-opacity: @transparency/100;
+	filter:alpha(opacity=@transparency);
+}
+
 #gradient {
 	.horizontal (@start-color, @end-color) when not (@disable-filters) {
 		background-color: @end-color;
@@ -347,4 +395,6 @@
 	-moz-hyphens: auto;
 	hyphens: auto;
 }
+
+
 

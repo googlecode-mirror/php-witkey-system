@@ -565,9 +565,7 @@ button[type="submit"]{
 
 	 		ul{
 	 			.po_ab;
-	 			visibility: hidden;
-	 			left:0;
-	 			top:30px;
+	 			.hidden;
 	 			li{
 	 				float: none;
 	 				position: static;
@@ -576,7 +574,9 @@ button[type="submit"]{
 
 	 		&:hover{
 	 			ul{
-	 				visibility: visible;
+	 				.block;
+	 				left:0;
+	 				top:30px;
 	 			}
 	 		}
 

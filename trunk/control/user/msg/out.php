@@ -42,9 +42,17 @@ class Control_user_msg_out extends Control_user{
 		if($_GET['msg_id']){
 			//删除命令是否来于查看页面
 			if($_GET['ac'] == 'view'){
+				//返回下一条id
 				$next_msg_id = $this->to_next_one($_GET['msg_id']);
 				$this->del_msg_by_status($_GET['msg_id'], $_GET['status'], $_GET['is_sys']);
-				$next_msg_id and Keke::show_msg('删除成功','user/msg_in/info?&from=out&msg_id='.$next_msg_id) or Keke::show_msg('删除成功','user/msg_out');
+				//跳到下一条
+				if($next_msg_id){
+					$uri = 'user/msg_in/info?from=out&msg_id='.$next_msg_id;
+				}else{
+					$uri = 'user/msg_out/'.$_GET['action'];
+				}
+				$this->request->redirect($uri);
+				
 			}else{
 				$this->del_msg_by_status($_GET['msg_id'], $_GET['status'], $_GET['is_sys']);
 			}
@@ -71,7 +79,13 @@ class Control_user_msg_out extends Control_user{
 			return DB::delete('witkey_msg')->where("msg_id = '$msg_id'")->execute();
 		}
 	}
+	//获取下一条信息
 	function to_next_one($msg_id){
-		return $res = DB::select('msg_id')->from('witkey_msg')->where(' msg_status<>2 and msg_id <'.$msg_id.' and uid='.$_SESSION['uid'])->get_count()->execute();
+		return DB::select('msg_id')->from('witkey_msg')
+		->where(' msg_status<>2 and msg_id <'.$msg_id.' and uid='.$_SESSION['uid'])
+		->order('msg_id desc')
+		->limit(0, 1)
+		->get_count()
+		->execute();
 	}
 }

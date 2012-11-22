@@ -49,7 +49,7 @@ class Num {
 		return number_format($number, $places, $decimal, $thousands);
 	}
 	/**
-	 * 格式化字节大小
+	 * 大小换为字节
 	 * @param int $size
 	 * @throws Keke_exception
 	 * @return number
@@ -80,6 +80,17 @@ class Num {
 		$bytes = $size * pow(2, Num::$_byte_units[$unit]);
 	
 		return $bytes;
+	}
+	/**
+	 *  字节换为大小
+	 * @param unknown $bytes
+	 */
+	public static function bytes_to_size($bytes){
+	     $units = array (0 => 'B',1 => 'kB',2 => 'MB',3 => 'GB'	);
+		 $log = log ( $bytes, 1024 );
+		 $power = ( int ) $log;
+		 $size = pow ( 1024, $log - $power );
+		 return round ( $size, 2 ) . ' ' . $units [$power];
 	}
 	
 	

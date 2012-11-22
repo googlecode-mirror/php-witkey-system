@@ -26,10 +26,26 @@ input:focus{ border-color:#06c; box-shadow:0 0 5px rgba(102, 153, 204,.5);}
 button[type=button],
 input[type=button],
 button[type=reset],
-input[type=reset]{ border: 1px solid #ccc; background: #eee; color: #444; font-size: 12px; line-height: 1em;padding: 5px; position: relative; z-index: 1;box-shadow:inset 0 1px 0 rgba(255,255,255,.5); border-radius: 3px}
+input[type=reset]{ border: 1px solid #ccc; background: #eee; color: #444; font-size: 12px; line-height: 1em;padding: 5px; position: relative; z-index: 1;box-shadow:inset 0 1px 0 rgba(255,255,255,.5); border-radius: 3px
+background-color: #fff;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee));
+  background-image: -webkit-linear-gradient(top, #fff, #eee);
+  background-image:    -moz-linear-gradient(top, #fff, #eee);
+  background-image:      -o-linear-gradient(top, #fff, #eee);
+  background-image:         linear-gradient(to bottom, #fff, #eee);
+
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffffff,endColorstr=#ffeeeeee);zoom: 1;}
 
 button[type=submit],
 input[type=submit]{border: 1px solid #424967; background: #8E95B7; color: #fff; font-size: 12px; font-weight: bold;  line-height: 1em; padding: 5px;  position: relative; z-index: 1; text-shadow:-1px -1px 0 rgba(0,0,0,.3); box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 1px 1px rgba(0,0,0,.2);border-radius: 3px;
+  background-color: #8E95B7;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#8E95B7), to(#606A97));
+  background-image: -webkit-linear-gradient(top, #8E95B7, #606A97);
+  background-image:    -moz-linear-gradient(top, #8E95B7, #606A97);
+  background-image:      -o-linear-gradient(top, #8E95B7, #606A97);
+  background-image:         linear-gradient(to bottom, #8E95B7, #606A97);
+
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff8E95B7,endColorstr=#ff606A97);zoom: 1;
 }
 
 button[type=submit]:active,
@@ -37,7 +53,10 @@ input[type=submit]:active,
 button[type=button]:active,
 input[type=button]:active,
 button[type=reset]:active,
-input[type=reset]:active{left:1px; top:1px; box-shadow: inset 1px 1px 2px rgba(0,0,0,.2);}
+input[type=reset]:active{left:1px; top:1px; box-shadow: inset 1px 1px 2px rgba(0,0,0,.2);
+  
+
+}
 
 .skin a.show_hide{ background:#4B4E5F;  background:rgba(75, 78, 95,.9); color:#fff; box-shadow:inset 0 0 3px rgba(0,0,0,.5);}
 .skin a.show_hide:hover{ background:#fff;  background:rgba(255, 255, 255,.8);color:#000;box-shadow:0 0 5px rgba(0,0,0,.8);text-shadow:1px 1px 1px rgba(255,255,255,.8);  }

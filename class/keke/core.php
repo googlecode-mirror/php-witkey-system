@@ -496,7 +496,7 @@ class Keke extends Keke_core {
 		$sys =  S_ROOT.$dir.DIRECTORY_SEPARATOR.'sys'.DIRECTORY_SEPARATOR.$class_name;
 		$model = S_ROOT.$dir.DIRECTORY_SEPARATOR.'model'.DIRECTORY_SEPARATOR.$class_name;
 		$control = S_ROOT.$file;
-		$models = array ('cache','database');
+		$models = array ('cache','database','image');
 		$found = false;
 		if (is_file ( $class )) {
 			$found = $class;

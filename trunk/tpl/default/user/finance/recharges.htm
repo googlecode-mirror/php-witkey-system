@@ -58,28 +58,27 @@
 			                            </tr>
 		                            </thead>
 		                            <tbody>
-		                         	{if $data_list}
-			                            {loop $data_list $v}
+		                         	{if $data_list}				
+			                            <!--{loop $data_list $v}-->
 				                            <tr>
 					                              <td><span class="money">£¤{$v['cash']}Ôª</span></td>
 					                              <td>
-					                              	<p>{if $v['type'] == 'online'}
-															{$v['bank']}
+					                              	<p>{if $v['btype'] == 'online'}
+															{$v['bpayment']}
 														{else}
-															<!--{eval  $conf = unserialize($v['bconfig']);//var_dump($conf);}-->
-															{$conf['pay_account']} {$conf['pay_user']} {$conf['pay_name']}
+															{$v['bpay_account']} {$v['bpay_user']} {$v['bpay_name']}
 														{/if}
 													</p>
 					                              </td>
 												  <td>
-												  	{if $v['type'] == 'online'}
-												  		{cutstr($v['bank_info'],30)}{else}{$v['recharge_pic']}
-													{/if}
+												  		<a href="{BASE_URL}/{$v['recharge_pic']}" target="_blank">
+												  			<img title="{BASE_URL}/{$v['recharge_pic']}" src="{BASE_URL}/{$v['recharge_pic']}" height="40px" />		
+												  		</a>
 												  </td>
 					                              <td>$v['status']</td>
 					                              <td>{date('Y-m-d',$v['pay_time'])}</td>
 				                            </tr>
-			                            {/loop}
+			                            <!--{/loop}-->
 									{else}
 									 	<tr>
 			                            	<td colspan="5" class="t_c">ÔÝÎÞ¼ÇÂ¼</td>

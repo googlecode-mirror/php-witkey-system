@@ -269,9 +269,7 @@ class Keke extends Keke_core {
 		//安全模式
 		Keke::$_safe_mode  = (bool)ini_get('safe_mode');
 		Keke::$_magic_quote = (bool)get_magic_quotes_gpc();
-		if(Keke::$_safe_mode===TRUE){
-			ini_set('safe_mode', 'Off');
-		}
+		
 		if((bool)get_magic_quotes_runtime()===TRUE){
 			ini_set('magic_quotes_runtime','Off');
 		}

@@ -93,7 +93,7 @@ abstract class Model {
 		
 		$page or $page = 1;
 		$page_size or $page_size = 10;
-		$page_obj = new keke_page_class();
+		$page_obj = new Page();
 		if ($ajax_dom) {
 			$page_obj->setAjax ( '1' );
 			$page_obj->setAjaxDom ( $ajax_dom );
@@ -136,7 +136,7 @@ abstract class Model {
 	
 		$page or $page = 1;
 		$page_size or $page_size = 10;
-		$page_obj = new keke_page_class();
+		$page_obj = new Page();
 		if ($ajax_dom) {
 			$page_obj->setAjax ( '1' );
 			$page_obj->setAjaxDom ( $ajax_dom );

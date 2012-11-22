@@ -703,28 +703,7 @@ class Keke_base {
 		die ();
 		file_exists ( $lock_file ) == false or Keke::show_msg ( $_lang ['kppw_install_notice'], 'install/index.php', 3, $_lang ['you_not_install_kppw_notice'] );
 	}
-	/**
-	 * 计处xx时间前
-	 * @param int $timestamp 时间
-	 * @return string  eg:xx天前,xx小时前
-	 */
-	static function get_gmdate($timestamp) {
-		global $_lang;
-		global $_K;
-		$time = $_K ['timestamp'] - $timestamp;
-		if ($time > 24 * 3600) {
-			$result = intval ( $time / (24 * 3600) ) . $_lang ['day_before'];
-		} elseif ($time > 3600) {
-			$result = intval ( $time / 3600 ) . $_lang ['hour_before'];
-		} elseif ($time > 60) {
-			$result = intval ( $time / 60 ) . $_lang ['minute_before'];
-		} elseif ($time > 0) {
-			$result = $time . $_lang ['seconds_before'];
-		} else {
-			$result = $_lang ['now'];
-		}
-		return $result;
-	}
+ 
 	
 	/**
 	 * 生成表单hash

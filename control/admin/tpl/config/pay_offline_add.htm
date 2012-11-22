@@ -46,7 +46,7 @@
 	  <tr>
         <th scope="row">{$_lang['account']}{$_lang['zh_mh']}</th>
         <td>
-        	<input type="text" name="fds[pay_account]" id="pay_account" value="{$payment_config['pay_account']}" class="txt" style=" width:260px;" msgArea="span_pay_account"
+        	<input type="text" name="pay_account" id="pay_account" value="{$payment_config['pay_account']}" class="txt" style=" width:260px;" msgArea="span_pay_account"
 			limit="required:true;len:16-19" title="&nbsp;&nbsp;&nbsp;&nbsp; {$_lang['bank_id']}" msg="&nbsp;&nbsp;&nbsp;&nbsp; {$_lang['bank_car_id_not_empty']}" onkeyup="clearstr(this)"/> 
 			<span id="span_pay_account"></span>
 		</td>
@@ -54,14 +54,14 @@
 		  <tr>
         <th scope="row">{$_lang['username']}{$_lang['zh_mh']}</th>
         <td>
-        	<input type="text" name="fds[pay_user]" id="pay_user" value="{$payment_config['pay_user']}"  class="txt" style=" width:260px;" msgArea="span_pay_user"
+        	<input type="text" name="pay_user" id="pay_user" value="{$payment_config['pay_user']}"  class="txt" style=" width:260px;" msgArea="span_pay_user"
 			limit="required:true;len:2-50" title="&nbsp;&nbsp;&nbsp;&nbsp; {$_lang['account_legal']}" msg="&nbsp;&nbsp;&nbsp;&nbsp; {$_lang['account_legal_not_empty']}"/> 
 			<span id="span_pay_user"></span>
 		</td>
       </tr>
         <th scope="row">{$_lang['contact_tel']}{$_lang['zh_mh']}</th>
         <td>
-        	<input type="text" name="fds[pay_phone]" class="txt" id="pay_phone" value="{$payment_config['pay_phone']}"  style=" width:260px;" msgArea="span_pay_phone"
+        	<input type="text" name="pay_phone" class="txt" id="pay_phone" value="{$payment_config['pay_tel']}"  style=" width:260px;" msgArea="span_pay_phone"
 			limit="required:true;type:tel" title="&nbsp;&nbsp;&nbsp;&nbsp; {$_lang['contact_the_car_as']}" msg="&nbsp;&nbsp;&nbsp;&nbsp; {$_lang['contact_the_car']}"/> 
 			<span id="span_pay_phone"></span> 
 		</td>

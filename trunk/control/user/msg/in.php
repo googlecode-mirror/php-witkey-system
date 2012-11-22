@@ -58,7 +58,9 @@ class Control_user_msg_in extends Control_user{
 		if(empty($_GET['msg_id'])){
 			$this->request->redirect('user/msg_in');
 		}
-		
+		 
+		self::$_left=$from;
+		 
 		
 		$date_arr = DB::select()->from('witkey_msg')->where('msg_id = '.$_GET['msg_id'])->get_one()->execute();
 		
@@ -72,11 +74,7 @@ class Control_user_msg_in extends Control_user{
 		require Keke_tpl::template('user/msg/info');
 	}
 	
-	function action_out_info(){
-		self::$_left='out';
-		
-		require Keke_tpl::template('user/msg/info');
-	}
+ 
 	
 	function action_del(){
 		if($_GET['msg_id']){

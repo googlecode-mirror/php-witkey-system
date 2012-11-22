@@ -33,7 +33,7 @@
 		                			<input type="button" value="返回列表" onclick="history.go(-1);">
 		                		</div>
 								<div class="actions">
-		                			<input type="button" value="删除" onclick="return vdel(this);">
+		                			<input type="button" value="删除"  onclick="return del(this,'$del_url');">
 		                		</div>
 		                	</div>
 
@@ -45,24 +45,21 @@
     </div>
     <!--content end-->
    	
-    <script type="text/javascript">
-    	
-    	function vdel(i,s){
-			d = art.dialog;
-			var c = "确认删除？";
-			if(s){
-				c=s;
-			}
-			d.confirm(c, function(){
-				$.get(i.href,function(){
-					del();
-				})
-			}).follow(i);
-			return false;
-		}
-	    function del(){
-			location.href='{BASE_URL}/index.php/user/msg_{$_GET['from']}/del?&ac=view&action={$_GET['action']}&msg_id='+{$date_arr['msg_id']}+'&status='+{$date_arr['msg_status']}+'&is_sys='+{$date_arr['uid']};
-	    }
+<script type="text/javascript">
+   
+	
+function del(o,url){
+	d = art.dialog;
+	var c = "确认删除？";
+	d.confirm(c, function(){
+		location.href=url;				
+	}).follow(o);
+	return false;
+}
+	    //function del(){
+		//	location.href='{BASE_URL}/index.php/user/msg_{$_GET['from']}/del?&ac=view&action={$_GET['action']}&msg_id='+{$date_arr['msg_id']}+'&status='+{$date_arr['msg_status']}+'&is_sys='+{$date_arr['uid']};
+	    //}
 
-	</script>
+
+</script>
 <!--{include user/footer}-->

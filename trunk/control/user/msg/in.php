@@ -61,17 +61,25 @@ class Control_user_msg_in extends Control_user{
 		}
 		require Keke_tpl::template('user/msg/info');
 	}
+	
 	function action_out_info(){
 		self::$_left='out';
 		
 		require Keke_tpl::template('user/msg/info');
 	}
+	
 	function action_del(){
 		if($_GET['msg_id']){
 			if($_GET['ac'] == 'view'){
 				$next_msg_id = $this->to_next_one($_GET['action'],$_GET['msg_id']);
 				$this->del_msg_by_status($_GET['msg_id'], $_GET['status'], $_GET['is_sys']);
-				$next_msg_id and Keke::show_msg('删除成功','user/msg_in/info?&from=in&msg_id='.$next_msg_id) or Keke::show_msg('删除成功','user/msg_in/'.$_GET['action'] );
+				//跳到下一条
+				if($next_msg_id){
+					$uri = 'user/msg_in/info?&from=in&msg_id='.$next_msg_id.'&action='.$_GET['action'];
+				}else{
+					$uri = 'user/msg_in/'.$_GET['action'];
+				}
+				$this->request->redirect($uri);
 			}else{
 				$this->del_msg_by_status($_GET['msg_id'], $_GET['status'], $_GET['is_sys']);
 			}
@@ -158,7 +166,9 @@ class Control_user_msg_in extends Control_user{
 				break;
 		}
 		$where .= ' and msg_id < '.$msg_id;
-		return $res = DB::select('msg_id')->from('witkey_msg')->where($where)->get_count()->execute();
+		return $res = DB::select('msg_id')->from('witkey_msg')
+		->where($where)->limit(0, 1)
+		->get_count()->execute();
 	}
 	
 }

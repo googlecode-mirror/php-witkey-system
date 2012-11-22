@@ -28,13 +28,13 @@ a{-o-transition: background 0.1s ease-out;-moz-transition:background 0.1s ease-o
 	
 
 /*arrow*/
-.arrow{position:absolute; z-index:5; top:13px; right:340px; display:none;}
+.arrow{position:absolute; z-index:5; top:13px; right:300px; display:none;}
 .arrow_b{ border:5px solid #fff;border-left-color:transparent; border-right-color:transparent;border-bottom-color:transparent; display:inline-block; width:0; height:0; font-size:0; line-height:0; vertical-align:middle; margin:0 2px;}
 .arrow_t{ border:5px solid #fff;border-left-color:transparent; border-right-color:transparent;border-top-color:transparent; display:inline-block; width:0; height:0; font-size:0; line-height:0; vertical-align:text-top; margin:0 2px;}
 .arrow_r{ border:5px solid #fff;border-right-color:transparent; border-top-color:transparent;border-bottom-color:transparent; display:inline-block; width:0; height:0; font-size:0; line-height:0; vertical-align:middle; margin:0 2px;}
 .arrow_l{ border:5px solid #fff;border-left-color:transparent; border-top-color:transparent;border-bottom-color:transparent; display:inline-block; width:0; height:0; font-size:0; line-height:0; vertical-align:middle; margin:0 2px;}
 
-.hide_nav{ display:none; position:absolute;  z-index:6; top:37px; right:0; border:1px solid #ccc; border-top:none;  width:90px; padding-bottom:10px; text-align:center; font-size:14px; }
+.hide_nav{ display:none; position:absolute;  z-index:6; top:37px; right:0; border:1px solid #ccc; border-top:none;  width:90px; padding-bottom:10px; text-align:center; font-size:12px; }
 input{ background:#fff; font-size:12px; margin-right:5px; vertical-align:middle;-o-transition: all 0.1s ease-out;-moz-transition:all 0.1s ease-out 0s;-webkit-transition:all 0.1s ease-out 0s;}
 
 .txt {border: 1px solid #ccc; padding:5px; font-size:12px; font-family: Verdana, Arial, Helvetica, sans-serif;color:#333;border-radius:3px;}
@@ -179,16 +179,15 @@ button.pill{*margin:0 5px;}
 
 
 /*login_box*/
-.login_box{ position:absolute; z-index:100; top:0; left:0; width:100%; height:100%;/*background:rgba(187, 201, 214,.8);*/}
-	.login_con{position:absolute; z-index:100; top:50%; left:50%; margin:-100px 0 0 -310px; font-size:12px; width:580px; padding:40px;  color:#525c66; /*border:20px; -o-border-image: url(../img/container.png) 20 stretch;-moz-border-image: url(../img/container.png) 20 stretch;-webkit-border-image: url(../img/container.png) 20 stretch;*/background:rgba(255,255,255,.8); box-shadow:0 0 20px rgba(0,0,0,.5);border-radius:5px; filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#CCFFFFFF,endColorstr=#CCFFFFFF); zoom: 1;}
+.login_box{ position:absolute; z-index:100; top:0; left:0; width:100%; height:100%;}
+	.login_con{position:absolute; z-index:100; top:50%; left:50%; text-align: center; margin:-160px 0 0 -200px;  font-size:12px; width:400px; height: 240px; padding:40px;  color:#525c66; background:rgba(255,255,255,.8); box-shadow:0 0 20px rgba(0,0,0,.5);border-radius:5px; filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#CCFFFFFF,endColorstr=#CCFFFFFF); zoom: 1;}
 .login_con1{font-size:12px;  padding:40px;  color:#525c66; background:rgba(255,255,255,.8); box-shadow:0 0 20px rgba(0,0,0,.5);border-radius:5px; filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#CCFFFFFF,endColorstr=#CCFFFFFF); zoom: 1;}
-		.login_con h1{ font-family:"Î¢ÈíÑÅºÚ"; margin-bottom:20px;}
+		.login_con h1{ font-family:"Î¢ÈíÑÅºÚ"; margin-bottom:0;}
 		.login_con td{ vertical-align:top;}
-		.login_con .logintitle{ float:left; width:4em; line-height:2em; font-size:14px; font-weight:bold;}
-		.login_con .loginform{ padding-left:5em; height:3em; line-height:3em; }
-		.login_con .loginbtn{  padding-left:5em;}
-		.login_con .pl{ border-right:1px solid #CCD6DE;}
-		.login_con .pr{ border-left:1px solid #FBFCFD; padding-left:20px;}
+		.login_con .logintitle{ display: inline-block; width:4em; text-align: left; line-height:2em; font-size:14px; font-weight:bold;}
+		.login_con .loginform{ height:3em; line-height:3em; }
+		.login_con .loginbtn{  padding-left:1em; padding-top: 1em;}
+		.login_con .copy{ margin-top: 2em;  padding-top: 1em; border-top:1px solid #ccc;}
 
 
 /*systips*/
@@ -216,11 +215,11 @@ button.pill{*margin:0 5px;}
 		#ie6 .header .user_box .avatar a{  display:inline-block; width:43px; height:43px;}
 	.header .user_box .name {display: block;padding:0; padding:3px 0 3px 5px; text-align:right;}
 	.header .user_box .name b{ padding:0 5px;}
-	.header .user_box .link_bar { text-align:right;  }
+	.header .user_box .link_bar { text-align:right; clear:both; display: block;}
 	#ie6 .header .user_box .link_bar {clear:both; }
-	.header .user_box .link_bar a {text-decoration: none; padding:2px 5px; padding:4px 5px 2px\9;  *margin-top:-40px; display:inline-block; font-size:12px;border-radius:3px;}
+	.header .user_box .link_bar a {text-decoration: none; padding:2px 5px; display:inline-block; font-size:12px;border-radius:3px;}
 
-	.header .nav{ position:absolute;z-index: 4; margin-top:10px; left:200px; top:0; width:auto; height:40px; overflow: hidden; right:360px;_margin-right:360px;}
+	.header .nav{ position:absolute;z-index: 4; margin-top:10px; left:200px; top:0; width:auto; height:40px; overflow: hidden; right:300px;_margin-right:300px;}
 	.header .nav ul,.header .nav li{ display:block;}
 	.header .nav li{ float:left;}
 	.header .nav a{ display:inline-block; text-decoration:none; padding:0 10px; margin:height:40px; line-height:40px; white-space:nowrap;}
@@ -249,11 +248,11 @@ button.pill{*margin:0 5px;}
 
 
 
-.frame_box {background:#fff;position: absolute;z-index: 4;top: 50px;left: 180px;width: auto; min-height: auto;  right: 0px;bottom: 0px;overflow:hidden;}
+.frame_box {background:#fff;position: absolute;z-index: 4;top: 50px;left: 150px;width: auto; min-height: auto;  right: 0px;bottom: 0px;overflow:hidden;}
 
-#ie6 .frame_box{top:50px;width:expression(document.body.offsetWidth - 180 + 'px');height:expression(document.body.offsetHeight - 64 + 'px');}
+#ie6 .frame_box{top:50px;width:expression(document.body.offsetWidth - 150 + 'px');height:expression(document.body.offsetHeight - 50 + 'px');}
 	#display_frame {height: 100%;width: 100%;z-index: 5; }
-	#ie7 #display_frame{height:expression(document.body.offsetHeight -60 + 'px');}
+	#ie7 #display_frame{height:expression(document.body.offsetHeight -50 + 'px');}
 		.frame_body{ background:#fff;}
 		.frame_content{color:#666; line-height:25px; font-size:12px; padding:10px;}		
 

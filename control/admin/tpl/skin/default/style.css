@@ -1,11 +1,19 @@
 @charset "gbk";
 /* CSS Document */
 
-.skin{background: #4B4E5F; color:#333; }
+.skin{background: #4B4E5F; color:#333;
+  background-color: #4B4E5F;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#4B4E5F), to(#61667B));
+  background-image: -webkit-linear-gradient(top, #4B4E5F, #61667B);
+  background-image:    -moz-linear-gradient(top, #4B4E5F, #61667B);
+  background-image:      -o-linear-gradient(top, #4B4E5F, #61667B);
+  background-image:         linear-gradient(to bottom, #4B4E5F, #61667B);
+
+}
 
 
 a:link{color:#06c; }
-a:visited{color:#06c; text-decoration:underline; }
+a:visited{color:#06c; text-decoration:none; }
 a:focus {color:#06c; }
 a:hover{ text-decoration: underline; }
 a:active{color:#424967;}
@@ -18,10 +26,10 @@ input:focus{ border-color:#06c; box-shadow:0 0 5px rgba(102, 153, 204,.5);}
 button[type=button],
 input[type=button],
 button[type=reset],
-input[type=reset]{ border: 1px solid #ccc; background: #eee; color: #444; font-size: 12px; height: 25px; padding: 5px; position: relative; z-index: 1;box-shadow:inset 0 1px 0 rgba(255,255,255,.5); border-radius: 3px}
+input[type=reset]{ border: 1px solid #ccc; background: #eee; color: #444; font-size: 12px; line-height: 1em;padding: 5px; position: relative; z-index: 1;box-shadow:inset 0 1px 0 rgba(255,255,255,.5); border-radius: 3px}
 
 button[type=submit],
-input[type=submit]{border: 1px solid #424967; background: #8E95B7; color: #fff; font-size: 12px; font-weight: bold; height: 25px; padding: 5px;  position: relative; z-index: 1; text-shadow:-1px -1px 0 rgba(0,0,0,.3); box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 1px 1px rgba(0,0,0,.2);border-radius: 3px;
+input[type=submit]{border: 1px solid #424967; background: #8E95B7; color: #fff; font-size: 12px; font-weight: bold;  line-height: 1em; padding: 5px;  position: relative; z-index: 1; text-shadow:-1px -1px 0 rgba(0,0,0,.3); box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 1px 1px rgba(0,0,0,.2);border-radius: 3px;
 }
 
 button[type=submit]:active,
@@ -31,16 +39,20 @@ input[type=button]:active,
 button[type=reset]:active,
 input[type=reset]:active{left:1px; top:1px; box-shadow: inset 1px 1px 2px rgba(0,0,0,.2);}
 
-.skin a.show_hide:link { background:#2b5792;  background:rgba(43, 86, 145,.9); color:#fff; box-shadow:inset 0 0 3px rgba(0,0,0,.5);}
+.skin a.show_hide{ background:#4B4E5F;  background:rgba(75, 78, 95,.9); color:#fff; box-shadow:inset 0 0 3px rgba(0,0,0,.5);}
 .skin a.show_hide:hover{ background:#fff;  background:rgba(255, 255, 255,.8);color:#000;box-shadow:0 0 5px rgba(0,0,0,.8);text-shadow:1px 1px 1px rgba(255,255,255,.8);  }
+
 
 
 .skin .header{background:rgba(0,0,0,.2); filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#33000000,endColorstr=#33000000);zoom: 1;}
 .skin .header .user_box .avatar a{background:rgba(255,255,255,.5); box-shadow:0 0 5px rgba(0,0,0,.9);filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#7FFFFFFF,endColorstr=#7FFFFFFF); zoom: 1;}
 .skin .header .user_box .avatar a:hover{background:rgba(255,255,255,.8);}
 .skin .header .user_box .name { color: #FFF;  font-size: 9pt;text-shadow:1px 1px 1px rgba(0,0,0,.5);}
-.skin .header .user_box .link_bar a {color: #FFF; text-shadow:1px 1px 1px rgba(0,0,0,.3); background:#2b66a8\9; *background:#2b66a8;}
-.skin .header .user_box .link_bar a:hover {color:#fff; background:#2b5792; background:rgba(0,0,0,.5); box-shadow:0 1px 2px rgba(0, 0, 0, 0.3) inset,0 1px 0 rgba(255, 255, 255, 0.2);}
+.skin .header .user_box .link_bar a {color: #FFF; text-shadow:1px 1px 1px rgba(0,0,0,.3); }
+.skin .header .user_box .link_bar a:hover {color:#fff; background:#000; background:rgba(0,0,0,.5); box-shadow:0 1px 2px rgba(0, 0, 0, 0.3) inset,0 1px 0 rgba(255, 255, 255, 0.2);}
+
+
+
 .skin a.sitehome{ }
 .skin a.sitehome:hover{}
 .skin a.setting{}
@@ -67,7 +79,7 @@ input[type=reset]:active{left:1px; top:1px; box-shadow: inset 1px 1px 2px rgba(0
 .skin .side_bar .menu_bar a.select:hover{text-shadow:1px 1px 1px rgba(0,0,0,.8);}
 .skin .side_bar .menu_bar a.select .arrow_l{ border-width:7px; margin-top:5px;}
 
-.skin .hide_nav{ background:#2b66a8;}
+.skin .hide_nav{ background:#fff;}
 
 .skin .tool_box{ background:rgba(255,255,255,.9); color:#333; background:none\0;filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#E5FFFFFF,endColorstr=#E5FFFFFF);zoom: 1;}
 .skin .tool_box .bread a{ color:#424967; text-decoration:none; background:#ebf3fb;}

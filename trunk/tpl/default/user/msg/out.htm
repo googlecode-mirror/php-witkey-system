@@ -56,7 +56,9 @@
 		                              	<th scope="col" width="15%"><a href="javascript:;" onclick="submitSort('{$uri}','on_time',{$ord_tag})">时间{if $_GET['f']=='on_time'}{$ord_char}{/if}</a></th>
 		                            </tr>
 		                            </thead>
-		                            <tbody>
+		                            
+		                            {if $data_list}
+									<tbody>
 		                            {loop $data_list $v}
 		                            <tr>
 		                              <td><input type="checkbox" name="ckb[]" value="$v['msg_id']|$v['msg_status']|$v['uid']"></td>
@@ -72,8 +74,17 @@
 
 		                            </tr>
 		                            {/loop}
+									 </tbody>
+									{else}
+										<tfoot>
+				                            <tr>
+					                            <td colspan="5" class="t_c">暂无记录</td>
+					                        </tr>
+				                    	</tfoot>
+									{/if}
 		                            
-		                            </tbody>
+		                           
+									
 		                            
 		                          </table>
 		                    </div>

@@ -62,7 +62,7 @@
 		{if $v['is_top']==1}<font color="red">[{$_lang['recommend']}]</font>{/if}
 	</td>
     <td>{$shop_status[$v['status']]}</td>
-    <td><!--{eval echo Keke::get_gmdate($v['on_time'])}--></td>
+    <td><!--{eval echo Date::date_span($v['on_time'])}--></td>
     <td>{c:$v['price']}</td>
 	<td>{$v['sale_num']}</td>
     <td>$v['username']</td>

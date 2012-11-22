@@ -62,7 +62,7 @@
 		{if $v['is_top']==1}<font color="red">[{$_lang['recommend']}]</font>{/if}
 	</td>
     <td>{$task_status[$v['task_status']]}</td>
-    <td><!--{eval echo Keke::get_gmdate($v['start_time'])}--></td>
+    <td><!--{eval echo Date::date_span($v['start_time'])}--></td>
     <td>{c:$v['task_cash']}</td>
 	<td>{$v['work_num']}</td>
     <td>$v['username']</td>

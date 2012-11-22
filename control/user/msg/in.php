@@ -68,7 +68,13 @@ class Control_user_msg_in extends Control_user{
 	}
 	function action_del(){
 		if($_GET['msg_id']){
-			$this->del_msg_by_status($_GET['msg_id'], $_GET['status'], $_GET['is_sys']);
+			if($_GET['ac'] == 'view'){
+				$next_msg_id = $this->to_next_one($_GET['action'],$_GET['msg_id']);
+				$this->del_msg_by_status($_GET['msg_id'], $_GET['status'], $_GET['is_sys']);
+				$next_msg_id and Keke::show_msg('删除成功','user/msg_in/info?&from=in&msg_id='.$next_msg_id) or Keke::show_msg('删除成功','user/msg_in/'.$_GET['action']);
+			}else{
+				$this->del_msg_by_status($_GET['msg_id'], $_GET['status'], $_GET['is_sys']);
+			}
 		}elseif($_GET['ids']){
 			(array)$msg_arr = explode(',',$_GET['ids']);
 			foreach ($msg_arr as $v){
@@ -135,6 +141,24 @@ class Control_user_msg_in extends Control_user{
 			DB::update('witkey_msg')->set(array('view_status'))->value(array(1))->where("msg_id = $msg_id")->execute();
 		}
 	}
-	
+	function to_next_one($action,$msg_id){
+		
+		switch ($action){
+			case "index"://全部
+				$where =" msg_status<>1 and to_uid = ".$_SESSION['uid'];
+				break;
+			case "unread"://未读
+				$where =" view_status<>1 and msg_status<>1 and to_uid = ".$_SESSION['uid'];
+				break;
+			case "sys"://系统
+				$where =" to_uid = ".$_SESSION['uid']." and uid<1 and msg_status<>1 ";
+				break;
+			case "unsys"://非系统
+				$where =" to_uid = ".$_SESSION['uid']." and uid>1 and msg_status<>1 ";
+				break;
+		}
+		$where .= ' and msg_id < '.$msg_id;
+		return $res = DB::select('msg_id')->from('witkey_msg')->where($where)->get_count()->execute();
+	}
 	
 }

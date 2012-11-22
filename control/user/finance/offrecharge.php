@@ -16,10 +16,10 @@ class Control_user_finance_offrecharge extends Control_user{
      * 
      * @var 二级菜单选中项,空值不做选择
      */
-	protected static $_left = 'offrecharge';
+	protected static $_left = 'recharge';
 	
 	function action_index(){
-		$fields = '`pay_id`,`payment`,`type`,`config`,`pay_name`,`status`';
+		$fields = '`pay_id`,`payment`,`type`,`pay_user`,`pay_name`,`pay_account`,`pay_tel`,`status`';
 		
 		$base_uri = BASE_URL.'/index.php/finance/offrecharge';
 		$del_uri = $base_uri.'/del';
@@ -39,11 +39,7 @@ class Control_user_finance_offrecharge extends Control_user{
 		
 		require Keke_tpl::template('user/finance/offrecharge');
 	}
-	function get_bank_pic(){
-		$bank_pic = array(
-				
-				);
-	}
+
 	function get_ten_bank_type(){
 		static $bank = array(
 				"1001"=>"17",

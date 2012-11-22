@@ -71,7 +71,7 @@ class Control_user_msg_in extends Control_user{
 			if($_GET['ac'] == 'view'){
 				$next_msg_id = $this->to_next_one($_GET['action'],$_GET['msg_id']);
 				$this->del_msg_by_status($_GET['msg_id'], $_GET['status'], $_GET['is_sys']);
-				$next_msg_id and Keke::show_msg('删除成功','user/msg_in/info?&from=in&msg_id='.$next_msg_id) or Keke::show_msg('删除成功','user/msg_in/'.$_GET['action']);
+				$next_msg_id and Keke::show_msg('删除成功','user/msg_in/info?&from=in&msg_id='.$next_msg_id) or Keke::show_msg('删除成功','user/msg_in/'.$_GET['action'] );
 			}else{
 				$this->del_msg_by_status($_GET['msg_id'], $_GET['status'], $_GET['is_sys']);
 			}

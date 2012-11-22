@@ -3,7 +3,7 @@
 
 /**
  * this not free,powered by keke-tech
- * @version 2.0
+ * @version 2.2
  * @auther xujie
  * 
  */

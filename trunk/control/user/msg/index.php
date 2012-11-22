@@ -28,7 +28,7 @@ class Control_user_msg_index extends Control_user{
        $where = "username = '$username'";
        (int)$res = DB::select('uid')->from('witkey_member')->where($where)->get_count()->execute();
        if($res > 0){
-       	  echo  $res;
+       	  echo  true;
        }else{
        	  echo 'user_not_exists';
        }

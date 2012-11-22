@@ -16,7 +16,9 @@ textarea:focus,
 input:focus{ border-color:#06c; box-shadow:0 0 5px rgba(102, 153, 204,.5);}
 
 button[type=button],
-input[type=button]{ border: 1px solid #ccc; background: #eee; font-size: 12px; height: 25px; padding: 5px; position: relative; z-index: 1;}
+input[type=button],
+button[type=reset],
+input[type=reset]{ border: 1px solid #ccc; background: #eee; font-size: 12px; height: 25px; padding: 5px; position: relative; z-index: 1;}
 
 button[type=submit],
 input[type=submit]{border: 1px solid #ccc; background: #fff; font-size: 12px; font-weight: bold; height: 25px; padding: 5px;  position: relative; z-index: 1;
@@ -32,7 +34,9 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffffff,endCo
 button[type=submit]:active,
 input[type=submit]:active,
 button[type=button]:active,
-input[type=button]:active{left:1px; top:1px; box-shadow: inset 1px 1px 2px rgba(0,0,0,.2);}
+input[type=button]:active,
+button[type=reset]:active,
+input[type=reset]:active{left:1px; top:1px; box-shadow: inset 1px 1px 2px rgba(0,0,0,.2);}
 
 .skin a.show_hide:link { background:#2b5792;  background:rgba(43, 86, 145,.9); color:#fff; box-shadow:inset 0 0 3px rgba(0,0,0,.5);}
 .skin a.show_hide:hover{ background:#fff;  background:rgba(255, 255, 255,.8);color:#000;box-shadow:0 0 5px rgba(0,0,0,.8);text-shadow:1px 1px 1px rgba(255,255,255,.8);  }

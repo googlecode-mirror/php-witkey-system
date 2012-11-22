@@ -272,8 +272,8 @@ class Keke extends Keke_core {
 		if(Keke::$_safe_mode===TRUE){
 			ini_set('safe_mode', 'Off');
 		}
-		if(Keke::$_magic_quote===TRUE){
-			ini_set('magic_quotes_gpc','Off');
+		if((bool)get_magic_quotes_runtime()===TRUE){
+			ini_set('magic_quotes_runtime','Off');
 		}
 		//处理全局变量
 		$_GET = Keke::k_stripslashes($_GET);

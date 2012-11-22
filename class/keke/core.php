@@ -273,6 +273,7 @@ class Keke extends Keke_core {
 		if((bool)get_magic_quotes_runtime()===TRUE){
 			ini_set('magic_quotes_runtime','Off');
 		}
+		
 		//处理全局变量
 		$_GET = Keke::k_stripslashes($_GET);
 		$_POST = Keke::k_stripslashes($_POST);

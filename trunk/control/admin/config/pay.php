@@ -93,7 +93,10 @@ class Control_admin_config_pay extends Control_admin{
 		$array = array('pay_name'=>$_POST['pay_name'],
 						'payment'=>$_POST['payment'],
 						'status'=>$_POST['status'],
-						'config'=>serialize($_POST['fds']));
+						'pay_user'=>$_POST['pay_user'],
+						'pay_tel'=>$_POST['pay_phone'],
+						'pay_account'=>$_POST['pay_account'],
+						'type'=>'offline');
 		if($_POST['hdn_pay_id']){
 			$where = "pay_id = '{$_POST['hdn_pay_id']}'";
 			Model::factory('witkey_pay_api')->setData($array)->setWhere($where)->update();
@@ -150,10 +153,7 @@ class Control_admin_config_pay extends Control_admin{
 		//执行查询
 		$payment_config = DB::select()->from('witkey_pay_api')->where($where)->execute();
 		$payment_config = $payment_config[0];
-		//反序列化
-		$pay_config =  unserialize($payment_config['config']);
-		//序列化数组合并
-		return $payment_config += $pay_config;
+		return $payment_config;
 	}
 	/**
 	 * 在线接口的配置保存

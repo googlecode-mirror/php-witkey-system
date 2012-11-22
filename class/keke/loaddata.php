@@ -47,7 +47,7 @@ class Keke_loaddata {
 			$temp_arr = array ();
 			if (is_array ( $feed_arr )) {
 				foreach ( $feed_arr as $v ) {
-					$v ['on_time'] = Keke::get_gmdate ( $v ['feed_time'] );
+					$v ['on_time'] = Date::date_span( $v ['feed_time'] );
 					$temp_arr [] = $v;
 				}
 			}

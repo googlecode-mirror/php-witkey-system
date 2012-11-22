@@ -64,9 +64,9 @@
 		                              <td><input type="checkbox" name="ckb[]" value="$v['msg_id']|$v['msg_status']|$v['uid']"></td>
 		                              <td>{$v['to_username']}</td>
 		                              <td>
-		                              	<a href="{BASE_URL}/index.php/user/msg_in/info?msg_id={$v['msg_id']}&from=out" class="title">{$v['title']}</a>
+		                              	<a href="{BASE_URL}/index.php/user/msg_in/info?from=out&msg_id={$v['msg_id']}" class="title">{$v['title']}</a>
 		                              	<div class="item_action">
-		                              		<a href="{BASE_URL}/index.php/user/msg_in/info?msg_id={$v['msg_id']}&from=out">查看</a>
+		                              		<a href="{BASE_URL}/index.php/user/msg_in/info?from=out&msg_id={$v['msg_id']}">查看</a>
 		                              		<a href="{$del_uri}?msg_id={$v['msg_id']}&status={$v['msg_status']}&is_sys={$v['uid']}" onclick="return kdel(this);">删除</a>
 		                              	</div>
 		                              </td>

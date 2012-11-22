@@ -40,7 +40,15 @@ class Control_user_msg_out extends Control_user{
  
 	function action_del(){
 		if($_GET['msg_id']){
-			$this->del_msg_by_status($_GET['msg_id'], $_GET['status'], $_GET['is_sys']);
+			//删除命令是否来于查看页面
+			if($_GET['ac'] == 'view'){
+				$next_msg_id = $this->to_next_one($_GET['msg_id']);
+				$this->del_msg_by_status($_GET['msg_id'], $_GET['status'], $_GET['is_sys']);
+				$next_msg_id and Keke::show_msg('删除成功','user/msg_in/info?&from=out&msg_id='.$next_msg_id) or Keke::show_msg('删除成功','user/msg_out');
+			}else{
+				$this->del_msg_by_status($_GET['msg_id'], $_GET['status'], $_GET['is_sys']);
+			}
+			
 		}elseif($_GET['ids']){
 			(array)$msg_arr = explode(',',$_GET['ids']);
 			foreach ($msg_arr as $v){
@@ -62,5 +70,8 @@ class Control_user_msg_out extends Control_user{
 		}else{
 			return DB::delete('witkey_msg')->where("msg_id = '$msg_id'")->execute();
 		}
+	}
+	function to_next_one($msg_id){
+		return $res = DB::select('msg_id')->from('witkey_msg')->where(' msg_status<>2 and msg_id <'.$msg_id.' and uid='.$_SESSION['uid'])->get_count()->execute();
 	}
 }

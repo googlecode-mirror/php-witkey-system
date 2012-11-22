@@ -19,25 +19,28 @@
 								</ul>
 		                </nav>
 		                <div class="box_detail">
+		                <form action="{BASE_URL}/index.php/user/finance_offrecharge/save" method="post" enctype="multipart/form-data">
 
 		                	<!--线下充值-->
 		                	<div class="form_row ">
 	                		<table cellspacing="0" border="0" cellpadding="0" width="100%" height="300" >
 	                			<tr>
 	                				<!--{eval $i=0;}-->
-	                				{loop $data_list $v}
+	                				<!--{loop $data_list $v}-->
 									 <!--{eval $i++;}-->
 	                				<td>
 		                				<dl>
-				                			<dt><input type="radio" name="offline_recharge" id="{$v['payment']}" {if $v['payment']=='icbc'}checked="checked"{/if}>
+				                			<dt>
+				                			<input type="hidden" name="formhash" value="{FORMHASH}">
+					                			<input type="radio" name="pay_id" value="{$v['pay_id']}" id="{$v['payment']}" {if $v['payment']=='icbc'}checked="checked"{/if}>
 												<label for="{$v['payment']}" style="cursor:pointer;">
 													<img src="{BASE_URL}/static/img/system/kppw_2.0_{$v['payment']}.png"/>
 												</label>
 											</dt>
-				                			<dd><!--{eval  $config = unserialize($v['config']);//var_dump($config);}-->
-				                				<p>开户行：{$config['pay_name']}</p>
-												<p>选择支付账户：{$config['pay_account']}</p>
-												<p>户   名：{$config['pay_user']}</p>
+				                			<dd>
+				                				<p>开户行：{$v['pay_name']}</p>
+												<p>选择支付账户：{$v['pay_account']}</p>
+												<p>户   名：{$v['pay_user']}</p>
 				                			</dd>
 				                		</dl>
 	                				</td>
@@ -47,7 +50,7 @@
 										<!--{eval continue;}-->
 									</tr>
 									{/if}
-									{/loop}
+									<!--{/loop}-->
 							</tr>
 	                			
 	                		</table>
@@ -58,12 +61,13 @@
 
 		                	<div class="form_row">
 		                		<label class="form_label">充值凭证：</label>
-		                		<input type="file">
+		                		<input type="file" name="cert_pic" ext='.gif,.jpg,.png' onchange="isExtName(this);" id="cert_pic"/>
 		                	</div>
 
 		                	<div class="form_row">
 		                		<label class="form_label">充值金额：</label>
-		                		<input type="text" value="" placeholder="请输入充值金额" ><span class="right_tip">元</span>
+		                		<input type="text" value="" name="recharge_cash" placeholder="请输入充值金额" ><span class="right_tip">元</span>
+		                		
 		                	</div>
 
 		                	<div class="form_line"></div>
@@ -72,6 +76,7 @@
 		                			
 		                			<input type="submit" value="提交">
 		                	</div>
+		                	</form>
 
 		                </div>
 		            </div>
@@ -80,4 +85,9 @@
     	</article>
     </div>
     <!--content end-->
+    
+<script type="text/javascript" src="{BASE_URL}/static/js/system/ajaxfileupload.js"></script>
+<script type="text/javascript">
+	In('valid');
+</script>
 <!--{include user/footer}-->

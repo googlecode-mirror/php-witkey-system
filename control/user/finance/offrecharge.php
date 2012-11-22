@@ -39,29 +39,25 @@ class Control_user_finance_offrecharge extends Control_user{
 		
 		require Keke_tpl::template('user/finance/offrecharge');
 	}
-
-	function get_ten_bank_type(){
-		static $bank = array(
-				"1001"=>"17",
-				"1002"=>"10",
-				"1003"=>"2",
-				"1004"=>"9",
-				"1005"=>"1",
-				"1006"=>"4",
-				"1008"=>"8",
-				"1009"=>"27",
-				"1010"=>"18",
-				"1020"=>"5",
-				"1021"=>"7",
-				"1022"=>"3",
-				"1024"=>"20",
-				"1025"=>"22",
-				"1027"=>"6",
-				"1032"=>"11",
-				"1033"=>"14",
-				"1052"=>"19",
-				"8001"=>"logo",
-		);
-		return $bank;
+	function action_save(){
+		Keke::formcheck($_POST['formhash']);
+		$_POST = Keke_tpl::chars($_POST);//·Àsql×¢Èë
+		$cert_pic = keke_file_class::upload_file('cert_pic');
+		$array = array(
+				'type'=>'offline',	
+				'bank'=>$_POST['recharge_bank'],
+				'uid'=>$_SESSION['uid'],
+				'username'=>$_SESSION['username'],
+				'pay_id'=>$_POST['pay_id'],
+				'cash'=>$_POST['recharge_cash'],
+				'status'=>'wait',
+				'recharge_pic'=>$cert_pic,
+				'pay_time'=>time(),
+				);
+				
+		Model::factory('witkey_recharge')->setData($array)->create();
+		$this->request->redirect('user/finance_recharges');
+		
 	}
+
 }

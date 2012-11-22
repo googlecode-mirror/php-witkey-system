@@ -55,9 +55,19 @@ class Control_user_msg_in extends Control_user{
 	}
 	function action_info(){
 		$from = $_GET['from'];//用来判断是收件(in)还是发件(out)
+		if(empty($_GET['msg_id'])){
+			$this->request->redirect('user/msg_in');
+		}
+		
+		
 		$date_arr = DB::select()->from('witkey_msg')->where('msg_id = '.$_GET['msg_id'])->get_one()->execute();
+		
+		$del_url = BASE_URL.'/index.php/user/msg_'.$from.'/del?msg_id='.$_GET['msg_id'].'&action='.$_GET['action'];
+		$del_url .= '&status='.$date_arr['msg_status'].'&is_sys='.$date_arr['uid'].'&ac=view';
+		
 		if($_GET['msg_id']&& $date_arr['view_status']<1&&$from!='out'){
-			 $this->change_view_status($_GET['msg_id']);
+			
+			$this->change_view_status($_GET['msg_id']);
 		}
 		require Keke_tpl::template('user/msg/info');
 	}
@@ -70,12 +80,14 @@ class Control_user_msg_in extends Control_user{
 	
 	function action_del(){
 		if($_GET['msg_id']){
+			//删除命令是否来于查看页面
 			if($_GET['ac'] == 'view'){
+				//返回下一条id
 				$next_msg_id = $this->to_next_one($_GET['action'],$_GET['msg_id']);
 				$this->del_msg_by_status($_GET['msg_id'], $_GET['status'], $_GET['is_sys']);
 				//跳到下一条
 				if($next_msg_id){
-					$uri = 'user/msg_in/info?&from=in&msg_id='.$next_msg_id.'&action='.$_GET['action'];
+					$uri = 'user/msg_in/info?msg_id='.$next_msg_id.'&from=in&action='.$_GET['action'];
 				}else{
 					$uri = 'user/msg_in/'.$_GET['action'];
 				}
@@ -153,21 +165,21 @@ class Control_user_msg_in extends Control_user{
 		
 		switch ($action){
 			case "index"://全部
-				$where =" msg_status<>1 and to_uid = ".$_SESSION['uid'];
+				$where =" msg_status!=1 and to_uid = ".$_SESSION['uid'];
 				break;
 			case "unread"://未读
-				$where =" view_status<>1 and msg_status<>1 and to_uid = ".$_SESSION['uid'];
+				$where =" view_status!=1 and msg_status!=1 and to_uid = ".$_SESSION['uid'];
 				break;
 			case "sys"://系统
-				$where =" to_uid = ".$_SESSION['uid']." and uid<1 and msg_status<>1 ";
+				$where =" to_uid = {$_SESSION['uid']} and uid<1 and msg_status!=1 ";
 				break;
 			case "unsys"://非系统
-				$where =" to_uid = ".$_SESSION['uid']." and uid>1 and msg_status<>1 ";
+				$where =" to_uid = {$_SESSION['uid']} and uid>1 and msg_status!=1 ";
 				break;
 		}
 		$where .= ' and msg_id < '.$msg_id;
-		return $res = DB::select('msg_id')->from('witkey_msg')
-		->where($where)->limit(0, 1)
+		return DB::select('msg_id')->from('witkey_msg')
+		->where($where)->order('msg_id desc')->limit(0, 1)
 		->get_count()->execute();
 	}
 	

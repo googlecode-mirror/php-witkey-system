@@ -44,8 +44,8 @@ class Control_user_finance_offrecharge extends Control_user{
 		$_POST = Keke_tpl::chars($_POST);//·Àsql×¢Èë
 		$cert_pic = keke_file_class::upload_file('cert_pic');
 		$array = array(
-				'type'=>'offline',	
-				'bank'=>$_POST['recharge_bank'],
+				//'type'=>'offline',	
+				//'bank'=>$_POST['recharge_bank'],
 				'uid'=>$_SESSION['uid'],
 				'username'=>$_SESSION['username'],
 				'pay_id'=>$_POST['pay_id'],

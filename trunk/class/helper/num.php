@@ -93,6 +93,4 @@ class Num {
 		 return round ( $size, 2 ) . ' ' . $units [$power];
 	}
 	
-	
-	
 }

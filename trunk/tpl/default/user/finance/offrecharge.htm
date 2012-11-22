@@ -24,81 +24,32 @@
 		                	<div class="form_row ">
 	                		<table cellspacing="0" border="0" cellpadding="0" width="100%" height="300" >
 	                			<tr>
+	                				<!--{eval $i=0;}-->
+	                				{loop $data_list $v}
+									 <!--{eval $i++;}-->
 	                				<td>
-	                					<dl>
-			                			<dt><input type="radio" name="bank_type" id="101" checked="checked">
-											<label for="101" style="cursor:pointer;"><img src="{BASE_URL}/static/img/bank/10.gif"/></label>
-										</dt>
-			                			<dd>
-			                				<p>开户行：武汉市中国工商银行</p>
-											<p>选择支付账户：454545454545454545</p>
-											<p>户   名：阿乐</p>
-			                			</dd>
-			                		</dl>
-	                				</td>
-	                				<td>
-	                					<dl>
-				                			<dt><input type="radio" name="bank_type" id="102">
-												<label for="102" style="cursor:pointer;"><img src="{BASE_URL}/static/img/bank/1.gif"/></label>
+		                				<dl>
+				                			<dt><input type="radio" name="offline_recharge" id="{$v['payment']}" {if $v['payment']=='icbc'}checked="checked"{/if}>
+												<label for="{$v['payment']}" style="cursor:pointer;">
+													<img src="{BASE_URL}/static/img/system/kppw_2.0_{$v['payment']}.png"/>
+												</label>
 											</dt>
-				                			<dd>
-				                				<p>开户行：中国农业银行 </p>
-												<p>选择支付账户：284248736584356847</p>
-												<p>户   名：张三</p>
+				                			<dd><!--{eval  $config = unserialize($v['config']);//var_dump($config);}-->
+				                				<p>开户行：{$config['pay_name']}</p>
+												<p>选择支付账户：{$config['pay_account']}</p>
+												<p>户   名：{$config['pay_user']}</p>
 				                			</dd>
 				                		</dl>
 	                				</td>
-	                				<td>
-	                					<dl>
-				                			<dt><input type="radio" name="bank_type" id="103">
-												<label for="103" style="cursor:pointer;"><img src="{BASE_URL}/static/img/bank/17.gif"/></label>
-											</dt>
-				                			<dd>
-				                				<p>开户行：中国招商银行  </p>
-												<p>选择支付账户：2842487365843568423</p>
-												<p>户   名：李四</p>
-				                			</dd>
-				                		</dl>
-	                				</td>
-	                			</tr>
-	                			<tr>
-	                				<td>
-	                					<dl>
-				                			<dt><input type="radio" name="bank_type" id="104">
-												<label for="104" style="cursor:pointer;"><img src="{BASE_URL}/static/img/bank/14.gif"/></label>
-											</dt>
-				                			<dd>
-				                				<p>开户行：武汉市中国工商银行</p>
-												<p>选择支付账户：454545454545454545</p>
-												<p>户   名：阿乐</p>
-				                			</dd>
-				                		</dl>
-	                				</td>
-	                				<td>
-	                					<dl>
-				                			<dt><input type="radio" name="bank_type" id="105">
-												<label for="105" style="cursor:pointer;"><img src="{BASE_URL}/static/img/bank/5.gif"/></label>
-											</dt>
-				                			<dd>
-				                				<p>开户行：中国农业银行 </p>
-												<p>选择支付账户：284248736584356847</p>
-												<p>户   名：张三</p>
-				                			</dd>
-				                		</dl>
-	                				</td>
-	                				<td>
-	                					<dl>
-				                			<dt><input type="radio" name="bank_type" id="106">
-												<label for="106" style="cursor:pointer;"><img src="{BASE_URL}/static/img/bank/16.gif"/></label>
-											</dt>
-				                			<dd>
-				                				<p>开户行：中国招商银行  </p>
-												<p>选择支付账户：2842487365843568423</p>
-												<p>户   名：李四</p>
-				                			</dd>
-				                		</dl>
-	                				</td>
-	                			</tr>
+									
+									 {if $i%3==0}
+									<tr>
+										<!--{eval continue;}-->
+									</tr>
+									{/if}
+									{/loop}
+							</tr>
+	                			
 	                		</table>
 		                	</div>
 

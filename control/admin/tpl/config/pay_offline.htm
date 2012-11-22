@@ -23,12 +23,11 @@
           </tr>
 		  <!--{loop $payment_list $v}-->
 			
-			<!--{eval $pay_config=unserialize($v['config'])}-->
               <tr class="item">
                 <td>{$bank_arr[$v['payment']]}</td>
-                <td>$pay_config['pay_account']</td>
-                <td>$pay_config['pay_user']</td>
-				<td>$pay_config['pay_phone']</td>
+                <td>$v['pay_account']</td>
+                <td>$v['pay_user']</td>
+				<td>$v['pay_tel']</td>
                 <td class="td25">{if $v['status']}{$_lang['open']}{else}{$_lang['close']}{/if}</td>
                 <td> 
                 {if $v['status']}

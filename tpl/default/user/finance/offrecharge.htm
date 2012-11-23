@@ -19,7 +19,7 @@
 								</ul>
 		                </nav>
 		                <div class="box_detail">
-		                <form action="{BASE_URL}/index.php/user/finance_offrecharge/save" method="post" enctype="multipart/form-data">
+		                <form action="{BASE_URL}/index.php/user/finance_offrecharge/save" name="offrecharge_frm" id="offrecharge_frm" method="post" enctype="multipart/form-data">
 
 		                	<!--线下充值-->
 		                	<div class="form_row ">
@@ -61,20 +61,26 @@
 
 		                	<div class="form_row">
 		                		<label class="form_label">充值凭证：</label>
-		                		<input type="file" name="cert_pic" ext='.gif,.jpg,.png' onchange="isExtName(this);" id="cert_pic"/>
+		                		<input type="file" name="cert_pic" ext='.gif,.jpg,.png' onchange="isExtName(this);" id="cert_pic"
+								limit="required:true" msg="充值凭证" msgArea="span_cert_pic"
+								/>
+								<span id="span_cert_pic"></span>
 		                	</div>
 
 		                	<div class="form_row">
 		                		<label class="form_label">充值金额：</label>
-		                		<input type="text" value="" name="recharge_cash" placeholder="请输入充值金额" ><span class="right_tip">元</span>
-		                		
+		                		<input type="text" value="" name="recharge_cash" id="recharge_cash" placeholder="请输入充值金额" 
+									limit="required:true;type:float;between:0.01-100000" 
+									msg="充值金额最少为0.01元" 
+									msgArea="span_recharge_cash"
+								><span class="right_tip">元</span>
+		                		<span id="span_recharge_cash"></span>
 		                	</div>
 
 		                	<div class="form_line"></div>
 
 		                	<div class="form_footer">
-		                			
-		                			<input type="submit" value="提交">
+		                			<input type="submit" value="提交" onclick="return step_submit();">
 		                	</div>
 		                	</form>
 
@@ -89,5 +95,12 @@
 <script type="text/javascript" src="{BASE_URL}/static/js/system/ajaxfileupload.js"></script>
 <script type="text/javascript">
 	In('valid');
+	function step_submit(){
+
+		if(checkForm(document.getElementById('offrecharge_frm'))){
+			return true;
+		}
+		return false;
+	}
 </script>
 <!--{include user/footer}-->

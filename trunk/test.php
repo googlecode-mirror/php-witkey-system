@@ -2,8 +2,8 @@
 
 include 'app_boot.php';
 
+phpinfo();
 
-$js = Keke::execute_time();
 
 var_dump($js);
 

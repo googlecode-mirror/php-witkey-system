@@ -303,7 +303,7 @@
 			<!--{eval $v['file_name_ext']=urlencode($v['file_name']);}-->
 	          <li>
 	             <a id="ddd" target="_blank" href="index.php?do=ajax&view=file&ajax=download&file_name={$v['file_name_ext']}&file_path={$v['save_name']}#file" >
-	             	{$v['file_name']}<span class="c999">£¨<!--{eval echo is_file($v['save_name'])?kekezu::get_format_size(filesize($v[save_name])):''}-->£©</span><span class="icon16 download"></span></a>
+	             	{$v['file_name']}<span class="c999">£¨<!--{eval echo is_file($v['save_name'])?kekezu::bytes_to_size(filesize($v[save_name])):''}-->£©</span><span class="icon16 download"></span></a>
 	          </li>
 			{/loop}
 			

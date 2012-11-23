@@ -2,7 +2,9 @@
 
 include 'app_boot.php';
 
-
+if (version_compare(PHP_VERSION, '5.4.0') <= 0) {
+	echo 'I am at least PHP version 5.3.0, my version: ' . PHP_VERSION . "\n";
+}
 
 
 // error_reporting(E_ALL);

@@ -154,7 +154,42 @@ class Keke_global {
 		 'boc'=>$_lang['boc'],
 		 );
 	} 
-
+	/**
+	 * 银行简称
+	 * @return multitype:string
+	 */
+	public static function bank_abb(){
+		global $_lang;
+		return array(
+				'1'=>'aboc',//农行
+				'2'=>'ccb',//建行
+				'3'=>'ceb',//光大银行
+				'4'=>'cmbc',//民生银行
+				'5'=>'bocm',//交行
+				'6'=>'gdb',//广发
+				'7'=>'ccb',//中信
+				'8'=>'sdb',//深圳发展银行
+				'9'=>'spdb',//上海浦东发展	
+				'10'=>'icbc',//工行
+				'11'=>'bob',//北京银行
+				'12'=>'cib',//兴业银行
+				'13'=>'gyl',//广银联
+				'14'=>'udpay',//网汇通
+				'15'=>'icbcq',//工商银行企业	
+				'16'=>'boc',//中国银行
+				'17'=>'cmb',//招商银行
+				'18'=>'pa',//平安银行
+				'19'=>'boc',//中国银行
+				'20'=>'bos',//上海银行
+				'21'=>'nbcb',//宁波银行
+				'22'=>'hx',//华夏银行
+				'23'=>'hkb',//汉口银行
+				'24'=>'njcb',//南京银行
+				'25'=>'jsb',//江苏银行
+				'26'=>'hzb',//杭州银行
+				);
+	}
+	
 	public static function get_payment_config($paymentname = "", $pay_type = 'online', $pay_status = null) {
 		if ($paymentname) {
 			if ($pay_type != 'offline') {

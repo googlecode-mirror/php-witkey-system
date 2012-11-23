@@ -64,10 +64,7 @@ abstract class Keke_Controller {
 	 */
 	public function before()
 	{
-		// global $_K;
-		// $this->_K = $_K;
-		 //$this->_url = BASE_URL.'/'.$this->request->url();
-		// Nothing by default
+		 
 	}
 
 	/**

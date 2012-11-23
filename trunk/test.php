@@ -1,11 +1,9 @@
 <?php define ( "IN_KEKE", TRUE );
 
 include 'app_boot.php';
-
-phpinfo();
-
-
-var_dump($js);
+echo Num::bytes_to_size('330896');
+// Keke::execute_time()
+var_dump(Num::bytes_to_size(memory_get_usage()));
 
 // error_reporting(E_ALL);
 

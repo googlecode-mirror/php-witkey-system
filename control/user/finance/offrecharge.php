@@ -59,5 +59,5 @@ class Control_user_finance_offrecharge extends Control_user{
 		$this->request->redirect('user/finance_recharges');
 		
 	}
-
+	
 }

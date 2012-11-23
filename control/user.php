@@ -78,8 +78,8 @@ abstract  class Control_user extends Controller{
     		'steer'=>array('½¨Òé','custom_steer'),
     );
     
-    function before(){
-    	parent::before();
+    function __construct($request,$response){
+    	parent::__construct($request, $response);
     	//Keke_user_login::instance()->auto_login();
     	if(Keke_user_login::instance()->logged_in()===FALSE){
     		Cookie::set('last_page', $this->request->uri());

@@ -11,8 +11,8 @@
 include 'base.php';
 class Keke_core extends Keke_base {
 	protected  static $_core_class = array ();
-	protected static $_caching = FALSE;
-	protected static $_files_changed = false;
+	protected static $_caching = TRUE;
+	protected static $_files_changed = TRUE;
 	
 	/**
 	 * 用于页面跳转提示
@@ -158,9 +158,9 @@ class Keke_core extends Keke_base {
 	 * 异常监听
 	 */
 	static function shutdown_handler() {
-		//if(!Keke::$_inited){
-		//	return ;
-		//}
+		if(!Keke::$_inited){
+			return ;
+		}
 		if (self::$_caching === TRUE AND self::$_files_changed === TRUE){
 			Keke::cache('loader_class', self::$_core_class);
 		}

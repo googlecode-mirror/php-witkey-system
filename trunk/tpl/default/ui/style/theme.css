@@ -482,18 +482,6 @@ table {
   width: 14%;
 }
 /**/
-.op_05 {
-  filter: alpha(opacity=50);
-  -moz-opacity: 0.5;
-  -khtml-opacity: 0.5;
-  opacity: 0.5;
-}
-.op_03 {
-  filter: alpha(opacity=30);
-  -moz-opacity: 0.3;
-  -khtml-opacity: 0.3;
-  opacity: 0.3;
-}
 /*arrow*/
 .arrow_b {
   border: 4px solid #f90;
@@ -1320,8 +1308,6 @@ button[type="submit"]{
 }
 .nav li ul {
   position: absolute;
-  display: none !important;
-  visibility: hidden;
   display: none !important;
   visibility: hidden;
 }

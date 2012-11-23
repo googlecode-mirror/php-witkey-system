@@ -158,7 +158,7 @@ class Keke_global {
 	 * 银行简称
 	 * @return multitype:string
 	 */
-	public static function bank_abb(){
+	public static function get_bank_abb(){
 		global $_lang;
 		return array(
 				'1'=>'aboc',//农行

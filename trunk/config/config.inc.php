@@ -9,6 +9,7 @@ define ( 'CHARSET', 'gbk' );
 define ( 'DBTYPE', 'mysql' );
 define ( 'TABLEPRE', 'keke_');
 define ( 'ENCODE_KEY', 'keke' );
+define ( 'GZIP', TRUE );
 define ( "IS_REWRITE", 0 );
 define ( 'IMGDIR', 'resource/img/' );
 define ( 'KEKE_DEBUG', 1 );

@@ -7,9 +7,11 @@
 <script type="text/javascript">
 var tips = window.parent.document.getElementById('del_tips');
 function clear_tips(){
-	setInterval(function(){
+	var s = setInterval(function(){
 		$(tips).children().html('').removeClass('tips_info');
-	},20000);
+		clearInterval(s);
+	},1000);
+	
 }
 function cdel(o,s){
 	d = art.dialog;
@@ -23,7 +25,7 @@ function cdel(o,s){
 			url:o.href,
 			dataType:'text',
 			beforeSend:function(){
-	 	        $(tips).children().html('删除中... 已经删除成功!').addClass('tips_info'); 
+	 	        $(tips).children().html('删除中... ').addClass('tips_info'); 
 			},
 			success: function(data){
 			   if(data >=0){
@@ -31,7 +33,7 @@ function cdel(o,s){
 				}
 			},
 			complete:function(){
-				//$(tips).children().html('').removeClass('tips_info');
+				$(tips).children().html('提交成功!');
 				clear_tips();
 			}
 			
@@ -96,13 +98,14 @@ function batch_act(obj){
 				url:url,
 			dataType:'text',
 			beforeSend:function(){
-	 	        $(tips).children().html('删除中... 已经删除成功!').addClass('tips_info'); 
+	 	        $(tips).children().html('删除中...').addClass('tips_info'); 
 			},
 			success: function(data){
 				location.href= location.href;
 
 			},
 			complete:function(){
+				$(tips).children().html('提交成功!');
 				clear_tips();
 			}
 			});

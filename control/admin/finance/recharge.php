@@ -12,7 +12,7 @@ class Control_admin_finance_recharge extends Control_admin {
 		// 定义全局变量与语言包，只要加载模板，这个是必须要定义.操
 		global $_K, $_lang;
 		// 要显示的字段,即SQl中SELECT要用到的字段
-		$fields = ' `rid`,`type`,`bank`,`username`,`cash`,`pay_time`,`status`,`mem` ';
+		$fields = ' `rid`,`pay_id`,`recharge_pic`,`username`,`cash`,`pay_time`,`status`,`mem` ';
 		// 要查询的字段,在模板中显示用的
 		$query_fields = array ('rid' => $_lang ['id'], 'username' => $_lang ['username'], 'bank' => '银行' );
 		// 总记录数,分页用的，你不定义，数据库就是多查一次的。为了少个Sql语句，你必须要写的，亲!

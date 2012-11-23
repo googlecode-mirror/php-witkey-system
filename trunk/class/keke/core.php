@@ -122,7 +122,7 @@ class Keke_core extends Keke_base {
 		$stime = explode ( ' ', SYS_START_TIME );
 		$etime = explode ( ' ', microtime ( 1 ) );
 		$ex_time = ($etime [0] - $stime[0]);
-		$memory = sprintf ( ' memory usage: %s', self::get_format_size ( memory_get_usage() ) );
+		$memory = sprintf ( ' memory usage: %s', Num::bytes_to_size ( memory_get_usage() ) );
 		return array (	$ex_time,$memory);
 	}
 	

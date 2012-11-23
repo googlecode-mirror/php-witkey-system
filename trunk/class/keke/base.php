@@ -74,14 +74,14 @@ class Keke_base {
 		return $res;
 	}
 	
-	static function get_format_size($bytes) {
+	/* static function get_format_size($bytes) {
 	$units = array (0 => 'B',1 => 'kB',2 => 'MB',3 => 'GB'	);
 			$log = log ( $bytes, 1024 );
 			$power = ( int ) $log;
 			$size = pow ( 1024, $log - $power );
 			return round ( $size, 2 ) . ' ' . $units [$power];
 	
-	}
+	} */
 	/**
 	* 将很长的数字转换成 xx万
 	*

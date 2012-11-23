@@ -2,7 +2,7 @@
 <ul>
 	{loop $file_list $v2}
 		<li>
-			<a class="file_down" href="{$_K['siteurl']}/index.php?do=ajax&view=file&ajax=download&file_name={$v2['file_name']}&file_path={$v2['save_name']}#file" temp="$v2['save_name']">{$v2['file_name']}<span class="c999">£¨{if is_file($v2['save_name'])}<!--{eval echo kekezu::get_format_size(filesize($v2['save_name']))}-->{else}file_not_exists{/if}£©</span><span class="icon16 download"></span></a>
+			<a class="file_down" href="{$_K['siteurl']}/index.php?do=ajax&view=file&ajax=download&file_name={$v2['file_name']}&file_path={$v2['save_name']}#file" temp="$v2['save_name']">{$v2['file_name']}<span class="c999">£¨{if is_file($v2['save_name'])}<!--{eval echo kekezu::bytes_to_size(filesize($v2['save_name']))}-->{else}file_not_exists{/if}£©</span><span class="icon16 download"></span></a>
 		</li>
 	{/loop}
  </ul>
@@ -60,7 +60,7 @@
 	  	   {loop $file_list $v2}
 			<li>
 			  <!--{eval $name = substr($v2,strrpos($v2,'/')+1)}-->
-			  <a href="{$_K['siteurl']}/index.php?do=ajax&view=file&ajax=download&file_name={$name}&file_path={$v2}#file" temp="$v2">{$name}<span class="c999">£¨<!--{eval echo kekezu::get_format_size(filesize($v2))}-->£©</span><span class="icon16 download"></span></a>
+			  <a href="{$_K['siteurl']}/index.php?do=ajax&view=file&ajax=download&file_name={$name}&file_path={$v2}#file" temp="$v2">{$name}<span class="c999">£¨<!--{eval echo kekezu::bytes_to_size(filesize($v2))}-->£©</span><span class="icon16 download"></span></a>
 		   </li>
 	      {/loop}
    		 </ul>

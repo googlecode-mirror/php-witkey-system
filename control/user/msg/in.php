@@ -1,4 +1,4 @@
-		<?php  defined ( "IN_KEKE" ) or die ( "Access Denied" );
+<?php  defined ( "IN_KEKE" ) or die ( "Access Denied" );
 /**
  * 用户中心-信息-收件箱
  * @author Michael

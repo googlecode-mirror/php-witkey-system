@@ -1,4 +1,4 @@
-<?php  defined ( "IN_KEKE" ) or die ( "Access Denied" );
+	<?php  defined ( "IN_KEKE" ) or die ( "Access Denied" );
 /**
  * 用户中心-账号管理首页-用户充值
  * @author Michael
@@ -22,6 +22,8 @@ class Control_user_finance_recharge extends Control_user{
 		
 		
 		
+		//线上银行信息
+		$bank_abb = Keke_global::get_bank_abb();
 		require Keke_tpl::template('user/finance/recharge');
 	}
 }

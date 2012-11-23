@@ -22,9 +22,8 @@
                 <div class="grid_17">
                     <!--from±íµ¥ start-->
                     <div class="form_box clearfix border_n">
-                        <form action="{BASE_URL}/index.php/login/login" method="post" id="login_frm" name="login_frm">
+                        <form action="{BASE_URL}/index.php/login/login" method="post" id="login_frm" name="login_frm" enctype="application/x-www-form-urlencoded">
                             <input type="hidden" name="formhash" id="formhash" value="{FORMHASH}">
-							<input type="hidden" name="hdn_refer" id="hdn_refer" value="{$_K['refer']}">
 							<input type="hidden" name="handlekey" value="login_frm1"><!--ÕËºÅ-->
                             <div class="rowElem clearfix po_re">
                                 <label class="grid_4">
@@ -135,7 +134,7 @@
     //µÇÂ¼
     function user_login(){ 
         if (checkForm(document.getElementById("login_frm"), false)) {
-        	showWindow('login_frm1', 'login_frm', 'post',0,{cover:1},'hide()');
+        	showWindow('login_frm1', 'login_frm', 'post',0,{cover:1});
         }
         return false;
     }

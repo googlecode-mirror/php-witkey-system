@@ -1,9 +1,11 @@
 <!--{if $_K['inajax']==1}-->
-<h3 class="flb"><em>{$title}</em><span><a href="javascript:;" class="flbc" onClick="hideWindow('$r['handlekey']');" title="{$_lang['close']}">&#10005</a></span></h3>
+<h3 class="flb"><em>{$title}</em><span>
+<a href="javascript:;" class="flbc" onClick="hideWindow('$r['handlekey']');" title="{$_lang['close']}">&#10005</a></span>
+</h3>
    	<div class="c altw"><div class="{$type}"><p>$content</p></div></div>
 <p class="o pns">
 	{if $time>0}
-	<button class="submit" value="true" onclick="{if $url}window.location.href ='$url';return false;{else}hideWindow('$r['handlekey']');{/if}" id="fwin_dialog_submit">{$_lang['confirm']}</button>
+	<button class="submit" value="true" onclick="{if $url}window.location.href ='$url';{else}hideWindow('$r['handlekey']');{/if}" id="fwin_dialog_submit">{$_lang['confirm']}</button>
 	{else}
 	<button class="button" onclick="hideWindow('$r['handlekey']');" id="fwin_dialog_submit">{$_lang['jumping']}</button>
 	{/if}
@@ -15,7 +17,7 @@
 	    setTimeout(function(){
 			window.location.href=u;
 		},t);		 
-	}
+	} 
 </script>
 <!--{else}-->
 <!DOCTYPE html>

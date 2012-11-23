@@ -12,7 +12,7 @@ include 'base.php';
 class Keke_core extends Keke_base {
 	protected  static $_core_class = array ();
 	protected static $_caching = TRUE;
-	protected static $_files_changed = TRUE;
+	protected static $_files_changed = FALSE;
 	
 	/**
 	 * 用于页面跳转提示

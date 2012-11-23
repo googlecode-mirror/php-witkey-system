@@ -2,7 +2,13 @@
 <script type="text/javascript" defer="defer" src="{BASE_URL}/static/js/artdialog/artDialog.js"></script>
 <script type="text/javascript" defer="defer" src="{BASE_URL}/static/js/artdialog/plugins/iframeTools.js"></script> 
 <script type="text/javascript">
- 
+var tips = window.document.getElementById('ajax_tips');
+function clear_tips(){
+	var s = setInterval(function(){
+		$(tips).children().html('').removeClass('tips_info');
+		clearInterval(s);
+	},1000);
+} 
 //排序 
 function submitSort(uri,f,ord){
 	uri += (uri.indexOf('?')==-1)?"?":"&";
@@ -20,14 +26,24 @@ function kdel(o,s){
 		c=s;
 	}
 	d.confirm(c, function(){
-		$.get(o.href,function(){
-			location.href = location.href;
-		})
+		$.ajax({
+			url:o.href,
+			dataType:'text',
+			beforeSend:function(){
+	 	        $(tips).children().html('删除中...').addClass('tips_info'); 
+			},
+			success: function(data){
+				location.href= location.href;
+			},
+			complete:function(){
+				$(tips).children().html('提交成功!')
+				 clear_tips();
+			}
+			
+		});
 	}).follow(o);
 	return false;
 }
-
-var tips = window.document.getElementById('ajax_tips');
 //删除多条
 function batch_del(obj){
 	d = art.dialog;
@@ -42,20 +58,18 @@ function batch_del(obj){
 			})
 			var val = str.join(',');
 			var url = '{$del_uri}?ids='+val;
- 			//d.alert(url);return false;
 			$.ajax({
 			url:url,
 			dataType:'text',
 			beforeSend:function(){
-	 	        $(tips).children().html('删除中... 已经删除成功!').addClass('tips_info'); 
+	 	        $(tips).children().html('删除中...').addClass('tips_info'); 
 			},
 			success: function(data){
 				location.href= location.href;
 			},
 			complete:function(){
-				setInterval(function(){
-					$(tips).children().html('').removeClass('tips_info');
-				},2000);
+				$(tips).children().html('提交成功!')
+				 clear_tips();
 			}
 			});
 		}).follow(obj);

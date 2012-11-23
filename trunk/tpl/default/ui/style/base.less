@@ -47,33 +47,26 @@
 	background-color: transparent;
 }
 
-.font12{font-size:12px;}
-.font14{font-size:14px;}
-.font14b{font-size:14px !important;font-weight:bold !important;}
-.font16{font-size:16px;}
-.font16b{font-size:16px !important;font-weight:bold !important;}
-.font18{ font-size:18px;}
-.font18b{ font-size:18px; font-weight:bold;}
-.font20{font-size:20px;}
-.font20b{font-size:20px;font-weight:bold;}
-.font36{font-size:36px;}
-.font36b{font-size:36px; font-weight:bold;}
+
 .font_simsun{ font-family:SimSun;}/*宋体*/
 .font_georgia{ font-family:Georgia, "Times New Roman", Times, serif;}
 .font_normal{ font-weight:normal;}
+
 .ov_visibel{ overflow:visible !important;}
 .ov_hide{ overflow:hidden !important;}
-.ws_normal{ white-space:normal !important;}
-.ws_break{word-wrap:break-word !important;word-break:normal !important;}
-.ws_prewrap{ white-space:pre-wrap !important;}
-.ws_hide{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
 
-.t_l{text-align:left !important;}
-.t_c{text-align:center !important;}
-.t_r{text-align:right !important;}
+.ws_normal(){ white-space:normal !important;}
+.ws_break(){word-wrap:break-word !important;word-break:normal !important;}
+.ws_prewrap(){ white-space:pre-wrap !important;}
+.ws_hide(){ white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+
+.t_l(){text-align:left !important;}
+.t_c(){text-align:center !important;}
+.t_r(){text-align:right !important;}
 
 .block{ display:block !important; visibility:visible;}
 .hidden{display: none !important;visibility: hidden;}
+
 .visually-hidden() {
 	border: 0;
 	clip: rect(0 0 0 0);
@@ -186,7 +179,8 @@
 .col6{ display:inline; float:left; width:16%; }
 .col7{ display:inline; float:left; width:14%; }
 /**/
-
+.op_05{filter:alpha(opacity=50); -moz-opacity:0.5;	-khtml-opacity: 0.5;opacity: 0.5;}
+.op_03{filter:alpha(opacity=30); -moz-opacity:0.3;	-khtml-opacity: 0.3;opacity: 0.3;}
 /*arrow*/
 .arrow_b{ border:4px solid #f90;border-left-color:#fff; border-right-color:#fff;border-bottom-color:#fff; display:inline-block; width:0; height:0; font-size:0; line-height:0; vertical-align:middle; margin:0 2px;}
 .arrow_t{ border:4px solid #f90;border-left-color:#fff; border-right-color:#fff;border-top-color:#fff; display:inline-block; width:0; height:0; font-size:0; line-height:0; vertical-align:text-top; margin:0 2px;}

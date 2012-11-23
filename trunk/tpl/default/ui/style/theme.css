@@ -125,44 +125,6 @@ table {
   border-spacing: 0;
 }
 /*global*/
-.font12 {
-  font-size: 12px;
-}
-.font14 {
-  font-size: 14px;
-}
-.font14b {
-  font-size: 14px !important;
-  font-weight: bold !important;
-}
-.font16 {
-  font-size: 16px;
-}
-.font16b {
-  font-size: 16px !important;
-  font-weight: bold !important;
-}
-.font18 {
-  font-size: 18px;
-}
-.font18b {
-  font-size: 18px;
-  font-weight: bold;
-}
-.font20 {
-  font-size: 20px;
-}
-.font20b {
-  font-size: 20px;
-  font-weight: bold;
-}
-.font36 {
-  font-size: 36px;
-}
-.font36b {
-  font-size: 36px;
-  font-weight: bold;
-}
 .font_simsun {
   font-family: SimSun;
 }
@@ -178,30 +140,6 @@ table {
 }
 .ov_hide {
   overflow: hidden !important;
-}
-.ws_normal {
-  white-space: normal !important;
-}
-.ws_break {
-  word-wrap: break-word !important;
-  word-break: normal !important;
-}
-.ws_prewrap {
-  white-space: pre-wrap !important;
-}
-.ws_hide {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.t_l {
-  text-align: left !important;
-}
-.t_c {
-  text-align: center !important;
-}
-.t_r {
-  text-align: right !important;
 }
 .block {
   display: block !important;
@@ -482,6 +420,18 @@ table {
   width: 14%;
 }
 /**/
+.op_05 {
+  filter: alpha(opacity=50);
+  -moz-opacity: 0.5;
+  -khtml-opacity: 0.5;
+  opacity: 0.5;
+}
+.op_03 {
+  filter: alpha(opacity=30);
+  -moz-opacity: 0.3;
+  -khtml-opacity: 0.3;
+  opacity: 0.3;
+}
 /*arrow*/
 .arrow_b {
   border: 4px solid #f90;
@@ -7900,10 +7850,12 @@ progress::-moz-progress-value {
 .winbox .box_detail .detail {
   padding: 20px;
   font-size: 14px;
+  font-size: 1.1666666666666667rem;
 }
 .winbox .box_footer {
   *zoom: 1;
   font-size: 12px;
+  font-size: 1rem;
   padding: 10px;
   text-align: right !important;
   color: #666;
@@ -7944,6 +7896,7 @@ progress::-moz-progress-value {
 .winbox .msg {
   display: inline-block;
   font-size: 12px;
+  font-size: 1rem;
   vertical-align: middle;
 }
 .winbox .btn_box {
@@ -8665,10 +8618,12 @@ a.submit:active {
 .win .box .box_detail .detail {
   padding: 20px;
   font-size: 14px;
+  font-size: 1.1666666666666667rem;
 }
 .win .box .box_footer {
   *zoom: 1;
   font-size: 12px;
+  font-size: 1rem;
   padding: 10px;
   text-align: right !important;
   color: #666;
@@ -8709,6 +8664,7 @@ a.submit:active {
 .win .box .msg {
   display: inline-block;
   font-size: 12px;
+  font-size: 1rem;
   vertical-align: middle;
 }
 .win .box .btn_box {

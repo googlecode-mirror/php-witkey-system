@@ -7,6 +7,11 @@
  */
 
 class Control_task_sreward_release extends Control_task_base{
+     
+    function before(){
+    	parent::before();
+        $this->_tpl = 'control/task/sreward/tpl/';	
+    }
     
 	function action_index(){
 		Keke::init_model();
@@ -14,7 +19,18 @@ class Control_task_sreward_release extends Control_task_base{
 		$r_step = 'step1';
 		
 		$base_url = BASE_URL.'/index.php/task/sreward_release/'.$r_step;
-		require Keke_tpl::template('release');
+		
+		require Keke_tpl::template($this->_tpl.'release1');
+	}
+	
+	function action_step2(){
+		require Keke_tpl::template($this->_tpl.'release2');
+	}
+	function action_step3(){
+		require Keke_tpl::template($this->_tpl.'release3');
+	}
+	function action_step4(){
+		require Keke_tpl::template($this->_tpl.'release4');
 	}
 	
 	

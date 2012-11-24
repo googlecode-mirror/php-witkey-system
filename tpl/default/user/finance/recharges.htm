@@ -50,11 +50,11 @@
 		                        <table  class="data_table">
 		                            <thead>
 			                            <tr>
-			                                <th scope="col" width="15%">充值金额</th>
+			                                <th scope="col" width="15%"><a href="javascript:;" onclick="submitSort('{$uri}','cash',{$ord_tag})">充值金额{if $_GET['f']=='cash'}{$ord_char}{/if}</a></th>
 			                                <th scope="col" width="40%">收款账户</th>
 										    <th scope="col" width="20%">打款账户</th>
 			                                <th scope="col" width="15%">状态</th>
-			                                <th scope="col">时间</th>
+			                                <th scope="col"><a href="javascript:;" onclick="submitSort('{$uri}','pay_time',{$ord_tag})">时间{if $_GET['f']=='pay_time'}{$ord_char}{/if}</a></th>
 			                            </tr>
 		                            </thead>
 		                            <tbody>

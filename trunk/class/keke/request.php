@@ -1211,7 +1211,7 @@ class Keke_Request  {
 			// Act as a getter
 			return $this->_response;
 		}
-		
+		die('response');
 		// Act as a setter
 		$this->_response = $response;
 		

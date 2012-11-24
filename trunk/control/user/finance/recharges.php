@@ -45,7 +45,7 @@ class Control_user_finance_recharges extends Control_user{
 		//显示分页的页数
 		$pages = $data_info['pages'];
 		//充值状态
-		$recharge_status = Sys_order::get_recharge_status ();
+		$status_arr = Sys_order::get_recharge_status ();
 		
 		require Keke_tpl::template('user/finance/recharges');
 	}

@@ -889,7 +889,7 @@ function isExtName(obj,isalert,msgType,showTarget){
 	    		if(msgType){
 					tipsAppend(showTarget,lastname+L.file_format_error,'error','red');
 	    		}else{
-	    			showDialog(lastname+L.file_format_error, 'alert', L.file_format_error,'',0);
+	    			art.dialog.alert(lastname+L.file_format_error);
 	    		}return false;
 	    	}
 	}else{

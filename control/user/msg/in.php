@@ -161,7 +161,7 @@ class Control_user_msg_in extends Control_user{
 		}
 	}
 	function to_next_one($action,$msg_id){
-		
+		$where = " 1=1";
 		switch ($action){
 			case 'all':
 			case "index"://È«²¿

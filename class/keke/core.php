@@ -32,7 +32,7 @@ class Keke_core extends Keke_base {
 		}
 		//没有http加上base_url
 		if (strpos($url, '://') === FALSE){
-			$url = Route::site($url, TRUE, Keke::$_index_file);
+			$url = URL::site($url);
 		}
 		require Keke_tpl::template ( 'show_msg' );
 		die ();
@@ -481,11 +481,11 @@ class Keke extends Keke_core {
 		
 	}
 	function init_out_put() {
-		if(function_exists('ob_gzhandler')){
+		/* if(function_exists('ob_gzhandler')){
 			ob_start ('ob_gzhandler');
-		}else{
+		}else{ */
 			ob_start();
-		}
+		//}
 	}
 	/**
 	 * 查指定目录中的文件

@@ -4,8 +4,10 @@ class Control_test extends Controller{
 
 	function action_index(){
         $test = 'вс╠Да©';  	 
-         
-        require Keke_tpl::template('test/link');
+
+       
+        //$this->response->body($test);
+       require Keke_tpl::template('link');
 	}
  
 }

@@ -63,7 +63,7 @@
 
 		                	<div class="form_row">
 		                		<label class="form_label">≥‰÷µ∆æ÷§£∫</label>
-		                		<input type="file" name="cert_pic" id="cert_pic" ext=".gif,.jpg,.png" onchange="isExtName(this,1);"/>
+		                		<input type="file" name="cert_pic" id="cert_pic" ext=".jpg,.png,.gif,.jpeg" onchange="isExtName(this,1);"/>
 		                	</div>
 
 		                	<div class="form_row">
@@ -90,10 +90,11 @@
     	</article>
     </div>
     <!--content end-->
-    
-<script type="text/javascript" src="{BASE_URL}/static/js/keke.js"></script>
+
+
 <script type="text/javascript">
 	In('valid');
+
 	function step_submit(){
 		var cert_pic = $("#cert_pic").val();
 		var i=checkForm(document.getElementById("offrecharge_frm"));

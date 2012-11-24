@@ -22,15 +22,15 @@ class Control_user_finance_recharges extends Control_user{
 		//编号		金额 	账户 	状态 	时间
 		
 		$sql = sprintf("select a.*,
-				b.pay_id pid,b.payment bpayment,b.type btype,b.pay_user bpay_user,b.pay_account bpay_account,b.pay_name bpay_name,b.status bstatus 
+				b.pay_id pid,b.payment bpayment,b.type btype,b.pay_user bpay_user,
+				b.pay_account bpay_account,b.pay_name bpay_name,b.status bstatus 
 				from %switkey_recharge a 
 				left join %switkey_pay_api b 
 				on a.pay_id= b.pay_id ",TABLEPRE,TABLEPRE);
 		$query_fields = array('a.status'=>'状态','a.pay_name'=>'时间');
-		if ($_GET['txt_condition']){
-			//查询状态转换
-			$this->turn_search($_GET['txt_condition']);
-		}
+		//查询状态转换
+		$_GET['txt_condition'] =  self::$_status[$_GET['txt_condition']];
+		
 		$count = intval($_GET['count']);
 		$this->_default_ord_field = 'pay_time';
 		$base_uri = BASE_URL.'/index.php/user/finance_recharges	';
@@ -50,8 +50,14 @@ class Control_user_finance_recharges extends Control_user{
 		require Keke_tpl::template('user/finance/recharges');
 	}
 	
+  	static $_status = 
+  		array('待确认'=>'wait','已付款'=>'ok','付款失败'=>'fail')
+	;
+	
 	//充值状态转换
 	function turn_search($cond){
+		
+		
 		switch ($cond){
 			case '待确认':
 				$_GET['txt_condition']='wait';

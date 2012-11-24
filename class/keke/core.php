@@ -132,7 +132,7 @@ class Keke_core extends Keke_base {
 	
 	// 获取用户最后操作时间
 	static function update_oltime() {
-		global $_K, $kekezu;
+		global $_K;
 		$res = null;
 		$login_uid = Keke::$_uid;
 		$user_oltime = Dbfactory::get_one ( sprintf ( "select last_op_time from %switkey_member_oltime where uid = '%d'", TABLEPRE, $login_uid ) );
@@ -224,7 +224,7 @@ class Keke extends Keke_core {
 	protected static $_files = array ();
 	public static $_errors = true;
 	
-	public static function &get_instance() {
+	public static function get_instance() {
 		static $obj = null;
 		if ($obj === null) {
 			$obj = new Keke ();
@@ -232,6 +232,7 @@ class Keke extends Keke_core {
 		return $obj;
 	}
 	function __construct() {
+		$this->init_out_put ();
 		$this->init ();
 		Keke_lang::loadlang ( 'public', 'public' );
 	}
@@ -284,10 +285,9 @@ class Keke extends Keke_core {
 		
 		 
 		
-		Keke::$_cache_obj = Cache::instance ();
+		//Keke::$_cache_obj = Cache::instance ();
 		 
-
-		$this->init_out_put ();
+		
 		$this->init_lang ();
 		$this->init_curr();
 		 
@@ -481,7 +481,11 @@ class Keke extends Keke_core {
 		
 	}
 	function init_out_put() {
-		ob_start ();
+		if(function_exists('ob_gzhandler')){
+			ob_start ('ob_gzhandler');
+		}else{
+			ob_start();
+		}
 	}
 	/**
 	 * 查指定目录中的文件
@@ -570,8 +574,9 @@ class Keke extends Keke_core {
 
 $ipath = dirname ( dirname ( dirname ( __FILE__ ) ) ) . DIRECTORY_SEPARATOR . "data" . DIRECTORY_SEPARATOR . "install.lck";
 file_exists ( $ipath ) == true or header ( "Location: install/index.php" ); 
+unset($ipath);
 
-$kekezu = Keke::get_instance ();
+Keke::get_instance ();
 
 Keke_lang::load_lang_class ( 'keke_core_class' );
 // end 

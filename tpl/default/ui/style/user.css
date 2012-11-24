@@ -8817,6 +8817,7 @@ ol.sosumi {
   border-width: 1px;
   border-style: solid;
   border-color: #e1e1e1;
+  display: inline-block;
   text-align: center;
   text-decoration: none;
   outline: none;
@@ -8864,6 +8865,7 @@ ol.sosumi {
   border-width: 1px;
   border-style: solid;
   border-color: #006d9f;
+  display: inline-block;
   text-align: center;
   text-decoration: none;
   outline: none;

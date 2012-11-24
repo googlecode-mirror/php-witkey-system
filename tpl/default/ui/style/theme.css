@@ -8400,6 +8400,7 @@ button[type=reset] {
   border-width: 1px;
   border-style: solid;
   border-color: #cacaca #cacaca #bbbbbb;
+  display: inline-block;
   text-align: center;
   text-decoration: none;
   outline: none;

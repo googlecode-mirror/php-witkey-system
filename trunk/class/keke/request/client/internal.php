@@ -41,7 +41,7 @@ class Keke_Request_Client_Internal extends Keke_Request_Client {
 
 		// Controller
 		$controller = $request->controller();
-
+       
 		if ($directory)
 		{
 			// Add the directory name to the class prefix
@@ -74,14 +74,11 @@ class Keke_Request_Client_Internal extends Keke_Request_Client {
 				throw new Keke_exception('Cannot create instances of abstract :controller',
 					array(':controller' => $prefix.$controller));
 			}
-			
-			
-			
 			// Create a new instance of the controller
 			$controller = $class->newInstance($request, $request->response() ? $request->response() : $request->create_response());
 			
 			$class->getMethod('before')->invoke($controller);
-             
+			
 			// Determine the action to use
 			$action = $request->action();
 
@@ -95,9 +92,9 @@ class Keke_Request_Client_Internal extends Keke_Request_Client {
 			}
 			
 			$method = $class->getMethod('action_'.$action);
-			
+			 
 			$method->invoke($controller);
-			
+			 
 			// Execute the "after action" method
 			$class->getMethod('after')->invoke($controller);
 			
@@ -118,7 +115,7 @@ class Keke_Request_Client_Internal extends Keke_Request_Client {
 		Request::$current = $previous;
 		
 		 
-		//var_dump($request->response());die;
+		//var_dump(strlen($request->response()));die;
 		// Return the response
 		return $request->response();
 	}

@@ -81,6 +81,7 @@ class Control_user_msg_in extends Control_user{
 			//删除命令是否来于查看页面
 			if($_GET['ac'] == 'view'){
 				//返回下一条id
+				//var_dump($_GET['action']);die;
 				$next_msg_id = $this->to_next_one($_GET['action'],$_GET['msg_id']);
 				$this->del_msg_by_status($_GET['msg_id'], $_GET['status'], $_GET['is_sys']);
 				//跳到下一条
@@ -162,6 +163,7 @@ class Control_user_msg_in extends Control_user{
 	function to_next_one($action,$msg_id){
 		
 		switch ($action){
+			case 'all':
 			case "index"://全部
 				$where =" msg_status!=1 and to_uid = ".$_SESSION['uid'];
 				break;

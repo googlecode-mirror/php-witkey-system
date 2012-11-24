@@ -53,10 +53,15 @@
 		 {loop $list_arr $k $v}
     <tr class='item'>
     	<td><input type="checkbox" name="ckb[]" class="checkbox" value="{$v['rid']}">{$v['rid']}</td>
-        <td>{$charge_type_arr[$v['type']]}</td>
+        <td>{$charge_type_arr[$v['btype']]}</td>
         <td>
             <font color="red">
-				{$bank_arr[$v['bank']]}
+				
+				{if $v['btype'] == 'offline'}
+					 $v['bpay_name']
+				{else}
+					{$bank_arr[$v['bpaymant']]}
+				{/if}
 			</font>
         </td>
         <td>{$v['username']}</td>

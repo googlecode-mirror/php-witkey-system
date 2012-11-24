@@ -3,8 +3,11 @@
 include 'app_boot.php';
 
 //isset ( $_GET['m'] ) && $_GET['m'] == "user" and $do = "avatar";
+ 
+
 
 $request = Request::factory ();
+
 $_K ['control'] = $request->initial ()->controller ();
 $_K ['action'] = $request->initial ()->action ();
 $_K ['directory'] = $request->initial ()->directory ();
@@ -16,7 +19,9 @@ Keke_lang::package_init ( $_K['directory'] );
 Keke_lang::loadlang ( $_K ['control'] );
 
 
-echo $request->execute();die;
+echo $request->execute()->send_headers(TRUE);
+
+die;
 
 
 

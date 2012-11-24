@@ -38,7 +38,7 @@ class Keke_HTTP_Cache {
 	{
 		if ( ! $cache instanceof Cache)
 		{
-			$cache = Cache::instance('file');
+			$cache = Cache::instance();
 		}
        
 		$options['cache'] = $cache;
@@ -57,7 +57,7 @@ class Keke_HTTP_Cache {
 	 * @param   Request   request 
 	 * @return  string
 	 */
-	public static function basic_cache_key_generator(Request $request)
+	public static function basic_cache_key_generator(Keke_Request $request)
 	{
 		$uri     = $request->uri();
 		$query   = $request->query();
@@ -108,8 +108,7 @@ class Keke_HTTP_Cache {
 				$this->$key($value);
 			}
 		}
-
-		if ($this->_cache_key_callback === NULL)
+        if ($this->_cache_key_callback === NULL)
 		{
 			$this->cache_key_callback('Keke_HTTP_Cache::basic_cache_key_generator');
 		}
@@ -126,11 +125,14 @@ class Keke_HTTP_Cache {
 	 * @param   Request   request to execute with client
 	 * @return  [Response]
 	 */
-	public function execute(Keke_Request_Client $client, Request $request)
+	public function execute(Keke_Request_Client $client, Keke_request $request)
 	{
-		if ( ! $this->_cache instanceof Cache)
+		
+		
+		//var_dump($this->_cache instanceof Keke_cache);die('cccc');
+		if ( ! $this->_cache instanceof Keke_cache)
 			return $client->execute_request($request);
-
+        
 		// If this is a destructive request, by-pass cache completely
 		if (in_array($request->method(), array(
 			Keke_HTTP_Request::POST, 
@@ -150,26 +152,29 @@ class Keke_HTTP_Cache {
 			// Ensure client respects destructive action
 			return $response->headers('cache-control', $cache_control);
 		}
-
+		 
 		// Create the cache key
 		$cache_key = $this->create_cache_key($request, $this->_cache_key_callback);
-
+		
+// 		var_dump($this->cache_response($cache_key, $request));die;
 		// Try and return cached version
-		if (($response = $this->cache_response($cache_key, $request)) instanceof Response)
+		if (($response = $this->cache_response($cache_key, $request)) instanceof Keke_Response)
 			return $response;
-
+		
+		 
 		// Start request time
 		$this->_request_time = time();
-
+		 
 		// Execute the request with the Request client
 		$response = $client->execute_request($request);
-
+		
+// 		
 		// Stop response time
 		$this->_response_time = (time() - $this->_request_time);
-
+		//var_dump($cache_key, $request, $response);die;
 		// Cache the response
 		$this->cache_response($cache_key, $request, $response);
-
+		
 		$response->headers(Keke_HTTP_Cache::CACHE_STATUS_KEY, 
 			Keke_HTTP_Cache::CACHE_STATUS_MISS);
 
@@ -184,9 +189,9 @@ class Keke_HTTP_Cache {
 	 * @param   Request  $request Response to remove from cache
 	 * @return  void
 	 */
-	public function invalidate_cache(Request $request)
+	public function invalidate_cache(Keke_Request $request)
 	{
-		if (($cache = $this->cache()) instanceof Cache)
+		if (($cache = $this->cache()) instanceof Keke_cache)
 		{
 			$cache->delete($this->create_cache_key($request, $this->_cache_key_callback));
 		}
@@ -202,7 +207,7 @@ class Keke_HTTP_Cache {
 	 * @return  Keke_Cache
 	 * @return  Keke_Request_Client
 	 */
-	public function cache(Cache $cache = NULL)
+	public function cache(Keke_cache $cache = NULL)
 	{
 		if ($cache === NULL)
 			return $this->_cache;
@@ -279,7 +284,7 @@ class Keke_HTTP_Cache {
 	 * @param   callback  optional callback to use instead of built-in method
 	 * @return  string
 	 */
-	public function create_cache_key(Request $request, $callback = FALSE)
+	public function create_cache_key(Keke_request $request, $callback = FALSE)
 	{
 		if (is_callable($callback))
 			return call_user_func($callback, $request);
@@ -295,10 +300,10 @@ class Keke_HTTP_Cache {
 	 * @param   Response  $response The Response
 	 * @return  boolean
 	 */
-	public function set_cache(Response $response)
+	public function set_cache(Keke_Response $response)
 	{
 		$headers = $response->headers()->getArrayCopy();
-
+        
 		if ($cache_control = $headers['cache-control'])
 		{
 			// Parse the cache control
@@ -345,11 +350,10 @@ class Keke_HTTP_Cache {
 	 * @param   Response  the HTTP Response
 	 * @return  mixed
 	 */
-	public function cache_response($key, Request $request, Response $response = NULL)
+	public function cache_response($key, Keke_Request $request, Keke_Response $response = NULL)
 	{
-		if ( ! $this->_cache instanceof Cache)
+		if ( ! $this->_cache instanceof Keke_cache)
 			return FALSE;
-
 		// Check for Pragma: no-cache
 		if ($pragma = $request->headers('pragma'))
 		{
@@ -358,38 +362,35 @@ class Keke_HTTP_Cache {
 			elseif (is_array($pragma) AND in_array('no-cache', $pragma))
 				return FALSE;
 		}
-
+		
 		// If there is no response, lookup an existing cached response
 		if ($response === NULL)
 		{
 			$response = $this->_cache->get($key);
-
-			if ( ! $response instanceof Response)
+			if ( ! $response instanceof Keke_Response)
 				return FALSE;
-
+		 
 			// Do cache hit arithmetic, using fast arithmetic if available
-			/* if ($this->_cache instanceof Cache_Arithmetic)
-			{
-				$hit_count = $this->_cache->increment(HTTP_Cache::CACHE_HIT_KEY.$key);
-			}
-			else
-			{ */
+			     
 				$hit_count = $this->_cache->get(Keke_HTTP_Cache::CACHE_HIT_KEY.$key);
 				$this->_cache->set(Keke_HTTP_Cache::CACHE_HIT_KEY.$key, ++$hit_count);
-			//}
+				
+				//var_dump($hit_count);die;
 
 			// Update the header to have correct HIT status and count
 			$response->headers(Keke_HTTP_Cache::CACHE_STATUS_KEY,
 				Keke_HTTP_Cache::CACHE_STATUS_HIT)
 				->headers(Keke_HTTP_Cache::CACHE_HIT_KEY, $hit_count);
-
+		
 			return $response;
 		}
 		else
 		{
+			//var_dump($response);die;
+			 
 			if (($ttl = $this->cache_lifetime($response)) === FALSE)
 				return FALSE;
-
+			 
 			$response->headers(Keke_HTTP_Cache::CACHE_STATUS_KEY,
 				Keke_HTTP_Cache::CACHE_STATUS_SAVED);
 
@@ -407,12 +408,14 @@ class Keke_HTTP_Cache {
 	 * @param   Response  $response  Response to evaluate
 	 * @return  mixed  TTL value or false if the response should not be cached
 	 */
-	public function cache_lifetime(Response $response)
+	public function cache_lifetime(Keke_Response $response)
 	{
 		// Get out of here if this cannot be cached
+		
 		if ( ! $this->set_cache($response))
 			return FALSE;
-
+		
+		 
 		// Calculate apparent age
 		if ($date = $response->headers('date'))
 		{
@@ -422,7 +425,6 @@ class Keke_HTTP_Cache {
 		{
 			$apparent_age = max(0, $this->_response_time);
 		}
-
 		// Calculate corrected received age
 		if ($age = $response->headers('age'))
 		{
@@ -444,7 +446,7 @@ class Keke_HTTP_Cache {
 
 		// Prepare the cache freshness lifetime
 		$ttl = NULL;
-
+		 
 		// Cache control overrides
 		if ($cache_control = $response->headers('cache-control'))
 		{
@@ -466,7 +468,7 @@ class Keke_HTTP_Cache {
 				$ttl = $current_age + $cache_control['max-stale'];
 			}
 		}
-
+		//var_dump($response->headers('expires'));die;
 		// If we have a TTL at this point, return
 		if ($ttl !== NULL)
 			return $ttl;

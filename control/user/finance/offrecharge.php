@@ -35,6 +35,8 @@ class Control_user_finance_offrecharge extends Control_user{
 		$data_list = $data_info['data'];
 // 		var_dump($data_list);
 		//显示分页的页数
+		$bank_pic = array_flip(Keke_global::get_bank_abb());
+		
 		$pages = $data_info['pages'];
 		
 		require Keke_tpl::template('user/finance/offrecharge');

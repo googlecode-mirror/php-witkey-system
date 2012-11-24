@@ -23,7 +23,6 @@
 
 		                	<div class="toolbar">
 		                		<form class="detail" action="{BASE_URL}/index.php/user/msg_in" method="get" id="frm_user_search">
-										   <input type="hidden" value="{$page}" name="page">
 										<table cellspacing="0" cellpadding="0">
 											<tbody>
 											<tr>
@@ -139,13 +138,13 @@ function batch_read(obj){
 			url:url,
 			dataType:'text',
 			beforeSend:function(){
-	 	        $("#ajax_tips").children().html('删除中...').addClass('tips_info'); 
+	 	        $("#ajax_tips").children().html('提交中...').addClass('tips_info'); 
 			},
 			success: function(data){
 				location.href= location.href;
 			},
 			complete:function(){
-				 $("#ajax_tips").children().html('已经删除成功!');
+				 $("#ajax_tips").children().html('提交成功!');
 				setInterval(function(){
 					$("#ajax_tips").children().html('').removeClass('tips_info');
 				},2000);

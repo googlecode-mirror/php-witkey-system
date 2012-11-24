@@ -807,12 +807,12 @@ class Keke_Request  {
 			}
 
 			// Store the controller
-			$this->_controller = $params['controller'];
+			$this->_controller = strtolower($params['controller']);
 
 			if (isset($params['action']))
 			{
 				// Store the action
-				$this->_action = $params['action'];
+				$this->_action = strtolower($params['action']);
 			}
 			else
 			{

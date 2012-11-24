@@ -32,9 +32,9 @@
 		                				<dl>
 				                			<dt>
 				                			<input type="hidden" name="formhash" value="{FORMHASH}">
-					                			<input type="radio" name="pay_id" value="{$v['pay_id']}" id="{$v['payment']}" {if $v['payment']=='icbc'}checked="checked"{/if}>
+					                			<input type="radio" name="pay_id" value="{$v['pay_id']}" id="{$v['payment']}" {if $bank_pic[$v['payment']]=='1'}checked="checked"{/if}>
 												<label for="{$v['payment']}" style="cursor:pointer;">
-													<img src="{BASE_URL}/static/img/system/kppw_2.0_{$v['payment']}.png"/>
+													<img src="{BASE_URL}/static/img/bank/{$bank_pic[$v['payment']]}.gif"/>
 												</label>
 											</dt>
 				                			<dd>

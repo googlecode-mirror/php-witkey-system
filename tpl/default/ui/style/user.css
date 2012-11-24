@@ -8911,6 +8911,9 @@ ol.sosumi {
   -moz-box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.3), 0 1px 0 #ffffff;
   box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.3), 0 1px 0 #ffffff;
 }
+#user a.submit {
+  line-height: 32px;
+}
 #user .form_row {
   padding-top: 5px;
   padding-bottom: 5px;

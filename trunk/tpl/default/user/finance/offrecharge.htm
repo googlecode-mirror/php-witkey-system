@@ -97,12 +97,13 @@
 
 	function step_submit(){
 		var cert_pic = $("#cert_pic").val();
+		var pic = document.getElementById('cert_pic');
 		var i=checkForm(document.getElementById("offrecharge_frm"));
-		if(cert_pic==''){
-			art.dialog.alert('请上传充值凭证！');
-		}
-		if(i){
-			return true;
+		if(isExtName(pic,1)){
+			if(i){
+				return true;
+			}
+			return false;
 		}
 		return false;
 	}

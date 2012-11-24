@@ -442,7 +442,7 @@ class Keke_Route {
 		if (! empty ( $params ['directory'] )) {
 			// PSR-0: Replace underscores with spaces, run ucwords, then replace
 			// underscore
-			$params ['directory'] = str_replace ( ' ', '_', ucwords ( str_replace ( '_', ' ', $params ['directory'] ) ) );
+			$params ['directory'] = str_replace ( ' ', '_',  str_replace ( '_', ' ', $params ['directory'] )  );
 		}
 		
 		if ($this->_filters) {

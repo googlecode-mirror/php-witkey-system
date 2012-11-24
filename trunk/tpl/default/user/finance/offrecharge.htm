@@ -32,7 +32,9 @@
 		                				<dl>
 				                			<dt>
 				                			<input type="hidden" name="formhash" value="{FORMHASH}">
-					                			<input type="radio" name="pay_id" value="{$v['pay_id']}" id="{$v['payment']}" {if $bank_pic[$v['payment']]=='1'}checked="checked"{/if}>
+					                			<input type="radio" name="pay_id" value="{$v['pay_id']}" id="{$v['payment']}" 
+												{if $bank_pic[$v['payment']]=='1'} checked="checked" {/if}>
+												
 												<label for="{$v['payment']}" style="cursor:pointer;">
 													<img src="{BASE_URL}/static/img/bank/{$bank_pic[$v['payment']]}.gif"/>
 												</label>
@@ -61,10 +63,7 @@
 
 		                	<div class="form_row">
 		                		<label class="form_label">充值凭证：</label>
-		                		<input type="file" name="cert_pic" ext='.gif,.jpg,.png' onchange="isExtName(this);" id="cert_pic"
-								limit="required:true" msg="充值凭证" msgArea="span_cert_pic"
-								/>
-								<span id="span_cert_pic"></span>
+		                		<input type="file" name="cert_pic" id="cert_pic" ext=".gif,.jpg,.png" onchange="isExtName(this,1);"/>
 		                	</div>
 
 		                	<div class="form_row">
@@ -92,12 +91,16 @@
     </div>
     <!--content end-->
     
-<script type="text/javascript" src="{BASE_URL}/static/js/system/ajaxfileupload.js"></script>
+<script type="text/javascript" src="{BASE_URL}/static/js/keke.js"></script>
 <script type="text/javascript">
 	In('valid');
 	function step_submit(){
-
-		if(checkForm(document.getElementById('offrecharge_frm'))){
+		var cert_pic = $("#cert_pic").val();
+		var i=checkForm(document.getElementById("offrecharge_frm"));
+		if(cert_pic==''){
+			art.dialog.alert('请上传充值凭证！');
+		}
+		if(i){
 			return true;
 		}
 		return false;

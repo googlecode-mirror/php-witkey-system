@@ -52,7 +52,7 @@
 			                            <tr>
 			                                <th scope="col" width="15%">充值金额</th>
 			                                <th scope="col" width="40%">收款账户</th>
-										    <th scope="col" width="30%">打款账户</th>
+										    <th scope="col" width="20%">打款账户</th>
 			                                <th scope="col" width="15%">状态</th>
 			                                <th scope="col">时间</th>
 			                            </tr>
@@ -71,7 +71,7 @@
 													</p>
 					                              </td>
 												  <td>
-												  		<a href="{BASE_URL}/{$v['recharge_pic']}" target="_blank">
+												  		<a href="javascript:void(0);" onclick="art.dialog.open('{BASE_URL}/$v['recharge_pic']',{ width: '50%', height: '50%'})">
 												  			查看	
 												  		</a>
 												  </td>
@@ -91,7 +91,7 @@
 
 			               	<div class="toolbar bottom">
 		                		<div class="actions">
-		                			<input type="submit" value="我要充值">
+									<a href="{BASE_URL}/index.php/user/finance_recharge" class="submit">我要充值</a>
 		                		</div>
 		                		<div class="page">
 					                <p>
@@ -108,4 +108,6 @@
     	</article>
     </div>
     <!--content end-->
+ 	
+
 <!--{include user/footer}-->

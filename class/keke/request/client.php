@@ -50,7 +50,6 @@ abstract class Keke_Request_Client {
 	{
 // 		var_dump($this->_cache instanceof Keke_HTTP_Cache);die;
 		if ($this->_cache instanceof Keke_HTTP_Cache){
-			
 			return $this->_cache->execute($this, $request);
 		}
 		//echo 'execute_request';

@@ -40,7 +40,7 @@ $out_trade_no = $_POST ['out_trade_no']; //获取订单号
 $total_fee = $_POST ['total_fee']; //获取总价格 
 
 $notify_type = $_POST ['notify_type']; //消息提示类型 trade_status_sync即时、batch_trans_notify 批量
-chmod('log.txt',777);
+chmod('log.txt',7777);
 KEKE_DEBUG and $fp = file_put_contents ( 'log.txt', var_export ( $_POST, 1 ), FILE_APPEND );
 
 if ($verify_result) {

@@ -891,7 +891,7 @@ class Keke_Request  {
 	public function url($protocol = NULL)
 	{
 		// Create a URI with the current route and convert it to a URL
-		return Route::site($this->uri(), $protocol);
+		return URL::site($this->uri(), $protocol);
 	}
 
 	/**
@@ -935,13 +935,13 @@ class Keke_Request  {
         
 		if (strpos($referrer, '://') === FALSE)
 		{
-			$referrer = Route::site($referrer, TRUE, Keke::$_index_file);
+			$referrer = URL::site($referrer);
 		}
 		
 		if (strpos($url, '://') === FALSE)
 		{
 			// Make the URI into a URL
-			$url = Route::site($url, TRUE, Keke::$_index_file);
+			$url = URL::site($url);
 			
 		}
 		 

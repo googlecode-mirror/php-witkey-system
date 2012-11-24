@@ -12,8 +12,17 @@ class Control_admin_finance_recharge extends Control_admin {
 		// 定义全局变量与语言包，只要加载模板，这个是必须要定义.操
 		global $_K, $_lang;
 		// 要显示的字段,即SQl中SELECT要用到的字段
-		$fields = ' `rid`,`pay_id`,`recharge_pic`,`username`,`cash`,`pay_time`,`status`,`mem` ';
+		
+		
+		$sql = sprintf("select a.*,
+				b.pay_id pid,b.payment bpayment,b.type btype,b.pay_user bpay_user,b.pay_account bpay_account,b.pay_name bpay_name,b.status bstatus
+				from %switkey_recharge a
+				left join %switkey_pay_api b
+				on a.pay_id= b.pay_id ",TABLEPRE,TABLEPRE);
+		
+		//$fields = ' `rid`,`pay_id`,`recharge_pic`,`username`,`cash`,`pay_time`,`status`,`mem` ';
 		// 要查询的字段,在模板中显示用的
+		
 		$query_fields = array ('rid' => $_lang ['id'], 'username' => $_lang ['username'], 'bank' => '银行' );
 		// 总记录数,分页用的，你不定义，数据库就是多查一次的。为了少个Sql语句，你必须要写的，亲!
 		$count = intval ( $_GET ['count'] );
@@ -27,7 +36,8 @@ class Control_admin_finance_recharge extends Control_admin {
 		// 这里要口水一下，get_url就是处理查询的条件
 		extract ( $this->get_url ( $base_uri ) );
 		// 获取列表分页的相关数据,参数$where,$uri,$order,$page来自于get_url方法
-		$data_info = Model::factory ( 'witkey_recharge' )->get_grid ( $fields, $where, $uri, $order, $page, $count, $_GET ['page_size'] );
+		$data_info = Model::sql_grid($sql,$where,$uri,$order,$group_by,$page,$count,$_GET['page_size'],null);
+		//$data_info = Model::factory ( 'witkey_recharge' )->get_grid ( $fields, $where, $uri, $order, $page, $count, $_GET ['page_size'] );
 		// 列表数据
 		$list_arr = $data_info ['data'];
 		// 分页数据
@@ -40,7 +50,7 @@ class Control_admin_finance_recharge extends Control_admin {
 		
 		// 充值类型
 		$bank_arr = Keke_global::get_bank ();
-		
+// 		var_dump($list_arr);
 		// 充值订单状态
 		$status_arr = Sys_order::get_recharge_status ();
 		// 线下支付方式

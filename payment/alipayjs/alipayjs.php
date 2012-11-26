@@ -47,9 +47,7 @@ class Alipayjs extends Sys_payment {
 		$body = $subject = "提现批量打款";
 		$pay_date = date ( Ymd );
 		$batch_no = $pay_date . date ( hms );
-		$detail_data = array_filter ( $detail_data );
-		$batch_obj  = pay_batch_fac_class::get_instance('alipayjs');
-		$detail_data = $batch_obj->stack_batch($detail_data);
+		$detail_data = $this->batch_pack_detail($detail_data);
 		$parameter = array (
 				"service" => 'batch_trans_notify',
 				"partner" => $this->_pay_config ['pid'],

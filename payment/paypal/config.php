@@ -5,7 +5,7 @@
                      "pay_dev"=>"kekezu",
                      "pay_desc"=>"¼´Ê±µ½ÕË½Ó¿Ú",
                      "img"=>"paypal.gif",
-                     "initparam"=>"account:±´±¦ÕÊºÅ"
+                     "initparam"=>"pay_account:±´±¦ÊÕ¿îÕÊºÅ"
                );
                
 ?>

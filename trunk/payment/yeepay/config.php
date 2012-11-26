@@ -5,7 +5,7 @@
                      "pay_dev"=>"kekezu",
                      "pay_desc"=>"易宝接口",
                      "img"=>"tenpay.gif",
-                     "initparam"=>"seller_id:商户编号;safekey:交易密钥"
+                     "initparam"=>"pid:商户编号;key:交易密钥"
                );
 //商户编号p1_MerId,以及密钥
 ?>

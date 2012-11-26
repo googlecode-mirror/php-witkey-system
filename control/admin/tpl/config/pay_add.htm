@@ -22,8 +22,8 @@
                       <tr>
                         <th scope="row"> {$_lang['is_enabled']}:</th>
                         <td>
-                        	<label for="rdo_pay_status1"><input type="radio" id="rdo_pay_status1" name="status" {if $payment_config['status']} checked="checked" {/if}  value="1">{$_lang['open']}</label>
-                            <label for="rdo_pay_status2"><input type="radio" id="rdo_pay_status2" name="status" {if !$payment_config['status']} checked="checked" {/if} value="0">{$_lang['close']}</label></td>
+                        	<label for="rdo_pay_status1"><input type="radio" id="rdo_pay_status1" name="fds[status]" {if $payment_config['status']} checked="checked" {/if}  value="1">{$_lang['open']}</label>
+                            <label for="rdo_pay_status2"><input type="radio" id="rdo_pay_status2" name="fds[status]" {if !$payment_config['status']} checked="checked" {/if} value="0">{$_lang['close']}</label></td>
                       </tr>
 					  {loop $items $v}
 					   
@@ -31,6 +31,7 @@
 		                   <th scope="row" width="180px">{$v['name']}:</th>
 			               <td>
 			                    <input type="text" name="fds[{$v['k']}]" value="{$v['v']}" class="txt" style=" width:260px;"/>
+								
 								{if $payment_config['payment'] =='alipayjs'&&$v['k']=='account'}
 									<button class="pill" type="button" onclick="getPidKey(this);">
 										<span class="icon plus">&nbsp;</span>
@@ -52,17 +53,10 @@
 						  </td>
 					   </tr>
 					  {/loop}		
-			  		 {if $payname =='alipayjs'}
-                      <tr>
-                        <th scope="row"> {$_lang['payment_charges']}</th>
-                        <td>
-                        	<img src="{$_K['siteurl']}/payment/alipayjs/rate_img.gif">
-                        </td>
-                      </tr>
-					 {/if}
+			  		 
 					  <tr>
                         <th scope="row"> {$_lang['interface_description']}:</th>
-                        <td><textarea name="fds[descript]" cols="100" rows="5">{$pay_config['descript']}</textarea></td>
+                        <td><textarea name="fds[mem]" cols="100" rows="5">{$payment_config['mem']}</textarea></td>
                       </tr>
                       <tr>
                         <th scope="row">&nbsp;</th>

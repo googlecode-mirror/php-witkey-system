@@ -10,13 +10,13 @@ class Control_admin_config_pay extends Control_admin{
 	 * 支付配置
 	 */
 	function action_index(){
-		global $_K,$_lang;
+		global $_lang;
 		//非提交时
 		if(!$_POST){
 			//获取要编辑的数据
 			$res = DB::select('k,v')->from('witkey_pay_config')->execute();
 			//健值重组
-			$pay_config = self::get_arr_by_key($res,'k');
+			$pay_config = Arr::get_arr_by_key($res,'k');
 			//加载支付配置模板
 			require Keke_tpl::template('control/admin/tpl/config/pay');
 			die;
@@ -33,18 +33,7 @@ class Control_admin_config_pay extends Control_admin{
 		//跳转
 		Keke::show_msg($_lang['submit_success'],'admin/config_pay','success');
 	}
-	/**
-	 * 按指定的键，重组多维数组
-	 * @param array $array
-	 * @param string $key
-	 */
-	static function get_arr_by_key(array $array,$key){
-		$temp = array();
-		foreach ($array as $k=>$v){
-			$temp[$v[$key]] = $v['v'];
-		}
-		return $temp;
-	}
+	 
 	/**
 	 * 在线支付
 	 */
@@ -133,6 +122,7 @@ class Control_admin_config_pay extends Control_admin{
 			$payment_config = self::get_pay_config($_GET['pay_id']);
 			//支付的名称也就是目录
 			$dir = $payment_config['payment'];
+			$pay_basic = array();
 			//初始化配置数组
 			include S_ROOT.'payment/'.$dir.'/config.php';
 			//初始化配置数量 $pay_basic 是config.php 中的数组
@@ -144,16 +134,18 @@ class Control_admin_config_pay extends Control_admin{
 				$items [] = array ('k' => $it ['0'], 'name' => $it ['1'], 'v' => $payment_config [$it ['0']] );
 			}
 		}
+		 
 		//加载支付配置模板
 		require Keke_tpl::template('control/admin/tpl/config/pay_add');
 	}
+	
+	
 	static function get_pay_config($pay_id){
 		//查询条件
 		$where = "pay_id = '".intval($pay_id)."'";
 		//执行查询
-		$payment_config = DB::select()->from('witkey_pay_api')->where($where)->execute();
-		$payment_config = $payment_config[0];
-		return $payment_config;
+		return  DB::select()->from('witkey_pay_api')->where($where)->get_one()->execute();
+		
 	}
 	/**
 	 * 在线接口的配置保存
@@ -165,13 +157,14 @@ class Control_admin_config_pay extends Control_admin{
 		//这里只只执行update
 		if($_POST['hdn_pay_id']){
 			//要更新字段
-			$columns= array('status','config');
+			$columns= array_keys($_POST['fds']);
 			//更新的值
-			$values =array($_POST['status'],serialize($_POST['fds']));
+			$values =array_values($_POST['fds']);
 			//执行条件
 			$where = "pay_id='{$_POST['hdn_pay_id']}'";
 			//开始执行
 			DB::update('witkey_pay_api')->set($columns)->value($values)->where($where)->execute();
+			
 			Keke::show_msg($_lang['submit_success'],"admin/config_pay/add?pay_id={$_POST['hdn_pay_id']}",'success');
 		} 
 		

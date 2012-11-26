@@ -190,57 +190,7 @@ class Keke_global {
 				'27'=>'psbc',//中国邮政储蓄
 				);
 	}
-	
-	public static function get_payment_config($paymentname = "", $pay_type = 'online', $pay_status = null) {
-		if ($paymentname) {
-			if ($pay_type != 'offline') {
-				if (! file_exists ( S_ROOT . "/payment/" . $paymentname . "/pay_config.php" )) {
-					return FALSE;
-				} else {
-					require_once S_ROOT . "/payment/" . $paymentname . "/pay_config.php";
-				}
-			}
-			$list = Keke::get_table_data ( '*', "witkey_pay_api", "payment='$paymentname' and type='$pay_type'", "", '', '', '', null );
-			//var_dump($list);die();
-			if ($list) {
-				$pay_config = $pay_basic;
-				$pay_config ['payment']= "$list [0] ['payment']";
-				$pay_config ['config'] = "$list [0] ['config']";
-				$pay_config ['type'] = "$list [0] ['type']";
-				$config = unserialize ( $pay_config ['config'] );
-				$config and $pay_config = array_merge ( $pay_config, $config );
-				$list = $pay_config;
-				if (isset ( $pay_status )) {
-					if ($list ['pay_status'] == intval ( $pay_status )) {
-						return $list;
-					}
-				} else {
-					return $list;
-				}
-			}
-		} else {
-			if ($pay_type == 'offline') {
-				$list = Keke::get_table_data ( 'payment', "witkey_pay_api", " type='offline'", '', '', '', '', null );
-				$i = 0;
-				while ( list ( $k, $v ) = each ( $list ) ) {
-					$paymentlist [$v ['payment']] = self::get_payment_config ( $v ['payment'], $pay_type, $pay_status );
-					$i = $i + 1;
-				}
-			} else {
-				$filepath = S_ROOT . "/payment";
-				$handle = opendir ( $filepath );
-				$i = 0;
-				while ( $file = readdir ( $handle ) ) {
-					if (($file != ".") and ($file != ".." and file_exists ( S_ROOT . "/payment/" . $file . "/pay_config.php" ))) {
-						$paymentlist [$file] = self::get_payment_config ( $file, $pay_type, $pay_status );
-						$i = $i + 1;
-					}
-				}
-				closedir ( $handle );
-			}
-			return array_filter ( $paymentlist );
-		}
-	}	
+	 	
 	/**
 	 * 模型类型
 	 */

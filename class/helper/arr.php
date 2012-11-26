@@ -237,7 +237,7 @@ class Arr {
 	 * @param string $key
 	 * @return array
 	 */
-	public static function get_array_by_key($arr, $key){
+	public static function get_arr_by_key($arr, $key){
 		return keke::get_arr_by_key($arr,$key);
 	}
 }

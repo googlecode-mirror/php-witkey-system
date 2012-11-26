@@ -285,7 +285,7 @@ class Keke extends Keke_core {
 		
 		 
 		
-		//Keke::$_cache_obj = Cache::instance ();
+		Keke::$_cache_obj = Cache::instance ();
 		 
 		
 		$this->init_lang ();

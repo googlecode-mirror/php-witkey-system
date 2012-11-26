@@ -207,19 +207,18 @@ class Keke_admin {
 	 */
 	public function admin_login($username, $password, $allow_times, $formhash='') {
 		global $_lang;
-		global $kekezu;
 	
 		$login_limit = $_SESSION ['login_limit']; //用户登录限制时间
 		$remain_times = $login_limit - time (); //允许再次登录时差
 		if ($login_limit && $remain_times > 0) { //存在登录时间限制并且时限未过
-			$kekezu->echojson ( "login limit!", "8" );
+			Keke::echojson( "login limit!", "8" );
 			die ();
 		} else {
 			if (!Keke::formcheck($formhash, true)) {//检测hash值
 				$_SESSION ['allow_times'] -= 1;
 				-- $allow_times == 0 and $this->set_login_limit_time ( '1' );
 				$hash = Keke::formhash();
-				$kekezu->echojson($_lang['repeat_form_submit'], 6, array('times'=>$allow_times, 'formhash'=>$hash));
+				Keke::echojson($_lang['repeat_form_submit'], 6, array('times'=>$allow_times, 'formhash'=>$hash));
 				die();
 			}
 		
@@ -230,18 +229,18 @@ class Keke_admin {
 			if ($user_info === - 1) {
 				$_SESSION ['allow_times'] -= 1;
 				-- $allow_times == 0 and $this->set_login_limit_time ( '1' );
-				$kekezu->echojson ( $_lang['username_input_error'], "6", array('times'=>$allow_times, 'formhash'=>$hash) );
+				Keke::echojson ( $_lang['username_input_error'], "6", array('times'=>$allow_times, 'formhash'=>$hash) );
 				die ();
 			} else if ($user_info === - 2) {
 				$_SESSION ['allow_times'] -= 1;
 				-- $allow_times == 0 and $this->set_login_limit_time ( '1' );
-				$kekezu->echojson ( $_lang['password_input_error'], "5", array('times'=>$allow_times, 'formhash'=>$hash) );
+				Keke::echojson ( $_lang['password_input_error'], "5", array('times'=>$allow_times, 'formhash'=>$hash) );
 				die ();
 			}
 			if (! $user_info) { 
 				$_SESSION ['allow_times'] -= 1;
 				-- $allow_times == 0 and $this->set_login_limit_time ( '1' );
-				$kekezu->echojson ( $_lang['login_fail'], "4", array('times'=>$allow_times, 'formhash'=>$hash) );
+				Keke::echojson ( $_lang['login_fail'], "4", array('times'=>$allow_times, 'formhash'=>$hash) );
 				die ();
 			} else {  
 				$user_info = Keke_user::instance()->get_user_info( $user_info ); //获取用户信息
@@ -251,12 +250,12 @@ class Keke_admin {
 			if (! $user_info) {
 				$_SESSION ['allow_times'] -= 1;
 				-- $allow_times == 0 and $this->set_login_limit_time ( '1' );
-				$kekezu->echojson ( $_lang['no_rights_login_backstage'], "3", array('times'=>$allow_times, 'formhash'=>$hash) );
+				Keke::echojson ( $_lang['no_rights_login_backstage'], "3", array('times'=>$allow_times, 'formhash'=>$hash) );
 				die ();
 			} elseif (empty($roles)) {
 				$_SESSION ['allow_times'] -= 1;
 				-- $allow_times == 0 and $this->set_login_limit_time ( '1' );
-				$kekezu->echojson ( $_lang['no_rights_login_backstage'], "2", array('times'=>$allow_times, 'formhash'=>$hash) );
+				Keke::echojson ( $_lang['no_rights_login_backstage'], "2", array('times'=>$allow_times, 'formhash'=>$hash) );
 				die ();
 			} else {
 				$_SESSION ['admin_uid'] =  $user_info ['uid'];
@@ -265,7 +264,7 @@ class Keke_admin {
 				Keke::admin_system_log ( $user_info ['username'] . date ( 'Y-m-d H:i:s', time () ) . $_lang['login_system'] );
 				
 				$this->set_login_limit_time ();
-				$kekezu->echojson ( $_lang['login_success'], "1" );
+				Keke::echojson ( $_lang['login_success'], "1" );
 				die ();
 			}
 		}

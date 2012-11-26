@@ -641,15 +641,14 @@ class Keke_base {
 	 * ¹Ø¼ü´Ê¹ýÂË
 	 */
 	static function str_filter($content = '') {
-		global $basic_config;
+		global $_K;
 		if (is_array ( $content )) {
 			foreach ( $content as $k => $v ) {
 				$content [$k] = self::str_filter ( $v );
 			}
 			return $content;
 		} else {
-			$basic_info = $basic_config;
-			$censor = $basic_info [ban_content];
+			$censor = $_K ['ban_content'];
 			if (empty ( $censor ) || $content == '*' || $content == '?') {
 				return $content;
 			}

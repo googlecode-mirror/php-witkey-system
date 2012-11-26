@@ -231,5 +231,14 @@ class Arr {
 		}
 		return $flat;
 	}
+	/**
+	 * 按指定的键重新生数组键值对
+	 * @param array $arr
+	 * @param string $key
+	 * @return array
+	 */
+	public static function get_array_by_key($arr, $key){
+		return keke::get_arr_by_key($arr,$key);
+	}
 }
  

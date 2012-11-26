@@ -7,7 +7,7 @@
                     "pay_desc"=>"即时到账接口",
                     "img"=>"alipayjs.gif",
   					'rate_img'=>'rate_img',
-                    "initparam"=>"account:支付宝帐号;account_name:付款人真实姓名;seller_id:合作者身份(PID);safekey:安全效验码(Key)"
+                    "initparam"=>"pay_account:支付宝收款帐号;pay_user:收款人姓名;pid:合作者身份(PID);key:安全效验码(Key)"
                );
 
 ?>

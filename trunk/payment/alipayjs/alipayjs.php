@@ -52,7 +52,7 @@ class Alipayjs extends Sys_payment {
 				"service" => 'batch_trans_notify',
 				"partner" => $this->_pay_config ['pid'],
 				"email" => Keke_valid::email($this->_pay_config ['pay_account'])?$this->_pay_config ['pay_account']:'',
-				"account_name" => $this->_pay_config ['pay_account'],
+				"account_name" => $this->_pay_config ['pay_user'],
 				"notify_url" => $_K ['siteurl'] ."/payment/alipayjs/batch_notify.php",
 				"_input_charset" => strtoupper(CHARSET),
 				"pay_date" => $pay_date,
@@ -103,8 +103,10 @@ class Alipayjs extends Sys_payment {
 		$detail_arr = array ();
 		$detail_str = '';
 		$batch_fee = 0;
+		var_dump($detail_data);die;
 		foreach ( (array)$detail_data as $v ) {
-			$v ['fee'] = self::get_to_cash( $v ['fee'] );
+			$v ['fee'] = self::get_to_cash( $v ['cash'] );
+			//var_dump($v);die;
 			$detail_str .= "|" . implode ( "^", $v );
 			$batch_fee += floatval ( $v ['fee'] );
 		}
@@ -149,6 +151,7 @@ class Alipayjs extends Sys_payment {
 				case "S" :
 					/** 提现成功*/
 					$w_cash = self::get_to_cash($info [$k]['cash']);
+					//提现利润,作提现手续费
 					$fee = $info [$k]['cash'] - $w_cash;
 					Database::instance()->execute( sprintf ( " update %switkey_withdraw set status='1',fee=%.2f where wid ='%d'", TABLEPRE,$fee, $k ) );
 					/** 用户消息提示*/

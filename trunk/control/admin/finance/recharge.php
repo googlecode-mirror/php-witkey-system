@@ -40,6 +40,7 @@ class Control_admin_finance_recharge extends Control_admin {
 		//$data_info = Model::factory ( 'witkey_recharge' )->get_grid ( $fields, $where, $uri, $order, $page, $count, $_GET ['page_size'] );
 		// 列表数据
 		$list_arr = $data_info ['data'];
+		//var_dump($list_arr);
 		// 分页数据
 		$pages = $data_info ['pages'];
 		// 用户组
@@ -52,7 +53,9 @@ class Control_admin_finance_recharge extends Control_admin {
 		$bank_arr = Keke_global::get_bank ();
 // 		var_dump($list_arr);
 		// 充值订单状态
-		$status_arr = Sys_order::get_recharge_status ();
+		
+		$status_arr = Sys_payment::recharge_status();
+		
 		// 线下支付方式
 		$offline_pay = DB::select ()->from ( 'witkey_pay_api' )->where ( "type='offline'" )->execute ();
 		$offline_pay = Keke::get_arr_by_key ( $offline_pay, 'payment' );

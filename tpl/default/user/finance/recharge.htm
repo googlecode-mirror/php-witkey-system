@@ -20,42 +20,44 @@
 		                </nav>
 		                <div class="box_detail">
 
-		                	
-
+		                	<form action="{$charge_uri}" target="_blank" method="post">
+							<input type="hidden"  name="hdn_order_id" value="$_GET['order_id']">
 		                	<div class="form_row">
-	                			<label class="form_label">第三方支付方式：</label>
-	                			<input id="tenpay" type="radio" name="paytype" checked="checked">
+	                			<label class="form_label">在线支付：</label>
+	                			
+								<input id="tenpay" type="radio" name="pay" value="tenpay" checked="checked">
 	                			<label for="tenpay" class="mr_10"><img src="{BASE_URL}/payment/tenpay/tenpay.gif" alt="财付通"></label>
 
-	                			<input id="alipay" type="radio" name="paytype">
-	                			<label for="alipay" class="mr_10"><img src="{BASE_URL}/payment/alipayjs/alipay.gif" alt="支付宝"></label>
+	                			<input id="alipay" type="radio" name="pay" value="alipayjs">
+	                			<label for="alipay" class="mr_10"><img src="{BASE_URL}/payment/alipayjs/alipayjs.gif" alt="支付宝"></label>
 
-	                			<input id="chinabank" type="radio" name="paytype">
+	                			<input id="chinabank" type="radio" name="pay" value="chinabank">
 	                			<label for="chinabank" class="mr_10"><img src="{BASE_URL}/payment/chinabank/chinabank.gif" alt="网银在线"></label>
 
-	                			<input id="paypal" type="radio" name="paytype">
-	                			<label for="paypal" class="mr_10"><img src="{BASE_URL}/payment/paypal/paypal.gif" alt="PayPal"></label>	
+	                			<input id="paypal" type="radio" name="pay" value="paypal">
+	                			<label for="paypal" class="mr_10"><img src="{BASE_URL}/payment/paypal/paypal.gif" alt="PayPal"></label>
+									
 		                	</div>
 		                	<div class="form_row float_row">
-		                		<label class="form_label">支付银行：</label>
+		                		<label class="form_label">银行：</label>
 		                		<div class="detail">
 			                		<table cellspacing="0" border="0" cellpadding="0" width="100%" height="300" >
 										<tr>
 											
 											<!--{eval $i=0;}-->
-			                				<!--{loop $bank_abb $v}-->
+			                			<!--{loop $bank_abb $k $v}-->
 											 <!--{eval $i++;}-->
 											 <td>
-												<input type="radio" name="bank_type" {if $i== 1}checked="checked"{/if}  id="$v">
+												<input type="radio" name="bank_code" {if $i== 1}checked="checked"{/if} value="$v"  id="$v">
 												<label for="$v" style="cursor:pointer;"><img src="{BASE_URL}/static/img/bank/{$i}.gif"/></label>
 											</td>
 											
-										{if $i%4==0}
-										<tr>
-										<!--{eval continue;}-->
-										</tr>
-										{/if}
-									<!--{/loop}-->
+											{if $i%4==0}
+											<tr>
+											<!--{eval continue;}-->
+											</tr>
+											{/if}
+										<!--{/loop}-->
 									</tr>
 											
 									</table>
@@ -64,7 +66,7 @@
 
 		                	<div class="form_row">
 	                			<label class="form_label">充值金额：</label>
-	                			<input type="text" value="" placeholder="请输入充值金额" ><span class="right_tip">元</span>
+	                			<input type="text" name="amount"  placeholder="请输入充值金额" limit="type:float;require:true"  ><span class="right_tip">元</span>
 		                	</div>
 
 		                	<div class="form_line"></div>
@@ -73,7 +75,7 @@
 		                			<input type="submit" value="充值">
 		                	</div>
 
-
+							</form>
 		                	
 		                </div>
 		            </div>

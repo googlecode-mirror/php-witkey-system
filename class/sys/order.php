@@ -47,7 +47,6 @@ class Sys_order {
 	public static function create_order($model_id, $seller_uid, $seller_username, $order_name, $order_amount, $order_body, $order_status = 'ok') {
 		global $uid, $username;
 		$order_obj = new Keke_witkey_order ();
-		$order_obj->_order_id = null;
 		$order_obj->setModel_id ( $model_id );
 		$order_obj->setOrder_name ( $order_name );
 		$order_obj->setOrder_uid ( $uid );
@@ -58,7 +57,7 @@ class Sys_order {
 		$order_obj->setOrder_amount ( $order_amount );
 		$order_obj->setOrder_status ( $order_status );
 		$order_obj->setOrder_time ( time () );
-		return $order_obj->create_keke_witkey_order ();
+		return $order_obj->create ();
 	}
 	/**
 	 * 用户余额充值订单生个
@@ -149,7 +148,7 @@ class Sys_order {
 		$fina_info = dbfactory::get_one ( sprintf ( " select uid,fina_cash,fina_credit from %switkey_finance where order_id ='%d'", TABLEPRE, $order_id ) );
 		if ($fina_info) {
 			//根据此条财务记录来进行返款
-			return keke_finance_class::cash_in ( $fina_info ['uid'], $fina_info ['fina_cash'], $fina_info ['fina_credit'], "order_cancel", '', 'order', $order_id );
+			return Sys_finance::cash_in ( $fina_info ['uid'], $fina_info ['fina_cash'], $fina_info ['fina_credit'], "order_cancel", '', 'order', $order_id );
 		} else {
 			return true;
 		}
@@ -198,6 +197,7 @@ class Sys_order {
 		global $_lang;
 		return array ("wait" => $_lang['wait_confirm'], "ok" => $_lang['has_pay'], 'fail' => $_lang['pay_fail'], "close" => $_lang['trans_close'] );
 	}
+	
 	public static function get_order_obj() {
 		global $_lang;
 		return array ("task" => $_lang['task_trans'], "payitem" => $_lang['payitem_service'], "service" => $_lang['goods_trans'], "hosted" => $_lang['bounty_hosting'] );

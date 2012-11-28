@@ -73,6 +73,7 @@ class Control_admin_finance_withdraw extends Control_admin {
 		DB::update ( 'witkey_withdraw' )->set ( $columns )->value ( $values )->where ( $where )->execute ();
 		// 提现失败，退款给提现的人
 		$winfo = DB::select ()->from ( 'witkey_withdraw' )->where ( $where )->get_one ()->execute ();
-		Sys_finance::cash_out ( $winfo ['uid'], $winfo ['cash'], 'withdraw_fail' );
+		//Sys_finance::cash_out ( $winfo ['uid'], $winfo ['cash'], 'withdraw_fail' );
+		Sys_finance::get_instance($winfo ['uid'])->set_action('withdraw_fail')->cash_in($winfo['cash'],0,0,'withdraw',$wid);
 	}
 }

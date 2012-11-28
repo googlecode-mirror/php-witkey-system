@@ -4,33 +4,9 @@
  * @auther 九江
  * encoding GBK  last-modify 2011-2-24
  */
-Keke_lang::load_lang_class('keke_global_class');
+Keke_lang::load_lang_class('keke_global');
 class Keke_global {
 	
-	/**
-	 * 
-	 * @return 返回 财务动作
-	 */
-	public static function get_finance_action() {
-		global $_lang;
-		return array ("realname_auth" => $_lang['realname_auth'], "bank_auth" => $_lang['bank_auth'], "email_auth" => $_lang['email_auth'],
-		 "mobile_auth" => $_lang['mobile_auth'], "buy_vip" => $_lang['buy_vip'], "buy_service" => $_lang['buy_service'],
-		 "pub_task" => $_lang['pub_task'],"hosted_reward"=>$_lang['hosted_reward'], "withdraw" => $_lang['withdraw'], "task_delay" => $_lang['task_delay'], //==========(in)=========
-		"ext_cash"=>$_lang['ext_cash'],"online_recharge" => $_lang['online_recharge'], "offline_recharge" => $_lang['offline_recharge'],
-		 "task_bid" => $_lang['task_bid'],"task_fail" => $_lang['task_fail'], "task_prom_fail" => $_lang['task_prom_fail'],
-		"sale_service" => $_lang['sale_service'], "admin_recharge" => $_lang['admin_recharge'],"withdraw_fail" => $_lang['withdraw_fail'],
-		"report"=>$_lang['report_processs'],"payitem"=>$_lang['payitem'],"prom_reg"=>$_lang['prom_reg'],"task_fj"=>$_lang['task_fj'],
-		'rights_return'=>$_lang['rights_return'],"task_auto_return"=>$_lang['task_auto_return'],'order_cancel'=>$_lang['order_cancel'],
-		"online_charge"=>$_lang['online_charge'],"order_charge"=>$_lang['order_charge'],'prom_pub_task'=>$_lang['prom_pub_task'],
-		'prom_bid_task'=>$_lang['prom_bid_task'],'prom_service'=>$_lang['prom_service'],
-		'prom_bank_auth'=>$_lang['prom_bank_auth'],'prom_realname_auth'=>$_lang['prom_realname_auth'],
-		'prom_email_auth'=>$_lang['prom_email_auth'],'prom_mobile_auth'=>$_lang['prom_mobile_auth'],
-		'prom_enterprise_auth'=>$_lang['prom_mobile_auth'],'enterprise_auth'=>$_lang['enterprise_auth'],
-		'task_remain'=>$_lang['task_remain_return'],'hosted_return'=>$_lang['task_hosted_return'],
-		'admin_charge'=>$_lang['admin_charge'],'host_deposit'=>$_lang['host_deposit'],
-		'deposit_return'=>$_lang['deposit_return'],'host_return'=>$_lang['host_return'],
-		'host_split'=>$_lang['host_split']);
-	}
 
 	public static function get_value_add_type(){
 		global $_lang;
@@ -158,7 +134,7 @@ class Keke_global {
 	 * 银行简称
 	 * @return multitype:string
 	 */
-	public static function get_bank_abb(){
+	public static function get_bank_code(){
 		global $_lang;
 		return array(
 				'1'=>'aboc',//农行

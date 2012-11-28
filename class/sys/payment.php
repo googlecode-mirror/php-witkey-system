@@ -26,8 +26,10 @@ abstract class Sys_payment {
 		if(Keke_valid::not_empty(self::$_instances[$name])){
 			return self::$_instances[$name];
 		}
+		
 		include S_ROOT.'payment/'.$name.'/'.$name.'.php';
-		$class = new $name($name);
+		$cname = ucfirst($name);
+		$class = new  $cname($name);
 		return self::$_instances[$name] = $class;
 	}
 	
@@ -45,7 +47,7 @@ abstract class Sys_payment {
 	 * @param int $rid 充值记录ID
 	 * @return string (form,url)
 	 */
-	abstract public function get_pay_html($method,$pay_amount,$subject, $order_id,$rid);
+	abstract public function get_pay_html($method,$pay_amount,$subject, $order_id,$rid,$bank_code=NULL);
 	
 	/**
 	 * 充值状态,主要用在线下充值

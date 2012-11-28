@@ -33,7 +33,7 @@
 				                			<dt>
 				                			<input type="hidden" name="formhash" value="{FORMHASH}">
 					                			<input type="radio" name="pay_id" value="{$v['pay_id']}" id="{$v['payment']}" 
-												{if $bank_pic[$v['payment']]=='1'} checked="checked" {/if}>
+												{if $i==1} checked="checked" {/if}>
 												
 												<label for="{$v['payment']}" style="cursor:pointer;">
 													<img src="{BASE_URL}/static/img/bank/{$bank_pic[$v['payment']]}.gif"/>
@@ -99,11 +99,8 @@
 		var cert_pic = $("#cert_pic").val();
 		var pic = document.getElementById('cert_pic');
 		var i=checkForm(document.getElementById("offrecharge_frm"));
-		if(isExtName(pic,1)){
-			if(i){
-				return true;
-			}
-			return false;
+		if(isExtName(pic,1) && i){
+			return true;
 		}
 		return false;
 	}

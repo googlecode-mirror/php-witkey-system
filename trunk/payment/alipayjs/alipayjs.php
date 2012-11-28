@@ -1,7 +1,7 @@
 <?php defined('IN_KEKE') or die('access denied');
 
-require 'alipay_function.php';
-require 'alipay_service.php';
+require 'lib/alipay_submit.class.php'; 
+require 'alipay_notify.class.php';
 /**
  * 支付定即时到账接口,生成 付款的url或者form
  * 
@@ -16,25 +16,35 @@ class Alipayjs extends Sys_payment {
 	
 	private  $_service = 'create_direct_pay_by_user';
 	
+	private $_alipay_config = array();
+	
+    function __construct(){
+    	parent::__construct('alipayjs');
+    	$this->_alipay_config['partner']=$this->_pay_config['pid'];
+    	$this->_alipay_config['key']=$this->_pay_config['key'];
+    	$this->_alipay_config['sign_type']=$this->_sign_type;
+    	$this->_alipay_config['input_charset']=strtolower(CHARSET);
+    	$this->_alipay_config['cacert']=getcwd().'\\cacert.pem';
+    	$this->_alipay_config['transport']='http';
+    }
+	
 	function set_service($value){
 		$this->_service = $value;
 		return $this;
 	}
 	
-	function get_pay_url($charge_type, $pay_amount, $subject, $order_id, $model_id = null, $obj_id = null ) {
-		$parameter = $this->init_param($charge_type, $pay_amount, $subject, $order_id,$model_id , $obj_id );
-		$alipay = new alipay_service ( $parameter, $this->_pay_config ['key'], $this->_sign_type );
-	    return $alipay->create_url ();
+	function get_pay_html($method,$pay_amount, $subject, $order_id,$rid) {
+		$parameter = $this->init_param($pay_amount, $subject, $order_id,$rid );
+		
+		$alipay = new AlipaySubmit($this->_alipay_config);
+		if($method==='post'){
+			return $alipay->buildRequestForm($parameter, $method, '提交中...');
+		}else{
+			return $alipay->buildRequestParaToString($parameter);
+		}
+ 
 	}
-	/**
-	 * @see Sys_payment::get_pay_form()
-	 */
-	function get_pay_form($charge_type, $pay_amount,  $subject, $order_id, $model_id = null, $obj_id = null) {
-		$parameter = $this->init_param($charge_type, $pay_amount, $subject, $order_id,$model_id , $obj_id );
-		$alipay = new alipay_service ( $parameter, $this->_pay_config ['key'], $this->_sign_type );
-		return $alipay->build_postform ();
-	}
-	
+ 	
 	/**
 	 * 生成批量付款URL
 	 * @param string $detail_data 打款明细数组
@@ -42,7 +52,7 @@ class Alipayjs extends Sys_payment {
 	 * @return string url
 	 *
 	 */
-	function get_batch_url($detail_data, $method = 'form') {
+	function get_batch_html($detail_data, $method = 'form') {
 		global $_K;
 		$body = $subject = "提现批量打款";
 		$pay_date = date ( Ymd );
@@ -54,18 +64,18 @@ class Alipayjs extends Sys_payment {
 				"email" => Keke_valid::email($this->_pay_config ['pay_account'])?$this->_pay_config ['pay_account']:'',
 				"account_name" => $this->_pay_config ['pay_user'],
 				"notify_url" => $_K ['siteurl'] ."/payment/alipayjs/batch_notify.php",
-				"_input_charset" => strtoupper(CHARSET),
+				"_input_charset" => trim(strtolower((CHARSET))),
 				"pay_date" => $pay_date,
 				"batch_no" => $batch_no,
 				"batch_num" => $detail_data['batch_num'],
 				"batch_fee"=>$detail_data['batch_fee'],
 				"detail_data"=>$detail_data['detail_data']
 		);
-		$alipay = new alipay_service ( $parameter, $this->_pay_config ['key'], $this->_sign_type,'batch');
+		$alipay = new AlipaySubmit($this->_alipay_config);
 		if ($method == 'form') {
-			return $alipay->build_postform ('get');
+			return $alipay->buildRequestForm($parameter, 'post', '提交');
 		} else {
-			return $alipay->create_url ();
+			return $alipay->buildRequestParaToString($parameter);
 		}
 	}
 	
@@ -73,21 +83,24 @@ class Alipayjs extends Sys_payment {
 	 * 初始化参数
 	 * @return array
 	 */
-	function init_param($charge_type, $pay_amount,  $subject, $order_id, $model_id = null, $obj_id = null){
+	function init_param($pay_amount,$subject, $order_id,$rid){
 		global $_K;
 		$body = "(from:" . $_SESSION['username'] . ")";
+		$order_id = (int)$order_id;
+		$rid = (int)$rid;
+		//订单充值还是余额充值
 		return array (
 				"service" => $this->_service,
-				"partner" => $this->_pay_config ['pid'],
+				"partner" => trim($this->_pay_config ['pid']),
 				"return_url" => $_K ['siteurl'] . '/payment/alipayjs/return.php',
 				"notify_url" => $_K ['siteurl'] . '/payment/alipayjs/notify.php',
 				"_input_charset" => CHARSET,
 				"subject" => $subject,
 				"body" => $body,
-				"out_trade_no" => "charge-{$charge_type}-{$_SESSION['uid']}-{$obj_id}-{$order_id}-{$model_id}",
+				"out_trade_no" => "{$_SESSION['uid']}-{$order_id}-$rid",
 				"total_fee" => $pay_amount,
 				"payment_type" => "1",
-				"show_url" => $_K ['siteurl'] . "/index.php?do=user&view=finance",
+				"show_url" => $_K ['siteurl'] . "/index.php/user/account_index",
 				"seller_email" => $this->_pay_config ['pay_account'],
 				"extend_param"=>"isv^kk11"
 		  );
@@ -103,12 +116,11 @@ class Alipayjs extends Sys_payment {
 		$detail_arr = array ();
 		$detail_str = '';
 		$batch_fee = 0;
-		var_dump($detail_data);die;
 		foreach ( (array)$detail_data as $v ) {
-			$v ['fee'] = self::get_to_cash( $v ['cash'] );
-			//var_dump($v);die;
+			$v ['cash'] = self::get_to_cash( $v ['cash'] );
+			$v['mem']='withdraw';
 			$detail_str .= "|" . implode ( "^", $v );
-			$batch_fee += floatval ( $v ['fee'] );
+			$batch_fee += floatval ( $v ['cash'] );
 		}
 		$detail_str = substr ( $detail_str, 1 );
 		 
@@ -176,36 +188,12 @@ class Alipayjs extends Sys_payment {
 		}
 	}
 	
-	/**
-	 * 获取威客实际所得的金额,用在支付宝批量打款处
-	 * 
-	 * 这里面会算出网站要收的手续费后，打给支付宝的金额
-	 * 
-	 * @param  $cash ----用户提现金额
-	 * @return $real_cash  -----用户可获得的实际金额
-	 */
-	public static function get_to_cash($cash){
-		//获取网站配置
-	 
-		$config_info = Arr::get_arr_by_key(DB::select()->from('witkey_pay_config')
-		->where("k in('per_charge','per_low','per_high')")->execute(),'k');
-		
-		$min_cash = $config_info['per_low']['v'];
-		$middle_profit = $config_info['per_charge']['v'];
-		$max_cash = $config_info['per_high']['v'];
-		//调试
-		if($cash<1){
-			return $cash;
-		}
-			
-		if($cash<=200){
-			$real_cash = abs($cash - $min_cash);
-		}elseif($cash>200&&$cash<=5000){
-			$real_cash = $cash - $cash*$middle_profit/100;
-		}elseif($cash>5000){
-			$real_cash = $cash - $max_cash;
-		}
-		return $real_cash;
-	}
 	
+	/**
+	 * alipay notify 对象
+	 * @return AlipayNotify
+	 */
+	public function get_alipay_notify(){
+		return new AlipayNotify($this->_alipay_config);
+	}
 }

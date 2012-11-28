@@ -33,9 +33,9 @@ class Control_user_finance_offrecharge extends Control_user{
 		$data_info = Model::factory('witkey_pay_api')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
 		
 		$data_list = $data_info['data'];
-// 		var_dump($data_list);
+//		var_dump($data_list);
 		//显示分页的页数
-		$bank_pic = array_flip(Keke_global::get_bank_abb());
+		$bank_pic = array_flip(Keke_global::get_bank_code());
 		
 		$pages = $data_info['pages'];
 		

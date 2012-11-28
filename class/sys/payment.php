@@ -53,6 +53,37 @@ abstract class Sys_payment {
 	public static function recharge_status(){
 	      return array('wait'=>'待确认','ok'=>'充值成功','fail'=>'充值失败');
 	}
+	/**
+	 * 改变充值记录的状态
+	 * @param int $rid 充值ID
+	 * @param string $account 充值账号
+	 * @param float $cash 充值金额
+	 * @param string $bank 银行名称 
+	 * @return bool
+	 */
+	public static function set_recharge_status($uid,$rid,$account,$cash,$bank=NULL){
+		$s = (bool)DB::update('witkey_recharge')
+		->set(array('status','bank_info'))
+		->value(array('ok',$account))
+		->where("rid = '$rid' and cash = '$cash' and uid = '$uid'")
+		->execute();
+		if($s===FALSE){
+			return $s;
+		}
+		//生成财务记录给用户余额加钱
+		Sys_finance::get_instance($uid)->set_action('recharge')
+		->set_mem(array(':bank'=>$bank,':cash'=>$cash))
+		->cash_in($cash,0,0,'recharge',$rid);
+		//消息通知打款用户
+		register_shutdown_function(array('Sys_payment','send_msg'),$uid,$rid,$cash);
+		return TRUE;
+	}
+	static function  send_msg($uid,$rid,$cash){
+		Keke_msg::instance()->to_user($uid)
+		->set_tpl('recharge_success')
+		->set_var(array('{充值单号}'=>$rid,'{充值金额}'=>$cash))
+		->send();
+	}
 	
 	/**
 	 * 获取威客实际所得的金额,用在支付宝批量打款处

@@ -84,17 +84,11 @@ class Control_admin_finance_recharge extends Control_admin {
 		//银行名称
 		$bank_arr = Keke_global::get_bank ();
 		
-		$order_info = DB::select ()->from ( 'witkey_recharge' )->where ( "rid=:rid" )
+		 $charge_info = DB::select ()->from ( 'witkey_recharge' )->where ( "rid=:rid" )
 		->param ( ":rid", $rid )->get_one ()->execute ();
-		//充值事由
-		$data =  array (':bank' => $bank_arr [$order_info ['bank']], ':cash' => $order_info ['cash'] ) ;
-		//充值金额
-		//Sys_finance::cash_in ( $order_info ['uid'], $order_info ['cash'],0, 'offline_recharge' );
-		Sys_finance::get_instance($order_info ['uid'])->set_action('recharge')
-		->set_mem($data)->cash_in($order_info ['cash'],0,0,'recharge',$rid);
-		// 改变充值记录的状态
-		DB::update ( 'witkey_recharge' )->set ( array ('status' ) )->value ( array ('ok' ) )
-		->where ( "rid=:rid" )->param ( ":rid", $rid )->execute ();
+		
+		Sys_payment::set_recharge_status($charge_info['uid'], $rid, $_GET['bank'], $charge_info['cash'],$_GET['bank']);
+		
 		// 充值日志
 		Keke::admin_system_log ( $_lang ['confirm_payment_recharge'] . $rid );
 	}

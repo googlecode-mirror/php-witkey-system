@@ -1,7 +1,7 @@
 <?php defined('IN_KEKE') or die('access denied');
 
 require 'lib/alipay_submit.class.php'; 
-require 'alipay_notify.class.php';
+require 'lib/alipay_notify.class.php';
 /**
  * 支付定即时到账接口,生成 付款的url或者form
  * 
@@ -133,6 +133,7 @@ class Alipayjs extends Sys_payment {
 	 * 批量打款返回数据解压成打款详细数据
 	 * @param $success_str 打款成功详细串接信息
 	 * @param $fail_str    打款失败详细串接信息
+	 * @return array detail_arr
 	 */
 	public  function batch_unpack_detail($success_str, $fail_str) {
 		$detail_arr = array ();
@@ -163,9 +164,9 @@ class Alipayjs extends Sys_payment {
 				case "S" :
 					/** 提现成功*/
 					$w_cash = self::get_to_cash($info [$k]['cash']);
-					//提现利润,作提现手续费
-					$fee = $info [$k]['cash'] - $w_cash;
-					Database::instance()->execute( sprintf ( " update %switkey_withdraw set status='1',fee=%.2f where wid ='%d'", TABLEPRE,$fee, $k ) );
+					//提现利润,在申请提现时就将手续费(利润)算出来， 存到feed字段中
+					//$fee = $info [$k]['cash'] - $w_cash;
+					//Database::instance()->execute( sprintf ( " update %switkey_withdraw set status='1',fee=%.2f where wid ='%d'", TABLEPRE,$fee, $k ) );
 					/** 用户消息提示*/
 					$arr = array($_lang['sitename']=>$_K['sitename'],$_lang['tx_cash']=>$w_cash);
 					Keke_msg::instance()->set_tpl('draw_success')->set_var($arr)->to_user($info[$k]['uid'])->send();

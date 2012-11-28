@@ -3,12 +3,29 @@
 include 'app_boot.php';
  
 
-$res = Sys_finance::get_instance('5')->
-set_action('pub_task')
-->set_mem(array(':task_id'=>'12',':task_title'=>'找人做一人上设计'))
-->cash_out(150,0,'task',12);
+class a{
+	
+	static function b(){
+		
+		register_shutdown_function(array('a','send_msg'),1,484,0.01);
+		return true;
+	}
+	
+	static function send_msg($uid,$rid,$cash){
+		Keke_msg::instance()->to_user($uid)
+		->set_tpl('recharge_success')
+		->set_var(array('{充值单号}'=>$rid,'{充值金额}'=>$cash))
+		->send();
+	}
+	
+} 
 
+$res = a::b();
 var_dump($res);
+
+
+
+
  
 
 //$url =  Sys_payment::factory()->get_pay_url('order', '200', 'test', 1212);

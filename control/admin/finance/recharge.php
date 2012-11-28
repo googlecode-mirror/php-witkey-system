@@ -87,9 +87,11 @@ class Control_admin_finance_recharge extends Control_admin {
 		$order_info = DB::select ()->from ( 'witkey_recharge' )->where ( "rid=:rid" )
 		->param ( ":rid", $rid )->get_one ()->execute ();
 		//充值事由
-		Sys_finance::init_mem ( 'recharge', array (':bank' => $bank_arr [$order_info ['bank']], ':cash' => $order_info ['cash'] ) );
+		$data =  array (':bank' => $bank_arr [$order_info ['bank']], ':cash' => $order_info ['cash'] ) ;
 		//充值金额
-		Sys_finance::cash_in ( $order_info ['uid'], $order_info ['cash'],0, 'offline_recharge' );
+		//Sys_finance::cash_in ( $order_info ['uid'], $order_info ['cash'],0, 'offline_recharge' );
+		Sys_finance::get_instance($order_info ['uid'])->set_action('recharge')
+		->set_mem($data)->cash_in($order_info ['cash'],0,0,'recharge',$rid);
 		// 改变充值记录的状态
 		DB::update ( 'witkey_recharge' )->set ( array ('status' ) )->value ( array ('ok' ) )
 		->where ( "rid=:rid" )->param ( ":rid", $rid )->execute ();

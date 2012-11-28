@@ -71,9 +71,15 @@
 													</p>
 					                              </td>
 												  <td>
+												  	   {if $v['btype']=='offline'}
 												  		<a href="javascript:void(0);" onclick="art.dialog.open('{BASE_URL}/$v['recharge_pic']',{title:'图片',width: '50%', height: '50%'})">
 												  			查看	
 												  		</a>
+													   {else}
+													   	<a href="javascript:void(0);" onclick="art.dialog.alert('$v['bank_info']')">
+												  			查看	
+												  		</a>
+													   {/if}
 												  </td>
 					                              <td>{$status_arr[$v['status']]} {if $v['status']=='fail'}:$v['mem']{/if}</td>
 					                              <td>{date('Y-m-d',$v['pay_time'])}</td>

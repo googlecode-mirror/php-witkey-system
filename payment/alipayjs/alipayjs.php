@@ -33,7 +33,7 @@ class Alipayjs extends Sys_payment {
 		return $this;
 	}
 	
-	function get_pay_html($method,$pay_amount, $subject, $order_id,$rid) {
+	function get_pay_html($method,$pay_amount, $subject, $order_id,$rid,$bank_code=NULL) {
 		$parameter = $this->init_param($pay_amount, $subject, $order_id,$rid );
 		
 		$alipay = new AlipaySubmit($this->_alipay_config);

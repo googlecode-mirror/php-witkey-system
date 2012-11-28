@@ -5,6 +5,10 @@
 Keke_lang::load_lang_class ( 'keke_order_class' );
 class Sys_order {
 	
+	
+	
+	
+	
 	/**
 	 * 获取指定订单+详细信息
 	 * @param int $order_id 订单编号
@@ -13,7 +17,7 @@ class Sys_order {
 	public static function get_order_info($order_id) {
 		$sql = "select a.*,b.obj_type,b.obj_id from %switkey_order a left join
 		%switkey_order_detail b on a.order_id=b.order_id where a.order_id='%d'";
-		return dbfactory::get_one ( sprintf ( $sql, TABLEPRE, TABLEPRE, $order_id ) );
+		return Dbfactory::get_one ( sprintf ( $sql, TABLEPRE, TABLEPRE, $order_id ) );
 	
 	}
 	/**
@@ -24,7 +28,7 @@ class Sys_order {
 	 */
 	public static function get_order_id($obj_type, $obj_id) {
 		$sql = "select order_id from %switkey_order_detail where obj_type='%s' and obj_id='%d'";
-		return dbfactory::get_count ( sprintf ( $sql, TABLEPRE, $obj_type, $obj_id ) );
+		return Dbfactory::get_count ( sprintf ( $sql, TABLEPRE, $obj_type, $obj_id ) );
 	}
 	/**
 	 * 获取订单的详细内容
@@ -33,7 +37,7 @@ class Sys_order {
 	 */
 	public static function get_order_detail($order_id) {
 		$sql = "select * from %switkey_order_detail where order_id = '%d'";
-		return dbfactory::query ( sprintf ( $sql, TABLEPRE, $order_id ) );
+		return Dbfactory::query ( sprintf ( $sql, TABLEPRE, $order_id ) );
 	}
 	
 	/**
@@ -56,7 +60,7 @@ class Sys_order {
 		$order_obj->setOrder_body ( $order_body );
 		$order_obj->setOrder_amount ( $order_amount );
 		$order_obj->setOrder_status ( $order_status );
-		$order_obj->setOrder_time ( time () );
+		$order_obj->setOrder_time ( SYS_START_TIME );
 		return $order_obj->create ();
 	}
 	/**
@@ -112,7 +116,7 @@ class Sys_order {
 	 * @param int $num    数量 默认为1
 	 */
 	public static function create_order_detail($order_id, $detail_name, $obj_type, $obj_id, $price, $num = '1') {
-		$detail_obj = new Keke_witkey_order_detail_class ();
+		$detail_obj = new Keke_witkey_order_detail ();
 		
 		$detail_obj->_detail_id = null;
 		$detail_obj->setOrder_id ( $order_id );
@@ -121,7 +125,7 @@ class Sys_order {
 		$detail_obj->setObj_type ( $obj_type );
 		$detail_obj->setPrice ( $price );
 		$detail_obj->setNum ( $num );
-		return $detail_obj->create_keke_witkey_order_detail ();
+		return $detail_obj->create ();
 	}
 	/**
 	 * 订单删除
@@ -138,7 +142,7 @@ class Sys_order {
 	 * @param string $to_status 变更状态
 	 */
 	public static function set_order_status($order_id, $to_status) {
-		return dbfactory::execute ( sprintf ( " update %switkey_order set order_status='%s' where order_id='%d'", TABLEPRE, $to_status, $order_id ) );
+		return Dbfactory::execute ( sprintf ( " update %switkey_order set order_status='%s' where order_id='%d'", TABLEPRE, $to_status, $order_id ) );
 	}
 	/**
 	 * 交易终止返款
@@ -153,32 +157,7 @@ class Sys_order {
 			return true;
 		}
 	}
-	/**
-	 * 订单维权提交
-	 * @param $order_id 对象编号(订单编号)
-	 * @param $report_type 举报类型
-	 * @param $to_uid 被举报人
-	 * @param $to_username 被举报人姓名
-	 * @param $file_name 上传文件路径
-	 * @return json 
-	 */
-	public static function set_report($order_id, $to_uid, $to_username, $report_type, $file_name, $desc) {
-		global $uid;
-		global $_lang;
-		$order_info = self::get_order_info ( $order_id );
-		$transname = Sys_report::get_transrights_name ( $report_type ); //举报投诉中文
-		if ($order_info ['order_uid'] == $uid || $order_info ['seller_uid'] == $uid) {
-			if ($order_info ['order_uid'] == $uid && $uid == $to_uid) {
-				Keke::keke_show_msg ( '', $_lang['buyer_can_not_to_self'] . $transname, 'error', 'json' );
-			} elseif ($order_info ['seller_uid'] == $uid && $uid == $to_uid) {
-				Keke::keke_show_msg ( '', $_lang['seller_can_not_to_self'] . $transname, 'error', 'json' );
-			}
-		} else {
-			Keke::keke_show_msg ( '', $_lang['no_trans_not_to_order'] . $transname, 'error', 'json' );
-		}
-		$uid == $order_info ['order_uid'] and $user_type = '2' or $user_type = '1'; //角色
-		$res = Sys_report::add_report ( 'order', $order_info ['obj_id'], $to_uid, $to_username, $desc, $report_type, $order_info ['order_status'], $order_id, $user_type, $file_name );
-	}
+ 
 	/**
 	 * 更新财务记录的订单号
 	 * 
@@ -193,7 +172,7 @@ class Sys_order {
 	 * 商品订单的状态定义不一样
 	 * 
 	 */
-	public static function get_recharge_status() {
+	public static function task_order_status() {
 		global $_lang;
 		return array ("wait" => $_lang['wait_confirm'], "ok" => $_lang['has_pay'], 'fail' => $_lang['pay_fail'], "close" => $_lang['trans_close'] );
 	}

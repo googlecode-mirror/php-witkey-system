@@ -76,7 +76,7 @@
         <td>
         	{if $v['status']=='wait'}
 			 {if $v['btype']=='offline'}
-        		<a href="{$base_uri}/update?rid={$v['rid']}" onclick="return kconfirm(this,'{$_lang[confirm_cashin]}？');" class="button">
+        		<a href="{$base_uri}/update?rid={$v['rid']}&bank={$bank_arr[$v['bpayment']]}" onclick="return kconfirm(this,'{$_lang[confirm_cashin]}？');" class="button">
         			 {$_lang['confirm_of_payment']}？</a>
 			 
 			    <a href="{$base_uri}/nopass?rid={$v['rid']}" onclick="return kprom(this,'不通过的理由？');" class="button">{$_lang['nopass']}</a>	

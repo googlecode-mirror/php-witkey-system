@@ -43,6 +43,8 @@ class Control_user_finance_recharge extends Control_user{
 		$subject = Keke::$_sys_config['website_name'].$title;
 		
 		$rid = $this->save_charge_recode($pay_id, $order_id, $pay_amount, $title);
+		//设置打款成功后的跳转页面
+		Cookie::set('last_page', 'user/finance_recharges');
 		
 		echo Sys_payment::factory($pay_name)->get_pay_html('post', $pay_amount, $subject, $order_id, $rid);
 	}

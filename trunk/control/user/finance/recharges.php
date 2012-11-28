@@ -28,8 +28,10 @@ class Control_user_finance_recharges extends Control_user{
 				left join %switkey_pay_api b 
 				on a.pay_id= b.pay_id ",TABLEPRE,TABLEPRE);
 		$query_fields = array('a.status'=>'状态','a.pay_name'=>'时间');
+		//充值状态
+		$status_arr = Sys_payment::recharge_status();
 		//查询状态转换
-		$_GET['txt_condition'] =  self::$_status[$_GET['txt_condition']];
+		$_GET['txt_condition'] =  $status_arr[$_GET['txt_condition']];
 		
 		$count = intval($_GET['count']);
 		$this->_default_ord_field = 'pay_time';
@@ -44,35 +46,10 @@ class Control_user_finance_recharges extends Control_user{
 		$data_list = $data_info['data'];
 		//显示分页的页数
 		$pages = $data_info['pages'];
-		//充值状态
-		$status_arr = Sys_payment::recharge_status();
+		
 		
 		require Keke_tpl::template('user/finance/recharges');
 	}
-	
-  	static $_status = 
-  		array('待确认'=>'wait','已付款'=>'ok','付款失败'=>'fail')
-	;
-	
-	//充值状态转换
-/* 	function turn_search($cond){
-		
-		
-		switch ($cond){
-			case '待确认':
-				$_GET['txt_condition']='wait';
-				break;
-			case '已付款':
-				$_GET['txt_condition']='ok';
-				break;
-			case '付款失败':
-				$_GET['txt_condition']='fail';
-				break;
-			case '交易关闭':
-				$_GET['txt_condition']='close';
-				break;
-			default:
-				$_GET['txt_condition']=$cond;
-		}
-	} */
+	 
+  
 }

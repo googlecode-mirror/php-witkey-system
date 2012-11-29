@@ -1,34 +1,47 @@
-<?php
-define ( "IN_KEKE", true );
-require_once (dirname ( dirname ( dirname ( __FILE__ ) ) ) . DIRECTORY_SEPARATOR . 'app_comm.php');
+<?php  define ( "IN_KEKE", true );
 
-require_once ("PayResponseHandler.php");
-$pay_arr = kekezu::get_payment_config ( "tenpay" );
-@extract ( $pay_arr );
-$key = $safekey;
+require (dirname ( dirname ( dirname ( __FILE__ ) ) ) . DIRECTORY_SEPARATOR . 'app_boot.php');
 
-$resHandler = new PayResponseHandler ();
-$resHandler->setKey ( $key );
-chmod('log.txt',777);
-KEKE_DEBUG and $fp = file_put_contents ( 'log.txt', var_export ( $_GET, 1 ), FILE_APPEND ); //信息录入
+require ("classes/ResponseHandler.class.php");
 
-$v_void = $resHandler->getParameter ( "sp_billno" );//tentpay内部订单号
-$v_attach = $resHandler->getParameter ( "attach" );//商家数据包
-$v_amount = $resHandler->getParameter ( "total_fee" );
-$v_amount = $v_amount * 0.01;
+$pay_config = Sys_payment::factory('tenpay')->get_pay_config();
 
-$pay_result = $resHandler->getParameter ( "pay_result" );
+	/* 创建支付应答对象 */
+	$resHandler = new ResponseHandler();
+	$resHandler->setKey($pay_config['key']);
 
-list ( $_, $charge_type, $uid, $obj_id, $order_id, $model_id ) = explode ( '-', $v_attach, 6 );
-$fac_obj = new pay_return_fac_class ( $charge_type, $model_id, $uid, $obj_id, $order_id, $v_amount, 'tenpay' );
-if ($resHandler->isTenpaySign ()) {
-	if ("0" == $pay_result && $_ == 'charge') {
-		/* charge */
-		$response = $fac_obj->load ( );
-		$fac_obj->return_notify ( 'tenpay',$response);
-	} else {
-		$fac_obj->return_notify ( 'tenpay');
+	//判断签名
+	if($resHandler->isTenpaySign()===FALSE) {
+		echo "<br/>" . "认证签名失败" . "<br/>";
+		echo $resHandler->getDebugInfo() . "<br>";
+		die;
 	}
-} else {
-	$fac_obj->return_notify ( 'tenpay');
-}
+	
+	//通知id
+	$notify_id = $resHandler->getParameter("notify_id");
+	//商户订单号
+	$out_trade_no = $resHandler->getParameter("out_trade_no");
+	//财付通订单号
+	$transaction_id = $resHandler->getParameter("transaction_id");
+	//金额,以分为单位
+	$total_fee = $resHandler->getParameter("total_fee");
+	//如果有使用折扣券，discount有值，total_fee+discount=原请求的total_fee
+	$discount = $resHandler->getParameter("discount");
+	//支付结果
+	$trade_state = $resHandler->getParameter("trade_state");
+	//交易模式,1即时到账
+	$trade_mode = $resHandler->getParameter("trade_mode");
+	
+	$total_fee = keke_curren_class::output($total_fee/100);
+	//var_dump($resHandler->getAllParameters());die;
+	if("1" == $trade_mode ) {
+		if( "0" == $trade_state){ 
+		 	Keke::show_msg('即时到帐支付成功,付款金额：'.$total_fee,Cookie::get('last_page'));
+		} else {
+			//当做不成功处理
+			//echo "<br/>" . "即时到帐支付失败" . "<br/>";
+			Keke::show_msg('即时到帐支付失败',Cookie::get('last_page'),'error');
+		}
+	} 
+	
+ 

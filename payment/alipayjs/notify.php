@@ -25,11 +25,15 @@ $buyer_email = $_POST['buyer_email'];
 if ($_POST ['trade_status'] == 'TRADE_FINISHED' || $_POST ['trade_status'] == 'TRADE_SUCCESS') { 
 	//交易成功业务处理 
 	list ($uid, $order_id ,$rid ) = explode ( '-', $out_trade_no, 3 );
-	KEKE_DEBUG AND file_put_contents ( 'log.txt', var_export ( $_POST, 1 ), FILE_APPEND );
+	//KEKE_DEBUG AND file_put_contents ( 'log.txt', var_export ( $_POST, 1 ), FILE_APPEND );
 	
 	//改变充值记录,并判断这个打款有没有处理过，如果有处理过，则返回，否则继续
 	if(Sys_payment::set_recharge_status($uid,$rid, $buyer_email, $total_fee,'支付宝')===FALSE){
 		return false;
+	}
+	
+	if($order_id>0){
+		//处理订单信息
 	}
 	//改变订单状态，以及订单对应的业务处理
 	

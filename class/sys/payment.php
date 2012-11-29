@@ -118,6 +118,9 @@ abstract class Sys_payment {
 		}
 		return $real_cash;
 	}
+	function get_pay_config(){
+		return $this->_pay_config;
+	}
 	
 }
 

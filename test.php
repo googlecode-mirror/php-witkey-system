@@ -19,9 +19,10 @@ class a{
 	}
 	
 } 
-
-$res = a::b();
-var_dump($res);
+$pay_config = Sys_payment::factory('tenpay')->get_pay_config();
+var_dump($pay_config);
+/* $res = a::b();
+var_dump($res); */
 
 
 

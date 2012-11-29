@@ -72,6 +72,10 @@ $pay_config = Sys_payment::factory('tenpay')->get_pay_config();
 					return false;
 				}
 				
+				if($order_id>0){
+					//处理订单信息
+				}
+				
 				echo 'success';
 				//------------------------------
 				//处理业务完毕

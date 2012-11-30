@@ -29,6 +29,11 @@ class Keke_msg_keke extends Keke_msg {
 	 */
 	function set_tpl($msg_type) {
 		self::$_tpl = $msg_type;
+		$where = "k = '".self::$_tpl."'";
+		$this->_tpl_info = DB::select()->from('witkey_msg_tpl')->where($where)->get_one()->execute();
+		if(!Keke_valid::not_empty($this->_tpl_info)){
+			throw new Keke_exception('模板名称不存在 请检查名称： :tpl',array(':tpl'=>$msg_type));
+		}
 		return $this;
 	}
 	/**
@@ -50,8 +55,7 @@ class Keke_msg_keke extends Keke_msg {
 	 */
 	function set_var(array $arr){
 		self::$_var += $arr;
-		$where = "k = '".self::$_tpl."'";
-		$this->_tpl_info = DB::select()->from('witkey_msg_tpl')->where($where)->get_one()->execute();
+		
 		return $this;
 	}
 	/**

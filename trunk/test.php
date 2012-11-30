@@ -3,28 +3,10 @@
 include 'app_boot.php';
  
 
-class a{
-	
-	static function b(){
-		
-		register_shutdown_function(array('a','send_msg'),1,484,0.01);
-		return true;
-	}
-	
-	static function send_msg($uid,$rid,$cash){
-		Keke_msg::instance()->to_user($uid)
-		->set_tpl('recharge_success')
-		->set_var(array('{充值单号}'=>$rid,'{充值金额}'=>$cash))
-		->send();
-	}
-	
-} 
-$pay_config = Sys_payment::factory('tenpay')->get_pay_config();
-var_dump($pay_config);
-/* $res = a::b();
-var_dump($res); */
-
-
+$res = Keke_msg::instance()->send_sms('13545368115','任务完成');
+/* $res = a::b();*/
+var_dump($res); 
+ 
 
 
  

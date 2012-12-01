@@ -1,25 +1,29 @@
-<?php
-
-
+<?php defined('IN_KEKE') or die('access deined');
 /**
- * Paypal Class
+ * paypal 支付接口
+ * @author Michael	
+ * @version 3.0 2012-12-01
  *
- * Integrate the Paypal payment gateway in your site using this easy
- * to use library. Just see the example code to know how you should
- * proceed. Btw, this library does not support the recurring payment
- * system. If you need that, drop me a note and I will send to you.
- *
- * @package		Payment Gateway
- * @category	Library
- * @author      Md Emran Hasan <phpfour@gmail.com>
- * @link        http://www.phpfour.com
  */
 
-include_once ('PaymentGateway.php');
-
-class Paypal extends PaymentGateway
-{
-
+class Paypal extends Sys_payment{
+    /**
+     * 
+     * @var 0,正式环境，1测试环境
+     */
+	private  $_debug = 1;
+		
+	private $ipnResponse;
+	private $lastError = NULL;
+	/**
+	 * @var 提交的正式地址
+	 */
+	protected  $gatewayUrl='https://www.paypal.com/cgi-bin/webscr';
+	
+	private $fields = array();
+	
+	public $ipnData = array();
+	
     /**
 	 * Initialize the Paypal gateway
 	 *
@@ -28,89 +32,77 @@ class Paypal extends PaymentGateway
 	 */
 	public function __construct()
 	{
-        parent::__construct();
+        parent::__construct('paypal');
 
-        // Some default values of the class
-		$this->gatewayUrl = 'https://www.paypal.com/cgi-bin/webscr';
-		$this->ipnLogFile = 'log.txt';
-
+        if($this->_debug===1){
+        	//测试地址
+        	$this->gatewayUrl = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
+        }
 		// Populate $fields array with a few default
-		$this->addField('rm', '2');           // Return method = POST
-		$this->addField('cmd', '_xclick');
+		$this->set_field('rm', '2');           // Return method = POST
+		$this->set_field('cmd', '_xclick');
 	}
-
-    /**
-     * Enables the test mode
-     *
-     * @param none
-     * @return none
-     */
-    public function enableTestMode()
-    {
-        $this->testMode = TRUE;
-        $this->gatewayUrl = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
+    function get_pay_html($method, $pay_amount, $subject, $order_id, $rid,$bank_code=NULL){
+    	$this->init_param($pay_amount, $subject, $order_id, $rid,$bank_code);
+    	if($method=='post'){
+    		return $this->buildRequestForm('提交中...');
+    	}else{
+    		return $this->getRequestURL();
+    	}
+    }
+    function init_param($pay_amount, $subject, $order_id,  $rid,$bank_code){
+    	global $_K;
+    	$return_url =  $_K ['siteurl']."/payment/paypal/return.php";
+    	$notify_url =  $_K ['siteurl']."/payment/paypal/return.php";
+    	$cancel_url = $_K ['siteurl'] . "/index.php/user/finance_recharges";
+    	$order_id = (int)$order_id;
+    	$out_trade_no = "{$_SESSION['uid']}-{$order_id}-$rid";
+    	//CHARSET=='gbk' and $subject = Keke::gbktoutf($subject);
+    	$this->set_field('business', $this->_pay_config['pay_account']);
+    	$this->set_field('custom', $out_trade_no);
+    	$this->set_field('amount', $pay_amount);
+    	$this->set_field('v_moneytype', 'HKD');
+    	$this->set_field('notify_url', $notify_url);
+    	$this->set_field('return', $return_url);
+    	$this->set_field('cancel_return', $cancel_url);
+    	$this->set_field('currency_code', 'HKD');
+    	$this->set_field('item_name', "(from:" . $_SESSION['username'] . ")");
+    }
+	function buildRequestForm($btn_name) {
+		// echo 1;
+		$sHtml = "<form  name='paypalsubmit'  action='".$this->gatewayUrl."' method='post'>";
+		
+		foreach ($this->fields as $key=>$val){
+			$sHtml .= "<input type='hidden' name='" . $key . "' value='" . $val . "'/>";
+		}
+		$sHtml = $sHtml . "<input type='submit'  value='$btn_name'/>";
+		$sHtml .= "<script>document.forms[\"paypalsubmit\"].submit();</script>";
+		return $sHtml;
+	}
+	
+	function getRequestURL(){
+		$url = $this->gatewayUrl.'?';
+		return $url .= http_build_query($this->fields);
+	}
+	
+    public function set_field($k,$v){
+        $this->fields[$k] = $v;
     }
 
     /**
-	 * Validate the IPN notification
-	 *
-	 * @param none
+	 * 验证返回的结果,用来作回调处理
 	 * @return boolean
 	 */
-	public function validateIpn()
-	{
-		// parse the paypal URL
-		$urlParsed = parse_url($this->gatewayUrl);
-		
-		// generate the post string from the _POST vars
-		$postString = '';
-		
-		foreach ($_POST as $field=>$value)
-		{
-			$this->ipnData["$field"] = $value;
-			$postString .= $field .'=' . urlencode(stripslashes($value)) . '&';
+	public function validateIpn(){
+		foreach ($_POST as $field=>$value){
+			$this->ipnData[$field] = $value;
 		}
-		$postString .="cmd=_notify-validate"; // append ipn command
-		
-		// open the connection to paypal
-		$fp = fsockopen("ssl://".$urlParsed[host], "443", $errNum, $errStr, 30);
-		if(!$fp)
-		{
-			// Could not open the connection, log error if enabled
-			$this->lastError = "fsockopen error no. $errNum: $errStr";
-			$this->logResults(false);
-			return false;
-		}
-		else
-		{
-			// Post the data back to paypal
-			fputs($fp, "POST $urlParsed[path] HTTP/1.1\r\n");
-			fputs($fp, "Host: $urlParsed[host]\r\n");
-			fputs($fp, "Content-type: application/x-www-form-urlencoded\r\n");
-			fputs($fp, "Content-length: " . strlen($postString) . "\r\n");
-			fputs($fp, "Connection: close\r\n\r\n");
-			fputs($fp, $postString . "\r\n\r\n");
-
-			// loop through the response from the server and append to variable
-			while(!feof($fp))
-			{
-				$this->ipnResponse .= fgets($fp, 1024);
-			}
-		 	fclose($fp); // close connection
-		}
-
-		if (eregi("VERIFIED", $this->ipnResponse))
-		{
-		 	// Valid IPN transaction.
-		 	$this->logResults(true);
-		 	return true;
-		}
-		else
-		{
-		 	// Invalid IPN transaction.  Check the log for details.
-			$this->lastError = "IPN Validation Failed . $urlParsed[path] : $urlParsed[host]";
-			$this->logResults(false);
-			return false;
-		}
+		$this->ipnData['cmd'] = '_notify-validate';
+		return  Keke::curl_request($this->gatewayUrl,TRUE,'post',$this->ipnData);
+	}
+	
+	function logResults(){
+		Keke::$_log->add(Log::DEBUG, $this->lastError)->write();
 	}
 }
+

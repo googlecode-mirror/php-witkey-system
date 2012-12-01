@@ -1,27 +1,19 @@
-<?php
-/**
- * paypal 支付跳转页面
- */
-define ( "IN_KEKE", true );
-require (dirname ( dirname ( dirname ( __FILE__ ) ) ) . DIRECTORY_SEPARATOR . 'app_comm.php');
-require "Paypal.php";
-$myPaypal = new Paypal ();
+<?php define ( "IN_KEKE", true );
+require (dirname ( dirname ( dirname ( __FILE__ ) ) ) . DIRECTORY_SEPARATOR . 'app_boot.php');
 
-// Log the IPN results
-$myPaypal->logIpn = TRUE;
+$paypal = Sys_payment::factory('paypal');
+
 // Enable test mode if needed
 //$myPaypal->enableTestMode ();
-$valid  = $myPaypal->validateIpn ();
-// Check validity and write down it
-list ( $_, $charge_type, $uid, $obj_id, $order_id, $model_id ) = explode ( '-', $myPaypal->ipnData ['custom'], 6 );
-$fac_obj = new pay_return_fac_class ( $charge_type, $model_id, $uid, $obj_id, $order_id,$myPaypal->ipnData['mc_gross'], 'paypal' );
-if ($valid) {
-	if ($myPaypal->ipnData ['payment_status'] == 'Completed') {
-		$response = $fac_obj->load();
-		$fac_obj->return_notify('paypal',$response);
-	} else {
-		$fac_obj->return_notify( 'paypal');
-	}
-} else {
-	$fac_obj->return_notify( 'paypal');
+$valid  = $paypal->validateIpn();
+
+if ($valid===FALSE) {
+  Keke::show_msg('校验失败,数据可疑',Cookie::get('last_page'),'error');
 }
+if ($paypal->ipnData ['payment_status'] == 'Completed') {
+	
+	Keke::show_msg('即时到帐支付成功,付款金额：'.$paypal->ipnData[' '],Cookie::get('last_page'));
+} else {
+	Keke::show_msg('即时到帐支付失败',Cookie::get('last_page'),'error');
+}
+ 

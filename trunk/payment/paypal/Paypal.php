@@ -67,6 +67,7 @@ class Paypal extends Sys_payment{
     	$this->set_field('cancel_return', $cancel_url);
     	$this->set_field('currency_code', 'HKD');
     	$this->set_field('item_name', "(from:" . $_SESSION['username'] . ")");
+    	$this->set_field('charset', CHARSET);
     }
 	function buildRequestForm($btn_name) {
 		// echo 1;
@@ -97,8 +98,15 @@ class Paypal extends Sys_payment{
 		foreach ($_POST as $field=>$value){
 			$this->ipnData[$field] = $value;
 		}
+		
 		$this->ipnData['cmd'] = '_notify-validate';
-		return  Keke::curl_request($this->gatewayUrl,TRUE,'post',$this->ipnData);
+		$res =  Keke::curl_request($this->gatewayUrl,TRUE,'post',$this->ipnData);
+		
+		if(strcmp($res, 'VERIFIED')==0){
+			return TRUE;
+		}elseif(strcmp($res, 'INVALID')==0){
+			return FALSE;
+		}
 	}
 	
 	function logResults(){

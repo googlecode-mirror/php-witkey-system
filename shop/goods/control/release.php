@@ -34,7 +34,7 @@ switch ($r_step) { //服务发布步骤
 		 
 			$_POST['txt_title']  = kekezu::escape($txt_title);
 			$_POST['tar_content'] =  $tar_content ;
-			$_POST['txt_price'] = keke_curren_class::convert($_POST['txt_price'],0,true);
+			$_POST['txt_price'] = Curren::convert($_POST['txt_price'],0,true);
 			$release_obj->save_service_obj ( $_POST, $std_cache_name ); //信息保存		
 			header ( "location:index.php?do=shop_release&model_id={$model_id}&r_step=step3" );
 			die ();

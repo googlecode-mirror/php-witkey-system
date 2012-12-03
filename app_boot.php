@@ -60,7 +60,7 @@ $_K['attent_list'] = Keke::$_weibo_attent;
 $_K['style_path'] = Keke::$_style_path;
 $_K['style_path']=SKIN_PATH;
 //货币列表
-//$_K['f_c_list'] = keke_curren_class::get_curr_list('code,title');
+//$_K['f_c_list'] = Curren::get_curr_list('code,title');
 
 
 //uir路由测试

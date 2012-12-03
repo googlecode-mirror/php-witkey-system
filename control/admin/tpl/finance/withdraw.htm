@@ -58,7 +58,7 @@
                 <input type="checkbox" name="ckb[]" id="ckb_$v['wid']" class="checkbox" value="{$v['wid']}">{$v['wid']}
             </td>
             <td>
-                {$bank_arr[$v['bank_name']]} 
+                {$v['bank_name']} 
              </td>
             <td>
                 {$v['username']}
@@ -124,17 +124,7 @@
 			})
 			if(ids&&typeof(ids)!=undefined){
 			$.post("{$base_uri}/batch?type=alipayjs&ids="+ids,function(url){
-			/*
-art.dialog({
-				title:"{$_lang['confirm_payment']}",
-				content: "{$_lang['you_confirm_payment']}",
-   				yesFn: function(){
-					window.open(url);this.close();
-				},
-				noFn :function(){this.close();return false;}
-				});
-*/
-				d.confirm("{$_lang['you_confirm_payment']}", function(){
+ 				d.confirm("{$_lang['you_confirm_payment']}", function(){
 				     window.open(url);
 					 d.close();
 				});	
@@ -144,6 +134,5 @@ art.dialog({
 			art.dialog.alert("{$_lang['have_no_choice_play_money']}");
 		}
 	}
- 
 </script>
 <!--{include control/admin/tpl/admin_footer}-->

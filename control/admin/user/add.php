@@ -61,50 +61,31 @@ class Control_admin_user_add extends Control_admin{
 		Keke::formcheck($_POST['formhash']);
 		if($_POST['user']){
 			//充值的金额和元宝都为0或者空的时候提醒
-			if(!$_POST['cash']&&!$_POST['credit']){
+			if(!$_POST['cash'] AND !$_POST['credit']){
 				Keke::show_msg("充值或者扣除金额不得为0或者空!!!","admin/user_add/charge","warning");
 			}
-			$fina_obj = new Keke_witkey_finance;
 			
 			CHARSET=='gbk' and $user = Keke::utftogbk($_POST['user']);
 			$info = $this->get_info($user);
 			//现金的充值和扣除
-			if ($_POST['cash_type']==0&&$_POST['cash']>$info['balance']){
-				Keke::show_msg("扣除的现金超出了可用现金!!!","admin/user_add/charge","warning");
-			}elseif($_POST['cash_type']==1){
-				$info['balance']+=$_POST['cash'];
-				$array = array('balance'=>$info['balance']);
-				Model::factory('witkey_space')->setData($array)->setWhere('uid= '.$info['uid'])->update();
-			}else{
-				$info['balance']-=$_POST['cash'];
-				$array = array('balance'=>$info['balance']);
-				Model::factory('witkey_space')->setData($array)->setWhere('uid= '.$info['uid'])->update();
+			if ($_POST['cash_type']==0 AND $_POST['cash']>$info['balance'] || 
+				$_POST['credit_type']==0 AND $_POST['credit']>$info['credit']){
+				Keke::show_msg("扣除的现金/代金券超出了可用余额!!!","admin/user_add/charge","warning");
 			}
-			$fina_obj->setFina_type('in');
-			$fina_obj->setFina_action('admin_charge');
-			$fina_obj->setFina_cash($_POST['cash']);
-			$fina_obj->setUser_balance($info['balance']);
-			$fina_obj->setUid($info['uid']);
-			$fina_obj->setUsername($info['username']);
+			 
+			$cash = (float)$_POST['cash'];
 			
-			//元宝的充值和扣除
-			if ($_POST['credit_type']==0&&$_POST['credit']>$info['credit']){
-				Keke::show_msg("扣除的元宝超出了可用元宝!!!","admin/user_add/charge","warning");
-			}elseif ($_POST['credit_type']==1){
-				$info['credit']+=$_POST['credit'];
-				$array = array('credit'=>$info['credit']);
-				Model::factory('witkey_space')->setData($array)->setWhere('uid= '.$info['uid'])->update();
-			}else{
-				$info['credit']-=$_POST['credit'];
-				$array = array('credit'=>$info['credit']);
-				Model::factory('witkey_space')->setData($array)->setWhere('uid= '.$info['uid'])->update();
+			$credit = (float)$_POST['credit'];
+			
+			if((int)$_POST['cash_type']==0){
+				$cash = -$cash;
 			}
-			$fina_obj->setFina_credit($_POST['credit']);
-			$fina_obj->setUser_credit($info['credit']);
-			$fina_obj->setFina_mem("系统管理员操作".$_POST['charge_reason']);
-			
-			//生成财务记录
-			$fina_obj->create();
+			if((int)$_POST['credit_type']==0){
+				$credit = -$credit;
+			}
+			Sys_finance::get_instance($info['uid'])->set_action('admin_charge')
+			->set_mem("系统管理员操作:".$_POST['charge_reason'])
+			->cash_in($cash,$credit);
 		}
 		require Keke_tpl::template('control/admin/tpl/user/add_charge');
 	}

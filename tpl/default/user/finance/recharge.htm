@@ -20,7 +20,7 @@
 		                </nav>
 		                <div class="box_detail">
 
-		                	<form action="{$charge_uri}" target="_blank" method="post">
+		                	<form action="{$charge_uri}" target="_blank" method="post" onsubmit="return checkForm(this)">
 							<input type="hidden"  name="hdn_order_id" value="$_GET['order_id']">
 		                	<div class="form_row">
 	                			<label class="form_label">在线支付：</label>
@@ -59,7 +59,12 @@
 
 		                	<div class="form_row">
 	                			<label class="form_label">充值金额：</label>
-	                			<input type="text" name="amount"  placeholder="请输入充值金额" limit="type:float;require:true"  ><span class="right_tip">元</span>
+	                			<input type="text" name="amount"  placeholder="请输入充值金额" 
+								limit="required:true;type:float;between:{$recharge_min}-" 
+									msg="充值金额最少为{$recharge_min}元" 
+									msgArea="span_recharge_cash" >
+								<span class="right_tip">元</span>
+								<span id="span_recharge_cash"></span>
 		                	</div>
 
 		                	<div class="form_line"></div>
@@ -77,4 +82,7 @@
     	</article>
     </div>
     <!--content end-->
+<script type="text/javascript">
+	In('valid');
+</script>	
 <!--{include user/footer}-->

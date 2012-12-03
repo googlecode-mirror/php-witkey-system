@@ -32,7 +32,7 @@ $pay_config = Sys_payment::factory('tenpay')->get_pay_config();
 	//交易模式,1即时到账
 	$trade_mode = $resHandler->getParameter("trade_mode");
 	
-	$total_fee = keke_curren_class::output($total_fee/100);
+	$total_fee = Curren::output($total_fee/100);
 	//var_dump($resHandler->getAllParameters());die;
 	if("1" == $trade_mode ) {
 		if( "0" == $trade_state){ 

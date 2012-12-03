@@ -4,7 +4,7 @@ require (dirname ( dirname ( dirname ( __FILE__ ) ) ) . DIRECTORY_SEPARATOR . 'a
 //验证结果
 $verify_result = Sys_payment::factory('alipayjs')->get_alipay_notify()->verifyReturn();
 
-$total_fee = keke_curren_class::output($_GET ['total_fee']);
+$total_fee = Curren::output($_GET ['total_fee']);
 
 if ($verify_result) {
 	Keke::show_msg('付款成功,付款金额：'.$total_fee,Cookie::get('last_page'));

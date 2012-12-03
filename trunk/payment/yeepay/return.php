@@ -10,7 +10,7 @@ $return = $yeepay->getCallBackValue($r0_Cmd,$r1_Code,$r2_TrxId,$r3_Amt,$r4_Cur,$
 $bRet = $yeepay->CheckHmac($r0_Cmd,$r1_Code,$r2_TrxId,$r3_Amt,$r4_Cur,$r5_Pid,$r6_Order,$r7_Uid,$r8_MP,$r9_BType,$hmac);
 #	以上代码和变量不需要修改.
 
-$total_fee = keke_curren_class::output($r3_Amt);
+$total_fee = Curren::output($r3_Amt);
 
 #	校验码正确.
 if($bRet===FALSE){

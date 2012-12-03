@@ -50,11 +50,11 @@ class Control_admin_finance_withdraw extends Control_admin {
 		// 更新状态
 		DB::update ( 'witkey_withdraw' )->set ( array ('status' ) )->value ( array ('1' ) )->where ( $where )->execute ();
 		// 提现信息
-		$winfo = DB::select ()->from ( 'witey_withdraw' )->where ( $where )->get_one ()->execute ();
+		/* $winfo = DB::select ()->from ( 'witey_withdraw' )->where ( $where )->get_one ()->execute ();
 		// 生成out 财务记录,不能用cash_out;
 		$columns = array ('fina_type', 'fina_action', 'uid', 'username', 'fina_cash', 'fina_time', 'obj_type', 'obj_id' );
 		$values = array ('out', 'withdraw', $winfo ['uid'], $winfo ['username'], $winfo ['cash'], time (), 'withdraw', $wid );
-		DB::insert ( 'witkey_finance' )->set ( $columns )->value ( $values )->execute ();
+		DB::insert ( 'witkey_finance' )->set ( $columns )->value ( $values )->execute (); */
 	}
 	
 	// 不通过审核
@@ -74,6 +74,7 @@ class Control_admin_finance_withdraw extends Control_admin {
 		// 提现失败，退款给提现的人
 		$winfo = DB::select ()->from ( 'witkey_withdraw' )->where ( $where )->get_one ()->execute ();
 		//Sys_finance::cash_out ( $winfo ['uid'], $winfo ['cash'], 'withdraw_fail' );
-		Sys_finance::get_instance($winfo ['uid'])->set_action('withdraw_fail')->cash_in($winfo['cash'],0,0,'withdraw',$wid);
+		Sys_finance::get_instance($winfo ['uid'])->set_action('withdraw_fail')->set_mem('提现失败')
+		->cash_in($winfo['cash'],0,0,'withdraw',$wid);
 	}
 }

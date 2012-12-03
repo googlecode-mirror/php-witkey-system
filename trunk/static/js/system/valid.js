@@ -219,7 +219,12 @@ function validElement(ele){
 			msgSpan.innerHTML = '<span>'+errMsg+'</span>';
 		}else{
 			//showDialog(errMsg,'alert','tips');
-			alert(errMsg);
+			 if(typeof(eval("art.dialog"))=="function"){
+				 art.dialog.alert(errMsg);
+			 }else{
+				 alert(errMsg);
+			 }  
+			
 		}
 		 
 		return false;
@@ -909,26 +914,26 @@ function form_valid(){
 	for(i=0;i<eles.length;i++){
 		var limit = eles[i].getAttribute("limit");
 		if(limit != null && limit != ""){
-			id = eles[i].getAttribute('id');
-			if(id !='' && id != null ){
-			  ele_valid(id);	
-			}
+			//id = eles[i].getAttribute('id');
+			//if(id !='' && id != null ){
+			  ele_valid(eles[i]);	
+			//}
 			
 		}	
 	}
 	return true;
 }
 //通用元素离焦与focus验证方法
-function ele_valid(id){
+function ele_valid(obj){
 	
-	var obj = document.getElementById(id);
+	//var obj = document.getElementById(id);
 	var msgArea = obj.getAttribute("msgArea");
 	var msg = obj.getAttribute('msg');
 	var tips = obj.getAttribute('title');
 	
 	if(tips==null) tips='&nbsp;';
 	
-	$("#"+id).blur(function(){
+	$(obj).blur(function(){
 		var url = obj.getAttribute('ajax');
 		var value="";
 		var aa = validElement(obj);
@@ -940,7 +945,7 @@ function ele_valid(id){
 		} else {
 			//ajax验证
 			if(url){
-				value = trim($("#"+id).val());
+				value = trim($(obj).val());
 				if(!value.length){
 					return false;
 				}
@@ -949,12 +954,21 @@ function ele_valid(id){
 					if($.trim(data)==true){
 						$("#" + msgArea).addClass('msg').addClass('msg_ok').removeClass('msg_tips').removeClass('msg_error');
 						$("#" + msgArea).html('<i></i>');
-						$("#"+id).attr("valid",2);
+						$(obj).attr("valid",2);
 						return true;
 					}else{
 						$("#" + msgArea).addClass('msg').addClass('msg_error').removeClass('msg_tips').removeClass('msg_ok');
-						$("#" + msgArea).html('<i></i><span>'+data+'</span>');
-						$("#"+id).attr("valid",1);
+						if(msgArea==undefined || msgArea==null){
+							 if(typeof(eval("art.dialog"))=="function"){
+								 art.dialog.alert(data);
+							 }else{
+								 alert(data);
+							 } 
+						}else{
+							$("#" + msgArea).html('<i></i><span>'+data+'</span>');
+						}
+						
+						$(obj).attr("valid",1);
 						return false;
 					}
 				})

@@ -70,7 +70,7 @@ class Control_admin_config_currencies extends Control_admin{
 	function action_update(){
 		global $_K,$_lang;
 		$code = $_GET['code'];
-		$cur = new keke_curren_class();
+		$cur = new Curren();
 		if($code){
 			//更新指定的汇率
 			$cur->update(FALSE,$code);

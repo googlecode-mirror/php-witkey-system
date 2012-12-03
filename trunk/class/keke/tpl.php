@@ -69,7 +69,7 @@ class Keke_tpl {
 		//时间处理
 		$template = preg_replace ( "/\{date\((.+?),(.+?)\)\}/ie", "Keke_tpl::datetags('\\1','\\2')", $template );
 		//货币显示
-		$template = preg_replace ( "/{c\:(.+?)(,?)(\d?)\}/ie", "keke_curren_class::currtags('\\1','\\3')", $template );
+		$template = preg_replace ( "/{c\:(.+?)(,?)(\d?)\}/ie", "Curren::currtags('\\1','\\3')", $template );
 		//头像处理
 		$template = preg_replace ( "/\{avatar\((.+?),(.+?)\)\}/ie", "Keke_tpl::avatar('\\1','\\2')", $template );
 		//文字裁剪

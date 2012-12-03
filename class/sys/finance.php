@@ -145,14 +145,17 @@ class Sys_finance {
 		$fo->setObj_id ( $obj_id );
 		$fo->setFina_credit ( $credit );
 		$fo->setFina_cash ( $cash );
-		$fo->setFina_mem ( $this->_mem );
 		$fo->setUser_balance ( $user_info ['balance'] + $cash );
 		$fo->setUser_credit ( $user_info ['credit'] + $credit );
 		$fo->setUid ( $user_info ['uid'] );
 		$fo->setUsername ( $user_info ['username'] );
 		$fo->setSite_profit ( $profit );
 		$fo->setFina_mem ( $this->_mem );
-		$sql = "update " . TABLEPRE . "witkey_space set balance = balance+{$cash},credit = credit+{$credit} where uid ='{$user_info['uid']}'";
+		
+		$cash = (float)$cash;
+		$credit = (float)$credit;
+		$sql = "update " . TABLEPRE . "witkey_space set balance = balance+{$cash},
+		credit = credit+{$credit} where uid ='{$user_info['uid']}'";
 		$res = Dbfactory::execute($sql);
 		if ($res) {
 			$fo->setFina_time ( SYS_START_TIME );

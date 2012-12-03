@@ -33,6 +33,10 @@ class Control_user_finance_offrecharge extends Control_user{
 		$data_info = Model::factory('witkey_pay_api')->get_grid($fields,$where,$uri,$order,$page,$count,$_GET['page_size']);
 		
 		$data_list = $data_info['data'];
+		
+		//用户充值的最小金额限制
+		$recharge_min =  DB::select('v')->from('witkey_pay_config')->where("k='recharge_min'")->get_count()->execute();
+		
 //		var_dump($data_list);
 		//显示分页的页数
 		$bank_pic = array_flip(Keke_global::get_bank_code());

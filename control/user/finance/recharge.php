@@ -26,6 +26,9 @@ class Control_user_finance_recharge extends Control_user{
 		->order("pay_id asc")
 		->execute();
 		
+		//用户充值的最小金额限制
+		$recharge_min =  DB::select('v')->from('witkey_pay_config')->where("k='recharge_min'")->get_count()->execute(); 
+		
 		//线上银行信息
 		$bank_abb = Keke_global::get_bank_code();
 		$charge_uri = URL::site('user/finance_recharge/charge');

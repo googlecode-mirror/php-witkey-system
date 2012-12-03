@@ -4,6 +4,7 @@
 $(function(){
 	var trObj = $("table tr.item");
 	trObj.click(function(event){
+		//alert('test');
 		trClick(this,event);
 	})
 	trObj.dblclick(function(event){
@@ -22,22 +23,26 @@ $(function(){
 		labelColor(this);
 	})
  })
- 
+//单击行一次选中，再次取消选中 
 function trClick(trObj,event){
-	var title = $(trObj).find(".dbl_target").text();
-	$(trObj).addClass("selected");
-	$.trim(title)?$(trObj).attr("title",L.double_click+title):'';
+	
 	var ckbObj = $(trObj).find(":checkbox").get(0);
 	if(ckbObj){
+		
 		if(ckbObj.checked==true){
-			$(ckbObj).attr("checked","");
+			 
+			ckbObj.checked = false;
 			$(trObj).removeClass("selected");
 		}else{
-			$(ckbObj).attr("checked","true");
+			ckbObj.checked = true;
+			
+			$(trObj).addClass("selected");
+			 
 		}
 	}
 	event.stopPropagation();
 }
+//双击行
 function trDBclick(trObj,event){
 	var dbTarget = $(trObj).find(".dbl_target");
 	var jumpHref = dbTarget.attr("href");

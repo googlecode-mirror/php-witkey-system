@@ -36,4 +36,17 @@ class Keke_user_keke extends Keke_user {
 	function avatar_flash($uid) {
 		return Keke_user_avatar::avatar_html ( $uid );
 	}
+	/**
+	 * 检查用户安全码
+	 * @param string $code
+	 */
+	function check_sec_code($code,$uid=NULL){
+		//随机码
+		if($uid===NULL){
+			$uid = $_SESSION['uid'];
+		}
+		$m = DB::select('salt,sec_code')->from('witkey_member')->where("uid='$uid'")->get_one()->execute();
+		
+		return (bool)(hash_hmac('md5', $code,$m['salt'])===$m['sec_code']);
+	}
 }

@@ -21,25 +21,32 @@
 
 		                	<div class="form_row">
 	                			<label class="form_label">账户余额：</label>
-	                			{c:$user_balance}
+	                			{c:$user['balance']}
 		                	</div>
-
-		                	
-
 		               <form action="{BASE_URL}/index.php/user/finance_withdraw/save" onsubmit="return checkForm(this)" method="post" >
 							<input type="hidden" name="formhash" value="{FORMHASH}">
 		                	<div class="form_row">
-	                			<label class="form_label">银行账户：</label>
+	                			<label class="form_label">银行：</label>
 	                			<input type="text"  size="26" name="fds[bank_name]"
+								placeholder="支付宝/中国农业银行"
 								limit="required:true"
 								title="如：支付宝，中国银行..."
 								msg="不能为空值"
 								>
 		                	</div>
-
+							<div class="form_row">
+	                			<label class="form_label">收款人名称：</label>
+	                			<input type="text" size="26"  name="fds[bank_username]"
+								placeholder="张宝支"
+								title="收款人名称"
+								limit="required:true"
+								msg="不能为空值"
+								>
+		                	</div>
 		                	<div class="form_row">
-	                			<label class="form_label">账户名：</label>
+	                			<label class="form_label">账号：</label>
 	                			<input type="text" size="26"  name="fds[bank_account]"
+								placeholder="6228110050005515"
 								title="收款账号"
 								limit="required:true"
 								msg="不能为空值"

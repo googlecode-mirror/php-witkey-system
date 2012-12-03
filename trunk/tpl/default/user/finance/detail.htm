@@ -13,29 +13,43 @@
 		                </header>
 		                <nav class="box_nav">
 								<ul id="test_ul" class="clearfix">
-									<li class="selected"><a href="#">收入</a></li>
-									<li><a href="#">支出</a></li>
+									<li {if $_K['action']=='in'}class="selected"{/if}><a href="{$base_uri}/in">收入</a></li>
+									<li {if $_K['action']=='in'}class="selected"{/if}><a href="{$base_uri}/out">支出</a></li>
 								</ul>
 		                </nav>
 		                <div class="box_detail">
 
 		                	<div class="toolbar">
-		                		<div class="actions">
-		                			<input type="search" placeholder="请输入关键字"><input type="button" value="搜索">
-		                		</div>
-		                		<div class="page">
-					                <p>
-					                    <a href="###" title="第一页">&#171;</a>
-					                    <a href="###" title="上一页">&#139;</a>
-					                    <a href="###" class="selected">1</a>
-					                    <a href="###">2</a>
-					                    <a href="###">3</a>
-					                    <a href="###">4</a>
-					                    <a href="###" title="下一页">&#155;</a>
-					                    <a href="###" title="最后一页">&#187;</a>
-					                    <span class="stats">1/10</span>
-					                </p>
-					            </div>
+		                	<form class="detail" action="{BASE_URL}/index.php/user/finance_recharges" method="get" id="frm_user_search">
+							<input type="hidden" value="{$page}" name="page">
+								<table cellspacing="0" cellpadding="0">
+									<tbody>
+										<tr>
+										    <td> 条件
+										       <select name="slt_fields">
+										       	<option></option>
+										       	{loop $query_fields $k $v}
+										       	 <option  value="$k" {if $k == $_GET['slt_fields']} selected="selected" {/if}>{$v}</option>
+												{/loop} 
+										       </select>
+											   <select name="slt_cond">
+											 	<option value="=" {if $_GET['slt_cond']=='='}selected="selected"{/if}>=</option>
+												<option value=">" {if $_GET['slt_cond']=='>'}selected="selected"{/if}>></option>
+												<option value="<" {if $_GET['slt_cond']=='<'}selected="selected"{/if}><</option>
+												<option value="like" {if $_GET['slt_cond']=='like'}selected="selected"{/if}>Like</option>
+											   </select>
+										       <input type="text" class="txt" name="txt_condition" id="txt_condition" value="{$_GET['txt_condition']}">
+											   <select name="page_size">
+												<option value="10" {if $_GET['page_size']=='10'}selected="selected"{/if}>{$_lang['page_size']}10条</option>
+												<option value="20" {if $_GET['page_size']=='20'}selected="selected"{/if}>{$_lang['page_size']}20条</option>
+												<option value="30" {if $_GET['page_size']=='30'}selected="selected"{/if}>{$_lang['page_size']}30条</option>
+											   </select>
+											   <input type="submit" value="{$_lang['search']}">
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</form>
 		                	</div>
 
 		                	<!--date_table数据表格 start-->
@@ -50,78 +64,38 @@
 		                              <th scope="col">金币余额</th>
 		                              <th scope="col">时间</th>
 		                            </tr>
-		                            </thead>
+		                            </thead> 
+									{if $data_list}
 		                            <tbody>
-		                            <tr>
-		                              <td>
-		                              	<span class="money">+￥10</span>
-		                              </td>
-		                              <td>
-		                              	+10
-		                              </td>
-		                              <td>中标收入 <a href="#">维科天猫旗舰店推广第一期:旺旺/QQ群不限,2元一稿</a></td>
-		                              <td><span class="money">￥100.00</span></td>
-		                              <td>10.00</td>
-		                              <td>2012-12-25</td>
-		                            </tr>
-		                            <tr>
-		                              <td>
-		                              	<span class="money">-￥210</span>
-		                              </td>
-		                              <td>
-		                              	0
-		                              </td>
-		                              <td>发布任务 <a href="#">纯果肉果酱系列和养生佐餐小凉菜包装标签设计</a></td>
-		                              <td><span class="money">￥90.00</span></td>
-		                              <td>0.00</td>
-		                              <td>2011-08-22</td>
-
-		                            </tr>
-		                            <tr>
-		                              <td>
-		                              	<span class="money">+￥10</span>
-		                              </td>
-		                              <td>
-		                              	0
-		                              </td>
-		                              <td>中标收入 <a href="#">维科天猫旗舰店推广第一期:旺旺/QQ群不限,2元一稿</a></td>
-		                              <td><span class="money">￥300.00</span></td>
-		                              <td>0.00</td>
-		                              <td>2011-08-21</td>
-
-		                            </tr>
-		                            <tr>
-		                              <td>
-		                              	<span class="money">+￥10</span>
-		                              </td>
-		                              <td>
-		                              	0
-		                              </td>
-		                              <td>中标收入 <a href="#">饰品主题连锁店系列装修风格效果图征集</a></td>
-		                              <td><span class="money">￥290.00</span></td>
-		                              <td>0.00</td>
-		                              <td>2011-08-20</td>
-		                            </tr>
-		                            </tbody>
-		                            
+			                           {loop $data_list $k $v}	
+			                            <tr>
+			                              <td>
+			                              	<span class="money">+{c:$v['fina_cash']}</span>
+			                              </td>
+			                              <td>+{$v['fina_credit']}</td>
+			                              <td><a href="#">{$v['fina_mem']}</a></td>
+			                              <td><span class="money">{c:$v['user_balance']}</span></td>
+			                              <td>{$v['user_credit']}</td>
+			                              <td>{date('Y-m-d',$v['fina_time'])}</td>
+			                            </tr>
+										 {/loop}
+								    </tbody>
+		                           {else}
+									 <tfoot>
+									 	<tr>
+			                            	<td colspan="6" class="t_c">暂无记录</td>
+			                        	</tr>
+			                    	</tfoot>
+								   {/if} 
 		                          </table>
+								 
 		                    </div>
 			               	<!--data_table数据表格 end-->
 
 			               	<div class="toolbar bottom">
 		                		
 		                		<div class="page">
-					                <p>
-					                    <a href="###" title="第一页">&#171;</a>
-					                    <a href="###" title="上一页">&#139;</a>
-					                    <a href="###" class="selected">1</a>
-					                    <a href="###">2</a>
-					                    <a href="###">3</a>
-					                    <a href="###">4</a>
-					                    <a href="###" title="下一页">&#155;</a>
-					                    <a href="###" title="最后一页">&#187;</a>
-					                    <span class="stats">1/10</span>
-					                </p>
+					               {$pages['page']}
 					            </div>
 		                	</div>
 

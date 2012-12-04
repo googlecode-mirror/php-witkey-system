@@ -122,15 +122,16 @@ abstract class Keke_Controller {
 			$query_uri .= '&page_size='.$_GET['page_size'];
 		}
 		//页数
-		$_GET['page'] and $page = $_GET['page'] or $page = 1;
+		//$_GET['page'] and $page = $_GET['page'] or $page = 1;
 	    //将页数加到uri上去
-	    $query_uri .= '&page='.$page;
+	    //$query_uri .= 'page='.$page;
 		//排序的uri,f表示要排序的字段
 		if($_GET['f']){
 			$query_uri .= '&f='.$_GET['f'].'&ord='.$_GET['ord'];
 		}
 		//查询uri
 		$uri = $base_uri.$query_uri;
+		//var_dump($uri);die;
 		//设置默认排序字段
 		if(!isset($_GET['f'])){
 			//默认按时间排序

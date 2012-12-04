@@ -122,7 +122,7 @@ abstract class Keke_Controller {
 			$query_uri .= '&page_size='.$_GET['page_size'];
 		}
 		//页数
-		//$_GET['page'] and $page = $_GET['page'] or $page = 1;
+		$_GET['page'] and $page = $_GET['page'] or $page = 1;
 	    //将页数加到uri上去
 	    //$query_uri .= 'page='.$page;
 		//排序的uri,f表示要排序的字段

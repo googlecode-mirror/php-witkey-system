@@ -13,14 +13,14 @@
 		                </header>
 		                <nav class="box_nav">
 								<ul id="test_ul" class="clearfix">
-									<li {if $_K['action']=='in'}class="selected"{/if}><a href="{$base_uri}/in">收入</a></li>
-									<li {if $_K['action']=='in'}class="selected"{/if}><a href="{$base_uri}/out">支出</a></li>
+									<li {if $_K['action']=='in'}class="selected"{/if}><a href="{$b_uri}/in">收入</a></li>
+									<li {if $_K['action']=='out'}class="selected"{/if}><a href="{$b_uri}/out">支出</a></li>
 								</ul>
 		                </nav>
 		                <div class="box_detail">
 
 		                	<div class="toolbar">
-		                	<form class="detail" action="{BASE_URL}/index.php/user/finance_recharges" method="get" id="frm_user_search">
+		                	<form class="detail" action="{$base_uri}" method="get" id="frm_user_search">
 							<input type="hidden" value="{$page}" name="page">
 								<table cellspacing="0" cellpadding="0">
 									<tbody>
@@ -70,10 +70,13 @@
 			                           {loop $data_list $k $v}	
 			                            <tr>
 			                              <td>
-			                              	<span class="money">+{c:$v['fina_cash']}</span>
+			                              	{if $v['fina_type']=='out'}
+											    <!--{eval $v['fina_cash']  = -(float)$v['fina_cash'];}--> 
+											{/if}
+			                              	<span class="money">{c:$v['fina_cash']}</span>
 			                              </td>
-			                              <td>+{$v['fina_credit']}</td>
-			                              <td><a href="#">{$v['fina_mem']}</a></td>
+			                              <td>{$v['fina_credit']}</td>
+			                              <td>{$v['fina_mem']}</td>
 			                              <td><span class="money">{c:$v['user_balance']}</span></td>
 			                              <td>{$v['user_credit']}</td>
 			                              <td>{date('Y-m-d',$v['fina_time'])}</td>

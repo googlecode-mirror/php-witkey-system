@@ -3,11 +3,11 @@
 include 'app_boot.php';
  
 
-$res = Keke_msg::instance()->send_sms('13545368115','任务完成');
-/* $res = a::b();*/
-var_dump($res); 
- 
+//echo Keke_user_register::instance('keke')->gen_secode('123456','7sghrm');
 
+$a = (float)'1.2';
+$a = -$a;
+var_dump($a);
 
  
 

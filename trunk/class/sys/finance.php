@@ -174,19 +174,16 @@ class Sys_finance {
 	function set_mem($data) {
 		$action_arr = self::get_action_tpl();
 		$action_str = $action_arr [$this->_action];
-		// 如果没有初始化事由或者初始化失败,就调用默认简单的行为描述
-		if (empty($action_str)){
-			//throw new Keke_exception('收支类目没有定义，请先定义类目模板');
-			$action_arr = $this->get_finance_action($this->_action );
-			$this->_mem = $action_arr [$this->_action];
-			return $this; 
-		}
 		if (is_array ( $data )) { 
 			//模板替换
 			$this->_mem = strtr ( $action_str, $data );
 		} elseif(is_string($data)) { 
 			// 直接使用字符串拼接事由
 			$this->_mem = $data;
+		}elseif(empty($data)){
+			// 如果没有初始化事由或者初始化失败,就调用默认简单的行为描述
+			$action_arr = $this->get_finance_action($this->_action );
+			$this->_mem = $action_arr [$this->_action];
 		}
 		return $this;
 	}

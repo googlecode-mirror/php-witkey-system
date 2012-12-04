@@ -43,7 +43,8 @@ class Page {
 	function Pagination($num, $perpage, $curpage, $mpurl,$anchor='') {
 		global $_lang;
 		$Paginationpage = '';
-		$this->_static or $mpurl .= strpos ( $mpurl, '?' ) ? '&' : '?';
+		$this->_static or $mpurl .= strpos ( $mpurl, '?' )===false ? '?' : '';
+		
 		$ajax_dom = $this->_ajax_dom;
 		if ($num > $perpage) {
 			$page = 10;

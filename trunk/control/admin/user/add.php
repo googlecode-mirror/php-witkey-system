@@ -84,7 +84,7 @@ class Control_admin_user_add extends Control_admin{
 				$credit = -$credit;
 			}
 			Sys_finance::get_instance($info['uid'])->set_action('admin_charge')
-			->set_mem("系统管理员操作:".$_POST['charge_reason'])
+			->set_mem(NULL)
 			->cash_in($cash,$credit);
 		}
 		require Keke_tpl::template('control/admin/tpl/user/add_charge');

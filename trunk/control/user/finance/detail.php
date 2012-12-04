@@ -36,13 +36,15 @@ class Control_user_finance_detail extends Control_user{
 	 */
 	function get_data($type=NULL){
 		
-		$fields = "`fina_cash`,`fina_credit`,`user_balance`,`user_credit`,`fina_mem`,`fina_time`";
+		$fields = "`fina_type`,`fina_cash`,`fina_credit`,`user_balance`,`user_credit`,`fina_mem`,`fina_time`";
 		
-		$query_fields = array('fina_mem'=>'事由','fina_time'=>'时间');
+		$query_fields = array('fina_cash'=>'金额','fina_mem'=>'事由','fina_time'=>'时间');
 		
 		$count = intval($_GET['count']);
 		$this->_default_ord_field = 'fina_time';
-		$base_uri = BASE_URL.'/index.php/user/finance_detail';
+		$b_uri = BASE_URL.'/index.php/user/finance_detail';
+		$base_uri = $b_uri.'/'.$type;
+ 
 		extract($this->get_url($base_uri));
 		
 		$where .= ' and uid = '.$_SESSION['uid'];
@@ -56,6 +58,7 @@ class Control_user_finance_detail extends Control_user{
 		$data_list = $data_info['data'];
 		//显示分页的页数
 		$pages = $data_info['pages'];
+		//echo $pages['page'];die;
 		
 		require Keke_tpl::template('user/finance/detail');
 	}

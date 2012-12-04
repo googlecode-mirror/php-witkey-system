@@ -47,6 +47,8 @@ class Control_user_finance_recharges extends Control_user{
 		//显示分页的页数
 		$pages = $data_info['pages'];
 		
+		$bank_names = Keke_global::get_bank();
+		//echo $bank_names['aboc'];
 		
 		require Keke_tpl::template('user/finance/recharges');
 	}

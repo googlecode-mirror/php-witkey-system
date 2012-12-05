@@ -72,7 +72,6 @@ class Keke_db_update extends Keke_db_query {
 		if($this->_where){
 			$query .= ' where '.$this->_where;
 		}
-		
 		$this->_sql = $query;
 		$query = $this->compile($db);
 		$this->reset();

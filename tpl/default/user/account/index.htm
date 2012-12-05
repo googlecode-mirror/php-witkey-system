@@ -27,56 +27,74 @@
 								</p>
 								
 								<p>
-									<span>账户余额 <strong class="money">￥3000.00</strong></span>
-									<span>金币余额 <strong class="money">￥0.00</strong></span>
+									<span>账户余额 <strong class="money">{c:$uinfo['balance']}</strong></span>
+									{if $_K['credit_is_allow']==1}
+									<span>金币余额 <strong class="money">{$uinfo['credit']}{$_K['credit_name']}</strong></span>
+									{/if}
 									<a href="{BASE_URL}/index.php/user/finance_recharge">充值</a>
 									<a href="{BASE_URL}/index.php/user/finance_withdraw">提现</a>
 								</p>
 								<p><span>所属行业：网页设计 暂未设置 </span><a href="{BASE_URL}/index.php/user/account_basic">立即设置</a></p>
 								<p>
-	                				<span>买家等级：<img src="{BASE_URL}/data/uploads/sys/mark/28624f3b088d957db.gif?fid=2077" alt="六级买家"></span>
-	                				<span>服务商等级：<img src="{BASE_URL}/data/uploads/sys/mark/188574f3b088a50adf.gif?fid=2076"alt="六级服务商"></span>
+	                				<span>买家等级：<img src="{BASE_URL}/{$user_title[0]['ico']}" title="{$user_title[0]['title']}"></span>
+	                				<span>服务商等级：<img src="{BASE_URL}/{$user_title[1]['ico']}" title="{$user_title[1]['title']}"></span>
 	                			</p>
 	                		</div>
 
 	                		<div class="form_line">
 	                			<hr>
 	                		</div>
-
-	                		<div class="form_tip success col2">
+							
+	                		<div class="form_tip {if $uinfo['mobile_status']}success{else}info{/if} col2">
 		                		<span class="icon"></span>
 		                		<div class="detail">
-		                		<p>手机 已绑定</p>
-		                		<p>155****7940 <a href="{BASE_URL}/index.php/user/account_basic">解绑手机</a></p>
+		                		<p>手机 {if $uinfo['mobile_status']}已绑定{else}未绑定{/if}</p>
+		                		<p>{$uinfo['mobile']} 
+								{if $uinfo['mobile_status']}
+								<a href="{BASE_URL}/index.php/user/account_basic/unmobile">解绑手机</a>
+								{else}
+								<a href="{BASE_URL}/index.php/user/account_basic">绑定手机</a>
+								{/if}
+								</p>
 		                		</div>
 		                	</div>
 
-		                	<div class="form_tip info col2">
+		                	<div class="form_tip {if $uinfo['email_status']}success{else}info{/if} col2">
 		                		<span class="icon"></span>
 		                		<div class="detail">
-		                		<p>邮箱 未绑定</p>
-		                		<p>mail@qq.com <a href="#">绑定邮箱</a></p>
+		                		<p>邮箱 {if $uinfo['email_status']}已绑定{else}未绑定{/if}</p>
+		                		<p>{$uinfo['email']} 
+								{if $uinfo['email_status']}
+								<a href="{BASE_URL}/index.php/user/account_basic/unemail">解绑邮箱</a>
+								{else}
+								<a href="{BASE_URL}/index.php/user/account_basic">绑定邮箱</a>
+								{/if}
+								</p>
 		                		</div>
 		                	</div>
-
-	                		<div class="form_tip info col2">
+                            {if $uinfo['group_id']==2}
+	                		<div class="form_tip {if $uinfo['realname_status']}success{else}info{/if} col2">
 		                		<span class="icon"></span>
 		                		<div class="detail">
-		                		<p>实名认证 未通过</p>
-		                		<p><a href="#">立即开始实名认证</a></p>
+		                		<p>实名认证    {if $uinfo['realname_status']}已通过{else}未通过{/if}</p>
+		                		<p>{if !$uinfo['realname_status']}
+								<a href="{BASE_URL}/index.php/user/account_auth">立即开始实名认证</a>
+								{/if}
+								</p>
 		                		</div>
 		                	</div>
-
-		                	<div class="form_tip info col2">
+							{elseif $uinfo['group_id']==3}
+		                	<div class="form_tip {if $uinfo['enter_status']}success{else}info{/if} col2">
 		                		<span class="icon"></span>
 		                		<div class="detail">
-		                		<p>企业认证 未通过</p>
-		                		<p><a href="#">立即开始企业认证</a></p>
+		                		<p>企业认证 {if $uinfo['enter_status']}已通过{else}未通过{/if}</p>
+		                		<p>{if !$uinfo['enter_status']}
+		                			<a href="{BASE_URL}/index.php/user/account_auth/enter">立即开始企业认证</a>
+								   {/if}
+								</p>
 		                		</div>
 		                	</div>
-
-		                	
-
+							{/if}
 		                </div>
 		            </div>
 		        </div>

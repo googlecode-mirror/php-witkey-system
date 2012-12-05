@@ -7,6 +7,8 @@
  */
 define('USER_URL', BASE_URL.'/index.php/user');
 abstract  class Control_user extends Controller{
+	protected $uid ;
+	protected $username;
     /**
      * 一级导航菜单
      */
@@ -81,6 +83,8 @@ abstract  class Control_user extends Controller{
     function __construct($request,$response){
     	parent::__construct($request, $response);
     	//Keke_user_login::instance()->auto_login();
+    	$this->uid = $_SESSION['uid'];
+    	$this->username = $_SESSION['username'];
     	if(Keke_user_login::instance()->logged_in()===FALSE){
     		Cookie::set('last_page', $this->request->uri());
     		$this->request->redirect('login');

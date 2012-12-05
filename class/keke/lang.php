@@ -1,58 +1,81 @@
-<?php
+<?php defined('IN_KEKE') or die('access is deined');
 class Keke_lang {
 	
-	static $_init_lang_set = array();
-	private  static $_package = 'public';
+	private static $_init_lang_set = array();
+	//公共语言夹
+	private static $_dir = 'public';
+	//当前语言
 	public static $_lang='cn';
- 	public static function lang($key,$action=null,$package=null){
-		$r = self::getlang($key, $action, $package);
-		$package or $package = self::$_package;
-		$action or $action = 'public';
-	 	(KEKE_DEBUG==1 and !$r) and  $r = "lang:$key not found  please edit langfile lang/cn/{$package}/{$action}.php"; 
+	
+	private static $_caches;
+	/**
+	 * 加载的文件列表，用来调试
+	 */
+	public static $_files = array();
+	/**
+	 * 当前语言列表
+	 */
+	public static $lang_list =  array(
+			"cn"=>"简体中文",
+			"tw"=>"繁体中文",
+			"en"=>"English",
+			"ko"=>"korea");
+	
+ 	public static function lang($key,$class=null,$dir=null){
+		$r = self::getlang($key, $class, $dir);
+		$dir or $dir = self::$_dir;
+		$class or $class = 'public';
+	 	//(KEKE_DEBUG==1 and !$r) and  $r = "lang:$key not found  please edit langfile lang/cn/{$dir}/{$class}.php"; 
 		return $r;
 	}
-	public static function package_init($package){
-		self::$_package = $package;
-		self::loadlang("public");
+	/**
+	 * 设置目录
+	 * @param string $dir
+	 * @return Keke_lang
+	 */
+	public static function set_dir($dir){
+		self::$_dir = $dir;
+		return self;
 	}
-	
-	
-	
-	public static function loadlang($action,$package=null){
+	/**
+	 * 加载lang数组，并将lang设为全局变量
+	 * @param string $class lang文件
+	 * @param string $dir 目录
+	 */
+	public static function loadlang($class,$dir=null){
 		global $_lang;
-		$lang = self::load_lang_file($action,$package); 
-		if (!empty($lang)){
+		(array)$lang = self::load_lang_file($class,$dir); 
 		foreach ($lang as $k=>$v){
-		 	self::$_init_lang_set[$k]=$v;
+			$_lang[$k] =$v;
 		 }
-		 //self::$_init_lang_set = array_merge(self::$_init_lang_set,$lang);
-		 $_lang =  self::$_init_lang_set;
-		}
 	}
 	
 	
-	private static function getlang($key,$action,$package=null){
-		if ($action){
-			$lang = self::load_lang_file($action,$package);
+	private static function getlang($key,$class,$dir=null){
+		if ($class){
+			$lang = self::load_lang_file($class,$dir);
 			return $lang[$key];
-		}
-		else {
+		}else {
 			return self::$_init_lang_set[$key];
 		}
 	}
-	
+	/**
+	 * 返回当前语言
+	 * @return string
+	 */
 	public static function get_lang(){
-		$lang_arr =self::lang_type();
-		$l = 'cn';
-		if(isset($_COOKIE['keke_lang'])){
-			$l = trim($_COOKIE['keke_lang']);
+		$lang_arr =self::$lang_list;
+		$l = Cookie::get('keke_lang');
+		if(!isset($lang_arr[$l])){
+			$l = self::$_lang;
 		}
-		$lang_arr[$l] and $r=$l or $r = self::$_lang;
-		return $r;
+		return $l;
 	}
-	public static function lang_type(){
-		return  array("cn"=>"简体中文","tw"=>"繁体中文","en"=>"English","ko"=>"korea");
-	}
+
+	/**
+	 * 语言与货币的对应数组
+	 * @return array
+	 */
 	public static function get_curr_list(){
 		global $_lang;
 		return array(
@@ -62,17 +85,28 @@ class Keke_lang {
 				'en'=>array('USD',$_lang['usd'])
 		);
 	}
-	private static function load_lang_file($action,$package=null){
+	/**
+	 * 加载指定的语言文件
+	 * @param string $class 语言包文件
+	 * @param string $dir  目录
+	 * @return array
+	 */
+	private static function load_lang_file($class,$dir=null){
+		$lang  = array();
 		$r = self::get_lang();
-		$package or $package = self::$_package;
-		$file_name = S_ROOT."lang/".$r."/{$package}/{$action}.php";
-		file_exists($file_name) and include $file_name;
+		$dir or $dir = self::$_dir;
+		$file_name = S_ROOT.'lang/'.$r."/{$dir}/{$class}.php";
+		self::$_files[] = $file_name;
+ 		if(file_exists($file_name)){
+			self::$_caches[$dir.$class] = $file_name;
+			include $file_name;
+		}
 		return $lang;
+		
 	}
+	 
 	public  static function load_lang_class($class_name=null){
-           
          self::loadlang($class_name,'public');
 	}
 	
-}
-?>
+}//end

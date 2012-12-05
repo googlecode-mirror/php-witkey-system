@@ -3,7 +3,7 @@
 
 /**
  * this not free,powered by keke-tech
- * @version 2.2
+ * @version 3.0
  * @auther xujie
  * 
  */
@@ -44,9 +44,9 @@ class Keke_core extends Keke_base {
 		spl_autoload_register ( array (	'Keke_core','autoload') );
 	
 	}
-	public static function keke_require_once($filename, $class_name = null) {
+/* 	public static function keke_require_once($filename, $class_name = null) {
 		isset ( $GLOBALS ['class'] [$filename] ) or (($GLOBALS ['class'] [$filename] = 1) and require $filename);
-	}
+	} */
 	
 	public static function autoload($class_name) {
 		try{
@@ -227,7 +227,7 @@ class Keke extends Keke_core {
 	public static function get_instance() {
 		static $obj = null;
 		if ($obj === null) {
-			$obj = new Keke ();
+			$obj = new self();
 		}
 		return $obj;
 	}
@@ -338,8 +338,7 @@ class Keke extends Keke_core {
 		define ( 'UPLOAD_ROOT', S_ROOT . '/data/uploads/' . UPLOAD_RULE ); // 附件保存物理路径
 		define ( 'UPLOAD_ALLOWEXT', '' . $config_arr ['file_type'] ); // 允许上传的文件后缀，多个后缀用“|”分隔
 		define ( 'UPLOAD_MAXSIZE', '' . $config_arr ['max_size'] * 1024 * 1024 ); // 允许上传的附件最大值
-		define ( "CREDIT_NAME", $config_arr ['credit_rename'] ? $config_arr ['credit_rename'] : $_lang ['credit'] );
-		define ( "EXP_NAME", $config_arr ['exp_rename'] ? $config_arr ['exp_rename'] : $_lang ['experience'] );
+		define ( "CREDIT_NAME", $config_arr ['credit_name']);
 		define ( 'FORMHASH', Keke::formhash () );
 		Keke::$_sys_config = $config_arr;
 		Keke::$_style_path = $_K ['siteurl'] . "/" . SKIN_PATH;
@@ -412,7 +411,7 @@ class Keke extends Keke_core {
 	}
 	//初始化语言
 	function init_lang() {
-		Keke::$_lang_list = Keke_lang::lang_type ();
+		//Keke::$_lang_list = Keke_lang::$lang_type;
 		Keke::$_lang = Keke_lang::get_lang ();
 	}
 	//初始化货币
@@ -481,11 +480,11 @@ class Keke extends Keke_core {
 		
 	}
 	function init_out_put() {
-		/* if(function_exists('ob_gzhandler')){
+		 if(function_exists('ob_gzhandler')){
 			ob_start ('ob_gzhandler');
-		}else{ */
+		}else{ 
 			ob_start();
-		//}
+		}
 	}
 	/**
 	 * 查指定目录中的文件
@@ -578,5 +577,5 @@ unset($ipath);
 
 Keke::get_instance ();
 
-Keke_lang::load_lang_class ( 'keke_core_class' );
+//Keke_lang::load_lang_class ( 'keke_core_class' );
 // end 

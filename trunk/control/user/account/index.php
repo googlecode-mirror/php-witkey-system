@@ -24,7 +24,7 @@ class Control_user_account_index extends Control_user{
 		$uinfo = self::get_user_info();
 
 		$user_title = Keke_user_mark::get_title($this->uid);
-		
+	     
 		require Keke_tpl::template('user/account/index');
 	}
 	/**

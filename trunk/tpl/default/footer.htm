@@ -11,7 +11,7 @@
 							<dd>
                     	 	{P_NAME}{KEKE_VERSION} Copyright &copy; 2009 -2011 kekezu. All rights reserved <a href="http://icp.valu.cn/" target="_blank">{$_K['filing']}</a>
 								{if KEKE_DEBUG}
-								<!--{eval list($querys,$times)=Keke::execute_time()}-->
+								<!--{eval list($querys,$times)=Keke::execute_time();var_dump(Keke_lang::$_files);}-->
 								<span>
 									Querys: {$querys}
 									 &nbsp;
@@ -85,11 +85,7 @@
 <script type="text/javascript">
 	var uid="{$_K['uid']}";
 	var xyq = "<!--{eval echo $xyq = session_id();}-->";
-	{if $exec_time_traver}
-	$(function(){
-	   $.get('js.php?op=time&r='+Math.random());	
-	})
-	{/if}
+	 
  //js“Ï≤Ωº”‘ÿ
 In('common');
 

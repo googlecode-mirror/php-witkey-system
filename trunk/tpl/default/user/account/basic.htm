@@ -115,7 +115,9 @@
 										});
 									}
 									function valid_code(){
-										
+										var code = $("#mobile_code").val();
+										var url = BASE_URL+'/index.php/user/account_basic/valid_code/'+code;
+										loaction.href=url;
 									}
 								</script>
 								

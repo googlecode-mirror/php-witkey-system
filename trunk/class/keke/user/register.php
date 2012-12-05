@@ -69,9 +69,9 @@ abstract class Keke_user_register {
 			}
 		}
 		
-		$columns = array('uid','username','email','reg_time','reg_ip','last_login_time','status');
+		$columns = array('uid','username','email','reg_time','reg_ip','last_login_time','status','buyer_level','seller_level');
 		
-		$values = array($uid,$username,$this->_email,time(),Keke::get_ip(),time(),$status);
+		$values = array($uid,$username,$this->_email,time(),Keke::get_ip(),time(),$status,1,1);
 		
 		return (int)DB::insert('witkey_space')->set($columns)->value($values)->execute();
 	}

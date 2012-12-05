@@ -7,9 +7,10 @@ class Control_admin_config_msg extends Control_admin{
      * 短信接口配置
      */
 	function  action_index(){
-    	global $_K,$_lang;
     	
-    	require Keke_tpl::template('control/admin/tpl/config/msg_config');
+		 $user =  Keke_sms::instance()->get_userinfo();
+		 
+    	 require Keke_tpl::template('control/admin/tpl/config/msg_config');
     }
     /**
      * 保存配置信息

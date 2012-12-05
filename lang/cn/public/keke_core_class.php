@@ -23,6 +23,6 @@ $lang=array(
       'credit'=>'代金券',
       'experience'=>'经验值',
 
-/*keke_base_class.php*/
+ 
 
 );

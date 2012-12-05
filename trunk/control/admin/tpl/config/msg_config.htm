@@ -46,7 +46,7 @@
     </tr>
   <tr>
   	<th scope="row">短信用户信息：</th>
-	<td>用户余额：<!--{eval $user =  Keke_sms::instance()->get_userinfo(); echo  keke_curren_class::output($user['balance']); }--></td>
+	<td>用户余额：{c:$user['balance']}</td>
   </tr>
    <tr>
 		<th scope="row">&nbsp;</th>

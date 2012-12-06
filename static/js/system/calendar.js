@@ -1,4 +1,10 @@
 
+/**
+ * 
+ * onclick="showcalendar(event, this, 0)" ;
+ * 
+ */
+
 var userAgent = navigator.userAgent.toLowerCase();
 var is_opera = userAgent.indexOf('opera') != -1 && opera.version();
 var is_moz = (navigator.product == 'Gecko') && userAgent.substr(userAgent.indexOf('firefox') + 8, 3);
@@ -143,7 +149,7 @@ function changePos(id){
 	var p = getposition(id);
 	var s = new Array();
 	s['x']=s['y']=0;
-	$("#[id*='fwin_']").get(0)?s=winScroll():'';
+	$("[id*='fwin_']").get(0)?s=winScroll():'';
 	document.getElementById('calendar').style.left = p['x']+s['x']+'px';
 	document.getElementById('calendar').style.top	= (p['y']+s['y'] + 20)+'px';
 }

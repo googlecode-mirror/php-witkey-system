@@ -1,4 +1,3 @@
-//<!--
 /*******************************************************************************
  * PCAS (Province City Area Selector 省、市、地区联动选择JS封装类) Ver 2.02 完整版 *\
  * 
@@ -113,4 +112,3 @@ PCAS.SetA = function(PCA) {
 				PCA.SelA[i - 1].selected = true
 		}
 }
-//-->

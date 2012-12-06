@@ -18,16 +18,19 @@
 									<li><a href="{USER_URL}/account_auth/enter">企业认证</a></li>
 								</ul>
 		                </nav>
+						<form action="{USER_URL}/account_auth/real_save">
+							<input type="hidden" value="{FORMHASH}" id="formhash" >
+						
 		                <div class="box_detail">
-
+							{if empty($auth_info) OR $_GET['ac']=='reset'}
 		                	<div class="form_row">
 		                		<label class="form_label">真实姓名：</label>
-		                		<input type="text" value="" size="25">
+		                		<input type="text" value="$auth_info['realname']" size="25">
 		                	</div>
 
 		                	<div class="form_row">
 		                		<label class="form_label">身份证号码：</label>
-		                		<input type="text" value="" size="25" placeholder="请输入15~18位身份证号码">
+		                		<input type="text" value="$auth_info['id_code']" size="25" placeholder="请输入15~18位身份证号码">
 		                	</div>
 
 		                	<div class="form_row">
@@ -39,49 +42,46 @@
 		                		<label class="form_label">身份证反面：</label>
 		                		<input type="file">
 		                	</div>
-
-		                	<div class="form_tip info">
+							{else}
+		                
+		                	<div class="form_tip {if $auth_info['auth_status']==0}
+							info {elseif $auth_info['auth_status']==1}
+							success {elseif $auth_info['auth_status']==2}
+							error
+							{/if}">
 		                		<span class="icon"></span>
 		                		<div class="detail">
-			                		<p>认证信息已经提交，信息审核中，请耐心等待！</p>
-			                		<p>真实姓名：灵媒师</p>
-			                		<p>身份证号码：00000000000000000x</p>
-		                		</div>
-		                	</div>
-
-		                	<div class="form_tip success">
-		                		<span class="icon"></span>
-		                		<div class="detail">
-			                		<p>认证成功！</p>
-			                		<p>真实姓名：灵媒师</p>
-			                		<p>身份证号码：00000000000000000x</p>
+			                		<p>
+			                			{if $auth_info['auth_status']==0}
+			                			认证信息已经提交，信息审核中，请耐心等待！ 
+										{elseif $auth_info['auth_status']==1}
+										认证成功！ 
+										{elseif $auth_info['auth_status']==2}
+										认证失败！$auth_info['mem']
+										{/if}
+										</p>
+			                		<p>真实姓名：$auth_info['realname']</p>
+			                		<p>身份证号码：$auth_info['id_code']</p>
 			                	</div>
 		                	</div>
-
-
-		                	<div class="form_tip error">
-		                		<span class="icon"></span>
-		                		<div class="detail">
-			                		<p>认证失败！您的身份证无效或者过期。</p>
-			                		<p>真实姓名：灵媒师</p>
-			                		<p>身份证号码：00000000000000000x</p>
-			                	</div>
-		                	</div>
-		                	
-
+							{/if}
 		                	<div class="form_line"><hr></div>
 
-
-
 		                	<div class="form_footer">
+		                		
+		                			{if empty($auth_info) OR $_GET['ac']=='reset'}
 		                			<input type="submit" value="提交">
 		                			<input type="reset" value="重置">
-		                			<input type="button" value="返回修改">
-		                			<input type="button" value="重新认证">
+									{elseif $auth_info['auth_status']==0}
+		                			<input type="button" onclick="location.href = location.href+'?ac=reset'" value="返回修改">
+									{elseif $auth_info['auth_status']==3}
+		                			<input type="button" onclick="location.href = location.href+'?ac=reset'" value="重新认证">
+									{/if}
+									
 		                	</div>
 
-
 		                </div>
+					</form>
 		            </div>
 		        </div>
     		</div>

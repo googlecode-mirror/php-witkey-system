@@ -92,7 +92,6 @@ abstract class Keke_user_register {
 			<a href="'.Keke::$_sys_config['website_url'].'/index.php/login/active_email?code='.$hash_code.'&auid='.$uid.'" traget="_blank">
 			'.$_lang['onclick_activate_account'].'
 			</a>';
-
 		Keke_msg::instance()->to_user($uid)->send_mail($this->_email,$title,$body);
 	}
 	/**
@@ -106,8 +105,17 @@ abstract class Keke_user_register {
 			//激活连接无效
 			return -1;
 		}
+		//绑定邮箱
+		$sql = "replace into `:keke_witkey_auth_email`\n".
+				"(uid,username,email,auth_time,auth_status)\n".
+				"values\n".
+				"(:uid,:username,:email,:auth_time,:auth_status) ";
+		DB::query($sql,Database::UPDATE)->tablepre(':keke_')
+		->parameters(array(':uid'=>$uid,':username'=>$this->_username,
+		':email'=>$this->_email,':auth_time'=>SYS_START_TIME,':auth_status'=>1))
+		->execute();
+		//更新状态状态
 		return (bool)DB::update('witkey_space')->set(array('status'))->value(array(1))->where($where)->execute();
-		
 	}
 	/**
 	 * 生成安全码

@@ -5,8 +5,15 @@ include 'app_boot.php';
 
 //echo Keke_user_register::instance('keke')->gen_secode('123456','7sghrm');
 
-$res = Keke_user_mark::get_title(5);
+$columns = array('uid','username','email');
 
+$email = '232,3,232,3';
+
+$values = array(6,'xx',$email);
+
+$res = DB::insert('witkey_auth_email')->set($columns)->value($values)->execute();
+
+var_dump($res);die;
 
 
 //$url =  Sys_payment::factory()->get_pay_url('order', '200', 'test', 1212);

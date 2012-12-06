@@ -89,7 +89,17 @@ function check_all(){
     	}
     })
 }
-
+function kconfirm(o,s){
+	d = art.dialog;
+	var c = "{$_lang['confirm']}?";
+	if(s){
+		c=s;
+	}
+	d.confirm(c, function(){
+			location.href = o.href;
+	}).follow(o);
+	return false;
+}
 </script>
 <!--{eval list($times,$memory)=Keke::execute_time()}-->
  

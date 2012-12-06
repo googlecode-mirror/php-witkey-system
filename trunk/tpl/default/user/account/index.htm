@@ -51,7 +51,7 @@
 		                		<p>手机 {if $uinfo['mobile_status']}已绑定{else}未绑定{/if}</p>
 		                		<p>{$uinfo['mobile']} 
 								{if $uinfo['mobile_status']}
-								<a href="{BASE_URL}/index.php/user/account_basic/unmobile">解绑手机</a>
+								<a onclick="return kconfirm(this);" href="{BASE_URL}/index.php/user/account_index/unmobile">解绑手机</a>
 								{else}
 								<a href="{BASE_URL}/index.php/user/account_basic">绑定手机</a>
 								{/if}
@@ -65,7 +65,7 @@
 		                		<p>邮箱 {if $uinfo['email_status']}已绑定{else}未绑定{/if}</p>
 		                		<p>{$uinfo['email']} 
 								{if $uinfo['email_status']}
-								<a href="{BASE_URL}/index.php/user/account_basic/unemail">解绑邮箱</a>
+								<a onclick="return kconfirm(this);" href="{BASE_URL}/index.php/user/account_index/unemail">解绑邮箱</a>
 								{else}
 								<a href="{BASE_URL}/index.php/user/account_basic">绑定邮箱</a>
 								{/if}

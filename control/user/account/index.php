@@ -55,5 +55,15 @@ class Control_user_account_index extends Control_user{
 				"on a.uid = e.uid where a.uid = :uid";
 		return DB::query($sql)->tablepre(':keke_')->param(':uid', $uid)->get_one()->execute();
 	}
+	//邮件解绑
+	function action_unemail(){
+		DB::update('witkey_auth_email')->set(array('auth_status'))->value(array(0))->where("uid=$this->uid")->execute();
+		$this->request->redirect('user/account_index');
+	}
+	//手机解绑
+	function action_unmobile(){
+		DB::update('witkey_auth_mobile')->set(array('auth_status'))->value(array(0))->where("uid=$this->uid")->execute();
+		$this->request->redirect('user/account_index');
+	}
 	
 }

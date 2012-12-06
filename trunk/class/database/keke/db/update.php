@@ -61,7 +61,7 @@ class Keke_db_update extends Keke_db_query {
 		}
 		if(is_array($this->_value)){
 			$values = $db->quote_string($this->_value);
-			$this->_value = explode(',',$values);
+			$this->_value = explode(':\n',$values);
 		}
 		$set_arr = array_combine($this->_set, $this->_value);
 		
@@ -72,8 +72,10 @@ class Keke_db_update extends Keke_db_query {
 		if($this->_where){
 			$query .= ' where '.$this->_where;
 		}
+		
 		$this->_sql = $query;
 		$query = $this->compile($db);
+		
 		$this->reset();
 		return $db->query($query,$this->_type);
 		

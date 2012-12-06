@@ -22,7 +22,30 @@ class Control_user_account_auth extends Control_user{
 	 */
 	function action_index(){
 		
-		require Keke_tpl::template('user/account/auth_realname');
+		$auth_info = DB::select()->from('witkey_auth_realname')->where("uid= $this->uid")->get_one()->execute();
+		
+		
+		$gid = DB::select('group_id')->from('witkey_space')->where("uid= $this->uid")->get_count()->execute();
+		if($gid==2){
+			require Keke_tpl::template('user/account/auth_realname');
+		}else{
+			$this->action_enter();
+		}
+	}
+	function action_real_save(){
+		Keke::formcheck($_POST['formhash']);
+		$realname = $_POST['realname'];
+		$id_code = $_POST['id_code'];
+		$id_pic = $_POST['realname'];
+		$pic = $_POST['realname'];
+		$sql = "replace into `:keke_witkey_auth_realname`\n".
+				"(uid,username,realname,id_code,pic,id_pic,start_time,auth_status) \n".
+				"values (:uid,:username,:realname,:id_code,:pic,:id_pic,:start_time,:auth_status) where uid=:uid";
+		$params = array(':uid'=>$this->uid,':username'=>$this->username,':realname'=>$realname,
+				      ':id_code'=>$id_code,':pic'=>$pic,':id_pic'=>$id_pic,
+					  ':start_time'=>SYS_START_TIME,':auth_status'=>0);
+		DB::query($sql)->tablepre(':keke_')->parameters($params)->execute();
+		Keke::show_msg('提交成功','user/account_auth');
 	}
  
 	/**

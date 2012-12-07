@@ -18,29 +18,29 @@
 									<li><a href="{USER_URL}/account_auth/enter">企业认证</a></li>
 								</ul>
 		                </nav>
-						<form action="{USER_URL}/account_auth/real_save">
+						<form action="{USER_URL}/account_auth/real_save" method="post" enctype="multipart/form-data">
 							<input type="hidden" value="{FORMHASH}" id="formhash" >
 						
 		                <div class="box_detail">
 							{if empty($auth_info) OR $_GET['ac']=='reset'}
 		                	<div class="form_row">
 		                		<label class="form_label">真实姓名：</label>
-		                		<input type="text" value="$auth_info['realname']" size="25">
+		                		<input type="text" value="$auth_info['realname']" name="realname" maxlength="10" size="25">
 		                	</div>
 
 		                	<div class="form_row">
 		                		<label class="form_label">身份证号码：</label>
-		                		<input type="text" value="$auth_info['id_code']" size="25" placeholder="请输入15~18位身份证号码">
+		                		<input type="text" value="$auth_info['id_code']" name="id_code" maxlength="18" size="25" placeholder="请输入15~18位身份证号码">
 		                	</div>
 
 		                	<div class="form_row">
 		                		<label class="form_label">身份证正面：</label>
-		                		<input type="file">
+		                		<input type="file" name="id_pic">
 		                	</div>
 
 		                	<div class="form_row">
 		                		<label class="form_label">身份证反面：</label>
-		                		<input type="file">
+		                		<input type="file" name="pic">
 		                	</div>
 							{else}
 		                

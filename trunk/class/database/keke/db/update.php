@@ -60,8 +60,7 @@ class Keke_db_update extends Keke_db_query {
 			array_walk ( $this->_set, array ($db, 'quote_field' ) );
 		}
 		if(is_array($this->_value)){
-			$values= $db->quote_string($this->_value);
-			$this->_value = explode(',',$values);
+			$this->_value = $db->quote_string($this->_value);
 		}
 		$set_arr = array_combine($this->_set, $this->_value);
 		

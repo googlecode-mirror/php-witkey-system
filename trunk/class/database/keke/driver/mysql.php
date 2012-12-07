@@ -142,9 +142,9 @@ final class Keke_driver_mysql extends Keke_database {
 		array_walk ( $fs, array ($this, 'quote_field' ) );
 		$field = implode ( ',', $fs );
 		$value = $this->quote_string($vs);
-
+        
 		$method = $replace ? 'replace' : 'insert';
-		$sql = $method . ' into ' . $tablename . ' (' . $field . ') values (' . $value . ')';
+		$sql = $method . ' into ' . $tablename . ' (' . $field . ') values (' . implode(',', $value) . ')';
 		return $res = $this->query ( $sql, Database::INSERT );
 		/* var_dump($res);die;
 		if ($returnid && ! $replace) {

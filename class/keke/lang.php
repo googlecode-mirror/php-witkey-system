@@ -75,18 +75,27 @@ class Keke_lang {
 	public function load($class){
 		global $_lang;
 		$lang = array();
-		$lang = $this->load_public();
-		$lang = $lang +(array)$this->load_file($class); 
+		$lang = (array)$this->load_file($class); 
 		foreach ($lang as $k=>$v){
 			$_lang[$k] =$v;
 		}
+		$this->load_public();
 	}
+	
 	public function load_public(){
+		global $_lang;
 		$lang = array();
 		$p_name = S_ROOT.'lang/'.$this->get_lang()."/public/public.php";
+		$files = array_flip(self::$_files);
+		if(isset($files[$p_name])){
+			return ;
+		}
 		include $p_name ;
+		
 		self::$_files[] = $p_name;
-		return $lang;
+		foreach ($lang as $k=>$v){
+			$_lang[$k] =$v;
+		}
 	}
 	/**
 	 * 加载指定的语言文件
@@ -110,8 +119,14 @@ class Keke_lang {
 			include $file_name;
 			$lang += $lang;
 		}
+		register_shutdown_function(array('Keke_lang','cache_files'));
 		return $lang;
 	}
+	
+	public static function cache_files(){
+		Keke::cache('laod_lang',array_flip(self::$_files));	
+	}
+	
 	/**
 	 * 加载类的语言文件
 	 * @param string $class_name

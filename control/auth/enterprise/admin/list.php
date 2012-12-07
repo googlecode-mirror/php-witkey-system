@@ -19,7 +19,7 @@ class Control_auth_enterprise_admin_list extends Controller {
 	function action_index(){
 	   global $_K,$_lang;
  
-	   $fields = ' `uid`,`username`,`company`,`licen_num`,`licen_pic`,`run_years`,`url`,`cash`,`staff_num`,`start_time`,`auth_status`,`end_time`';
+	   $fields = ' `uid`,`username`,`legal`,`id_pic`,`pic`,`company`,`licen_num`,`licen_pic`,`run_years`,`mem`,`start_time`,`auth_status`,`end_time`';
 	   //要查询的字段,在模板中显示用的
 	   $query_fields = array('uid'=>$_lang['id'],'company'=>$_lang['name'],'start_time'=>$_lang['time']);
 	   //总记录数,分页用的，你不定义，数据库就是多查一次的。为了少个Sql语句，你必须要写的，亲!
@@ -55,8 +55,20 @@ class Control_auth_enterprise_admin_list extends Controller {
 		 }else{
 		 	$uid = $_POST['ckb'];
 		 }
-		 Keke_user_auth::pass($uid, $auth_code);
-		 Keke::show_msg($_lang['submit_success'],$this->_uri,'success');
+		 
+		 $sql = "update `:keke_witkey_auth_enterprise` as a \n".
+				"left join :keke_witkey_space as b\n".
+				"on a.uid = b.uid\n".
+				"left join :keke_witkey_member_auth as c\n".
+				"on a.uid = c.uid\n".
+				"set a.auth_status = 1,\n".
+				"b.truename = a.legal,\n".
+				"c.enterprise = 1 where a.uid = :uid";
+		 DB::query($sql,Database::UPDATE)->tablepre(':keke_')->param(':uid', $uid)->execute();
+		 
+		 //Keke_user_auth::pass($uid, $auth_code);
+		 
+		 //Keke::show_msg($_lang['submit_success'],$this->_uri,'success');
 	}
 	/**
 	 * 认证不通过
@@ -66,11 +78,18 @@ class Control_auth_enterprise_admin_list extends Controller {
 		$auth_code = 'enterprise';
 		if($_GET['u_id']){
 			$uid = $_GET['u_id'];
-		}else{
-			$uid = $_POST['ckb'];
-		}
-		Keke_user_auth::no_pass($uid, $auth_code);
-		Keke::show_msg($_lang['submit_success'],$this->_uri,'success');
+		} 
+		if (CHARSET == 'gbk') {
+			$mem = Keke::utftogbk ( $_POST ['data'] );
+		}		
+		$sql = "update `:keke_witkey_auth_enterprise` as a \n".
+				"left join :keke_witkey_member_auth as c\n".
+				"on a.uid = c.uid\n".
+				"set a.auth_status = 2,\n".
+				"a.mem='$mem', \n". 
+				"c.enterprise = 0 where a.uid = :uid";
+		
+		DB::query($sql,Database::UPDATE)->tablepre(':keke_')->param(':uid', $uid)->execute();
 	}
 	/**
 	 * 单条删除与多条删除 

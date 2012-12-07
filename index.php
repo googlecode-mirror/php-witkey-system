@@ -12,15 +12,8 @@ $_K ['directory'] = $request->initial ()->directory ();
 
 $_K['directory'] or $_K['directory'] = 'index';
 
- 
-Keke_lang::loadlang ( $_K ['control'] ,$_K['directory'] );
-
+Keke_lang::get_instance()->set_dir($_K['directory'])->load($_K ['control']);
 
 echo $request->execute()->send_headers(TRUE);
 
 die;
-
-
-
-
-

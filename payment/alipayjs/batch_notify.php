@@ -1,6 +1,6 @@
 <?php  define ( "IN_KEKE", true );
 
-require (dirname ( dirname ( dirname ( __FILE__ ) ) ) . DIRECTORY_SEPARATOR . 'app_comm.php');
+require (dirname ( dirname ( dirname ( __FILE__ ) ) ) . DIRECTORY_SEPARATOR . 'app_boot.php');
 
 //计算得出通知验证结果
 (bool)$verify_result = Sys_payment::factory('alipayjs')->get_alipay_notify()->verifyNotify();

@@ -6,10 +6,8 @@ include 'app_boot.php';
 //echo Keke_user_register::instance('keke')->gen_secode('123456','7sghrm');
 //ÓïÑÔ°ü¼ÓÔØ²âÊÔ
 
-
-$bank = Keke_global::get_bank();
-
-var_dump($bank,Keke_lang::$_files);
+DB::insert('witkey_task_temp')->set(array('task_title','task_desc'))
+->value(array("ta'rtr'sk,task",'test1'))->execute();
 
 
 //$url =  Sys_payment::factory()->get_pay_url('order', '200', 'test', 1212);

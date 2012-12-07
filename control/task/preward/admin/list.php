@@ -6,7 +6,7 @@
    2012-10-19
  */
 
-class Control_task_preward_admin_list extends Control_task_list{
+class Control_task_preward_admin_list extends Control_admin_task_list{
 	/**
 	 * @var 模型代码
 	 */
@@ -57,14 +57,14 @@ class Control_task_preward_admin_list extends Control_task_list{
         $task_info = $this->get_task_info();
          
         $base_uri = $this->_base_uri;
-        $process_arr = Control_task_list::can_operate($task_info['task_status']);
+        $process_arr = Control_admin_task_list::can_operate($task_info['task_status']);
         $indus_option_arr = Sys_indus::get_indus_tree($task_info['indus_id']);
         //计件任务状态
         $status_arr = Control_task_preward_task::get_task_status();
         //获取任务的增值项
         $payitem_list = Sys_payitem::get_task_payitem($this->_task_id);
         
-        $file_list = Control_task_list::get_task_file($this->_task_id);
+        $file_list = Control_admin_task_list::get_task_file($this->_task_id);
          
     	require Keke_tpl::template('control/task/'.$this->_model_code.'/tpl/admin/task_edit');
     }

@@ -6,7 +6,7 @@
    2012-10-19
  */
 
-class Control_task_mreward_admin_config extends Control_task_config{
+class Control_task_mreward_admin_config extends Control_admin_task_config{
 	
 	public  $_model_code   = 'mreward';
     /**

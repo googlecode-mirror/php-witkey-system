@@ -83,6 +83,61 @@ class Keke_base {
 	
 	} */
 	/**
+	 *
+	 * Enter 字符串星号装换
+	 * @param string $str
+	 * @param int $start    开始位置
+	 * @param int $end		倒数多少个字符结束
+	 * @param int $start_num  要替换成多少星星
+	 * @param string $preg_str  要替换的特殊字符串
+	 */
+	public static function set_star($str, $start, $end, $start_num = 3, $preg_str = "*") {
+		if (strlen ( $str ) <= ($start + $end)) {
+				
+			return $str;
+		}
+		$start_str = mb_strcut ( $str, 0, $start, CHARSET );
+		$tmp_str = mb_strcut ( $str, 0, - $end, CHARSET );
+		$end_str = mb_strcut ( $str, mb_strlen ( $tmp_str ), mb_strlen ( $str ) );
+		$replace_str = str_repeat ( $preg_str, $start_num );
+		return $start_str . $replace_str . $end_str;
+	}
+	/**
+	 * 二级域名跳转。仅支持空间的二级
+	 */
+	static function redirect_second_domain() {
+		global $_K, $kekezu;
+		if ($kekezu->_sys_config ['second_domain']) { //开启
+			$host = $_SERVER ['HTTP_HOST'];
+			preg_match ( '/^(\d+)\./', $host, $m );
+			if ($m [1]) { //空间二级域名
+				$uid = intval ( $m [1] );
+				$e = Dbfactory::query ( sprintf ( ' select uid from %switkey_member where uid=%d', TABLEPRE, $uid ) );
+				if ($e) {
+					header ( 'Location:' . $_K ['siteurl'] . '/index.php?do=space&member_id=' . $uid . '&' . $_SERVER ['QUERY_STRING'] );
+				} else {
+					header ( 'Location:' . $_K ['siteurl'] . '/index.php?do=error&type=user' );
+				}
+			}
+		}
+	}
+	/**
+	 * 构造个人空间链接
+	 * [可构造二级域名]
+	 * @param int $mid 用户编号
+	 */
+	static function build_space_url($mid) {
+		global $_K, $kekezu;
+		if ($kekezu->_sys_config ['second_domain']) { //开启二级域名
+			$top = $kekezu->_sys_config ['top_domain'];
+			$p_url = preg_replace ( '/(\w*\.)?' . $top . '/', $mid . '.' . $top, $_K ['siteurl'] );
+		} else {
+			$p_url = $_K ['siteurl'] . "/index.php?do=space&member_id=$mid";
+		}
+		return $p_url;
+	}
+	
+	/**
 	* 将很长的数字转换成 xx万
 	*
 	* @param $number int、float..
@@ -99,46 +154,6 @@ class Keke_base {
 	return ((round ( $number / 1000 )) / 10) . $unit; // round四舍五入 ceil进一法取整
 	// floor舍去法取整
 	}
-	/**
-	 * 
-	 * Enter 字符串星号装换
-	 * @param string $str   
-	 * @param int $start    开始位置
-	 * @param int $end		倒数多少个字符结束
-	 * @param int $start_num  要替换成多少星星
-	 * @param string $preg_str  要替换的特殊字符串
-	 */
-	public static function set_star($str, $start, $end, $start_num = 3, $preg_str = "*") {
-		if(strlen($str)<=($start+$end)){
-			
-			return $str;
-		} 
-		 $start_str = mb_strcut($str, 0,$start,CHARSET); 
-	  	 $tmp_str = mb_strcut($str, 0,-$end,CHARSET);  
-	 	 $end_str =  mb_strcut($str,mb_strlen($tmp_str),mb_strlen($str)); 
-	 	 $replace_str = str_repeat($preg_str,$start_num); 
-	 	return $start_str.$replace_str.$end_str;
-	}
-	/**
-	 * */
-	static function exec_js($mode='set',$timer=300){
-		$path = S_ROOT."/data/data_cache/time_cache.php";
-		switch($mode){
-			case "set":
-				$str = '<?php '.(time()+$timer).';';
-				return keke_file_class::write_file($path,$str);
-				break;
-			case "get":
-				$last_respons = 0;
-				if(file_exists($path)){
-					$last_respons = mb_strcut(file_get_contents($path),6,10);
-				}
-				return intval($last_respons);
-				break;
-		}
-		
-	}
-
 	
 	static public function refer_url() {
 		global $_K;
@@ -376,40 +391,8 @@ class Keke_base {
 			return $output;
 		}
 	}
-	/**
-	 * 构造个人空间链接
-	 * [可构造二级域名]
-	 * @param int $mid 用户编号
-	 */
-	static function build_space_url($mid) {
-		global $_K;
-		if (Keke::$_sys_config ['second_domain']) { //开启二级域名
-			$top = Keke::$_sys_config ['top_domain'];
-			$p_url = preg_replace ( '/(\w*\.)?' . $top . '/', $mid . '.' . $top, $_K ['siteurl'] );
-		} else {
-			$p_url = $_K ['siteurl'] . "/index.php?do=space&member_id=$mid";
-		}
-		return $p_url;
-	}
-	/**
-	 * 过滤通过文本输入的内容中的特殊标签
-	 * [input|textarea|button|marquee|iframe|frame...]
-	 * Enter description here ...
-	 * @param unknown_type $string
-	 */
-	static function filter_input($str) {
-		if (is_array ( $str )) {
-			$key = array_keys ( $str );
-			$s = sizeof ( $str );
-			for($i = 0; $i < $s; $i ++) {
-				$str [$key [$i]] = self::filter_input ( $str [$key [$i]] );
-			}
-		} else {
-			$str = htmlspecialchars_decode ( $str );
-			$str = preg_replace ( '/<(input|textarea|select|button|marquee|iframe|frame|form|script)/', '</\\1', $str );
-		}
-		return $str;
-	}
+
+
 	/**
 	 * echo json
 	 *

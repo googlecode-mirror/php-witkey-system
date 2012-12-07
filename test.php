@@ -4,16 +4,12 @@ include 'app_boot.php';
  
 
 //echo Keke_user_register::instance('keke')->gen_secode('123456','7sghrm');
+//ÓïÑÔ°ü¼ÓÔØ²âÊÔ
 
-$columns = array('uid','username','email');
 
-$email = '232,3,232,3';
+$bank = Keke_global::get_bank();
 
-$values = array(6,'xx',$email);
-
-$res = DB::insert('witkey_auth_email')->set($columns)->value($values)->execute();
-
-var_dump($res);die;
+var_dump($bank,Keke_lang::$_files);
 
 
 //$url =  Sys_payment::factory()->get_pay_url('order', '200', 'test', 1212);

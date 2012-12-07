@@ -9,7 +9,7 @@ class Control_task_sreward_cron extends Sys_task_cron {
      /**
       * ÅúÁ¿Ö´ÐÐ
       */
-     function batch_run(){
+     function run(){
         $this->jg_to_xg();
         $this->xg_to_gs();
         $this->gs_to_jf();

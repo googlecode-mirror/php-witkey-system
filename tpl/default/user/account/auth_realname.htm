@@ -61,7 +61,7 @@
 										{/if}
 										</p>
 			                		<p>真实姓名：$auth_info['realname']</p>
-			                		<p>身份证号码：$auth_info['id_code']</p>
+			                		<p>身份证号码：<!--{eval echo Keke::set_star($auth_info['id_code'],3,3)}--></p>
 			                	</div>
 		                	</div>
 							{/if}

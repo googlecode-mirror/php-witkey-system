@@ -49,7 +49,7 @@
 		                		<span class="icon"></span>
 		                		<div class="detail">
 		                		<p>手机 {if $uinfo['mobile_status']}已绑定{else}未绑定{/if}</p>
-		                		<p>{$uinfo['mobile']} 
+		                		<p><!--{eval echo Keke::set_star($uinfo['mobile'],3,3)}-->
 								{if $uinfo['mobile_status']}
 								<a onclick="return kconfirm(this);" href="{BASE_URL}/index.php/user/account_index/unmobile">解绑手机</a>
 								{else}
@@ -77,6 +77,7 @@
 		                		<span class="icon"></span>
 		                		<div class="detail">
 		                		<p>实名认证    {if $uinfo['realname_status']}已通过{else}未通过{/if}</p>
+								<p>名称：{$uinfo['truename']}</p>
 		                		<p>{if !$uinfo['realname_status']}
 								<a href="{BASE_URL}/index.php/user/account_auth">立即开始实名认证</a>
 								{/if}
@@ -88,6 +89,8 @@
 		                		<span class="icon"></span>
 		                		<div class="detail">
 		                		<p>企业认证 {if $uinfo['enter_status']}已通过{else}未通过{/if}</p>
+								<p>法人：{$uinfo['legal']}</p>
+								<p>公司名称：{$uinfo['company']}</p>
 		                		<p>{if !$uinfo['enter_status']}
 		                			<a href="{BASE_URL}/index.php/user/account_auth/enter">立即开始企业认证</a>
 								   {/if}

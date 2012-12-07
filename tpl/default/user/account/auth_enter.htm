@@ -37,7 +37,7 @@
 
 		                	<div class="form_row">
 		                		<label class="form_label">企业法人：</label>
-		                		<input type="text" value="{$auth_info['lgal']}" name="lgal" maxlength="10" size="25">
+		                		<input type="text" value="{$auth_info['legal']}" name="legal" maxlength="10" size="25">
 		                	</div>
 							
 		                	<div class="form_row">
@@ -76,7 +76,7 @@
 										{/if}
 										</p>
 			                		<p>企业法人：$auth_info['legal']</p>
-			                		<p>企业执照：$auth_info['licen_num']</p>
+			                		<p>企业执照：<!--{eval echo Keke::set_star($auth_info['licen_num'],3,3)}--></p>
 			                	</div>
 		                	</div>
 							{/if}

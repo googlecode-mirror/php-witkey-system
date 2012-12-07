@@ -19,7 +19,7 @@ class Control_auth_realname_admin_list extends Controller {
 	function action_index(){
 	   global $_K,$_lang;
  
-	   $fields = '`uid`,`username`,`realname`,`id_code`,`id_pic`,`pic`,`cash`,`start_time`,`auth_status`,`end_time`';
+	   $fields = '`uid`,`username`,`realname`,`id_code`,`id_pic`,`pic`,`cash`,`start_time`,`auth_status`,`end_time`,`mem`';
 	   //要查询的字段,在模板中显示用的
 	   $query_fields = array('uid'=>$_lang['id'],'realname'=>$_lang['name'],'start_time'=>$_lang['time']);
 	   //总记录数,分页用的，你不定义，数据库就是多查一次的。为了少个Sql语句，你必须要写的，亲!
@@ -57,14 +57,28 @@ class Control_auth_realname_admin_list extends Controller {
 	function action_pass(){
 		 global $_lang;
 		 $auth_code = 'realname';
+         // 更新认证表，认证记录表，用户表
+		 $sql = "update  `:keke_witkey_auth_realname` as a \n".
+				"left join :keke_witkey_space as b\n".
+				"on a.uid = b.uid\n".
+				"left join :keke_witkey_member_auth as c \n".
+				"on a.uid = c.uid\n".
+				"set a.auth_status =1 ,\n".
+				"b.truename = a.realname,\n".
+				"c.realname = 1, \n".
+				"b.group_id = 2\n";
+		 
 		 if($_GET['u_id']){
 		 	$uid = $_GET['u_id'];
+		 	$sql .= "where a.uid = $uid";
 		 }else{
 		 	$uid = $_POST['ckb'];
+		 	$sql .= "where a.uid in ($uid)";
 		 }
-		 Keke_user_auth::pass($uid, $auth_code);
-		 Keke::show_msg($_lang['submit_success'],$this->_uri,'success');
+		 
+		 DB::query($sql,Database::UPDATE)->tablepre(':keke_')->execute();
 	}
+	
 	/**
 	 * 认证不通过
 	 */
@@ -73,11 +87,21 @@ class Control_auth_realname_admin_list extends Controller {
 		$auth_code = 'realname';
 		if($_GET['u_id']){
 			$uid = $_GET['u_id'];
-		}else{
-			$uid = $_POST['ckb'];
 		}
-		Keke_user_auth::no_pass($uid, $auth_code);
-		Keke::show_msg($_lang['submit_success'],$this->_uri,'success');
+		
+		if (CHARSET == 'gbk') {
+			$_POST ['data'] = Keke::utftogbk ( $_POST ['data'] );
+		}
+		
+		$sql = "update  `keke_witkey_auth_realname` as a \n".
+				"left join keke_witkey_member_auth as c \n".
+				"on a.uid = c.uid\n".
+				"set a.auth_status =2 ,\n".
+				"c.realname = 0,\n".
+				"a.mem = :mem \n".
+				"where a.uid = $uid";
+		
+		DB::query($sql,Database::UPDATE)->tablepre(':keke_')->param(':mem', $_POST['data'])->execute();
 	}
 	/**
 	 * 单条删除与多条删除 

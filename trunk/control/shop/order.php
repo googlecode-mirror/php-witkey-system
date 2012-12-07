@@ -5,7 +5,7 @@
  * @version 2.2
    2012-10-21
  */
-Keke_lang::loadlang ('list','shop');
+Keke_lang::load_lang_class('list','shop');
 abstract class Control_shop_order extends Control_admin{
     
 	/**

@@ -61,7 +61,7 @@ abstract  class Sys_task_cron {
 		$where = "mocdel_type='task' and model_status = 1";
 		$models = DB::select('model_code')->from('witkey_model')->where($where)->execute();
 		foreach ($models as $v){
-			Sys_task_cron::factory($v['model'])->run();
+			Sys_task_cron::factory($v['model_code'])->run();
 		}
 	}
 }//end

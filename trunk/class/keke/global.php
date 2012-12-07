@@ -5,6 +5,7 @@
  * encoding GBK  last-modify 2011-2-24
  */
 Keke_lang::load_lang_class('keke_global');
+
 class Keke_global {
 	
 

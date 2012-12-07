@@ -73,17 +73,13 @@ class Keke_lang {
 	 * @param string $class lang文件
 	 */
 	public function load($class){
-		global $_lang;
-		$lang = array();
-		$lang = (array)$this->load_file($class); 
-		foreach ($lang as $k=>$v){
-			$_lang[$k] =$v;
-		}
+		 
+		$this->load_file($class); 
+		
 		$this->load_public();
 	}
 	
 	public function load_public(){
-		global $_lang;
 		$lang = array();
 		$p_name = S_ROOT.'lang/'.$this->get_lang()."/public/public.php";
 		$files = array_flip(self::$_files);
@@ -91,11 +87,9 @@ class Keke_lang {
 			return ;
 		}
 		include $p_name ;
-		
+		$this->init_lang($lang);
 		self::$_files[] = $p_name;
-		foreach ($lang as $k=>$v){
-			$_lang[$k] =$v;
-		}
+ 
 	}
 	/**
 	 * 加载指定的语言文件
@@ -103,38 +97,52 @@ class Keke_lang {
 	 * @param string $dir  目录
 	 * @return array
 	 */
-	private  function load_file($class){
+	public  function load_file($class){
 		$lang  = array();
 		$r = self::get_lang();
 		$dir = $this->_dir;
 		$file_name = S_ROOT.'lang/'.$r."/{$dir}/{$class}.php";
 		//目录下的公共文件
 		$p_name = S_ROOT.'lang/'.$r."/{$dir}/public.php";
+		
+		//已经加载了就不再加载
+		$files = array_flip(self::$_files);
+		if(isset($files[$p_name]) OR isset($files[$file_name])){
+			return ;
+		}
+	 	
 		if(file_exists($p_name) AND $this->_default != $this->_dir){
 			self::$_files[] = $p_name;
 			include $p_name;
+			$this->init_lang($lang);
 		}
  		if(file_exists($file_name)){
 			self::$_files[] = $file_name;
 			include $file_name;
-			$lang += $lang;
+			$this->init_lang($lang);
 		}
-		register_shutdown_function(array('Keke_lang','cache_files'));
-		return $lang;
+	}
+	
+	public function init_lang($lang){
+		global $_lang;
+		foreach ($lang as $k=>$v){
+			$_lang[$k] =$v;
+		}
 	}
 	
 	public static function cache_files(){
-		Keke::cache('laod_lang',array_flip(self::$_files));	
+		Keke::cache('load_lang',array_flip(self::$_files));	
 	}
 	
 	/**
 	 * 加载类的语言文件
 	 * @param string $class_name
 	 */ 
-	public static function load_lang_class($class_name){
+	public static function load_lang_class($class_name,$dir='public'){
 		 $o  = self::get_instance();
-		 $o->set_dir('public');
-         $o->load($class_name);
+		 $o->set_dir($dir);
+		
+         $o->load_file($class_name);
 	}
 	
 	/**

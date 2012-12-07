@@ -49,7 +49,7 @@ class Keke_core extends Keke_base {
 	} */
 	
 	public static function autoload($class_name) {
-		try{
+		
 		    $class_name = strtolower($class_name);
 		    
 			$path = str_replace ( '_', '/', $class_name);
@@ -61,11 +61,10 @@ class Keke_core extends Keke_base {
 				require $class;
 				return true;
 			}
-		 }catch (Exception $e){
-			throw new Keke_exception($e);
-		} 
+		 
 		return false;
  	}
+
 	/**
 	 * 本方法要缓存系统初始化加的类文件
 	 *
@@ -149,7 +148,6 @@ class Keke_core extends Keke_base {
 		
 		if ($code != 8 ) {
 			ob_get_level () and ob_clean ();
-// 			var_dump($code,$error);die;
 			Keke_exception::handler ( new ErrorException ( $error, $code, 0, $file, $line ) );
 		}
 		return TRUE;
@@ -410,7 +408,6 @@ class Keke extends Keke_core {
 	}
 	//初始化语言
 	function init_lang() {
-		//Keke::$_lang_list = Keke_lang::$lang_type;
 		Keke::$_lang = Keke_lang::get_lang ();
 	}
 	//初始化货币
@@ -479,11 +476,7 @@ class Keke extends Keke_core {
 		
 	}
 	function init_out_put() {
-		 if(function_exists('ob_gzhandler')){
-			ob_start ('ob_gzhandler');
-		}else{ 
-			ob_start();
-		}
+		 ob_start();
 	}
 	/**
 	 * 查指定目录中的文件
@@ -575,6 +568,7 @@ file_exists ( $ipath ) == true or header ( "Location: install/index.php" );
 unset($ipath);
 
 Keke::get_instance ();
+
 
 //Keke_lang::load_lang_class ( 'keke_core_class' );
 // end 

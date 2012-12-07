@@ -243,7 +243,7 @@ class Keke extends Keke_core {
 		define ( 'LIB', S_ROOT . 'class' . DIRECTORY_SEPARATOR );
 		define ( 'EXT', '.php' );
 		include (S_ROOT . 'config/config.inc.php');
-		define ( 'KEKE_VERSION', '2.2' );
+		define ( 'KEKE_VERSION', '3.0' );
 		define ( 'KEKE_RELEASE', '2012-06-2' );
 		define ( "P_NAME", 'KPPW' );
 		if(Keke::$_caching === true){
@@ -257,7 +257,8 @@ class Keke extends Keke_core {
 			set_error_handler ( array ('Keke_core','error_handler' ) );
 		}
 		register_shutdown_function ( array ('Keke_core','shutdown_handler') );
-		
+		register_shutdown_function(array('Sys_cron','run'));
+
 		if(ini_get('register_globals')){
 			self::globals();
 		}
@@ -285,7 +286,7 @@ class Keke extends Keke_core {
 		Keke::$_cache_obj = Cache::instance ();
 		 
 		
-		$this->init_lang ();
+		//$this->init_lang ();
 		$this->init_curr();
 		 
 

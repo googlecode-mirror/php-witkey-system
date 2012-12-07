@@ -73,10 +73,12 @@ class Keke_lang {
 	 * @param string $class langÎÄ¼þ
 	 */
 	public function load($class){
-		 
+		
+		$this->load_public(); 
+		
 		$this->load_file($class); 
 		
-		$this->load_public();
+		
 	}
 	
 	public function load_public(){

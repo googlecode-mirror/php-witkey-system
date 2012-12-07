@@ -887,6 +887,7 @@ function isExtName(obj,isalert,msgType,showTarget){
 	var ext_arr = ext.split(',');
 	var s_num = value.lastIndexOf(".");
 	var lastname = value.substring(s_num,value.length).toLowerCase();
+	isalert = true;
 	if(isalert)
 	{
 	    if(ext_arr.in_array(lastname))

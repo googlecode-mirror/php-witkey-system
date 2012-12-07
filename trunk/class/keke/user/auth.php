@@ -135,6 +135,7 @@ class Keke_user_auth {
 		}
 		return TRUE;
 	}
+	
 	/**
 	 * 删除指定的认证记录
 	 * @param  int array  $uid
@@ -142,11 +143,13 @@ class Keke_user_auth {
 	 */
 	public static function del($uid,$auth_code){
 		if(is_numeric($uid)){
-			$res= DB::delete('witkey_auth_'.$auth_code)->where("uid='$uid' and auth_status != 1")->execute();
+			$res= DB::delete('witkey_auth_'.$auth_code)->where("uid='$uid' ")->execute();
+			DB::update('witkey_auth_'.$auth_code)->set(array($auth_code))->value(array(0))->where("uid=$uid")->execute();
 		}elseif(is_array($uid)){
 			$size = sizeof($uid);
 			for($i=0;$i<$size;$i++){
-				$res += DB::delete('witkey_auth_'.$auth_code)->where("uid='$uid[$i]' and auth_status != 1")->execute();
+				$res += DB::delete('witkey_auth_'.$auth_code)->where("uid='$uid[$i]'")->execute();
+				DB::update('witkey_auth_'.$auth_code)->set(array($auth_code))->value(array(0))->where("uid=$uid")->execute();
 			}
 		}
 		return (bool)$res;
@@ -155,10 +158,10 @@ class Keke_user_auth {
 	 * 企业认证时更新用户角色
 	 * @param $action 动作  pass not_pass
 	 * @param $uid  用户ID
-	 * @example user_role 1 为普通用户, 2 为企业用户
+	 * @example user_role 2为普通用户, 3为企业用户
 	 */
 	public static  function set_user_role($uid,$action='pass'){
-		$action=='pass' and $user_role='2' or $user_role='1';
-		Dbfactory::execute(sprintf(" update %switkey_space set user_type='%d' where uid='%d'",TABLEPRE,$user_role,$uid));
+		$action=='pass' and $user_role='3' or $user_role='2';
+		Dbfactory::execute(sprintf(" update %switkey_space set group_id='%d' where uid='%d'",TABLEPRE,$user_role,$uid));
 	}
 }

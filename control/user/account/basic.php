@@ -24,7 +24,7 @@ class Control_user_account_basic extends Control_user{
 		
 		$uinfo = $uindex->get_user_info();
 		//地区
-		$residency = explode(',', $uinfo['residency']);
+		$residency = explode('|', $uinfo['residency']);
 		//行业
 		$indus_arr = Sys_indus::get_indus_tree($uinfo['indus_id']);
 		require Keke_tpl::template('user/account/basic');
@@ -173,7 +173,7 @@ class Control_user_account_basic extends Control_user{
 		Keke::formcheck($_POST['formhash']);
 		$_POST = Keke_tpl::chars($_POST);
 		
-		$residency = $_POST['province'].','.$_POST['city'].','.$_POST['area'];
+		$residency = $_POST['province'].'|'.$_POST['city'].'|'.$_POST['area'];
 		
 		$columns = array('group_id','sex','indus_id','residency','summary');
 		$values = array($_POST['usertype'],$_POST['sex'],$_POST['indus'],$residency,$_POST['summary']);

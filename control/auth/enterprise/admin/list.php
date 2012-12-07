@@ -19,9 +19,9 @@ class Control_auth_enterprise_admin_list extends Controller {
 	function action_index(){
 	   global $_K,$_lang;
  
-	   $fields = ' `r_id`,`uid`,`username`,`company`,`licen_num`,`licen_pic`,`run_years`,`url`,`cash`,`staff_num`,`start_time`,`auth_status`,`end_time`';
+	   $fields = ' `uid`,`username`,`company`,`licen_num`,`licen_pic`,`run_years`,`url`,`cash`,`staff_num`,`start_time`,`auth_status`,`end_time`';
 	   //要查询的字段,在模板中显示用的
-	   $query_fields = array('r_id'=>$_lang['id'],'company'=>$_lang['name'],'start_time'=>$_lang['time']);
+	   $query_fields = array('uid'=>$_lang['id'],'company'=>$_lang['name'],'start_time'=>$_lang['time']);
 	   //总记录数,分页用的，你不定义，数据库就是多查一次的。为了少个Sql语句，你必须要写的，亲!
 	   $count = intval($_GET['count']);
 	   //基本uri,当前请求的uri ,本来是能通过Rotu类可以得出这个uri,为了程序灵活点，自己手写好了

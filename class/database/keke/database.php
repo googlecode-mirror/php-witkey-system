@@ -150,7 +150,7 @@ abstract class Keke_database {
 		}elseif (is_string($value)) {
 			return sprintf("'%s'",$value);
 		}  elseif (is_array ( $value )) {
-			return  implode ( ':\n', array_map (array($this,__FUNCTION__), $value ) ) ;
+			return  implode ( ',', array_map (array($this,__FUNCTION__), $value ) ) ;
 		} elseif (is_int ( $value )) {
 			return ( int ) $value;
 		} elseif (is_float ( $value )) {

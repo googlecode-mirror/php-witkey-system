@@ -60,7 +60,7 @@ class Keke_db_insert extends Keke_db_query {
 		}
 		if(is_array($this->_value)){
 			$values = $db->quote_string($this->_value);
-			$values = strtr($values, array(':\n'=>','));
+			//$values = strtr($values, array(':\n'=>','));
 			$query .= ' values ('.$values.')';
 		}
 	

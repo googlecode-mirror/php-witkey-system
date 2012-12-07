@@ -234,7 +234,6 @@ class Keke extends Keke_core {
 	function __construct() {
 		$this->init_out_put ();
 		$this->init ();
-		Keke_lang::loadlang ( 'public', 'public' );
 	}
 	
 	function init() {

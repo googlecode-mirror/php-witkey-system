@@ -527,11 +527,15 @@ class keke_file_class {
 	/**
 	 * 通用文件上传
 	 * $folder 自定义上传的文件夹名字 '/data/uploads/sys/'.$folder,这个参数在 后台广告添加页面用到
+	 * @param $ext 扩展名 
+	 * @param $isr 是否随机
+	 * @param $folder 指定的上传目录，目录存放地址data/uploads/sys/下
+	 * @return string 文件地址
 	 */
 	
 	public static function upload_file($file_name, $ext = '', $isr = 1, $folder = '', $output = 'normal') {
 		global $_lang;
-		
+		 
 		if ($_FILES [$file_name]) {
 			$ext == '' && $ext = UPLOAD_ALLOWEXT;
 			if ($folder != '') {
@@ -544,7 +548,7 @@ class keke_file_class {
 			
 			$upload_obj = new keke_upload_class ( $absolute_path, explode ( '|', $ext ), UPLOAD_MAXSIZE );
 			$files = $upload_obj->run ( $file_name, $isr );
-	
+			
 			if (! empty ( $files ) && is_array ( $files )) {
 				// 获得文件名
 				// $ref_name = $files [0] ['name'];

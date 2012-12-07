@@ -74,7 +74,7 @@
 		                			<input type="reset" value="重置">
 									{elseif $auth_info['auth_status']==0}
 		                			<input type="button" onclick="location.href = location.href+'?ac=reset'" value="返回修改">
-									{elseif $auth_info['auth_status']==3}
+									{elseif $auth_info['auth_status']==2 OR $auth_info['auth_status']==1}
 		                			<input type="button" onclick="location.href = location.href+'?ac=reset'" value="重新认证">
 									{/if}
 									

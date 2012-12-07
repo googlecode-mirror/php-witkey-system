@@ -1,6 +1,6 @@
 <?php  defined('IN_KEKE') OR die('access denied');
 /**
- * 单赏任务计划执行类 
+ * 多赏任务计划执行类 
  * @author Michael 
  * @version 3.0 
  *

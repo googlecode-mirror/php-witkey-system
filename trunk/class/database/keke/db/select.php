@@ -22,8 +22,8 @@ class Keke_db_select extends Keke_db_query {
 	public function select($fields) {
 		$field = "";
 		if ($fields !== '*' and $field = explode ( ',', $fields )) {
-			$db = Database::instance();
-			array_walk ( $field, array($db,'quote_field') );
+		    //array_walk ( $field, array(Database::instance(),'quote_field') );
+			$field =array_map(array(Database::instance(),'quote_field'), $field); 
 			$fields = implode ( ',', $field );
 		}
 		$this->_query_list ['fields'] = $fields;

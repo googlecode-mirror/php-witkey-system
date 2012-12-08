@@ -74,14 +74,7 @@ class Keke_base {
 		return $res;
 	}
 	
-	/* static function get_format_size($bytes) {
-	$units = array (0 => 'B',1 => 'kB',2 => 'MB',3 => 'GB'	);
-			$log = log ( $bytes, 1024 );
-			$power = ( int ) $log;
-			$size = pow ( 1024, $log - $power );
-			return round ( $size, 2 ) . ' ' . $units [$power];
-	
-	} */
+ 
 	/**
 	 *
 	 * Enter 字符串星号装换
@@ -106,8 +99,8 @@ class Keke_base {
 	 * 二级域名跳转。仅支持空间的二级
 	 */
 	static function redirect_second_domain() {
-		global $_K, $kekezu;
-		if ($kekezu->_sys_config ['second_domain']) { //开启
+		global $_K;
+		if (Keke::$_sys_config ['second_domain']) { //开启
 			$host = $_SERVER ['HTTP_HOST'];
 			preg_match ( '/^(\d+)\./', $host, $m );
 			if ($m [1]) { //空间二级域名
@@ -127,9 +120,9 @@ class Keke_base {
 	 * @param int $mid 用户编号
 	 */
 	static function build_space_url($mid) {
-		global $_K, $kekezu;
-		if ($kekezu->_sys_config ['second_domain']) { //开启二级域名
-			$top = $kekezu->_sys_config ['top_domain'];
+		global $_K;
+		if (Keke::$_sys_config ['second_domain']) { //开启二级域名
+			$top = Keke::$_sys_config ['top_domain'];
 			$p_url = preg_replace ( '/(\w*\.)?' . $top . '/', $mid . '.' . $top, $_K ['siteurl'] );
 		} else {
 			$p_url = $_K ['siteurl'] . "/index.php?do=space&member_id=$mid";
@@ -137,53 +130,7 @@ class Keke_base {
 		return $p_url;
 	}
 	
-	/**
-	* 将很长的数字转换成 xx万
-	*
-	* @param $number int、float..
-	*        	数字
-	* @param $unit string
-	*        	单位
-	*/
-	static function pretty_format($number, $unit = '') {
-	global $_lang;
-	$unit == '' && $unit = $_lang ['million'];
-	if ($number < 10000) {
-	return $number;
-	}
-	return ((round ( $number / 1000 )) / 10) . $unit; // round四舍五入 ceil进一法取整
-	// floor舍去法取整
-	}
-	
-	static public function refer_url() {
-		global $_K;
-		$url = $_SERVER ['REQUEST_URI'];
-		switch ($_K['is_rewrite']){
-				case 0:
-					if (stristr ( $url, 'do=login' )) {
-						$url = str_replace ( "do=login", "do=register", $url );
-					} elseif (stristr ( $url, 'do=register' )) {
-						$url = str_replace ( "do=register", "do=login", $url );
-					}
-					break;
-				case 1:
-					if (stristr ( $url, '/register.html' )) {
-						$url = preg_replace ( '/\/register.html(\??)/', "/login.html?", $url );
-					} elseif (stristr ( $url, '/login.html' )) {
-						$url = preg_replace ( '/\/login.html(\??)/', "/register.html?", $url );
-					}
-					break;
-			}
-		if (stristr ( $url, '&refer' )) {
-			$_K ['refer'] = str_replace ( "refer=", "", strstr ( $url, "refer" ) );
-			return $url;
-		} else {
-			$refer_url = $url . "&refer=" . $_SERVER ['HTTP_REFERER'];
-			$_K ['refer'] = $_SERVER ['HTTP_REFERER'];
-			return $refer_url;
-		}
-	
-	}
+ 
 	static function send_mail($address, $title, $body) {
 		global $_K;
 		$basicconfig = Keke::$_sys_config;
@@ -260,7 +207,25 @@ class Keke_base {
 			die ();
 		}
 		return true;
-	
+	}
+	/**
+	 * 过滤通过文本输入的内容中的特殊标签
+	 * [input|textarea|button|marquee|iframe|frame...]
+	 * Enter description here ...
+	 * @param unknown_type $string
+	 */
+	static function filter_input($str) {
+		if (is_array ( $str )) {
+			$key = array_keys ( $str );
+			$s = sizeof ( $str );
+			for($i = 0; $i < $s; $i ++) {
+				$str [$key [$i]] = self::filter_input ( $str [$key [$i]] );
+			}
+		} else {
+			$str = htmlspecialchars_decode ( $str );
+			$str = preg_replace ( '/<(input|textarea|select|button|marquee|iframe|frame|form|script)/', '</\\1', $str );
+		}
+		return $str;
 	}
 	/**
 	 * 无限分类显示
@@ -359,7 +324,7 @@ class Keke_base {
 		if ($obj)
 			foreach ( $obj as $k => $o ) {
 				if (is_object ( $o ) || is_array ( $o )) {
-					$obj [$k] = Keke::objtoarray ( $o );
+					$obj [$k] = self::objtoarray ( $o );
 				}
 			}
 		return $obj;
@@ -401,8 +366,7 @@ class Keke_base {
 	 * @param unknown_type $dataarr        	
 	 */
 	static function echojson($msg = '', $status = 0, $dataarr = array()) {
-		global $_K;
-		if ($_K ['charset'] == 'gbk') {
+		if (CHARSET == 'gbk') {
 			$msg = self::gbktoutf ( $msg );
 			$status = self::gbktoutf ( $status );
 			$dataarr = self::gbktoutf ( $dataarr );
@@ -416,8 +380,7 @@ class Keke_base {
 		if (function_exists ( 'json_encode' )) {
 			return json_encode ( $array );
 		} else {
-			require_once S_ROOT . 'lib/helper/keke_json_class.php';
-			$json_obj = new json ();
+			$json_obj = new json;
 			return $json_obj->encode ( $array );
 		}
 	}
@@ -677,15 +640,6 @@ class Keke_base {
 		return $m;
 	
 	}
-	// 安装锁定检查
-	static function check_install() {
-		global $_lang;
-		$lock_file = S_ROOT . './data/keke_kppw_install.lck';
-		
-		die ();
-		file_exists ( $lock_file ) == false or Keke::show_msg ( $_lang ['kppw_install_notice'], 'install/index.php', 3, $_lang ['you_not_install_kppw_notice'] );
-	}
- 
 	
 	/**
 	 * 生成表单hash
@@ -695,7 +649,6 @@ class Keke_base {
 	static function formhash() {
 		
 		 $token = $_SESSION['security_token'];
-		// var_dump($_SESSION);
 		 if(!isset($token)){
 		 	$token = sha1(uniqid(null,true));
 		 	$_SESSION['security_token'] = $token;
@@ -776,12 +729,7 @@ class Keke_base {
 		return $c;
 	}
 	
-	/* static function is_email($email) {
-		return strlen ( $email ) > 6 && preg_match ( '/^[\w\-\.]+@[\w\-\.]+(\.\w+)+$/', $email );
-	}
-	static function is_mobile($mobile) {
-		return preg_match ( "/^13[0-9]{1}[0-9]{8}$|15[0189]{1}[0-9]{8}$|18[0-9]{9}$/", $mobile );
-	} */
+ 
 	static function socket_request($url, $sim = true, $time_out = "60") {
 		$sim and $url .= "&sim_request=1";
 		$urlarr = parse_url ( $url );
@@ -870,7 +818,7 @@ class Keke_base {
 		$system_log_obj = new Keke_witkey_system_log();
 		$system_log_obj->setLog_content ( $msg );
 		$system_log_obj->setLog_ip ( Keke::get_ip () );
-		$system_log_obj->setLog_time ( time () );
+		$system_log_obj->setLog_time ( SYS_START_TIME );
 		$system_log_obj->setUser_type ( $admin_info ['group_id'] );
 		$system_log_obj->setUid ( $admin_info ['uid'] ? $admin_info ['uid'] : $_SESSION ['uid'] );
 		$system_log_obj->setUsername ( $admin_info ['username'] ? $admin_info ['username'] : $_SESSION ['username'] );
@@ -891,6 +839,16 @@ class Keke_base {
 	}
 	static function k_round($v, $dec = 0) {
 		return round ( $v * pow ( 10, $dec ) ) / pow ( 10, $dec );
+	}
+	/**
+	 * 检查是否安装过了
+	 */
+	static  function check_install(){
+		$ipath = dirname ( dirname ( dirname ( __FILE__ ) ) ) . DIRECTORY_SEPARATOR . "data" . DIRECTORY_SEPARATOR . "install.lck";
+		if(file_exists ( $ipath ) == FALSE){
+			header ( "Location: install/index.php" );
+			die;
+		}  
 	}
 
 }

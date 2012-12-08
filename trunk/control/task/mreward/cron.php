@@ -8,7 +8,7 @@
 class Control_task_mreward_cron extends Sys_task_cron {
 
      function run(){
-     	
+     	Keke::$_log->add(log::DEBUG, __CLASS__.__FUNCTION__)->write();
      }
      function jg_to_xg(){
      	

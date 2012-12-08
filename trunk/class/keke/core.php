@@ -236,10 +236,10 @@ class Keke extends Keke_core {
 	
 	function init() {
 // 		global  $_K, $_lang;
-		if(self::$_inited){
+		if(self::$_inited==TRUE){
 			return;
 		}
-		self::$_inited = true;
+		self::$_inited = TRUE;
 		define ( 'LIB', S_ROOT . 'class' . DIRECTORY_SEPARATOR );
 		define ( 'EXT', '.php' );
 		include (S_ROOT . 'config/config.inc.php');
@@ -272,7 +272,7 @@ class Keke extends Keke_core {
 		if((bool)get_magic_quotes_runtime()===TRUE){
 			ini_set('magic_quotes_runtime','Off');
 		}
-		
+		self::check_install();
 		//处理全局变量
 		$_GET = Keke::k_stripslashes($_GET);
 		$_POST = Keke::k_stripslashes($_POST);
@@ -281,7 +281,7 @@ class Keke extends Keke_core {
 		Keke::init_session ();
 		$this->init_config ();
 		
-		 
+		
 		
 		Keke::$_cache_obj = Cache::instance ();
 		 
@@ -564,12 +564,4 @@ class Keke extends Keke_core {
 
 }
 
-$ipath = dirname ( dirname ( dirname ( __FILE__ ) ) ) . DIRECTORY_SEPARATOR . "data" . DIRECTORY_SEPARATOR . "install.lck";
-file_exists ( $ipath ) == true or header ( "Location: install/index.php" ); 
-unset($ipath);
-
 Keke::get_instance ();
-
-
-//Keke_lang::load_lang_class ( 'keke_core_class' );
-// end 

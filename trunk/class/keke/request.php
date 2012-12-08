@@ -372,7 +372,7 @@ class Keke_Request  {
 			return $agent;
 		}
 
-		static $info;
+		static $info = array();
 
 		if (isset($info[$value]))
 		{

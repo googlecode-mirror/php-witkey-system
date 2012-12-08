@@ -7,9 +7,11 @@
  */
 class Control_task_sreward_cron extends Sys_task_cron {
      /**
-      * 批量执行
+      * 执行
       */
      function run(){
+     	Keke::$_log->add(log::DEBUG, __CLASS__.__FUNCTION__)->write();
+     	
         $this->jg_to_xg();
         $this->xg_to_gs();
         $this->gs_to_jf();

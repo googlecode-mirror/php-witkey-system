@@ -29,7 +29,7 @@ class Control_admin_tool_dboptim extends Control_admin{
 	 * 表修复，加载模板用的
 	 */
 	function action_repair(){
-		global $_K,$_lang;
+		 
 		require Keke_tpl::template('control/admin/tpl/tool/dbrepair');
 	}
 	/**

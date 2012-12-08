@@ -45,6 +45,6 @@
       		
        </div>
    
- <script src='../resource/js/jquery.js' type='text/javascript'></script>
+ <script src='../static/js/jquery.js' type='text/javascript'></script>
 </body>
 </html>

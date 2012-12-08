@@ -44,7 +44,7 @@
                     </div>
         </div>
 	</div>
-<script src='../resource/js/jquery.js' type='text/javascript'></script>
+<script src='../static/js/jquery.js' type='text/javascript'></script>
 <script type="text/javascript">
 	$(function(){
 		$("#select_lang").change(function(){

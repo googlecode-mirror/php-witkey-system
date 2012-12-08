@@ -7,7 +7,7 @@
  */
 class Control_task_mreward_cron extends Sys_task_cron {
 
-     function batch_run(){
+     function run(){
      	
      }
      function jg_to_xg(){

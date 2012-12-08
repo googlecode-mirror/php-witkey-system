@@ -2,7 +2,7 @@
 //define('KEKE_OFF', FALSE );
 define('ENV_ERROR', 2);
 define('CONFIG', '/config/config.inc.php');
-$func_items = array('mysql_connect', 'fsockopen', 'file_get_contents','json_encode');
+$func_items = array('mysql_connect', 'curl_init', 'file_get_contents','json_encode');
 
 //环境变量检测
 $env_items = array(
@@ -16,9 +16,11 @@ $env_items = array(
 $dirfile_items = array(
 	'config' => array('type' => 'file', 'path' => CONFIG),
 	'data' => array('type' => 'dir', 'path' => 'data'),
+	'adpic' => array('type' => 'dir', 'path' => 'data/adpic'),
 	'avatar' => array('type' => 'dir', 'path' => 'data/avatar'),
 	'backup' => array('type' => 'dir', 'path' => 'data/backup'),
-	'data_cache' => array('type' => 'dir', 'path' => 'data/data_cache'),
+	'cache' => array('type' => 'dir', 'path' => 'data/cache'),
+	'log' => array('type' => 'dir', 'path' => 'data/log'),
 	'session' => array('type' => 'dir', 'path' => 'data/session'),
 	'tmp' => array('type' => 'dir', 'path' => 'data/tmp'),
 	'tpl_c' => array('type' => 'dir', 'path' => 'data/tpl_c'),

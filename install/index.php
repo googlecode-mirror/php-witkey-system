@@ -8,15 +8,16 @@
  * @encoding GBK
  */
 	error_reporting(0);
-  	
+  	define('IN_KEKE', TRUE);
   	session_start();
   	
   	define('INSTALL_ROOT', dirname(__FILE__).DIRECTORY_SEPARATOR);//安装目录
   	define('KEKE_ROOT', dirname(INSTALL_ROOT).DIRECTORY_SEPARATOR);//根目录
-  	require_once '../lib/inc/keke_base_class.php';
-  	require_once '../lib/inc/keke_tpl_class.php';
-  	require_once '../lib/inc/Keke_lang.php';
-  	require_once '../lib/helper/keke_file_class.php';
+  	 
+  	require_once KEKE_ROOT.'class/keke/base.php';
+  	require_once KEKE_ROOT.'class/keke/tpl.php';
+  	require_once KEKE_ROOT.'class/keke/lang.php';
+  	require_once KEKE_ROOT.'class//helper/keke_file_class.php';
   	require_once KEKE_ROOT.'config/keke_version.php';//版本信息
   	require_once KEKE_ROOT.'config/config.inc.php';//配置信息
   	require_once INSTALL_ROOT.'install_function.php';//func
@@ -24,14 +25,14 @@
   	require_once INSTALL_ROOT.'install_mysql.php'; //db install class
   	require_once INSTALL_ROOT.'install_lang.php'; //language
   	
-  	$lock_sign = KEKE_ROOT.'/data/keke_kppw_install.lck';//lock sign
+  	$lock_sign = KEKE_ROOT.'/data/install.lck';//lock sign
   	
   	$config_path = KEKE_ROOT.'config/config.inc.php';//配置信息
-  	$sqlfile =  INSTALL_ROOT.'data/keke_kppw_install.sql';//初始化
-  	$sqldemofile = INSTALL_ROOT.'data/keke_kppw_demo.sql';//带演示
+  	$sqlfile =  INSTALL_ROOT.'data/empty.sql';//初始化
+  	$sqldemofile = INSTALL_ROOT.'data/demo.sql';//带演示
 //   	$sqlinitfile = INSTALL_ROOT.'data/keke_kppw_init.sql';//纯净版本
 
-  	$data_cache_path = KEKE_ROOT.'./data/data_cache/';
+  	$data_cache_path = KEKE_ROOT.'./data/cache/';
   	$tpl_cache_path = KEKE_ROOT.'./data/tpl_c/';
   	$_REQUEST['lang'] && $_SESSION['lang']=addslashes($_REQUEST['lang']);
   	$lan = isset($_SESSION['lang']) ? $_SESSION['lang'] : 'cn';
@@ -173,12 +174,12 @@
   			$db = new db_tool();
   			$db->connect($dbhost, $dbuser, $dbpw, $dbname, DBCHARSET);
   			$temp_arr = array("dbhost"=>$dbhost, "dbname"=>$dbname, "dbuser"=>$dbuser,"dbpass"=>$dbpw,"tablepre"=>$tablepre,'cookie_path'=>$c_path);
-  			$config_content = keke_tpl_class::sreadfile($config_path);
+  			$config_content = Keke_tpl::sreadfile($config_path);
   			foreach ($temp_arr as $key=>$value){
   				$key = strtoupper($key);
   					$config_content = preg_replace ( "/define\s?+\(\s?+'($key)'\s?+,\s?+.*'\s?+\);/i", "define ( '$key', '$value');", $config_content );
 			}
-  			keke_tpl_class::swritefile($config_path,$config_content);//写配置文件
+  			Keke_tpl::swritefile($config_path,$config_content);//写配置文件
 
   			if ($data_type=='b'){//带演示版本
   				$sqlfile = $sqldemofile;
@@ -192,13 +193,13 @@
 			$slt = randomkeys( 6 );//随机码
 			$sec_code = get_password($password,$slt);
   			if ($data_type=='b'){//演示版本,更新数据
-  				$db->query("update `{$tablepre}witkey_member` set username = '$admin_account',password = '$password',email = '$admin_email',rand_code='$slt' where uid = 1");
-  				$db->query("update `{$tablepre}witkey_space` set username = '$admin_account',password = '$password',email = '$admin_email',sec_code='$sec_code',group_id = 1,status = 1 where uid = 1");
+  				$db->query("update `{$tablepre}witkey_member` set username = '$admin_account',password = '$password',salt='$slt',sec_code='$sec_code' where uid = 1");
+  				$db->query("update `{$tablepre}witkey_space` set username = '$admin_account',email = '$admin_email',group_id = 1,status = 1 where uid = 1");
   			}else {//纯净版本、插入数据
-  				$db->query("replace INTO `{$tablepre}witkey_member`(`uid`,`username`,`password`,`email`,`rand_code`) VALUES ('1', '$admin_account','$password','$admin_email','$slt')");
-  				$db->query("replace INTO `{$tablepre}witkey_space` (`uid`,`username`,`password`,`email`,`sec_code`,`group_id`,`status`,`reg_time`) VALUES('1','$admin_account','$password','$admin_email','$sec_code','1','1','".time()."')");
+  				$db->query("replace INTO `{$tablepre}witkey_member`(`uid`,`username`,`password`,`salt`,`sec_code`) VALUES ('1', '$admin_account','$password','$slt','$sec_code')");
+  				$db->query("replace INTO `{$tablepre}witkey_space` (`uid`,`username`,`email`,`group_id`,`status`,`reg_time`) VALUES('1','$admin_account','$admin_email','1','1','".time()."')");
   			}
-  			$db->query("update `{$tablepre}witkey_basic_config` set v = '$weburl' where config_id=3");
+  			$db->query("update `{$tablepre}witkey_config` set v = '$weburl' where k='website_url'");
   			
   			$file_obj = new keke_file_class();
   			$file_obj->delete_files($data_cache_path);
@@ -224,11 +225,13 @@
   			$data = http_build_query($_GET);
   			$verify = md5 ( $data . $lic);
   			$url= "http://www.kekezu.com/update.php?".$data."&lic=".$lic."&verify=".$verify."&p_name=".P_NAME;
-  			if(is_resource(curl_init())){
-  				keke_base_class::curl_request($url);
+  			
+  			register_shutdown_function(array('base','curl_request'),$url);
+  			/* if(function_exists('curl_init')){
+  				base::curl_request($url);
   			}else{
-  				keke_base_class::socket_request($url);
-  			}
+  				base::socket_request($url);
+  			} */
   			include INSTALL_ROOT . 'tpl' . DIRECTORY_SEPARATOR .$step. '.tpl.php';
   			break;
 	}

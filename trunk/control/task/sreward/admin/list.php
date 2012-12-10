@@ -44,7 +44,7 @@ class Control_task_sreward_admin_list extends Control_admin_task_list{
     	//·ÖÒ³Êý¾Ý
     	$pages = $data_info['pages'];
     	
-    	$task_status = Control_task_sreward_tread::get_task_status();
+    	$task_status = Control_task_sreward_trade::get_task_status();
      	require Keke_tpl::template('control/task/'.$this->_model_code.'/tpl/admin/list');
     }
     /**

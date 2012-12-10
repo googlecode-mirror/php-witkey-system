@@ -33,6 +33,7 @@ class Control_task_dtender_admin_config extends Control_admin_task_config{
     	
     	//时间规则与延期规则，需要就调用
     	$time_rule = $this->get_tiem_rule();
+    	
    	    $delay_rule = $this->get_delay_rule();
    	    //删除时间的url
    	    $del_time_url = BASE_URL.'/index.php/task/'.$this->_model_code.'_admin_config/del_time';

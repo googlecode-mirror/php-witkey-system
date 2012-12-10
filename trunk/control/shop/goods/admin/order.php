@@ -6,7 +6,7 @@
    2012-10-19
  */
 
-class Control_shop_goods_admin_order extends Control_shop_order{
+class Control_shop_goods_admin_order extends Control_admin_shop_order{
 	/**
 	 * @var Ä£ÐÍ´úÂë
 	 */

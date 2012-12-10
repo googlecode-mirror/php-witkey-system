@@ -9,6 +9,7 @@ define('USER_URL', BASE_URL.'/index.php/user');
 abstract  class Control_user extends Controller{
 	protected $uid ;
 	protected $username;
+	protected $group_id;
     /**
      * 一级导航菜单
      */
@@ -89,6 +90,12 @@ abstract  class Control_user extends Controller{
     		Cookie::set('last_page', $this->request->uri());
     		$this->request->redirect('login');
     	}
+    	$res = Keke_user::instance()->get_user_info($this->uid,'group_id');
+    	$this->group_id = $res['group_id'];
+    	if($this->group_id==3){
+    		unset(self::$_account_nav['detail']);
+    	}
     }
+    
     
 }

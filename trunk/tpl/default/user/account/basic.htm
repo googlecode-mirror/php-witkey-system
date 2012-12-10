@@ -32,6 +32,7 @@
 								   <input type="hidden" name="usertype"  value="{$uinfo['group_id']}">
 		                		{/if}
 		                		
+								{if $uinfo['group_id']==2}
 		                		<div class="form_row" id="realname">
 		                			<label class="form_label">真实姓名：</label>
 									{if $uinfo['realname_status']==1}
@@ -40,6 +41,7 @@
 		                			<input type="button" onclick="location.href='{BASE_URL}/index.php/user/account_auth'" value="进行实名认证">
 									{/if}
 		                		</div>
+								{/if}
 
 		                		<!--企业-->
 								{if empty($uinfo['group_id']) OR $uinfo['group_id']==3}
@@ -52,16 +54,7 @@
 									<input type="button" onclick="location.href='{BASE_URL}/index.php/user/account_auth/enter'" value="进行企业认证">
 									{/if}
 		                		</div>
-								{if $uinfo['enter_status']==1}
-		                		<div class="form_row">
-		                			<label class="form_label">企业法人：</label>
-		                			{$uinfo['legal']}
-		                		</div>
-								<div class="form_row">
-		                			<label class="form_label">企业网站：</label>
-		                			<input type="url" value="{$uinfo['url']}" size="30" maxlength="150" placeholder="请输入网址" >
-		                		</div>
-								{/if}
+								 
 								</div>
 								
 								{/if}

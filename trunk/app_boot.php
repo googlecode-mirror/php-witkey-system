@@ -52,13 +52,14 @@ $_K['user_info'] = Keke::$_userinfo;
 $_K['model_list'] = Keke::$_model_list;
 $_K['nav_arr'] = Keke::$_nav_list;
 $_K['lang_list'] = Keke::$_lang_list;
-$_K['language']      = Keke::$_lang;
+$_K['lang']      = Keke::$_lang;
 $_K['api_open']   = Keke::$_api_open;
 $_K['weibo_list'] = Keke::$_weibo_list;
 $_K['attent_api_open'] = Keke::$_attent_api_open;
 $_K['attent_list'] = Keke::$_weibo_attent;
 $_K['style_path'] = Keke::$_style_path;
 $_K['style_path']=SKIN_PATH;
+
 //ªı±“¡–±Ì
 //$_K['f_c_list'] = Curren::get_curr_list('code,title');
 

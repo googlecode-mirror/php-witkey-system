@@ -286,7 +286,7 @@ class Keke extends Keke_core {
 		Keke::$_cache_obj = Cache::instance ();
 		 
 		
-		//$this->init_lang ();
+		$this->init_lang ();
 		$this->init_curr();
 		 
 
@@ -434,7 +434,7 @@ class Keke extends Keke_core {
 				Keke::$_shop_open = (Keke::$_shop_open or $v ['model_status']);
 			}
 		}
-		Keke::nav_filter ();
+		//Keke::nav_filter ();
 	}
 	/**
 	 * µ¼º½¹ıÂË

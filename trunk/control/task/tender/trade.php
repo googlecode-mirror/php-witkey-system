@@ -6,7 +6,7 @@
    2012-10-19
  */
 
-class Control_task_tender_task extends Control_task_task{
+class Control_task_tender_trade extends Sys_task_trade{
     
 	/**
 	 *

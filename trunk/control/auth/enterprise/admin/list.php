@@ -62,6 +62,7 @@ class Control_auth_enterprise_admin_list extends Controller {
 				"left join :keke_witkey_member_auth as c\n".
 				"on a.uid = c.uid\n".
 				"set a.auth_status = 1,\n".
+				"b.group_id = 3,\n".
 				"b.truename = a.legal,\n".
 				"c.enterprise = 1 where a.uid = :uid";
 		 DB::query($sql,Database::UPDATE)->tablepre(':keke_')->param(':uid', $uid)->execute();

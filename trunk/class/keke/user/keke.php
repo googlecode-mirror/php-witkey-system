@@ -36,17 +36,29 @@ class Keke_user_keke extends Keke_user {
 	function avatar_flash($uid) {
 		return Keke_user_avatar::avatar_html ( $uid );
 	}
-	/**
-	 * 检查用户安全码
-	 * @param string $code
+ 	/**
+	 * 检查安全码 ,检查安全码的地方都需要用到
+	 * @param  $pwd
+	 * @return boolean
 	 */
-	function check_sec_code($code,$uid=NULL){
-		//随机码
+	function check_safe($pwd,$uid=NULL){
 		if($uid===NULL){
 			$uid = $_SESSION['uid'];
 		}
-		$m = DB::select('salt,sec_code')->from('witkey_member')->where("uid='$uid'")->get_one()->execute();
-		
-		return (bool)(hash_hmac('md5', $code,$m['salt'])===$m['sec_code']);
+		$member = DB::select()->from('witkey_member')->where("uid=$uid")->get_one()->execute();
+		return (bool)(hash_hmac('md5', $pwd, $member['salt']) == $member['sec_code']);
+	}
+	/**
+	 * 更新安全码,找回密码可以用这个方法重置安全码
+	 * @param string $pwd
+	 * @param int uid
+	 */
+	function update_safe($pwd,$uid=NULL){
+		if($uid===NULL){
+			$uid = $_SESSION['uid'];
+		}
+		$salt = Keke::randomkeys(6);
+		$sec_code = hash_hmac('md5', $pwd, $salt);
+		return (bool) DB::update('witkey_member')->set(array('salt','sec_code'))->value(array($salt,$sec_code))->where("uid=$uid")->execute();
 	}
 }

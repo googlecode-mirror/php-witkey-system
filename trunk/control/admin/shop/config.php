@@ -6,7 +6,7 @@
    2012-10-19
  */
 
-abstract class Control_shop_config extends Control_task_config{
+abstract class Control_admin_shop_config extends Control_admin_task_config{
     
 	 
 }

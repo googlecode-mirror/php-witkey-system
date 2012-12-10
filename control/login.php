@@ -131,7 +131,7 @@ class Control_login extends Control_front {
 			//oauth 登录认证的地址
 			$to_url =  Keke_oauth_login::instance($type)->get_auth_url($ouri);
 			$to_url = urldecode($to_url);
-			header("Location:".$to_url);
+			$this->request->redirect($to_url);
 		}
 	}
 	

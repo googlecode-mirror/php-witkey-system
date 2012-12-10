@@ -6,7 +6,7 @@
    2012-10-19
  */
 
-class Control_task_preward_task extends Control_task_task{
+class Control_task_preward_trade extends Sys_task_trade{
     
 	/**
 	 * @return 返回计件悬赏任务状态

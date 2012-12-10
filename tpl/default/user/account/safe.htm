@@ -13,25 +13,26 @@
 		                </header>
 		                <nav class="box_nav">
 								<ul id="test_ul" class="clearfix">
-									<li><a href="{USER_URL}/account_safe">修改密码</a></li>
+									<li><a href="{USER_URL}/account_safe">修改安全码</a></li>
 									<li class="selected"><a href="{USER_URL}/account_safe/safe">修改安全码</a></li>
 								</ul>
 		                </nav>
+		                <form action="{USER_URL}/account_safe/update_safe" method="post" name="pwd" onsubmit="return checkForm(this);">
+							<input type="hidden" name="formhash" value="{FORMHASH}">
 		                <div class="box_detail">
-
 		                	<div class="form_row">
 		                		<label class="form_label">原始安全码：</label>
-		                		<input type="password">
+		                		<input type="password" name="old_pwd" limit="required:true;len:6-20" msg="原始安全码不能为空,长度为6-20">
 		                	</div>
 
 		                	<div class="form_row">
 		                		<label class="form_label">新安全码：</label>
-		                		<input type="password" disabled="disabled">
+		                		<input type="password" name="new_pwd1" limit="required:true;len:6-20" msg="新安全码为不能为空,长度为6-20"  >
 		                	</div>
 
 		                	<div class="form_row">
 		                		<label class="form_label">确认安全码：</label>
-		                		<input type="password" disabled="disabled">
+		                		<input type="password" name="new_pwd2" limit="required:true;len:6-20;equals:new_pwd1" msg="两次安全码不一样" >
 		                	</div>
 
 		                	<div class="form_line"></div>
@@ -40,8 +41,8 @@
 		                		<input type="submit" value="提交">
 		                	</div>
 
-
 		                </div>
+						</form>
 		            </div>
 		        </div>
     		</div>

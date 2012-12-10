@@ -6,7 +6,7 @@
    2012-10-19
  */
 
-class Control_task_sreward_tread extends Sys_task_tread{
+class Control_task_sreward_trade extends Sys_task_trade{
     
 	/**
 	 * @return 返回单人悬赏任务状态

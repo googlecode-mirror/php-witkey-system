@@ -73,7 +73,7 @@ class Control_user_finance_withdraw extends Control_user{
 	}
 	
 	static function action_check_code(){
-		$res = Keke_user::instance('keke')->check_sec_code($_GET['code']);
+		$res = Keke_user::instance('keke')->check_safe($_GET['code']);
 		if($res === FALSE){
 			echo '°²È«Âë´íÎó';
 		}else{

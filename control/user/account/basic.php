@@ -23,6 +23,8 @@ class Control_user_account_basic extends Control_user{
 		$uindex = new Control_user_account_index($this->request,$this->response);
 		
 		$uinfo = $uindex->get_user_info();
+// 		var_dump($uinfo);die;
+		
 		//地区
 		$residency = explode('|', $uinfo['residency']);
 		//行业

@@ -77,7 +77,7 @@ abstract class Control_admin_task_config extends Control_admin{
 	 */
 	function get_tiem_rule(){
 		$where = "model_id = ".$this->_model_info['model_id'];
-		return DB::select()->from('witkey_task_time_rule')->where($where)->execute();
+		return DB::select()->from('witkey_task_time_rule')->where($where)->order('rule_day asc')->execute();
 	}
 	/**
 	 * 保存时间规则

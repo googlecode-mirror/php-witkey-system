@@ -6,7 +6,7 @@
    2012-10-19
  */
 
-class Control_task_dtender_task extends Control_task_task{
+class Control_task_dtender_trade extends Sys_task_trade{
     
 	/**
 	 * @return 返回订金招标任务状态

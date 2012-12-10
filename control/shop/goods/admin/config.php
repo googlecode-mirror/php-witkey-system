@@ -6,7 +6,7 @@
    2012-10-19
  */
 
-class Control_shop_goods_admin_config extends Control_shop_config{
+class Control_shop_goods_admin_config extends Control_admin_shop_config{
 	
 	public  $_model_code   = 'goods';
     /**
@@ -31,6 +31,8 @@ class Control_shop_goods_admin_config extends Control_shop_config{
     function action_control(){
     	global $_K,$_lang;
     	$model_info = $this->_model_info;
+    	
+//     	var_dump($_K);die;
     	
     	require Keke_tpl::template('control/shop/'.$this->_model_code.'/tpl/admin/control');
     }

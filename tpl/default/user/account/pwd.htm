@@ -17,21 +17,22 @@
 									<li><a href="{USER_URL}/account_safe/safe">修改安全码</a></li>
 								</ul>
 		                </nav>
+						<form action="{USER_URL}/account_safe/update_pwd" method="post" name="pwd" onsubmit="return checkForm(this);">
+							<input type="hidden" name="formhash" value="{FORMHASH}">
 		                <div class="box_detail">
-
 		                	<div class="form_row">
 		                		<label class="form_label">原始密码：</label>
-		                		<input type="password">
+		                		<input type="password" name="old_pwd" limit="required:true;len:6-20" msg="原始密码不能为空,长度为6-20">
 		                	</div>
 
 		                	<div class="form_row">
 		                		<label class="form_label">新密码：</label>
-		                		<input type="password" disabled="disabled">
+		                		<input type="password" name="new_pwd1" limit="required:true;len:6-20" msg="新密码为不能为空,长度为6-20"  >
 		                	</div>
 
 		                	<div class="form_row">
 		                		<label class="form_label">确认密码：</label>
-		                		<input type="password" disabled="disabled">
+		                		<input type="password" name="new_pwd2" limit="required:true;len:6-20;equals:new_pwd1" msg="两次密码不一样" >
 		                	</div>
 
 		                	<div class="form_line"></div>
@@ -41,10 +42,14 @@
 		                	</div>
 
 		                </div>
+						</form>
 		            </div>
 		        </div>
     		</div>
     	</article>
     </div>
     <!--content end-->
+<script>
+	In('valid');
+</script>
 <!--{include user/footer}-->

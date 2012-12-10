@@ -125,7 +125,6 @@ class Control_login extends Control_front {
 		 
 		if($_GET['back']){
 			Keke_oauth_login::instance($type)->get_access_token();
-			//header('Location:'.$_K['website_url'].'/index.php/login/oauth?type='.$type);
 			$this->request->redirect('login/oauth?type='.$type);
 		}else{
 			//oauth 登录认证的地址

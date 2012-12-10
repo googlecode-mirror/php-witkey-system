@@ -108,10 +108,12 @@ class Keke_lang {
 		$p_name = S_ROOT.'lang/'.$r."/{$dir}/public.php";
 		
 		//已经加载了就不再加载
-		$files = array_flip(self::$_files);
-		if(isset($files[$p_name]) OR isset($files[$file_name])){
+		//$files = array_flip(self::$_files);
+		
+		/* if(isset($files[$p_name])){
 			return ;
-		}
+		} */
+		
 	 	
 		if(file_exists($p_name) AND $this->_default != $this->_dir){
 			self::$_files[] = $p_name;
@@ -140,11 +142,8 @@ class Keke_lang {
 	 * 加载类的语言文件
 	 * @param string $class_name
 	 */ 
-	public static function load_lang_class($class_name,$dir='public'){
-		 $o  = self::get_instance();
-		 $o->set_dir($dir);
-		
-         $o->load_file($class_name);
+	public static function load_lang_class($class,$dir='public'){
+		 Keke_lang::get_instance()->set_dir($dir)->load_file($class);
 	}
 	
 	/**

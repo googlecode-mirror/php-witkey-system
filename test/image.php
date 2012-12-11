@@ -25,10 +25,11 @@ $image = Image::factory(S_ROOT.'test/dynamic-600.jpg');
 //Èñ»¯
 //$image->sharpen(50);
 //Ðý×ª
-$image->rotate(180);
+//$image->rotate(180);
+$image->resize(100,100);
 
-$image->save('watermark.jpg');
+$image->save('watermark100.jpg');
 
-echo "<img src='watermark.jpg'>";
+echo "<img src='watermark100.jpg'>";
 
 

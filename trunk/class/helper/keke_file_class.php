@@ -546,7 +546,7 @@ class keke_file_class {
 				$filepath = 'data/uploads/' . UPLOAD_RULE;
 			}
 			
-			$upload_obj = new keke_upload_class ( $absolute_path, explode ( '|', $ext ), UPLOAD_MAXSIZE );
+			$upload_obj = new Upload ( $absolute_path, explode ( '|', $ext ), UPLOAD_MAXSIZE );
 			$files = $upload_obj->run ( $file_name, $isr );
 			
 			if (! empty ( $files ) && is_array ( $files )) {

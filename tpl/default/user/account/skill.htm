@@ -18,64 +18,76 @@
 									<li><a href="{USER_URL}/account_detail/skill_tag">技能标签</a></li>
 								</ul>
 		                </nav>
-		                <div class="box_detail">
-
-		                	<div class="form_row">
+						<form action="{USER_URL}/account_detail/skill/sikll_save" name="certs" method="post" onsubmit="return checkForm(this)" enctype="multipart/form-data" >
+						<input type="hidden" name="formhash" value="{FORMHASH}">
+ 		                <div class="box_detail">
+ 		                	
+ 		                	{if $certs }
+						    {loop $certs $k $v}
+							<div class="form_row">
 		                			<label class="form_label">证书名称：</label>
-		                			<input type="text" name="">
+		                			<input type="text" name="name[]">
 		                	</div>
-		                	
 		                	<div class="form_row">
 		                			<label class="form_label">颁发年份：</label>
-		                			<select name="" id="">
+		                			<select name="year[]" >
 		                				<option>1977</option>
 		                			</select>
 		                	</div>
 
 		                	<div class="form_row">
 		                			<label class="form_label">证书图片：</label>
-		                			<input type="file">
+		                			<input type="file" name="pic[]">
+									<div class="fl_r">
+									<a href="">删除</a>
+									<a href="">添加</a>
+									</div>
 		                	</div>
 
 		                	<div class="form_line"></div>
-
-		                	<div class="form_row">
+							{/loop}		
+							{else}
+							<div id="con">
+							<div class="form_row">
 		                			<label class="form_label">证书名称：</label>
-		                			<input type="text" name="">
+		                			<input type="text" name="name[]">
 		                	</div>
-		                	
 		                	<div class="form_row">
 		                			<label class="form_label">颁发年份：</label>
-		                			<select name="" id="">
+		                			<select name="year[]" >
 		                				<option>1977</option>
 		                			</select>
 		                	</div>
 
 		                	<div class="form_row">
 		                			<label class="form_label">证书图片：</label>
-		                			<input type="file">
+		                			<input type="file" name="pic[]">
+									<div class="fl_r">
+									<a href="">删除</a>
+									<a href="">添加</a>
+									</div>
 		                	</div>
-
-		                	
 		                	<div class="form_line"></div>
-		                	
+
+							</div>
+							{/if}			
 
 		                	<div class="form_footer">
 		                		<div class="fl_l">
 		                			<input type="submit" value="提交">
 		                		</div>
-		                		<div class="fl_r">
-		                			<input type="button" value="添加技能证书">
-		                			<input type="button" value="删除技能证书">
-		                		</div>
+		                	 
 		                	</div>
-
-
 		                </div>
+						</form>
+						
 		            </div>
 		        </div>
     		</div>
     	</article>
     </div>
     <!--content end-->
+<script>
+	In('valid');
+</script>	
 <!--{include user/footer}-->

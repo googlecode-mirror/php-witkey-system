@@ -870,7 +870,7 @@ class Keke_HTTP_Header extends ArrayObject {
 		 
 		if (Keke::$_expose AND ! isset($headers['x-powered-by']))
 		{
-			header_remove('X-Powered-By');
+			//header_remove('X-Powered-By');
 			$processed_headers[] = 'X-Powered-By: Keke '.
 				KEKE_VERSION;
 		}

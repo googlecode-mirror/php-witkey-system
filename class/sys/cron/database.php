@@ -6,6 +6,7 @@
  */
 Class Sys_cron_database {
 	
+	
 	public static function batch_run(){
 
 		$table_arr = DB::query ( "SHOW TABLE STATUS FROM `" . DBNAME . "` LIKE '" . TABLEPRE . "%'" )->execute();

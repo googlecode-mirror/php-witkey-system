@@ -40,7 +40,8 @@ abstract class Sys_cron {
 		
 		//执行计划任务
 		if($cron['filename']){
-			 $cron['filename']::batch_run();
+			 $class = new $cron['filename'];
+			 $class ->batch_run();
 		}
 		self::set_next_time($cron);
 	}

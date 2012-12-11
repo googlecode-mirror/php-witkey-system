@@ -1,6 +1,7 @@
 <?php
 
-class keke_backup_class {
+class DBbackup {
+	
 	static function run_backup() {
 		global $_lang;
 		$output = array();

@@ -19,7 +19,7 @@ class Control_admin_tool_dbbackup extends Control_admin{
 	function action_save(){
 		global  $_lang;
 		if(!$_GET['t']){
-			keke_backup_class::run_backup ();
+			DBbackup::run_backup ();
 		}else{
 			if($_GET['t']==1){
 				Keke::show_msg ($_lang ['operate_success'], "admin/tool_dbrestore",'success' );

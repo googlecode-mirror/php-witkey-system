@@ -1,6 +1,6 @@
 <?php
 
-class keke_base62_class {
+class Base62 {
 	private $string = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 	
 	public function base62_encode($str) {

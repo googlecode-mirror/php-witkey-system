@@ -88,7 +88,7 @@ class keke_ajax_upload_class {
 			$save_path = S_ROOT . '/data/uploads/sys/' . $this->_task_id . '/';
 			$rand_name = 1;
 		}
-		$file_uploads = new keke_upload_class ( $save_path, $this->_ext_url, UPLOAD_MAXSIZE );
+		$file_uploads = new Upload ( $save_path, $this->_ext_url, UPLOAD_MAXSIZE );
 		$savename = $file_uploads->run ( $this->_file_name, $rand_name );
 		if (is_array ( $savename )) {
 			if ($this->_file_type == 'att') {
@@ -134,7 +134,7 @@ class keke_ajax_upload_class {
 	 * @return   void
 	 */
 	public function upload_big_file() {
-		$file_uploads = new keke_upload_class ( UPLOAD_ROOT, '', 50 * (1024 * 1024) );
+		$file_uploads = new Upload ( UPLOAD_ROOT, '', 50 * (1024 * 1024) );
 		$savename = $file_uploads->run ( $this->_file_name, 1 );
 		if (is_array ( $savename )) {
 			$echo_str = 'data/uploads/' . UPLOAD_RULE . $savename [0] ['saveName'];

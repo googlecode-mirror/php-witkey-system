@@ -2,7 +2,8 @@
 
 Keke_lang::load_lang_class ( 'ajax_upload' );
 
-class Sys_ajax_upload {
+class Sys_upload {
+	
 	private $_ext_url;
 	private $_file_name;
 	public $_file_type;
@@ -21,12 +22,11 @@ class Sys_ajax_upload {
 	public static function get_instance($query_string) {
 		static $obj = null;
 		if ($obj == null) {
-			$obj = new Sys_ajax_upload ( $query_string );
+			$obj = new self ( $query_string );
 		}
 		return $obj;
 	}
 	function __construct($query_string) {
-		global $kekezu;
 		$this->_ext_url = explode ( "|", UPLOAD_ALLOWEXT );
 		$this->_uid = Keke::$_uid;
 		$this->_username = Keke::$_username;
@@ -35,7 +35,11 @@ class Sys_ajax_upload {
 	}
 	public function file_info_init($query_string) {
 		$url_data = array ();
-		parse_str ( $query_string, $url_data );
+		if(is_array($query_string)){
+			$url_data = $query_string;
+		}else{
+			parse_str ( $query_string, $url_data );
+		}
 		$url_data ['file_name'] and $this->_file_name = $url_data ['file_name'] or $this->_file_name = 'filedata';
 		$url_data ['file_type'] and $this->_file_type = $url_data ['file_type'];
 		intval($url_data ['img_width']) and $this->_img_width = $url_data ['img_width'];
@@ -109,25 +113,14 @@ class Sys_ajax_upload {
 			} else {
 				$msg = array ('url' => '!' . $file_pic, 'localname' => $real_file, 'id' => '1', 'up_file' => $file_pic );
 			}
-			$file_obj->setUid ( $this->_uid );
-			$file_obj->setUsername ( $this->_username );
-			$file_obj->setTask_id ( intval ( $this->_task_id ) );
-			$file_obj->setFile_name ( $real_file );
-			$file_obj->setSave_name ( $file_pic );
-			$file_obj->setWork_id ( intval ( $this->_work_id ) );
-			$file_obj->setObj_id ( intval ( $this->_obj_id ) );
-			$file_obj->setObj_type ( $this->_obj_type );
-			$file_obj->setOn_time ( time () );
-			
-			$res = $file_obj->create ();
-			
+			$fid = $this->save_db($file_pic);
 			$err = '';
 		} else {
 			$err = $savename;
 			$msg = $savename;
 		}
 		$_K ['charset'] != 'utf-8' and $msg = Keke::gbktoutf ( $msg );
-		echo Keke::json_encode_k ( array ('err' => $err, 'msg' => $msg, 'fid' => $res ) );
+		echo Keke::json_encode_k ( array ('err' => $err, 'msg' => $msg, 'fid' => $fid ) );
 		die ();
 	}
 	
@@ -135,10 +128,13 @@ class Sys_ajax_upload {
 	 * @return   void
 	 */
 	public function upload_big_file() {
+		
 		$file_uploads = new Upload ( UPLOAD_ROOT, '', 50 * (1024 * 1024) );
+		
 		$savename = $file_uploads->run ( $this->_file_name, 1 );
+		
 		if (is_array ( $savename )) {
-			$echo_str = 'data/uploads/' . UPLOAD_RULE . $savename [0] ['saveName'];
+			$filepath = 'data/uploads/' . UPLOAD_RULE . $savename [0] ['saveName'];
 			$filename = $savename [0] ['saveName'];
 			$real_file = $savename [0] [name];
 			($this->_flash&&CHARSET == 'gbk') && $real_file = Keke::utftogbk ( $real_file );
@@ -146,45 +142,58 @@ class Sys_ajax_upload {
 		} else {
 			$err = $savename;
 		}
-		$fid = time ();
-		echo Keke::json_encode_k ( array ('err' => $err, 'path' => $echo_str, 'filename' => $filename, 'localname' => $real_file, 'fid' => $fid ) );
+		$fid = $this->save_db($filepath);
+		
+		echo Keke::json_encode_k ( array ('err' => $err, 'path' => $filepath, 
+				'filename' => $filename, 'localname' => $real_file, 'fid' => $fid ) );
 		die ();
 	}
 	//return three pic size:100*100,210*210,
-	public function upload_and_resize_pic() {
+	public function upload_resize_pic() {
 		global $_K;
 		$ext = 'jpg|jpeg|gif|png|bmp';
-		$filename = $this->_file_name;
-		$real_file = $_FILES [$filename] ['name'];
 		
+	    $filename = $this->_file_name;
+	    
 		$filepath = keke_file_class::upload_file ( $filename, $ext, 1 );
+		
 		if (! filepath) {
 			return false;
 		}
 		CHARSET == 'gbk' && $real_file = Keke::utftogbk ( $real_file );
-		//存放到数据库
-		$file_obj = new Keke_witkey_file ();
-		$file_obj->setUid ( $this->_uid );
-		$file_obj->setUsername ( $this->_username );
-		$file_obj->setFile_name ( $real_file );
-		$file_obj->setSave_name ( $filepath );
-		$file_obj->setObj_id ( intval ( $this->_obj_id ) );
-		$file_obj->setObj_type ( $this->_obj_type );
-		$file_obj->setOn_time ( time () );
-		$fid = $file_obj->create();
+		
 		
 		$size_a = array (100, 100 );
 		$size_b = array (210, 210 );
 		$name = pathinfo($filepath,PATHINFO_FILENAME);
-		$p100 = str_replace($filepath, $name, $name.'100');
-		$p210 = str_replace($filepath, $name, $name.'210');
-		Image::factory($filepath)->resize(100,100)->save($p100);
-		Image::factory($filepath)->resize(210,210)->save($p210);
 		
-		$msg = array ('path' => $filepath, 'filename' => $filename, 'localname' => $real_file, 'fid' => $fid, 'size' => $size_a [0] . ',' . $size_b [0] );
+		$p100 =  S_ROOT.strtr($filepath,array($name=>$name.'100'));
+		$p210 =  S_ROOT.strtr($filepath,array($name=>$name.'210'));
+		
+		Image::factory(S_ROOT.$filepath)->resize(100,100)->save($p100);
+		Image::factory(S_ROOT.$filepath)->resize(210,210)->save($p210);
+		
+		$fid = $this->save_db($filepath);
+		
+		$msg = array ('path' => $filepath, 'filename' => $filename, 'localname' => $real_file,
+				 'fid' => $fid, 'size' => $size_a [0] . ',' . $size_b [0] );
 		($this->_flash&&CHARSET == 'gbk') && $msg = Keke::gbktoutf ( $msg );
 		$_K ['charset'] != 'utf-8' and $msg = Keke::gbktoutf ( $msg );
 		echo Keke::json_encode_k ( $msg );
 		die ();
+	}
+	
+	function save_db($filepath){
+		$filename = $this->_file_name;
+		//存放到数据库
+		$file_obj = new Keke_witkey_file ();
+		$file_obj->setUid ( $this->_uid );
+		$file_obj->setUsername ( $this->_username );
+		$file_obj->setFile_name ( $_FILES [$filename] ['name'] );
+		$file_obj->setSave_name ( $filepath );
+		$file_obj->setObj_id ( intval ( $this->_obj_id ) );
+		$file_obj->setObj_type ( $this->_obj_type );
+		$file_obj->setOn_time ( SYS_START_TIME );
+		return (int)$file_obj->create();
 	}
 }

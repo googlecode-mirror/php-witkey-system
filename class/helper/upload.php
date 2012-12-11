@@ -1,4 +1,5 @@
-<?php
+<?php defined ( 'IN_KEKE' ) or die ( 'Access Dinied' );
+
 class Upload {
 	
 	public $saveName; // ±£´æÃû

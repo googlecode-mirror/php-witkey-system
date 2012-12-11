@@ -4,6 +4,7 @@
  * @author Michael
  * @version 3.0 2012-12-07
  */
+
 abstract  class Sys_task_cron {
     
 	/**

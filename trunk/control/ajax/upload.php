@@ -18,7 +18,7 @@ class Control_ajax_upload extends Controller{
 	 */
 	function action_index(){
 		
-		$upload_obj=Sys_ajax_upload::get_instance($_SERVER['QUERY_STRING']);
+		$upload_obj= Sys_upload::get_instance($_SERVER['QUERY_STRING']);
 		
 		switch ($upload_obj->_file_type){
 			case 'sys'://系统附件上传
@@ -30,7 +30,7 @@ class Control_ajax_upload extends Controller{
 				$upload_obj->upload_big_file();
 				break;
 			case 'service'://上传图片，会自动剪切成大中小
-				$upload_obj -> upload_and_resize_pic();
+				$upload_obj -> upload_resize_pic();
 				break;
 		}
 	}

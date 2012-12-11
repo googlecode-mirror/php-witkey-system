@@ -279,6 +279,8 @@ class Keke extends Keke_core {
 		$_COOKIE = Keke::k_stripslashes($_COOKIE);
 			 
 		Keke::init_session ();
+		$this->init_lang ();
+		$this->init_curr();
 		$this->init_config ();
 		
 		
@@ -286,12 +288,11 @@ class Keke extends Keke_core {
 		Keke::$_cache_obj = Cache::instance ();
 		 
 		
-		$this->init_lang ();
-		$this->init_curr();
+		
 		 
 
 		self::$_log = log::instance()->attach(new keke_log_file());
-		  
+		$this->init_user();
 	}
 	/**
 	 * 初始化配置信息
@@ -340,6 +341,17 @@ class Keke extends Keke_core {
 		define ( 'FORMHASH', Keke::formhash () );
 		Keke::$_sys_config = $config_arr;
 		Keke::$_style_path = $_K ['siteurl'] . "/" . SKIN_PATH;
+		$_K = $_K+Keke::$_sys_config;
+		$_K['model_list'] = Keke::$_model_list;
+		$_K['nav_arr'] = Keke::$_nav_list;
+		$_K['lang_list'] = Keke::$_lang_list;
+		$_K['lang']      = Keke::$_lang;
+		$_K['api_open']   = Keke::$_api_open;
+		$_K['weibo_list'] = Keke::$_weibo_list;
+		$_K['attent_api_open'] = Keke::$_attent_api_open;
+		$_K['attent_list'] = Keke::$_weibo_attent;
+		$_K['style_path'] = Keke::$_style_path;
+		$_K['style_path']=SKIN_PATH;
 	
 	}
 	/**
@@ -347,18 +359,12 @@ class Keke extends Keke_core {
 	 */
 	function init_user() {
 		global $_K;
-		if (isset ( $_SESSION ['uid'] )) {
+		if (Keke_user_login::instance()->logged_in()) {
 			Keke::$_uid = $_SESSION ['uid'];
 			Keke::$_username = $_SESSION ['username'];
-			Keke::$_userinfo = Keke_user::instance()->get_user_info( Keke::$_uid );
-			Keke::$_user_group = Keke::$_userinfo ['group_id'];
-			$sql = "select count(msg_id) from %switkey_msg where to_uid = '%d' and view_status=0 and msg_status!=1";
-			//Keke::$_messagecount = Dbfactory::get_count ( sprintf ( $sql, TABLEPRE, Keke::$_uid ) );
-		} elseif (isset ( $_COOKIE ['user_login'] )) {
-			$temp = unserialize ( Encrypt::decode ( $_COOKIE ['user_login'] ) );
-			$_SESSION ['uid'] = $temp ['uid'];
-			$_SESSION ['username'] = $temp ['username'];
-			unset ( $temp );
+			Keke::$_user_group = $_SESSION ['group_id'];
+		} elseif ( Cookie::get('user_login')) {
+			Keke_user_login::instance()->auto_login();
 		}
 	}
 	/**
@@ -496,6 +502,7 @@ class Keke extends Keke_core {
 		$helper =S_ROOT.$dir.DIRECTORY_SEPARATOR.'helper'.DIRECTORY_SEPARATOR.$class_name;
 		$sys =  S_ROOT.$dir.DIRECTORY_SEPARATOR.'sys'.DIRECTORY_SEPARATOR.$class_name;
 		$model = S_ROOT.$dir.DIRECTORY_SEPARATOR.'model'.DIRECTORY_SEPARATOR.$class_name;
+		
 		$control = S_ROOT.$file;
 		$models = array ('cache','database','image');
 		$found = false;
@@ -503,10 +510,10 @@ class Keke extends Keke_core {
 			$found = $class;
 		}elseif(is_file($model)){
 			$found = $model;
-		}elseif(is_file($sys)){
-			$found = $sys;
 		}elseif(is_file($helper)){
 			$found = $helper;
+		}elseif(is_file($sys)){
+			$found = $sys;
 		}elseif(is_file($control)){
 			$found = $control;
 		} elseif(isset($models)) {

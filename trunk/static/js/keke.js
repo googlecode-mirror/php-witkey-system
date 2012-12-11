@@ -39,11 +39,11 @@ function uploadify(paramReg,contrReg){
 	var auto 	  = paramReg.auto==true?true:false;//是否自动提交
 	var debug     = paramReg.debug==true?true:false;//是否开启debug调试
 	var hide      = paramReg.hide==true?true:false;//上传完成后是否隐藏文件域
-	var swf  	  = paramReg.swf?paramReg.swf:'resource/js/uploadify/uploadify.swf';//flash路径
-	var uploader  = paramReg.uploader?paramReg.uploader:'index.php?do=ajax&view=upload&flash=1';////上传基本路径
-	var deleter   = paramReg.deleter?paramReg.deleter:'index.php?do=ajax&view=file&ajax=delete';//文件删除路径
+	var swf  	  = paramReg.swf?paramReg.swf:BASE_URL+'/static/js/uploadify/uploadify.swf';//flash路径
+	var uploader  = paramReg.uploader?paramReg.uploader:BASE_URL+'/index.php/ajax/upload?flash=1';////上传基本路径
+	var deleter   = paramReg.deleter?paramReg.deleter:BASE_URL+'/index.php/ajax/upload/del?';//文件删除路径
 	var file=fname= paramReg.file?paramReg.file:'upload';//file 表单名name=id=upload
-	var resText   = paramReg.text?paramReg.text:'file_ids';//上传完成后结果保存表单名.name=id=file_ids;
+	var resText   = paramReg.text?paramReg.restext:'file_ids';//上传完成后结果保存表单名.name=id=file_ids;
 	var size      = paramReg.size;//文件大小限制
 	var exts      = paramReg.exts;//文件类型限制
 	var method    = paramReg.m?paramReg.m:'post';//上传方式
@@ -75,6 +75,17 @@ function uploadify(paramReg,contrReg){
 		uploadify.queueSizeLimit  = qlimit;
 		uploadify.method		  = method;
 		uploadify.buttonText	  = text;
+		uploadify.fn = function(json){
+			if($("#"+json.fid).length<1){
+				var file_ids = $("#"+resText).val();
+				 if(file_ids){
+					$("#"+resText).val(file_ids+','+json.fid);
+				}else{	
+					$("#"+resText).val(json.fid);
+					$("#"+file).val('');
+				}
+			}
+		};
 		uploadify.onUploadSuccess =	function(file,json,response){
 			json = eval('('+json+')');
 			if(json.err){
@@ -86,67 +97,14 @@ function uploadify(paramReg,contrReg){
 				return false;
 			}else{
 				json.filename  = fname;
-				typeof(uploadResponse)=='function'&&uploadResponse(json);
+				//typeof(uploadResponse)=='function'&&uploadResponse(json);
+				uploadify.fn(json);
+				 
 			}
 		};
 	$("#"+file).uploadify(uploadify);
 }
-/**
- * 文件上传 uploadResponse这个方法需要具体使用的时候自行定义。因为不同的地方响应插入页面的内容不同
- * 
- * @param task_id
- *            任务id/后台时表示文件类型
- * @param obj_id
- *            对象id
- * @param obj_type
- *            对象类型
- * @param fileType
- *            上传类型 att,big,service
- * @param mode 
- * 			  上传模式 front,back
- * @param {Object}
- *            fileName 文件名
- * @param {Object}
- *            width 限制宽
- * @param {Object}
- *            height 限制高
- * @param {Object}
- * 			  msgType 消息提示类型  0或1 0shoDialog提示。1表示tips提示
- * @param {Object}
- * 			showTarget 消息插入容器ID  。当ac_type=1时有效
- */
-function upload(fileName,fileType,task_id,obj_id,obj_type,width,height,msgType,showTarget){
-	var fileObj=document.getElementById(fileName);
-		if(isExtName(fileObj,1,msgType,showTarget)){
-			var url=BASE_URL+"/index.php/ajax/upload?task_id="+task_id+"&file_type="+fileType+"&obj_type="+obj_type+"&obj_id="+obj_id+"&file_name="+fileName;
-			$.ajaxFileUpload({
-				url:url,
-				fileElementId:fileName,
-				dataType:'json',
-				success:function(json){
-					if(json.err){
-						if(msgType==1){
-							tipsAppend(showTarget,json.err,'error','red');
-						}else{
-							showDialog(decodeURI(json.err), 'alert', L.error_tips,'',0);
-						}
-						return false;
-					}else{
-						json.filename  = fileName;
-						uploadResponse(json);
-					}
-				 },
-				error:function(json,status,e){
-					if(msgType==1){
-						tipsAppend(showTarget,e,'error','red');
-					}else{
-						showDialog(e, 'alert', L.error_tips,'',0);
-					}
-					return false;
-				}
-			});
-		}
-}
+
 
 
 function addFav(name,url){

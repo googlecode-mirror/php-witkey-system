@@ -1,12 +1,32 @@
 <!--{include header}-->
 
-<form action="{$_K['siteurl']}/index.php/en/add" method="post" accept-charset="utf-8">
-	<input type="hidden" name='formhash' value="{FORMHASH}">
-	email:<input type="text" name="email" value="{$_POST['email']}" > 
-	ip:<input type="text" name="ip" > 66
-	url:<input type="text" name="url" > 
-	phone:<input type="text" name="phone" >
-	<p><input type="submit" value="Continue" /></p>
+<!--
+<form action="{BASE_URL}/test/big_upload.php" method="post"  enctype="multipart/form-data">
+	<input type="hidden" name="file_name" value="upload2">
+	<input type="hidden" name="file_type" value="att">
+	<input type="file"  name="upload2" id="upload2">
+	<input type="submit" value="ÉÏ´«" />
 </form>
-<input type="button" value="Ajax²âÊÔ" onclick="showWindow('test','{BASE_URL}/index.php/en/ajax/12')">
+-->
+
+<input type="hidden" name="file_ids" id="file_ids">
+<input type="file" class="file" name="upload" id="upload">
+<script type="text/javascript">
+		$(function(){
+			uploadify({
+					auto:true,
+					size:"{$_K['max_size']}MB",
+					exts:'*.jpg;*.png;*.jpeg',
+					file:'upload',
+					restext:'file_ids',
+					debug:true,
+					limit:5}
+				,{
+					fileType:'att',
+					objType:'att'
+				});
+		})
+In('ajaxfileupload');		
+</script>
+				
 <!--{include footer}-->

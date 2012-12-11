@@ -33,17 +33,17 @@ class Page {
 	/**
 	 * 生成分页html
 	 *
-	 * @param unknown_type $num
-	 * @param unknown_type $perpage
-	 * @param unknown_type $curpage
-	 * @param unknown_type $mpurl
-	 * @param $anchor 
-	 * @return unknown
+	 * @param int $num   总页数
+	 * @param int $perpage   第页多少条
+	 * @param int $curpage   当前页
+	 * @param string $mpurl  url
+	 * @param $anchor   描点
+	 * @return string
 	 */
 	function Pagination($num, $perpage, $curpage, $mpurl,$anchor='') {
 		global $_lang;
 		$Paginationpage = '';
-		$this->_static or $mpurl .= strpos ( $mpurl, '?' )===false ? '?' : '';
+		$this->_static or $mpurl .= strpos ( $mpurl, '?' )===false ? '?' : '&';
 		
 		$ajax_dom = $this->_ajax_dom;
 		if ($num > $perpage) {

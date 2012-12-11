@@ -17,7 +17,9 @@ class Control_ajax_upload extends Controller{
 	 * 
 	 */
 	function action_index(){
-		$upload_obj=keke_ajax_upload_class::get_instance($_SERVER['QUERY_STRING']);
+		
+		$upload_obj=Sys_ajax_upload::get_instance($_SERVER['QUERY_STRING']);
+		
 		switch ($upload_obj->_file_type){
 			case 'sys'://系统附件上传
 			case 'editor'://编辑器
@@ -47,4 +49,5 @@ class Control_ajax_upload extends Controller{
 		$res = keke_file_class::del_att_file($fid,$filepath,$size);
 		$res and Keke::echojson ( '', 1 ) or Keke::echojson ( '', '0' );
 	}
+	
 }

@@ -1,6 +1,6 @@
 <?php defined ( 'IN_KEKE' ) or exit('Access Denied');
 
-Keke_lang::load_lang_class ( 'keke_ajax_upload_class' );
+Keke_lang::load_lang_class ( 'ajax_upload' );
 
 class Sys_ajax_upload {
 	private $_ext_url;

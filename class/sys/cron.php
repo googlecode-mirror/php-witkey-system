@@ -36,13 +36,16 @@ abstract class Sys_cron {
 		ignore_user_abort ( TRUE );
 		set_time_limit ( 1000 );
 		
-		Keke::$_log->add(Log::ALERT, $cron['cron_name'])->write();
+		Keke::$_log->add(Log::INFO, $cron['cron_name'])->write();
 		
-		//执行计划任务
-		if($cron['filename']){
-			 $class = new $cron['filename'];
-			 $class ->batch_run();
+		//执行计划任务,文件名为空则不执行
+		if(!$cron['filename']){
+			return TRUE;
 		}
+			 /* $class = new $cron['filename'];
+			 $class ->batch_run(); */
+		call_user_func($cron['filename'] .'::batch_run');
+		
 		self::set_next_time($cron);
 	}
 	

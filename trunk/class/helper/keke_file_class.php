@@ -535,7 +535,7 @@ class keke_file_class {
 	
 	public static function upload_file($file_name, $ext = '', $isr = 1, $folder = '', $output = 'normal') {
 		global $_lang;
-		 
+
 		if ($_FILES [$file_name]) {
 			$ext == '' && $ext = UPLOAD_ALLOWEXT;
 			if ($folder != '') {
@@ -548,18 +548,28 @@ class keke_file_class {
 			
 			$upload_obj = new Upload ( $absolute_path, explode ( '|', $ext ), UPLOAD_MAXSIZE );
 			$files = $upload_obj->run ( $file_name, $isr );
-			
 			if (! empty ( $files ) && is_array ( $files )) {
 				// 获得文件名
-				// $ref_name = $files [0] ['name'];
-				$file = $files [0] ['saveName'];
+				if(sizeof($files)==1){
+					$file = $files [0] ['saveName'];
+				}elseif(sizeof($files)>1){
+					$tmp = array();
+					foreach ($files as $v){
+						$tmp[] = $filepath.$v['saveName'];
+					}
+					return $tmp;
+				}
 				
 				return $filepath . $file;
 			} else {
 				$err = $files;
+				if(Keke_valid::not_empty($err)===FALSE){
+					return NULL;
+				}
 				switch ($output) {
 					case "normal" :
-						Keke::show_msg ( $_lang ['operate_notice'], '', 2, $err, 'warning' );
+						$err = var_export($err,1);
+						Keke::show_msg ( $err, Keke_Request::initial()->referrer(),'error' );
 						break;
 					case "json" :
 						echo Keke::json_encode_k ( array (

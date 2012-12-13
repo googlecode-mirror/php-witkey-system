@@ -89,15 +89,28 @@ class Control_user_account_detail extends Control_user{
 	 */
 	function action_skill_tag(){
 		$where = "uid = $this->uid";
-	    $skills = DB::select('skill_ids')->from('witkey_space')->where($where)->get_count()->execute();	
-		//用户选中的技能
-		if($skills){
-	    	$skills = explode(',', trim($skills,','));
+		//用户的技能
+		$sql = "select group_concat(b.skill_id) skill_id, GROUP_CONCAT(b.skill_name) as skill_name from :keke_witkey_skill b \n".
+				"right join :keke_witkey_space a on \n".
+				"FIND_IN_SET(b.skill_id,a.skill_ids)\n".
+				"where a.uid=:uid\n".
+				"GROUP BY a.uid";
+	    $skills = DB::query($sql)->tablepre(':keke_')->param(':uid', $this->uid)->get_one()->execute();	
+		
+	    //用户选中的技能
+		if(Keke_valid::not_empty($skills['skill_id'])){
+	    	$skill_name = explode(',', trim($skills['skill_name'],','));
+	    	$skill_id = explode(',', trim($skills['skill_id'],','));
+	    	$skills = array_combine($skill_id, $skill_name);
+		}else{
+			$skills = NULL;
 		}
+		
+		//行业树
 	    $indus_arr =  Sys_indus::get_indus_tree(0);
 	    
 	    //随机取六个标签
-	    $sql = "SELECT skill_name \n".
+	    $sql = "SELECT skill_id,skill_name \n".
 				"FROM `:keke_witkey_skill` AS t1 JOIN \n".
 				"(SELECT ROUND(RAND() * (SELECT MAX(skill_id) FROM `:keke_witkey_skill`)) AS id) AS t2 \n".
 				"WHERE t1.skill_id >= t2.id \n".
@@ -110,43 +123,75 @@ class Control_user_account_detail extends Control_user{
 	 * 技能标签保存
 	 */
 	function action_tag_save(){
+		//用户选中的技能数组
 		$skills = $_POST['skill'];
-
+		
 		$use_skill = DB::select('skill_ids')->from('witkey_space')->where("uid= $this->uid")->get_count()->execute();
 		if($use_skill){
 			$use_skill = explode(',', trim($use_skill,','));
+		}else{
+			$use_skill = array();
 		}
+		//用户之前选中技能
 		$c = sizeof((array)$use_skill);
-// 		echo $c;die;
-		$t = array();
-		for($i=0;$i<(5-$c);$i++){
-		 $t[] = $skills[$i];	
+		if($c>=5){
+			Keke::show_msg('只能选五个技能','user/account_detail/skill_tag','info');
 		}
+		
+		$n = array_merge($use_skill,$skills);
+		$n = array_unique($n);
+		
+		//将已选 的与现在选 的合并后，只取前面五个
+		
+		$t = array();
+		 
+		$s = sizeof($n);
+		//只取前五个
+		while ($i<$s){
+			$i++;
+			if($i>5){
+				break;
+			}
+			$t[]  = array_shift($n);			
+		}
+		
+		//转成字符串
 		$tags = implode(',', $t);
 		if($tags){
-			$sql = "update :keke_witkey_space set skill_ids = concat(skill_ids,',$tags') where uid = $this->uid";
+			$sql = "update :keke_witkey_space set skill_ids = '$tags' where uid = $this->uid";
 			DB::query($sql,Database::UPDATE)->tablepre(':keke_')->execute();
 		}
 		$this->request->redirect('user/account_detail/skill_tag');
 	}
+	
 	function action_get_tag(){
 		$indus = $_GET['indus'];
-		$res = (array)DB::select('skill_name')->from('witkey_skill')->where("indus_id=$indus")->execute();
-		
+		$res = (array)DB::select('skill_id,skill_name')->from('witkey_skill')->where("indus_id=$indus")->execute();
+		if(Keke_valid::not_empty($res)===FALSE){
+			return ;
+		}
 		foreach ($res as $k=>$v){
-		  echo  "<input id=\"s$k\" type=\"checkbox\" name=\"skill[]\" value=\"{$v['skill_name']}\"><label for=\"s$k\">{$v['skill_name']}</label>";
+		  echo  "<input id=\"s$k\" type=\"checkbox\" name=\"skill[]\" value=\"{$v['skill_id']}\"><label for=\"s$k\">{$v['skill_name']}</label>";
 		}
 	}
 	/**
 	 * 技能标签删除
 	 */
 	function action_tag_del(){
-		$tag  = $_GET['tag'];
-		$sql = "update `:keke_witkey_space` \n".
-				"set skill_ids = ( REPLACE(skill_ids,'$tag,','') )\n".
-				",skill_ids = (replace(skill_ids,'$tag',''))\n".
-				" where uid = :uid";
-		DB::query($sql,Database::UPDATE)->tablepre(':keke_')->param(':uid', $this->uid)->execute();
+		$tag_id  = $_GET['tag'];
+		
+		$skill_ids  = DB::select('skill_ids')->from('witkey_space')->get_count()->where("uid = $this->uid")->execute();
+		$skill_ids = explode(',', $skill_ids);
+		
+		$skill_ids = array_flip($skill_ids);
+		unset($skill_ids[$tag_id]);
+		$skill_ids = array_flip($skill_ids);
+		
+		$skill_ids = implode(',', $skill_ids);
+		
+		DB::update('witkey_space')->set(array('skill_ids'))->value(array($skill_ids))->where("uid=$this->uid")->execute();
+		
+		//DB::query($sql,Database::UPDATE)->tablepre(':keke_')->param(':uid', $this->uid)->execute();
 	}
 	
 	/**

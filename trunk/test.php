@@ -1,7 +1,11 @@
 <?php define ( "IN_KEKE", TRUE );
 
 include 'app_boot.php';
- 
+
+$a = array(49,50,51,52,55,56);
+
+$c = (array)NULL;
+var_dump($c);
 
 //echo Keke_user_register::instance('keke')->gen_secode('123456','7sghrm');
 //сОят╟Э╪сть╡Бйт

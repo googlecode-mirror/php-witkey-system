@@ -2,10 +2,9 @@
 
 include 'app_boot.php';
 
-$a = array(49,50,51,52,55,56);
 
-$c = (array)NULL;
-var_dump($c);
+$res = Keke_user_login::instance('keke')->auto_login();
+var_dump($res);
 
 //echo Keke_user_register::instance('keke')->gen_secode('123456','7sghrm');
 //сОят╟Э╪сть╡Бйт

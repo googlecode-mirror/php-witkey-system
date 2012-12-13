@@ -364,7 +364,7 @@ class Keke extends Keke_core {
 			Keke::$_username = $_SESSION ['username'];
 			Keke::$_user_group = $_SESSION ['group_id'];
 		} elseif ( Cookie::get('remember_me')) {
-			Keke::$_log->add(Log::INFO, Cookie::get('remember_me'))->write();
+			//Keke::$_log->add(Log::INFO, Cookie::get('remember_me'))->write();
 			Keke_user_login::instance()->auto_login();
 		}
 	}

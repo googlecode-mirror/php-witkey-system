@@ -157,8 +157,7 @@ abstract class Keke_user_login   {
 		if($cdata===NULL){
 			return FALSE;
 		}
-		
-		$c_arr = base64_decode(unserialize($cdata));
+		$c_arr = unserialize(base64_decode($cdata));
 		$uid = $c_arr['uid'];
 		$username = $c_arr['username'];
 		$pwd = DB::select('password')->from('witkey_member')->where("uid='$uid' and username = '$username'")->get_count()->execute();
@@ -166,6 +165,8 @@ abstract class Keke_user_login   {
 		$data = $c_arr['uid'].$c_arr['username'].$pwd.$_SERVER['HTTP_USER_AGENT'];
 		//数据完整性验证，防止伪造 
 		$hash = hash_hmac('sha512', $data, ENCODE_KEY);
+		
+		
 		if($hash != $c_arr['hash']){
 			return FALSE;
 		}

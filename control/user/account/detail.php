@@ -23,14 +23,102 @@ class Control_user_account_detail extends Control_user{
 	function action_index(){
 		$where = "uid = $this->uid";
 		$works  = DB::select()->from('witkey_member_work')->where($where)->execute();
+		$inc_indus = self::$inc_indus;
+		$inc_job = self::$inc_job;
+		
+		$year = $this->get_year();
+		
 		require Keke_tpl::template('user/account/work_list');
 	}
 	/**
 	 * 工作经历保存
 	 */
 	function action_work_save(){
+		Keke::formcheck($_POST['formhash']);
+		$_POST = Keke_tpl::chars($_POST);
 		
+		$wid = $_POST['wid'];
+		$inc_name = $_POST['inc_name'];
+		$inc_indus = $_POST['inc_indus'];
+		$inc_job = $_POST['inc_job'];
+		$inc_time1 = $_POST['inc_time1'];
+		$inc_time2 = $_POST['inc_time2'];
+		$data = array_map(NULL, $wid,$inc_name,$inc_indus,$inc_job,$inc_time1,$inc_time2);
+		if(Keke_valid::not_empty($data)===FALSE){
+			Keke::show_msg('提交失败','user/account_detail','error');
+		}
+		foreach ($data as $v){
+			$columns = array('uid','inc_name','inc_indus','inc_time','inc_job');
+		    $values = array($this->uid,$v[1],$v[2],$v[4].','.$v[5],$v[3]);
+		  	if($v[0]){
+				$where = "wid = $v[0]";
+				DB::update('witkey_member_work')->set($columns)->value($values)->where($where)->execute();
+			}else{
+				DB::insert('witkey_member_work')->set($columns)->value($values)->execute();
+			}
+		}
+		Keke::show_msg('提交成功','user/account_detail');
 	}
+	/**
+	 * 工作经历删除 
+	 */
+	function action_work_del(){
+		$wid = $_GET['wid'];
+		DB::delete('witkey_member_work')->where("wid = $wid and uid = $this->uid")->execute();
+	}
+	/**
+	 * @var 公司行业
+	 */
+	public static $inc_indus = array(
+			'互联网',
+			'计算机业',
+			'通讯电子',
+			'商业',
+			'服务行业',
+			'教育业',
+			'制造业',
+			'金融业',
+			'政府部门',
+			'学生',
+			'失业中'
+			);
+	/**
+	 * @var 公司职称
+	 */
+	public static $inc_job = array(
+			
+			'经理人',
+			'市场营销/广告/公关',
+			'销售/客户',
+			'商务/采购/贸易',
+			'金融证券从业人员',
+			'建筑师/结构师/装修装饰',
+			'工程师',
+			'程序员',
+			'美术/创意设计(设计师)',
+			'医护人员',
+			'财会/审计/统计',
+			'法务人员',
+			'教师',
+			'人力资源',
+			'行政/文秘',
+			'编辑/记者',
+			'翻译',
+			'公务员',
+			'科研人员',
+			'物流管理',
+			'警察',
+			'军人',
+			'演艺人员',
+			'自由职业',
+			'客户服务/技术支持',
+			'产业工人',
+			'农业经营者',
+			'美容美发师',
+			'其它'
+				
+	);
+	
 	/**
 	 * 技能证书
 	 */
@@ -163,7 +251,9 @@ class Control_user_account_detail extends Control_user{
 		}
 		$this->request->redirect('user/account_detail/skill_tag');
 	}
-	
+	/**
+	 * ajax 显示 行业对应的标签
+	 */
 	function action_get_tag(){
 		$indus = $_GET['indus'];
 		$res = (array)DB::select('skill_id,skill_name')->from('witkey_skill')->where("indus_id=$indus")->execute();
@@ -190,8 +280,7 @@ class Control_user_account_detail extends Control_user{
 		$skill_ids = implode(',', $skill_ids);
 		
 		DB::update('witkey_space')->set(array('skill_ids'))->value(array($skill_ids))->where("uid=$this->uid")->execute();
-		
-		//DB::query($sql,Database::UPDATE)->tablepre(':keke_')->param(':uid', $this->uid)->execute();
+
 	}
 	
 	/**

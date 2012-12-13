@@ -19,7 +19,7 @@ function submitSort(uri,f,ord){
 	location.href = uri;
 }
 //删除单条
-function kdel(o,s){
+function kdel(o,s,func){
 	d = art.dialog;
 	var c = "确认删除？";
 	if(s){
@@ -33,13 +33,18 @@ function kdel(o,s){
 	 	        $(tips).children().html('删除中...').addClass('tips_info'); 
 			},
 			success: function(data){
-				location.href= location.href;
+				if(typeof func =='function'){
+					func(o);
+				}else if(typeof func =='string'){
+					eval(func);
+				}else{
+				   location.href= location.href;	
+				}
 			},
 			complete:function(){
 				$(tips).children().html('提交成功!')
 				 clear_tips();
 			}
-			
 		});
 	}).follow(o);
 	return false;

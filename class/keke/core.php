@@ -358,12 +358,13 @@ class Keke extends Keke_core {
 	 * 初始化用户
 	 */
 	function init_user() {
-		global $_K;
+		
 		if (Keke_user_login::instance()->logged_in()) {
 			Keke::$_uid = $_SESSION ['uid'];
 			Keke::$_username = $_SESSION ['username'];
 			Keke::$_user_group = $_SESSION ['group_id'];
-		} elseif ( Cookie::get('user_login')) {
+		} elseif ( Cookie::get('remember_me')) {
+			Keke::$_log->add(Log::INFO, Cookie::get('remember_me'))->write();
 			Keke_user_login::instance()->auto_login();
 		}
 	}

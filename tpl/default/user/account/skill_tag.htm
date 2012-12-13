@@ -41,7 +41,7 @@
 		                		<label class="form_label">标签：</label>
 		                		<div class="detail" id="sdetail">
 		                			{loop $tags $k $v}
-									<input id="s$k" type="checkbox" name="skill[]" value="$v['skill_name']"><label for="s$k">$v['skill_name']</label>
+									<input id="s$k" type="checkbox" name="skill[]" value="$v['skill_id']"><label for="s$k">$v['skill_name']</label>
 									{/loop}
 		                		</div>
 		                	</div>
@@ -51,15 +51,20 @@
 		                	<div class="form_row">
 		                		<label class="form_label">已选标签：</label>
 								{if Keke_valid::not_empty($skills)}
-								  {loop $skills $v}
-								      <span class="tags">$v
-									  <a onclick="return kdel(this)" href="{USER_URL}/account_detail/tag_del?tag=$v">&#10005</a></span>
+								  {loop $skills $k $v}
+								      <span class="tags" >$v
+									  <a onclick="return kdel(this,'',del)" href="{USER_URL}/account_detail/tag_del?tag=$k">&#10005</a></span>
 								  {/loop}
 								{else}
 									<span>您还没有选择标签。最多只能选五个!</span>
 								{/if}
 		                		 
 		                	</div>
+							<script>
+								function del(o){
+									$(o).parent().remove();
+								}
+							</script>
 
 		                	<div class="form_line"></div>
 

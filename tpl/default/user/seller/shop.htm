@@ -15,9 +15,9 @@
 			                
 			                <nav class="box_nav">
 									<ul id="test_ul" class="clearfix">
-										<li class="selected"><a href="{BASE_URL}/index.php/user/seller_shop">店铺设置</a></li>
-										<li><a href="{BASE_URL}/index.php/user/seller_shop/case">店铺案例</a></li>
-										<li><a href="{BASE_URL}/index.php/user/seller_shop/member">店铺成员</a></li>
+										<li class="selected"><a href="{USER_URL}/seller_shop">店铺设置</a></li>
+										<li><a href="{USER_URL}/seller_shop/case">店铺案例</a></li>
+										<li><a href="{USER_URL}/seller_shop/member">店铺成员</a></li>
 									</ul>
 			                </nav>
 		                {/if}
@@ -32,7 +32,7 @@
 			                	</div>
 		                	{else}
 		                	
-								<form action="{BASE_URL}/index.php/user/seller_shop/save" name="shop_frm" id="shop_frm" method="post">
+								<form action="{USER_URL}/seller_shop/save" name="shop_frm" id="shop_frm" method="post">
 				                	<div class="form_row">
 			                			<label class="form_label">店铺名称：</label>
 			                			<input type="text" size="60" name="shop_name" value="{$data_arr['shop_name']}">

@@ -17,7 +17,7 @@
 									<li><a href="{USER_URL}/account_basic/avatar">用户头像</a></li>
 								</ul>
 		                </nav>
-						<form action="{BASE_URL}/index.php/user/account_basic/save" enctype='application/x-www-form-urlencoded' method="post" autocomplete='off'>
+						<form action="{USER_URL}/account_basic/save" enctype='application/x-www-form-urlencoded' method="post" autocomplete='off'>
 							<input type="hidden" value="{FORMHASH}" name='formhash'>
 		                <div class="box_detail">
 		                	    {if empty($uinfo['group_id'])}
@@ -38,7 +38,7 @@
 									{if $uinfo['realname_status']==1}
 									{$uinfo['truename']}
 									{else}
-		                			<input type="button" onclick="location.href='{BASE_URL}/index.php/user/account_auth'" value="进行实名认证">
+		                			<input type="button" onclick="location.href='{USER_URL}/account_auth'" value="进行实名认证">
 									{/if}
 		                		</div>
 								{/if}
@@ -51,7 +51,7 @@
 									{if $uinfo['enter_status']==1}
 									{$uinfo['company']}
 									{else}
-									<input type="button" onclick="location.href='{BASE_URL}/index.php/user/account_auth/enter'" value="进行企业认证">
+									<input type="button" onclick="location.href='{USER_URL}/account_auth/enter'" value="进行企业认证">
 									{/if}
 		                		</div>
 								 
@@ -90,7 +90,7 @@
 									{else}
 		                			<input type="button" value="绑定邮箱">
 		                			<input type="email" id='email' placeholder="邮箱地址" >
-		                			<a  class='submit' onclick="this.href += $('#email').get(0).value" id="send_mail" href="{BASE_URL}/index.php/user/account_basic/send_mail?mail="  target="_blank">发送验证信息</a>
+		                			<a  class='submit' onclick="this.href += $('#email').get(0).value" id="send_mail" href="{USER_URL}/account_basic/send_mail?mail="  target="_blank">发送验证信息</a>
 									{/if}
 		                		</div>
 								

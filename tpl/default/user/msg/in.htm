@@ -13,16 +13,16 @@
 		                </header>
 		                <nav class="box_nav">
 								<ul id="test_ul" class="clearfix">
-									<li {if !isset($type)||$type=='all'}class="selected"{/if}><a href="{BASE_URL}/index.php/user/msg_in">全部消息</a></li>
-									<li {if $type=='unread'}class="selected"{/if}><a href="{BASE_URL}/index.php/user/msg_in/unread">未读消息</a></li>
-									<li {if $type=='sys'}class="selected"{/if}><a href="{BASE_URL}/index.php/user/msg_in/sys">系统消息</a></li>
-									<li {if $type=='unsys'}class="selected"{/if}><a href="{BASE_URL}/index.php/user/msg_in/unsys">非系统消息</a></li>
+									<li {if !isset($type)||$type=='all'}class="selected"{/if}><a href="{USER_URL}/msg_in">全部消息</a></li>
+									<li {if $type=='unread'}class="selected"{/if}><a href="{USER_URL}/msg_in/unread">未读消息</a></li>
+									<li {if $type=='sys'}class="selected"{/if}><a href="{USER_URL}/msg_in/sys">系统消息</a></li>
+									<li {if $type=='unsys'}class="selected"{/if}><a href="{USER_URL}/msg_in/unsys">非系统消息</a></li>
 								</ul>
 		                </nav>
 		                <div class="box_detail">
 
 		                	<div class="toolbar">
-		                		<form class="detail" action="{BASE_URL}/index.php/user/msg_in" method="get" id="frm_user_search">
+		                		<form class="detail" action="{USER_URL}/msg_in" method="get" id="frm_user_search">
 										<table cellspacing="0" cellpadding="0">
 											<tbody>
 											<tr>
@@ -73,9 +73,9 @@
 		                              </td>
 		                              <td>{if $v['uid']}{$v['username']}{else}系统消息{/if}</td>
 		                              <td>
-		                              	<a href="{BASE_URL}/index.php/user/msg_in/info?msg_id={$v['msg_id']}&from=in&action={$_K['action']}" class="title">{$v['title']}</a>
+		                              	<a href="{USER_URL}/msg_in/info?msg_id={$v['msg_id']}&from=in&action={$_K['action']}" class="title">{$v['title']}</a>
 		                              	<div class="item_action">
-		                              		<a href="{BASE_URL}/index.php/user/msg_in/info?msg_id={$v['msg_id']}&from=in&action={$_K['action']}">查看</a>
+		                              		<a href="{USER_URL}/msg_in/info?msg_id={$v['msg_id']}&from=in&action={$_K['action']}">查看</a>
 		                              		<a href="{$del_uri}?msg_id={$v['msg_id']}&status={$v['msg_status']}&is_sys={$v['to_uid']}" onclick="return kdel(this);">删除</a>
 		                              	</div>
 		                              </td>

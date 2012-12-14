@@ -13,15 +13,15 @@
 		                </header>
 		                <nav class="box_nav">
 								<ul id="test_ul" class="clearfix">
-									<li {if !$my}class="selected"{/if}><a href="{BASE_URL}/index.php/user/custom_report">我举报的</a></li>
-									<li {if $my}class="selected"{/if}><a href="{BASE_URL}/index.php/user/custom_report/my">我收到的</a></li>
+									<li {if !$my}class="selected"{/if}><a href="{USER_URL}/custom_report">我举报的</a></li>
+									<li {if $my}class="selected"{/if}><a href="{USER_URL}/custom_report/my">我收到的</a></li>
 								</ul>
 		                </nav>
 		                <div class="box_detail">
 
 		                	<div class="toolbar">
 		                		<div class="actions">
-		                			<form class="detail" action="{BASE_URL}/index.php/user/custom_report/{if $my}my{/if}" method="get" id="frm_user_search">
+		                			<form class="detail" action="{USER_URL}/custom_report/{if $my}my{/if}" method="get" id="frm_user_search">
 										   <input type="hidden" value="{$page}" name="page">
 										<table cellspacing="0" cellpadding="0">
 											<tbody>

@@ -49,7 +49,8 @@ class Keke_tpl {
 	 */
 	public static function parse_rule($template, $tpl = null) {
 		global $_K;
-		($_K['inajax'])&&ob_start();
+		//($_K['inajax'])&&ob_start();
+		//ob_start();
 		$template = preg_replace ( "/\<\!\-\-\{include\s+([a-z0-9_\/]+)\}\-\-\>/ie", "Keke_tpl::readtemplate('\\1')", $template );
 		//处理子页面中的代码
 		$template = preg_replace ( "/\<\!\-\-\{include\s+([a-z0-9_\/]+)\}\-\-\>/ie", "Keke_tpl::readtemplate('\\1')", $template );
@@ -306,12 +307,13 @@ class Keke_tpl {
 	//调整输出
 	static function ob_out() {
 		global $_K,$_lang;
+		
 		$content = ob_get_contents ();
+		
 		$preg_searchs = $preg_replaces = $str_searchs = $str_replaces = array();
 		if ($_K ['is_rewrite'] == 1) {
-
 			
-			$preg_searchs [] = '/\<a\s*href\=\"index\.php\?(.+?)\#(\w+)\"/ie';
+			/* $preg_searchs [] = '/\<a\s*href\=\"index\.php\/(.+?)\#(\w+)\"/ie';
 			$preg_replaces [] = 'Keke_tpl::rewrite_url(\'index-\',\'\\1\',\'\\2\')';
 			
 			$preg_searchs [] = '/\<a\s*href\=\"index\.php\"/i';
@@ -321,9 +323,15 @@ class Keke_tpl {
 			$preg_replaces [] = 'Keke_tpl::rewrite_url(\'http://\\1/index-\',\'\\2\',\'\\3\')';
 			
 			$preg_searchs [] = '/\<a\s*href\=\"index\.php\?(.+?)\"/ie';
-			$preg_replaces [] = 'Keke_tpl::rewrite_url(\'index-\',\'\\1\')';
+			$preg_replaces [] = 'Keke_tpl::rewrite_url(\'index-\',\'\\1\')';  */
+			
+			//$content = strtr($content, array('/index.php'=>''));
+			
+ 			$content = strtr($content, array('/index.php'=>''));
 		}
-		 
+		//$content = strtr($content, array('/index.php'=>''));
+		
+		
 		if ($_K ['inajax']) {
 			$preg_searchs [] = '/([\x01-\x09\x0b-\x0c\x0e-\x1f])+/';
 			$preg_replaces [] = ' ';
@@ -338,16 +346,20 @@ class Keke_tpl {
 		if ($str_searchs) {
 			$content = trim ( str_replace ( $str_searchs, $str_replaces, $content ) );
 		}
+		 
 		Keke_tpl::obclean ();
 		($_K ['inajax']) and self::xml_out ( $content );
+		echo $content;
 
 	}
 	static function obclean() {
 		global $_K;
-		 if($_K['inajax']==1){
-		 	ob_end_clean();
+		ob_end_clean();
+		 if($_K['inajax']==1 or GZIP===false){
 		 	ob_start();
-		 } 
+		 }else{
+			ob_start();
+		 }
 		 
 	}
 	static function rewrite_url($pre, $para, $hot = '') {

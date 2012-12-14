@@ -59,7 +59,7 @@ class Keke_Request_Client_Internal extends Keke_Request_Client {
 		
 		try
 		{
-//			echo $prefix.$controller;die();
+// 			echo $prefix.$controller;die();
 // 			var_dump(class_exists($prefix.$controller));die;
 			if ( ! class_exists($prefix.$controller)){
 				throw new Keke_exception('The requested URL :uri was not found on this server. :controller',
@@ -92,7 +92,7 @@ class Keke_Request_Client_Internal extends Keke_Request_Client {
 			}
 			
 			$method = $class->getMethod('action_'.$action);
-			 
+			
 			$method->invoke($controller);
 			 
 			// Execute the "after action" method
@@ -113,7 +113,7 @@ class Keke_Request_Client_Internal extends Keke_Request_Client {
 
 		// Restore the previous request
 		Request::$current = $previous;
-		
+		die;
 		 
 		//var_dump(strlen($request->response()));die;
 		// Return the response

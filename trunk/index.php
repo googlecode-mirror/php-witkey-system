@@ -14,6 +14,5 @@ $_K['directory'] or $_K['directory'] = 'index';
 
 Keke_lang::get_instance()->set_dir($_K['directory'])->load($_K ['control']);
 
-echo $request->execute()->send_headers(TRUE);
+$request->execute();
 
-die;

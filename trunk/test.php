@@ -2,18 +2,30 @@
 
 include 'app_boot.php';
 
-class a {
-	function b(){
-		echo 'b';
-	}
-}
+
+$subject = '<a href="/kppw_google/index.php/user/account_detail/skill_del?cid=9&pic=data/uploads/2012/12/12/2430650c82f6653cae.jpg" onclick="return kdel(this)">и╬ЁЩ</a>
+';
+
+$preg_searchs [] = '/\<a\s*href\=\"\.*\/(index)\.php\/.*\"/ie';
+$s[] = '/\<a\s*href=\"\/kppw_google\/(index.php)\.*\"/ie';
+
+$preg_replaces [] = 'index.html';
+ 
+
+// $c =  str_replace('index.php/', 'index.html/', $subject);
+$c = strtr($subject, array('index.php'=>'index.html'));
+
+var_dump($c);
+
+die;
+
+
+
+
 //$a = DB::select()->from('witkey_config')->execute();
-$a = new a;
+ 
 
-Cache::instance('redis')->set('a', $a);
-$b = Cache::instance('redis')->get('a');
 
-$b->b();
 //echo Keke_user_register::instance('keke')->gen_secode('123456','7sghrm');
 //сОят╟Э╪сть╡Бйт
 

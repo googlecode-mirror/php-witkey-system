@@ -327,7 +327,7 @@ class Keke_tpl {
 			
 			//$content = strtr($content, array('/index.php'=>''));
 			
- 			$content = strtr($content, array('/index.php'=>''));
+ 			//$content = strtr($content, array('/index.php'=>''));
 		}
 		//$content = strtr($content, array('/index.php'=>''));
 		

@@ -182,7 +182,7 @@ class Keke extends Keke_core {
 	public static $_safe_mode ;
 	public static $_magic_quote;
 	public static $_log;
-	public static $_index_file = 'index.php';
+	public static $_index_file = '';
 	public static $_sys_config;
 	public static $_uid;
 	public static $_username;
@@ -243,6 +243,13 @@ class Keke extends Keke_core {
 		define ( 'LIB', S_ROOT . 'class' . DIRECTORY_SEPARATOR );
 		define ( 'EXT', '.php' );
 		include (S_ROOT . 'config/config.inc.php');
+		
+		if(Keke::$_index_file){
+			define('PHP_URL',BASE_URL.'/'.Keke::$_index_file);
+		}else{
+			define('PHP_URL',BASE_URL);
+		}
+		
 		define ( 'KEKE_VERSION', '3.0' );
 		define ( 'KEKE_RELEASE', '2012-06-2' );
 		define ( "P_NAME", 'KPPW' );

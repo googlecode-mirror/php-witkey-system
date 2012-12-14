@@ -13,13 +13,13 @@
 		                </header>
 		                
 		                <div class="box_detail">
-		                	<form action="{BASE_URL}/index.php/user/msg_index/send" name="msg_frm" method="post" id="msg_frm" onsubmit="return check_send('msg_frm')">
+		                	<form action="{USER_URL}/msg_index/send" name="msg_frm" method="post" id="msg_frm" onsubmit="return check_send('msg_frm')">
 								<input type="hidden" name="formhash" value="{FORMHASH}">
 			                	
 								<div class="form_row">
 			                		<label for="" class="form_label">收件人：</label>
 									<input type="text" name="txt_to_username" id="txt_to_username" style="width:475px" 
-									limit="required:true;len:2-40" ajax = '{BASE_URL}/index.php/user/msg_index/check_username/' msg="收件人用户名" title="收件人用户名" msgArea="msg_txt_to_username"
+									limit="required:true;len:2-40" ajax = '{USER_URL}/msg_index/check_username/' msg="收件人用户名" title="收件人用户名" msgArea="msg_txt_to_username"
 									/>
 									<span id="msg_txt_to_username"></span>
 			                	</div>

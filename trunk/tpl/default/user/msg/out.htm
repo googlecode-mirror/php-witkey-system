@@ -14,7 +14,7 @@
 		                
 		                <div class="box_detail">
 							<div class="toolbar">
-		                	<form class="detail" action="{BASE_URL}/index.php/user/msg_out" method="get" id="frm_user_search">
+		                	<form class="detail" action="{USER_URL}/msg_out" method="get" id="frm_user_search">
 										   <input type="hidden" value="{$page}" name="page">
 										<table cellspacing="0" cellpadding="0">
 											<tbody>
@@ -64,9 +64,9 @@
 		                              <td><input type="checkbox" name="ckb[]" value="$v['msg_id']|$v['msg_status']|$v['uid']"></td>
 		                              <td>{$v['to_username']}</td>
 		                              <td>
-		                              	<a href="{BASE_URL}/index.php/user/msg_in/info?from=out&msg_id={$v['msg_id']}" class="title">{$v['title']}</a>
+		                              	<a href="{USER_URL}/msg_in/info?from=out&msg_id={$v['msg_id']}" class="title">{$v['title']}</a>
 		                              	<div class="item_action">
-		                              		<a href="{BASE_URL}/index.php/user/msg_in/info?from=out&msg_id={$v['msg_id']}">查看</a>
+		                              		<a href="{USER_URL}/msg_in/info?from=out&msg_id={$v['msg_id']}">查看</a>
 		                              		<a href="{$del_uri}?msg_id={$v['msg_id']}&status={$v['msg_status']}&is_sys={$v['uid']}" onclick="return kdel(this);">删除</a>
 		                              	</div>
 		                              </td>

@@ -22,7 +22,7 @@
 	                			<label class="form_label">账户余额：</label>
 	                			{c:$user['balance']}
 		                	</div>
-		               <form action="{BASE_URL}/index.php/user/finance_withdraw/save" onsubmit="return checkForm(this)" method="post" >
+		               <form action="{USER_URL}/finance_withdraw/save" onsubmit="return checkForm(this)" method="post" >
 							<input type="hidden" name="formhash" value="{FORMHASH}">
 		                	<div class="form_row">
 	                			<label class="form_label">银行：</label>
@@ -66,7 +66,7 @@
 	                			<label class="form_label" >安全密码：</label>
 	                			<input type="password" size="26" name="code"
 								limit="required:true"
-								ajax="{BASE_URL}/index.php/user/finance_withdraw/check_code?code="
+								ajax="{USER_URL}/finance_withdraw/check_code?code="
 								msg="安全码不对"
 								>
 								 

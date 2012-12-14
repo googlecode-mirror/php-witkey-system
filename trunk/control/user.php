@@ -5,7 +5,7 @@
  * @version 2.2
    2012-10-25
  */
-define('USER_URL', BASE_URL.'/index.php/user');
+define('USER_URL', PHP_URL.'/user');
 abstract  class Control_user extends Controller{
 	protected $uid ;
 	protected $username;

@@ -28,6 +28,7 @@ define ( 'SYS_START_TIME', microtime(1) );
 */
 define('BASE_URL', '/kppw_google');
 
+
 //redis ·þÎñÆ÷µØÖ·
 $_K['redis'] = array('host'=>'192.168.1.99','port'=>'6379');
 

@@ -311,7 +311,7 @@ class Keke_tpl {
 		$content = ob_get_contents ();
 		
 		$preg_searchs = $preg_replaces = $str_searchs = $str_replaces = array();
-		if ($_K ['is_rewrite'] == 1) {
+		//if ($_K ['is_rewrite'] == 1) {
 			
 			/* $preg_searchs [] = '/\<a\s*href\=\"index\.php\/(.+?)\#(\w+)\"/ie';
 			$preg_replaces [] = 'Keke_tpl::rewrite_url(\'index-\',\'\\1\',\'\\2\')';
@@ -328,7 +328,7 @@ class Keke_tpl {
 			//$content = strtr($content, array('/index.php'=>''));
 			
  			//$content = strtr($content, array('/index.php'=>''));
-		}
+		//}
 		//$content = strtr($content, array('/index.php'=>''));
 		
 		
@@ -349,12 +349,12 @@ class Keke_tpl {
 		 
 		Keke_tpl::obclean ();
 		($_K ['inajax']) and self::xml_out ( $content );
-		echo $content;
+		//echo $content;
 
 	}
 	static function obclean() {
 		global $_K;
-		ob_end_clean();
+		//ob_end_clean();
 		 if($_K['inajax']==1 or GZIP===false){
 		 	ob_start();
 		 }else{

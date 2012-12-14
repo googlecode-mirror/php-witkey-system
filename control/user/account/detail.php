@@ -126,8 +126,10 @@ class Control_user_account_detail extends Control_user{
 		$where = "uid = $this->uid";
 		$certs = DB::select()->from('witkey_member_cert')->where($where)->execute();
 		$year = $this->get_year();
-
-		require Keke_tpl::template('user/account/skill');
+	    global $_K;
+	    $_K['is_rewrite']=1;
+	    
+	    require Keke_tpl::template('user/account/skill');
 	}
 	/**
 	 * 技能证书保存

@@ -244,12 +244,6 @@ class Keke extends Keke_core {
 		define ( 'EXT', '.php' );
 		include (S_ROOT . 'config/config.inc.php');
 		
-		if(Keke::$_index_file){
-			define('PHP_URL',BASE_URL.'/'.Keke::$_index_file);
-		}else{
-			define('PHP_URL',BASE_URL);
-		}
-		
 		define ( 'KEKE_VERSION', '3.0' );
 		define ( 'KEKE_RELEASE', '2012-06-2' );
 		define ( "P_NAME", 'KPPW' );
@@ -354,6 +348,11 @@ class Keke extends Keke_core {
 		$_K['attent_list'] = Keke::$_weibo_attent;
 		$_K['style_path'] = Keke::$_style_path;
 		$_K['style_path']=SKIN_PATH;
+		if(Keke::$_index_file){
+			define('PHP_URL',BASE_URL.'/'.Keke::$_index_file);
+		}elseif(empty(Keke::$_index_file) OR $config_arr['is_rewrite']){
+			define('PHP_URL',BASE_URL);
+		}
 	
 	}
 	/**

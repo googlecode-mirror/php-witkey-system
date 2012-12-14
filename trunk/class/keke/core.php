@@ -235,7 +235,7 @@ class Keke extends Keke_core {
 	}
 	
 	function init() {
-// 		global  $_K, $_lang;
+ 		global  $_K;
 		if(self::$_inited==TRUE){
 			return;
 		}
@@ -283,14 +283,9 @@ class Keke extends Keke_core {
 		$this->init_curr();
 		$this->init_config ();
 		
-		
-		
 		Keke::$_cache_obj = Cache::instance ();
 		 
-		
-		
-		 
-
+	
 		self::$_log = log::instance()->attach(new keke_log_file());
 		$this->init_user();
 	}
@@ -330,7 +325,7 @@ class Keke extends Keke_core {
 		$_K ['refer'] = "index.php";
 		$_K ['block_search'] = $_K ['block_replace'] = array ();
 		$_lang = array ();
-		//is_file ( S_ROOT . '/config/lic.php' ) and include (S_ROOT . '/config/lic.php');
+		
 		$config_arr ['seo_title'] and $_K ['html_title'] = $config_arr ['seo_title'] or $_K ['html_title'] = $config_arr ['website_name'];
 		define ( 'SKIN_PATH', 'tpl/' . $_K ['template'] );
 		define ( 'UPLOAD_RULE', date ( 'Y/m/d/' ) );

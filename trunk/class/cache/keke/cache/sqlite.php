@@ -1,4 +1,9 @@
-<?php
+<?php defined('IN_KEKE') or die('access denied');
+/**
+ * 使用sqlite 作为数据缓存
+ * @author mciahel
+ * @version 3.0
+ */
 
 final class Keke_cache_sqlite extends Keke_cache {
 	public  $_config = array ();
@@ -139,5 +144,3 @@ final class Keke_cache_sqlite extends Keke_cache {
 	}
 
 }
-
-?>

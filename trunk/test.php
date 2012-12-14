@@ -2,10 +2,18 @@
 
 include 'app_boot.php';
 
+class a {
+	function b(){
+		echo 'b';
+	}
+}
+//$a = DB::select()->from('witkey_config')->execute();
+$a = new a;
 
-$res = Keke_user_login::instance('keke')->auto_login();
-var_dump($res);
+Cache::instance('redis')->set('a', $a);
+$b = Cache::instance('redis')->get('a');
 
+$b->b();
 //echo Keke_user_register::instance('keke')->gen_secode('123456','7sghrm');
 //сОят╟Э╪сть╡Бйт
 

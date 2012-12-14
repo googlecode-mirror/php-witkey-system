@@ -16,7 +16,7 @@ abstract class Keke_cache{
 	/**
 	 * 
 	 * construct cache calss 
-	 * @var string $cache_type  -- 'file' ,'sqlite','eacc','apc','mem'
+	 * @var string $cache_type  -- 'file' ,'sqlite','eacc','apc','mem','redis'
 	 * @var array $config   --array(0=>array("host"=>"127.0.0.1","port"=>"11211"))
 	 * @return cache obj 
 	 */
@@ -53,7 +53,7 @@ abstract class Keke_cache{
 	public function get_id(){
 		return self::$_id;
 	}
-	protected function sanitize_id($id)
+	protected function _sanitize_id($id)
 	{
 		return str_replace(array('/', '\\', ' '), '_', $id);
 	}

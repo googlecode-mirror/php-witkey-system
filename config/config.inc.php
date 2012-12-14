@@ -28,3 +28,9 @@ define ( 'SYS_START_TIME', microtime(1) );
 */
 define('BASE_URL', '/kppw_google');
 
+//redis 服务器地址
+$_K['redis'] = array('host'=>'192.168.1.99','port'=>'6379');
+
+//memcahce 服务器地址
+
+$_K['memcache'] = array('host'=>'127.0.0.1','port'=>'11211');

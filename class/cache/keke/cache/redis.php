@@ -1,7 +1,8 @@
 <?php
 /**
  * redis 是noSql的一种，也可以用来做主库，现在只是用来做缓存处理。。
- * phpredis 缓存类
+ * redis 可以作为内存缓存与持久缓存，按指定的策略可以定时更新内存缓到持久缓存中
+ * phpredis 缓存类 
  * @author michael
  *
  */
@@ -24,12 +25,17 @@ final class Keke_cache_redis extends Keke_cache {
 	 * 由salve 做持久化处理.不要用master做持久化，会对性能有影响
 	 */
 	public function set_server(){
+		global $_K;
 		self::$_redis = new redis();
-		if(is_array($this->_config)){
+		if(Keke_valid::not_empty($this->_config)){
 		   	self::$_redis->connect($this->_config['host'],$this->_config['port']);
+		}elseif($_K['redis']){
+			self::$_redis->connect($_K['redis']['host'],$_K['redis']['port']);
 		}else{
 			self::$_redis->connect('127.0.0.1','6379');
 		}
+		//可以直接保存php数组
+		self::$_redis->setOption(Redis::OPT_SERIALIZER, Redis::SERIALIZER_PHP);
 	}
 	/**
 	 * 获取普通String键的值
@@ -49,7 +55,10 @@ final class Keke_cache_redis extends Keke_cache {
 	 * 这里的set只对String 的值有效
 	 * @see Keke_cache::set()
 	 */
-	public function set($id, $value, $expire = 0, $dependency = null) {
+	public function set($id, $value, $expire = NULL) {
+		if($expire===NULL){
+			$expire = Cache::DEFAULT_CACHE_LIFE_TIME;
+		}
 		return self::$_redis->set($id,$value,$expire);
 	}
 	
@@ -61,7 +70,7 @@ final class Keke_cache_redis extends Keke_cache {
 	 * @param int $expire
 	 * @param string $dependency
 	 */
-	public function add($id, $value, $expire = 0, $dependency = null) {
+	public function add($id, $value, $expire = NULL) {
 	     return self::$_redis->append($id,$value);
 		
 	}

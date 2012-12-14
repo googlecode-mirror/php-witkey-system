@@ -1,5 +1,10 @@
-<?php
- 
+<?php  defined('IN_KEKE') or die('access denied');
+/**
+ * 数据缓存，memcache 是一种分布式数据缓存，断电和重启后，数据会丢失
+ * @author Michael
+ * @version 3.0
+ *
+ */ 
 final class Keke_cache_memcache extends Keke_cache {
 	public $useMemcached = false;
 	private $_cache = null;
@@ -87,11 +92,15 @@ class MemCacheServerconfig {
 	
 	public $status = true;
 	public function __construct($config) {
-		if (is_array ( $config )) {
+		if (Keke_valid::not_empty($config)) {
 			foreach ( $config as $key => $value )
 				$this->$key = $value;
 			if ($this->host === null)
 				die ( 'MemCache server config must have "host" value.' );
+		}elseif($_K['memcache']){
+			foreach ($_K['memcache'] as $key=>$value){
+				$this->$key = $value;
+			}
 		} else {
 			die ( 'MemCache server config must be an array.' );
 		}

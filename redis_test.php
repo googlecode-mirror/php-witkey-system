@@ -8,8 +8,6 @@ echo Cache::instance('redis')->get('3'); */
 /* $a = Cache::instance('redis')->mget(array('1','2'));
 var_dump($a); */
 
-Cache::instance('redis')->add('1','valuesss');
-
-$v = Cache::instance('redis')->get('1');
-var_dump($v);
+ 
+ 
 var_dump(Keke::execute_time());

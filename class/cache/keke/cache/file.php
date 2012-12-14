@@ -1,6 +1,11 @@
-<?php
-// Keke_lang::load_lang_class('file_cache_class');
-// require_once 'acache_class.php';
+<?php defined('IN_KEKE') or die('access denied');
+
+/**
+ * 用文件来缓存数据
+ * @author Michael
+ * @version 3.0
+ *
+ */
 class Keke_cache_file extends Keke_cache {
 
 	private $path;
@@ -96,7 +101,7 @@ class Keke_cache_file extends Keke_cache {
 			$this->contents = array (
 					'_contents' => $contents 
 			);
-			$this->filename = $this->sanitize_id ( $id );
+			$this->filename = $this->_sanitize_id ( $id );
 			if (! is_null ( $expires )) {
 				$this->default_expires = $expires;
 			}  
@@ -141,6 +146,7 @@ class Keke_cache_file extends Keke_cache {
 		throw new Keke_exception(__CLASS__.'/'.__FUNCTION__.'() is empty');
 	}
 	function del($id) {
+		$id = $this->_sanitize_id($id);
 		$cache_file = $this->path.$id.EXT;
 		if (is_file ( $cache_file )) {
 			unlink ( $cache_file );
@@ -188,5 +194,3 @@ class Keke_cache_file extends Keke_cache {
 	
 
 }
-
-?>

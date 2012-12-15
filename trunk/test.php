@@ -3,6 +3,8 @@
 include 'app_boot.php';
 
 
+ 
+
 $subject = '<a href="/kppw_google/index.php/user/account_detail/skill_del?cid=9&pic=data/uploads/2012/12/12/2430650c82f6653cae.jpg" onclick="return kdel(this)">É¾³ý</a>
 ';
 
@@ -13,9 +15,12 @@ $preg_replaces [] = 'index.html';
  
 
 // $c =  str_replace('index.php/', 'index.html/', $subject);
-$c = strtr($subject, array('index.php'=>'index.html'));
+// $c = strtr($subject, array('index.php'=>'index.html'));
 
-var_dump($c);
+//var_dump();
+
+
+
 
 die;
 

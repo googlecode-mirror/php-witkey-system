@@ -54,19 +54,21 @@ class Keke_tpl {
 		$template = preg_replace ( "/\<\!\-\-\{include\s+([a-z0-9_\/]+)\}\-\-\>/ie", "Keke_tpl::readtemplate('\\1')", $template );
 		//处理子页面中的代码
 		$template = preg_replace ( "/\<\!\-\-\{include\s+([a-z0-9_\/]+)\}\-\-\>/ie", "Keke_tpl::readtemplate('\\1')", $template );
-		//挂件调用
-		//$template = preg_replace ( "/\<\!\-\-\{widget\((.+?)\)\}\-\-\>/ie", "Keke_tpl::runwidget('\\1')", $template );
+		
 		//标签调用
 		$template = preg_replace ( "/\<\!\-\-\{tag\s+([^!@#$%^&*(){}<>?,.\'\"\+\-\;\":~`]+)\}\-\-\>/ie", "Keke_tpl::readtag(\"'\\1'\")", $template );
+		
 		//广告调用
 		$template = preg_replace ( "/\<\!\-\-\{showad\((.+?)\)\}\-\-\>/ie", "Keke_tpl::showad('\\1')", $template );
 		//多广告调用
 		$template = preg_replace ( "/\<\!\-\-\{showads\((.+?)\)\}\-\-\>/ie", "Keke_tpl::showads('\\1')", $template );
+		
 		//预设广告调用
 		$template = preg_replace ( "/\<\!\-\-\{ad_show\((.+?),(.+?)\)\}\-\-\>/ie", "Keke_tpl::ad_show('\\1','\\2')", $template );
+		
 		$template = preg_replace ( "/\<\!\-\-\{ad_show\((.+?)\)\}\-\-\>/ie", "Keke_tpl::ad_show('\\1')", $template );
 		//动态调用
-		$template = preg_replace ( "/\<\!\-\-\{loadfeed\((.+?)\)\}\-\-\>/ie", "Keke_tpl::loadfeed('\\1')", $template );
+		//$template = preg_replace ( "/\<\!\-\-\{loadfeed\((.+?)\)\}\-\-\>/ie", "Keke_tpl::loadfeed('\\1')", $template );
 		//时间处理
 		$template = preg_replace ( "/\{date\((.+?),(.+?)\)\}/ie", "Keke_tpl::datetags('\\1','\\2')", $template );
 		//货币显示
@@ -232,11 +234,11 @@ class Keke_tpl {
 	
 	}
 	
-	static function loadfeed($name) {
+	/* static function loadfeed($name) {
 		$content = '<!--{eval Keke_loaddata::readfeed(' . $name . ')}-->';
 		return $content;
 	
-	}
+	} */
 	
 	//获取文件内容
 	static function sreadfile($filename) {

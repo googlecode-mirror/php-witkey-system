@@ -138,7 +138,7 @@ function setHomepage(url){
 
 
  
-var STYLEID = '1', STATICURL = '', IMGDIR = 'resource/img/keke', VERHASH = 'cC0', charset = 'gbk', keke_uid = '0', cookiepre = 'keke', cookiedomain = '', cookiepath = '', attackevasive = '0', disallowfloat = '', creditnotice = ''
+var STYLEID = '1', STATICURL = '', IMGDIR = 'static/img/keke', VERHASH = 'cC0', charset = 'gbk', keke_uid = '0', cookiepre = 'keke', cookiedomain = '', cookiepath = '', attackevasive = '0', disallowfloat = '', creditnotice = ''
 var BROWSER = {};
 var USERAGENT = navigator.userAgent.toLowerCase();
 browserVersion({'ie':'msie','firefox':'','chrome':'','opera':'','safari':'','maxthon':'','mozilla':'','webkit':''});
@@ -1771,8 +1771,9 @@ function setCopy(text, msg,type){
 			showDialog(msg, 'info');
 		}
 	} else {
-		var flash  = 'resource/img/keke/clipboard.swf';
-			type=='admin'?flash='../../'+flash:'';
+		var flash  = BASE_URL+'/static/img/keke/clipboard.swf';
+		
+			//type=='admin'?flash='../../'+flash:'';
 		var msg = '<div class="c"><div style="width: 200px; text-align: center; text-decoration:underline;">'+L.click_copy+'</div>' +
 		AC_FL_RunContent('id', 'clipboardswf', 'name', 'clipboardswf', 'devicefont', 'false', 'width', '200', 'height', '40', 'src',  flash, 'menu', 'false',  'allowScriptAccess', 'sameDomain', 'swLiveConnect', 'true', 'wmode', 'transparent', 'style' , 'margin-top:-20px') + '</div>';
 		showDialog(msg, 'info');

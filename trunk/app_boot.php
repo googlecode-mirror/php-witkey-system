@@ -44,7 +44,7 @@ if(!Route::cache()){
 	Route::cache(TRUE);
 }   
 
-global $_K;
+ 
 //ªı±“¡–±Ì
 //$_K['f_c_list'] = Curren::get_curr_list('code,title');
 

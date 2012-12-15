@@ -349,16 +349,15 @@ class Keke_tpl {
 		 
 		Keke_tpl::obclean ();
 		($_K ['inajax']) and self::xml_out ( $content );
+		
 		//echo $content;
 
 	}
 	static function obclean() {
 		global $_K;
-		//ob_end_clean();
-		 if($_K['inajax']==1 or GZIP===false){
+		 if($_K['inajax']==1){
+		 	ob_end_clean();
 		 	ob_start();
-		 }else{
-			ob_start();
 		 }
 		 
 	}
@@ -375,16 +374,14 @@ class Keke_tpl {
 		return '<a href="'.$url . '.html' . $hot . '"';
 	}
 	static function xml_out($content) {
-		global $_K;
+		
 		header ( "Expires: -1" );
 		header ( "Cache-Control: no-store, private, post-check=0, pre-check=0, max-age=0", FALSE );
 		header ( "Pragma: no-cache" );
 		header ( "Content-type: application/xml; charset=".CHARSET );
 		echo '<' . "?xml version=\"1.0\" encoding=\"".CHARSET."\"?>\n";
 		echo "<root><![CDATA[" . trim ( $content ) . "]]></root>";
-		//extension_loaded('zlib') and ob_end_flush();//**//
 		exit ();
 	}
 
 }
-?>

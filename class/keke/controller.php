@@ -82,7 +82,7 @@ abstract class Keke_Controller {
 	/**
 	 * 获取数据分页，排序的uri 
 	 * @param string $base_uri
-	 * @return multitype:string number
+	 * @return array($r['where'],$r['query_uri'],$r['uri'],$r['ord_tag'],$r['ord_char'],$r['order'],$r['page'])
 	 */
 	function get_url($base_uri){
 		$r = array();

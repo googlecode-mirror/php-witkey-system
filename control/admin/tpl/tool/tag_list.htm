@@ -59,12 +59,12 @@
                 	<td><input type="checkbox" name="ckb[]" class="checkbox" value="{$v['tag_id']}">{$v['tag_id']}</td>
                     <td>{$v['tagname']}</td>
                     <td>
-                        <input type="text" class="txt" value="<!--{eval echo '<!--{tag '.$v['tagname'].'}-';}-->->" size="30" onfocus="setCopy(this.value,'点击复制','admin')">
+                        <input type="text" class="txt" value="<!--{eval echo '<!--{tag '.$v['tagname'].'}-';}-->->" size="30" onfocus="setCopy(this.value,'点击复制')">
                     </td>
                     <td>
-                        <input type="text" class="txt" value="<script src='{$_K['siteurl']}/js.php?op=tag&tag_id=$v['tag_id']'></script>"  size="40" onfocus="setCopy(this.value,'点击复制','admin')">
+                        <input type="text" class="txt" value="<script src='{$_K['siteurl']}/js.php?op=tag&tag_id=$v['tag_id']'></script>"  size="60" onfocus="setCopy(this.value,'点击复制')">
                     </td>
-					<td><!--{date('Y-m-d',$v['on_time'])}--></td>
+					<td>{date('Y-m-d',$v['on_time'])}</td>
                     <td colspan="3">
                         <a href="{$base_uri}/preview?&tag_id={$v['tag_id']}" target="_blank" class="button dbl_target">
                         <span class="book icon"></span>{$_lang['view']}</a>

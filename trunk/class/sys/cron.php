@@ -22,7 +22,7 @@ abstract class Sys_cron {
 		 $where = "nextruntime <= ".SYS_START_TIME ." and allow =1";
 		 
 		 $cron = DB::select()->from('witkey_cron')->where($where)
-		 ->limit(0, 1)->get_one()->cached(9000)->execute();
+		 ->limit(0, 1)->get_one()->execute();
 		 
 		//Keke::$_log->add(Log::DEBUG, $cron['cron_name'])->write();
 		

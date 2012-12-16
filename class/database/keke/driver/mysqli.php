@@ -1,8 +1,7 @@
 <?php
 /*
- * mysql 数据库连接类 kekezu
+ * mysqli 数据库连接类 kekezu
  */
-// require ('database.php');
 
 final class Keke_driver_mysqli extends Keke_database {
 	
@@ -12,9 +11,13 @@ final class Keke_driver_mysqli extends Keke_database {
 	private $_dbpass;
 	private $_dbcharset;
 	private $_link;
+	private $_lifetime;
 	private $_last_query_id = null;
+	private $_return_insert_id = FALSE;
 	private $_query_num = 0;
-	private $_query_sql = array ();
+	//private $_query_sql = array ();
+	private static  $_query_list = array ();
+	
 	function __construct($config = array()) {
 		if (empty ( $config )) {
 			$this->_dbhost = DBHOST;
@@ -36,14 +39,15 @@ final class Keke_driver_mysqli extends Keke_database {
 	 * @return resource
 	 */
 	public function dbconnection() {
-		function_exists ( 'mysqli_connect' ) or exit ( 'function mysqli is not support!' );
-		$this->_link = mysqli_connect ( $this->_dbhost, $this->_dbuser, $this->_dbpass ) or $this->halt ( 'connect mysql server fail!' );
+		if (! $this->_link = mysqli_connect ( $this->_dbhost, $this->_dbuser, $this->_dbpass)) {
+			exit ( 'connect mysql server fail!' );
+		}
 		if ($this->version () > '4.1') {
 			$this->_dbcharset and $serverset = "character_set_connection={$this->_dbcharset}, character_set_results={$this->_dbcharset}, character_set_client=binary";
 			$this->version () > '5.0.1' and $serverset .= ((empty ( $serverset ) ? '' : ',') . 'sql_mode=\'\'');
-			$serverset and mysqli_query ( "SET $serverset", $this->_link );
+			$serverset and mysqli_query ($this->_link, "SET $serverset" );
 		}
-		mysqli_select_db ( $this->_link, $this->_dbname ) or $this->halt ( 'select database:' . $this->_dbname . ' fail!' );
+		mysqli_select_db ( $this->_link,$this->_dbname ) or $this->halt ( 'select database:' . $this->_dbname . ' fail!' );
 		return $this->_link;
 	}
 	/**
@@ -51,16 +55,24 @@ final class Keke_driver_mysqli extends Keke_database {
 	 *
 	 * @param $sql string       	
 	 *
+	 * @example type=select 返回array
+	 * @example type=insert 返回array(insert_id,affected_rows)
+	 * @example type=update or delete 返回 int affected_rows;
 	 */
-	public function query($sql, $is_unbuffer = 0) {
-		$this->execute_sql ( $sql, $is_unbuffer );
-		$result = array ();
-		while ( ($rs = $this->fetch_array ()) != false ) {
-			$result [] = $rs;
+	public function query($sql, $type = Database::SELECT, $is_unbuffer = 0) {
+		$this->execute ( $sql, $is_unbuffer );
+		if ($type === Database::SELECT) {
+			$result = array ();
+			while ( ($rs = $this->fetch_array ()) != false ) {
+				$result [] = $rs;
+			}
+		} elseif ($type === Database::INSERT ) {
+			$result = mysqli_insert_id ( $this->_link );
+		} else {
+			$result = mysqli_affected_rows ( $this->_link );
 		}
 		$this->free_result ();
 		return $result;
-	
 	}
 	/**
 	 * 查询结果中某行某字段的值
@@ -69,37 +81,35 @@ final class Keke_driver_mysqli extends Keke_database {
 	 * @param $row int       	
 	 * @return int
 	 */
-	public function get_count($sql, $row = 0, $field = null) {
-		$query = $this->execute_sql ( $sql );
-		(is_object ( $query ) and mysqli_num_rows ( $query )) and $result = $this->fetch_one ( $query, $row, $field ) or $result = 0;
-		$this->free_result ();
-		return $result;
-	
-	}
-	public function fetch_one($query, $row = 0, $field = null) {
-		while ( $row = mysqli_fetch_array ( $query ) ) {
-			$field and $res = $row [$field] or $res = $row [0];
+	public function get_count($sql, $row = 0, $field = 0) {
+		$query = $this->execute ( $sql );
+		//(is_resource ( $query ) and mysql_num_rows ( $query )) and $result = mysql_result ( $query, $row, $field ) or $result = 0;
+		if(mysqli_num_rows($query)){
+			//官方文档，建议不用mysql_result 而是用性能更好的mysql_fetch_* 代替
+			$result = mysqli_fetch_row($query);//mysql_result ( $query, $row, $field );
 		}
-		return $res;
+		$this->free_result ();
+		return $result[0];
+	
 	}
 	public function begin() {
 		// 数据rollback 支持
 		if ($this->_trans == 0) {
 			$sql = "start transaction";
-			$this->execute_sql ( $sql );
+			$this->query ( $sql );
 		}
 		$this->_trans ++;
 		return;
 	}
 	public function commit() {
 		if ($this->_trans > 0) {
-			$this->execute_sql ( "commit" );
+			$this->query ( "commit" );
 		}
 		return true;
 	}
 	public function rollback() {
 		if ($this->_trans > 0) {
-			$this->execute_sql ( "ROLLBACK" );
+			$this->query ( "ROLLBACK" );
 			$this->_trans = 0;
 		}
 		return true;
@@ -108,53 +118,53 @@ final class Keke_driver_mysqli extends Keke_database {
 		return $this->_trans;
 	}
 	public function get_one_row($sql) {
-		$this->execute_sql ( $sql );
+		$this->execute ( $sql );
 		$res = $this->fetch_array ();
 		$this->free_result ();
 		return $res;
 	}
+	public function get_query_list(){
+		return self::$_query_list;
+	}
 	/**
-	 * 返回插入的ID
+	 * 插入数据
 	 *
 	 * @param $insertSql string       	
 	 * @return int last_insert_id
 	 */
-	public function insert_id($insertSql) {
-		$query = $this->execute_sql ( $insertSql );
-		$id = mysqli_insert_id ( $this->_link );
-		$this->free_result ();
-		return $id;
-	
-	}
 	public function insert($tablename, $insertsqlarr, $returnid = 0, $replace = false) {
-		if (! is_array ( $insertsqlarr )) {
+		if (empty ( $insertsqlarr )) {
 			return false;
 		}
+		$this->_return_insert_id = $returnid;
 		$fs = array_keys ( $insertsqlarr );
 		$vs = array_values ( $insertsqlarr );
-		array_walk ( $fs, array ($this, 'special_filed' ) );
-		array_walk ( $vs, array ($this, 'escape_string' ) );
-		
+		array_walk ( $fs, array ($this, 'quote_field' ) );
 		$field = implode ( ',', $fs );
-		$value = implode ( ',', $vs );
-		
+		$value = $this->quote_string($vs);
+        
 		$method = $replace ? 'replace' : 'insert';
-		$sql = $method . ' into ' . $tablename . ' (' . $field . ') values (' . $value . ')';
-		
-		$lsid = $this->insert_id ( $sql );
+		$sql = $method . ' into ' . $tablename . ' (' . $field . ') values (' . implode(',', $value) . ')';
+		return $res = $this->query ( $sql, Database::INSERT );
+		/* var_dump($res);die;
 		if ($returnid && ! $replace) {
-			return $lsid;
+			// insert_id
+			return $res [0];
 		} else {
-			return true;
-		}
+			// affected_rows
+			return $res [1];
+		} */
 	
 	}
 	public function update($tablename, $setsqlarr, $wheresqlarr) {
 		
 		$setsql = '';
 		$fields = array ();
+		if(empty($setsqlarr)){
+			throw new Keke_exception('update setsqlarr is emtpy!,please check!');
+		}
 		foreach ( $setsqlarr as $k => $v ) {
-			$fileds [] = $this->special_filed ( $k ) . '=' . $this->escape_string ( $v );
+			$fileds [] = $this->quote_field ( $k ) . '=' . $this->quote_string ( $v );
 		}
 		$setsql = implode ( ',', $fileds );
 		$where = "";
@@ -163,65 +173,80 @@ final class Keke_driver_mysqli extends Keke_database {
 		} elseif (is_array ( $wheresqlarr )) {
 			$temp = array ();
 			foreach ( $wheresqlarr as $k => $v ) {
-				$temp [] = $this->special_filed ( $k ) . '=' . $this->escape_string ( $v );
+				$temp [] = $this->quote_field ( $k ) . '=' . $this->quote_string ( $v );
 			}
 			$where = implode ( ' and ', $temp );
 		} else {
 			$where = $wheresqlarr;
 		}
-		
-		return $affectrows = $this->execute ( 'UPDATE ' . $tablename . ' SET ' . $setsql . ' WHERE ' . $where );
-	
+		$sql = 'UPDATE ' . $tablename . ' SET ' . $setsql . ' WHERE ' . $where;
+//  		var_dump($sql);die;
+		return $this->query ( $sql, Database::UPDATE );
 	}
-	public function select($fileds = '*', $table, $where = '', $order = '', $group = '', $limit = '', $pk = '', $cachetime = 0) {
+	public function cached($lifetime = NULL) {
+		if ($lifetime === NULL) {
+			// 默认缓存时间
+			$lifetime = Cache::DEFAULT_CACHE_LIFE_TIME;
+		}
+		$this->_lifetime = $lifetime;
+		return $this;
+	}
+	/**
+	 * 高级查询
+	 * (non-PHPdoc)
+	 *
+	 * @see keke_Database::select()
+	 */
+	public function select($fileds = '*', $table = null, $where = '', $order = '', $group = '', $limit = '', $pk = '', $cachetime = 0) {
+		$datalist = array ();
 		$where and $where = ' WHERE ' . $where;
 		$order and $order = ' ORDER BY ' . $order;
 		$group and $group = ' GROUP BY ' . $group;
 		$limit and $limit = ' LIMIT ' . $limit;
+		$filed = "";
 		$fileds != '*' and $filed = explode ( ',', $fileds );
 		if (is_array ( $filed )) {
-			array_walk ( $filed, array ($this, 'special_filed' ) );
+			array_walk ( $filed, array ($this, 'quote_field' ) );
 			$fileds = implode ( ',', $filed );
 		}
 		$sql = 'SELECT ' . $fileds . ' FROM `' . $this->_dbname . '`.`' . TABLEPRE . $table . '`' . $where . $group . $order . $limit;
-		$this->execute_sql ( $sql );
-		$datalist = array ();
-		while ( ($rs = $this->fetch_array ()) != false ) {
-			$pk and $datalist [$rs [$pk]] = $rs or $datalist [] = $rs;
+		$this->cached ( $cachetime );
+		$arr = $this->cache_data ( $sql );
+		if (! empty ( $pk )) {
+			foreach ( $arr as $k => $v ) {
+				$datalist [$v [$pk]] = $v;
+			}
+		} else {
+			$datalist = $arr;
+			unset ( $arr );
 		}
-		$this->free_result ();
 		return $datalist;
-	}
-	/**
-	 * 更新或删除数据库,返回影响的行数
-	 *
-	 * @param $updatesql string       	
-	 * @return int rows
-	 */
-	public function execute($updatesql) {
-		
-		$this->execute_sql ( $updatesql );
-		$res = mysqli_affected_rows ( $this->_link );
-		$this->free_result ();
-		return $res;
 	
 	}
-	protected function execute_sql($sql, $is_nubuffer = 0) {
+	/**
+	 * 执行sql
+	 *
+	 * @return resource by mysql_link
+	 * @see keke_Database::execute()
+	 */
+	public function execute($sql, $is_nubuffer = 0) {
 		! is_resource ( $this->_link ) and $this->dbconnection ();
 		
-		$is_nubuffer == 1 and $query_type = "mysqli_store_result" or $query_type = "mysqli_query";
-		array_push ( $this->_query_sql, $sql );
-		$this->_last_query_id = $query_type ( $this->_link, $sql ) or $this->halt ( mysql_error (), $sql );
+		$is_nubuffer == 1 and $query_type = "mysqli_multi_query" or $query_type = "mysqli_query";
+		//var_dump($sql);
+		//self::$_query_list[] = $sql;
+		//var_dump(self::$_query_list);
+		array_push ( self::$_query_list, $sql );
+		$this->_last_query_id = $query_type ($this->_link, $sql  ) or $this->halt ( mysqli_error (), $sql );
 		$this->_query_num ++;
 		return $this->_last_query_id;
 	}
 	public function get_query_num() {
-		// var_dump($this->_query_sql);
+		
 		return $this->_query_num;
 	}
-	public function fetch_array($type = MYSQL_ASSOC) {
+	public function fetch_array($type = MYSQLI_ASSOC) {
 		$res = mysqli_fetch_array ( $this->_last_query_id, $type );
-		! $res and $this->free_result ();
 		return $res;
 	}
 	
@@ -231,63 +256,46 @@ final class Keke_driver_mysqli extends Keke_database {
 			$this->_last_query_id = null;
 		}
 	}
-	/**
-	 * 关闭数据库连接
-	 *
-	 * @return unknown
-	 */
-	public function close() {
-		is_resource ( $this->_link ) and mysqli_close ( $this->_link );
-	}
-	/**
-	 * 获取错误
-	 *
-	 * @return unknown
-	 */
-	public function getError() {
-		return ($this->_link) ? mysqli_error ( $this->_link ) : mysqli_errno ();
-	}
-	/**
-	 * 获取错误
-	 *
-	 * @return unknown
-	 */
-	public function getErrno() {
-		return ($this->_link) ? mysqli_errno ( $this->_link ) : mysqli_errno ();
-	}
-	public function halt($message = '', $sql = '') {
-		throw new Keke_exception ( ':error [ :query ]', array (':error' => mysql_error ( $this->_link ), ':query' => $sql ), mysql_errno ( $this->_link ) );
-		exit ();
-	}
-	
-	public function special_filed(&$value) {
-		if ('*' == $value || false !== strpos ( $value, '(' ) || false !== strpos ( $value, '.' ) || false !== strpos ( $value, '`' )) {
-		
-		} else {
-			$value = '`' . trim ( $value ) . '`';
+	public function cache_data($sql, $default = 'null') {
+		$key = Cache::instance ()->generate_id ( $sql )->get_id();
+		if ($this->_lifetime > 0 and $datalist = Cache::instance ()->get ( $key )) {
+			return $datalist;
+		} elseif ($this->_lifetime <= 0) {
+			Cache::instance ()->del ( $key );
 		}
-		return $value;
+		$datalist = $data = $this->query ( $sql );
+		if (isset ( $key ) and $this->_lifetime > 0) {
+			empty ( $data ) and $data = $default;
+			Cache::instance ()->set ( $key, $data,$this->_lifetime);
+		}
+		return $datalist;
 	}
-	
-	public function escape_string(&$value) {
-		$q = '\'';
-		$value = $q . $value . $q;
-		return $value;
-	}
-	public function __destruct() {
-		$this->close ();
-	}
+
 	public function version() {
 		return mysqli_get_server_info ( $this->_link );
 	}
 	public function escape($value) {
 		$this->_link or $this->dbconnection ();
-		if (($value = mysql_real_escape_string ( ( string ) $value, $this->_link )) === FALSE) {
-			throw new Keke_exception ( ':error', array (':error' => mysql_error ( $this->_link ) ), mysql_errno ( $this->_link ) );
+		if (($value = mysqli_real_escape_string ( ( string ) $value, $this->_link )) === FALSE) {
+			throw new Keke_exception ( ':error', array (':error' => mysqli_error ( $this->_link ) ), mysqli_errno ( $this->_link ) );
 		}
 		return "'$value'";
 	}
-
+	public function close() {
+		is_resource ( $this->_link ) and mysqli_close ( $this->_link );
+	}
+	
+	public function getError() {
+		return ($this->_link) ? mysqli_error ( $this->_link ) : mysql_errno ();
+	}
+	
+	public function getErrno() {
+		return ($this->_link) ? mysqli_errno ( $this->_link ) : mysql_errno ();
+	}
+	public function halt($message = '', $sql = '') {
+		throw new Keke_exception ( ':error [ :query ]', array ('msg' => $message, ':error' => mysqli_error ( $this->_link ), ':query' => $sql ), mysqli_errno ( $this->_link ) );
+		exit ();
+	}
 }
 
 ?>
